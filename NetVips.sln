@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetVips", "NetVips\NetVips.csproj", "{CC938EA2-5AAE-40D0-990A-E28B141042AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetVips.CLI", "NetVips.CLI\NetVips.CLI.csproj", "{94FD1E37-0F65-4B47-B5DC-DEE6DDC2FF9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CDD2533C-1CD9-4930-94BD-273FFDBAF5EA}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC938EA2-5AAE-40D0-990A-E28B141042AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC938EA2-5AAE-40D0-990A-E28B141042AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC938EA2-5AAE-40D0-990A-E28B141042AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC938EA2-5AAE-40D0-990A-E28B141042AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FD1E37-0F65-4B47-B5DC-DEE6DDC2FF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FD1E37-0F65-4B47-B5DC-DEE6DDC2FF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FD1E37-0F65-4B47-B5DC-DEE6DDC2FF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FD1E37-0F65-4B47-B5DC-DEE6DDC2FF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01E259A4-338D-4B50-83B7-95AFB1E3D433}
+	EndGlobalSection
+EndGlobal
