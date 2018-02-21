@@ -7986,11 +7986,18 @@ namespace NetVips
             return __result0;
         }
 
-        public static int VipsImageWrite(global::NetVips.VipsImage image, global::NetVips.VipsImage @out)
+        public static int VipsImageWrite(global::NetVips.VipsImage image, out global::NetVips.VipsImage @out)
         {
             var __arg0 = ReferenceEquals(image, null) ? global::System.IntPtr.Zero : image.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsImageWrite(__arg0, __arg1);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -8034,19 +8041,33 @@ namespace NetVips
             }
         }
 
-        public static int VipsImageDecode(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out)
+        public static int VipsImageDecode(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsImageDecode(__arg0, __arg1);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsImageEncode(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsCoding coding)
+        public static int VipsImageEncode(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsCoding coding)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsImageEncode(__arg0, __arg1, coding);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -8829,11 +8850,18 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsCheckMatrix(string domain, global::NetVips.VipsImage im, global::NetVips.VipsImage @out)
+        public static int VipsCheckMatrix(string domain, global::NetVips.VipsImage im, out global::NetVips.VipsImage @out)
         {
             var __arg1 = ReferenceEquals(im, null) ? global::System.IntPtr.Zero : im.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCheckMatrix(domain, __arg1, __arg2);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -9182,10 +9210,17 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsFormatRead(string filename, global::NetVips.VipsImage @out)
+        public static int VipsFormatRead(string filename, out global::NetVips.VipsImage @out)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFormatRead(filename, __arg1);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -9857,13 +9892,20 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsSinkScreen(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, int tile_width, int tile_height, int max_tiles, int priority, global::NetVips.VipsSinkNotify notify_fn, global::System.IntPtr a)
+        public static int VipsSinkScreen(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, int tile_width, int tile_height, int max_tiles, int priority, global::NetVips.VipsSinkNotify notify_fn, global::System.IntPtr a)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __arg7 = notify_fn == null ? global::System.IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(notify_fn);
             var __ret = __Internal.VipsSinkScreen(__arg0, __arg1, __arg2, tile_width, tile_height, max_tiles, priority, __arg7, a);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -9874,10 +9916,17 @@ namespace NetVips
             return __ret;
         }
 
-        public static global::System.IntPtr VipsStartOne(global::NetVips.VipsImage @out, global::System.IntPtr a, global::System.IntPtr b)
+        public static global::System.IntPtr VipsStartOne(out global::NetVips.VipsImage @out, global::System.IntPtr a, global::System.IntPtr b)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsStartOne(__arg0, a, b);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
@@ -9887,10 +9936,17 @@ namespace NetVips
             return __ret;
         }
 
-        public static global::System.IntPtr VipsStartMany(global::NetVips.VipsImage @out, global::System.IntPtr a, global::System.IntPtr b)
+        public static global::System.IntPtr VipsStartMany(out global::NetVips.VipsImage @out, global::System.IntPtr a, global::System.IntPtr b)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsStartMany(__arg0, a, b);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
@@ -11435,11 +11491,18 @@ namespace NetVips
             __Internal.VipsImagePrintField(__arg0, field);
         }
 
-        public static int VipsImageGetImage(global::NetVips.VipsImage image, string name, global::NetVips.VipsImage @out)
+        public static int VipsImageGetImage(global::NetVips.VipsImage image, string name, out global::NetVips.VipsImage @out)
         {
             var __arg0 = ReferenceEquals(image, null) ? global::System.IntPtr.Zero : image.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsImageGetImage(__arg0, name, __arg2);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -13567,10 +13630,17 @@ namespace NetVips
             return Marshal.PtrToStringAnsi(__ret);
         }
 
-        public static int VipsVipsload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsVipsload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsVipsload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13581,24 +13651,45 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsOpenslideload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsOpenslideload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsOpenslideload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsJpegload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsJpegload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsJpegload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsJpegloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsJpegloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsJpegloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -13627,17 +13718,31 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsWebpload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsWebpload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsWebpload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsWebploadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsWebploadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsWebploadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -13666,17 +13771,31 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsTiffload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsTiffload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsTiffload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsTiffloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsTiffloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsTiffloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -13698,17 +13817,31 @@ namespace NetVips
             }
         }
 
-        public static int VipsOpenexrload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsOpenexrload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsOpenexrload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFitsload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFitsload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFitsload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13719,17 +13852,31 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsAnalyzeload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAnalyzeload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAnalyzeload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRawload(string filename, global::NetVips.VipsImage @out, int width, int height, int bands, string[] options = null)
+        public static int VipsRawload(string filename, out global::NetVips.VipsImage @out, int width, int height, int bands, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRawload(filename, __arg1, width, height, bands, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13747,10 +13894,17 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsCsvload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCsvload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCsvload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13761,10 +13915,17 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsMatrixload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMatrixload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMatrixload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13782,17 +13943,31 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsMagickload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMagickload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMagickload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMagickloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMagickloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMagickloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -13814,17 +13989,31 @@ namespace NetVips
             }
         }
 
-        public static int VipsPngload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPngload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPngload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPngloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPngloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPngloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -13846,10 +14035,17 @@ namespace NetVips
             }
         }
 
-        public static int VipsPpmload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPpmload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPpmload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13860,17 +14056,31 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsMatload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMatload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMatload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRadload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRadload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRadload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -13892,45 +14102,87 @@ namespace NetVips
             }
         }
 
-        public static int VipsPdfload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPdfload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPdfload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPdfloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPdfloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPdfloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSvgload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSvgload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSvgload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSvgloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSvgloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSvgloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGifload(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsGifload(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGifload(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGifloadBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsGifloadBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGifloadBuffer(buf, len, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -15067,53 +15319,89 @@ namespace NetVips
             internal static extern int VipsProfile(global::System.IntPtr @in, global::System.IntPtr columns, global::System.IntPtr rows, string[] options);
         }
 
-        public static int VipsAdd(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAdd(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAdd(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSum(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int n, string[] options = null)
+        public static int VipsSum(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSum(__arg0, __arg1, n, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSubtract(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSubtract(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(in1, null) ? global::System.IntPtr.Zero : in1.__Instance;
             var __arg1 = ReferenceEquals(in2, null) ? global::System.IntPtr.Zero : in2.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSubtract(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMultiply(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMultiply(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMultiply(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsDivide(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsDivide(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsDivide(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLinear(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double a, ref double b, int n, string[] options = null)
+        public static int VipsLinear(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double a, ref double b, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &a)
             {
@@ -15122,736 +15410,1302 @@ namespace NetVips
                 {
                     var __arg3 = __refParamPtr3;
                     var __ret = __Internal.VipsLinear(__arg0, __arg1, __arg2, __arg3, n, options);
+                    global::NetVips.VipsImage __result0;
+                    if (__arg1 == IntPtr.Zero) __result0 = null;
+                    else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                        __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                    else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                    @out = __result0;
                     return __ret;
                 }
             }
         }
 
-        public static int VipsLinear1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double a, double b, string[] options = null)
+        public static int VipsLinear1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double a, double b, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLinear1(__arg0, __arg1, a, b, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRemainder(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRemainder(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRemainder(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRemainderConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsRemainderConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsRemainderConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsRemainderConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsRemainderConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRemainderConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsInvert(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsInvert(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsInvert(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAbs(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAbs(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAbs(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSign(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSign(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSign(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRound(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationRound round, string[] options = null)
+        public static int VipsRound(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationRound round, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRound(__arg0, __arg1, round, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFloor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFloor(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFloor(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCeil(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCeil(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCeil(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRint(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRint(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRint(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMath(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath math, string[] options = null)
+        public static int VipsMath(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath math, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMath(__arg0, __arg1, math, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSin(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSin(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSin(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCos(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCos(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCos(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsTan(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsTan(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsTan(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAsin(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAsin(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAsin(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAcos(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAcos(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAcos(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAtan(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAtan(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAtan(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsExp(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsExp(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsExp(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsExp10(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsExp10(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsExp10(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLog(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLog(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLog(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLog10(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLog10(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLog10(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsComplex(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationComplex cmplx, string[] options = null)
+        public static int VipsComplex(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationComplex cmplx, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsComplex(__arg0, __arg1, cmplx, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPolar(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPolar(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPolar(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRect(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRect(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRect(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsConj(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsConj(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsConj(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsComplex2(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, global::NetVips.VipsOperationComplex2 cmplx, string[] options = null)
+        public static int VipsComplex2(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationComplex2 cmplx, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsComplex2(__arg0, __arg1, __arg2, cmplx, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCrossPhase(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCrossPhase(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCrossPhase(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsComplexget(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationComplexget get, string[] options = null)
+        public static int VipsComplexget(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationComplexget get, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsComplexget(__arg0, __arg1, get, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsReal(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsReal(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsReal(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsImag(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsImag(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsImag(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsComplexform(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsComplexform(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsComplexform(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRelational(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, global::NetVips.VipsOperationRelational relational, string[] options = null)
+        public static int VipsRelational(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationRelational relational, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRelational(__arg0, __arg1, __arg2, relational, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsEqual(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsEqual(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsEqual(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsNotequal(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsNotequal(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsNotequal(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLess(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLess(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLess(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLesseq(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLesseq(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLesseq(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMore(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMore(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMore(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMoreeq(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMoreeq(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMoreeq(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRelationalConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationRelational relational, ref double c, int n, string[] options = null)
+        public static int VipsRelationalConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationRelational relational, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr3 = &c)
             {
                 var __arg3 = __refParamPtr3;
                 var __ret = __Internal.VipsRelationalConst(__arg0, __arg1, relational, __arg3, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsEqualConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsEqualConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsEqualConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsNotequalConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsNotequalConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsNotequalConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsLessConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsLessConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsLessConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsLesseqConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsLesseqConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsLesseqConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsMoreConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsMoreConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsMoreConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsMoreeqConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsMoreeqConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsMoreeqConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsRelationalConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationRelational relational, double c, string[] options = null)
+        public static int VipsRelationalConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationRelational relational, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRelationalConst1(__arg0, __arg1, relational, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsEqualConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsEqualConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsEqualConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsNotequalConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsNotequalConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsNotequalConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLessConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsLessConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLessConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLesseqConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsLesseqConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLesseqConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMoreConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsMoreConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMoreConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMoreeqConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsMoreeqConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMoreeqConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBoolean(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, string[] options = null)
+        public static int VipsBoolean(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBoolean(__arg0, __arg1, __arg2, boolean, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAndimage(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAndimage(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAndimage(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsOrimage(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsOrimage(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsOrimage(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsEorimage(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsEorimage(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsEorimage(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLshift(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLshift(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLshift(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRshift(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRshift(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRshift(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBooleanConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, ref double c, int n, string[] options = null)
+        public static int VipsBooleanConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr3 = &c)
             {
                 var __arg3 = __refParamPtr3;
                 var __ret = __Internal.VipsBooleanConst(__arg0, __arg1, boolean, __arg3, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsAndimageConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsAndimageConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsAndimageConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsOrimageConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsOrimageConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsOrimageConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsEorimageConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsEorimageConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsEorimageConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsLshiftConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsLshiftConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsLshiftConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsRshiftConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsRshiftConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsRshiftConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsBooleanConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, double c, string[] options = null)
+        public static int VipsBooleanConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBooleanConst1(__arg0, __arg1, boolean, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAndimageConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsAndimageConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAndimageConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsOrimageConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsOrimageConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsOrimageConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsEorimageConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsEorimageConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsEorimageConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLshiftConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsLshiftConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLshiftConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRshiftConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsRshiftConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRshiftConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMath2(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath2 math2, string[] options = null)
+        public static int VipsMath2(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath2 math2, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMath2(__arg0, __arg1, __arg2, math2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPow(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPow(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPow(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsWop(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsWop(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsWop(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMath2Const(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath2 math2, ref double c, int n, string[] options = null)
+        public static int VipsMath2Const(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath2 math2, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr3 = &c)
             {
                 var __arg3 = __refParamPtr3;
                 var __ret = __Internal.VipsMath2Const(__arg0, __arg1, math2, __arg3, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsPowConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsPowConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsPowConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsWopConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsWopConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsWopConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsMath2Const1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath2 math2, double c, string[] options = null)
+        public static int VipsMath2Const1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationMath2 math2, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMath2Const1(__arg0, __arg1, math2, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPowConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsPowConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPowConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsWopConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsWopConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsWopConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -15899,19 +16753,33 @@ namespace NetVips
             }
         }
 
-        public static int VipsStats(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsStats(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsStats(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMeasure(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int h, int v, string[] options = null)
+        public static int VipsMeasure(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int h, int v, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMeasure(__arg0, __arg1, h, v, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -15949,44 +16817,79 @@ namespace NetVips
             }
         }
 
-        public static int VipsHistFind(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistFind(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistFind(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistFindNdim(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistFindNdim(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistFindNdim(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistFindIndexed(global::NetVips.VipsImage @in, global::NetVips.VipsImage index, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistFindIndexed(global::NetVips.VipsImage @in, global::NetVips.VipsImage index, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
             var __arg1 = ReferenceEquals(index, null) ? global::System.IntPtr.Zero : index.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistFindIndexed(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHoughLine(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHoughLine(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHoughLine(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHoughCircle(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHoughCircle(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHoughCircle(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -16440,197 +17343,365 @@ namespace NetVips
             internal static extern int VipsGamma(global::System.IntPtr @in, global::System.IntPtr @out, string[] options);
         }
 
-        public static int VipsCopy(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCopy(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCopy(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsTilecache(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsTilecache(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsTilecache(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLinecache(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLinecache(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLinecache(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSequential(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSequential(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSequential(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCache(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCache(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCache(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCopyFile(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCopyFile(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCopyFile(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsEmbed(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int x, int y, int width, int height, string[] options = null)
+        public static int VipsEmbed(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int x, int y, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsEmbed(__arg0, __arg1, x, y, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGravity(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsCompassDirection direction, int width, int height, string[] options = null)
+        public static int VipsGravity(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsCompassDirection direction, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGravity(__arg0, __arg1, direction, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFlip(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, string[] options = null)
+        public static int VipsFlip(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFlip(__arg0, __arg1, direction, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsInsert(global::NetVips.VipsImage main, global::NetVips.VipsImage sub, global::NetVips.VipsImage @out, int x, int y, string[] options = null)
+        public static int VipsInsert(global::NetVips.VipsImage main, global::NetVips.VipsImage sub, out global::NetVips.VipsImage @out, int x, int y, string[] options = null)
         {
             var __arg0 = ReferenceEquals(main, null) ? global::System.IntPtr.Zero : main.__Instance;
             var __arg1 = ReferenceEquals(sub, null) ? global::System.IntPtr.Zero : sub.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsInsert(__arg0, __arg1, __arg2, x, y, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsJoin(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, string[] options = null)
+        public static int VipsJoin(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, out global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, string[] options = null)
         {
             var __arg0 = ReferenceEquals(in1, null) ? global::System.IntPtr.Zero : in1.__Instance;
             var __arg1 = ReferenceEquals(in2, null) ? global::System.IntPtr.Zero : in2.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsJoin(__arg0, __arg1, __arg2, direction, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsArrayjoin(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int n, string[] options = null)
+        public static int VipsArrayjoin(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsArrayjoin(__arg0, __arg1, n, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsExtractArea(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int left, int top, int width, int height, string[] options = null)
+        public static int VipsExtractArea(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int left, int top, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsExtractArea(__arg0, __arg1, left, top, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCrop(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int left, int top, int width, int height, string[] options = null)
+        public static int VipsCrop(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int left, int top, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCrop(__arg0, __arg1, left, top, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSmartcrop(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsSmartcrop(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSmartcrop(__arg0, __arg1, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsExtractBand(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int band, string[] options = null)
+        public static int VipsExtractBand(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int band, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsExtractBand(__arg0, __arg1, band, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsReplicate(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int across, int down, string[] options = null)
+        public static int VipsReplicate(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int across, int down, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsReplicate(__arg0, __arg1, across, down, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGrid(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int tile_height, int across, int down, string[] options = null)
+        public static int VipsGrid(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int tile_height, int across, int down, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGrid(__arg0, __arg1, tile_height, across, down, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsWrap(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsWrap(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsWrap(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRot(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsAngle angle, string[] options = null)
+        public static int VipsRot(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsAngle angle, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRot(__arg0, __arg1, angle, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRot90(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRot90(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRot90(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRot180(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRot180(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRot180(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRot270(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRot270(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRot270(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRot45(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRot45(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRot45(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -16647,328 +17718,601 @@ namespace NetVips
             __Internal.VipsAutorotRemoveAngle(__arg0);
         }
 
-        public static int VipsAutorot(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAutorot(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAutorot(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsZoom(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int xfac, int yfac, string[] options = null)
+        public static int VipsZoom(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int xfac, int yfac, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsZoom(__arg0, __arg1, xfac, yfac, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSubsample(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int xfac, int yfac, string[] options = null)
+        public static int VipsSubsample(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int xfac, int yfac, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSubsample(__arg0, __arg1, xfac, yfac, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCast(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsBandFormat format, string[] options = null)
+        public static int VipsCast(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsBandFormat format, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCast(__arg0, __arg1, format, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastUchar(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastUchar(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastUchar(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastChar(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastChar(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastChar(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastUshort(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastUshort(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastUshort(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastShort(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastShort(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastShort(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastUint(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastUint(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastUint(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastInt(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastInt(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastInt(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastFloat(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastFloat(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastFloat(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastDouble(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastDouble(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastDouble(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastComplex(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastComplex(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastComplex(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCastDpcomplex(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCastDpcomplex(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCastDpcomplex(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsScale(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsScale(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsScale(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMsb(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsMsb(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMsb(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsByteswap(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsByteswap(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsByteswap(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandjoin(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int n, string[] options = null)
+        public static int VipsBandjoin(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandjoin(__arg0, __arg1, n, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandjoin2(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandjoin2(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(in1, null) ? global::System.IntPtr.Zero : in1.__Instance;
             var __arg1 = ReferenceEquals(in2, null) ? global::System.IntPtr.Zero : in2.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandjoin2(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandjoinConst(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
+        public static int VipsBandjoinConst(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, ref double c, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (double* __refParamPtr2 = &c)
             {
                 var __arg2 = __refParamPtr2;
                 var __ret = __Internal.VipsBandjoinConst(__arg0, __arg1, __arg2, n, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsBandjoinConst1(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double c, string[] options = null)
+        public static int VipsBandjoinConst1(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double c, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandjoinConst1(__arg0, __arg1, c, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandrank(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int n, string[] options = null)
+        public static int VipsBandrank(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int n, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandrank(__arg0, __arg1, n, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandfold(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandfold(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandfold(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandunfold(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandunfold(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandunfold(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandbool(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, string[] options = null)
+        public static int VipsBandbool(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsOperationBoolean boolean, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandbool(__arg0, __arg1, boolean, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandand(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandand(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandand(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandor(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandor(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandeor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandeor(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandeor(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBandmean(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBandmean(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBandmean(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRecomb(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage m, string[] options = null)
+        public static int VipsRecomb(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage m, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(m, null) ? global::System.IntPtr.Zero : m.__Instance;
             var __ret = __Internal.VipsRecomb(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsIfthenelse(global::NetVips.VipsImage cond, global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsIfthenelse(global::NetVips.VipsImage cond, global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(cond, null) ? global::System.IntPtr.Zero : cond.__Instance;
             var __arg1 = ReferenceEquals(in1, null) ? global::System.IntPtr.Zero : in1.__Instance;
             var __arg2 = ReferenceEquals(in2, null) ? global::System.IntPtr.Zero : in2.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg3 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsIfthenelse(__arg0, __arg1, __arg2, __arg3, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg3 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg3))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg3];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg3);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFlatten(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFlatten(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFlatten(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAddalpha(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsAddalpha(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAddalpha(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPremultiply(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPremultiply(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPremultiply(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsUnpremultiply(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsUnpremultiply(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsUnpremultiply(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsComposite(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int n, ref int mode, string[] options = null)
+        public static int VipsComposite(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int n, ref int mode, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             fixed (int* __refParamPtr3 = &mode)
             {
                 var __arg3 = __refParamPtr3;
                 var __ret = __Internal.VipsComposite(__arg0, __arg1, n, __arg3, options);
+                global::NetVips.VipsImage __result0;
+                if (__arg1 == IntPtr.Zero) __result0 = null;
+                else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                    __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+                else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+                @out = __result0;
                 return __ret;
             }
         }
 
-        public static int VipsComposite2(global::NetVips.VipsImage @base, global::NetVips.VipsImage overlay, global::NetVips.VipsImage @out, global::NetVips.VipsBlendMode mode1, string[] options = null)
+        public static int VipsComposite2(global::NetVips.VipsImage @base, global::NetVips.VipsImage overlay, out global::NetVips.VipsImage @out, global::NetVips.VipsBlendMode mode1, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@base, null) ? global::System.IntPtr.Zero : @base.__Instance;
             var __arg1 = ReferenceEquals(overlay, null) ? global::System.IntPtr.Zero : overlay.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsComposite2(__arg0, __arg1, __arg2, mode1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFalsecolour(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFalsecolour(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFalsecolour(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGamma(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsGamma(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGamma(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
     }
@@ -17041,100 +18385,177 @@ namespace NetVips
             internal static extern int VipsFastcor(global::System.IntPtr @in, global::System.IntPtr @ref, global::System.IntPtr @out, string[] options);
         }
 
-        public static int VipsConv(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsConv(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsConv(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsConvf(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsConvf(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsConvf(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsConvi(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsConvi(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsConvi(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsConva(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsConva(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsConva(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsConvsep(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsConvsep(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsConvsep(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsConvasep(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsConvasep(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsConvasep(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCompass(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
+        public static int VipsCompass(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsCompass(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGaussblur(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double sigma, string[] options = null)
+        public static int VipsGaussblur(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double sigma, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGaussblur(__arg0, __arg1, sigma, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSharpen(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSharpen(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSharpen(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSpcor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @ref, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSpcor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @ref, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
             var __arg1 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSpcor(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFastcor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @ref, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFastcor(global::NetVips.VipsImage @in, global::NetVips.VipsImage @ref, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
             var __arg1 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFastcor(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
     }
@@ -17181,28 +18602,49 @@ namespace NetVips
             internal static extern int VipsFillNearest(global::System.IntPtr @in, global::System.IntPtr @out, string[] options);
         }
 
-        public static int VipsMorph(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, global::NetVips.VipsOperationMorphology morph, string[] options = null)
+        public static int VipsMorph(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage mask, global::NetVips.VipsOperationMorphology morph, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
             var __ret = __Internal.VipsMorph(__arg0, __arg1, __arg2, morph, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRank(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int width, int height, int index, string[] options = null)
+        public static int VipsRank(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int width, int height, int index, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRank(__arg0, __arg1, width, height, index, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMedian(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int size, string[] options = null)
+        public static int VipsMedian(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int size, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMedian(__arg0, __arg1, size, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -17225,11 +18667,18 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsFillNearest(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFillNearest(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFillNearest(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
     }
@@ -17269,55 +18718,97 @@ namespace NetVips
             internal static extern int VipsRemosaic(global::System.IntPtr @in, global::System.IntPtr @out, [MarshalAs(UnmanagedType.LPStr)] string old_str, [MarshalAs(UnmanagedType.LPStr)] string new_str, string[] options);
         }
 
-        public static int VipsMerge(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, int dx, int dy, string[] options = null)
+        public static int VipsMerge(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, out global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, int dx, int dy, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
             var __arg1 = ReferenceEquals(sec, null) ? global::System.IntPtr.Zero : sec.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMerge(__arg0, __arg1, __arg2, direction, dx, dy, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMosaic(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, int xref, int yref, int xsec, int ysec, string[] options = null)
+        public static int VipsMosaic(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, out global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, int xref, int yref, int xsec, int ysec, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
             var __arg1 = ReferenceEquals(sec, null) ? global::System.IntPtr.Zero : sec.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMosaic(__arg0, __arg1, __arg2, direction, xref, yref, xsec, ysec, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMosaic1(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, string[] options = null)
+        public static int VipsMosaic1(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, out global::NetVips.VipsImage @out, global::NetVips.VipsDirection direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
             var __arg1 = ReferenceEquals(sec, null) ? global::System.IntPtr.Zero : sec.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMosaic1(__arg0, __arg1, __arg2, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMatch(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, global::NetVips.VipsImage @out, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, string[] options = null)
+        public static int VipsMatch(global::NetVips.VipsImage @ref, global::NetVips.VipsImage sec, out global::NetVips.VipsImage @out, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
             var __arg1 = ReferenceEquals(sec, null) ? global::System.IntPtr.Zero : sec.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMatch(__arg0, __arg1, __arg2, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGlobalbalance(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsGlobalbalance(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGlobalbalance(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRemosaic(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string old_str, string new_str, string[] options = null)
+        public static int VipsRemosaic(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string old_str, string new_str, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRemosaic(__arg0, __arg1, old_str, new_str, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
     }
@@ -17382,12 +18873,19 @@ namespace NetVips
             internal static extern int VipsHistEntropy(global::System.IntPtr @in, double* @out, string[] options);
         }
 
-        public static int VipsMaplut(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage lut, string[] options = null)
+        public static int VipsMaplut(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage lut, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(lut, null) ? global::System.IntPtr.Zero : lut.__Instance;
             var __ret = __Internal.VipsMaplut(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -17402,60 +18900,109 @@ namespace NetVips
             }
         }
 
-        public static int VipsStdif(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsStdif(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsStdif(__arg0, __arg1, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistCum(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistCum(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistCum(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistNorm(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistNorm(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistNorm(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistEqual(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistEqual(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistEqual(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistPlot(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistPlot(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistPlot(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistMatch(global::NetVips.VipsImage @in, global::NetVips.VipsImage @ref, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHistMatch(global::NetVips.VipsImage @in, global::NetVips.VipsImage @ref, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
             var __arg1 = ReferenceEquals(@ref, null) ? global::System.IntPtr.Zero : @ref.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistMatch(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHistLocal(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsHistLocal(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHistLocal(__arg0, __arg1, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -17512,45 +19059,80 @@ namespace NetVips
             internal static extern int VipsPhasecor(global::System.IntPtr in1, global::System.IntPtr in2, global::System.IntPtr @out, string[] options);
         }
 
-        public static int VipsFwfft(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFwfft(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFwfft(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsInvfft(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsInvfft(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsInvfft(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFreqmult(global::NetVips.VipsImage @in, global::NetVips.VipsImage mask, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFreqmult(global::NetVips.VipsImage @in, global::NetVips.VipsImage mask, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
             var __arg1 = ReferenceEquals(mask, null) ? global::System.IntPtr.Zero : mask.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFreqmult(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSpectrum(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSpectrum(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSpectrum(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPhasecor(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsPhasecor(global::NetVips.VipsImage in1, global::NetVips.VipsImage in2, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(in1, null) ? global::System.IntPtr.Zero : in1.__Instance;
             var __arg1 = ReferenceEquals(in2, null) ? global::System.IntPtr.Zero : in2.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPhasecor(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
     }
@@ -17649,115 +19231,213 @@ namespace NetVips
             internal static extern int VipsQuadratic(global::System.IntPtr @in, global::System.IntPtr @out, global::System.IntPtr coeff, string[] options);
         }
 
-        public static int VipsShrink(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double hshrink, double vshrink, string[] options = null)
+        public static int VipsShrink(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double hshrink, double vshrink, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsShrink(__arg0, __arg1, hshrink, vshrink, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsShrinkh(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int hshrink, string[] options = null)
+        public static int VipsShrinkh(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int hshrink, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsShrinkh(__arg0, __arg1, hshrink, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsShrinkv(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int vshrink, string[] options = null)
+        public static int VipsShrinkv(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int vshrink, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsShrinkv(__arg0, __arg1, vshrink, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsReduce(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double hshrink, double vshrink, string[] options = null)
+        public static int VipsReduce(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double hshrink, double vshrink, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsReduce(__arg0, __arg1, hshrink, vshrink, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsReduceh(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double hshrink, string[] options = null)
+        public static int VipsReduceh(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double hshrink, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsReduceh(__arg0, __arg1, hshrink, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsReducev(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double vshrink, string[] options = null)
+        public static int VipsReducev(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double vshrink, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsReducev(__arg0, __arg1, vshrink, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsThumbnail(string filename, global::NetVips.VipsImage @out, int width, string[] options = null)
+        public static int VipsThumbnail(string filename, out global::NetVips.VipsImage @out, int width, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsThumbnail(filename, __arg1, width, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsThumbnailBuffer(global::System.IntPtr buf, ulong len, global::NetVips.VipsImage @out, int width, string[] options = null)
+        public static int VipsThumbnailBuffer(global::System.IntPtr buf, ulong len, out global::NetVips.VipsImage @out, int width, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsThumbnailBuffer(buf, len, __arg2, width, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsThumbnailImage(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int width, string[] options = null)
+        public static int VipsThumbnailImage(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int width, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsThumbnailImage(__arg0, __arg1, width, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSimilarity(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSimilarity(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSimilarity(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsAffine(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double a, double b, double c, double d, string[] options = null)
+        public static int VipsAffine(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double a, double b, double c, double d, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsAffine(__arg0, __arg1, a, b, c, d, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsResize(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, double scale, string[] options = null)
+        public static int VipsResize(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, double scale, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsResize(__arg0, __arg1, scale, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMapim(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage index, string[] options = null)
+        public static int VipsMapim(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage index, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(index, null) ? global::System.IntPtr.Zero : index.__Instance;
             var __ret = __Internal.VipsMapim(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsQuadratic(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsImage coeff, string[] options = null)
+        public static int VipsQuadratic(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsImage coeff, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __arg2 = ReferenceEquals(coeff, null) ? global::System.IntPtr.Zero : coeff.__Instance;
             var __ret = __Internal.VipsQuadratic(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
     }
@@ -18090,219 +19770,408 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsColourspace(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, global::NetVips.VipsInterpretation space, string[] options = null)
+        public static int VipsColourspace(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, global::NetVips.VipsInterpretation space, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsColourspace(__arg0, __arg1, space, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLabQ2sRGB(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLabQ2sRGB(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLabQ2sRGB(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsRad2float(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsRad2float(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsRad2float(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFloat2rad(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsFloat2rad(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFloat2rad(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLabS2LabQ(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLabS2LabQ(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLabS2LabQ(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLabQ2LabS(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLabQ2LabS(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLabQ2LabS(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLabQ2Lab(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLabQ2Lab(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLabQ2Lab(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLab2LabQ(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLab2LabQ(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLab2LabQ(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLCh2Lab(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLCh2Lab(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLCh2Lab(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLab2LCh(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLab2LCh(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLab2LCh(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsYxy2Lab(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsYxy2Lab(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsYxy2Lab(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCMC2XYZ(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCMC2XYZ(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCMC2XYZ(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLab2XYZ(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLab2XYZ(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLab2XYZ(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsXYZ2Lab(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsXYZ2Lab(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsXYZ2Lab(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsXYZ2scRGB(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsXYZ2scRGB(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsXYZ2scRGB(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsScRGB2sRGB(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsScRGB2sRGB(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsScRGB2sRGB(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsScRGB2BW(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsScRGB2BW(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsScRGB2BW(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSRGB2scRGB(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSRGB2scRGB(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSRGB2scRGB(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsScRGB2XYZ(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsScRGB2XYZ(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsScRGB2XYZ(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsHSV2sRGB(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsHSV2sRGB(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsHSV2sRGB(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSRGB2HSV(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsSRGB2HSV(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSRGB2HSV(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLCh2CMC(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLCh2CMC(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLCh2CMC(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsCMC2LCh(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsCMC2LCh(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsCMC2LCh(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsXYZ2Yxy(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsXYZ2Yxy(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsXYZ2Yxy(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsYxy2XYZ(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsYxy2XYZ(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsYxy2XYZ(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLabS2Lab(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLabS2Lab(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLabS2Lab(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLab2LabS(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsLab2LabS(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLab2LabS(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
@@ -18312,62 +20181,111 @@ namespace NetVips
             return __ret;
         }
 
-        public static int VipsIccTransform(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string output_profile, string[] options = null)
+        public static int VipsIccTransform(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string output_profile, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsIccTransform(__arg0, __arg1, output_profile, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsIccImport(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsIccImport(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsIccImport(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsIccExport(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsIccExport(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsIccExport(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsIccAc2rc(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string profile_filename)
+        public static int VipsIccAc2rc(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string profile_filename)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsIccAc2rc(__arg0, __arg1, profile_filename);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsDE76(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsDE76(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsDE76(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsDE00(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsDE00(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsDE00(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsDECMC(global::NetVips.VipsImage left, global::NetVips.VipsImage right, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsDECMC(global::NetVips.VipsImage left, global::NetVips.VipsImage right, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(left, null) ? global::System.IntPtr.Zero : left.__Instance;
             var __arg1 = ReferenceEquals(right, null) ? global::System.IntPtr.Zero : right.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg2 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsDECMC(__arg0, __arg1, __arg2, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg2 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg2))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg2];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg2);
+            @out = __result0;
             return __ret;
         }
 
@@ -19019,194 +20937,383 @@ namespace NetVips
             internal static extern int VipsPerlin(global::System.IntPtr @out, int width, int height, string[] options);
         }
 
-        public static int VipsBlack(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsBlack(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBlack(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsXyz(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsXyz(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsXyz(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGrey(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsGrey(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGrey(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGaussmat(global::NetVips.VipsImage @out, double sigma, double min_ampl, string[] options = null)
+        public static int VipsGaussmat(out global::NetVips.VipsImage @out, double sigma, double min_ampl, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGaussmat(__arg0, sigma, min_ampl, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsLogmat(global::NetVips.VipsImage @out, double sigma, double min_ampl, string[] options = null)
+        public static int VipsLogmat(out global::NetVips.VipsImage @out, double sigma, double min_ampl, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsLogmat(__arg0, sigma, min_ampl, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsText(global::NetVips.VipsImage @out, string text, string[] options = null)
+        public static int VipsText(out global::NetVips.VipsImage @out, string text, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsText(__arg0, text, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsGaussnoise(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsGaussnoise(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGaussnoise(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsEye(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsEye(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsEye(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsSines(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsSines(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsSines(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsZone(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsZone(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsZone(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsIdentity(global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsIdentity(out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsIdentity(__arg0, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsBuildlut(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsBuildlut(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsBuildlut(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsInvertlut(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsInvertlut(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsInvertlut(__arg0, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsTonelut(global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsTonelut(out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsTonelut(__arg0, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskIdeal(global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, string[] options = null)
+        public static int VipsMaskIdeal(out global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskIdeal(__arg0, width, height, frequency_cutoff, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskIdealRing(global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, double ringwidth, string[] options = null)
+        public static int VipsMaskIdealRing(out global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, double ringwidth, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskIdealRing(__arg0, width, height, frequency_cutoff, ringwidth, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskIdealBand(global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff_x, double frequency_cutoff_y, double radius, string[] options = null)
+        public static int VipsMaskIdealBand(out global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff_x, double frequency_cutoff_y, double radius, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskIdealBand(__arg0, width, height, frequency_cutoff_x, frequency_cutoff_y, radius, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskButterworth(global::NetVips.VipsImage @out, int width, int height, double order, double frequency_cutoff, double amplitude_cutoff, string[] options = null)
+        public static int VipsMaskButterworth(out global::NetVips.VipsImage @out, int width, int height, double order, double frequency_cutoff, double amplitude_cutoff, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskButterworth(__arg0, width, height, order, frequency_cutoff, amplitude_cutoff, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskButterworthRing(global::NetVips.VipsImage @out, int width, int height, double order, double frequency_cutoff, double amplitude_cutoff, double ringwidth, string[] options = null)
+        public static int VipsMaskButterworthRing(out global::NetVips.VipsImage @out, int width, int height, double order, double frequency_cutoff, double amplitude_cutoff, double ringwidth, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskButterworthRing(__arg0, width, height, order, frequency_cutoff, amplitude_cutoff, ringwidth, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskButterworthBand(global::NetVips.VipsImage @out, int width, int height, double order, double frequency_cutoff_x, double frequency_cutoff_y, double radius, double amplitude_cutoff, string[] options = null)
+        public static int VipsMaskButterworthBand(out global::NetVips.VipsImage @out, int width, int height, double order, double frequency_cutoff_x, double frequency_cutoff_y, double radius, double amplitude_cutoff, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskButterworthBand(__arg0, width, height, order, frequency_cutoff_x, frequency_cutoff_y, radius, amplitude_cutoff, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskGaussian(global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, double amplitude_cutoff, string[] options = null)
+        public static int VipsMaskGaussian(out global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, double amplitude_cutoff, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskGaussian(__arg0, width, height, frequency_cutoff, amplitude_cutoff, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskGaussianRing(global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, double amplitude_cutoff, double ringwidth, string[] options = null)
+        public static int VipsMaskGaussianRing(out global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff, double amplitude_cutoff, double ringwidth, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskGaussianRing(__arg0, width, height, frequency_cutoff, amplitude_cutoff, ringwidth, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskGaussianBand(global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff_x, double frequency_cutoff_y, double radius, double amplitude_cutoff, string[] options = null)
+        public static int VipsMaskGaussianBand(out global::NetVips.VipsImage @out, int width, int height, double frequency_cutoff_x, double frequency_cutoff_y, double radius, double amplitude_cutoff, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskGaussianBand(__arg0, width, height, frequency_cutoff_x, frequency_cutoff_y, radius, amplitude_cutoff, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsMaskFractal(global::NetVips.VipsImage @out, int width, int height, double fractal_dimension, string[] options = null)
+        public static int VipsMaskFractal(out global::NetVips.VipsImage @out, int width, int height, double fractal_dimension, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsMaskFractal(__arg0, width, height, fractal_dimension, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsFractsurf(global::NetVips.VipsImage @out, int width, int height, double fractal_dimension, string[] options = null)
+        public static int VipsFractsurf(out global::NetVips.VipsImage @out, int width, int height, double fractal_dimension, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsFractsurf(__arg0, width, height, fractal_dimension, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsWorley(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsWorley(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsWorley(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
 
-        public static int VipsPerlin(global::NetVips.VipsImage @out, int width, int height, string[] options = null)
+        public static int VipsPerlin(out global::NetVips.VipsImage @out, int width, int height, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg0 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsPerlin(__arg0, width, height, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg0 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg0))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg0];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg0);
+            @out = __result0;
             return __ret;
         }
     }
@@ -19221,11 +21328,18 @@ namespace NetVips
             internal static extern int VipsGmic(global::System.IntPtr @in, global::System.IntPtr @out, int n, int padding, double x_scale, double y_scale, [MarshalAs(UnmanagedType.LPStr)] string command, string[] options);
         }
 
-        public static int VipsGmic(global::NetVips.VipsImage @in, global::NetVips.VipsImage @out, int n, int padding, double x_scale, double y_scale, string command, string[] options = null)
+        public static int VipsGmic(global::NetVips.VipsImage @in, out global::NetVips.VipsImage @out, int n, int padding, double x_scale, double y_scale, string command, string[] options = null)
         {
             var __arg0 = ReferenceEquals(@in, null) ? global::System.IntPtr.Zero : @in.__Instance;
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsGmic(__arg0, __arg1, n, padding, x_scale, y_scale, command, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
     }
@@ -19307,10 +21421,17 @@ namespace NetVips
             return __result0;
         }
 
-        public static int VipsForeignLoad(string filename, global::NetVips.VipsImage @out, string[] options = null)
+        public static int VipsForeignLoad(string filename, out global::NetVips.VipsImage @out, string[] options = null)
         {
+            @out = new global::NetVips.VipsImage();
             var __arg1 = ReferenceEquals(@out, null) ? global::System.IntPtr.Zero : @out.__Instance;
             var __ret = __Internal.VipsForeignLoad(filename, __arg1, options);
+            global::NetVips.VipsImage __result0;
+            if (__arg1 == IntPtr.Zero) __result0 = null;
+            else if (global::NetVips.VipsImage.NativeToManagedMap.ContainsKey(__arg1))
+                __result0 = (global::NetVips.VipsImage) global::NetVips.VipsImage.NativeToManagedMap[__arg1];
+            else __result0 = global::NetVips.VipsImage.__CreateInstance(__arg1);
+            @out = __result0;
             return __ret;
         }
 

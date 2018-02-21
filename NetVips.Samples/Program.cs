@@ -3,6 +3,7 @@ using System;
 using static NetVips.vips;
 using static NetVips.header;
 using static NetVips.image;
+using static NetVips.resample;
 
 namespace NetVips_Sample
 {
@@ -40,6 +41,21 @@ namespace NetVips_Sample
 
             Console.WriteLine("Test write image");
             VipsImageWriteToFile(image, "lichtenstein2.jpg");
+
+            // TODO: Fix thumbnailing.
+            /*
+            Console.WriteLine();
+            Console.WriteLine("Test thumbnail");
+
+            // Doesn't work
+            // VipsThumbnail("lichtenstein.jpg", out var thumbImage, 200);
+
+            VipsThumbnailImage(image, out var thumbImage, 200);
+            Console.WriteLine("Image.Bands = " + thumbImage.Bands);
+            Console.WriteLine("Image.Width = " + VipsImageGetWidth(thumbImage)); // TODO: Fix image.Width
+            Console.WriteLine("Image.Height = " + VipsImageGetHeight(thumbImage)); // TODO: Fix image.Height
+            VipsImageWriteToFile(thumbImage, "lichtenstein_thumb.jpg"); 
+            */
 
             VipsShutdown();
 

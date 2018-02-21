@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using NetVips.Passes;
 
 namespace NetVips
 {
@@ -57,6 +58,8 @@ namespace NetVips
         public void SetupPasses(Driver driver)
         {
             driver.AddTranslationUnitPass(new IgnoreNonVipsDeclsPass());
+            driver.AddTranslationUnitPass(new FixParameterUsageFromName());
+            driver.AddTranslationUnitPass(new AddOptionsParamForVariadicFuncs());
         }
 
         /// <summary>
