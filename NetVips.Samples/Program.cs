@@ -3,7 +3,6 @@ using System;
 using static NetVips.vips;
 using static NetVips.header;
 using static NetVips.image;
-using static NetVips.resample;
 
 namespace NetVips_Sample
 {
@@ -22,10 +21,10 @@ namespace NetVips_Sample
                 return;
             }
 
-            Console.WriteLine("libvips " + VipsVersionString());
+            Console.WriteLine("libvips " + VipsVersion(0) + "." + VipsVersion(1) + "." + VipsVersion(2));
             Console.WriteLine("Test load image");
 
-            VipsImage image = VipsImageNewFromFile("lichtenstein.jpg");
+            /*VipsImage image = VipsImageNewFromFile("lichtenstein.jpg");
 
             if (image == null)
             {
@@ -43,7 +42,6 @@ namespace NetVips_Sample
             VipsImageWriteToFile(image, "lichtenstein2.jpg");
 
             // TODO: Fix thumbnailing.
-            /*
             Console.WriteLine();
             Console.WriteLine("Test thumbnail");
 
@@ -54,10 +52,7 @@ namespace NetVips_Sample
             Console.WriteLine("Image.Bands = " + thumbImage.Bands);
             Console.WriteLine("Image.Width = " + VipsImageGetWidth(thumbImage)); // TODO: Fix image.Width
             Console.WriteLine("Image.Height = " + VipsImageGetHeight(thumbImage)); // TODO: Fix image.Height
-            VipsImageWriteToFile(thumbImage, "lichtenstein_thumb.jpg"); 
-            */
-
-            VipsShutdown();
+            VipsImageWriteToFile(thumbImage, "lichtenstein_thumb.jpg"); */
 
             Console.WriteLine("Press enter to continue...");
             Console.ReadLine();

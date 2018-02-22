@@ -3,8 +3,8 @@ using CppSharp.AST;
 using CppSharp.Generators;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
+using CppSharp.Parser;
 using NetVips.Passes;
 
 namespace NetVips
@@ -25,12 +25,17 @@ namespace NetVips
         /// <param name="driver"></param>
         public void Setup(Driver driver)
         {
+            ParserOptions parserOptions = driver.ParserOptions;
+            parserOptions.AddIncludeDirs(Path.Combine(vipsInfo.VipsPath, "include"));
+            parserOptions.AddIncludeDirs(Path.Combine(vipsInfo.VipsPath, "include", "glib-2.0"));
+            parserOptions.AddIncludeDirs(Path.Combine(vipsInfo.VipsPath, "lib", "glib-2.0", "include"));
+
             DriverOptions options = driver.Options;
             options.GeneratorKind = GeneratorKind.CSharp;
             options.CompileCode = true;
             options.StripLibPrefix = false;
             options.GenerateSingleCSharpFile = true;
-            options.MarshalCharAsManagedChar = false;
+            options.MarshalCharAsManagedChar = true;
             options.GenerateFinalizers = true;
             options.OutputDir = vipsInfo.OutputPath;
             options.GenerateDefaultValuesForArguments = true;
@@ -42,13 +47,7 @@ namespace NetVips
             vipsModule.SharedLibraryName = "libvips-42.dll";
             vipsModule.OutputNamespace = "NetVips";
             vipsModule.LibraryName = "libvips";
-            vipsModule.IncludeDirs.Add(Path.Combine(vipsInfo.VipsPath, "include"));
-            vipsModule.IncludeDirs.Add(Path.Combine(vipsInfo.VipsPath, "include/glib-2.0"));
-            vipsModule.IncludeDirs.Add(Path.Combine(vipsInfo.VipsPath, "lib/glib-2.0/include"));
             vipsModule.Headers.Add("vips/vips.h");
-            vipsModule.LibraryDirs.Add(Path.Combine(vipsInfo.VipsPath, "lib"));
-            vipsModule.Libraries.Add("libvips.lib");
-            vipsModule.Defines.Add("GType=uint64_t");
         }
 
         /// <summary>
@@ -57,9 +56,8 @@ namespace NetVips
         /// <param name="driver"></param>
         public void SetupPasses(Driver driver)
         {
-            driver.AddTranslationUnitPass(new IgnoreNonVipsDeclsPass());
-            driver.AddTranslationUnitPass(new FixParameterUsageFromName());
-            driver.AddTranslationUnitPass(new AddOptionsParamForVariadicFuncs());
+            driver.AddTranslationUnitPass(new IgnoreUnneededVipsDecls());
+            driver.AddTranslationUnitPass(new ClearComments());
         }
 
         /// <summary>
@@ -69,38 +67,19 @@ namespace NetVips
         /// <param name="ctx"></param>
         public void Preprocess(Driver driver, ASTContext ctx)
         {
-            // Ignore stuff that doesn't compile. TODO: Needs better fixing.
+            // Ignore stuff that doesn't compile.
+            // TODO: Some of these should have been reported upstream.
 
-            // Error CS1002 ; expected
-            ctx.FindFunction("vips__image_copy_fields_array").First().ExplicitlyIgnore();
-
-            // Error CS0266 Cannot implicitly convert type 'string*' to 'sbyte**'
-            foreach (var item in ctx.FindCompleteClass("_VipsFormatClass").Fields)
-            {
-                if (item.QualifiedLogicalName.Equals("_VipsFormatClass::suffs"))
-                {
-                    item.ExplicitlyIgnore();
-                }
-            }
+            // Error CS0426 The type name '_' does not exist in the type 'GValue'
+            ctx.IgnoreClassField("_GValue", "data");
 
             // Error CS0266 Cannot implicitly convert type 'string*' to 'sbyte**'
-            foreach (var item in ctx.FindCompleteClass("_VipsForeignClass").Fields)
-            {
-                if (item.QualifiedLogicalName.Equals("_VipsForeignClass::suffs"))
-                {
-                    item.ExplicitlyIgnore();
-                }
-            }
+            ctx.IgnoreClassField("_VipsFormatClass", "suffs");
+            ctx.IgnoreClassField("_VipsForeignClass", "suffs");
 
             // Error CS0266 Cannot implicitly convert type 'NetVips.VipsBandFormat*' to 'System.IntPtr'
             // Error CS0266 Cannot implicitly convert type 'System.IntPtr' to 'NetVips.VipsBandFormat*'
-            foreach (var item in ctx.FindCompleteClass("_VipsForeignSaveClass").Fields)
-            {
-                if (item.QualifiedLogicalName.Equals("_VipsForeignSaveClass::format_table"))
-                {
-                    item.ExplicitlyIgnore();
-                }
-            }
+            ctx.IgnoreClassField("_VipsForeignSaveClass", "format_table");
         }
 
         /// <summary>

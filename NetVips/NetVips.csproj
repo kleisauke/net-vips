@@ -63,9 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Passes\AddOptionsParamForVariadicFuncs.cs" />
-    <Compile Include="Passes\IgnoreNonVipsDeclarations.cs" />
-    <Compile Include="Passes\FixParameterUsageFromName.cs" />
+    <Compile Include="Passes\ClearComments.cs" />
+    <Compile Include="Passes\IgnoreUnneededVipsDecls.cs" />
     <Compile Include="VipsInfo.cs" />
     <Compile Include="NetVips.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
