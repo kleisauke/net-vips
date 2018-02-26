@@ -2,7 +2,7 @@
 using CppSharp.AST;
 using CppSharp.Passes;
 
-namespace NetVips.Passes
+namespace NetVips.Generator.Passes
 {
     public class IgnoreUnneededVipsDecls : TranslationUnitPass
     {
@@ -32,12 +32,14 @@ namespace NetVips.Passes
             "g_value_unset",
             "g_type_fundamental",
             "vips_enum_from_nick",
+            "vips_enum_nick",
             "g_value_set_boolean",
             "g_value_set_int",
             "g_value_set_double",
             "g_value_set_enum",
             "g_value_set_flags",
             "g_value_set_string",
+            "vips_value_set_ref_string",
             "g_value_set_object",
             "vips_value_set_array_double",
             "vips_value_set_array_int",
@@ -55,10 +57,11 @@ namespace NetVips.Passes
             "vips_value_get_array_int",
             "vips_value_get_array_image",
             "vips_value_get_blob",
-            "vips_interpretation_get_type",
             "vips_operation_flags_get_type",
+            "vips_interpretation_get_type",
             "vips_band_format_get_type",
             "vips_blend_mode_get_type", // Since libvips 8.6
+            "vips_value_set_blob_free", // Since libvips 8.6
             "vips_foreign_find_load",
             "vips_foreign_find_load_buffer",
             "vips_foreign_find_save",
@@ -98,11 +101,18 @@ namespace NetVips.Passes
             "_VipsImage",
             "_GValue",
             "_GTypeClass",
+            "GObject",
             "_GObject",
+            "GParamSpec",
             "_GParamSpec",
+            "_VipsOperation",
+            "_VipsOperationClass",
             "_VipsInterpolate",
             "_VipsObject",
             "_VipsObjectClass",
+            "VipsArgument",
+            "VipsArgumentClass",
+            "VipsArgumentInstance",
             "_VipsArgument",
             "_VipsArgumentInstance",
             "_VipsArgumentClass",
@@ -111,7 +121,9 @@ namespace NetVips.Passes
 
         private readonly string[] _enumsToKeep =
         {
-            "_VipsArgumentFlags"
+            "VipsArgumentFlags",
+            "VipsOperationFlags",
+            "VipsBandFormat"
         };
 
         public override bool VisitFunctionDecl(Function function)

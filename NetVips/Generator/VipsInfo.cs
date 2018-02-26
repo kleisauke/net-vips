@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace NetVips
+namespace NetVips.Generator
 {
     public class VipsInfo
     {

@@ -1,7 +1,7 @@
 ﻿using CppSharp.AST;
 using CppSharp.Passes;
 
-namespace NetVips.Passes
+namespace NetVips.Generator.Passes
 {
     public class ClearComments : TranslationUnitPass
     {

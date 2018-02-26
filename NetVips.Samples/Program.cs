@@ -1,58 +1,52 @@
-﻿using NetVips;
+﻿using NetVips.AutoGen;
 using System;
-using static NetVips.vips;
-using static NetVips.header;
-using static NetVips.image;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace NetVips_Sample
+namespace NetVips.Sample
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // This sample application demonstrates how to use the generated libvips PInvoke layer to execute a sample script.
-            // Although a higher level object model in .NET can be easily created that eliminates the need for boilerplate code,
-            // this sample focuses on direct, low-level usage of the libvips API.
-
-            if (VipsInit("NetVips") != 0)
+            if (vips.VipsInit("NetVips") != 0)
             {
                 Console.WriteLine("Unable to init libvips");
                 Console.ReadLine();
                 return;
             }
 
-            Console.WriteLine("libvips " + VipsVersion(0) + "." + VipsVersion(1) + "." + VipsVersion(2));
+            // File.WriteAllText("functions.txt", Operation.GenerateAllFunctions());
+
+            Console.WriteLine("libvips " + Base.Version(0) + "." + Base.Version(1) + "." + Base.Version(2));
+
+            var array = Enumerable.Repeat(0, 200).ToArray();
+            var memory = Image.NewFromMemory(array, 20, 10, 1, "uchar");
+            Console.WriteLine(memory.ToString());
+            Console.WriteLine(memory.Avg());
+
+            // TODO Doesn't work (memory corruption)
+            /*memory += 10;
+            Console.WriteLine(memory.Avg());*/
+
             Console.WriteLine("Test load image");
 
-            /*VipsImage image = VipsImageNewFromFile("lichtenstein.jpg");
-
-            if (image == null)
+            var lichtenstein = Image.NewFromFile("lichtenstein.jpg", new Dictionary<string, object>
             {
-                Console.WriteLine("Could not load image from file: " + error.VipsErrorBuffer());
-                Console.ReadLine();
-                return;
-            }
+                {"access", "sequential"}
+            });
+            Console.WriteLine(lichtenstein.ToString());
 
-            Console.WriteLine("Image.Bands = " + image.Bands);
-            Console.WriteLine("Image.Width = " + VipsImageGetWidth(image)); // TODO: Fix image.Width
-            Console.WriteLine("Image.Height = " + VipsImageGetHeight(image)); // TODO: Fix image.Height
-            Console.WriteLine();
+            // TODO: Doesn't work, hangs on `VipsCacheOperationBuild` (due to GC?)
+            lichtenstein[0].WriteToFile("lichtenstein-first-band.jpg");
+            lichtenstein.WriteToFile("lichtenstein-original.jpg");
 
-            Console.WriteLine("Test write image");
-            VipsImageWriteToFile(image, "lichtenstein2.jpg");
+            var thumbnail = lichtenstein.ThumbnailImage(200);
 
-            // TODO: Fix thumbnailing.
-            Console.WriteLine();
-            Console.WriteLine("Test thumbnail");
+            Console.WriteLine(thumbnail.ToString());
 
-            // Doesn't work
-            // VipsThumbnail("lichtenstein.jpg", out var thumbImage, 200);
-
-            VipsThumbnailImage(image, out var thumbImage, 200);
-            Console.WriteLine("Image.Bands = " + thumbImage.Bands);
-            Console.WriteLine("Image.Width = " + VipsImageGetWidth(thumbImage)); // TODO: Fix image.Width
-            Console.WriteLine("Image.Height = " + VipsImageGetHeight(thumbImage)); // TODO: Fix image.Height
-            VipsImageWriteToFile(thumbImage, "lichtenstein_thumb.jpg"); */
+            // TODO: Doesn't work, hangs on `VipsCacheOperationBuild` (due to GC?)
+            thumbnail.WriteToFile("lichtenstein-thumb.jpg");
 
             Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
