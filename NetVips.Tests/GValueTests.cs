@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
 using NUnit.Framework;
-using NetVips.AutoGen;
+using NetVips.Internal;
 
 namespace NetVips.Tests
 {
@@ -11,7 +11,7 @@ namespace NetVips.Tests
         [SetUp]
         public void Init()
         {
-            vips.VipsInit("NetVips");
+            Base.VipsInit();
         }
 
         [TearDown]
@@ -58,7 +58,7 @@ namespace NetVips.Tests
         {
             // the Interpretation enum is created when the first image is made --
             // make it ourselves in case we are run before the first image
-            enumtypes.VipsInterpretationGetType();
+            Vips.VipsInterpretationGetType();
             var interpretationGtype = Base.TypeFromName("VipsInterpretation");
             var gv = new GValue();
             gv.SetType(interpretationGtype);
@@ -72,7 +72,7 @@ namespace NetVips.Tests
         {
             // the OperationFlags enum is created when the first op is made --
             // make it ourselves in case we are run before that
-            enumtypes.VipsOperationFlagsGetType();
+            Vips.VipsOperationFlagsGetType();
             var operationflagsGtype = Base.TypeFromName("VipsOperationFlags");
             var gv = new GValue();
             gv.SetType(operationflagsGtype);
@@ -172,7 +172,7 @@ namespace NetVips.Tests
         [Test]
         public void TestBlob()
         {
-            var blob = File.ReadAllText(Helper.JpegFile);
+            var blob = File.ReadAllBytes(Helper.JpegFile);
             var gv = new GValue();
             gv.SetType(GValue.BlobType);
             gv.Set(blob);

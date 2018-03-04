@@ -1,14 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Channels;
 using System.Text;
+using NetVips.Internal;
 
 namespace NetVips
 {
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// All numeric types. Used by <see cref="IsNumeric(Type)"/>.
+        /// </summary>
         private static readonly HashSet<Type> NumericTypes = new HashSet<Type>
         {
             typeof(int),
@@ -24,12 +29,29 @@ namespace NetVips
             typeof(float)
         };
 
+        /// <summary>
+        /// Removes the element with the specified key from the <see cref="T:System.Collections.Generic.IDictionary" />
+        /// and retrieves the value to <paramref name="target" />.
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="key">>The key of the element to remove.</param>
+        /// <param name="target">The target to retrieve the value to.</param>
+        /// <returns><see langword="true" /> if the element is successfully removed; otherwise, <see langword="false" /></returns>
         public static bool Remove<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, out TValue target)
         {
             self.TryGetValue(key, out target);
             return self.Remove(key);
         }
 
+        /// <summary>
+        /// Merges 2 <see cref="T:System.Collections.Generic.IDictionary" />
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="merge"></param>
         public static void Merge<TKey, TValue>(this IDictionary<TKey, TValue> self, IDictionary<TKey, TValue> merge)
         {
             foreach (var item in merge)
@@ -42,26 +64,25 @@ namespace NetVips
         /// Check whether the object is a pixel.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
+        /// <returns><see langword="true" /> if the object is a pixel; otherwise, <see langword="false" /></returns>
         public static bool IsPixel(this object value)
         {
-            Type valueType = value.GetType();
+            var valueType = value.GetType();
             return valueType.IsNumeric() ||
                    value is Array array && array.Length > 0 && !(valueType == typeof(Image));
         }
-
 
         /// <summary>
         /// Test for rectangular array of something
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
+        /// <returns><see langword="true" /> if the object is a rectangular array; otherwise, <see langword="false" /></returns>
         public static bool Is2D(this object value)
         {
-            return value is object[][] jaggedArr &&
-                   jaggedArr.Length > 0 &&
-                   jaggedArr.Rank == 2 &&
-                   jaggedArr.All(x => x.Length == jaggedArr[0].Length);
+            return value is Array array &&
+                   array.Length > 0 &&
+                   (array.Rank == 2 || array.GetValue(0) is Array jaggedArray &&
+                    jaggedArray.Length == array.Length);
         }
 
         /// <summary>
@@ -69,12 +90,11 @@ namespace NetVips
         /// we often need to do something like (1.0 / other) and need to work for lists
         /// as well as scalars
         /// </summary>
+        /// <param name="values"></param>
         /// <param name="func"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static T[] Smap<T>(this IEnumerable<T> x, Func<T, T> func)
+        public static T[] Smap<T>(this object[] values, Func<object, T> func)
         {
-            return x.ToList().Select(func).ToArray();
+            return values.Select(func).ToArray();
         }
 
         /// <summary>
@@ -82,38 +102,45 @@ namespace NetVips
         /// we often need to do something like (1.0 / other) and need to work for lists
         /// as well as scalars
         /// </summary>
-        /// <param name="func"></param>
         /// <param name="x"></param>
-        public static T Smap<T>(this T x, Func<T, T> func)
+        /// <param name="func"></param>
+        public static object Smap<T>(this T x, Func<T, T> func)
         {
+            if (x is IEnumerable enumerable)
+            {
+                return enumerable.Cast<T>().Select(func).ToArray();
+            }
+
             return func(x);
         }
 
         /// <summary>
-        ///  Extension method, call for any object, eg "if (x.IsNumeric())..."
+        /// Extension method, call for any object, eg "if (x.IsNumeric())..."
         /// </summary>
         /// <param name="x"></param>
-        /// <returns></returns>
+        /// <returns><see langword="true" /> if the object is numeric; otherwise, <see langword="false" /></returns>
         public static bool IsNumeric(this object x)
         {
             return x != null && IsNumeric(x.GetType());
         }
 
         /// <summary>
-        /// 
+        /// Checks if the given <paramref name="myType" /> is numeric.
         /// </summary>
         /// <param name="myType"></param>
-        /// <returns></returns>
+        /// <returns><see langword="true" /> if the type is numeric; otherwise, <see langword="false" /></returns>
         public static bool IsNumeric(this Type myType)
         {
             return NumericTypes.Contains(Nullable.GetUnderlyingType(myType) ?? myType);
         }
 
         /// <summary>
-        /// 
+        /// Dereferences data from an unmanaged block of memory 
+        /// to a newly allocated managed object of the specified type.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ptr"></param>
+        /// <typeparam name="T">The type of object to be created. This object
+        /// must represent a formatted class or a structure.</typeparam>
+        /// <param name="ptr">A pointer to an unmanaged block of memory.</param>
         /// <returns></returns>
         public static T Dereference<T>(this IntPtr ptr)
         {
@@ -129,7 +156,7 @@ namespace NetVips
         /// <returns></returns>
         public static object Call(this Image image, string operationName, object arg)
         {
-            return Operation.Call(operationName, image, arg);
+            return Operation.Call(operationName, null, image, arg);
         }
 
         /// <summary>
@@ -141,7 +168,7 @@ namespace NetVips
         /// <returns></returns>
         public static object Call(this Image image, string operationName, params object[] args)
         {
-            return Operation.Call(operationName, args.PrependImage(image));
+            return Operation.Call(operationName, null, args.PrependImage(image));
         }
 
         /// <summary>
@@ -212,6 +239,11 @@ namespace NetVips
             return str.ToLower();
         }
 
+        /// <summary>
+        /// Convert snake case (my_string) to camel case (MyString).
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string ToCamelCase(this string str)
         {
             return str.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries)
@@ -219,17 +251,118 @@ namespace NetVips
                 .Aggregate(string.Empty, (s1, s2) => s1 + s2);
         }
 
-        public static object[] PrependImage(this object[] args, object image)
+        /// <summary>
+        /// Prepends <paramref name="image" /> to <paramref name="args" />.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="image"></param>
+        /// <returns>A new object array.</returns>
+        public static object[] PrependImage(this object[] args, Image image)
         {
             if (args == null)
             {
-                return new[] {image};
+                return new object[] {image};
             }
 
             var newValues = new object[args.Length + 1];
             newValues[0] = image;
             Array.Copy(args, 0, newValues, 1, args.Length);
             return newValues;
+        }
+
+        /// <summary>
+        /// Marshals a GLib UTF8 char* to a managed string.
+        /// </summary>
+        /// <returns>The managed string string.</returns>
+        /// <param name="ptr">Pointer to the GLib string.</param>
+        /// <param name="freePtr">If set to <c>true</c>, free the GLib string.</param>
+        /// <param name="length">The number of characters to copy.</param>
+        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int length = 0)
+        {
+            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr));
+        }
+
+        /// <summary>
+        /// Marshals a managed string to a GLib UTF8 char*.
+        /// </summary>
+        /// <remarks>
+        /// The returned pointer should be freed by calling <see cref="GLib.GFree"/>.
+        /// </remarks>
+        /// <param name="str">The managed string.</param>
+        /// <returns>The to pointer to the GLib string.</returns>
+        public static IntPtr ToUtf8Ptr(this string str)
+        {
+            return str == null ? IntPtr.Zero : Encoding.UTF8.GetBytes(str).ToPtr();
+        }
+
+        /// <summary>
+        /// Marshals a managed byte array to a C string.
+        /// </summary>
+        /// <remarks>
+        /// The returned pointer should be freed by calling <see cref="GLib.GFree"/>.
+        /// The byte array should not include the null terminator. It will be
+        /// added automatically.
+        /// </remarks>
+        /// <param name="bytes">The managed byte array.</param>
+        /// <returns>A pointer to the unmanaged string.</returns>
+        public static IntPtr ToPtr(this byte[] bytes)
+        {
+            if (bytes == null)
+            {
+                return IntPtr.Zero;
+            }
+
+            var ptr = GLib.GMalloc((ulong) bytes.Length + 1);
+            Marshal.Copy(bytes, 0, ptr, bytes.Length);
+            Marshal.WriteByte(ptr, bytes.Length, 0);
+            return ptr;
+        }
+
+        /// <summary>
+        /// Marshals a C string pointer to a byte array.
+        /// </summary>
+        /// <remarks>
+        /// Since encoding is not specified, the string is returned as a byte array.
+        /// The byte array does not include the null terminator.
+        /// </remarks>
+        /// <param name="ptr">Pointer to the unmanaged string.</param>
+        /// <param name="freePtr">If set to <c>true</c> free the unmanaged memory.</param>
+        /// <param name="length">The number of characters to copy.</param>
+        /// <returns>The string as a byte array.</returns>
+        public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int length = 0)
+        {
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            var bytes = new List<byte>();
+
+            if (length == 0)
+            {
+                var offset = 0;
+
+                byte b;
+                while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
+                {
+                    bytes.Add(b);
+                }
+            }
+            else
+            {
+                for (var i = 0; i < length; i++)
+                {
+                    bytes.Add(Marshal.ReadByte(ptr, i));
+                }
+            }
+
+            if (freePtr)
+            {
+                GLib.GFree(ptr);
+            }
+
+
+            return bytes.ToArray();
         }
     }
 }

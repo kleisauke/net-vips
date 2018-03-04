@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetVips
+﻿namespace NetVips
 {
     public static class Enums
     {
@@ -112,7 +106,7 @@ namespace NetVips
         /// Various fixed 90 degree rotation angles.
         /// </summary>
         /// <remarks>
-        /// See for example :meth:`.rot`.
+        /// See for example <see cref="Image.Rot"/>.
         /// 
         /// Attributes:
         ///     D0 (string): no rotate
@@ -132,7 +126,7 @@ namespace NetVips
         /// Various fixed 45 degree rotation angles.
         /// </summary>
         /// <remarks>
-        /// See for example :meth:`.rot45`.
+        /// See for example <see cref="Image.Rot45"/>.
         /// 
         /// Attributes:
         ///     D0 (string): no rotate
@@ -160,7 +154,7 @@ namespace NetVips
         /// The rendering intent.
         /// </summary>
         /// <remarks>
-        /// See :meth:`.icc_transform`.
+        /// See <see cref="Image.IccTransform"/>
         /// 
         /// Attributes:
         ///     Perceptual (string):
@@ -181,7 +175,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// When the edges of an image are extended, you can specify how you want
-        /// the extension done.  See :meth:`.embed`, :meth:`.conv`, :meth:`.affine`
+        /// the extension done.  See <see cref="Image.Embed"/>, <see cref="Image.Conv"/>, <see cref="Image.Affine"/>
         /// and so on.
         /// 
         /// Attributes:
@@ -206,7 +200,7 @@ namespace NetVips
         /// Computation precision.
         /// </summary>
         /// <remarks>
-        /// See for example :meth:`.conv`.
+        /// See for example <see cref="Image.Conv"/>.
         /// 
         /// Attributes:
         ///     Integer (string): Integer.
@@ -244,7 +238,7 @@ namespace NetVips
         /// A direction.
         /// </summary>
         /// <remarks>
-        /// Operations like :meth:`.flip` need to be told whether to flip
+        /// Operations like <see cref="Image.Flip"/> need to be told whether to flip
         /// left-right or top-bottom.
         /// 
         /// Attributes:
@@ -261,7 +255,7 @@ namespace NetVips
         /// Various types of alignment.
         /// </summary>
         /// <remarks>
-        /// See :meth:`.join`, for example.
+        /// See <see cref="Image.Join"/>, for example.
         /// 
         /// Attributes:
         ///     Low (string): Align on the low coordinate edge
@@ -279,7 +273,7 @@ namespace NetVips
         /// How to combine passes.
         /// </summary>
         /// <remarks>
-        /// See for example :meth:`.compass`.
+        /// See for example <see cref="Image.Compass"/>.
         /// 
         /// Attributes:
         ///     Max (string): Take the maximum of all values.
@@ -295,7 +289,7 @@ namespace NetVips
         /// Set Perofile Connection Space.
         /// </summary>
         /// <remarks>
-        /// See for example :meth:`.icc_import`.
+        /// See for example <see cref="Image.IccImport"/>.
         /// 
         /// Attributes:
         ///     Lab (string): CIE Lab space.

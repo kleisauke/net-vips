@@ -1,23 +1,23 @@
-using NetVips.AutoGen;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using NLog;
+using NetVips.Internal;
 using SMath = System.Math;
+using NLog;
 
 namespace NetVips
 {
     /// <summary>
-    /// Wrap a VipsImage object.
+    /// Wrap a <see cref="NetVips.Internal.VipsImage"/> object.
     /// </summary>
     public class Image : VipsObject
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public VipsImage VImage;
+        public VipsImage IntlImage;
 
         /// <summary>
         /// Secret ref for NewFromMemory
@@ -26,11 +26,23 @@ namespace NetVips
 
         public Image(VipsImage vImage) : base(vImage.ParentInstance)
         {
-            // logger.Debug($"Image: pointer = {Pointer}");
-            VImage = vImage;
+            // logger.Debug($"VipsImage = {vImage}");
+            IntlImage = vImage;
         }
 
-        private static object CallEnum(object image, object other, string operationName, string operation)
+        #region helpers
+
+        /// <summary>
+        /// Handy for the overloadable operators. A vips operator like
+        /// 'more', but if the arg is not an image (ie. it's a constant), call
+        /// 'more_const' instead.
+        /// </summary>
+        /// <param name="image">The left-hand argument.</param>
+        /// <param name="other">The right-hand argument.</param>
+        /// <param name="operationName">The base part of the operation name.</param>
+        /// <param name="operation">The operation to call.</param>
+        /// <returns></returns>
+        public static object CallEnum(object image, object other, string operationName, string operation)
         {
             if (other.IsPixel())
             {
@@ -51,7 +63,8 @@ namespace NetVips
         /// </remarks>
         /// <param name="func"></param>
         /// <param name="image"></param>
-        /// <returns></returns>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If image doesn't have an even number of bands.</exception>
         private static Image RunCmplx(Func<Image, Image> func, Image image)
         {
             string newFormat;
@@ -92,10 +105,17 @@ namespace NetVips
             return image;
         }
 
-        public static Image Imageize(Image self, object value)
+        /// <summary>
+        /// Turn a constant (eg. 1, '12', new []{1, 2, 3}, {new []{1}}) into an image using
+        /// <see cref="matchImage"></see> as a guide.
+        /// </summary>
+        /// <param name="matchImage"></param>
+        /// <param name="value"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Imageize(Image matchImage, object value)
         {
-            // logger.Debug($"Image.Imageize: value = {value}");
-            // careful! self can be None if value is a 2D array
+            // logger.Debug($"Imageize: value = {value}");
+            // careful! this can be None if value is a 2D array
             if (value is Image image)
             {
                 return image;
@@ -106,9 +126,11 @@ namespace NetVips
             }
             else
             {
-                return self.NewFromImage(value);
+                return matchImage.NewFromImage(value);
             }
         }
+
+        #endregion
 
         #region constructors
 
@@ -122,9 +144,12 @@ namespace NetVips
         ///     image = netvips.Image.NewFromFile('fred.jpg[shrink=2]')
         ///
         /// You can also supply options as keyword arguments, for example: 
-        /// 
-        ///     image = netvips.Image.NewFromFile('fred.jpg', shrink=2)
-        ///
+        /// <![CDATA[
+        ///     var image = netvips.Image.NewFromFile('fred.jpg', new Dictionary<string, object>
+        ///     {
+        ///         {"shrink", 2}
+        ///     });
+        /// ]]>
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like:
         /// 
@@ -140,7 +165,7 @@ namespace NetVips
         /// optional appended arguments.</param>
         /// <param name="kwargs">
         /// memory (bool): If set True, load the image via memory rather than
-        ///     via a temporary disc file. See :meth:`.NewTempFile` for
+        ///     via a temporary disc file. See <see cref="NewTempFile"/> for
         ///     notes on where temporary files are created. Small images are
         ///     loaded via memory by default, use ``VIPS_DISC_THRESHOLD`` to
         ///     set the definition of small.
@@ -149,20 +174,15 @@ namespace NetVips
         ///     the first serious error in the file. By default, libvips
         ///     will attempt to read everything it can from a damanged image.
         /// </param>
-        /// <returns>A new :class:`.Image`.</returns>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If unable to load from <paramref name="vipsFilename" />.</exception>
         public static Image NewFromFile(string vipsFilename, IDictionary<string, object> kwargs = null)
         {
-            string filename;
-            string options;
-            unsafe
-            {
-                filename = Marshal.PtrToStringAnsi((IntPtr) image.VipsFilenameGetFilename(vipsFilename));
-                options = Marshal.PtrToStringAnsi((IntPtr) image.VipsFilenameGetOptions(vipsFilename));
-            }
+            var fileNamePtr = vipsFilename.ToUtf8Ptr();
+            var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
+            var options = VipsImage.VipsFilenameGetOptions(fileNamePtr);
 
-            Console.WriteLine(filename);
-
-            var name = foreign.VipsForeignFindLoad(filename);
+            var name = VipsForeign.VipsForeignFindLoad(filename.ToUtf8Ptr());
             if (name == null)
             {
                 throw new Exception($"unable to load from file {vipsFilename}");
@@ -185,7 +205,7 @@ namespace NetVips
         /// Load a formatted image from memory.
         /// </summary>
         /// <remarks>
-        /// This behaves exactly as :meth:`NewFromFile`, but the image is
+        /// This behaves exactly as <see cref="NewFromFile"/>, but the image is
         /// loaded from the memory object rather than from a file. The memory
         /// object can be a string or buffer.
         /// </remarks>
@@ -197,10 +217,34 @@ namespace NetVips
         ///     first serious error in the image. By default, libvips will
         ///     attempt to read everything it can from a damanged image.
         /// </param>
-        /// <returns></returns>
-        public static Image NewFromBuffer(string data, string options = "", IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If unable to load from <paramref name="data" />.</exception>
+        public static Image NewFromBuffer(object data, string options = "", IDictionary<string, object> kwargs = null)
         {
-            var name = foreign.VipsForeignFindLoadBuffer(Marshal.StringToHGlobalAuto(data), (ulong) data.Length);
+            int length;
+            IntPtr memory;
+            switch (data)
+            {
+                case string strValue:
+                    length = Encoding.UTF8.GetByteCount(strValue);
+                    memory = strValue.ToUtf8Ptr();
+                    break;
+                case byte[] byteArrValue:
+                    length = byteArrValue.Length;
+                    memory = byteArrValue.ToPtr();
+                    break;
+                case char[] charArrValue:
+                    length = Encoding.UTF8.GetByteCount(charArrValue);
+                    memory = Encoding.UTF8.GetBytes(charArrValue).ToPtr();
+                    break;
+                default:
+                    throw new Exception(
+                        $"unsupported value type {data.GetType()} for NewFromBuffer"
+                    );
+            }
+
+
+            var name = VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length);
             if (name == null)
             {
                 throw new Exception("unable to load from buffer");
@@ -220,16 +264,16 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            return Operation.Call(name, data, kwargs) as Image;
+            return Operation.Call(name, kwargs, data) as Image;
         }
 
         /// <summary>
         /// Create an image from a 1D or 2D array.
         /// </summary>
         /// <remarks>
-        /// A new one-band image with :class:`BandFormat` ``'double'`` pixels is
+        /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
         /// created from the array. These image are useful with the libvips
-        /// convolution operator :meth:`Image.conv`.
+        /// convolution operator <see cref="Conv"/> 
         /// </remarks>
         /// <param name="array">Create the image from these values. 
         /// 1D arrays become a single row of pixels.</param>
@@ -237,21 +281,22 @@ namespace NetVips
         /// convolution.  Useful for integer convolution masks.</param>
         /// <param name="offset">Default to 0.0. What to subtract from each pixel
         /// after convolution.  Useful for integer convolution masks.</param>
-        /// <returns>A new :class:`Image`.</returns>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If unable to make image from <paramref name="array" />.</exception>
         public static Image NewFromArray(object array, double scale = 1.0, double offset = 0.0)
         {
             if (!array.Is2D())
             {
-                array = array as object[][];
+                array = array as Array;
             }
 
-            if (!(array is object[][] arr))
+            if (!(array is Array arr))
             {
                 throw new Exception("can't create image from unknown object");
             }
 
             var height = arr.Length;
-            var width = arr[0].Length;
+            var width = arr.GetValue(0) is Array arrWidth ? arrWidth.Length : 1;
             var n = width * height;
 
             var a = new double[n];
@@ -259,11 +304,14 @@ namespace NetVips
             {
                 for (var x = 0; x < width; x++)
                 {
-                    a[x + y * width] = (double) arr[y][x];
+                    var yValue = arr.GetValue(y);
+                    var value = yValue is Array yArray ? (yArray.Length <= x ? 0 : yArray.GetValue(x)) : yValue;
+                    a[x + y * width] = Convert.ToDouble(value);
                 }
             }
 
-            var vi = AutoGen.image.VipsImageNewMatrixFromArray(width, height, ref a[0], n);
+            var vi = VipsImage.VipsImageNewMatrixFromArray(width, height, a, n);
+
             if (vi == null)
             {
                 throw new Exception("unable to make image from matrix");
@@ -284,24 +332,25 @@ namespace NetVips
         /// values 1, 2, 3, 4, you can make a one-band, 2x2 uchar image from
         /// it like this: 
         /// 
-        ///     image = Image.NewFromMemory(data, 2, 2, 1, 'uchar')
+        ///     var image = NetVips.Image.NewFromMemory(data, 2, 2, 1, "uchar")
         /// 
         /// A reference is kept to the data object, so it will not be
         /// garbage-collected until the returned image is garbage-collected.
         /// 
-        /// This method is useful for efficiently transferring images from PIL or
-        /// NumPy into libvips.
+        /// This method is useful for efficiently transferring images from GDI+
+        /// into libvips.
         /// 
-        /// See :meth:`.WriteToMemory` for the opposite operation.
+        /// See <see cref="WriteToMemory"/> for the opposite operation.
         /// 
-        /// Use :meth:`.copy` to set other image attributes.
+        /// Use <see cref="Copy"/> to set other image attributes.
         /// </remarks>
         /// <param name="data">A memoryview or buffer object.</param>
         /// <param name="width">Image width in pixels.</param>
         /// <param name="height">Image height in pixels.</param>
         /// <param name="bands">Number of bands</param>
         /// <param name="format">Band format.</param>
-        /// <returns>A new :class:`Image`.</returns>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If unable to make image from <paramref name="data" />.</exception>
         public static Image NewFromMemory(
             Array data,
             int width,
@@ -316,8 +365,8 @@ namespace NetVips
             try
             {
                 var pointer = handle.AddrOfPinnedObject();
-                vi = AutoGen.image.VipsImageNewFromMemory(pointer, (ulong) data.Length,
-                    width, height, bands, (VipsBandFormat) formatValue);
+                vi = VipsImage.VipsImageNewFromMemory(pointer, (ulong) data.Length,
+                    width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
             }
             finally
             {
@@ -346,7 +395,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Returns an image backed by a temporary file. When written to with
-        /// :func:`Image.write`, a temporary file will be created on disc in the
+        /// <see cref="Write"/>, a temporary file will be created on disc in the
         /// specified format. When the image is closed, the file will be deleted
         /// automatically.
         ///
@@ -361,10 +410,11 @@ namespace NetVips
         /// <param name="format">The format for the temp file, for example
         /// ``"%s.v"`` for a vips format file. The ``%s`` is
         /// substituted by the file path.</param>
-        /// <returns>A new :class:`Image`.</returns>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If unable to make temp file from <paramref name="format" />.</exception>
         public static Image NewTempFile(string format)
         {
-            var vi = image.VipsImageNewTempFile(format);
+            var vi = VipsImage.VipsImageNewTempFile(format.ToUtf8Ptr());
             if (vi == null)
             {
                 throw new Exception("unable to make temp file");
@@ -378,12 +428,12 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// A new image is created which has the same size, format, interpretation
-        /// and resolution as ``self``, but with every pixel set to ``value``.
+        /// and resolution as ``this``, but with every pixel set to ``value``.
         /// </remarks>
         /// <param name="value">The value for the pixels. Use a
         /// single number to make a one-band image; use an array constant
         /// to make a many-band image.</param>
-        /// <returns>A new :class:`Image`.</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image NewFromImage(object value)
         {
             var pixel = (Black(1, 1) + value).Cast(Format);
@@ -410,10 +460,11 @@ namespace NetVips
         /// memory area, and a new image is returned which wraps that large memory
         /// area.
         /// </remarks>
-        /// <returns>A new :class:`Image`.</returns>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="T:System.Exception">If unable to copy to memory.</exception>
         public Image CopyMemory()
         {
-            var vi = image.VipsImageCopyMemory(VImage);
+            var vi = VipsImage.VipsImageCopyMemory(IntlImage);
             if (vi == null)
             {
                 throw new Exception("unable to copy to memory");
@@ -433,16 +484,19 @@ namespace NetVips
         /// 
         /// This method can save images in any format supported by vips. The format
         /// is selected from the filename suffix. The filename can include embedded
-        /// save options, see :func:`Image.new_from_file`.
+        /// save options, see <see cref="NewFromFile"/>.
         /// 
         /// For example:
         /// 
         ///     image.WriteToFile('fred.jpg[Q=95]')
         /// 
         /// You can also supply options as keyword arguments, for example: 
-        /// 
-        ///     image.WriteToFile('fred.jpg', Q=95)
-        /// 
+        /// <![CDATA[
+        ///     image.WriteToFile('fred.jpg', new Dictionary<string, object>
+        ///     {
+        ///         {"Q", 95}
+        ///     });
+        /// ]]>
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like: 
         /// 
@@ -455,17 +509,14 @@ namespace NetVips
         /// optional appended arguments.</param>
         /// <param name="kwargs"></param>
         /// <returns>None</returns>
+        /// <exception cref="T:System.Exception">If unable to write to <paramref name="vipsFilename" />.</exception>
         public void WriteToFile(string vipsFilename, IDictionary<string, object> kwargs = null)
         {
-            string filename;
-            string options;
-            unsafe
-            {
-                filename = Marshal.PtrToStringAnsi((IntPtr) image.VipsFilenameGetFilename(vipsFilename));
-                options = Marshal.PtrToStringAnsi((IntPtr) image.VipsFilenameGetOptions(vipsFilename));
-            }
+            var fileNamePtr = vipsFilename.ToUtf8Ptr();
+            var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
+            var options = VipsImage.VipsFilenameGetOptions(fileNamePtr);
 
-            var name = foreign.VipsForeignFindSave(filename);
+            var name = VipsForeign.VipsForeignFindSave(filename.ToUtf8Ptr());
             if (name == null)
             {
                 throw new Exception($"unable to write to file {vipsFilename}");
@@ -485,7 +536,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            Operation.Call(name, this, filename, kwargs);
+            Operation.Call(name, kwargs, this, filename);
         }
 
         /// <summary>
@@ -494,16 +545,19 @@ namespace NetVips
         /// <remarks>
         /// This method can save images in any format supported by vips. The format
         /// is selected from the suffix in the format string. This can include
-        /// embedded save options, see :func:`Image.new_from_file`.
+        /// embedded save options, see <see cref="NewFromFile"/>.
         /// 
         /// For example: 
         /// 
-        ///     data = image.WriteToBuffer('.jpg[Q=95]')
+        ///     var data = image.WriteToBuffer('.jpg[Q=95]')
         /// 
         /// You can also supply options as keyword arguments, for example: 
-        /// 
-        ///     data = image.WriteToBuffer('.jpg', Q=95)
-        /// 
+        /// <![CDATA[
+        ///     var data = image.WriteToBuffer('.jpg', new Dictionary<string, object>
+        ///     {
+        ///         {"Q", 95}
+        ///     });
+        /// ]]>
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like: 
         /// 
@@ -514,16 +568,14 @@ namespace NetVips
         /// </remarks>
         /// <param name="formatString">The suffix, plus any string-form arguments.</param>
         /// <param name="kwargs"></param>
-        /// <returns>A byte string.</returns>
-        public string WriteToBuffer(string formatString, IDictionary<string, object> kwargs = null)
+        /// <returns>A byte string</returns>
+        /// <exception cref="T:System.Exception">If unable to write to buffer.</exception>
+        public byte[] WriteToBuffer(string formatString, IDictionary<string, object> kwargs = null)
         {
-            string options;
-            unsafe
-            {
-                options = Marshal.PtrToStringAnsi((IntPtr) image.VipsFilenameGetOptions(formatString));
-            }
+            var formatStrPtr = formatString.ToUtf8Ptr();
+            var options = VipsImage.VipsFilenameGetOptions(formatStrPtr);
 
-            var name = foreign.VipsForeignFindSaveBuffer(formatString);
+            var name = VipsForeign.VipsForeignFindSaveBuffer(formatString);
             if (name == null)
             {
                 throw new Exception("unable to write to buffer");
@@ -543,7 +595,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            return Operation.Call(name, this, kwargs) as string;
+            return Operation.Call(name, kwargs, this) as byte[];
         }
 
         /// <summary>
@@ -556,19 +608,20 @@ namespace NetVips
         /// For example, if you have a 2x2 uchar image containing the bytes 1, 2,
         /// 3, 4, read left-to-right, top-to-bottom, then: 
         /// 
-        ///     buf = image.WriteToMemory()
+        ///     var buf = image.WriteToMemory()
         /// 
         /// will return a four byte buffer containing the values 1, 2, 3, 4.
         /// </remarks>
         /// <returns>buffer</returns>
-        public int[] WriteToMemory()
+        public byte[] WriteToMemory()
         {
             ulong psize = 0;
-            var pointer = image.VipsImageWriteToMemory(VImage, ref psize);
-            gmem.GFree(pointer);
+            var pointer = VipsImage.VipsImageWriteToMemory(IntlImage, ref psize);
 
-            var managedArray = new int[psize];
+            var managedArray = new byte[psize];
             Marshal.Copy(pointer, managedArray, 0, (int) psize);
+
+            GLib.GFree(pointer);
 
             return managedArray;
         }
@@ -577,14 +630,15 @@ namespace NetVips
         /// Write an image to another image.
         /// </summary>
         /// <remarks>
-        /// This function writes ``self`` to another image. Use something like
-        /// :func:`Image.NewTempFile` to make an image that can be written to.
+        /// This function writes ``this`` to another image. Use something like
+        /// <see cref="NewTempFile"/> to make an image that can be written to.
         /// </remarks>
-        /// <param name="other">The :class:`Image` to write to,</param>
+        /// <param name="other">The <see cref="Image"/> to write to.</param>
         /// <returns></returns>
+        /// <exception cref="T:System.Exception">If unable to write to image.</exception>
         public void Write(Image other)
         {
-            var result = image.VipsImageWrite(VImage, other.VImage);
+            var result = VipsImage.VipsImageWrite(IntlImage, other.IntlImage);
             if (result != 0)
             {
                 throw new Exception("unable to write to image");
@@ -600,10 +654,10 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Fetch the GType of a piece of metadata, or 0 if the named item does not
-        /// exist. See :class:`GValue`.
+        /// exist. See <see cref="GValue"/>.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to get the type of.</param>
-        /// <returns>The ``GType``, or 0.</returns>
+        /// <returns>The ``GType``, or 0</returns>
         public override ulong GetTypeOf(string name)
         {
             // on libvips before 8.5, property types must be fetched separately,
@@ -617,19 +671,20 @@ namespace NetVips
                 }
             }
 
-            return header.VipsImageGetTypeof(VImage, name);
+            return VipsImage.VipsImageGetTypeof(IntlImage, name);
         }
 
         /// <summary>
         /// Get an item of metadata.
         /// </summary>
-        /// Fetches an item of metadata as a Python value. For example:
+        /// Fetches an item of metadata as a C# value. For example:
         /// 
-        ///     orientation = image.get('orientation')
+        ///     orientation = image.get("orientation")
         /// 
         /// would fetch the image orientation.
         /// <param name="name">The name of the piece of metadata to get.</param>
-        /// <returns>The metadata item as a C# value.</returns>
+        /// <returns>The metadata item as a C# value</returns>
+        /// <exception cref="T:System.Exception">If unable to get <paramref name="name" />.</exception>
         public override object Get(string name)
         {
             // with old libvips, we must fetch properties (as opposed to
@@ -644,7 +699,7 @@ namespace NetVips
             }
 
             var gv = new GValue();
-            var result = header.VipsImageGet(VImage, name, gv.Pointer);
+            var result = VipsImage.VipsImageGet(IntlImage, name, gv.IntlGValue);
             if (result != 0)
             {
                 throw new Exception($"unable to get {name}");
@@ -653,34 +708,21 @@ namespace NetVips
             return gv.Get();
         }
 
-
         /// <summary>
         /// Get a list of all the metadata fields on an image.
         /// </summary>
-        /// <returns>string[]</returns>
+        /// <remarks>
+        /// At least libvips 8.5 is needed
+        /// </remarks>
+        /// <returns>string[] or null</returns>
         public string[] GetFields()
         {
-            IntPtr ptrArr;
-            unsafe
+            if (!Base.AtLeastLibvips(8, 5))
             {
-                ptrArr = (IntPtr) header.VipsImageGetFields(VImage);
+                return null;
             }
 
-            var names = new List<string>();
-
-            var count = 0;
-            IntPtr strPtr;
-            while ((strPtr = Marshal.ReadIntPtr(ptrArr, count * IntPtr.Size)) != IntPtr.Zero)
-            {
-                var name = Marshal.PtrToStringAnsi(strPtr);
-                names.Add(name);
-                gmem.GFree(strPtr);
-                ++count;
-            }
-
-            gmem.GFree(ptrArr);
-
-            return names.ToArray();
+            return VipsImage.VipsImageGetFields(IntlImage);
         }
 
         /// <summary>
@@ -688,7 +730,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Sets the type and value of an item of metadata. Any old item of the
-        /// same name is removed. See :class:`GValue` for types.
+        /// same name is removed. See <see cref="GValue"/> for types.
         /// </remarks>
         /// <param name="gtype">The GType of the metadata item to create.</param>
         /// <param name="name">The name of the piece of metadata to create.</param>
@@ -700,7 +742,7 @@ namespace NetVips
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            header.VipsImageSet(VImage, name, gv.Pointer);
+            VipsImage.VipsImageSet(IntlImage, name, gv.IntlGValue);
         }
 
         /// <summary>
@@ -711,9 +753,10 @@ namespace NetVips
         /// exist.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to set the value of.</param>
-        /// <param name="value">The value to set as a Python value. It is
+        /// <param name="value">The value to set as a C# value. It is
         /// converted to the type of the metadata item, if possible.</param>
         /// <returns></returns>
+        /// <exception cref="T:System.Exception">If metadata item <paramref name="name" /> does not exist.</exception>
         public override void Set(string name, object value)
         {
             var gtype = GetTypeOf(name);
@@ -735,7 +778,7 @@ namespace NetVips
         /// <returns></returns>
         public bool Remove(string name)
         {
-            return header.VipsImageRemove(VImage, name) != 0;
+            return VipsImage.VipsImageRemove(IntlImage, name) != 0;
         }
 
         public override string ToString()
@@ -747,7 +790,7 @@ namespace NetVips
 
         // TODO Should we define these in a separate file?
 
-        #region autogenerated functions
+        #region auto-generated functions
 
         /// <summary>
         /// Absolute value of an image
@@ -759,7 +802,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Abs()
         {
             return this.Call("abs") as Image;
@@ -776,7 +819,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Add(Image right)
         {
             return this.Call("add", right) as Image;
@@ -813,7 +856,7 @@ namespace NetVips
         /// background (double[]): Background value
         /// extend (string): How to generate the extra pixels
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Affine(double[] matrix, IDictionary<string, object> kwargs = null)
         {
             return this.Call("affine", kwargs, matrix) as Image;
@@ -840,10 +883,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Analyzeload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Analyzeload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("analyzeload", kwargs, filename);
+            return Operation.Call("analyzeload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -875,10 +918,10 @@ namespace NetVips
         /// hspacing (int): Horizontal spacing between images
         /// vspacing (int): Vertical spacing between images
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Arrayjoin(Image[] @in, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("arrayjoin", kwargs, @in) as Image;
+            return Operation.Call("arrayjoin", kwargs, new object[] {@in}) as Image;
         }
 
         /// <summary>
@@ -891,10 +934,10 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image or object[]</returns>
-        public object Autorot()
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Autorot()
         {
-            return this.Call("autorot");
+            return this.Call("autorot") as Image;
         }
 
         /// <summary>
@@ -907,7 +950,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>double</returns>
+        /// <returns>A double</returns>
         public double Avg()
         {
             return this.Call("avg") is double result ? result : 0;
@@ -924,7 +967,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="boolean">boolean to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Bandbool(string boolean)
         {
             return this.Call("bandbool", boolean) as Image;
@@ -946,7 +989,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// factor (int): Fold by this factor
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Bandfold(IDictionary<string, object> kwargs = null)
         {
             return this.Call("bandfold", kwargs) as Image;
@@ -963,7 +1006,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="c">Array of constants to add</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image BandjoinConst(double[] c)
         {
             return this.Call("bandjoin_const", c) as Image;
@@ -979,7 +1022,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Bandmean()
         {
             return this.Call("bandmean") as Image;
@@ -1001,7 +1044,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// factor (int): Unfold by this factor
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Bandunfold(IDictionary<string, object> kwargs = null)
         {
             return this.Call("bandunfold", kwargs) as Image;
@@ -1025,7 +1068,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// bands (int): Number of bands in image
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Black(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("black", kwargs, width, height) as Image;
@@ -1043,7 +1086,7 @@ namespace NetVips
         /// </example>
         /// <param name="right">Right-hand image argument</param>
         /// <param name="boolean">boolean to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Boolean(Image right, string boolean)
         {
             return this.Call("boolean", right, boolean) as Image;
@@ -1061,7 +1104,7 @@ namespace NetVips
         /// </example>
         /// <param name="boolean">boolean to perform</param>
         /// <param name="c">Array of constants</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image BooleanConst(string boolean, double[] c)
         {
             return this.Call("boolean_const", boolean, c) as Image;
@@ -1077,7 +1120,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Buildlut()
         {
             return this.Call("buildlut") as Image;
@@ -1093,7 +1136,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Byteswap()
         {
             return this.Call("byteswap") as Image;
@@ -1119,7 +1162,7 @@ namespace NetVips
         /// tile_height (int): Tile height in pixels
         /// tile_width (int): Tile width in pixels
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Cache(IDictionary<string, object> kwargs = null)
         {
             return this.Call("cache", kwargs) as Image;
@@ -1142,7 +1185,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// shift (bool): Shift integer values up and down
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Cast(string format, IDictionary<string, object> kwargs = null)
         {
             return this.Call("cast", kwargs, format) as Image;
@@ -1158,7 +1201,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image CMC2LCh()
         {
             return this.Call("CMC2LCh") as Image;
@@ -1181,7 +1224,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// source_space (string): Source color space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Colourspace(string space, IDictionary<string, object> kwargs = null)
         {
             return this.Call("colourspace", kwargs, space) as Image;
@@ -1214,7 +1257,7 @@ namespace NetVips
         /// layers (int): Use this many layers in approximation
         /// cluster (int): Cluster lines closer than this in approximation
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Compass(Image mask, IDictionary<string, object> kwargs = null)
         {
             return this.Call("compass", kwargs, mask) as Image;
@@ -1231,7 +1274,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="cmplx">complex to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Complex(string cmplx)
         {
             return this.Call("complex", cmplx) as Image;
@@ -1249,7 +1292,7 @@ namespace NetVips
         /// </example>
         /// <param name="right">Right-hand image argument</param>
         /// <param name="cmplx">binary complex operation to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Complex2(Image right, string cmplx)
         {
             return this.Call("complex2", right, cmplx) as Image;
@@ -1266,7 +1309,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Complexform(Image right)
         {
             return this.Call("complexform", right) as Image;
@@ -1283,7 +1326,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="get">complex to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Complexget(string get)
         {
             return this.Call("complexget", get) as Image;
@@ -1309,7 +1352,7 @@ namespace NetVips
         /// compositing_space (string): Composite images in this colour space
         /// premultiplied (bool): Images have premultiplied alpha
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Composite2(Image overlay, string mode, IDictionary<string, object> kwargs = null)
         {
             return this.Call("composite2", kwargs, overlay, mode) as Image;
@@ -1336,7 +1379,7 @@ namespace NetVips
         /// layers (int): Use this many layers in approximation
         /// cluster (int): Cluster lines closer than this in approximation
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Conv(Image mask, IDictionary<string, object> kwargs = null)
         {
             return this.Call("conv", kwargs, mask) as Image;
@@ -1361,7 +1404,7 @@ namespace NetVips
         /// layers (int): Use this many layers in approximation
         /// cluster (int): Cluster lines closer than this in approximation
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Conva(Image mask, IDictionary<string, object> kwargs = null)
         {
             return this.Call("conva", kwargs, mask) as Image;
@@ -1384,7 +1427,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// layers (int): Use this many layers in approximation
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Convasep(Image mask, IDictionary<string, object> kwargs = null)
         {
             return this.Call("convasep", kwargs, mask) as Image;
@@ -1401,7 +1444,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Convf(Image mask)
         {
             return this.Call("convf", mask) as Image;
@@ -1418,7 +1461,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Convi(Image mask)
         {
             return this.Call("convi", mask) as Image;
@@ -1445,7 +1488,7 @@ namespace NetVips
         /// layers (int): Use this many layers in approximation
         /// cluster (int): Cluster lines closer than this in approximation
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Convsep(Image mask, IDictionary<string, object> kwargs = null)
         {
             return this.Call("convsep", kwargs, mask) as Image;
@@ -1485,7 +1528,7 @@ namespace NetVips
         /// xoffset (int): Horizontal offset of origin
         /// yoffset (int): Vertical offset of origin
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Copy(IDictionary<string, object> kwargs = null)
         {
             return this.Call("copy", kwargs) as Image;
@@ -1502,7 +1545,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="direction">Countlines left-right or up-down</param>
-        /// <returns>double</returns>
+        /// <returns>A double</returns>
         public double Countlines(string direction)
         {
             return this.Call("countlines", direction) is double result ? result : 0;
@@ -1537,10 +1580,10 @@ namespace NetVips
         /// whitespace (string): Set of whitespace characters
         /// separator (string): Set of separator characters
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Csvload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Csvload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("csvload", kwargs, filename);
+            return Operation.Call("csvload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -1566,7 +1609,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Csvsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("csvsave", kwargs, filename);
@@ -1583,7 +1626,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DE00(Image right)
         {
             return this.Call("dE00", right) as Image;
@@ -1600,7 +1643,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DE76(Image right)
         {
             return this.Call("dE76", right) as Image;
@@ -1617,7 +1660,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DECMC(Image right)
         {
             return this.Call("dECMC", right) as Image;
@@ -1633,7 +1676,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>double</returns>
+        /// <returns>A double</returns>
         public double Deviate()
         {
             return this.Call("deviate") is double result ? result : 0;
@@ -1650,7 +1693,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Divide(Image right)
         {
             return this.Call("divide", right) as Image;
@@ -1676,7 +1719,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// fill (bool): Draw a solid object
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DrawCircle(double[] ink, int cx, int cy, int radius, IDictionary<string, object> kwargs = null)
         {
             return this.Call("draw_circle", kwargs, ink, cx, cy, radius) as Image;
@@ -1688,7 +1731,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// Image image = image.DrawFlood(ink, x, y, new Dictionary<string, object>
+        /// var output = image.DrawFlood(ink, x, y, new Dictionary<string, object>
         /// {
         ///     {"test", Image}
         ///     {"equal", bool}
@@ -1703,7 +1746,7 @@ namespace NetVips
         /// test (Image): Test pixels in this image
         /// equal (bool): DrawFlood while equal to edge
         /// </param>
-        /// <returns>Image or object[]</returns>
+        /// <returns>A new <see cref="Image"/> or an array of new <see cref="Image"/>s</returns>
         public object DrawFlood(double[] ink, int x, int y, IDictionary<string, object> kwargs = null)
         {
             return this.Call("draw_flood", kwargs, ink, x, y);
@@ -1728,7 +1771,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// mode (string): Combining mode
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DrawImage(Image sub, int x, int y, IDictionary<string, object> kwargs = null)
         {
             return this.Call("draw_image", kwargs, sub, x, y) as Image;
@@ -1749,7 +1792,7 @@ namespace NetVips
         /// <param name="y1">Start of draw_line</param>
         /// <param name="x2">End of draw_line</param>
         /// <param name="y2">End of draw_line</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DrawLine(double[] ink, int x1, int y1, int x2, int y2)
         {
             return this.Call("draw_line", ink, x1, y1, x2, y2) as Image;
@@ -1769,7 +1812,7 @@ namespace NetVips
         /// <param name="mask">Mask of pixels to draw</param>
         /// <param name="x">Draw mask here</param>
         /// <param name="y">Draw mask here</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DrawMask(double[] ink, Image mask, int x, int y)
         {
             return this.Call("draw_mask", ink, mask, x, y) as Image;
@@ -1796,7 +1839,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// fill (bool): Draw a solid object
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DrawRect(double[] ink, int left, int top, int width, int height,
             IDictionary<string, object> kwargs = null)
         {
@@ -1817,7 +1860,7 @@ namespace NetVips
         /// <param name="top">Rect to fill</param>
         /// <param name="width">Rect to fill</param>
         /// <param name="height">Rect to fill</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image DrawSmudge(int left, int top, int width, int height)
         {
             return this.Call("draw_smudge", left, top, width, height) as Image;
@@ -1866,7 +1909,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Dzsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("dzsave", kwargs, filename);
@@ -1878,7 +1921,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.DzsaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.DzsaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"basename", string}
         ///     {"layout", string}
@@ -1914,10 +1957,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string DzsaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] DzsaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("dzsave_buffer", kwargs) is string result ? result : null;
+            return this.Call("dzsave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -1942,7 +1985,7 @@ namespace NetVips
         /// extend (string): How to generate the extra pixels
         /// background (double[]): Color for background pixels
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Embed(int x, int y, int width, int height, IDictionary<string, object> kwargs = null)
         {
             return this.Call("embed", kwargs, x, y, width, height) as Image;
@@ -1962,7 +2005,7 @@ namespace NetVips
         /// <param name="top">Top edge of extract area</param>
         /// <param name="width">Width of extract area</param>
         /// <param name="height">Height of extract area</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image ExtractArea(int left, int top, int width, int height)
         {
             return this.Call("extract_area", left, top, width, height) as Image;
@@ -1985,7 +2028,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// n (int): Number of bands to extract
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image ExtractBand(int band, IDictionary<string, object> kwargs = null)
         {
             return this.Call("extract_band", kwargs, band) as Image;
@@ -2011,7 +2054,7 @@ namespace NetVips
         /// uchar (bool): Output an unsigned char image
         /// factor (double): Maximum spatial frequency
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Eye(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("eye", kwargs, width, height) as Image;
@@ -2027,7 +2070,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Falsecolour()
         {
             return this.Call("falsecolour") as Image;
@@ -2044,7 +2087,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="ref">Input reference image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Fastcor(Image @ref)
         {
             return this.Call("fastcor", @ref) as Image;
@@ -2060,10 +2103,10 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image or object[]</returns>
-        public object FillNearest()
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image FillNearest()
         {
-            return this.Call("fill_nearest");
+            return this.Call("fill_nearest") as Image;
         }
 
         /// <summary>
@@ -2072,7 +2115,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// in.FindTrim(new Dictionary<string, object>
+        /// var output = in.FindTrim(new Dictionary<string, object>
         /// {
         ///     {"threshold", double}
         ///     {"background", double[]}
@@ -2084,7 +2127,7 @@ namespace NetVips
         /// threshold (double): Object threshold
         /// background (double[]): Color for background pixels
         /// </param>
-        /// <returns>object[]</returns>
+        /// <returns>An array of objects</returns>
         public object[] FindTrim(IDictionary<string, object> kwargs = null)
         {
             return this.Call("find_trim", kwargs) as object[];
@@ -2108,7 +2151,7 @@ namespace NetVips
         /// background (double[]): Background value
         /// max_alpha (double): Maximum value of alpha channel
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Flatten(IDictionary<string, object> kwargs = null)
         {
             return this.Call("flatten", kwargs) as Image;
@@ -2125,7 +2168,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="direction">Direction to flip image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Flip(string direction)
         {
             return this.Call("flip", direction) as Image;
@@ -2141,7 +2184,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Float2rad()
         {
             return this.Call("float2rad") as Image;
@@ -2160,7 +2203,7 @@ namespace NetVips
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         /// <param name="fractalDimension">Fractal dimension</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Fractsurf(int width, int height, double fractalDimension)
         {
             return Operation.Call("fractsurf", width, height, fractalDimension) as Image;
@@ -2177,7 +2220,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="mask">Input mask image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Freqmult(Image mask)
         {
             return this.Call("freqmult", mask) as Image;
@@ -2193,7 +2236,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Fwfft()
         {
             return this.Call("fwfft") as Image;
@@ -2215,7 +2258,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// exponent (double): Gamma factor
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Gamma(IDictionary<string, object> kwargs = null)
         {
             return this.Call("gamma", kwargs) as Image;
@@ -2240,7 +2283,7 @@ namespace NetVips
         /// min_ampl (double): Minimum amplitude of Gaussian
         /// precision (string): Convolve with this precision
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Gaussblur(double sigma, IDictionary<string, object> kwargs = null)
         {
             return this.Call("gaussblur", kwargs, sigma) as Image;
@@ -2266,7 +2309,7 @@ namespace NetVips
         /// separable (bool): Generate separable Gaussian
         /// precision (string): Generate with this precision
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Gaussmat(double sigma, double minAmpl, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("gaussmat", kwargs, sigma, minAmpl) as Image;
@@ -2292,7 +2335,7 @@ namespace NetVips
         /// sigma (double): Standard deviation of pixels in generated image
         /// mean (double): Mean of pixels in generated image
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Gaussnoise(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("gaussnoise", kwargs, width, height) as Image;
@@ -2310,7 +2353,7 @@ namespace NetVips
         /// </example>
         /// <param name="x">Point to read</param>
         /// <param name="y">Point to read</param>
-        /// <returns>double[]</returns>
+        /// <returns>An array of doubles</returns>
         public double[] Getpoint(int x, int y)
         {
             return this.Call("getpoint", x, y) as double[];
@@ -2341,10 +2384,10 @@ namespace NetVips
         /// page (int): Load this page from the file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Gifload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Gifload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("gifload", kwargs, filename);
+            return Operation.Call("gifload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -2372,10 +2415,10 @@ namespace NetVips
         /// page (int): Load this page from the file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object GifloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image GifloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("gifload_buffer", kwargs, buffer);
+            return Operation.Call("gifload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -2396,7 +2439,7 @@ namespace NetVips
         /// gamma (double): Image gamma
         /// int_output (bool): Integer output
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Globalbalance(IDictionary<string, object> kwargs = null)
         {
             return this.Call("globalbalance", kwargs) as Image;
@@ -2423,7 +2466,7 @@ namespace NetVips
         /// extend (string): How to generate the extra pixels
         /// background (double[]): Color for background pixels
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Gravity(string direction, int width, int height, IDictionary<string, object> kwargs = null)
         {
             return this.Call("gravity", kwargs, direction, width, height) as Image;
@@ -2447,7 +2490,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// uchar (bool): Output an unsigned char image
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Grey(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("grey", kwargs, width, height) as Image;
@@ -2466,7 +2509,7 @@ namespace NetVips
         /// <param name="tileHeight">chop into tiles this high</param>
         /// <param name="across">number of tiles across</param>
         /// <param name="down">number of tiles down</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Grid(int tileHeight, int across, int down)
         {
             return this.Call("grid", tileHeight, across, down) as Image;
@@ -2482,7 +2525,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistCum()
         {
             return this.Call("hist_cum") as Image;
@@ -2498,7 +2541,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>double</returns>
+        /// <returns>A double</returns>
         public double HistEntropy()
         {
             return this.Call("hist_entropy") is double result ? result : 0;
@@ -2520,7 +2563,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// band (int): Equalise with this band
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistEqual(IDictionary<string, object> kwargs = null)
         {
             return this.Call("hist_equal", kwargs) as Image;
@@ -2542,7 +2585,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// band (int): Find histogram of band
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistFind(IDictionary<string, object> kwargs = null)
         {
             return this.Call("hist_find", kwargs) as Image;
@@ -2565,7 +2608,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// combine (string): Combine bins like this
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistFindIndexed(Image index, IDictionary<string, object> kwargs = null)
         {
             return this.Call("hist_find_indexed", kwargs, index) as Image;
@@ -2587,7 +2630,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// bins (int): Number of bins in each dimension
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistFindNdim(IDictionary<string, object> kwargs = null)
         {
             return this.Call("hist_find_ndim", kwargs) as Image;
@@ -2603,7 +2646,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>bool</returns>
+        /// <returns>A bool</returns>
         public bool HistIsmonotonic()
         {
             return this.Call("hist_ismonotonic") is bool result && result;
@@ -2627,7 +2670,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// max_slope (int): Maximum slope (CLAHE)
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistLocal(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return this.Call("hist_local", kwargs, width, height) as Image;
@@ -2644,7 +2687,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="ref">Reference histogram</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistMatch(Image @ref)
         {
             return this.Call("hist_match", @ref) as Image;
@@ -2660,7 +2703,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistNorm()
         {
             return this.Call("hist_norm") as Image;
@@ -2676,7 +2719,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HistPlot()
         {
             return this.Call("hist_plot") as Image;
@@ -2702,7 +2745,7 @@ namespace NetVips
         /// min_radius (int): Smallest radius to search for
         /// max_radius (int): Largest radius to search for
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HoughCircle(IDictionary<string, object> kwargs = null)
         {
             return this.Call("hough_circle", kwargs) as Image;
@@ -2726,7 +2769,7 @@ namespace NetVips
         /// width (int): horizontal size of parameter space
         /// height (int): Vertical size of parameter space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HoughLine(IDictionary<string, object> kwargs = null)
         {
             return this.Call("hough_line", kwargs) as Image;
@@ -2742,7 +2785,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image HSV2sRGB()
         {
             return this.Call("HSV2sRGB") as Image;
@@ -2770,7 +2813,7 @@ namespace NetVips
         /// output_profile (string): Filename to load output profile from
         /// depth (int): Output device space depth in bits
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image IccExport(IDictionary<string, object> kwargs = null)
         {
             return this.Call("icc_export", kwargs) as Image;
@@ -2798,7 +2841,7 @@ namespace NetVips
         /// embedded (bool): Use embedded input profile, if available
         /// input_profile (string): Filename to load input profile from
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image IccImport(IDictionary<string, object> kwargs = null)
         {
             return this.Call("icc_import", kwargs) as Image;
@@ -2829,7 +2872,7 @@ namespace NetVips
         /// input_profile (string): Filename to load input profile from
         /// depth (int): Output device space depth in bits
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image IccTransform(string outputProfile, IDictionary<string, object> kwargs = null)
         {
             return this.Call("icc_transform", kwargs, outputProfile) as Image;
@@ -2855,7 +2898,7 @@ namespace NetVips
         /// ushort (bool): Create a 16-bit LUT
         /// size (int): Size of 16-bit LUT
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Identity(IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("identity", kwargs) as Image;
@@ -2882,7 +2925,7 @@ namespace NetVips
         /// expand (bool): Expand output to hold all of both inputs
         /// background (double[]): Color for new pixels
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Insert(Image sub, int x, int y, IDictionary<string, object> kwargs = null)
         {
             return this.Call("insert", kwargs, sub, x, y) as Image;
@@ -2898,7 +2941,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Invert()
         {
             return this.Call("invert") as Image;
@@ -2920,7 +2963,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// size (int): LUT size to generate
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Invertlut(IDictionary<string, object> kwargs = null)
         {
             return this.Call("invertlut", kwargs) as Image;
@@ -2942,7 +2985,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// real (bool): Output only the real part of the transform
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Invfft(IDictionary<string, object> kwargs = null)
         {
             return this.Call("invfft", kwargs) as Image;
@@ -2972,7 +3015,7 @@ namespace NetVips
         /// background (double[]): Colour for new pixels
         /// align (string): Align on the low, centre or high coordinate edge
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Join(Image in2, string direction, IDictionary<string, object> kwargs = null)
         {
             return this.Call("join", kwargs, in2, direction) as Image;
@@ -3003,10 +3046,10 @@ namespace NetVips
         /// fail (bool): Fail on first error
         /// autorotate (bool): Rotate image using exif orientation
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Jpegload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Jpegload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("jpegload", kwargs, filename);
+            return Operation.Call("jpegload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -3034,10 +3077,10 @@ namespace NetVips
         /// fail (bool): Fail on first error
         /// autorotate (bool): Rotate image using exif orientation
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object JpegloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image JpegloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("jpegload_buffer", kwargs, buffer);
+            return Operation.Call("jpegload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -3079,7 +3122,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Jpegsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("jpegsave", kwargs, filename);
@@ -3091,7 +3134,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.JpegsaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.JpegsaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"page_height", int}
         ///     {"Q", int}
@@ -3123,10 +3166,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string JpegsaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] JpegsaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("jpegsave_buffer", kwargs) is string result ? result : null;
+            return this.Call("jpegsave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -3167,7 +3210,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void JpegsaveMime(IDictionary<string, object> kwargs = null)
         {
             this.Call("jpegsave_mime", kwargs);
@@ -3183,7 +3226,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Lab2LabQ()
         {
             return this.Call("Lab2LabQ") as Image;
@@ -3199,7 +3242,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Lab2LabS()
         {
             return this.Call("Lab2LabS") as Image;
@@ -3215,7 +3258,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Lab2LCh()
         {
             return this.Call("Lab2LCh") as Image;
@@ -3237,7 +3280,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// temp (double[]): Color temperature
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Lab2XYZ(IDictionary<string, object> kwargs = null)
         {
             return this.Call("Lab2XYZ", kwargs) as Image;
@@ -3253,10 +3296,10 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image or object[]</returns>
-        public object Labelregions()
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Labelregions()
         {
-            return this.Call("labelregions");
+            return this.Call("labelregions") as Image;
         }
 
         /// <summary>
@@ -3269,7 +3312,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LabQ2Lab()
         {
             return this.Call("LabQ2Lab") as Image;
@@ -3285,7 +3328,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LabQ2LabS()
         {
             return this.Call("LabQ2LabS") as Image;
@@ -3301,7 +3344,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LabQ2sRGB()
         {
             return this.Call("LabQ2sRGB") as Image;
@@ -3317,7 +3360,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LabS2Lab()
         {
             return this.Call("LabS2Lab") as Image;
@@ -3333,7 +3376,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LabS2LabQ()
         {
             return this.Call("LabS2LabQ") as Image;
@@ -3349,7 +3392,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LCh2CMC()
         {
             return this.Call("LCh2CMC") as Image;
@@ -3365,7 +3408,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image LCh2Lab()
         {
             return this.Call("LCh2Lab") as Image;
@@ -3389,7 +3432,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// uchar (bool): Output should be uchar
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Linear(double[] a, double[] b, IDictionary<string, object> kwargs = null)
         {
             return this.Call("linear", kwargs, a, b) as Image;
@@ -3417,7 +3460,7 @@ namespace NetVips
         /// threaded (bool): Allow threaded access
         /// persistent (bool): Keep cache between evaluations
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Linecache(IDictionary<string, object> kwargs = null)
         {
             return this.Call("linecache", kwargs) as Image;
@@ -3443,7 +3486,7 @@ namespace NetVips
         /// separable (bool): Generate separable Logmatian
         /// precision (string): Generate with this precision
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Logmat(double sigma, double minAmpl, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("logmat", kwargs, sigma, minAmpl) as Image;
@@ -3476,10 +3519,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Magickload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Magickload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("magickload", kwargs, filename);
+            return Operation.Call("magickload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -3509,10 +3552,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object MagickloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image MagickloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("magickload_buffer", kwargs, buffer);
+            return Operation.Call("magickload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -3540,7 +3583,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Magicksave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("magicksave", kwargs, filename);
@@ -3552,7 +3595,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.MagicksaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.MagicksaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"format", string}
         ///     {"quality", int}
@@ -3570,10 +3613,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string MagicksaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] MagicksaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("magicksave_buffer", kwargs) is string result ? result : null;
+            return this.Call("magicksave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -3593,7 +3636,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// interpolate (GObject): Interpolate pixels with this
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Mapim(Image index, IDictionary<string, object> kwargs = null)
         {
             return this.Call("mapim", kwargs, index) as Image;
@@ -3616,7 +3659,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// band (int): apply one-band lut to this band of in
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Maplut(Image lut, IDictionary<string, object> kwargs = null)
         {
             return this.Call("maplut", kwargs, lut) as Image;
@@ -3649,7 +3692,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskButterworth(int width, int height, double order, double frequencyCutoff,
             double amplitudeCutoff, IDictionary<string, object> kwargs = null)
         {
@@ -3686,7 +3729,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskButterworthBand(int width, int height, double order, double frequencyCutoffX,
             double frequencyCutoffY, double radius, double amplitudeCutoff, IDictionary<string, object> kwargs = null)
         {
@@ -3722,7 +3765,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskButterworthRing(int width, int height, double order, double frequencyCutoff,
             double amplitudeCutoff, double ringwidth, IDictionary<string, object> kwargs = null)
         {
@@ -3755,7 +3798,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskFractal(int width, int height, double fractalDimension,
             IDictionary<string, object> kwargs = null)
         {
@@ -3788,7 +3831,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskGaussian(int width, int height, double frequencyCutoff, double amplitudeCutoff,
             IDictionary<string, object> kwargs = null)
         {
@@ -3823,7 +3866,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskGaussianBand(int width, int height, double frequencyCutoffX, double frequencyCutoffY,
             double radius, double amplitudeCutoff, IDictionary<string, object> kwargs = null)
         {
@@ -3858,7 +3901,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskGaussianRing(int width, int height, double frequencyCutoff, double amplitudeCutoff,
             double ringwidth, IDictionary<string, object> kwargs = null)
         {
@@ -3891,7 +3934,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskIdeal(int width, int height, double frequencyCutoff,
             IDictionary<string, object> kwargs = null)
         {
@@ -3925,7 +3968,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskIdealBand(int width, int height, double frequencyCutoffX, double frequencyCutoffY,
             double radius, IDictionary<string, object> kwargs = null)
         {
@@ -3959,7 +4002,7 @@ namespace NetVips
         /// reject (bool): Invert the sense of the filter
         /// optical (bool): Rotate quadrants to optical space
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskIdealRing(int width, int height, double frequencyCutoff, double ringwidth,
             IDictionary<string, object> kwargs = null)
         {
@@ -3997,7 +4040,7 @@ namespace NetVips
         /// search (bool): Search to improve tie-points
         /// interpolate (GObject): Interpolate pixels with this
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Match(Image sec, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2,
             IDictionary<string, object> kwargs = null)
         {
@@ -4015,7 +4058,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="math">math to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Math(string math)
         {
             return this.Call("math", math) as Image;
@@ -4033,7 +4076,7 @@ namespace NetVips
         /// </example>
         /// <param name="right">Right-hand image argument</param>
         /// <param name="math2">math to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Math2(Image right, string math2)
         {
             return this.Call("math2", right, math2) as Image;
@@ -4051,7 +4094,7 @@ namespace NetVips
         /// </example>
         /// <param name="math2">math to perform</param>
         /// <param name="c">Array of constants</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Math2Const(string math2, double[] c)
         {
             return this.Call("math2_const", math2, c) as Image;
@@ -4078,10 +4121,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Matload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Matload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("matload", kwargs, filename);
+            return Operation.Call("matload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4105,10 +4148,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Matrixload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Matrixload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("matrixload", kwargs, filename);
+            return Operation.Call("matrixload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4131,7 +4174,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Matrixprint(IDictionary<string, object> kwargs = null)
         {
             this.Call("matrixprint", kwargs);
@@ -4158,7 +4201,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Matrixsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("matrixsave", kwargs, filename);
@@ -4170,7 +4213,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// double @out = in.Max(new Dictionary<string, object>
+        /// var output = in.Max(new Dictionary<string, object>
         /// {
         ///     {"size", int}
         /// });
@@ -4180,7 +4223,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// size (int): Number of maximum values to find
         /// </param>
-        /// <returns>double or object[]</returns>
+        /// <returns>A double or an array of doubles</returns>
         public object Max(IDictionary<string, object> kwargs = null)
         {
             return this.Call("max", kwargs);
@@ -4210,7 +4253,7 @@ namespace NetVips
         /// width (int): Width of extract area
         /// height (int): Height of extract area
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Measure(int h, int v, IDictionary<string, object> kwargs = null)
         {
             return this.Call("measure", kwargs, h, v) as Image;
@@ -4236,7 +4279,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// mblend (int): Maximum blend size
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Merge(Image sec, string direction, int dx, int dy, IDictionary<string, object> kwargs = null)
         {
             return this.Call("merge", kwargs, sec, direction, dx, dy) as Image;
@@ -4248,7 +4291,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// double @out = in.Min(new Dictionary<string, object>
+        /// var output = in.Min(new Dictionary<string, object>
         /// {
         ///     {"size", int}
         /// });
@@ -4258,7 +4301,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// size (int): Number of minimum values to find
         /// </param>
-        /// <returns>double or object[]</returns>
+        /// <returns>A double or an array of doubles</returns>
         public object Min(IDictionary<string, object> kwargs = null)
         {
             return this.Call("min", kwargs);
@@ -4276,7 +4319,7 @@ namespace NetVips
         /// </example>
         /// <param name="mask">Input matrix image</param>
         /// <param name="morph">Morphological operation to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Morph(Image mask, string morph)
         {
             return this.Call("morph", mask, morph) as Image;
@@ -4288,7 +4331,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, new Dictionary<string, object>
+        /// var output = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, new Dictionary<string, object>
         /// {
         ///     {"hwindow", int}
         ///     {"harea", int}
@@ -4310,7 +4353,7 @@ namespace NetVips
         /// mblend (int): Maximum blend size
         /// bandno (int): Band to search for features on
         /// </param>
-        /// <returns>Image or object[]</returns>
+        /// <returns>A new <see cref="Image"/> or an array of new <see cref="Image"/>s</returns>
         public object Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec,
             IDictionary<string, object> kwargs = null)
         {
@@ -4353,7 +4396,7 @@ namespace NetVips
         /// mblend (int): Maximum blend size
         /// bandno (int): Band to search for features on
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic1(Image sec, string direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2,
             int ys2, IDictionary<string, object> kwargs = null)
         {
@@ -4376,7 +4419,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// band (int): Band to msb
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Msb(IDictionary<string, object> kwargs = null)
         {
             return this.Call("msb", kwargs) as Image;
@@ -4393,7 +4436,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Multiply(Image right)
         {
             return this.Call("multiply", right) as Image;
@@ -4428,10 +4471,10 @@ namespace NetVips
         /// associated (string): Load this associated image
         /// attach_associated (bool): Attach all asssociated images
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Openslideload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Openslideload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("openslideload", kwargs, filename);
+            return Operation.Call("openslideload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4463,10 +4506,10 @@ namespace NetVips
         /// dpi (double): Render at this DPI
         /// scale (double): Scale output by this factor
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Pdfload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Pdfload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("pdfload", kwargs, filename);
+            return Operation.Call("pdfload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4498,10 +4541,10 @@ namespace NetVips
         /// dpi (double): Render at this DPI
         /// scale (double): Scale output by this factor
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object PdfloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image PdfloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("pdfload_buffer", kwargs, buffer);
+            return Operation.Call("pdfload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -4515,7 +4558,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="percent">Percent of pixels</param>
-        /// <returns>int</returns>
+        /// <returns>A int</returns>
         public int Percent(double percent)
         {
             return this.Call("percent", percent) is int result ? result : 0;
@@ -4541,7 +4584,7 @@ namespace NetVips
         /// cell_size (int): Size of Perlin cells
         /// uchar (bool): Output an unsigned char image
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Perlin(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("perlin", kwargs, width, height) as Image;
@@ -4558,7 +4601,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="in2">Second input image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Phasecor(Image in2)
         {
             return this.Call("phasecor", in2) as Image;
@@ -4585,10 +4628,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Pngload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Pngload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("pngload", kwargs, filename);
+            return Operation.Call("pngload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4612,10 +4655,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object PngloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image PngloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("pngload_buffer", kwargs, buffer);
+            return Operation.Call("pngload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -4647,7 +4690,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Pngsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("pngsave", kwargs, filename);
@@ -4659,7 +4702,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.PngsaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.PngsaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"compression", int}
         ///     {"interlace", bool}
@@ -4681,10 +4724,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string PngsaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] PngsaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("pngsave_buffer", kwargs) is string result ? result : null;
+            return this.Call("pngsave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -4708,10 +4751,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Ppmload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Ppmload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("ppmload", kwargs, filename);
+            return Operation.Call("ppmload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4739,7 +4782,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Ppmsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("ppmsave", kwargs, filename);
@@ -4761,7 +4804,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// max_alpha (double): Maximum value of alpha channel
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Premultiply(IDictionary<string, object> kwargs = null)
         {
             return this.Call("premultiply", kwargs) as Image;
@@ -4773,11 +4816,11 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// in.Profile();
+        /// var output = in.Profile();
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>object[]</returns>
+        /// <returns>An array of objects</returns>
         public object[] Profile()
         {
             return this.Call("profile") as object[];
@@ -4789,11 +4832,11 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// in.Project();
+        /// var output = in.Project();
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>object[]</returns>
+        /// <returns>An array of objects</returns>
         public object[] Project()
         {
             return this.Call("project") as object[];
@@ -4816,7 +4859,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// interpolate (GObject): Interpolate values with this
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Quadratic(Image coeff, IDictionary<string, object> kwargs = null)
         {
             return this.Call("quadratic", kwargs, coeff) as Image;
@@ -4832,7 +4875,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Rad2float()
         {
             return this.Call("rad2float") as Image;
@@ -4859,10 +4902,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Radload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Radload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("radload", kwargs, filename);
+            return Operation.Call("radload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -4886,7 +4929,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Radsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("radsave", kwargs, filename);
@@ -4898,7 +4941,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.RadsaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.RadsaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"page_height", int}
         ///     {"strip", bool}
@@ -4912,10 +4955,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string RadsaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] RadsaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("radsave_buffer", kwargs) is string result ? result : null;
+            return this.Call("radsave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -4931,7 +4974,7 @@ namespace NetVips
         /// <param name="width">Window width in pixels</param>
         /// <param name="height">Window height in pixels</param>
         /// <param name="index">Select pixel at index</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Rank(int width, int height, int index)
         {
             return this.Call("rank", width, height, index) as Image;
@@ -4948,7 +4991,7 @@ namespace NetVips
         ///     {"memory", bool}
         ///     {"access", string}
         ///     {"fail", bool}
-        ///     {"offset", <unknown type>}
+        ///     {"offset", object}
         /// });
         /// ]]>
         /// </code>
@@ -4961,13 +5004,13 @@ namespace NetVips
         /// memory (bool): Force open via memory
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
-        /// offset (<unknown type>): Offset in bytes from start of file
+        /// offset (object): Offset in bytes from start of file
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Rawload(string filename, int width, int height, int bands,
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Rawload(string filename, int width, int height, int bands,
             IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("rawload", kwargs, filename, width, height, bands);
+            return Operation.Call("rawload", kwargs, filename, width, height, bands) as Image;
         }
 
         /// <summary>
@@ -4991,7 +5034,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Rawsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("rawsave", kwargs, filename);
@@ -5018,7 +5061,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void RawsaveFd(int fd, IDictionary<string, object> kwargs = null)
         {
             this.Call("rawsave_fd", kwargs, fd);
@@ -5035,7 +5078,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="m">matrix of coefficients</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Recomb(Image m)
         {
             return this.Call("recomb", m) as Image;
@@ -5061,7 +5104,7 @@ namespace NetVips
         /// kernel (string): Resampling kernel
         /// centre (bool): Use centre sampling convention
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Reduce(double hshrink, double vshrink, IDictionary<string, object> kwargs = null)
         {
             return this.Call("reduce", kwargs, hshrink, vshrink) as Image;
@@ -5086,7 +5129,7 @@ namespace NetVips
         /// kernel (string): Resampling kernel
         /// centre (bool): Use centre sampling convention
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Reduceh(double hshrink, IDictionary<string, object> kwargs = null)
         {
             return this.Call("reduceh", kwargs, hshrink) as Image;
@@ -5111,7 +5154,7 @@ namespace NetVips
         /// kernel (string): Resampling kernel
         /// centre (bool): Use centre sampling convention
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Reducev(double vshrink, IDictionary<string, object> kwargs = null)
         {
             return this.Call("reducev", kwargs, vshrink) as Image;
@@ -5129,7 +5172,7 @@ namespace NetVips
         /// </example>
         /// <param name="right">Right-hand image argument</param>
         /// <param name="relational">relational to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Relational(Image right, string relational)
         {
             return this.Call("relational", right, relational) as Image;
@@ -5147,7 +5190,7 @@ namespace NetVips
         /// </example>
         /// <param name="relational">relational to perform</param>
         /// <param name="c">Array of constants</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image RelationalConst(string relational, double[] c)
         {
             return this.Call("relational_const", relational, c) as Image;
@@ -5164,7 +5207,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Remainder(Image right)
         {
             return this.Call("remainder", right) as Image;
@@ -5181,7 +5224,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="c">Array of constants</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image RemainderConst(double[] c)
         {
             return this.Call("remainder_const", c) as Image;
@@ -5199,7 +5242,7 @@ namespace NetVips
         /// </example>
         /// <param name="across">Repeat this many times horizontally</param>
         /// <param name="down">Repeat this many times vertically</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Replicate(int across, int down)
         {
             return this.Call("replicate", across, down) as Image;
@@ -5224,7 +5267,7 @@ namespace NetVips
         /// kernel (string): Resampling kernel
         /// vscale (double): Vertical scale image by this factor
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Resize(double scale, IDictionary<string, object> kwargs = null)
         {
             return this.Call("resize", kwargs, scale) as Image;
@@ -5241,7 +5284,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="angle">Angle to rotate image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Rot(string angle)
         {
             return this.Call("rot", angle) as Image;
@@ -5263,7 +5306,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// angle (string): Angle to rotate image
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Rot45(IDictionary<string, object> kwargs = null)
         {
             return this.Call("rot45", kwargs) as Image;
@@ -5280,7 +5323,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="round">rounding operation to perform</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Round(string round)
         {
             return this.Call("round", round) as Image;
@@ -5302,7 +5345,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// depth (int): Output device space depth in bits
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image ScRGB2BW(IDictionary<string, object> kwargs = null)
         {
             return this.Call("scRGB2BW", kwargs) as Image;
@@ -5324,7 +5367,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// depth (int): Output device space depth in bits
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image ScRGB2sRGB(IDictionary<string, object> kwargs = null)
         {
             return this.Call("scRGB2sRGB", kwargs) as Image;
@@ -5340,7 +5383,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image ScRGB2XYZ()
         {
             return this.Call("scRGB2XYZ") as Image;
@@ -5362,7 +5405,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// tile_height (int): Tile height in pixels
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Sequential(IDictionary<string, object> kwargs = null)
         {
             return this.Call("sequential", kwargs) as Image;
@@ -5394,7 +5437,7 @@ namespace NetVips
         /// m1 (double): Slope for flat areas
         /// m2 (double): Slope for jaggy areas
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Sharpen(IDictionary<string, object> kwargs = null)
         {
             return this.Call("sharpen", kwargs) as Image;
@@ -5412,7 +5455,7 @@ namespace NetVips
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor</param>
         /// <param name="vshrink">Vertical shrink factor</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Shrink(double hshrink, double vshrink)
         {
             return this.Call("shrink", hshrink, vshrink) as Image;
@@ -5429,7 +5472,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Shrinkh(int hshrink)
         {
             return this.Call("shrinkh", hshrink) as Image;
@@ -5446,7 +5489,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="vshrink">Vertical shrink factor</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Shrinkv(int vshrink)
         {
             return this.Call("shrinkv", vshrink) as Image;
@@ -5462,7 +5505,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Sign()
         {
             return this.Call("sign") as Image;
@@ -5498,7 +5541,7 @@ namespace NetVips
         /// idx (double): Horizontal input displacement
         /// idy (double): Vertical input displacement
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Similarity(IDictionary<string, object> kwargs = null)
         {
             return this.Call("similarity", kwargs) as Image;
@@ -5526,7 +5569,7 @@ namespace NetVips
         /// hfreq (double): Horizontal spatial frequency
         /// vfreq (double): Vertical spatial frequency
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Sines(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("sines", kwargs, width, height) as Image;
@@ -5550,7 +5593,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// interesting (string): How to measure interestingness
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Smartcrop(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return this.Call("smartcrop", kwargs, width, height) as Image;
@@ -5567,7 +5610,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="ref">Input reference image</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Spcor(Image @ref)
         {
             return this.Call("spcor", @ref) as Image;
@@ -5583,7 +5626,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Spectrum()
         {
             return this.Call("spectrum") as Image;
@@ -5599,7 +5642,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image SRGB2HSV()
         {
             return this.Call("sRGB2HSV") as Image;
@@ -5615,7 +5658,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image SRGB2scRGB()
         {
             return this.Call("sRGB2scRGB") as Image;
@@ -5631,7 +5674,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Stats()
         {
             return this.Call("stats") as Image;
@@ -5661,7 +5704,7 @@ namespace NetVips
         /// m0 (double): New mean
         /// a (double): Weight of new mean
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Stdif(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return this.Call("stdif", kwargs, width, height) as Image;
@@ -5685,7 +5728,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// point (bool): Point sample
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Subsample(int xfac, int yfac, IDictionary<string, object> kwargs = null)
         {
             return this.Call("subsample", kwargs, xfac, yfac) as Image;
@@ -5702,7 +5745,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Subtract(Image right)
         {
             return this.Call("subtract", right) as Image;
@@ -5719,10 +5762,10 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="in">Array of input images</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Sum(Image[] @in)
         {
-            return Operation.Call("sum", @in) as Image;
+            return Operation.Call("sum", new object[] {@in}) as Image;
         }
 
         /// <summary>
@@ -5750,10 +5793,10 @@ namespace NetVips
         /// fail (bool): Fail on first error
         /// scale (double): Scale output by this factor
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Svgload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Svgload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("svgload", kwargs, filename);
+            return Operation.Call("svgload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -5781,10 +5824,10 @@ namespace NetVips
         /// fail (bool): Fail on first error
         /// scale (double): Scale output by this factor
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object SvgloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image SvgloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("svgload_buffer", kwargs, buffer);
+            return Operation.Call("svgload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -5793,7 +5836,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// NetVips.Image.System(cmdFormat, new Dictionary<string, object>
+        /// var output = NetVips.Image.System(cmdFormat, new Dictionary<string, object>
         /// {
         ///     {"in", Image[]}
         ///     {"out_format", string}
@@ -5808,10 +5851,10 @@ namespace NetVips
         /// out_format (string): Format for output filename
         /// in_format (string): Format for input filename
         /// </param>
-        /// <returns>void or object[]</returns>
-        public static object System(string cmdFormat, IDictionary<string, object> kwargs = null)
+        /// <returns>None</returns>
+        public static void System(string cmdFormat, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("system", kwargs, cmdFormat);
+            Operation.Call("system", kwargs, cmdFormat);
         }
 
         /// <summary>
@@ -5820,7 +5863,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// Image @out = NetVips.Image.Text(text, new Dictionary<string, object>
+        /// var output = NetVips.Image.Text(text, new Dictionary<string, object>
         /// {
         ///     {"font", string}
         ///     {"width", int}
@@ -5841,7 +5884,7 @@ namespace NetVips
         /// dpi (int): DPI to render at
         /// spacing (int): Line spacing
         /// </param>
-        /// <returns>Image or object[]</returns>
+        /// <returns>A new <see cref="Image"/> or a autofit_dpi</returns>
         public static object Text(string text, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("text", kwargs, text);
@@ -5879,7 +5922,7 @@ namespace NetVips
         /// export_profile (string): Fallback export profile
         /// intent (string): Rendering intent
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Thumbnail(string filename, int width, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("thumbnail", kwargs, filename, width) as Image;
@@ -5917,8 +5960,8 @@ namespace NetVips
         /// export_profile (string): Fallback export profile
         /// intent (string): Rendering intent
         /// </param>
-        /// <returns>Image</returns>
-        public static Image ThumbnailBuffer(string buffer, int width, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image ThumbnailBuffer(byte[] buffer, int width, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("thumbnail_buffer", kwargs, buffer, width) as Image;
         }
@@ -5954,7 +5997,7 @@ namespace NetVips
         /// export_profile (string): Fallback export profile
         /// intent (string): Rendering intent
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image ThumbnailImage(int width, IDictionary<string, object> kwargs = null)
         {
             return this.Call("thumbnail_image", kwargs, width) as Image;
@@ -5987,10 +6030,10 @@ namespace NetVips
         /// fail (bool): Fail on first error
         /// autorotate (bool): Rotate image using orientation tag
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Tiffload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Tiffload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("tiffload", kwargs, filename);
+            return Operation.Call("tiffload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -6020,10 +6063,10 @@ namespace NetVips
         /// fail (bool): Fail on first error
         /// autorotate (bool): Rotate image using orientation tag
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object TiffloadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image TiffloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("tiffload_buffer", kwargs, buffer);
+            return Operation.Call("tiffload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -6077,7 +6120,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Tiffsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("tiffsave", kwargs, filename);
@@ -6089,7 +6132,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.TiffsaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.TiffsaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"compression", string}
         ///     {"Q", int}
@@ -6133,10 +6176,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string TiffsaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] TiffsaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("tiffsave_buffer", kwargs) is string result ? result : null;
+            return this.Call("tiffsave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -6165,7 +6208,7 @@ namespace NetVips
         /// threaded (bool): Allow threaded access
         /// persistent (bool): Keep cache between evaluations
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Tilecache(IDictionary<string, object> kwargs = null)
         {
             return this.Call("tilecache", kwargs) as Image;
@@ -6205,7 +6248,7 @@ namespace NetVips
         /// M (double): Adjust mid-tones by this much
         /// H (double): Adjust highlights by this much
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Tonelut(IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("tonelut", kwargs) as Image;
@@ -6227,7 +6270,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// max_alpha (double): Maximum value of alpha channel
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Unpremultiply(IDictionary<string, object> kwargs = null)
         {
             return this.Call("unpremultiply", kwargs) as Image;
@@ -6254,10 +6297,10 @@ namespace NetVips
         /// access (string): Required access pattern for this file
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Vipsload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Vipsload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("vipsload", kwargs, filename);
+            return Operation.Call("vipsload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -6281,7 +6324,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Vipssave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("vipssave", kwargs, filename);
@@ -6310,10 +6353,10 @@ namespace NetVips
         /// shrink (int): Shrink factor on load
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object Webpload(string filename, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Webpload(string filename, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("webpload", kwargs, filename);
+            return Operation.Call("webpload", kwargs, filename) as Image;
         }
 
         /// <summary>
@@ -6339,10 +6382,10 @@ namespace NetVips
         /// shrink (int): Shrink factor on load
         /// fail (bool): Fail on first error
         /// </param>
-        /// <returns>Image or object[]</returns>
-        public static object WebploadBuffer(string buffer, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image WebploadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("webpload_buffer", kwargs, buffer);
+            return Operation.Call("webpload_buffer", kwargs, buffer) as Image;
         }
 
         /// <summary>
@@ -6378,7 +6421,7 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>void</returns>
+        /// <returns>None</returns>
         public void Webpsave(string filename, IDictionary<string, object> kwargs = null)
         {
             this.Call("webpsave", kwargs, filename);
@@ -6390,7 +6433,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// string buffer = in.WebpsaveBuffer(new Dictionary<string, object>
+        /// byte[] buffer = in.WebpsaveBuffer(new Dictionary<string, object>
         /// {
         ///     {"page_height", int}
         ///     {"Q", int}
@@ -6416,10 +6459,10 @@ namespace NetVips
         /// strip (bool): Strip all metadata from image
         /// background (double[]): Background value
         /// </param>
-        /// <returns>string</returns>
-        public string WebpsaveBuffer(IDictionary<string, object> kwargs = null)
+        /// <returns>An array of bytes</returns>
+        public byte[] WebpsaveBuffer(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("webpsave_buffer", kwargs) is string result ? result : null;
+            return this.Call("webpsave_buffer", kwargs) as byte[];
         }
 
         /// <summary>
@@ -6440,7 +6483,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// cell_size (int): Size of Worley cells
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Worley(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("worley", kwargs, width, height) as Image;
@@ -6464,7 +6507,7 @@ namespace NetVips
         /// x (int): Left edge of input in output
         /// y (int): Top edge of input in output
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Wrap(IDictionary<string, object> kwargs = null)
         {
             return this.Call("wrap", kwargs) as Image;
@@ -6492,7 +6535,7 @@ namespace NetVips
         /// dsize (int): Size of fourth dimension
         /// esize (int): Size of fifth dimension
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Xyz(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("xyz", kwargs, width, height) as Image;
@@ -6514,7 +6557,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// temp (double[]): Colour temperature
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image XYZ2Lab(IDictionary<string, object> kwargs = null)
         {
             return this.Call("XYZ2Lab", kwargs) as Image;
@@ -6530,7 +6573,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image XYZ2scRGB()
         {
             return this.Call("XYZ2scRGB") as Image;
@@ -6546,7 +6589,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image XYZ2Yxy()
         {
             return this.Call("XYZ2Yxy") as Image;
@@ -6562,7 +6605,7 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Yxy2XYZ()
         {
             return this.Call("Yxy2XYZ") as Image;
@@ -6586,7 +6629,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// uchar (bool): Output an unsigned char image
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Zone(int width, int height, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("zone", kwargs, width, height) as Image;
@@ -6604,7 +6647,7 @@ namespace NetVips
         /// </example>
         /// <param name="xfac">Horizontal zoom factor</param>
         /// <param name="yfac">Vertical zoom factor</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Zoom(int xfac, int yfac)
         {
             return this.Call("zoom", xfac, yfac) as Image;
@@ -6624,7 +6667,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// Image @out = in.Scale(new Dictionary<string, object>
+        /// Image @out = in.ScaleImage(new Dictionary<string, object>
         /// {
         ///     {"exp", double}
         ///     {"log", bool}
@@ -6632,9 +6675,12 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="kwargs"></param>
-        /// <returns>Image</returns>
-        public Image Scale(IDictionary<string, object> kwargs = null)
+        /// <param name="kwargs">
+        /// exp (double): Exponent for log scale
+        /// log (bool): Log scale
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image ScaleImage(IDictionary<string, object> kwargs = null)
         {
             return this.Call("scale", kwargs) as Image;
         }
@@ -6654,8 +6700,10 @@ namespace NetVips
         /// </example>
         /// <param name="in1">Source for TRUE pixels</param>
         /// <param name="in2">Source for FALSE pixels</param>
-        /// <param name="kwargs"></param>
-        /// <returns>Image</returns>
+        /// <param name="kwargs">
+        /// blend (bool): Blend smoothly between then and else parts
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Ifthenelse(object in1, object in2, IDictionary<string, object> kwargs = null)
         {
             Image matchImage;
@@ -6696,7 +6744,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="other">Array of input images</param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Bandjoin(object other)
         {
             if (!(other is IEnumerable))
@@ -6717,7 +6765,7 @@ namespace NetVips
                 return BandjoinConst(values.Select(x => (double) x).ToArray());
             }
 
-            return Operation.Call("bandjoin", this, values) as Image;
+            return Operation.Call("bandjoin", null, new object[] {values.PrependImage(this)}) as Image;
         }
 
         /// <summary>
@@ -6737,7 +6785,7 @@ namespace NetVips
         /// <param name="kwargs">
         /// index (int): Select this band element from sorted list
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Bandrank(object other, IDictionary<string, object> kwargs = null)
         {
             if (!(other is IEnumerable))
@@ -6750,7 +6798,7 @@ namespace NetVips
                 return null;
             }
 
-            return Operation.Call("bandrank", kwargs, this, values) as Image;
+            return Operation.Call("bandrank", kwargs, new object[] {values.PrependImage(this)}) as Image;
         }
 
         /// <summary>
@@ -6773,7 +6821,7 @@ namespace NetVips
         /// compositing_space (string): Composite images in this colour space
         /// premultiplied (bool): Images have premultiplied alpha
         /// </param>
-        /// <returns>Image</returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image Composite(object @in, object mode, IDictionary<string, object> kwargs = null)
         {
             if (!(@in is IEnumerable))
@@ -6803,9 +6851,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Return the coordinates of the image maximum.
+        /// </summary>
+        /// <returns>An array of objects</returns>
+        public object[] MaxPos()
+        {
+            var result = Max(new Dictionary<string, object>
+            {
+                {"x", 1},
+                {"y", 1}
+            }) as object[];
+            var v = result?[0];
+            var opts = result?[1] as Dictionary<object, object>;
+            return new[] {v, opts?["x"], opts?["y"]};
+        }
+
+        /// <summary>
+        /// Return the coordinates of the image maximum.
+        /// </summary>
+        /// <returns>An array of objects</returns>
+        public object[] MinPos()
+        {
+            var result = Min(new Dictionary<string, object>
+            {
+                {"x", 1},
+                {"y", 1}
+            }) as object[];
+            var v = result?[0];
+            var opts = result?[1] as Dictionary<object, object>;
+            return new[] {v, opts?["x"], opts?["y"]};
+        }
+
+        /// <summary>
+        /// Return the real part of a complex image.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Real()
+        {
+            return Complexget("real");
+        }
+
+        /// <summary>
+        /// Return the imaginary part of a complex image.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Imag()
+        {
+            return Complexget("imag");
+        }
+
+        /// <summary>
         ///  Return an image converted to polar coordinates.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Polar()
         {
             return RunCmplx(x => x.Complex("polar"), this);
@@ -6814,15 +6912,238 @@ namespace NetVips
         /// <summary>
         /// Return an image converted to rectangular coordinates.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image Rect()
         {
             return RunCmplx(x => x.Complex("rect"), this);
         }
 
-        #endregion
+        /// <summary>
+        /// Return the complex conjugate of an image.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Conj()
+        {
+            return Complex("conj");
+        }
 
-        // TODO These are writen by hand, maybe we need to generate these automatically.
+        /// <summary>
+        /// Return the sine of an image in degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Sin()
+        {
+            return Math("sin");
+        }
+
+        /// <summary>
+        /// Return the cosine of an image in degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Cos()
+        {
+            return Math("cos");
+        }
+
+        /// <summary>
+        /// Return the tangent of an image in degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Tan()
+        {
+            return Math("tan");
+        }
+
+        /// <summary>
+        /// Return the inverse sine of an image in degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Asin()
+        {
+            return Math("asin");
+        }
+
+        /// <summary>
+        /// Return the inverse cosine of an image in degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Acos()
+        {
+            return Math("acos");
+        }
+
+        /// <summary>
+        /// Return the inverse tangent of an image in degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Atan()
+        {
+            return Math("atan");
+        }
+
+        /// <summary>
+        /// Return the natural log of an image.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Log()
+        {
+            return Math("log");
+        }
+
+        /// <summary>
+        /// Return the log base 10 of an image.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Log10()
+        {
+            return Math("log10");
+        }
+
+        /// <summary>
+        /// Return e ** pixel.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Exp()
+        {
+            return Math("exp");
+        }
+
+        /// <summary>
+        /// Return 10 ** pixel.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Exp10()
+        {
+            return Math("exp10");
+        }
+
+        /// <summary>
+        /// Erode with a structuring element.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Erode(Image mask)
+        {
+            return Morph(mask, "erode");
+        }
+
+        /// <summary>
+        /// Dilate with a structuring element.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Dilate(Image mask)
+        {
+            return Morph(mask, "dilate");
+        }
+
+        /// <summary>
+        /// size x size median filter.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Median(int size)
+        {
+            return Rank(size, size, size * size / 2);
+        }
+
+        /// <summary>
+        /// Flip horizontally.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image FlipHor()
+        {
+            return Flip(Enums.Direction.Horizontal);
+        }
+
+        /// <summary>
+        /// Flip vertically.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image FlipVer()
+        {
+            return Flip(Enums.Direction.Vertical);
+        }
+
+        /// <summary>
+        /// Rotate 90 degrees clockwise.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Rot90()
+        {
+            return Rot(Enums.Angle.D90);
+        }
+
+        /// <summary>
+        /// Rotate 180 degrees.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Rot180()
+        {
+            return Rot(Enums.Angle.D180);
+        }
+
+        /// <summary>
+        /// Rotate 270 degrees clockwise.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Rot270()
+        {
+            return Rot(Enums.Angle.D270);
+        }
+
+        /// <summary>
+        /// Return the largest integral value not greater than the argument.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Floor()
+        {
+            return this.Call("round", "floor") as Image;
+        }
+
+        /// <summary>
+        /// Return the largest integral value not greater than the argument.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Ceil()
+        {
+            return this.Call("round", "ceil") as Image;
+        }
+
+        /// <summary>
+        /// Return the nearest integral value.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Rint()
+        {
+            return this.Call("round", "rint") as Image;
+        }
+
+        /// <summary>
+        /// AND image bands together.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image BandAnd()
+        {
+            return this.Call("bandbool", "and") as Image;
+        }
+
+        /// <summary>
+        /// OR image bands together.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image BandOr()
+        {
+            return this.Call("bandbool", "or") as Image;
+        }
+
+        /// <summary>
+        /// EOR image bands together.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image BandEor()
+        {
+            return this.Call("bandbool", "eor") as Image;
+        }
+
+        #endregion
 
         #region autogenerated properties
 
@@ -6940,7 +7261,7 @@ namespace NetVips
             }
             else
             {
-                return left.Call("linear", 1, right.Smap(x => (x as dynamic) * -1)) as Image;
+                return left.Call("linear", 1, right.Smap<dynamic>(x => x * -1)) as Image;
             }
         }
 
@@ -6964,7 +7285,19 @@ namespace NetVips
             }
             else
             {
-                return left.Call("linear", right.Smap(x => (x as dynamic) / 1.0), 0) as Image;
+                return left.Call("linear", right.Smap<dynamic>(x => 1.0 / x), 0) as Image;
+            }
+        }
+
+        public static Image operator %(Image left, object right)
+        {
+            if (right is Image image)
+            {
+                return left.Call("remainder", image) as Image;
+            }
+            else
+            {
+                return left.Call("remainder_const", right) as Image;
             }
         }
 
@@ -6993,7 +7326,7 @@ namespace NetVips
             return CallEnum(left, right, "boolean", "rshift") as Image;
         }
 
-        public static bool operator ==(Image left, object right)
+        public static object operator ==(Image left, object right)
         {
             // == version allows comparison to null
             if (right == null)
@@ -7001,10 +7334,10 @@ namespace NetVips
                 return false;
             }
 
-            return CallEnum(left, right, "relational", "equal") is bool result && result;
+            return CallEnum(left, right, "relational", "equal") as Image;
         }
 
-        public static bool operator !=(Image left, object right)
+        public static object operator !=(Image left, object right)
         {
             // == version allows comparison to null
             if (right == null)
@@ -7012,27 +7345,27 @@ namespace NetVips
                 return true;
             }
 
-            return CallEnum(left, right, "relational", "noteq") is bool result && result;
+            return CallEnum(left, right, "relational", "noteq") as Image;
         }
 
-        public static bool operator <(Image left, object right)
+        public static Image operator <(Image left, object right)
         {
-            return CallEnum(left, right, "relational", "less") is bool result && result;
+            return CallEnum(left, right, "relational", "less") as Image;
         }
 
-        public static bool operator >(Image left, object right)
+        public static Image operator >(Image left, object right)
         {
-            return CallEnum(left, right, "relational", "more") is bool result && result;
+            return CallEnum(left, right, "relational", "more") as Image;
         }
 
-        public static bool operator <=(Image left, object right)
+        public static Image operator <=(Image left, object right)
         {
-            return CallEnum(left, right, "relational", "lesseq") is bool result && result;
+            return CallEnum(left, right, "relational", "lesseq") as Image;
         }
 
-        public static bool operator >=(Image left, object right)
+        public static Image operator >=(Image left, object right)
         {
-            return CallEnum(left, right, "relational", "moreeq") is bool result && result;
+            return CallEnum(left, right, "relational", "moreeq") as Image;
         }
 
         #endregion
@@ -7043,7 +7376,7 @@ namespace NetVips
         /// Does band exist in image.
         /// </summary>
         /// <param name="i">The index to fetch.</param>
-        /// <returns>true if the index exists.</returns>
+        /// <returns>true if the index exists</returns>
         public bool BandExists(int i)
         {
             return i >= 0 && i <= Bands - 1;
@@ -7060,7 +7393,7 @@ namespace NetVips
         /// Will make a new one-band image from band 1 (the middle band).
         /// </remarks>
         /// <param name="i"></param>
-        /// <returns></returns>
+        /// <returns>A new <see cref="Image"/></returns>
         public Image this[int i]
         {
             get => BandExists(i) ? this.Call("extract_band", i) as Image : null;
@@ -7099,14 +7432,19 @@ namespace NetVips
                     components[index - 1] = componentsList[index];
                 }
 
-                VImage = (this.Call("bandjoin", head, components) as Image)?.VImage;
+                if (this.Call("bandjoin", head, components) is Image bandImage)
+                {
+                    IntlImage = bandImage.IntlImage;
+                    IntlVipsObject = bandImage.IntlVipsObject;
+                    IntlGObject = bandImage.IntlGObject;
+                }
             }
         }
 
         /// <summary>
         /// Split an n-band image into n separate images.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An array of <see cref="Image"/></returns>
         public Image[] Bandsplit()
         {
             var images = new Image[Bands];

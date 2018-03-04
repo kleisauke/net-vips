@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
-using NetVips.AutoGen;
+using NetVips.Internal;
 using NLog;
 
 namespace NetVips
@@ -10,46 +11,49 @@ namespace NetVips
     /// Wrap GValue in a C# class.
     /// </summary>
     /// <remarks>
-    /// This class wraps :class:`.GValue` in a convenient interface. You can use
-    /// instances of this class to get and set :class:`.GObject` properties.
+    /// This class wraps <see cref="NetVips.Internal.GValue"/> in a convenient interface. You can use
+    /// instances of this class to get and set <see cref="GObject"/> properties.
     /// 
-    /// On construction, :class:`.GValue` is all zero (empty). You can pass it to
-    /// a get function to have it filled by :class:`.GObject`, or use init to
+    /// On construction, <see cref="NetVips.Internal.GValue"/> is all zero (empty). You can pass it to
+    /// a get function to have it filled by <see cref="GObject"/>, or use init to
     /// set a type, set to set a value, then use it to set an object property.
     /// 
     /// GValue lifetime is managed automatically.
     /// </remarks>
     public class GValue : IDisposable
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public AutoGen.GValue Pointer;
+        public readonly Internal.GValue IntlGValue;
+
+        // Track whether Dispose has been called.
+        private bool _disposed;
 
         // look up some common gtypes at init for speed
-        public static ulong GBoolType = Base.TypeFromName("gboolean");
-        public static ulong GIntType = Base.TypeFromName("gint");
-        public static ulong GDoubleType = Base.TypeFromName("gdouble");
-        public static ulong GStrType = Base.TypeFromName("gchararray");
-        public static ulong GEnumType = Base.TypeFromName("GEnum");
-        public static ulong GFlagsType = Base.TypeFromName("GFlags");
-        public static ulong GObjectType = Base.TypeFromName("GObject");
-        public static ulong ImageType = Base.TypeFromName("VipsImage");
-        public static ulong ArrayIntType = Base.TypeFromName("VipsArrayInt");
-        public static ulong ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
-        public static ulong ArrayImageType = Base.TypeFromName("VipsArrayImage");
-        public static ulong RefStrType = Base.TypeFromName("VipsRefString");
-        public static ulong BlobType = Base.TypeFromName("VipsBlob");
-        public static ulong BandFormatType;
-        public static ulong BlendModeType;
+        public static readonly ulong GBoolType = Base.TypeFromName("gboolean");
+        public static readonly ulong GIntType = Base.TypeFromName("gint");
+        public static readonly ulong GDoubleType = Base.TypeFromName("gdouble");
+        public static readonly ulong GStrType = Base.TypeFromName("gchararray");
+        public static readonly ulong GEnumType = Base.TypeFromName("GEnum");
+        public static readonly ulong GFlagsType = Base.TypeFromName("GFlags");
+        public static readonly ulong GObjectType = Base.TypeFromName("GObject");
+        public static readonly ulong ImageType = Base.TypeFromName("VipsImage");
+        public static readonly ulong ArrayIntType = Base.TypeFromName("VipsArrayInt");
+        public static readonly ulong ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
+        public static readonly ulong ArrayImageType = Base.TypeFromName("VipsArrayImage");
+        public static readonly ulong RefStrType = Base.TypeFromName("VipsRefString");
+        public static readonly ulong BlobType = Base.TypeFromName("VipsBlob");
+        public static readonly ulong BandFormatType;
+        public static readonly ulong BlendModeType;
 
         static GValue()
         {
-            enumtypes.VipsBandFormatGetType();
+            Vips.VipsBandFormatGetType();
             BandFormatType = Base.TypeFromName("VipsBandFormat");
 
             if (Base.AtLeastLibvips(8, 6))
             {
-                enumtypes.VipsBlendModeGetType();
+                Vips.VipsBlendModeGetType();
                 BlendModeType = Base.TypeFromName("VipsBlendMode");
             }
         }
@@ -68,7 +72,7 @@ namespace NetVips
             {ArrayIntType, "int[]"},
             {ArrayDoubleType, "double[]"},
             {ArrayImageType, "Image[]"},
-            {BlobType, "string"}
+            {BlobType, "byte[]"}
         };
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace NetVips
         /// <returns></returns>
         public static string GTypeToCSharp(ulong gtype)
         {
-            var fundamental = AutoGen.gtype.GTypeFundamental(gtype);
+            var fundamental = GType.GTypeFundamental(gtype);
 
             if (GTypeToCSharpDict.ContainsKey(gtype))
             {
@@ -90,7 +94,7 @@ namespace NetVips
                 return GTypeToCSharpDict[fundamental];
             }
 
-            return "<unknown type>";
+            return "object";
         }
 
         /// <summary>
@@ -102,10 +106,9 @@ namespace NetVips
         public static int ToEnum(ulong gtype, object value)
         {
             return value is string strValue
-                ? util.VipsEnumFromNick("netvips", gtype, strValue)
+                ? Vips.VipsEnumFromNick("NetVips", gtype, strValue)
                 : (int) value;
         }
-
 
         /// <summary>
         /// Turn an int back into an enum string.
@@ -115,7 +118,7 @@ namespace NetVips
         /// <returns></returns>
         public static string FromEnum(ulong gtype, int enumValue)
         {
-            var cstr = util.VipsEnumNick(gtype, enumValue);
+            var cstr = Vips.VipsEnumNick(gtype, enumValue);
             if (cstr == null)
             {
                 throw new Exception("value not in enum");
@@ -127,14 +130,8 @@ namespace NetVips
         public GValue()
         {
             // allocate memory for the gvalue which will be freed on GC
-            Pointer = AutoGen.GValue.__CreateInstance(new AutoGen.GValue.__Internal());
-
-            // logger.Debug($"GValue: GValue = {Pointer}");
-        }
-
-        ~GValue()
-        {
-            Dispose(false);
+            IntlGValue = new Internal.GValue();
+            // logger.Debug($"GValue = {IntlGValue}");
         }
 
         /// <summary>
@@ -151,7 +148,7 @@ namespace NetVips
         /// <returns></returns>
         public void SetType(ulong gtype)
         {
-            gvalue.GValueInit(Pointer, gtype);
+            Internal.GValue.GValueInit(IntlGValue, gtype);
         }
 
         /// <summary>
@@ -165,108 +162,163 @@ namespace NetVips
         /// <returns></returns>
         public void Set(object value)
         {
-            // logger.Debug($"GValue.Set: value = {value}");
-
-            var gtype = Pointer.GType;
-            var fundamental = AutoGen.gtype.GTypeFundamental(gtype);
+            // logger.Debug($"Set: value = {value}");
+            var gtype = IntlGValue.GType;
+            var fundamental = GType.GTypeFundamental(gtype);
             if (gtype == GBoolType)
             {
-                gvaluetypes.GValueSetBoolean(Pointer, (bool) value ? 1 : 0);
+                Internal.GValue.GValueSetBoolean(IntlGValue, (bool) value ? 1 : 0);
             }
             else if (gtype == GIntType)
             {
-                gvaluetypes.GValueSetInt(Pointer, (int) value);
+                Internal.GValue.GValueSetInt(IntlGValue, (int) value);
             }
             else if (gtype == GDoubleType)
             {
-                gvaluetypes.GValueSetDouble(Pointer, (double) value);
+                Internal.GValue.GValueSetDouble(IntlGValue, (double) value);
             }
             else if (fundamental == GEnumType)
             {
-                genums.GValueSetEnum(Pointer, ToEnum(gtype, value));
+                Internal.GValue.GValueSetEnum(IntlGValue, ToEnum(gtype, value));
             }
             else if (fundamental == GFlagsType)
             {
-                genums.GValueSetFlags(Pointer, Convert.ToUInt32(value));
+                Internal.GValue.GValueSetFlags(IntlGValue, (uint) (int) value);
             }
             else if (gtype == GStrType)
             {
-                gvaluetypes.GValueSetString(Pointer, (string) value);
+                Internal.GValue.GValueSetString(IntlGValue, (string) value);
             }
             else if (gtype == RefStrType)
             {
-                type.VipsValueSetRefString(Pointer, (string) value);
+                VipsType.VipsValueSetRefString(IntlGValue, (string) value);
             }
             else if (fundamental == GObjectType)
             {
-                gobject.GValueSetObject(Pointer, ((GObject) value).Pointer.__Instance);
+                if (!(value is Image image))
+                {
+                    throw new Exception(
+                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                    );
+                }
+
+                Internal.GObject.GValueSetObject(IntlGValue, image.IntlImage.Pointer);
             }
             else if (gtype == ArrayIntType)
             {
-                if (value is int[] values)
+                switch (value)
                 {
-                    type.VipsValueSetArrayInt(Pointer, values, values.Length);
+                    case int[] ints:
+                        VipsType.VipsValueSetArrayInt(IntlGValue, ints, ints.Length);
+                        break;
+                    case int intValue:
+                        VipsType.VipsValueSetArrayInt(IntlGValue, new[] {intValue}, 1);
+                        break;
+                    case double doubleValue:
+                        VipsType.VipsValueSetArrayInt(IntlGValue, new[] {(int) doubleValue}, 1);
+                        break;
+                    case double[] doubles:
+                        VipsType.VipsValueSetArrayInt(IntlGValue,
+                            doubles.Select(x => (int) x).ToArray(),
+                            doubles.Length);
+                        break;
+                    case object[] objects:
+                        VipsType.VipsValueSetArrayDouble(IntlGValue,
+                            objects.Select(x => (double) x).ToArray(),
+                            objects.Length);
+                        break;
+                    default:
+                        throw new Exception(
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                        );
                 }
             }
             else if (gtype == ArrayDoubleType)
             {
-                if (value is double[] values)
+                switch (value)
                 {
-                    type.VipsValueSetArrayDouble(Pointer, values, values.Length);
+                    case double[] doubles:
+                        VipsType.VipsValueSetArrayDouble(IntlGValue, doubles, doubles.Length);
+                        break;
+                    case double dblValue:
+                        VipsType.VipsValueSetArrayDouble(IntlGValue, new[] {dblValue}, 1);
+                        break;
+                    case int intValue:
+                        VipsType.VipsValueSetArrayDouble(IntlGValue, new[] {(double) intValue}, 1);
+                        break;
+                    case int[] ints:
+                        VipsType.VipsValueSetArrayDouble(IntlGValue,
+                            ints.Select(x => (double) x).ToArray(),
+                            ints.Length);
+                        break;
+                    case object[] objects:
+                        VipsType.VipsValueSetArrayDouble(IntlGValue,
+                            objects.Select(x => (double) x).ToArray(),
+                            objects.Length);
+                        break;
+                    default:
+                        throw new Exception(
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                        );
                 }
             }
             else if (gtype == ArrayImageType)
             {
-                if (value is Image[] values)
+                if (!(value is Image[] images))
                 {
-                    var size = values.Length;
-                    image.VipsValueSetArrayImage(Pointer, size);
+                    throw new Exception(
+                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                    );
+                }
 
-                    var psize = 0;
+                var size = images.Length;
+                VipsImage.VipsValueSetArrayImage(IntlGValue, size);
 
-                    unsafe
-                    {
-                        var ptr = (IntPtr*) image.VipsValueGetArrayImage(Pointer, ref psize);
+                var psize = 0;
 
-                        for (var i = 0; i < size; i++)
-                        {
-                            var gObject = values[i].Pointer.__Instance;
-                            gobject.GObjectRef(gObject);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(IntlGValue, ref psize);
 
-                            ptr[i] = gObject;
-                        }
-                    }
+                for (var i = 0; i < size; i++)
+                {
+                    var gObject = Internal.GObject.GObjectRef(images[i].IntlGObject.Pointer);
+                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, gObject);
                 }
             }
             else if (gtype == BlobType)
             {
-                if (value is string blob)
+                if (!(value is byte[] blob))
                 {
-                    var length = blob.Length;
+                    throw new Exception(
+                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                    );
+                }
 
-                    // We need to set the blob to a copy of the string that vips_lib
-                    // can own
-                    var memory = Marshal.StringToHGlobalUni(blob);
+                var length = blob.Length;
 
-                    if (Base.AtLeastLibvips(8, 6))
+                // We need to set the blob to a copy of the string that vips
+                // can own
+                var memory = blob.ToPtr();
+
+                if (Base.AtLeastLibvips(8, 6))
+                {
+                    VipsType.VipsValueSetBlobFree(IntlGValue, memory, (ulong) length);
+                }
+                else
+                {
+                    int FreeFn(IntPtr a, IntPtr b)
                     {
-                        type.VipsValueSetBlobFree(Pointer, memory, (ulong) length);
-                    }
-                    else
-                    {
-                        type.VipsValueSetBlob(Pointer, (a, b) =>
-                        {
-                            gmem.GFree(a);
+                        GLib.GFree(a);
 
-                            return 0;
-                        }, memory, (ulong) length);
+                        return 0;
                     }
+
+                    VipsType.VipsValueSetBlob(IntlGValue, FreeFn, memory, (ulong) length);
                 }
             }
             else
             {
                 throw new Exception(
-                    $"unsupported gtype for set {Base.TypeName(gtype)}, fundamental {Base.TypeName(fundamental)}"
+                    $"unsupported gtype for set {Base.TypeName(gtype)}, fundamental {Base.TypeName(fundamental)}, value type {value.GetType()}"
                 );
             }
         }
@@ -280,62 +332,57 @@ namespace NetVips
         /// <returns></returns>
         public object Get()
         {
-            // logger.Debug($"GValue.Get: this = {this}");
-
-            var gtype = Pointer.GType;
-            var fundamental = AutoGen.gtype.GTypeFundamental(gtype);
+            // logger.Debug($"Get: this = {this}");
+            var gtype = IntlGValue.GType;
+            var fundamental = GType.GTypeFundamental(gtype);
 
             object result;
             if (gtype == GBoolType)
             {
-                result = gvaluetypes.GValueGetBoolean(Pointer) != 0;
+                result = Internal.GValue.GValueGetBoolean(IntlGValue) != 0;
             }
             else if (gtype == GIntType)
             {
-                result = gvaluetypes.GValueGetInt(Pointer);
+                result = Internal.GValue.GValueGetInt(IntlGValue);
             }
             else if (gtype == GDoubleType)
             {
-                result = gvaluetypes.GValueGetDouble(Pointer);
+                result = Internal.GValue.GValueGetDouble(IntlGValue);
             }
             else if (fundamental == GEnumType)
             {
-                result = FromEnum(gtype, genums.GValueGetEnum(Pointer));
+                result = FromEnum(gtype, Internal.GValue.GValueGetEnum(IntlGValue));
             }
             else if (fundamental == GFlagsType)
             {
-                result = genums.GValueGetFlags(Pointer);
+                result = Internal.GValue.GValueGetFlags(IntlGValue);
             }
             else if (gtype == GStrType)
             {
-                result = gvaluetypes.GValueGetString(Pointer);
+                result = Internal.GValue.GValueGetString(IntlGValue);
             }
             else if (gtype == RefStrType)
             {
                 ulong psize = 0;
-                result = type.VipsValueGetRefString(Pointer, ref psize);
+                result = VipsType.VipsValueGetRefString(IntlGValue, ref psize);
             }
             else if (gtype == ImageType)
             {
-                // g_value_get_object() will not add a ref ... that is
+                // GValueGetObject() will not add a ref ... that is
                 // held by the gvalue
-                var go = gobject.GValueGetObject(Pointer);
+                var go = Internal.GObject.GValueGetObject(IntlGValue);
 
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
-                // by Image()
-                gobject.GObjectRef(go);
+                // by GObject
+                var vi = new VipsImage(Internal.GObject.GObjectRef(go));
 
-                result = new Image(VipsImage.__CreateInstance(go, true));
+                result = new Image(vi);
             }
             else if (gtype == ArrayIntType)
             {
                 var psize = 0;
-                IntPtr intPtr;
-                unsafe
-                {
-                    intPtr = new IntPtr(type.VipsValueGetArrayInt(Pointer, ref psize));
-                }
+                var intPtr = VipsType.VipsValueGetArrayInt(IntlGValue, ref psize);
 
                 var intArr = new int[psize];
                 Marshal.Copy(intPtr, intArr, 0, psize);
@@ -344,11 +391,7 @@ namespace NetVips
             else if (gtype == ArrayDoubleType)
             {
                 var psize = 0;
-                IntPtr intPtr;
-                unsafe
-                {
-                    intPtr = new IntPtr(type.VipsValueGetArrayDouble(Pointer, ref psize));
-                }
+                var intPtr = VipsType.VipsValueGetArrayDouble(IntlGValue, ref psize);
 
                 var doubleArr = new double[psize];
                 Marshal.Copy(intPtr, doubleArr, 0, psize);
@@ -357,14 +400,14 @@ namespace NetVips
             else if (gtype == ArrayImageType)
             {
                 var psize = 0;
-                var ptr = image.VipsValueGetArrayImage(Pointer, ref psize);
+                var ptr = VipsImage.VipsValueGetArrayImage(IntlGValue, ref psize);
 
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
                 {
-                    var vi = VipsImage.__CreateInstance(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
-                    gobject.GObjectRef(vi.__Instance);
-                    images[i] = new Image(vi);
+                    var go = Internal.GObject.GObjectRef(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
+
+                    images[i] = new Image(new VipsImage(go));
                 }
 
                 result = images;
@@ -372,9 +415,10 @@ namespace NetVips
             else if (gtype == BlobType)
             {
                 ulong psize = 0;
-                var array = type.VipsValueGetBlob(Pointer, ref psize);
+                var array = VipsType.VipsValueGetBlob(IntlGValue, ref psize);
 
-                result = Marshal.PtrToStringUni(array, (int) psize);
+                // Blob types are returned as an array of bytes.
+                result = array.ToByteString(false, (int) psize);
             }
             else
             {
@@ -384,26 +428,45 @@ namespace NetVips
             return result;
         }
 
-        private void ReleaseUnmanagedResources()
+        ~GValue()
         {
-            // and tag it to be unset on GC as well
-            // logger.Debug($"GObject GC: GValue = {Pointer}");
-            gvalue.GValueUnset(Pointer);
-            // logger.Debug($"GObject GC: GValue = {Pointer}");
+            // Do not re-create Dispose clean-up code here.
+            Dispose(false);
         }
 
-        private void Dispose(bool disposing)
+        /// <summary>
+        /// Releases unmanaged resources
+        /// </summary>
+        private void ReleaseUnmanagedResources()
         {
-            ReleaseUnmanagedResources();
-            if (disposing)
+            // logger.Debug($"GC: GValue = {IntlGValue}");
+            IntlGValue.Dispose();
+            // logger.Debug($"GC: GValue = {IntlGValue}");
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources;
+        /// <c>false</c> to release only unmanaged resources.</param>
+        protected void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!_disposed)
             {
-                Pointer?.Dispose();
+                // Dispose unmanaged resources.
+                ReleaseUnmanagedResources();
+
+                // Note disposing has been done.
+                _disposed = true;
             }
         }
 
         public void Dispose()
         {
             Dispose(true);
+
+            // This object will be cleaned up by the Dispose method.
             GC.SuppressFinalize(this);
         }
     }

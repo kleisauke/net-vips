@@ -1,11 +1,20 @@
 using System;
-using NetVips.AutoGen;
-using System.Runtime.InteropServices;
+using NetVips.Internal;
 
 namespace NetVips
 {
     public static class Base
     {
+        /// <summary>
+        /// VipsInit() starts up the world of VIPS. You should call this on
+        /// program startup before using any other VIPS operations. 
+        /// </summary>
+        /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" /></returns>
+        public static bool VipsInit()
+        {
+            return Vips.VipsInit("NetVips") == 0;
+        }
+
         /// <summary>
         /// Enable or disable libvips leak checking.
         /// </summary>
@@ -17,7 +26,7 @@ namespace NetVips
         /// <returns></returns>
         public static void LeakSet(int leak)
         {
-            vips.VipsLeakSet(leak);
+            Vips.VipsLeakSet(leak);
         }
 
         /// <summary>
@@ -27,7 +36,7 @@ namespace NetVips
         /// <returns>The version number</returns>
         public static int Version(int flag)
         {
-            var value = vips.VipsVersion(flag);
+            var value = Vips.VipsVersion(flag);
             if (value < 0)
             {
                 throw new Exception("Unable to get library version");
@@ -41,7 +50,7 @@ namespace NetVips
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <returns></returns>
+        /// <returns><see langword="true" /> if at least libvips x.y; otherwise, <see langword="false" /></returns>
         public static bool AtLeastLibvips(int x, int y)
         {
             var major = Version(0);
@@ -49,14 +58,14 @@ namespace NetVips
             return major > x || major == x && minor >= y;
         }
 
-        public static unsafe string PathFilename7(string filename)
+        public static string PathFilename7(string filename)
         {
-            return Marshal.PtrToStringAnsi((IntPtr) basic.VipsPathFilename7(filename));
+            return Vips.VipsPathFilename7(filename.ToUtf8Ptr());
         }
 
-        public static unsafe string PathMode7(string filename)
+        public static string PathMode7(string filename)
         {
-            return Marshal.PtrToStringAnsi((IntPtr) basic.VipsPathMode7(filename));
+            return Vips.VipsPathMode7(filename.ToUtf8Ptr());
         }
 
         /// <summary>
@@ -71,7 +80,7 @@ namespace NetVips
         /// <returns></returns>
         public static ulong TypeFind(string basename, string nickname)
         {
-            return @object.VipsTypeFind(basename, nickname);
+            return Internal.VipsObject.VipsTypeFind(basename, nickname);
         }
 
         /// <summary>
@@ -81,7 +90,7 @@ namespace NetVips
         /// <returns></returns>
         public static string TypeName(ulong type)
         {
-            return gtype.GTypeName(type);
+            return GType.GTypeName(type);
         }
 
         /// <summary>
@@ -91,7 +100,7 @@ namespace NetVips
         /// <returns></returns>
         public static string NicknameFind(ulong type)
         {
-            return @object.VipsNicknameFind(type);
+            return Internal.VipsObject.VipsNicknameFind(type);
         }
 
         /// <summary>
@@ -102,7 +111,7 @@ namespace NetVips
         /// <returns></returns>
         public static IntPtr TypeMap(ulong type, VipsTypeMap2Fn fn)
         {
-            return @object.VipsTypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
+            return Internal.VipsObject.VipsTypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -112,7 +121,7 @@ namespace NetVips
         /// <returns></returns>
         public static ulong TypeFromName(string name)
         {
-            return gtype.GTypeFromName(name);
+            return GType.GTypeFromName(name);
         }
     }
 }

@@ -1,35 +1,32 @@
-using NetVips.AutoGen;
 using System;
-using System.Runtime.InteropServices;
+using NetVips.Internal;
 using NLog;
 
 namespace NetVips
 {
     /// <summary>
-    /// Manage a VipsObject.
+    /// Manage a <see cref="NetVips.Internal.VipsObject"/>.
     /// </summary>
     public class VipsObject : GObject
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public AutoGen.VipsObject VObject;
+        public Internal.VipsObject IntlVipsObject;
 
-        public VipsObject(AutoGen.VipsObject vipsObject) : base(vipsObject.ParentInstance)
+        public VipsObject(Internal.VipsObject vipsObject) : base(vipsObject.ParentInstance)
         {
-            // logger.Debug($"VipsObject: VipsObject = {vipsObject}");
-            VObject = vipsObject;
+            IntlVipsObject = vipsObject;
+            // logger.Debug($"VipsObject = {vipsObject}");
         }
 
         /// <summary>
         /// Print a table of all active libvips objects. Handy for debugging.
         /// </summary>
-        /// <param name="msg"></param>
         /// <returns></returns>
-        public void PrintAll(string msg)
+        public static void PrintAll()
         {
             GC.Collect();
-            // logger.Debug(msg);
-            @object.VipsObjectPrintAll();
+            Internal.VipsObject.VipsObjectPrintAll();
         }
 
         /// <summary>
@@ -39,17 +36,19 @@ namespace NetVips
         /// <returns></returns>
         public GParamSpec GetPspec(string name)
         {
-            // logger.Debug($"VipsObject.GetPspec: this = {this}, name = {name}");
-            var pspec = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)));
-            var argumentClass = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)));
-            var argumentInstance = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)));
+            // logger.Debug($"GetPspec: this = {this}, name = {name}");
+            var pspec = new GParamSpec();
+            var argumentClass = new VipsArgumentClass();
+            var argumentInstance = new VipsArgumentInstance();
 
             var result =
-                @object.__Internal.VipsObjectGetArgument(VObject.__Instance, name, pspec, argumentClass,
-                    argumentInstance);
-            return result != 0
-                ? null
-                : GParamSpec.__CreateInstance(pspec.Dereference<IntPtr>().Dereference<GParamSpec.__Internal>());
+                Internal.VipsObject.VipsObjectGetArgument(IntlVipsObject, name, pspec, argumentClass, argumentInstance);
+            if (result != 0)
+            {
+                return null;
+            }
+
+            return new GParamSpec(pspec.Pointer.Dereference<IntPtr>());
         }
 
         /// <summary>
@@ -59,10 +58,17 @@ namespace NetVips
         /// <returns>This function returns 0 if the property does not exist.</returns>
         public virtual ulong GetTypeOf(string name)
         {
-            // logger.Debug($"VipsObject.GetPspec: this = {this}, name = {name}");
+            // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
             var pspec = GetPspec(name);
 
-            return pspec?.ValueType ?? 0;
+            if (pspec == null)
+            {
+                // need to clear any error, this is horrible
+                Vips.VipsErrorClear();
+                return 0;
+            }
+
+            return pspec.ValueType;
         }
 
         /// <summary>
@@ -72,7 +78,14 @@ namespace NetVips
         /// <returns></returns>
         public string GetBlurb(string name)
         {
-            return gparam.GParamSpecGetBlurb(GetPspec(name));
+            var pspec = GetPspec(name);
+
+            if (pspec == null)
+            {
+                return null;
+            }
+
+            return GParamSpec.GParamSpecGetBlurb(GetPspec(name));
         }
 
         /// <summary>
@@ -85,7 +98,7 @@ namespace NetVips
         /// <returns></returns>
         public virtual object Get(string name)
         {
-            // logger.Debug($"VipsObject.Get: name = {name}");
+            // logger.Debug($"Get: name = {name}");
             var pspec = GetPspec(name);
             if (pspec == null)
             {
@@ -95,7 +108,7 @@ namespace NetVips
             var gtype = pspec.ValueType;
             var gv = new GValue();
             gv.SetType(gtype);
-            gobject.GObjectGetProperty(Pointer, name, gv.Pointer);
+            Internal.GObject.GObjectGetProperty(IntlGObject, name, gv.IntlGValue);
             return gv.Get();
         }
 
@@ -107,12 +120,12 @@ namespace NetVips
         /// <returns></returns>
         public virtual void Set(string name, object value)
         {
-            // logger.Debug($"VipsObject.Set: name = {name}, value = {value}");
+            // logger.Debug($"Set: name = {name}, value = {value}");
             var gtype = GetTypeOf(name);
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            gobject.GObjectSetProperty(Pointer, name, gv.Pointer);
+            Internal.GObject.GObjectSetProperty(IntlGObject, name, gv.IntlGValue);
         }
 
         /// <summary>
@@ -120,14 +133,14 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example:
-        ///  'fred=12, tile'
-        ///   '[fred=12]'
+        /// 'fred=12, tile'
+        /// '[fred=12]'
         /// </remarks>
         /// <param name="stringOptions"></param>
         /// <returns></returns>
         public bool SetString(string stringOptions)
         {
-            var result = @object.VipsObjectSetFromString(VObject, stringOptions);
+            var result = Internal.VipsObject.VipsObjectSetFromString(IntlVipsObject, stringOptions);
             return result == 0;
         }
 
@@ -137,7 +150,7 @@ namespace NetVips
         /// <returns></returns>
         public string GetDescription()
         {
-            return @object.VipsObjectGetDescription(VObject);
+            return Internal.VipsObject.VipsObjectGetDescription(IntlVipsObject);
         }
     }
 }

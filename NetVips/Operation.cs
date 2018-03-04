@@ -1,86 +1,69 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NetVips.AutoGen;
+using NetVips.Internal;
 using NLog;
 
 namespace NetVips
 {
+    /// <summary>
+    /// Wrap a <see cref="NetVips.Internal.VipsOperation"/> object.
+    /// </summary>
     public class Operation : VipsObject
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private VipsOperation VOperation;
+        private readonly VipsOperation IntlOperation;
 
         public Operation(VipsOperation vOperation) : base(vOperation.ParentInstance)
         {
-            // logger.Debug($"Image: pointer = {Pointer}");
-            VOperation = vOperation;
+            IntlOperation = vOperation;
+            // logger.Debug($"VipsOperation = {vOperation}");
         }
 
         /// <summary>
-        /// search an array with a predicate, recursing into subarrays as we see them
-        /// used to find the match_image for an operation
+        /// Recursive search for <see cref="T" /> into an array and the underlying
+        /// subarrays. This is used to find the matchImage for an operation
         /// </summary>
         /// <param name="thing"></param>
-        /// <param name="predicate"></param>
         /// <returns></returns>
-        private static T FindInside<T>(IEnumerable<object> thing, Func<object, bool> predicate) where T : Image
+        private static T FindInside<T>(IEnumerable<object> thing) where T : class
         {
-            foreach (var item in thing)
-            {
-                var result = FindInside<T>(item, predicate);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return thing.Select(FindInside<T>).FirstOrDefault(result => result != null);
         }
 
-        private static T FindInside<T>(object thing, Func<object, bool> predicate) where T : Image
+        private static T FindInside<T>(object thing) where T : class
         {
-            if (!(thing is IEnumerable enumerable))
+            if (!(thing is object[] enumerable))
             {
-                return predicate(thing) ? thing as T : null;
+                return thing.GetType() == typeof(T) ? thing as T : null;
             }
 
-            foreach (var item in enumerable)
-            {
-                var result = FindInside<T>(item, predicate);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return FindInside<T>(enumerable);
         }
 
         public static Operation NewFromName(string operationName)
         {
-            var vop = operation.VipsOperationNew(operationName);
-            if (vop == null)
+            var vop = VipsOperation.VipsOperationNew(operationName);
+            if (vop == IntPtr.Zero)
             {
                 throw new Exception($"no such operation {operationName}");
             }
 
-            return new Operation(vop);
+            return new Operation(new VipsOperation(vop));
         }
 
         public void Set(string name, int flags, Image matchImage, object value)
         {
             // logger.Debug($"Operation.Set: name = {name}, flags = {flags}, " +
-            //            $"matchImage = {matchImage} value = {value}");
+            //           $"matchImage = {matchImage} value = {value}");
 
-            // if the object wants an image and we have a constant, _imageize it
+            // if the object wants an image and we have a constant, Imageize it
             //
-            // if the object wants an image array, _imageize any constants in the
+            // if the object wants an image array, Imageize any constants in the
             // array
-            if (matchImage != null)
+            if (!(matchImage is null))
             {
                 var gtype = GetTypeOf(name);
                 if (gtype == GValue.ImageType)
@@ -97,9 +80,9 @@ namespace NetVips
             }
 
             // MODIFY args need to be copied before they are set
-            if ((flags & (int) VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
+            if ((flags & (int) Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
             {
-                //logger.Debug($"copying MODIFY arg {name}")
+                // logger.Debug($"copying MODIFY arg {name}");
                 // make sure we have a unique copy
                 value = (value as Image)?.Copy().CopyMemory();
             }
@@ -107,21 +90,23 @@ namespace NetVips
             Set(name, value);
         }
 
-        public VipsOperationFlags GetFlags()
+        public Internal.Enums.VipsOperationFlags GetFlags()
         {
-            return operation.VipsOperationGetFlags(VOperation);
+            return VipsOperation.VipsOperationGetFlags(IntlOperation);
         }
 
         // this is slow ... call as little as possible
-        public IDictionary<string, VipsArgumentFlags> GetArgs()
+        public IDictionary<string, Internal.Enums.VipsArgumentFlags> GetArgs()
         {
-            var args = new Dictionary<string, VipsArgumentFlags>();
-            VipsArgumentMapFn addConstruct = (self, pspec, argumentClass, argumentInstance, a, b) =>
+            var args = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
+
+            IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance, IntPtr a,
+                IntPtr b)
             {
-                var flags = VipsArgumentClass.__CreateInstance(argumentClass).Flags;
-                if ((flags & VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) != 0)
+                var flags = new VipsArgumentClass(argumentClass).Flags;
+                if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) != 0)
                 {
-                    var name = GParamSpec.__CreateInstance(pspec).Name;
+                    var name = new GParamSpec(pspec).Name;
                     // libvips uses '-' to separate parts of arg names, but we
                     // need '_' for C#
                     name = name.Replace("-", "_");
@@ -130,9 +115,10 @@ namespace NetVips
                 }
 
                 return IntPtr.Zero;
-            };
+            }
 
-            @object.VipsArgumentMap(VObject, addConstruct, IntPtr.Zero, IntPtr.Zero);
+            Internal.VipsObject.VipsArgumentMap(IntlVipsObject, AddConstruct, IntPtr.Zero, IntPtr.Zero);
+
             return args;
         }
 
@@ -142,7 +128,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// 
-        /// black_image = netvips.Operation.call('black', 10, 10)
+        /// var blackImage = netvips.Operation.call('black', 10, 10)
         /// 
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -160,7 +146,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// 
-        /// black_image = netvips.Operation.call('black', 10, 10)
+        /// var blackImage = netvips.Operation.call('black', 10, 10)
         /// 
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -178,7 +164,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// 
-        /// black_image = netvips.Operation.call('black', 10, 10)
+        /// var blackImage = netvips.Operation.call('black', 10, 10)
         /// 
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -202,7 +188,7 @@ namespace NetVips
             // logger.Debug($"VipsOperation.call: arguments = {arguments}");
 
             // make a thing to quickly get flags from an arg name
-            var flagsFromName = new Dictionary<string, VipsArgumentFlags>();
+            var flagsFromName = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
 
             var nRequired = 0;
             foreach (var entry in arguments)
@@ -213,17 +199,15 @@ namespace NetVips
                 flagsFromName[name] = flag;
 
                 // count required input args
-                if ((flag & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
+                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
                 {
                     nRequired++;
                 }
             }
 
-            // the final supplied argument can be a hash of options, or undefined
-            if (nRequired != args.Length &&
-                nRequired + 1 != args.Length)
+            if (nRequired != args.Length)
             {
                 throw new Exception(
                     $"unable to call {operationName}: {args.Length} arguments given, but {nRequired} required");
@@ -232,9 +216,9 @@ namespace NetVips
             // the first image argument is the thing we expand constants to
             // match ... look inside tables for images, since we may be passing
             // an array of image as a single param
-            var matchImage = FindInside<Image>(args, x => x is Image);
+            var matchImage = FindInside<Image>(args);
 
-            // logger.Debug($"VipsOperation.call: match_image = {matchImage}");
+            // logger.Debug($"VipsOperation.call: matchImage = {matchImage}");
 
             // set any string options before any args so they can't be
             // overridden
@@ -244,15 +228,15 @@ namespace NetVips
             }
 
             // set required and optional args
-            int n = 0;
+            var n = 0;
             foreach (var entry in arguments)
             {
                 var name = entry.Key;
                 var flag = entry.Value;
 
-                if ((flag & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
+                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
                 {
                     op.Set(name, (int) flag, matchImage, args[n]);
                     n++;
@@ -276,13 +260,13 @@ namespace NetVips
             }
 
             // build operation
-            var vop = operation.VipsCacheOperationBuild(op.VOperation);
-            if (vop == null)
+            var vop = VipsOperation.VipsCacheOperationBuild(op.IntlOperation);
+            if (vop == IntPtr.Zero)
             {
                 throw new Exception($"unable to call {operationName}");
             }
 
-            op = new Operation(vop);
+            op = new Operation(new VipsOperation(vop));
 
             // fetch required output args, plus modified input images
             var result = new List<object>();
@@ -292,15 +276,15 @@ namespace NetVips
                 var name = entry.Key;
                 var flag = entry.Value;
 
-                if ((flag & VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
+                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
                 {
                     result.Add(op.Get(name));
                 }
 
-                if ((flag & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
+                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
                 {
                     result.Add(op.Get(name));
                 }
@@ -316,16 +300,17 @@ namespace NetVips
                     var name = entry.Key;
 
                     var flags = flagsFromName[name];
-                    if ((flags & VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
-                        (flags & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0 &&
-                        (flags & VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
+                    if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
+                        (flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0 &&
+                        (flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
                     {
                         opts[name] = op.Get(name);
                     }
                 }
             }
 
-            @object.VipsObjectUnrefOutputs(op.VObject);
+            Internal.VipsObject.VipsObjectUnrefOutputs(op.IntlVipsObject);
+
             if (opts.Count > 0)
             {
                 result.Add(opts);
@@ -333,7 +318,7 @@ namespace NetVips
 
             // logger.Debug($"VipsOperation.call: result = {result}");
 
-            return result.Count == 0 ? null : (result.Count == 1 ? result[0] : result);
+            return result.Count == 0 ? null : (result.Count == 1 ? result[0] : result.ToArray());
         }
 
         /// <summary>
@@ -348,16 +333,16 @@ namespace NetVips
         public static string GenerateFunction(string operationName, string indent = "        ")
         {
             var op = NewFromName(operationName);
-            if ((op.GetFlags() & VipsOperationFlags.VIPS_OPERATION_DEPRECATED) != 0)
+            if ((op.GetFlags() & Internal.Enums.VipsOperationFlags.VIPS_OPERATION_DEPRECATED) != 0)
             {
                 throw new Exception($"No such operator. Operator \"{operationName}\" is deprecated");
             }
 
             // we are only interested in non-deprecated args
-            var arguments = op.GetArgs().Where(x => (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
-                .Select(x => new KeyValuePair<string, VipsArgumentFlags>(x.Key, x.Value))
+            var arguments = op.GetArgs()
+                .Where(x => (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
+                .Select(x => new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(x.Key, x.Value))
                 .ToDictionary(x => x.Key, x => x.Value);
-
 
             // find the first required input image arg, if any ... that will be self
             string memberX = null;
@@ -366,8 +351,8 @@ namespace NetVips
                 var name = entry.Key;
                 var flag = entry.Value;
 
-                if ((flag & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                    (flag & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
                     op.GetTypeOf(name) == GValue.ImageType)
                 {
                     memberX = name;
@@ -380,28 +365,37 @@ namespace NetVips
                 "in", "ref", "out"
             };
 
-            var requiredInput = arguments.Where(x => (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                                                     (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                                                     x.Key != memberX)
+            string[] ignoredOptionalOutputTypes =
+            {
+                "flags", "segments", "angle", "distance"
+            };
+
+            var requiredInput = arguments.Where(x =>
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                    x.Key != memberX)
                 .Select(x => x.Key)
                 .ToArray();
-            var optionalInput = arguments.Where(x => (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                                                     (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0)
+            var optionalInput = arguments.Where(x =>
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0)
                 .Select(x => x.Key)
                 .ToArray();
-            var requiredOutput = arguments.Where(x => (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
-                                                      (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 ||
-                                                      (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                                                      (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                                                      (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
+            var requiredOutput = arguments.Where(x =>
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 ||
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
                 .Select(x => x.Key)
                 .ToArray();
-            var optionalOutput = arguments.Where(x => (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
-                                                      (x.Value & VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0)
+            var optionalOutput = arguments.Where(x =>
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
+                    (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0)
                 .Select(x => x.Key)
                 .ToArray();
 
-            Func<string, string> safeIdentifier = name =>
+            string safeIdentifier(string name) =>
                 reservedKeywords.Contains(name)
                     ? "@" + name
                     : name;
@@ -418,11 +412,16 @@ namespace NetVips
                 .AppendLine($"{indent}/// <![CDATA[")
                 .Append($"{indent}/// ");
 
-            if (requiredOutput.Length == 1)
+            if (requiredOutput.Length == 1 && optionalOutput.Length == 0 || optionalOutput.Length == 1 &&
+                ignoredOptionalOutputTypes.Contains(optionalOutput[0]))
             {
                 var name = requiredOutput[0];
                 result.Append(
                     $"{GValue.GTypeToCSharp(op.GetTypeOf(name))} {safeIdentifier(name).ToCamelCase().FirstLetterToLower()} = ");
+            }
+            else if (requiredOutput.Length > 1 || optionalOutput.Length > 0)
+            {
+                result.Append("var output = ");
             }
 
             result.Append(memberX ?? "NetVips.Image")
@@ -491,17 +490,53 @@ namespace NetVips
                 outputType = "object[]";
             }
 
-            bool shouldOutputAsObject = optionalOutput.Length > 0 && outputType != "object[]";
+            string toCref(string name) =>
+                name.Equals("Image") || name.Equals("GObject") ? $"new <see cref=\"{name}\"/>" : name;
 
-            if (shouldOutputAsObject)
+            if (outputType.Equals("void"))
             {
-                outputType += " or object[]";
+                result.Append(
+                    $"{indent}/// <returns>None");
+            }
+            else if (outputType.EndsWith("[]"))
+            {
+                result.Append(
+                    $"{indent}/// <returns>An array of {toCref(outputType.Remove(outputType.Length - 2))}s");
+                if (optionalOutput.Length == 1 && !ignoredOptionalOutputTypes.Contains(optionalOutput[0]))
+                {
+                    outputType = "object";
+                    result.Append($" or a single {toCref(optionalOutput[0])}");
+                }
+                else if (optionalOutput.Length > 1)
+                {
+                    outputType = "object";
+                    result.AppendLine(optionalOutput.Any(o => o != optionalOutput[0])
+                        ? $" or an array of {toCref(outputTypes[0])}s"
+                        : " or an array of objects");
+                }
+            }
+            else
+            {
+                result.Append($"{indent}/// <returns>A {toCref(outputType)}");
+                if (optionalOutput.Length == 1 && optionalOutput[0] != outputType &&
+                    !ignoredOptionalOutputTypes.Contains(optionalOutput[0]))
+                {
+                    outputType = "object";
+                    result.Append($" or a {toCref(optionalOutput[0])}");
+                }
+                else if (optionalOutput.Length > 1)
+                {
+                    outputType = "object";
+                    result.Append(optionalOutput.Any(o => o != optionalOutput[0])
+                        ? $" or an array of {toCref(outputTypes[0])}s"
+                        : " or an array of objects");
+                }
             }
 
-            result.AppendLine($"{indent}/// <returns>{outputType}</returns>")
+            result.AppendLine("</returns>")
                 .Append($"{indent}public ")
                 .Append(memberX == null ? "static " : "")
-                .Append(shouldOutputAsObject ? "object" : outputType)
+                .Append(outputType)
                 .Append(
                     $" {newOperationName}({string.Join(", ", requiredInput.Select(name => $"{GValue.GTypeToCSharp(op.GetTypeOf(name))} {safeIdentifier(name).ToCamelCase().FirstLetterToLower()}").ToArray())}");
             if (optionalInput.Length > 0)
@@ -532,42 +567,51 @@ namespace NetVips
 
             if (requiredInput.Length > 0)
             {
-                result.Append(
-                    $", {string.Join(", ", requiredInput.Select(x => safeIdentifier(x).ToCamelCase().FirstLetterToLower()).ToArray())}");
+
+                result.Append(", ");
+
+                // Co-variant array conversion from Image[] to object[] can cause run-time exception on write operation.
+                // So we need to wrap the image array into a object array.
+                var needToWrap = requiredInput.Length == 1 && GValue.GTypeToCSharp(op.GetTypeOf(requiredInput[0])).Equals("Image[]");
+                if (needToWrap)
+                {
+                    result.Append("new object[] {");
+                }
+
+                result.Append(string.Join(", ", requiredInput.Select(x => safeIdentifier(x).ToCamelCase().FirstLetterToLower()).ToArray()));
+
+                if (needToWrap)
+                {
+                    result.Append("}");
+                }
             }
 
             result.Append(")");
 
-            if (shouldOutputAsObject)
+            switch (outputType)
             {
-                result.Append(";");
-            }
-            else
-            {
-                switch (outputType)
-                {
-                    case "GObject":
-                    case "Image":
-                    case "int[]":
-                    case "double[]":
-                    case "Image[]":
-                    case "object[]":
-                        result.Append($" as {outputType};");
-                        break;
-                    case "int":
-                    case "double":
-                        result.Append($" is {outputType} result ? result : 0;");
-                        break;
-                    case "bool":
-                        result.Append($" is {outputType} result && result;");
-                        break;
-                    case "string":
-                        result.Append($" is {outputType} result ? result : null;");
-                        break;
-                    default:
-                        result.Append(";");
-                        break;
-                }
+                case "GObject":
+                case "Image":
+                case "int[]":
+                case "double[]":
+                case "byte[]":
+                case "Image[]":
+                case "object[]":
+                    result.Append($" as {outputType};");
+                    break;
+                case "int":
+                case "double":
+                    result.Append($" is {outputType} result ? result : 0;");
+                    break;
+                case "bool":
+                    result.Append($" is {outputType} result && result;");
+                    break;
+                case "string":
+                    result.Append($" is {outputType} result ? result : null;");
+                    break;
+                default:
+                    result.Append(";");
+                    break;
             }
 
             result.AppendLine()
@@ -654,7 +698,7 @@ namespace NetVips
         /// <param name="max"></param>
         public static void VipsCacheSetMax(int max)
         {
-            operation.VipsCacheSetMax(max);
+            VipsOperation.VipsCacheSetMax(max);
         }
 
         /// <summary>
@@ -663,7 +707,7 @@ namespace NetVips
         /// <param name="maxMem"></param>
         public static void VipsCacheSetMaxMem(ulong maxMem)
         {
-            operation.VipsCacheSetMaxMem(maxMem);
+            VipsOperation.VipsCacheSetMaxMem(maxMem);
         }
 
         /// <summary>
@@ -672,7 +716,7 @@ namespace NetVips
         /// <param name="maxFiles"></param>
         public static void VipsCacheSetMaxFiles(int maxFiles)
         {
-            operation.VipsCacheSetMaxFiles(maxFiles);
+            VipsOperation.VipsCacheSetMaxFiles(maxFiles);
         }
 
         /// <summary>
@@ -681,7 +725,7 @@ namespace NetVips
         /// <param name="trace"></param>
         public static void VipsCacheSetTrace(int trace)
         {
-            operation.VipsCacheSetTrace(trace);
+            VipsOperation.VipsCacheSetTrace(trace);
         }
     }
 }
