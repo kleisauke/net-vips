@@ -22,7 +22,9 @@ namespace NetVips
         /// <summary>
         /// Secret ref for NewFromMemory
         /// </summary>
+#pragma warning disable 414
         private Array _data;
+#pragma warning restore 414
 
         public Image(VipsImage vImage) : base(vImage.ParentInstance)
         {
@@ -67,21 +69,22 @@ namespace NetVips
         /// <exception cref="T:System.Exception">If image doesn't have an even number of bands.</exception>
         private static Image RunCmplx(Func<Image, Image> func, Image image)
         {
-            string newFormat;
             var originalFormat = image.Format;
-            if (image.Format != "complex" && image.Format != "dpcomplex")
+            if (image.Format != Enums.BandFormat.Complex && image.Format != Enums.BandFormat.Dpcomplex)
             {
                 if (image.Bands % 2 != 0)
                 {
                     throw new Exception("not an even number of bands");
                 }
 
-                if (image.Format != "float" && image.Format != "double")
+                if (image.Format != Enums.BandFormat.Float && image.Format != Enums.BandFormat.Double)
                 {
-                    image = image.Cast("float");
+                    image = image.Cast(Enums.BandFormat.Float);
                 }
 
-                newFormat = image.Format == "double" ? "dpcomplex" : "complex";
+                var newFormat = image.Format == Enums.BandFormat.Double
+                    ? Enums.BandFormat.Dpcomplex
+                    : Enums.BandFormat.Complex;
 
                 image = image.Copy(new Dictionary<string, object>
                 {
@@ -91,9 +94,11 @@ namespace NetVips
             }
 
             image = func(image);
-            if (originalFormat != "complex" && originalFormat != "dpcomplex")
+            if (originalFormat != Enums.BandFormat.Complex && originalFormat != Enums.BandFormat.Dpcomplex)
             {
-                newFormat = image.Format == "dpcomplex" ? "double" : "float";
+                var newFormat = image.Format == Enums.BandFormat.Dpcomplex
+                    ? Enums.BandFormat.Double
+                    : Enums.BandFormat.Float;
 
                 image = image.Copy(new Dictionary<string, object>
                 {
@@ -687,6 +692,17 @@ namespace NetVips
         /// <exception cref="T:System.Exception">If unable to get <paramref name="name" />.</exception>
         public override object Get(string name)
         {
+            // scale and offset have default values
+            if (name == "scale" && GetTypeOf("scale") == 0)
+            {
+                return 1.0;
+            }
+
+            if (name == "offset" && GetTypeOf("offset") == 0)
+            {
+                return 0.0;
+            }
+
             // with old libvips, we must fetch properties (as opposed to
             // metadata) via VipsObject
             if (!Base.AtLeastLibvips(8, 5))
@@ -833,13 +849,13 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Affine(matrix, new Dictionary<string, object>
         /// {
-        ///     {"interpolate", GObject}
-        ///     {"oarea", int[]}
-        ///     {"odx", double}
-        ///     {"ody", double}
-        ///     {"idx", double}
-        ///     {"idy", double}
-        ///     {"background", double[]}
+        ///     {"interpolate", GObject},
+        ///     {"oarea", int[]},
+        ///     {"odx", double},
+        ///     {"ody", double},
+        ///     {"idx", double},
+        ///     {"idy", double},
+        ///     {"background", double[]},
         ///     {"extend", string}
         /// });
         /// ]]>
@@ -870,8 +886,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Analyzeload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -890,6 +906,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load an Analyze6 image
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Analyzeload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("analyzeload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Join an array of images
         /// </summary>
         /// <example>
@@ -897,12 +960,12 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Arrayjoin(@in, new Dictionary<string, object>
         /// {
-        ///     {"across", int}
-        ///     {"shim", int}
-        ///     {"background", double[]}
-        ///     {"halign", string}
-        ///     {"valign", string}
-        ///     {"hspacing", int}
+        ///     {"across", int},
+        ///     {"shim", int},
+        ///     {"background", double[]},
+        ///     {"halign", string},
+        ///     {"valign", string},
+        ///     {"hspacing", int},
         ///     {"vspacing", int}
         /// });
         /// ]]>
@@ -938,6 +1001,33 @@ namespace NetVips
         public Image Autorot()
         {
             return this.Call("autorot") as Image;
+        }
+
+        /// <summary>
+        /// Autorotate image by exif tag
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = in.Autorot(out var angle);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="angle">Angle image was rotated by</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Autorot(out string angle)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"angle", true}
+            };
+
+            var results = this.Call("autorot", optionalOutput) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            angle = opts?["angle"] is string out1 ? out1 : null;
+
+            return finalResult;
         }
 
         /// <summary>
@@ -1150,8 +1240,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Cache(new Dictionary<string, object>
         /// {
-        ///     {"max_tiles", int}
-        ///     {"tile_height", int}
+        ///     {"max_tiles", int},
+        ///     {"tile_height", int},
         ///     {"tile_width", int}
         /// });
         /// ]]>
@@ -1238,11 +1328,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Compass(mask, new Dictionary<string, object>
         /// {
-        ///     {"times", int}
-        ///     {"angle", string}
-        ///     {"combine", string}
-        ///     {"precision", string}
-        ///     {"layers", int}
+        ///     {"times", int},
+        ///     {"angle", string},
+        ///     {"combine", string},
+        ///     {"precision", string},
+        ///     {"layers", int},
         ///     {"cluster", int}
         /// });
         /// ]]>
@@ -1340,7 +1430,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = base.Composite2(overlay, mode, new Dictionary<string, object>
         /// {
-        ///     {"compositing_space", string}
+        ///     {"compositing_space", string},
         ///     {"premultiplied", bool}
         /// });
         /// ]]>
@@ -1366,8 +1456,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Conv(mask, new Dictionary<string, object>
         /// {
-        ///     {"precision", string}
-        ///     {"layers", int}
+        ///     {"precision", string},
+        ///     {"layers", int},
         ///     {"cluster", int}
         /// });
         /// ]]>
@@ -1393,7 +1483,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Conva(mask, new Dictionary<string, object>
         /// {
-        ///     {"layers", int}
+        ///     {"layers", int},
         ///     {"cluster", int}
         /// });
         /// ]]>
@@ -1475,8 +1565,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Convsep(mask, new Dictionary<string, object>
         /// {
-        ///     {"precision", string}
-        ///     {"layers", int}
+        ///     {"precision", string},
+        ///     {"layers", int},
         ///     {"cluster", int}
         /// });
         /// ]]>
@@ -1502,15 +1592,15 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Copy(new Dictionary<string, object>
         /// {
-        ///     {"width", int}
-        ///     {"height", int}
-        ///     {"bands", int}
-        ///     {"format", string}
-        ///     {"coding", string}
-        ///     {"interpretation", string}
-        ///     {"xres", double}
-        ///     {"yres", double}
-        ///     {"xoffset", int}
+        ///     {"width", int},
+        ///     {"height", int},
+        ///     {"bands", int},
+        ///     {"format", string},
+        ///     {"coding", string},
+        ///     {"interpretation", string},
+        ///     {"xres", double},
+        ///     {"yres", double},
+        ///     {"xoffset", int},
         ///     {"yoffset", int}
         /// });
         /// ]]>
@@ -1559,12 +1649,12 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Csvload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"skip", int}
-        ///     {"lines", int}
-        ///     {"fail", bool}
-        ///     {"whitespace", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"skip", int},
+        ///     {"lines", int},
+        ///     {"fail", bool},
+        ///     {"whitespace", string},
         ///     {"separator", string}
         /// });
         /// ]]>
@@ -1587,6 +1677,61 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load csv from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Csvload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"skip", int},
+        ///     {"lines", int},
+        ///     {"fail", bool},
+        ///     {"whitespace", string},
+        ///     {"separator", string}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// skip (int): Skip this many lines at the start of the file
+        /// lines (int): Read this many lines from the file
+        /// fail (bool): Fail on first error
+        /// whitespace (string): Set of whitespace characters
+        /// separator (string): Set of separator characters
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Csvload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("csvload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to csv file
         /// </summary>
         /// <example>
@@ -1594,9 +1739,9 @@ namespace NetVips
         /// <![CDATA[
         /// in.Csvsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"separator", string}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"separator", string},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -1731,9 +1876,9 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var output = image.DrawFlood(ink, x, y, new Dictionary<string, object>
+        /// Image image = image.DrawFlood(ink, x, y, new Dictionary<string, object>
         /// {
-        ///     {"test", Image}
+        ///     {"test", Image},
         ///     {"equal", bool}
         /// });
         /// ]]>
@@ -1746,10 +1891,219 @@ namespace NetVips
         /// test (Image): Test pixels in this image
         /// equal (bool): DrawFlood while equal to edge
         /// </param>
-        /// <returns>A new <see cref="Image"/> or an array of new <see cref="Image"/>s</returns>
-        public object DrawFlood(double[] ink, int x, int y, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image DrawFlood(double[] ink, int x, int y, IDictionary<string, object> kwargs = null)
         {
-            return this.Call("draw_flood", kwargs, ink, x, y);
+            return this.Call("draw_flood", kwargs, ink, x, y) as Image;
+        }
+
+        /// <summary>
+        /// Flood-fill an area
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image image = image.DrawFlood(ink, x, y, out var left, new Dictionary<string, object>
+        /// {
+        ///     {"test", Image},
+        ///     {"equal", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="ink">Color for pixels</param>
+        /// <param name="x">DrawFlood start point</param>
+        /// <param name="y">DrawFlood start point</param>
+        /// <param name="left">Left edge of modified area</param>
+        /// <param name="kwargs">
+        /// test (Image): Test pixels in this image
+        /// equal (bool): DrawFlood while equal to edge
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image DrawFlood(double[] ink, int x, int y, out int left, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"left", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            left = opts?["left"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Flood-fill an area
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, new Dictionary<string, object>
+        /// {
+        ///     {"test", Image},
+        ///     {"equal", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="ink">Color for pixels</param>
+        /// <param name="x">DrawFlood start point</param>
+        /// <param name="y">DrawFlood start point</param>
+        /// <param name="left">Left edge of modified area</param>
+        /// <param name="top">top edge of modified area</param>
+        /// <param name="kwargs">
+        /// test (Image): Test pixels in this image
+        /// equal (bool): DrawFlood while equal to edge
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"left", true},
+                {"top", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            left = opts?["left"] is int out1 ? out1 : 0;
+            top = opts?["top"] is int out2 ? out2 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Flood-fill an area
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, new Dictionary<string, object>
+        /// {
+        ///     {"test", Image},
+        ///     {"equal", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="ink">Color for pixels</param>
+        /// <param name="x">DrawFlood start point</param>
+        /// <param name="y">DrawFlood start point</param>
+        /// <param name="left">Left edge of modified area</param>
+        /// <param name="top">top edge of modified area</param>
+        /// <param name="width">width of modified area</param>
+        /// <param name="kwargs">
+        /// test (Image): Test pixels in this image
+        /// equal (bool): DrawFlood while equal to edge
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"left", true},
+                {"top", true},
+                {"width", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            left = opts?["left"] is int out1 ? out1 : 0;
+            top = opts?["top"] is int out2 ? out2 : 0;
+            width = opts?["width"] is int out3 ? out3 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Flood-fill an area
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, new Dictionary<string, object>
+        /// {
+        ///     {"test", Image},
+        ///     {"equal", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="ink">Color for pixels</param>
+        /// <param name="x">DrawFlood start point</param>
+        /// <param name="y">DrawFlood start point</param>
+        /// <param name="left">Left edge of modified area</param>
+        /// <param name="top">top edge of modified area</param>
+        /// <param name="width">width of modified area</param>
+        /// <param name="height">height of modified area</param>
+        /// <param name="kwargs">
+        /// test (Image): Test pixels in this image
+        /// equal (bool): DrawFlood while equal to edge
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width, out int height,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"left", true},
+                {"top", true},
+                {"width", true},
+                {"height", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            left = opts?["left"] is int out1 ? out1 : 0;
+            top = opts?["top"] is int out2 ? out2 : 0;
+            width = opts?["width"] is int out3 ? out3 : 0;
+            height = opts?["height"] is int out4 ? out4 : 0;
+
+            return finalResult;
         }
 
         /// <summary>
@@ -1874,19 +2228,19 @@ namespace NetVips
         /// <![CDATA[
         /// in.Dzsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"basename", string}
-        ///     {"layout", string}
-        ///     {"page_height", int}
-        ///     {"suffix", string}
-        ///     {"overlap", int}
-        ///     {"tile_size", int}
-        ///     {"centre", bool}
-        ///     {"depth", string}
-        ///     {"angle", string}
-        ///     {"container", string}
-        ///     {"properties", bool}
-        ///     {"compression", int}
-        ///     {"strip", bool}
+        ///     {"basename", string},
+        ///     {"layout", string},
+        ///     {"page_height", int},
+        ///     {"suffix", string},
+        ///     {"overlap", int},
+        ///     {"tile_size", int},
+        ///     {"centre", bool},
+        ///     {"depth", string},
+        ///     {"angle", string},
+        ///     {"container", string},
+        ///     {"properties", bool},
+        ///     {"compression", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -1923,19 +2277,19 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.DzsaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"basename", string}
-        ///     {"layout", string}
-        ///     {"page_height", int}
-        ///     {"suffix", string}
-        ///     {"overlap", int}
-        ///     {"tile_size", int}
-        ///     {"centre", bool}
-        ///     {"depth", string}
-        ///     {"angle", string}
-        ///     {"container", string}
-        ///     {"properties", bool}
-        ///     {"compression", int}
-        ///     {"strip", bool}
+        ///     {"basename", string},
+        ///     {"layout", string},
+        ///     {"page_height", int},
+        ///     {"suffix", string},
+        ///     {"overlap", int},
+        ///     {"tile_size", int},
+        ///     {"centre", bool},
+        ///     {"depth", string},
+        ///     {"angle", string},
+        ///     {"container", string},
+        ///     {"properties", bool},
+        ///     {"compression", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -1971,7 +2325,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Embed(x, y, width, height, new Dictionary<string, object>
         /// {
-        ///     {"extend", string}
+        ///     {"extend", string},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -2042,7 +2396,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Eye(width, height, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
+        ///     {"uchar", bool},
         ///     {"factor", double}
         /// });
         /// ]]>
@@ -2110,6 +2464,33 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Fill image zeros with nearest non-zero pixel
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = in.FillNearest(out var distance);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="distance">Distance to nearest non-zero pixel</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image FillNearest(out Image distance)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"distance", true}
+            };
+
+            var results = this.Call("fill_nearest", optionalOutput) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            distance = opts?["distance"] as Image;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Search an image for non-edge areas
         /// </summary>
         /// <example>
@@ -2117,7 +2498,7 @@ namespace NetVips
         /// <![CDATA[
         /// var output = in.FindTrim(new Dictionary<string, object>
         /// {
-        ///     {"threshold", double}
+        ///     {"threshold", double},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -2141,7 +2522,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Flatten(new Dictionary<string, object>
         /// {
-        ///     {"background", double[]}
+        ///     {"background", double[]},
         ///     {"max_alpha", double}
         /// });
         /// ]]>
@@ -2272,7 +2653,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Gaussblur(sigma, new Dictionary<string, object>
         /// {
-        ///     {"min_ampl", double}
+        ///     {"min_ampl", double},
         ///     {"precision", string}
         /// });
         /// ]]>
@@ -2297,7 +2678,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, new Dictionary<string, object>
         /// {
-        ///     {"separable", bool}
+        ///     {"separable", bool},
         ///     {"precision", string}
         /// });
         /// ]]>
@@ -2323,7 +2704,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Gaussnoise(width, height, new Dictionary<string, object>
         /// {
-        ///     {"sigma", double}
+        ///     {"sigma", double},
         ///     {"mean", double}
         /// });
         /// ]]>
@@ -2367,10 +2748,10 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Gifload(filename, new Dictionary<string, object>
         /// {
-        ///     {"n", int}
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"page", int}
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -2396,12 +2777,63 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
+        /// Image @out = NetVips.Image.Gifload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// n (int): Load this many pages
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// page (int): Load this page from the file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Gifload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("gifload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load GIF with giflib
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
         /// Image @out = NetVips.Image.GifloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"n", int}
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"page", int}
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -2422,6 +2854,57 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load GIF with giflib
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// n (int): Load this many pages
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// page (int): Load this page from the file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image GifloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("gifload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Global balance an image mosaic
         /// </summary>
         /// <example>
@@ -2429,7 +2912,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Globalbalance(new Dictionary<string, object>
         /// {
-        ///     {"gamma", double}
+        ///     {"gamma", double},
         ///     {"int_output", bool}
         /// });
         /// ]]>
@@ -2453,7 +2936,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Gravity(direction, width, height, new Dictionary<string, object>
         /// {
-        ///     {"extend", string}
+        ///     {"extend", string},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -2733,8 +3216,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.HoughCircle(new Dictionary<string, object>
         /// {
-        ///     {"scale", int}
-        ///     {"min_radius", int}
+        ///     {"scale", int},
+        ///     {"min_radius", int},
         ///     {"max_radius", int}
         /// });
         /// ]]>
@@ -2759,7 +3242,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.HoughLine(new Dictionary<string, object>
         /// {
-        ///     {"width", int}
+        ///     {"width", int},
         ///     {"height", int}
         /// });
         /// ]]>
@@ -2799,9 +3282,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.IccExport(new Dictionary<string, object>
         /// {
-        ///     {"pcs", string}
-        ///     {"intent", string}
-        ///     {"output_profile", string}
+        ///     {"pcs", string},
+        ///     {"intent", string},
+        ///     {"output_profile", string},
         ///     {"depth", int}
         /// });
         /// ]]>
@@ -2827,9 +3310,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.IccImport(new Dictionary<string, object>
         /// {
-        ///     {"pcs", string}
-        ///     {"intent", string}
-        ///     {"embedded", bool}
+        ///     {"pcs", string},
+        ///     {"intent", string},
+        ///     {"embedded", bool},
         ///     {"input_profile", string}
         /// });
         /// ]]>
@@ -2855,10 +3338,10 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.IccTransform(outputProfile, new Dictionary<string, object>
         /// {
-        ///     {"pcs", string}
-        ///     {"intent", string}
-        ///     {"embedded", bool}
-        ///     {"input_profile", string}
+        ///     {"pcs", string},
+        ///     {"intent", string},
+        ///     {"embedded", bool},
+        ///     {"input_profile", string},
         ///     {"depth", int}
         /// });
         /// ]]>
@@ -2886,8 +3369,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Identity(new Dictionary<string, object>
         /// {
-        ///     {"bands", int}
-        ///     {"ushort", bool}
+        ///     {"bands", int},
+        ///     {"ushort", bool},
         ///     {"size", int}
         /// });
         /// ]]>
@@ -2912,7 +3395,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = main.Insert(sub, x, y, new Dictionary<string, object>
         /// {
-        ///     {"expand", bool}
+        ///     {"expand", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -2999,9 +3482,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in1.Join(in2, direction, new Dictionary<string, object>
         /// {
-        ///     {"expand", bool}
-        ///     {"shim", int}
-        ///     {"background", double[]}
+        ///     {"expand", bool},
+        ///     {"shim", int},
+        ///     {"background", double[]},
         ///     {"align", string}
         /// });
         /// ]]>
@@ -3029,10 +3512,10 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Jpegload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"shrink", int}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
+        ///     {"fail", bool},
         ///     {"autorotate", bool}
         /// });
         /// ]]>
@@ -3053,6 +3536,57 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load jpeg from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Jpegload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
+        ///     {"fail", bool},
+        ///     {"autorotate", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// shrink (int): Shrink factor on load
+        /// fail (bool): Fail on first error
+        /// autorotate (bool): Rotate image using exif orientation
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Jpegload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("jpegload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load jpeg from buffer
         /// </summary>
         /// <example>
@@ -3060,10 +3594,10 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.JpegloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"shrink", int}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
+        ///     {"fail", bool},
         ///     {"autorotate", bool}
         /// });
         /// ]]>
@@ -3084,6 +3618,57 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load jpeg from buffer
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
+        ///     {"fail", bool},
+        ///     {"autorotate", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// shrink (int): Shrink factor on load
+        /// fail (bool): Fail on first error
+        /// autorotate (bool): Rotate image using exif orientation
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image JpegloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("jpegload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to jpeg file
         /// </summary>
         /// <example>
@@ -3091,17 +3676,17 @@ namespace NetVips
         /// <![CDATA[
         /// in.Jpegsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"Q", int}
-        ///     {"profile", string}
-        ///     {"optimize_coding", bool}
-        ///     {"interlace", bool}
-        ///     {"no_subsample", bool}
-        ///     {"trellis_quant", bool}
-        ///     {"overshoot_deringing", bool}
-        ///     {"optimize_scans", bool}
-        ///     {"quant_table", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"Q", int},
+        ///     {"profile", string},
+        ///     {"optimize_coding", bool},
+        ///     {"interlace", bool},
+        ///     {"no_subsample", bool},
+        ///     {"trellis_quant", bool},
+        ///     {"overshoot_deringing", bool},
+        ///     {"optimize_scans", bool},
+        ///     {"quant_table", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -3136,17 +3721,17 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.JpegsaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"Q", int}
-        ///     {"profile", string}
-        ///     {"optimize_coding", bool}
-        ///     {"interlace", bool}
-        ///     {"no_subsample", bool}
-        ///     {"trellis_quant", bool}
-        ///     {"overshoot_deringing", bool}
-        ///     {"optimize_scans", bool}
-        ///     {"quant_table", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"Q", int},
+        ///     {"profile", string},
+        ///     {"optimize_coding", bool},
+        ///     {"interlace", bool},
+        ///     {"no_subsample", bool},
+        ///     {"trellis_quant", bool},
+        ///     {"overshoot_deringing", bool},
+        ///     {"optimize_scans", bool},
+        ///     {"quant_table", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -3180,17 +3765,17 @@ namespace NetVips
         /// <![CDATA[
         /// in.JpegsaveMime(new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"Q", int}
-        ///     {"profile", string}
-        ///     {"optimize_coding", bool}
-        ///     {"interlace", bool}
-        ///     {"no_subsample", bool}
-        ///     {"trellis_quant", bool}
-        ///     {"overshoot_deringing", bool}
-        ///     {"optimize_scans", bool}
-        ///     {"quant_table", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"Q", int},
+        ///     {"profile", string},
+        ///     {"optimize_coding", bool},
+        ///     {"interlace", bool},
+        ///     {"no_subsample", bool},
+        ///     {"trellis_quant", bool},
+        ///     {"overshoot_deringing", bool},
+        ///     {"optimize_scans", bool},
+        ///     {"quant_table", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -3300,6 +3885,33 @@ namespace NetVips
         public Image Labelregions()
         {
             return this.Call("labelregions") as Image;
+        }
+
+        /// <summary>
+        /// Label regions in an image
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image mask = in.Labelregions(out var segments);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="segments">Number of discrete contigious regions</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Labelregions(out int segments)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"segments", true}
+            };
+
+            var results = this.Call("labelregions", optionalOutput) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            segments = opts?["segments"] is int out1 ? out1 : 0;
+
+            return finalResult;
         }
 
         /// <summary>
@@ -3446,9 +4058,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Linecache(new Dictionary<string, object>
         /// {
-        ///     {"tile_height", int}
-        ///     {"access", string}
-        ///     {"threaded", bool}
+        ///     {"tile_height", int},
+        ///     {"access", string},
+        ///     {"threaded", bool},
         ///     {"persistent", bool}
         /// });
         /// ]]>
@@ -3474,7 +4086,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, new Dictionary<string, object>
         /// {
-        ///     {"separable", bool}
+        ///     {"separable", bool},
         ///     {"precision", string}
         /// });
         /// ]]>
@@ -3500,11 +4112,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Magickload(filename, new Dictionary<string, object>
         /// {
-        ///     {"density", string}
-        ///     {"page", int}
-        ///     {"n", int}
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"density", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -3526,6 +4138,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load file with ImageMagick
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Magickload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"density", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// density (string): Canvas resolution for rendering vector formats like SVG
+        /// page (int): Load this page from the file
+        /// n (int): Load this many pages
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Magickload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("magickload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load buffer with ImageMagick
         /// </summary>
         /// <example>
@@ -3533,11 +4198,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MagickloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"density", string}
-        ///     {"page", int}
-        ///     {"n", int}
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"density", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -3559,6 +4224,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load buffer with ImageMagick
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"density", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// density (string): Canvas resolution for rendering vector formats like SVG
+        /// page (int): Load this page from the file
+        /// n (int): Load this many pages
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image MagickloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("magickload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save file with ImageMagick
         /// </summary>
         /// <example>
@@ -3566,10 +4284,10 @@ namespace NetVips
         /// <![CDATA[
         /// in.Magicksave(filename, new Dictionary<string, object>
         /// {
-        ///     {"format", string}
-        ///     {"quality", int}
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"format", string},
+        ///     {"quality", int},
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -3597,10 +4315,10 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.MagicksaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"format", string}
-        ///     {"quality", int}
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"format", string},
+        ///     {"quality", int},
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -3673,9 +4391,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3708,9 +4426,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3745,9 +4463,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3781,9 +4499,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3813,9 +4531,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3846,9 +4564,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3882,9 +4600,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3917,9 +4635,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3949,9 +4667,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -3984,9 +4702,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"nodc", bool}
-        ///     {"reject", bool}
+        ///     {"uchar", bool},
+        ///     {"nodc", bool},
+        ///     {"reject", bool},
         ///     {"optical", bool}
         /// });
         /// ]]>
@@ -4017,9 +4735,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, new Dictionary<string, object>
         /// {
-        ///     {"hwindow", int}
-        ///     {"harea", int}
-        ///     {"search", bool}
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"search", bool},
         ///     {"interpolate", GObject}
         /// });
         /// ]]>
@@ -4108,8 +4826,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Matload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -4128,6 +4846,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load mat from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Matload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Matload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("matload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load matrix from file
         /// </summary>
         /// <example>
@@ -4135,8 +4900,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Matrixload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -4155,6 +4920,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load matrix from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Matrixload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Matrixload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("matrixload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Print matrix
         /// </summary>
         /// <example>
@@ -4162,8 +4974,8 @@ namespace NetVips
         /// <![CDATA[
         /// in.Matrixprint(new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4188,8 +5000,8 @@ namespace NetVips
         /// <![CDATA[
         /// in.Matrixsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4213,7 +5025,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var output = in.Max(new Dictionary<string, object>
+        /// double @out = in.Max(new Dictionary<string, object>
         /// {
         ///     {"size", int}
         /// });
@@ -4223,10 +5035,252 @@ namespace NetVips
         /// <param name="kwargs">
         /// size (int): Number of maximum values to find
         /// </param>
-        /// <returns>A double or an array of doubles</returns>
-        public object Max(IDictionary<string, object> kwargs = null)
+        /// <returns>A double</returns>
+        public double Max(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("max", kwargs);
+            return this.Call("max", kwargs) is double result ? result : 0;
+        }
+
+        /// <summary>
+        /// Find image maximum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Max(out var x, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of maximum</param>
+        /// <param name="kwargs">
+        /// size (int): Number of maximum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Max(out int x, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("max", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image maximum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Max(out var x, out var y, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of maximum</param>
+        /// <param name="y">Vertical position of maximum</param>
+        /// <param name="kwargs">
+        /// size (int): Number of maximum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Max(out int x, out int y, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("max", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image maximum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Max(out var x, out var y, out var outArray, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of maximum</param>
+        /// <param name="y">Vertical position of maximum</param>
+        /// <param name="outArray">Array of output values</param>
+        /// <param name="kwargs">
+        /// size (int): Number of maximum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Max(out int x, out int y, out double[] outArray, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true},
+                {"out_array", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("max", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+            outArray = opts?["out_array"] as double[];
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image maximum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of maximum</param>
+        /// <param name="y">Vertical position of maximum</param>
+        /// <param name="outArray">Array of output values</param>
+        /// <param name="xArray">Array of horizontal positions</param>
+        /// <param name="kwargs">
+        /// size (int): Number of maximum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Max(out int x, out int y, out double[] outArray, out int[] xArray,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true},
+                {"out_array", true},
+                {"x_array", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("max", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+            outArray = opts?["out_array"] as double[];
+            xArray = opts?["x_array"] as int[];
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image maximum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, out var yArray, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of maximum</param>
+        /// <param name="y">Vertical position of maximum</param>
+        /// <param name="outArray">Array of output values</param>
+        /// <param name="xArray">Array of horizontal positions</param>
+        /// <param name="yArray">Array of vertical positions</param>
+        /// <param name="kwargs">
+        /// size (int): Number of maximum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Max(out int x, out int y, out double[] outArray, out int[] xArray, out int[] yArray,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true},
+                {"out_array", true},
+                {"x_array", true},
+                {"y_array", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("max", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+            outArray = opts?["out_array"] as double[];
+            xArray = opts?["x_array"] as int[];
+            yArray = opts?["y_array"] as int[];
+
+            return finalResult;
         }
 
         /// <summary>
@@ -4237,9 +5291,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Measure(h, v, new Dictionary<string, object>
         /// {
-        ///     {"left", int}
-        ///     {"top", int}
-        ///     {"width", int}
+        ///     {"left", int},
+        ///     {"top", int},
+        ///     {"width", int},
         ///     {"height", int}
         /// });
         /// ]]>
@@ -4291,7 +5345,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var output = in.Min(new Dictionary<string, object>
+        /// double @out = in.Min(new Dictionary<string, object>
         /// {
         ///     {"size", int}
         /// });
@@ -4301,10 +5355,252 @@ namespace NetVips
         /// <param name="kwargs">
         /// size (int): Number of minimum values to find
         /// </param>
-        /// <returns>A double or an array of doubles</returns>
-        public object Min(IDictionary<string, object> kwargs = null)
+        /// <returns>A double</returns>
+        public double Min(IDictionary<string, object> kwargs = null)
         {
-            return this.Call("min", kwargs);
+            return this.Call("min", kwargs) is double result ? result : 0;
+        }
+
+        /// <summary>
+        /// Find image minimum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Min(out var x, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of minimum</param>
+        /// <param name="kwargs">
+        /// size (int): Number of minimum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Min(out int x, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("min", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image minimum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Min(out var x, out var y, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of minimum</param>
+        /// <param name="y">Vertical position of minimum</param>
+        /// <param name="kwargs">
+        /// size (int): Number of minimum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Min(out int x, out int y, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("min", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image minimum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Min(out var x, out var y, out var outArray, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of minimum</param>
+        /// <param name="y">Vertical position of minimum</param>
+        /// <param name="outArray">Array of output values</param>
+        /// <param name="kwargs">
+        /// size (int): Number of minimum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Min(out int x, out int y, out double[] outArray, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true},
+                {"out_array", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("min", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+            outArray = opts?["out_array"] as double[];
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image minimum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of minimum</param>
+        /// <param name="y">Vertical position of minimum</param>
+        /// <param name="outArray">Array of output values</param>
+        /// <param name="xArray">Array of horizontal positions</param>
+        /// <param name="kwargs">
+        /// size (int): Number of minimum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Min(out int x, out int y, out double[] outArray, out int[] xArray,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true},
+                {"out_array", true},
+                {"x_array", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("min", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+            outArray = opts?["out_array"] as double[];
+            xArray = opts?["x_array"] as int[];
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Find image minimum
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, out var yArray, new Dictionary<string, object>
+        /// {
+        ///     {"size", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="x">Horizontal position of minimum</param>
+        /// <param name="y">Vertical position of minimum</param>
+        /// <param name="outArray">Array of output values</param>
+        /// <param name="xArray">Array of horizontal positions</param>
+        /// <param name="yArray">Array of vertical positions</param>
+        /// <param name="kwargs">
+        /// size (int): Number of minimum values to find
+        /// </param>
+        /// <returns>A double</returns>
+        public double Min(out int x, out int y, out double[] outArray, out int[] xArray, out int[] yArray,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"x", true},
+                {"y", true},
+                {"out_array", true},
+                {"x_array", true},
+                {"y_array", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("min", kwargs) as object[];
+            var finalResult = results?[0] is double result ? result : 0;
+            var opts = results?[1] as Dictionary<object, object>;
+            x = opts?["x"] is int out1 ? out1 : 0;
+            y = opts?["y"] is int out2 ? out2 : 0;
+            outArray = opts?["out_array"] as double[];
+            xArray = opts?["x_array"] as int[];
+            yArray = opts?["y_array"] as int[];
+
+            return finalResult;
         }
 
         /// <summary>
@@ -4331,11 +5627,11 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var output = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, new Dictionary<string, object>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, new Dictionary<string, object>
         /// {
-        ///     {"hwindow", int}
-        ///     {"harea", int}
-        ///     {"mblend", int}
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
         ///     {"bandno", int}
         /// });
         /// ]]>
@@ -4353,11 +5649,388 @@ namespace NetVips
         /// mblend (int): Maximum blend size
         /// bandno (int): Band to search for features on
         /// </param>
-        /// <returns>A new <see cref="Image"/> or an array of new <see cref="Image"/>s</returns>
-        public object Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec,
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec,
             IDictionary<string, object> kwargs = null)
         {
-            return this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec);
+            return this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as Image;
+        }
+
+        /// <summary>
+        /// Mosaic two images
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, new Dictionary<string, object>
+        /// {
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
+        ///     {"bandno", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="sec">Secondary image</param>
+        /// <param name="direction">Horizontal or vertcial mosaic</param>
+        /// <param name="xref">Position of reference tie-point</param>
+        /// <param name="yref">Position of reference tie-point</param>
+        /// <param name="xsec">Position of secondary tie-point</param>
+        /// <param name="ysec">Position of secondary tie-point</param>
+        /// <param name="dx0">Detected integer offset</param>
+        /// <param name="kwargs">
+        /// hwindow (int): Half window size
+        /// harea (int): Half area size
+        /// mblend (int): Maximum blend size
+        /// bandno (int): Band to search for features on
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"dx0", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            dx0 = opts?["dx0"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Mosaic two images
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, new Dictionary<string, object>
+        /// {
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
+        ///     {"bandno", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="sec">Secondary image</param>
+        /// <param name="direction">Horizontal or vertcial mosaic</param>
+        /// <param name="xref">Position of reference tie-point</param>
+        /// <param name="yref">Position of reference tie-point</param>
+        /// <param name="xsec">Position of secondary tie-point</param>
+        /// <param name="ysec">Position of secondary tie-point</param>
+        /// <param name="dx0">Detected integer offset</param>
+        /// <param name="dy0">Detected integer offset</param>
+        /// <param name="kwargs">
+        /// hwindow (int): Half window size
+        /// harea (int): Half area size
+        /// mblend (int): Maximum blend size
+        /// bandno (int): Band to search for features on
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
+            out int dy0, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"dx0", true},
+                {"dy0", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            dx0 = opts?["dx0"] is int out1 ? out1 : 0;
+            dy0 = opts?["dy0"] is int out2 ? out2 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Mosaic two images
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, new Dictionary<string, object>
+        /// {
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
+        ///     {"bandno", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="sec">Secondary image</param>
+        /// <param name="direction">Horizontal or vertcial mosaic</param>
+        /// <param name="xref">Position of reference tie-point</param>
+        /// <param name="yref">Position of reference tie-point</param>
+        /// <param name="xsec">Position of secondary tie-point</param>
+        /// <param name="ysec">Position of secondary tie-point</param>
+        /// <param name="dx0">Detected integer offset</param>
+        /// <param name="dy0">Detected integer offset</param>
+        /// <param name="scale1">Detected scale</param>
+        /// <param name="kwargs">
+        /// hwindow (int): Half window size
+        /// harea (int): Half area size
+        /// mblend (int): Maximum blend size
+        /// bandno (int): Band to search for features on
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
+            out int dy0, out double scale1, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"dx0", true},
+                {"dy0", true},
+                {"scale1", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            dx0 = opts?["dx0"] is int out1 ? out1 : 0;
+            dy0 = opts?["dy0"] is int out2 ? out2 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Mosaic two images
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, new Dictionary<string, object>
+        /// {
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
+        ///     {"bandno", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="sec">Secondary image</param>
+        /// <param name="direction">Horizontal or vertcial mosaic</param>
+        /// <param name="xref">Position of reference tie-point</param>
+        /// <param name="yref">Position of reference tie-point</param>
+        /// <param name="xsec">Position of secondary tie-point</param>
+        /// <param name="ysec">Position of secondary tie-point</param>
+        /// <param name="dx0">Detected integer offset</param>
+        /// <param name="dy0">Detected integer offset</param>
+        /// <param name="scale1">Detected scale</param>
+        /// <param name="angle1">Detected rotation</param>
+        /// <param name="kwargs">
+        /// hwindow (int): Half window size
+        /// harea (int): Half area size
+        /// mblend (int): Maximum blend size
+        /// bandno (int): Band to search for features on
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
+            out int dy0, out double scale1, out double angle1, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"dx0", true},
+                {"dy0", true},
+                {"scale1", true},
+                {"angle1", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            dx0 = opts?["dx0"] is int out1 ? out1 : 0;
+            dy0 = opts?["dy0"] is int out2 ? out2 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
+            angle1 = opts?["angle1"] is double out4 ? out4 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Mosaic two images
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, new Dictionary<string, object>
+        /// {
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
+        ///     {"bandno", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="sec">Secondary image</param>
+        /// <param name="direction">Horizontal or vertcial mosaic</param>
+        /// <param name="xref">Position of reference tie-point</param>
+        /// <param name="yref">Position of reference tie-point</param>
+        /// <param name="xsec">Position of secondary tie-point</param>
+        /// <param name="ysec">Position of secondary tie-point</param>
+        /// <param name="dx0">Detected integer offset</param>
+        /// <param name="dy0">Detected integer offset</param>
+        /// <param name="scale1">Detected scale</param>
+        /// <param name="angle1">Detected rotation</param>
+        /// <param name="dy1">Detected first-order displacement</param>
+        /// <param name="kwargs">
+        /// hwindow (int): Half window size
+        /// harea (int): Half area size
+        /// mblend (int): Maximum blend size
+        /// bandno (int): Band to search for features on
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
+            out int dy0, out double scale1, out double angle1, out double dy1,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"dx0", true},
+                {"dy0", true},
+                {"scale1", true},
+                {"angle1", true},
+                {"dy1", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            dx0 = opts?["dx0"] is int out1 ? out1 : 0;
+            dy0 = opts?["dy0"] is int out2 ? out2 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
+            angle1 = opts?["angle1"] is double out4 ? out4 : 0;
+            dy1 = opts?["dy1"] is double out5 ? out5 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Mosaic two images
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, new Dictionary<string, object>
+        /// {
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"mblend", int},
+        ///     {"bandno", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="sec">Secondary image</param>
+        /// <param name="direction">Horizontal or vertcial mosaic</param>
+        /// <param name="xref">Position of reference tie-point</param>
+        /// <param name="yref">Position of reference tie-point</param>
+        /// <param name="xsec">Position of secondary tie-point</param>
+        /// <param name="ysec">Position of secondary tie-point</param>
+        /// <param name="dx0">Detected integer offset</param>
+        /// <param name="dy0">Detected integer offset</param>
+        /// <param name="scale1">Detected scale</param>
+        /// <param name="angle1">Detected rotation</param>
+        /// <param name="dy1">Detected first-order displacement</param>
+        /// <param name="dx1">Detected first-order displacement</param>
+        /// <param name="kwargs">
+        /// hwindow (int): Half window size
+        /// harea (int): Half area size
+        /// mblend (int): Maximum blend size
+        /// bandno (int): Band to search for features on
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
+            out int dy0, out double scale1, out double angle1, out double dy1, out double dx1,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"dx0", true},
+                {"dy0", true},
+                {"scale1", true},
+                {"angle1", true},
+                {"dy1", true},
+                {"dx1", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            dx0 = opts?["dx0"] is int out1 ? out1 : 0;
+            dy0 = opts?["dy0"] is int out2 ? out2 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
+            angle1 = opts?["angle1"] is double out4 ? out4 : 0;
+            dy1 = opts?["dy1"] is double out5 ? out5 : 0;
+            dx1 = opts?["dx1"] is double out6 ? out6 : 0;
+
+            return finalResult;
         }
 
         /// <summary>
@@ -4368,11 +6041,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, new Dictionary<string, object>
         /// {
-        ///     {"hwindow", int}
-        ///     {"harea", int}
-        ///     {"search", bool}
-        ///     {"interpolate", GObject}
-        ///     {"mblend", int}
+        ///     {"hwindow", int},
+        ///     {"harea", int},
+        ///     {"search", bool},
+        ///     {"interpolate", GObject},
+        ///     {"mblend", int},
         ///     {"bandno", int}
         /// });
         /// ]]>
@@ -4450,12 +6123,12 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Openslideload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"level", int}
-        ///     {"autocrop", bool}
-        ///     {"fail", bool}
-        ///     {"associated", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"level", int},
+        ///     {"autocrop", bool},
+        ///     {"fail", bool},
+        ///     {"associated", string},
         ///     {"attach_associated", bool}
         /// });
         /// ]]>
@@ -4478,6 +6151,61 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load file with OpenSlide
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"level", int},
+        ///     {"autocrop", bool},
+        ///     {"fail", bool},
+        ///     {"associated", string},
+        ///     {"attach_associated", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// level (int): Load this level from the file
+        /// autocrop (bool): Crop to image bounds
+        /// fail (bool): Fail on first error
+        /// associated (string): Load this associated image
+        /// attach_associated (bool): Attach all asssociated images
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Openslideload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("openslideload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load PDF with libpoppler
         /// </summary>
         /// <example>
@@ -4485,12 +6213,12 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Pdfload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"page", int}
-        ///     {"n", int}
-        ///     {"fail", bool}
-        ///     {"dpi", double}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
+        ///     {"dpi", double},
         ///     {"scale", double}
         /// });
         /// ]]>
@@ -4518,14 +6246,69 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
+        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
+        ///     {"dpi", double},
+        ///     {"scale", double}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// page (int): Load this page from the file
+        /// n (int): Load this many pages
+        /// fail (bool): Fail on first error
+        /// dpi (double): Render at this DPI
+        /// scale (double): Scale output by this factor
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Pdfload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("pdfload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load PDF with libpoppler
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
         /// Image @out = NetVips.Image.PdfloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"page", int}
-        ///     {"n", int}
-        ///     {"fail", bool}
-        ///     {"dpi", double}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
+        ///     {"dpi", double},
         ///     {"scale", double}
         /// });
         /// ]]>
@@ -4545,6 +6328,61 @@ namespace NetVips
         public static Image PdfloadBuffer(byte[] buffer, IDictionary<string, object> kwargs = null)
         {
             return Operation.Call("pdfload_buffer", kwargs, buffer) as Image;
+        }
+
+        /// <summary>
+        /// Load PDF with libpoppler
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
+        ///     {"dpi", double},
+        ///     {"scale", double}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// page (int): Load this page from the file
+        /// n (int): Load this many pages
+        /// fail (bool): Fail on first error
+        /// dpi (double): Render at this DPI
+        /// scale (double): Scale output by this factor
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image PdfloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("pdfload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
         }
 
         /// <summary>
@@ -4572,7 +6410,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Perlin(width, height, new Dictionary<string, object>
         /// {
-        ///     {"cell_size", int}
+        ///     {"cell_size", int},
         ///     {"uchar", bool}
         /// });
         /// ]]>
@@ -4615,8 +6453,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Pngload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -4635,6 +6473,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load png from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Pngload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Pngload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("pngload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load png from buffer
         /// </summary>
         /// <example>
@@ -4642,8 +6527,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.PngloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -4662,6 +6547,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load png from buffer
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image PngloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("pngload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to png file
         /// </summary>
         /// <example>
@@ -4669,12 +6601,12 @@ namespace NetVips
         /// <![CDATA[
         /// in.Pngsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"compression", int}
-        ///     {"interlace", bool}
-        ///     {"page_height", int}
-        ///     {"profile", string}
-        ///     {"filter", int}
-        ///     {"strip", bool}
+        ///     {"compression", int},
+        ///     {"interlace", bool},
+        ///     {"page_height", int},
+        ///     {"profile", string},
+        ///     {"filter", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4704,12 +6636,12 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.PngsaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"compression", int}
-        ///     {"interlace", bool}
-        ///     {"page_height", int}
-        ///     {"profile", string}
-        ///     {"filter", int}
-        ///     {"strip", bool}
+        ///     {"compression", int},
+        ///     {"interlace", bool},
+        ///     {"page_height", int},
+        ///     {"profile", string},
+        ///     {"filter", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4738,8 +6670,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Ppmload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -4758,6 +6690,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load ppm from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Ppmload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Ppmload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("ppmload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to ppm file
         /// </summary>
         /// <example>
@@ -4765,10 +6744,10 @@ namespace NetVips
         /// <![CDATA[
         /// in.Ppmsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"ascii", bool}
-        ///     {"squash", bool}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"ascii", bool},
+        ///     {"squash", bool},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4889,8 +6868,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Radload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -4909,6 +6888,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load a Radiance image from a file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Radload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Radload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("radload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to Radiance file
         /// </summary>
         /// <example>
@@ -4916,8 +6942,8 @@ namespace NetVips
         /// <![CDATA[
         /// in.Radsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4943,8 +6969,8 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.RadsaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -4988,9 +7014,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool},
         ///     {"offset", object}
         /// });
         /// ]]>
@@ -5014,6 +7040,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load raw data from a file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool},
+        ///     {"offset", object}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="width">Image width in pixels</param>
+        /// <param name="height">Image height in pixels</param>
+        /// <param name="bands">Number of bands in image</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// offset (object): Offset in bytes from start of file
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Rawload(string filename, int width, int height, int bands, out int flags,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("rawload", kwargs, filename, width, height, bands) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to raw file
         /// </summary>
         /// <example>
@@ -5021,8 +7100,8 @@ namespace NetVips
         /// <![CDATA[
         /// in.Rawsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -5048,8 +7127,8 @@ namespace NetVips
         /// <![CDATA[
         /// in.RawsaveFd(fd, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -5092,7 +7171,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Reduce(hshrink, vshrink, new Dictionary<string, object>
         /// {
-        ///     {"kernel", string}
+        ///     {"kernel", string},
         ///     {"centre", bool}
         /// });
         /// ]]>
@@ -5118,7 +7197,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Reduceh(hshrink, new Dictionary<string, object>
         /// {
-        ///     {"kernel", string}
+        ///     {"kernel", string},
         ///     {"centre", bool}
         /// });
         /// ]]>
@@ -5143,7 +7222,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Reducev(vshrink, new Dictionary<string, object>
         /// {
-        ///     {"kernel", string}
+        ///     {"kernel", string},
         ///     {"centre", bool}
         /// });
         /// ]]>
@@ -5256,7 +7335,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Resize(scale, new Dictionary<string, object>
         /// {
-        ///     {"kernel", string}
+        ///     {"kernel", string},
         ///     {"vscale", double}
         /// });
         /// ]]>
@@ -5419,11 +7498,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Sharpen(new Dictionary<string, object>
         /// {
-        ///     {"sigma", double}
-        ///     {"x1", double}
-        ///     {"y2", double}
-        ///     {"y3", double}
-        ///     {"m1", double}
+        ///     {"sigma", double},
+        ///     {"x1", double},
+        ///     {"y2", double},
+        ///     {"y3", double},
+        ///     {"m1", double},
         ///     {"m2", double}
         /// });
         /// ]]>
@@ -5519,13 +7598,13 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Similarity(new Dictionary<string, object>
         /// {
-        ///     {"background", double[]}
-        ///     {"interpolate", GObject}
-        ///     {"scale", double}
-        ///     {"angle", double}
-        ///     {"odx", double}
-        ///     {"ody", double}
-        ///     {"idx", double}
+        ///     {"background", double[]},
+        ///     {"interpolate", GObject},
+        ///     {"scale", double},
+        ///     {"angle", double},
+        ///     {"odx", double},
+        ///     {"ody", double},
+        ///     {"idx", double},
         ///     {"idy", double}
         /// });
         /// ]]>
@@ -5555,8 +7634,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Sines(width, height, new Dictionary<string, object>
         /// {
-        ///     {"uchar", bool}
-        ///     {"hfreq", double}
+        ///     {"uchar", bool},
+        ///     {"hfreq", double},
         ///     {"vfreq", double}
         /// });
         /// ]]>
@@ -5688,9 +7767,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Stdif(width, height, new Dictionary<string, object>
         /// {
-        ///     {"s0", double}
-        ///     {"b", double}
-        ///     {"m0", double}
+        ///     {"s0", double},
+        ///     {"b", double},
+        ///     {"m0", double},
         ///     {"a", double}
         /// });
         /// ]]>
@@ -5776,10 +7855,10 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Svgload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"dpi", double}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"dpi", double},
+        ///     {"fail", bool},
         ///     {"scale", double}
         /// });
         /// ]]>
@@ -5805,12 +7884,63 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
+        /// Image @out = NetVips.Image.Svgload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"dpi", double},
+        ///     {"fail", bool},
+        ///     {"scale", double}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// dpi (double): Render at this DPI
+        /// fail (bool): Fail on first error
+        /// scale (double): Scale output by this factor
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Svgload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("svgload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load SVG with rsvg
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
         /// Image @out = NetVips.Image.SvgloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"dpi", double}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"dpi", double},
+        ///     {"fail", bool},
         ///     {"scale", double}
         /// });
         /// ]]>
@@ -5831,15 +7961,66 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load SVG with rsvg
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"dpi", double},
+        ///     {"fail", bool},
+        ///     {"scale", double}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// dpi (double): Render at this DPI
+        /// fail (bool): Fail on first error
+        /// scale (double): Scale output by this factor
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image SvgloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("svgload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Run an external command
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var output = NetVips.Image.System(cmdFormat, new Dictionary<string, object>
+        /// NetVips.Image.System(cmdFormat, new Dictionary<string, object>
         /// {
-        ///     {"in", Image[]}
-        ///     {"out_format", string}
+        ///     {"in", Image[]},
+        ///     {"out_format", string},
         ///     {"in_format", string}
         /// });
         /// ]]>
@@ -5858,18 +8039,112 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Run an external command
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// NetVips.Image.System(cmdFormat, out var @out, new Dictionary<string, object>
+        /// {
+        ///     {"in", Image[]},
+        ///     {"out_format", string},
+        ///     {"in_format", string}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="cmdFormat">Command to run</param>
+        /// <param name="out">Output image</param>
+        /// <param name="kwargs">
+        /// in (Image[]): Array of input images
+        /// out_format (string): Format for output filename
+        /// in_format (string): Format for input filename
+        /// </param>
+        /// <returns>None</returns>
+        public static void System(string cmdFormat, out Image @out, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"out", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("system", kwargs, cmdFormat) as object[];
+
+            var opts = results?[1] as Dictionary<object, object>;
+            @out = opts?["out"] as Image;
+        }
+
+        /// <summary>
+        /// Run an external command
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// NetVips.Image.System(cmdFormat, out var @out, out var log, new Dictionary<string, object>
+        /// {
+        ///     {"in", Image[]},
+        ///     {"out_format", string},
+        ///     {"in_format", string}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="cmdFormat">Command to run</param>
+        /// <param name="out">Output image</param>
+        /// <param name="log">Command log</param>
+        /// <param name="kwargs">
+        /// in (Image[]): Array of input images
+        /// out_format (string): Format for output filename
+        /// in_format (string): Format for input filename
+        /// </param>
+        /// <returns>None</returns>
+        public static void System(string cmdFormat, out Image @out, out string log,
+            IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"out", true},
+                {"log", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("system", kwargs, cmdFormat) as object[];
+
+            var opts = results?[1] as Dictionary<object, object>;
+            @out = opts?["out"] as Image;
+            log = opts?["log"] is string out2 ? out2 : null;
+        }
+
+        /// <summary>
         /// Make a text image
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// var output = NetVips.Image.Text(text, new Dictionary<string, object>
+        /// Image @out = NetVips.Image.Text(text, new Dictionary<string, object>
         /// {
-        ///     {"font", string}
-        ///     {"width", int}
-        ///     {"height", int}
-        ///     {"align", string}
-        ///     {"dpi", int}
+        ///     {"font", string},
+        ///     {"width", int},
+        ///     {"height", int},
+        ///     {"align", string},
+        ///     {"dpi", int},
         ///     {"spacing", int}
         /// });
         /// ]]>
@@ -5884,10 +8159,63 @@ namespace NetVips
         /// dpi (int): DPI to render at
         /// spacing (int): Line spacing
         /// </param>
-        /// <returns>A new <see cref="Image"/> or a autofit_dpi</returns>
-        public static object Text(string text, IDictionary<string, object> kwargs = null)
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Text(string text, IDictionary<string, object> kwargs = null)
         {
-            return Operation.Call("text", kwargs, text);
+            return Operation.Call("text", kwargs, text) as Image;
+        }
+
+        /// <summary>
+        /// Make a text image
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, new Dictionary<string, object>
+        /// {
+        ///     {"font", string},
+        ///     {"width", int},
+        ///     {"height", int},
+        ///     {"align", string},
+        ///     {"dpi", int},
+        ///     {"spacing", int}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="text">Text to render</param>
+        /// <param name="autofitDpi">DPI selected by autofit</param>
+        /// <param name="kwargs">
+        /// font (string): Font to render with
+        /// width (int): Maximum image width in pixels
+        /// height (int): Maximum image height in pixels
+        /// align (string): Align on the low, centre or high edge
+        /// dpi (int): DPI to render at
+        /// spacing (int): Line spacing
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Text(string text, out int autofitDpi, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"autofit_dpi", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("text", kwargs, text) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            autofitDpi = opts?["autofit_dpi"] is int out1 ? out1 : 0;
+
+            return finalResult;
         }
 
         /// <summary>
@@ -5898,13 +8226,13 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Thumbnail(filename, width, new Dictionary<string, object>
         /// {
-        ///     {"height", int}
-        ///     {"size", string}
-        ///     {"auto_rotate", bool}
-        ///     {"crop", string}
-        ///     {"linear", bool}
-        ///     {"import_profile", string}
-        ///     {"export_profile", string}
+        ///     {"height", int},
+        ///     {"size", string},
+        ///     {"auto_rotate", bool},
+        ///     {"crop", string},
+        ///     {"linear", bool},
+        ///     {"import_profile", string},
+        ///     {"export_profile", string},
         ///     {"intent", string}
         /// });
         /// ]]>
@@ -5936,13 +8264,13 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, new Dictionary<string, object>
         /// {
-        ///     {"height", int}
-        ///     {"size", string}
-        ///     {"auto_rotate", bool}
-        ///     {"crop", string}
-        ///     {"linear", bool}
-        ///     {"import_profile", string}
-        ///     {"export_profile", string}
+        ///     {"height", int},
+        ///     {"size", string},
+        ///     {"auto_rotate", bool},
+        ///     {"crop", string},
+        ///     {"linear", bool},
+        ///     {"import_profile", string},
+        ///     {"export_profile", string},
         ///     {"intent", string}
         /// });
         /// ]]>
@@ -5974,13 +8302,13 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.ThumbnailImage(width, new Dictionary<string, object>
         /// {
-        ///     {"height", int}
-        ///     {"size", string}
-        ///     {"auto_rotate", bool}
-        ///     {"crop", string}
-        ///     {"linear", bool}
-        ///     {"import_profile", string}
-        ///     {"export_profile", string}
+        ///     {"height", int},
+        ///     {"size", string},
+        ///     {"auto_rotate", bool},
+        ///     {"crop", string},
+        ///     {"linear", bool},
+        ///     {"import_profile", string},
+        ///     {"export_profile", string},
         ///     {"intent", string}
         /// });
         /// ]]>
@@ -6011,11 +8339,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Tiffload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"page", int}
-        ///     {"n", int}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
         ///     {"autorotate", bool}
         /// });
         /// ]]>
@@ -6037,6 +8365,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load tiff from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Tiffload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
+        ///     {"autorotate", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// page (int): Load this page from the image
+        /// n (int): Load this many pages
+        /// fail (bool): Fail on first error
+        /// autorotate (bool): Rotate image using orientation tag
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Tiffload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("tiffload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load tiff from buffer
         /// </summary>
         /// <example>
@@ -6044,11 +8425,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.TiffloadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"page", int}
-        ///     {"n", int}
-        ///     {"fail", bool}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
         ///     {"autorotate", bool}
         /// });
         /// ]]>
@@ -6070,6 +8451,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load tiff from buffer
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"page", int},
+        ///     {"n", int},
+        ///     {"fail", bool},
+        ///     {"autorotate", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// page (int): Load this page from the image
+        /// n (int): Load this many pages
+        /// fail (bool): Fail on first error
+        /// autorotate (bool): Rotate image using orientation tag
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image TiffloadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("tiffload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to tiff file
         /// </summary>
         /// <example>
@@ -6077,23 +8511,23 @@ namespace NetVips
         /// <![CDATA[
         /// in.Tiffsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"compression", string}
-        ///     {"Q", int}
-        ///     {"predictor", string}
-        ///     {"page_height", int}
-        ///     {"profile", string}
-        ///     {"tile", bool}
-        ///     {"tile_width", int}
-        ///     {"tile_height", int}
-        ///     {"pyramid", bool}
-        ///     {"miniswhite", bool}
-        ///     {"squash", bool}
-        ///     {"resunit", string}
-        ///     {"xres", double}
-        ///     {"yres", double}
-        ///     {"bigtiff", bool}
-        ///     {"properties", bool}
-        ///     {"strip", bool}
+        ///     {"compression", string},
+        ///     {"Q", int},
+        ///     {"predictor", string},
+        ///     {"page_height", int},
+        ///     {"profile", string},
+        ///     {"tile", bool},
+        ///     {"tile_width", int},
+        ///     {"tile_height", int},
+        ///     {"pyramid", bool},
+        ///     {"miniswhite", bool},
+        ///     {"squash", bool},
+        ///     {"resunit", string},
+        ///     {"xres", double},
+        ///     {"yres", double},
+        ///     {"bigtiff", bool},
+        ///     {"properties", bool},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -6134,23 +8568,23 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.TiffsaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"compression", string}
-        ///     {"Q", int}
-        ///     {"predictor", string}
-        ///     {"page_height", int}
-        ///     {"profile", string}
-        ///     {"tile", bool}
-        ///     {"tile_width", int}
-        ///     {"tile_height", int}
-        ///     {"pyramid", bool}
-        ///     {"miniswhite", bool}
-        ///     {"squash", bool}
-        ///     {"resunit", string}
-        ///     {"xres", double}
-        ///     {"yres", double}
-        ///     {"bigtiff", bool}
-        ///     {"properties", bool}
-        ///     {"strip", bool}
+        ///     {"compression", string},
+        ///     {"Q", int},
+        ///     {"predictor", string},
+        ///     {"page_height", int},
+        ///     {"profile", string},
+        ///     {"tile", bool},
+        ///     {"tile_width", int},
+        ///     {"tile_height", int},
+        ///     {"pyramid", bool},
+        ///     {"miniswhite", bool},
+        ///     {"squash", bool},
+        ///     {"resunit", string},
+        ///     {"xres", double},
+        ///     {"yres", double},
+        ///     {"bigtiff", bool},
+        ///     {"properties", bool},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -6190,11 +8624,11 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Tilecache(new Dictionary<string, object>
         /// {
-        ///     {"tile_width", int}
-        ///     {"tile_height", int}
-        ///     {"max_tiles", int}
-        ///     {"access", string}
-        ///     {"threaded", bool}
+        ///     {"tile_width", int},
+        ///     {"tile_height", int},
+        ///     {"max_tiles", int},
+        ///     {"access", string},
+        ///     {"threaded", bool},
         ///     {"persistent", bool}
         /// });
         /// ]]>
@@ -6222,15 +8656,15 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Tonelut(new Dictionary<string, object>
         /// {
-        ///     {"in_max", int}
-        ///     {"out_max", int}
-        ///     {"Lb", double}
-        ///     {"Lw", double}
-        ///     {"Ps", double}
-        ///     {"Pm", double}
-        ///     {"Ph", double}
-        ///     {"S", double}
-        ///     {"M", double}
+        ///     {"in_max", int},
+        ///     {"out_max", int},
+        ///     {"Lb", double},
+        ///     {"Lw", double},
+        ///     {"Ps", double},
+        ///     {"Pm", double},
+        ///     {"Ph", double},
+        ///     {"S", double},
+        ///     {"M", double},
         ///     {"H", double}
         /// });
         /// ]]>
@@ -6284,8 +8718,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Vipsload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
+        ///     {"memory", bool},
+        ///     {"access", string},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -6304,6 +8738,53 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load vips from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Vipsload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Vipsload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("vipsload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to vips file
         /// </summary>
         /// <example>
@@ -6311,8 +8792,8 @@ namespace NetVips
         /// <![CDATA[
         /// in.Vipssave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -6338,9 +8819,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Webpload(filename, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"shrink", int}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -6360,6 +8841,55 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load webp from file
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.Webpload(filename, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// shrink (int): Shrink factor on load
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Webpload(string filename, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("webpload", kwargs, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Load webp from buffer
         /// </summary>
         /// <example>
@@ -6367,9 +8897,9 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.WebploadBuffer(buffer, new Dictionary<string, object>
         /// {
-        ///     {"memory", bool}
-        ///     {"access", string}
-        ///     {"shrink", int}
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
         ///     {"fail", bool}
         /// });
         /// ]]>
@@ -6389,6 +8919,55 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load webp from buffer
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, new Dictionary<string, object>
+        /// {
+        ///     {"memory", bool},
+        ///     {"access", string},
+        ///     {"shrink", int},
+        ///     {"fail", bool}
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="kwargs">
+        /// memory (bool): Force open via memory
+        /// access (string): Required access pattern for this file
+        /// shrink (int): Shrink factor on load
+        /// fail (bool): Fail on first error
+        /// </param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image WebploadBuffer(byte[] buffer, out int flags, IDictionary<string, object> kwargs = null)
+        {
+            var optionalOutput = new Dictionary<string, object>
+            {
+                {"flags", true}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(optionalOutput);
+            }
+            else
+            {
+                kwargs = optionalOutput;
+            }
+
+            var results = Operation.Call("webpload_buffer", kwargs, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as Dictionary<object, object>;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
         /// Save image to webp file
         /// </summary>
         /// <example>
@@ -6396,14 +8975,14 @@ namespace NetVips
         /// <![CDATA[
         /// in.Webpsave(filename, new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"Q", int}
-        ///     {"lossless", bool}
-        ///     {"preset", string}
-        ///     {"smart_subsample", bool}
-        ///     {"near_lossless", bool}
-        ///     {"alpha_q", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"Q", int},
+        ///     {"lossless", bool},
+        ///     {"preset", string},
+        ///     {"smart_subsample", bool},
+        ///     {"near_lossless", bool},
+        ///     {"alpha_q", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -6435,14 +9014,14 @@ namespace NetVips
         /// <![CDATA[
         /// byte[] buffer = in.WebpsaveBuffer(new Dictionary<string, object>
         /// {
-        ///     {"page_height", int}
-        ///     {"Q", int}
-        ///     {"lossless", bool}
-        ///     {"preset", string}
-        ///     {"smart_subsample", bool}
-        ///     {"near_lossless", bool}
-        ///     {"alpha_q", int}
-        ///     {"strip", bool}
+        ///     {"page_height", int},
+        ///     {"Q", int},
+        ///     {"lossless", bool},
+        ///     {"preset", string},
+        ///     {"smart_subsample", bool},
+        ///     {"near_lossless", bool},
+        ///     {"alpha_q", int},
+        ///     {"strip", bool},
         ///     {"background", double[]}
         /// });
         /// ]]>
@@ -6497,7 +9076,7 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = in.Wrap(new Dictionary<string, object>
         /// {
-        ///     {"x", int}
+        ///     {"x", int},
         ///     {"y", int}
         /// });
         /// ]]>
@@ -6521,8 +9100,8 @@ namespace NetVips
         /// <![CDATA[
         /// Image @out = NetVips.Image.Xyz(width, height, new Dictionary<string, object>
         /// {
-        ///     {"csize", int}
-        ///     {"dsize", int}
+        ///     {"csize", int},
+        ///     {"dsize", int},
         ///     {"esize", int}
         /// });
         /// ]]>
@@ -6752,20 +9331,22 @@ namespace NetVips
                 other = new[] {other};
             }
 
-            if (!(other is object[] values))
-            {
-                return null;
-            }
-
-            var allNumbers = values.Any(x => x.IsNumeric());
-
             // if [other] is all numbers, we can use BandjoinConst
-            if (allNumbers)
+            switch (other)
             {
-                return BandjoinConst(values.Select(x => (double) x).ToArray());
+                case double[] doubles:
+                    return BandjoinConst(doubles);
+                case int[] ints:
+                    return BandjoinConst(Array.ConvertAll(ints, Convert.ToDouble));
+                case object[] objects when objects.All(x => x.IsNumeric()):
+                    return BandjoinConst(Array.ConvertAll(objects, Convert.ToDouble));
+                case IEnumerable objects:
+                    return Operation.Call("bandjoin", null, new object[] {objects.PrependImage(this)}) as Image;
+                default:
+                    throw new Exception(
+                        $"unsupported value type {other.GetType()} for Bandjoin"
+                    );
             }
-
-            return Operation.Call("bandjoin", null, new object[] {values.PrependImage(this)}) as Image;
         }
 
         /// <summary>
@@ -6793,12 +9374,7 @@ namespace NetVips
                 other = new[] {other};
             }
 
-            if (!(other is object[] values))
-            {
-                return null;
-            }
-
-            return Operation.Call("bandrank", kwargs, new object[] {values.PrependImage(this)}) as Image;
+            return Operation.Call("bandrank", kwargs, new object[] {((IEnumerable) other).PrependImage(this)}) as Image;
         }
 
         /// <summary>
@@ -6807,7 +9383,7 @@ namespace NetVips
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// Image @out = NetVips.Image.Composite(@in, mode, new Dictionary<string, object>
+        /// Image @out = baseImage.Composite(other, mode, new Dictionary<string, object>
         /// {
         ///     {"compositing_space", string}
         ///     {"premultiplied", bool}
@@ -6815,21 +9391,21 @@ namespace NetVips
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="in">Array of input images</param>
+        /// <param name="other">Array of input images</param>
         /// <param name="mode">Array of VipsBlendMode to join with</param>
         /// <param name="kwargs">
         /// compositing_space (string): Composite images in this colour space
         /// premultiplied (bool): Images have premultiplied alpha
         /// </param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Composite(object @in, object mode, IDictionary<string, object> kwargs = null)
+        public Image Composite(object other, object mode, IDictionary<string, object> kwargs = null)
         {
-            if (!(@in is IEnumerable))
+            if (!(other is IEnumerable))
             {
-                @in = new[] {@in};
+                other = new[] {other};
             }
 
-            if (!(@in is object[] images))
+            if (!(other is object[] images))
             {
                 return null;
             }
@@ -6839,47 +9415,64 @@ namespace NetVips
                 mode = new[] {mode};
             }
 
-            if (!(mode is object[] modes))
-            {
-                return null;
-            }
-
             // modes are VipsBlendMode enums, but we have to pass as array of int --
             // we need to map str->int by hand
-            var blendModes = modes.Select(x => GValue.ToEnum(GValue.BlendModeType, x)).ToArray();
-            return Operation.Call("composite", kwargs, images, blendModes) as Image;
+            int[] blendModes;
+            switch (mode)
+            {
+                case string[] strModes:
+                    blendModes = strModes.Select(x => GValue.ToEnum(GValue.BlendModeType, x)).ToArray();
+                    break;
+                case int[] intModes:
+                    blendModes = intModes;
+                    break;
+                default:
+                    // Use Enums.BlendMode.Over if a non-existent value is given.
+                    blendModes = new[] {GValue.ToEnum(GValue.BlendModeType, Enums.BlendMode.Over)};
+                    break;
+            }
+
+            return Operation.Call("composite", kwargs, images.PrependImage(this), blendModes) as Image;
+        }
+
+        /// <summary>
+        /// A synonym for <see cref="ExtractArea"/>.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// Image @out = input.Crop(left, top, width, height);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="left">Left edge of extract area</param>
+        /// <param name="top">Top edge of extract area</param>
+        /// <param name="width">Width of extract area</param>
+        /// <param name="height">Height of extract area</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Crop(int left, int top, int width, int height)
+        {
+            return this.Call("extract_area", left, top, width, height) as Image;
         }
 
         /// <summary>
         /// Return the coordinates of the image maximum.
         /// </summary>
-        /// <returns>An array of objects</returns>
-        public object[] MaxPos()
+        /// <returns>An array of doubles</returns>
+        public double[] MaxPos()
         {
-            var result = Max(new Dictionary<string, object>
-            {
-                {"x", 1},
-                {"y", 1}
-            }) as object[];
-            var v = result?[0];
-            var opts = result?[1] as Dictionary<object, object>;
-            return new[] {v, opts?["x"], opts?["y"]};
+            var v = Max(out var x, out var y);
+            return new[] {v, x, y};
         }
 
         /// <summary>
-        /// Return the coordinates of the image maximum.
+        /// Return the coordinates of the image minimum.
         /// </summary>
-        /// <returns>An array of objects</returns>
-        public object[] MinPos()
+        /// <returns>An array of doubles</returns>
+        public double[] MinPos()
         {
-            var result = Min(new Dictionary<string, object>
-            {
-                {"x", 1},
-                {"y", 1}
-            }) as object[];
-            var v = result?[0];
-            var opts = result?[1] as Dictionary<object, object>;
-            return new[] {v, opts?["x"], opts?["y"]};
+            var v = Min(out var x, out var y);
+            return new[] {v, x, y};
         }
 
         /// <summary>
@@ -7465,7 +10058,7 @@ namespace NetVips
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Image) obj);
         }
 

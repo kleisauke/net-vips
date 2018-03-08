@@ -5,9 +5,9 @@ using System.Security;
 
 namespace NetVips.Internal
 {
-    public class Vips
+    public static class Vips
     {
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libvips-42.dll", CallingConvention = CallingConvention.Cdecl,
@@ -157,7 +157,7 @@ namespace NetVips.Internal
             [FieldOffset(0)] internal GObject.Fields ParentInstance;
         }
 
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libvips-42.dll", CallingConvention = CallingConvention.Cdecl,
@@ -209,7 +209,7 @@ namespace NetVips.Internal
             internal static extern IntPtr VipsObjectGetDescription(IntPtr @object);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -296,7 +296,7 @@ namespace NetVips.Internal
             [FieldOffset(0)] internal IntPtr Pspec;
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -341,7 +341,7 @@ namespace NetVips.Internal
             [FieldOffset(24)] internal uint Offset;
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -380,7 +380,7 @@ namespace NetVips.Internal
             // More
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -410,9 +410,9 @@ namespace NetVips.Internal
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int VipsCallbackFn(IntPtr a, IntPtr b);
 
-    public class VipsType
+    public static class VipsType
     {
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libvips-42.dll", CallingConvention = CallingConvention.Cdecl,
@@ -515,7 +515,7 @@ namespace NetVips.Internal
             [FieldOffset(0)] internal VipsObject.Fields ParentInstance;
         }
 
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libvips-42.dll", CallingConvention = CallingConvention.Cdecl,
@@ -596,7 +596,7 @@ namespace NetVips.Internal
             internal static extern IntPtr VipsImageGetFields(IntPtr image);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -736,7 +736,7 @@ namespace NetVips.Internal
             internal static extern IntPtr VipsInterpolateNew([MarshalAs(UnmanagedType.LPStr)] string nickname);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -780,7 +780,7 @@ namespace NetVips.Internal
             // More
         }
 
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libvips-42.dll", CallingConvention = CallingConvention.Cdecl,
@@ -818,7 +818,7 @@ namespace NetVips.Internal
             internal static extern void VipsCacheSetTrace(int trace);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -882,9 +882,9 @@ namespace NetVips.Internal
         public VipsObject ParentInstance => new VipsObject(new IntPtr(&((Fields*) Pointer)->ParentInstance));
     }
 
-    public class VipsForeign
+    public static class VipsForeign
     {
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libvips-42.dll", CallingConvention = CallingConvention.Cdecl,

@@ -11,9 +11,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public Internal.VipsObject IntlVipsObject;
+        protected Internal.VipsObject IntlVipsObject;
 
-        public VipsObject(Internal.VipsObject vipsObject) : base(vipsObject.ParentInstance)
+        protected VipsObject(Internal.VipsObject vipsObject) : base(vipsObject.ParentInstance)
         {
             IntlVipsObject = vipsObject;
             // logger.Debug($"VipsObject = {vipsObject}");

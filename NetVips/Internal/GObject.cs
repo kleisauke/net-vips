@@ -4,7 +4,7 @@ using System.Security;
 
 namespace NetVips.Internal
 {
-    public class GTypeInstance
+    public static class GTypeInstance
     {
         [StructLayout(LayoutKind.Explicit, Size = 8)]
         public struct Fields
@@ -25,7 +25,7 @@ namespace NetVips.Internal
             [FieldOffset(16)] internal IntPtr Qdata;
         }
 
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libgobject-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
@@ -60,7 +60,7 @@ namespace NetVips.Internal
             internal static extern IntPtr GValueGetObject(IntPtr value);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; private set; }
 
         private static void* CopyValue(Fields native)
         {
@@ -140,9 +140,9 @@ namespace NetVips.Internal
         }
     }
 
-    public class GType
+    public static class GType
     {
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libgobject-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
@@ -186,7 +186,7 @@ namespace NetVips.Internal
             [FieldOffset(8)] internal fixed byte Data[16];
         }
 
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libgobject-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
@@ -259,7 +259,7 @@ namespace NetVips.Internal
             internal static extern uint GValueGetFlags(IntPtr value);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; private set; }
 
         private static void* CopyValue(Fields native)
         {
@@ -397,7 +397,7 @@ namespace NetVips.Internal
             [FieldOffset(32)] internal ulong OwnerType;
         }
 
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libgobject-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
@@ -405,7 +405,7 @@ namespace NetVips.Internal
             internal static extern IntPtr GParamSpecGetBlurb(IntPtr pspec);
         }
 
-        public IntPtr Pointer { get; protected set; }
+        public IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {

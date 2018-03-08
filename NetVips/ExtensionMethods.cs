@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -92,7 +91,7 @@ namespace NetVips
         /// </summary>
         /// <param name="values"></param>
         /// <param name="func"></param>
-        public static T[] Smap<T>(this object[] values, Func<object, T> func)
+        public static T[] Smap<T>(this IEnumerable<object> values, Func<object, T> func)
         {
             return values.Select(func).ToArray();
         }
@@ -121,7 +120,7 @@ namespace NetVips
         /// <returns><see langword="true" /> if the object is numeric; otherwise, <see langword="false" /></returns>
         public static bool IsNumeric(this object x)
         {
-            return x != null && IsNumeric(x.GetType());
+            return x != null && x.GetType().IsNumeric();
         }
 
         /// <summary>
@@ -257,16 +256,18 @@ namespace NetVips
         /// <param name="args"></param>
         /// <param name="image"></param>
         /// <returns>A new object array.</returns>
-        public static object[] PrependImage(this object[] args, Image image)
+        public static object[] PrependImage(this IEnumerable args, Image image)
         {
             if (args == null)
             {
                 return new object[] {image};
             }
 
-            var newValues = new object[args.Length + 1];
+            var enumerable = args as object[] ?? args.Cast<object>().ToArray();
+
+            var newValues = new object[enumerable.Length + 1];
             newValues[0] = image;
-            Array.Copy(args, 0, newValues, 1, args.Length);
+            Array.Copy(enumerable, 0, newValues, 1, enumerable.Length);
             return newValues;
         }
 
@@ -275,9 +276,8 @@ namespace NetVips
         /// </summary>
         /// <returns>The managed string string.</returns>
         /// <param name="ptr">Pointer to the GLib string.</param>
-        /// <param name="freePtr">If set to <c>true</c>, free the GLib string.</param>
-        /// <param name="length">The number of characters to copy.</param>
-        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int length = 0)
+        /// <param name="freePtr">If set to <see langword="true" />, free the GLib string.</param>
+        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false)
         {
             return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr));
         }
@@ -326,7 +326,7 @@ namespace NetVips
         /// The byte array does not include the null terminator.
         /// </remarks>
         /// <param name="ptr">Pointer to the unmanaged string.</param>
-        /// <param name="freePtr">If set to <c>true</c> free the unmanaged memory.</param>
+        /// <param name="freePtr">If set to <see langword="true" /> free the unmanaged memory.</param>
         /// <param name="length">The number of characters to copy.</param>
         /// <returns>The string as a byte array.</returns>
         public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int length = 0)

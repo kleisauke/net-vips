@@ -27,13 +27,13 @@ namespace NetVips.Sample
             // make the other pixels in the image by mirroring im up / down / 
             // left / right, see
             // https://jcupitt.github.io/libvips/API/current/libvips-conversion.html#vips-embed
-            im = im.Embed(100, 100, 3000, 3000, new Dictionary<string, object>()
+            im = im.Embed(100, 100, 3000, 3000, new Dictionary<string, object>
             {
                 {"extend", Enums.Extend.Mirror}
             });
 
             // multiply the green (middle) band by 2, leave the other two alone
-            im *= new[] { 1, 2, 1 };
+            im *= new[] {1, 2, 1};
 
             // make an image from an array constant, convolve with it
             var mask = Image.NewFromArray(new[]

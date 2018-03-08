@@ -7,7 +7,7 @@ namespace NetVips
     /// <summary>
     /// Make interpolators for operators like <see cref="Image.Affine"/>.
     /// </summary>
-    class Interpolate : VipsObject
+    public class Interpolate : VipsObject
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 

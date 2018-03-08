@@ -23,7 +23,7 @@ namespace NetVips.Tests
                 {"reject", true},
                 {"optical", true}
             });
-            _colour = _image * new double[] {1, 2, 3} + new double[] {2, 3, 4};
+            _colour = _image * new [] {1, 2, 3} + new [] {2, 3, 4};
             _mono = _colour[1];
             _allImages = new[]
             {
@@ -52,7 +52,7 @@ namespace NetVips.Tests
                 {
                     foreach (var z in formats)
                     {
-                        Helper.RunImage2(func + " image", x.Cast(y), x.Cast(z), func);
+                        Helper.RunImage2(x.Cast(y), x.Cast(z), func);
                     }
                 }
             }
@@ -69,13 +69,13 @@ namespace NetVips.Tests
             {
                 foreach (var y in formats)
                 {
-                    Helper.RunConst(func + " scalar", func, x.Cast(y), (double) 2);
+                    Helper.RunConst(func, x.Cast(y), (double) 2);
                 }
             }
 
             foreach (var y in formats)
             {
-                Helper.RunConst(func + " vector", func, _colour.Cast(y), new double[] {1, 2, 3});
+                Helper.RunConst(func, _colour.Cast(y), new [] {1, 2, 3});
             }
         }
 
@@ -83,17 +83,16 @@ namespace NetVips.Tests
         /// run a function on an image,
         /// 50,50 and 10,10 should have different values on the test image
         /// </summary>
-        /// <param name="message"></param>
         /// <param name="im"></param>
         /// <param name="func"></param>
         /// <returns>None</returns>
-        public void RunImageunary(string message, Image im, Func<object, object> func)
+        public void RunImageunary(Image im, Func<object, object> func)
         {
-            Helper.RunCmp(message, im, 50, 50, x => Helper.RunFn(func, x));
-            Helper.RunCmp(message, im, 10, 10, x => Helper.RunFn(func, x));
+            Helper.RunCmp(im, 50, 50, x => Helper.RunFn(func, x));
+            Helper.RunCmp(im, 10, 10, x => Helper.RunFn(func, x));
         }
 
-        public void RunUnary(Image[] images, Func<object, object> func, string[] formats = null)
+        public void RunUnary(IEnumerable<Image> images, Func<object, object> func, string[] formats = null)
         {
             if (formats == null)
             {
@@ -104,7 +103,7 @@ namespace NetVips.Tests
             {
                 foreach (var y in formats)
                 {
-                    RunImageunary(func + " image", x.Cast(y), func);
+                    RunImageunary(x.Cast(y), func);
                 }
             }
         }
@@ -639,18 +638,9 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind();
-                CollectionAssert.AreEqual(new double[]
-                {
-                    5000
-                }, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    5000
-                }, hist.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    0
-                }, hist.Getpoint(5, 0));
+                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(10, 0));
+                CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
             }
 
             test = test * new[] {1, 2, 3};
@@ -660,35 +650,17 @@ namespace NetVips.Tests
                 {
                     {"band", 0}
                 });
-                CollectionAssert.AreEqual(new double[]
-                {
-                    5000
-                }, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    5000
-                }, hist.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    0
-                }, hist.Getpoint(5, 0));
+                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(10, 0));
+                CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
 
                 hist = test.Cast(fmt).HistFind(new Dictionary<string, object>
                 {
                     {"band", 1}
                 });
-                CollectionAssert.AreEqual(new double[]
-                {
-                    5000
-                }, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    5000
-                }, hist.Getpoint(20, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    0
-                }, hist.Getpoint(5, 0));
+                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(20, 0));
+                CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
             }
         }
 
@@ -711,14 +683,8 @@ namespace NetVips.Tests
                     var a = test.Cast(x);
                     var b = index.Cast(y);
                     var hist = a.HistFindIndexed(b);
-                    CollectionAssert.AreEqual(new double[]
-                    {
-                        0
-                    }, hist.Getpoint(0, 0));
-                    CollectionAssert.AreEqual(new double[]
-                    {
-                        50000
-                    }, hist.Getpoint(1, 0));
+                    CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(0, 0));
+                    CollectionAssert.AreEqual(new [] {50000}, hist.Getpoint(1, 0));
                 }
             }
         }
@@ -762,7 +728,7 @@ namespace NetVips.Tests
                 });
 
                 var maxPos = hough.MaxPos();
-                var v = (double) maxPos[0];
+                var v = maxPos[0];
                 var x = (int) maxPos[1];
                 var y = (int) maxPos[2];
 
@@ -791,11 +757,11 @@ namespace NetVips.Tests
                     var hough = im.HoughLine();
 
                     var maxPos = hough.MaxPos();
-                    var x = (int) maxPos[1];
-                    var y = (int) maxPos[2];
+                    var x = maxPos[1];
+                    var y = maxPos[2];
 
                     var angle = Math.Floor(180.0 * x / hough.Width);
-                    var distance = Math.Floor((double) test.Height * y / hough.Height);
+                    var distance = Math.Floor(test.Height * y / hough.Height);
 
                     // TODO 45? 
                     Assert.AreEqual(22, angle);
@@ -1013,14 +979,13 @@ namespace NetVips.Tests
                 {
                     return 1;
                 }
-                else if (x < 0)
+
+                if (x < 0)
                 {
                     return -1;
                 }
-                else
-                {
-                    return 0;
-                }
+
+                return 0;
             }
 
             RunUnary(_allImages, Sign, Helper.NonComplexFormats);
@@ -1038,9 +1003,9 @@ namespace NetVips.Tests
                 Assert.AreEqual(100, v);
 
                 var maxPos = test.Cast(fmt).MaxPos();
-                v = (double) maxPos[0];
-                var x = (int) maxPos[1];
-                var y = (int) maxPos[2];
+                v = maxPos[0];
+                var x = maxPos[1];
+                var y = maxPos[2];
 
                 Assert.AreEqual(100, v);
                 Assert.AreEqual(40, x);
@@ -1060,9 +1025,9 @@ namespace NetVips.Tests
                 Assert.AreEqual(0, v);
 
                 var minPos = test.Cast(fmt).MinPos();
-                v = (double) minPos[0];
-                var x = (int) minPos[1];
-                var y = (int) minPos[2];
+                v = minPos[0];
+                var x = minPos[1];
+                var y = minPos[2];
 
                 Assert.AreEqual(0, v);
                 Assert.AreEqual(40, x);
@@ -1122,7 +1087,7 @@ namespace NetVips.Tests
                 var testRgb = test.Bandjoin(new[] {test, test});
                 var trim2 = testRgb.FindTrim(new Dictionary<string, object>
                 {
-                    {"background", new double[] {255, 255, 255}}
+                    {"background", new [] {255, 255, 255}}
                 });
                 var left2 = trim2[0];
                 var top2 = trim2[1];
@@ -1148,18 +1113,18 @@ namespace NetVips.Tests
                 var rows = profile[1] as Image;
 
                 var minPos = columns.MinPos();
-                var v = (double) minPos[0];
-                var x = (int) minPos[1];
-                var y = (int) minPos[2];
+                var v = minPos[0];
+                var x = minPos[1];
+                var y = minPos[2];
 
                 Assert.AreEqual(50, v);
                 Assert.AreEqual(40, x);
                 Assert.AreEqual(0, y);
 
                 minPos = rows.MinPos();
-                v = (double) minPos[0];
-                x = (int) minPos[1];
-                y = (int) minPos[2];
+                v = minPos[0];
+                x = minPos[1];
+                y = minPos[2];
 
                 Assert.AreEqual(40, v);
                 Assert.AreEqual(0, x);
@@ -1182,19 +1147,10 @@ namespace NetVips.Tests
                 var columns = profile[0] as Image;
                 var rows = profile[1] as Image;
 
-                CollectionAssert.AreEqual(new double[]
-                {
-                    0
-                }, columns.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    50 * 10
-                }, columns.Getpoint(70, 0));
+                CollectionAssert.AreEqual(new [] {0}, columns.Getpoint(10, 0));
+                CollectionAssert.AreEqual(new [] {50 * 10}, columns.Getpoint(70, 0));
 
-                CollectionAssert.AreEqual(new double[]
-                {
-                    50 * 10
-                }, rows.Getpoint(0, 10));
+                CollectionAssert.AreEqual(new [] {50 * 10}, rows.Getpoint(0, 10));
             }
         }
 
@@ -1212,55 +1168,19 @@ namespace NetVips.Tests
                 var a = test.Cast(fmt);
                 var matrix = a.Stats();
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Min()
-                }, matrix.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Max()
-                }, matrix.Getpoint(1, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    50 * 50 * 10
-                }, matrix.Getpoint(2, 0));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    50 * 50 * 100
-                }, matrix.Getpoint(3, 0));
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Avg()
-                }, matrix.Getpoint(4, 0));
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Deviate()
-                }, matrix.Getpoint(5, 0));
+                CollectionAssert.AreEqual(new[] {a.Min()}, matrix.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new[] {a.Max()}, matrix.Getpoint(1, 0));
+                CollectionAssert.AreEqual(new [] {50 * 50 * 10}, matrix.Getpoint(2, 0));
+                CollectionAssert.AreEqual(new [] {50 * 50 * 100}, matrix.Getpoint(3, 0));
+                CollectionAssert.AreEqual(new[] {a.Avg()}, matrix.Getpoint(4, 0));
+                CollectionAssert.AreEqual(new[] {a.Deviate()}, matrix.Getpoint(5, 0));
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Min()
-                }, matrix.Getpoint(0, 1));
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Max()
-                }, matrix.Getpoint(1, 1));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    50 * 50 * 10
-                }, matrix.Getpoint(2, 1));
-                CollectionAssert.AreEqual(new double[]
-                {
-                    50 * 50 * 100
-                }, matrix.Getpoint(3, 1));
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Avg()
-                }, matrix.Getpoint(4, 1));
-                CollectionAssert.AreEqual(new[]
-                {
-                    a.Deviate()
-                }, matrix.Getpoint(5, 1));
+                CollectionAssert.AreEqual(new[] {a.Min()}, matrix.Getpoint(0, 1));
+                CollectionAssert.AreEqual(new[] {a.Max()}, matrix.Getpoint(1, 1));
+                CollectionAssert.AreEqual(new [] {50 * 50 * 10}, matrix.Getpoint(2, 1));
+                CollectionAssert.AreEqual(new [] {50 * 50 * 100}, matrix.Getpoint(3, 1));
+                CollectionAssert.AreEqual(new[] {a.Avg()}, matrix.Getpoint(4, 1));
+                CollectionAssert.AreEqual(new[] {a.Deviate()}, matrix.Getpoint(5, 1));
             }
         }
 

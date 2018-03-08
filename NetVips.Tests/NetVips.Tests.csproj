@@ -48,11 +48,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArithmeticTests.cs" />
+    <Compile Include="ColourTests.cs" />
+    <Compile Include="ConversionTests.cs" />
+    <Compile Include="ConvolutionTests.cs" />
+    <Compile Include="CreateTests.cs" />
+    <Compile Include="DrawTests.cs" />
     <Compile Include="ForeignTests.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="GValueTests.cs" />
+    <Compile Include="HistogramTests.cs" />
     <Compile Include="IoFuncsTests.cs" />
+    <Compile Include="MorphologyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResampleTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -90,6 +98,9 @@
     <Content Include="TestData\trans-x.png" />
     <Content Include="TestData\vips-profile.svg" />
     <Content Include="TestData\йцук.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

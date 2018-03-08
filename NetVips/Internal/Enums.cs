@@ -2,7 +2,7 @@
 
 namespace NetVips.Internal
 {
-    public class Enums
+    public static class Enums
     {
         public enum GParamFlags
         {

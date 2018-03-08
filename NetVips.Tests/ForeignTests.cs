@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace NetVips.Tests
 {
+    [TestFixture]
     class ForeignTests
     {
         private string _tempDir;
@@ -93,8 +94,8 @@ namespace NetVips.Tests
             Assert.AreEqual(x.Width, im.Width);
             Assert.AreEqual(x.Height, im.Height);
             Assert.AreEqual(x.Bands, im.Bands);
-            Assert.LessOrEqual((double) (im - x).Abs().Max(), thresh);
-            x = null;
+            Assert.LessOrEqual((im - x).Abs().Max(), thresh);
+            x.Dispose();
         }
 
 
@@ -106,7 +107,7 @@ namespace NetVips.Tests
             Assert.AreEqual(x.Width, im.Width);
             Assert.AreEqual(x.Height, im.Height);
             Assert.AreEqual(x.Bands, im.Bands);
-            Assert.LessOrEqual((double) (im - x).Abs().Max(), maxDiff);
+            Assert.LessOrEqual((im - x).Abs().Max(), maxDiff);
         }
 
         public void SaveBufferTempFile(string saver, string suf, Image im, int maxDiff = 0)
@@ -121,7 +122,7 @@ namespace NetVips.Tests
             Assert.AreEqual(x.Width, im.Width);
             Assert.AreEqual(x.Height, im.Height);
             Assert.AreEqual(x.Bands, im.Bands);
-            Assert.LessOrEqual((double) (im - x).Abs().Max(), maxDiff);
+            Assert.LessOrEqual((im - x).Abs().Max(), maxDiff);
         }
 
         [Test]
@@ -138,7 +139,7 @@ namespace NetVips.Tests
 
             Assert.AreEqual(beforeExif.Length, afterExif.Length);
             Assert.AreEqual(beforeExif, afterExif);
-            x = null;
+            x.Dispose();
         }
 
         [Test]
@@ -147,7 +148,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "jpegload") == 0)
             {
                 Console.WriteLine("no jpeg support in this vips, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void JpegValid(Image im)
@@ -217,19 +218,14 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "pngload") == 0 || !File.Exists(Helper.PngFile))
             {
                 Console.WriteLine("no png support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void PngValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    38671.0,
-                    33914.0,
-                    26762.0
-                }, a);
+                CollectionAssert.AreEqual(new[] {38671.0, 33914.0, 26762.0}, a);
                 Assert.AreEqual(290, im.Width);
                 Assert.AreEqual(442, im.Height);
                 Assert.AreEqual(3, im.Bands);
@@ -248,19 +244,14 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "tiffload") == 0 || !File.Exists(Helper.TifFile))
             {
                 Console.WriteLine("no tiff support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void TiffValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    38671.0,
-                    33914.0,
-                    26762.0
-                }, a);
+                CollectionAssert.AreEqual(new[] {38671.0, 33914.0, 26762.0}, a);
                 Assert.AreEqual(290, im.Width);
                 Assert.AreEqual(442, im.Height);
                 Assert.AreEqual(3, im.Bands);
@@ -403,11 +394,11 @@ namespace NetVips.Tests
 
                 var a = Image.NewFromBuffer(buf, "", new Dictionary<string, object>
                 {
-                    {"page", 2},
+                    {"page", 2}
                 });
                 var b = Image.NewFromBuffer(buf2, "", new Dictionary<string, object>
                 {
-                    {"page", 2},
+                    {"page", 2}
                 });
                 Assert.AreEqual(a.Width, b.Width);
                 Assert.AreEqual(a.Height, b.Height);
@@ -421,7 +412,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "magickload") == 0 || !File.Exists(Helper.GifFile))
             {
                 Console.WriteLine("no magick support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void GifValid(Image im)
@@ -446,13 +437,13 @@ namespace NetVips.Tests
             // density should change size of generated svg
             x = Image.Magickload(Helper.SvgFile, new Dictionary<string, object>
             {
-                {"density", "100"},
+                {"density", "100"}
             });
             var width = x.Width;
             var height = x.Height;
             x = Image.Magickload(Helper.SvgFile, new Dictionary<string, object>
             {
-                {"density", "200"},
+                {"density", "200"}
             });
 
             // This seems to fail on travis, no idea why, some problem in their IM
@@ -467,7 +458,7 @@ namespace NetVips.Tests
             height = x.Height;
             x = Image.Magickload(Helper.GifAnimFile, new Dictionary<string, object>
             {
-                {"all_frames", true},
+                {"all_frames", true}
             });
             Assert.AreEqual(width, x.Width);
             Assert.AreEqual(height * 5, x.Height);
@@ -506,19 +497,14 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "webpload") == 0 || !File.Exists(Helper.WebpFile))
             {
                 Console.WriteLine("no webp support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void WebpValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    71,
-                    166,
-                    236
-                }, a);
+                CollectionAssert.AreEqual(new[] {71, 166, 236}, a);
                 Assert.AreEqual(550, im.Width);
                 Assert.AreEqual(368, im.Height);
                 Assert.AreEqual(3, im.Bands);
@@ -585,7 +571,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "analyzeload") == 0 || !File.Exists(Helper.AnalyzeFile))
             {
                 Console.WriteLine("no analyze support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void AnalyzeValid(Image im)
@@ -607,19 +593,14 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "matload") == 0 || !File.Exists(Helper.MatlabFile))
             {
                 Console.WriteLine("no matlab support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void MatlabValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    38671.0,
-                    33914.0,
-                    26762.0
-                }, a);
+                CollectionAssert.AreEqual(new[] {38671.0, 33914.0, 26762.0}, a);
                 Assert.AreEqual(290, im.Width);
                 Assert.AreEqual(442, im.Height);
                 Assert.AreEqual(3, im.Bands);
@@ -634,7 +615,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "openexrload") == 0 || !File.Exists(Helper.ExrFile))
             {
                 Console.WriteLine("no openexr support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void ExrValid(Image im)
@@ -647,7 +628,7 @@ namespace NetVips.Tests
                     0.159668,
                     0.040375,
                     1.0
-                }, a, "", 0.00001);
+                }, a, 0.00001);
                 Assert.AreEqual(610, im.Width);
                 Assert.AreEqual(406, im.Height);
                 Assert.AreEqual(4, im.Bands);
@@ -662,7 +643,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "fitsload") == 0 || !File.Exists(Helper.FitsFile))
             {
                 Console.WriteLine("no fits support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
 
@@ -676,7 +657,7 @@ namespace NetVips.Tests
                     -0.148553,
                     1.09122,
                     -0.942242
-                }, a, "", 0.00001);
+                }, a, 0.00001);
                 Assert.AreEqual(200, im.Width);
                 Assert.AreEqual(200, im.Height);
                 Assert.AreEqual(4, im.Bands);
@@ -692,20 +673,14 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "openslideload") == 0 || !File.Exists(Helper.OpenslideFile))
             {
                 Console.WriteLine("no openslide support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void OpenslideValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    244,
-                    250,
-                    243,
-                    255
-                }, a);
+                CollectionAssert.AreEqual(new[] {244, 250, 243, 255}, a);
                 Assert.AreEqual(2220, im.Width);
                 Assert.AreEqual(2967, im.Height);
                 Assert.AreEqual(4, im.Bands);
@@ -720,7 +695,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "pdfload") == 0 || !File.Exists(Helper.PdfFile))
             {
                 Console.WriteLine("no pdf support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
 
@@ -728,13 +703,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    35,
-                    31,
-                    32,
-                    255
-                }, a);
+                CollectionAssert.AreEqual(new[] {35, 31, 32, 255}, a);
                 Assert.AreEqual(1133, im.Width);
                 Assert.AreEqual(680, im.Height);
                 Assert.AreEqual(4, im.Bands);
@@ -746,7 +715,7 @@ namespace NetVips.Tests
             var x = Image.NewFromFile(Helper.PdfFile);
             var y = Image.NewFromFile(Helper.PdfFile, new Dictionary<string, object>
             {
-                {"scale", 2.0}
+                {"scale", 2}
             });
             Assert.Less(Math.Abs(x.Width * 2 - y.Width), 2);
             Assert.Less(Math.Abs(x.Height * 2 - y.Height), 2);
@@ -754,7 +723,7 @@ namespace NetVips.Tests
             x = Image.NewFromFile(Helper.PdfFile);
             y = Image.NewFromFile(Helper.PdfFile, new Dictionary<string, object>
             {
-                {"dpi", 144.0}
+                {"dpi", 144}
             });
             Assert.Less(Math.Abs(x.Width * 2 - y.Width), 2);
             Assert.Less(Math.Abs(x.Height * 2 - y.Height), 2);
@@ -766,17 +735,14 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "gifload") == 0 || !File.Exists(Helper.GifFile))
             {
                 Console.WriteLine("no gif support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void GifValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
 
-                CollectionAssert.AreEqual(new[]
-                {
-                    33
-                }, a);
+                CollectionAssert.AreEqual(new[] {33}, a);
                 Assert.AreEqual(159, im.Width);
                 Assert.AreEqual(203, im.Height);
                 Assert.AreEqual(1, im.Bands);
@@ -818,7 +784,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "svgload") == 0 || !File.Exists(Helper.SvgFile))
             {
                 Console.WriteLine("no svg support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             void SvgValid(Image im)
@@ -848,7 +814,7 @@ namespace NetVips.Tests
             var x = Image.NewFromFile(Helper.SvgFile);
             var y = Image.NewFromFile(Helper.SvgFile, new Dictionary<string, object>
             {
-                {"scale", 2.0}
+                {"scale", 2}
             });
 
             Assert.Less(Math.Abs(x.Width * 2 - y.Width), 2);
@@ -857,7 +823,7 @@ namespace NetVips.Tests
             x = Image.NewFromFile(Helper.SvgFile);
             y = Image.NewFromFile(Helper.SvgFile, new Dictionary<string, object>
             {
-                {"dpi", 144.0}
+                {"dpi", 144}
             });
             Assert.Less(Math.Abs(x.Width * 2 - y.Width), 2);
             Assert.Less(Math.Abs(x.Height * 2 - y.Height), 2);
@@ -881,7 +847,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "ppmload") == 0)
             {
                 Console.WriteLine("no PPM support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             SaveLoad("%s.ppm", _mono);
@@ -894,7 +860,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "radload") == 0)
             {
                 Console.WriteLine("no Radiance support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             SaveLoad("%s.hdr", _colour);
@@ -907,7 +873,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsForeign", "dzsave") == 0)
             {
                 Console.WriteLine("no dzsave support, skipping test");
-                return;
+                Assert.Ignore();
             }
 
             // dzsave is hard to test, there are so many options

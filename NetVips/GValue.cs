@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using NetVips.Internal;
 using NLog;
@@ -107,7 +107,7 @@ namespace NetVips
         {
             return value is string strValue
                 ? Vips.VipsEnumFromNick("NetVips", gtype, strValue)
-                : (int) value;
+                : Convert.ToInt32(value);
         }
 
         /// <summary>
@@ -167,15 +167,15 @@ namespace NetVips
             var fundamental = GType.GTypeFundamental(gtype);
             if (gtype == GBoolType)
             {
-                Internal.GValue.GValueSetBoolean(IntlGValue, (bool) value ? 1 : 0);
+                Internal.GValue.GValueSetBoolean(IntlGValue, Convert.ToBoolean(value) ? 1 : 0);
             }
             else if (gtype == GIntType)
             {
-                Internal.GValue.GValueSetInt(IntlGValue, (int) value);
+                Internal.GValue.GValueSetInt(IntlGValue, Convert.ToInt32(value));
             }
             else if (gtype == GDoubleType)
             {
-                Internal.GValue.GValueSetDouble(IntlGValue, (double) value);
+                Internal.GValue.GValueSetDouble(IntlGValue, Convert.ToDouble(value));
             }
             else if (fundamental == GEnumType)
             {
@@ -183,48 +183,50 @@ namespace NetVips
             }
             else if (fundamental == GFlagsType)
             {
-                Internal.GValue.GValueSetFlags(IntlGValue, (uint) (int) value);
+                Internal.GValue.GValueSetFlags(IntlGValue, Convert.ToUInt32(value));
             }
             else if (gtype == GStrType)
             {
-                Internal.GValue.GValueSetString(IntlGValue, (string) value);
+                Internal.GValue.GValueSetString(IntlGValue, Convert.ToString(value));
             }
             else if (gtype == RefStrType)
             {
-                VipsType.VipsValueSetRefString(IntlGValue, (string) value);
+                VipsType.VipsValueSetRefString(IntlGValue, Convert.ToString(value));
             }
             else if (fundamental == GObjectType)
             {
-                if (!(value is Image image))
+                switch (value)
                 {
-                    throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                    );
+                    case Image image:
+                        Internal.GObject.GValueSetObject(IntlGValue, image.IntlImage.Pointer);
+                        break;
+                    case Interpolate interpolate:
+                        Internal.GObject.GValueSetObject(IntlGValue, interpolate.IntlVipsInterpolate.Pointer);
+                        break;
+                    default:
+                        throw new Exception(
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                        );
                 }
-
-                Internal.GObject.GValueSetObject(IntlGValue, image.IntlImage.Pointer);
             }
             else if (gtype == ArrayIntType)
             {
+                if (!(value is IEnumerable))
+                {
+                    value = new[] {value};
+                }
+
                 switch (value)
                 {
                     case int[] ints:
                         VipsType.VipsValueSetArrayInt(IntlGValue, ints, ints.Length);
                         break;
-                    case int intValue:
-                        VipsType.VipsValueSetArrayInt(IntlGValue, new[] {intValue}, 1);
-                        break;
-                    case double doubleValue:
-                        VipsType.VipsValueSetArrayInt(IntlGValue, new[] {(int) doubleValue}, 1);
-                        break;
                     case double[] doubles:
-                        VipsType.VipsValueSetArrayInt(IntlGValue,
-                            doubles.Select(x => (int) x).ToArray(),
+                        VipsType.VipsValueSetArrayInt(IntlGValue, Array.ConvertAll(doubles, Convert.ToInt32),
                             doubles.Length);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue,
-                            objects.Select(x => (double) x).ToArray(),
+                        VipsType.VipsValueSetArrayInt(IntlGValue, Array.ConvertAll(objects, Convert.ToInt32),
                             objects.Length);
                         break;
                     default:
@@ -235,25 +237,22 @@ namespace NetVips
             }
             else if (gtype == ArrayDoubleType)
             {
+                if (!(value is IEnumerable))
+                {
+                    value = new[] {value};
+                }
+
                 switch (value)
                 {
                     case double[] doubles:
                         VipsType.VipsValueSetArrayDouble(IntlGValue, doubles, doubles.Length);
                         break;
-                    case double dblValue:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue, new[] {dblValue}, 1);
-                        break;
-                    case int intValue:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue, new[] {(double) intValue}, 1);
-                        break;
                     case int[] ints:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue,
-                            ints.Select(x => (double) x).ToArray(),
+                        VipsType.VipsValueSetArrayDouble(IntlGValue, Array.ConvertAll(ints, Convert.ToDouble),
                             ints.Length);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue,
-                            objects.Select(x => (double) x).ToArray(),
+                        VipsType.VipsValueSetArrayDouble(IntlGValue, Array.ConvertAll(objects, Convert.ToDouble),
                             objects.Length);
                         break;
                     default:
@@ -447,8 +446,8 @@ namespace NetVips
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources;
-        /// <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
+        /// <see langword="false" /> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.

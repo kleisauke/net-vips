@@ -4,9 +4,9 @@ using System.Security;
 
 namespace NetVips.Internal
 {
-    public class GLib
+    public static class GLib
     {
-        public struct Internal
+        private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libglib-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,

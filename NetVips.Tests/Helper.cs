@@ -32,39 +32,39 @@ namespace NetVips.Tests
         public static readonly string GifAnimFile = Path.Combine(Images, "cogs.gif");
         public static readonly string DicomFile = Path.Combine(Images, "dicom_test_image.dcm");
 
-        public static string[] UnsignedFormats =
+        public static readonly string[] UnsignedFormats =
         {
             Enums.BandFormat.Uchar,
             Enums.BandFormat.Ushort,
             Enums.BandFormat.Uint
         };
 
-        public static string[] SignedFormats =
+        public static readonly string[] SignedFormats =
         {
             Enums.BandFormat.Char,
             Enums.BandFormat.Short,
             Enums.BandFormat.Int
         };
 
-        public static string[] FloatFormats =
+        public static readonly string[] FloatFormats =
         {
             Enums.BandFormat.Float,
             Enums.BandFormat.Double
         };
 
-        public static string[] ComplexFormats =
+        public static readonly string[] ComplexFormats =
         {
             Enums.BandFormat.Complex,
             Enums.BandFormat.Dpcomplex
         };
 
-        public static string[] IntFormats = UnsignedFormats.Concat(SignedFormats).ToArray();
+        public static readonly string[] IntFormats = UnsignedFormats.Concat(SignedFormats).ToArray();
 
-        public static string[] NonComplexFormats = IntFormats.Concat(FloatFormats).ToArray();
+        public static readonly string[] NonComplexFormats = IntFormats.Concat(FloatFormats).ToArray();
 
-        public static string[] AllFormats = IntFormats.Concat(FloatFormats).Concat(ComplexFormats).ToArray();
+        public static readonly string[] AllFormats = IntFormats.Concat(FloatFormats).Concat(ComplexFormats).ToArray();
 
-        public static string[] ColourColourspaces =
+        public static readonly string[] ColourColourspaces =
         {
             Enums.Interpretation.Xyz,
             Enums.Interpretation.Lab,
@@ -77,17 +77,17 @@ namespace NetVips.Tests
             Enums.Interpretation.Yxy
         };
 
-        public static string[] CodedColourspaces =
+        public static readonly string[] CodedColourspaces =
         {
             Enums.Interpretation.Labq
         };
 
-        public static string[] MonoColourspaces =
+        public static readonly string[] MonoColourspaces =
         {
             Enums.Interpretation.Bw
         };
 
-        public static string[] SixteenbitColourspaces =
+        public static readonly string[] SixteenbitColourspaces =
         {
             Enums.Interpretation.Grey16,
             Enums.Interpretation.Rgb16
@@ -98,7 +98,7 @@ namespace NetVips.Tests
             .Concat(SixteenbitColourspaces)
             .ToArray();
 
-        public static Dictionary<string, double> MaxValue = new Dictionary<string, double>
+        public static readonly Dictionary<string, double> MaxValue = new Dictionary<string, double>
         {
             {
                 Enums.BandFormat.Uchar,
@@ -142,7 +142,7 @@ namespace NetVips.Tests
             }
         };
 
-        public static Dictionary<string, int> SizeofFormat = new Dictionary<string, int>
+        public static readonly Dictionary<string, int> SizeOfFormat = new Dictionary<string, int>
         {
             {
                 Enums.BandFormat.Uchar,
@@ -186,7 +186,7 @@ namespace NetVips.Tests
             }
         };
 
-        public static string[] Rot45Angles =
+        public static readonly string[] Rot45Angles =
         {
             Enums.Angle45.D0,
             Enums.Angle45.D45,
@@ -198,7 +198,7 @@ namespace NetVips.Tests
             Enums.Angle45.D315
         };
 
-        public static string[] Rot45AngleBonds =
+        public static readonly string[] Rot45AngleBonds =
         {
             Enums.Angle45.D0,
             Enums.Angle45.D315,
@@ -210,7 +210,7 @@ namespace NetVips.Tests
             Enums.Angle45.D45
         };
 
-        public static string[] RotAngles =
+        public static readonly string[] RotAngles =
         {
             Enums.Angle.D0,
             Enums.Angle.D90,
@@ -218,7 +218,7 @@ namespace NetVips.Tests
             Enums.Angle.D270
         };
 
-        public static string[] RotAngleBonds =
+        public static readonly string[] RotAngleBonds =
         {
             Enums.Angle.D0,
             Enums.Angle.D270,
@@ -234,7 +234,7 @@ namespace NetVips.Tests
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static object[][] ZipExpand(object x, object y)
+        public static IEnumerable<object[]> ZipExpand(object x, object y)
         {
             // handle singleton list case
             if (x is Array xArray && xArray.Length == 1)
@@ -253,7 +253,8 @@ namespace NetVips.Tests
                     .Zip(enumerable2.Cast<object>(), (xObj, yObj) => new[] {xObj, yObj})
                     .ToArray();
             }
-            else if (x is IEnumerable enumerableX)
+
+            if (x is IEnumerable enumerableX)
             {
                 return enumerableX.Cast<object>().Select(i => new[]
                 {
@@ -261,7 +262,8 @@ namespace NetVips.Tests
                     y
                 }).ToArray();
             }
-            else if (y is IEnumerable enumerableY)
+
+            if (y is IEnumerable enumerableY)
             {
                 return enumerableY.Cast<object>().Select(j => new[]
                 {
@@ -269,13 +271,11 @@ namespace NetVips.Tests
                     j
                 }).ToArray();
             }
-            else
+
+            return new[]
             {
-                return new[]
-                {
-                    new[] {x, y}
-                };
-            }
+                new[] {x, y}
+            };
         }
 
         /// <summary>
@@ -290,10 +290,8 @@ namespace NetVips.Tests
             {
                 return enumerable.Cast<object>().Select(func).ToArray();
             }
-            else
-            {
-                return func(x);
-            }
+
+            return func(x);
         }
 
         /// <summary>
@@ -309,58 +307,45 @@ namespace NetVips.Tests
             if (x is Image || y is Image)
             {
                 return func(x, y);
-            } else if (x is Array || y is Array)
+            }
+
+            if (x is Array || y is Array)
             {
                 return ZipExpand(x, y).Select(o => func(o[0], o[1])).ToArray();
             }
-            else
-            {
-                return func(x, y);
-            }
+
+            return func(x, y);
         }
 
         /// <summary>
         /// run a function on an image and on a single pixel, the results
         /// should match
         /// </summary>
-        /// <param name="message"></param>
         /// <param name="im"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="func"></param>
-        public static void RunCmp(
-            string message,
-            Image im,
-            int x,
-            int y,
-            Func<object, object> func)
+        public static void RunCmp(Image im, int x, int y, Func<object, object> func)
         {
             var a = im.Getpoint(x, y);
             var v1 = func(a);
             var im2 = func(im) as Image;
             var v2 = im2?.Getpoint(x, y);
 
-            AssertAlmostEqualObjects(v1, v2, message);
+            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] {v1}, v2);
         }
 
         /// <summary>
-        // run a function on a pair of images and on a pair of pixels, the results
-        // should match
+        /// run a function on a pair of images and on a pair of pixels, the results
+        /// should match
         /// </summary>
-        /// <param name="message"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="func"></param>
         /// <returns></returns>
-        public static void RunCmp2(
-            string message,
-            Image left,
-            Image right,
-            int x,
-            int y,
-            Func<object, object, object> func)
+        public static void RunCmp2(Image left, Image right, int x, int y, Func<object, object, object> func)
         {
             var a = left.Getpoint(x, y);
             var b = right.Getpoint(x, y);
@@ -368,55 +353,65 @@ namespace NetVips.Tests
             var after = func(left, right) as Image;
             var v2 = after?.Getpoint(x, y);
 
-            AssertAlmostEqualObjects(v1, v2, message);
+            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] {v1}, v2);
         }
 
         /// <summary>
         /// run a function on a pair of images
         /// 50,50 and 10,10 should have different values on the test image
         /// </summary>
-        /// <param name="message"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <param name="func"></param>
         /// <returns></returns>
-        public static void RunImage2(string message, Image left, Image right, Func<object, object, object> func)
+        public static void RunImage2(Image left, Image right, Func<object, object, object> func)
         {
-            RunCmp2(message, left, right, 50, 50, (x, y) => RunFn2(func, x, y));
-            RunCmp2(message, left, right, 10, 10, (x, y) => RunFn2(func, x, y));
+            RunCmp2(left, right, 50, 50, (x, y) => RunFn2(func, x, y));
+            RunCmp2(left, right, 10, 10, (x, y) => RunFn2(func, x, y));
         }
 
         /// <summary>
         /// run a function on (image, constant), and on (constant, image).
         /// 50,50 and 10,10 should have different values on the test image
         /// </summary>
-        public static void RunConst(string message, Func<object, object, object> func, Image im, object c)
+        public static void RunConst(Func<object, object, object> func, Image im, object c)
         {
-            RunCmp(message, im, 50, 50, x => RunFn2(func, x, c));
-            RunCmp(message, im, 50, 50, x => RunFn2(func, c, x));
-            RunCmp(message, im, 10, 10, x => RunFn2(func, x, c));
-            RunCmp(message, im, 10, 10, x => RunFn2(func, c, x));
+            RunCmp(im, 50, 50, x => RunFn2(func, x, c));
+            RunCmp(im, 50, 50, x => RunFn2(func, c, x));
+            RunCmp(im, 10, 10, x => RunFn2(func, x, c));
+            RunCmp(im, 10, 10, x => RunFn2(func, c, x));
         }
 
         /// <summary>
         /// test a pair of things which can be lists for approx. equality
         /// </summary>
+        /// <param name="expected"></param>
+        /// <param name="actual"></param>
+        /// <param name="delta"></param>
+        public static void AssertAlmostEqualObjects(IEnumerable expected, IEnumerable actual, double delta = 0.0001)
+        {
+            CollectionAssert.AreEqual(expected, actual, Comparer<object>.Create((x, y) =>
+            {
+                var a = Convert.ToDouble(x);
+                var b = Convert.ToDouble(y);
+                return Math.Abs(a - b) < delta ? 0 : a.CompareTo(b);
+            }));
+        }
+
+        /// <summary>
+        /// test a pair of things which can be lists for difference less than a
+        /// thresholdy
+        /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        /// <param name="msg"></param>
-        /// <param name="delta"></param>
-        public static void AssertAlmostEqualObjects(object a, object b, string msg = "", double delta = 0.0001)
+        /// <param name="diff"></param>
+        public static void AssertLessThreshold(object a, object b, double diff)
         {
-            foreach (var array in ZipExpand(a, b))
+            foreach (var expand in ZipExpand(a, b))
             {
-                if (array[0] is double dbl1 && array[1] is double dbl2)
-                {
-                    Assert.AreEqual(dbl1, dbl2, delta, msg);
-                }
-                else
-                {
-                    Assert.AreEqual(array[0], array[1], msg);
-                }
+                var x = Convert.ToDouble(expand[0]);
+                var y = Convert.ToDouble(expand[1]);
+                Assert.Less(Math.Abs(x - y), diff);
             }
         }
 

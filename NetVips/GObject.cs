@@ -23,7 +23,7 @@ namespace NetVips
         /// instance is garbage-collected, the underlying object is unreferenced.
         /// </remarks>
         /// <param name="gObject"></param>
-        public GObject(Internal.GObject gObject)
+        protected GObject(Internal.GObject gObject)
         {
             // record the GValue we were given to manage
             IntlGObject = gObject;
@@ -49,8 +49,8 @@ namespace NetVips
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources;
-        /// <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
+        /// <see langword="false" /> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.

@@ -23,16 +23,81 @@
         /// </remarks>
         public static class BandFormat
         {
-            public static string Uchar = "uchar";
-            public static string Char = "char";
-            public static string Ushort = "ushort";
-            public static string Short = "short";
-            public static string Uint = "uint";
-            public static string Int = "int";
-            public static string Float = "float";
-            public static string Complex = "complex";
-            public static string Double = "double";
-            public static string Dpcomplex = "dpcomplex";
+            public const string Uchar = "uchar";
+            public const string Char = "char";
+            public const string Ushort = "ushort";
+            public const string Short = "short";
+            public const string Uint = "uint";
+            public const string Int = "int";
+            public const string Float = "float";
+            public const string Complex = "complex";
+            public const string Double = "double";
+            public const string Dpcomplex = "dpcomplex";
+        }
+
+        /// <summary>
+        /// The various Porter-Duff and PDF blend modes. See <see cref="Image.Composite"/>.
+        /// </summary>
+        /// <remarks>
+        /// The Cairo docs have a nice explanation of all the blend modes:
+        /// https://www.cairographics.org/operators
+        /// 
+        /// The non-separable modes are not implemented.
+        /// 
+        /// Attributes:
+        ///     Clear (string): where the second object is drawn, the first is removed
+        ///     Source (string): the second object is drawn as if nothing were below
+        ///     Over (string): the image shows what you would expect if you held two semi-transparent slides on top of each other
+        ///     In (string): the first object is removed completely, the second is only drawn where the first was
+        ///     Out (string): the second is drawn only where the first isn't
+        ///     Atop (string): this leaves the first object mostly intact, but mixes both objects in the overlapping area
+        ///     Dest (string): leaves the first object untouched, the second is discarded completely
+        ///     DestOver (string): like Over, but swaps the arguments
+        ///     DestIn (string): like In, but swaps the arguments
+        ///     DestOut (string): like Out, but swaps the arguments
+        ///     DestAtop (string): like Atop, but swaps the arguments
+        ///     Xor (string): something like a difference operator
+        ///     Add (string): a bit like adding the two images
+        ///     Saturate (string): a bit like the darker of the two
+        ///     Multiply (string): at least as dark as the darker of the two inputs
+        ///     Screen (string): at least as light as the lighter of the inputs
+        ///     Overlay (string): multiplies or screens colors, depending on the lightness
+        ///     Darken (string): the darker of each component
+        ///     Lighten (string): the lighter of each component
+        ///     ColourDodge (string): brighten first by a factor second
+        ///     ColourBurn (string): darken first by a factor of second
+        ///     HardLight (string): multiply or screen, depending on lightness
+        ///     SoftLight (string): darken or lighten, depending on lightness
+        ///     Difference (string): difference of the two
+        ///     Exclusion (string): somewhat like Difference, but lower-contrast 
+        /// </remarks>
+        public static class BlendMode
+        {
+            public const string Clear = "clear";
+            public const string Source = "source";
+            public const string Over = "over";
+            public const string In = "in";
+            public const string Out = "out";
+            public const string Atop = "atop";
+            public const string Dest = "dest";
+            public const string DestOver = "dest-over";
+            public const string DestIn = "dest-in";
+            public const string DestOut = "dest-out";
+            public const string DestAtop = "dest-atop";
+            public const string Xor = "xor";
+            public const string Add = "add";
+            public const string Saturate = "saturate";
+            public const string Multiply = "multiply";
+            public const string Screen = "screen";
+            public const string Overlay = "overlay";
+            public const string Darken = "darken";
+            public const string Lighten = "lighten";
+            public const string ColourDodge = "colour-dodge";
+            public const string ColourBurn = "colour-burn";
+            public const string HardLight = "hard-light";
+            public const string SoftLight = "soft-light";
+            public const string Difference = "difference";
+            public const string Exclusion = "exclusion";
         }
 
         /// <summary>
@@ -47,8 +112,8 @@
         /// </remarks>
         public static class Access
         {
-            public static string Random = "random";
-            public static string Sequential = "sequential";
+            public const string Random = "random";
+            public const string Sequential = "sequential";
         }
 
         /// <summary>
@@ -81,25 +146,25 @@
         /// </remarks>
         public static class Interpretation
         {
-            public static string Multiband = "multiband";
-            public static string Bw = "b-w";
-            public static string Histogram = "histogram";
-            public static string Xyz = "xyz";
-            public static string Lab = "lab";
-            public static string Cmyk = "cmyk";
-            public static string Labq = "labq";
-            public static string Rgb = "rgb";
-            public static string Cmc = "cmc";
-            public static string Lch = "lch";
-            public static string Labs = "labs";
-            public static string Srgb = "srgb";
-            public static string Yxy = "yxy";
-            public static string Fourier = "fourier";
-            public static string Rgb16 = "rgb16";
-            public static string Grey16 = "grey16";
-            public static string Matrix = "matrix";
-            public static string Scrgb = "scrgb";
-            public static string Hsv = "hsv";
+            public const string Multiband = "multiband";
+            public const string Bw = "b-w";
+            public const string Histogram = "histogram";
+            public const string Xyz = "xyz";
+            public const string Lab = "lab";
+            public const string Cmyk = "cmyk";
+            public const string Labq = "labq";
+            public const string Rgb = "rgb";
+            public const string Cmc = "cmc";
+            public const string Lch = "lch";
+            public const string Labs = "labs";
+            public const string Srgb = "srgb";
+            public const string Yxy = "yxy";
+            public const string Fourier = "fourier";
+            public const string Rgb16 = "rgb16";
+            public const string Grey16 = "grey16";
+            public const string Matrix = "matrix";
+            public const string Scrgb = "scrgb";
+            public const string Hsv = "hsv";
         }
 
         /// <summary>
@@ -114,12 +179,12 @@
         ///     D180 (string): 180 degrees
         ///     D270 (string): 90 degrees anti-clockwise
         /// </remarks>
-        public class Angle
+        public static class Angle
         {
-            public static string D0 = "d0";
-            public static string D90 = "d90";
-            public static string D180 = "d180";
-            public static string D270 = "d270";
+            public const string D0 = "d0";
+            public const string D90 = "d90";
+            public const string D180 = "d180";
+            public const string D270 = "d270";
         }
 
         /// <summary>
@@ -138,16 +203,16 @@
         ///     D270 (string): 90 degrees anti-clockwise
         ///     D315 (string): 45 degrees anti-clockwise
         /// </remarks>
-        public class Angle45
+        public static class Angle45
         {
-            public static string D0 = "d0";
-            public static string D45 = "d45";
-            public static string D90 = "d90";
-            public static string D135 = "d135";
-            public static string D180 = "d180";
-            public static string D225 = "d225";
-            public static string D270 = "d270";
-            public static string D315 = "d315";
+            public const string D0 = "d0";
+            public const string D45 = "d45";
+            public const string D90 = "d90";
+            public const string D135 = "d135";
+            public const string D180 = "d180";
+            public const string D225 = "d225";
+            public const string D270 = "d270";
+            public const string D315 = "d315";
         }
 
         /// <summary>
@@ -162,12 +227,12 @@
         ///     Saturation (string):
         ///     Absolute (string):
         /// </remarks>
-        public class Intent
+        public static class Intent
         {
-            public static string Perceptual = "perceptual";
-            public static string Relative = "relative";
-            public static string Saturation = "saturation";
-            public static string Absolute = "absolute";
+            public const string Perceptual = "perceptual";
+            public const string Relative = "relative";
+            public const string Saturation = "saturation";
+            public const string Absolute = "absolute";
         }
 
         /// <summary>
@@ -175,7 +240,7 @@
         /// </summary>
         /// <remarks>
         /// When the edges of an image are extended, you can specify how you want
-        /// the extension done.  See <see cref="Image.Embed"/>, <see cref="Image.Conv"/>, <see cref="Image.Affine"/>
+        /// the extension done. See <see cref="Image.Embed"/>, <see cref="Image.Conv"/>, <see cref="Image.Affine"/>
         /// and so on.
         /// 
         /// Attributes:
@@ -186,14 +251,14 @@
         ///     White (string): new pixels are white, ie. all bits are set
         ///     Background (string): colour set from the @background property
         /// </remarks>
-        public class Extend
+        public static class Extend
         {
-            public static string Black = "black";
-            public static string Copy = "copy";
-            public static string Repeat = "repeat";
-            public static string Mirror = "mirror";
-            public static string White = "white";
-            public static string Background = "background";
+            public const string Black = "black";
+            public const string Copy = "copy";
+            public const string Repeat = "repeat";
+            public const string Mirror = "mirror";
+            public const string White = "white";
+            public const string Background = "background";
         }
 
         /// <summary>
@@ -207,11 +272,11 @@
         ///     Float (string): Floating point.
         ///     Approximate (string): Compute approximate result.
         /// </remarks>
-        public class Precision
+        public static class Precision
         {
-            public static string Integer = "integer";
-            public static string Float = "float";
-            public static string Approximate = "approximate";
+            public const string Integer = "integer";
+            public const string Float = "float";
+            public const string Approximate = "approximate";
         }
 
         /// <summary>
@@ -227,11 +292,11 @@
         ///     Labq (string): pixels encode 3 float CIELAB values as 4 uchar
         ///     Rad (string): pixels encode 3 float RGB as 4 uchar (Radiance coding)
         /// </remarks>
-        public class Coding
+        public static class Coding
         {
-            public static string None = "none";
-            public static string Labq = "labq";
-            public static string Rad = "rad";
+            public const string None = "none";
+            public const string Labq = "labq";
+            public const string Rad = "rad";
         }
 
         /// <summary>
@@ -245,10 +310,10 @@
         ///     Horizontal (string): left-right
         ///     Vertical (string): top-bottom
         /// </remarks>
-        public class Direction
+        public static class Direction
         {
-            public static string Horizontal = "horizontal";
-            public static string Vertical = "vertical";
+            public const string Horizontal = "horizontal";
+            public const string Vertical = "vertical";
         }
 
         /// <summary>
@@ -262,11 +327,11 @@
         ///     Centre (string): Align on the centre
         ///     High (string): Align on the high coordinate edge
         /// </remarks>
-        public class Align
+        public static class Align
         {
-            public static string Low = "low";
-            public static string Centre = "centre";
-            public static string High = "high";
+            public const string Low = "low";
+            public const string Centre = "centre";
+            public const string High = "high";
         }
 
         /// <summary>
@@ -279,10 +344,10 @@
         ///     Max (string): Take the maximum of all values.
         ///     Sum (string): Take the sum of all values.
         /// </remarks>
-        public class Combine
+        public static class Combine
         {
-            public static string Max = "max";
-            public static string Sum = "sum";
+            public const string Max = "max";
+            public const string Sum = "sum";
         }
 
         /// <summary>
@@ -295,10 +360,10 @@
         ///     Lab (string): CIE Lab space.
         ///     Xyz (string): CIE XYZ space.
         /// </remarks>
-        public class PCS
+        public static class PCS
         {
-            public static string Lab = "lab";
-            public static string Xyz = "xyz";
+            public const string Lab = "lab";
+            public const string Xyz = "xyz";
         }
     }
 }

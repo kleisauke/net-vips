@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
-using NUnit.Framework;
 using NetVips.Internal;
+using NUnit.Framework;
 
 namespace NetVips.Tests
 {
@@ -96,19 +96,9 @@ namespace NetVips.Tests
         {
             var gv = new GValue();
             gv.SetType(GValue.ArrayIntType);
-            gv.Set(new[]
-            {
-                1,
-                2,
-                3
-            });
+            gv.Set(new[] {1, 2, 3});
             var value = gv.Get();
-            Assert.AreEqual(new[]
-            {
-                1,
-                2,
-                3
-            }, value);
+            CollectionAssert.AreEqual(new[] {1, 2, 3}, value as IEnumerable);
         }
 
         [Test]
@@ -116,19 +106,9 @@ namespace NetVips.Tests
         {
             var gv = new GValue();
             gv.SetType(GValue.ArrayDoubleType);
-            gv.Set(new[]
-            {
-                1.1,
-                2.1,
-                3.1
-            });
+            gv.Set(new[] {1.1, 2.1, 3.1});
             var value = gv.Get();
-            Assert.AreEqual(new[]
-            {
-                1.1,
-                2.1,
-                3.1
-            }, value);
+            CollectionAssert.AreEqual(new[] {1.1, 2.1, 3.1}, value as IEnumerable);
         }
 
         [Test]
@@ -153,20 +133,10 @@ namespace NetVips.Tests
 
             var gv = new GValue();
             gv.SetType(GValue.ArrayImageType);
-            gv.Set(new[]
-            {
-                r,
-                g,
-                b
-            });
+            gv.Set(new[] {r, g, b});
             var value = gv.Get();
 
-            CollectionAssert.AreEqual(new[]
-            {
-                r,
-                g,
-                b
-            }, value as IEnumerable);
+            CollectionAssert.AreEqual(new[] {r, g, b}, value as IEnumerable);
         }
 
         [Test]
