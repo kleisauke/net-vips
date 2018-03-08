@@ -67,7 +67,7 @@ namespace NetVips.Tests
 
             if (Base.AtLeastLibvips(8, 5))
             {
-                var im3 = im.HistLocal(10, 10, new Dictionary<string, object>
+                var im3 = im.HistLocal(10, 10, new VOption
                 {
                     {"max_slope", 3}
                 });

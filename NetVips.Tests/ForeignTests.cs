@@ -31,7 +31,7 @@ namespace NetVips.Tests
             _rad = _colour.Float2rad();
             _rad.Remove("icc-profile-data");
             _cmyk = _colour.Bandjoin(_mono);
-            _cmyk = _cmyk.Copy(new Dictionary<string, object>
+            _cmyk = _cmyk.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Cmyk}
             });
@@ -203,7 +203,7 @@ namespace NetVips.Tests
                 x.Set("orientation", 6);
                 x.WriteToFile(filename);
                 var x1 = Image.NewFromFile(filename);
-                var x2 = Image.NewFromFile(filename, new Dictionary<string, object>
+                var x2 = Image.NewFromFile(filename, new VOption
                 {
                     {"autorotate", true}
                 });
@@ -313,7 +313,7 @@ namespace NetVips.Tests
             x.Set("orientation", 6);
             x.WriteToFile(filename);
             var x1 = Image.NewFromFile(filename);
-            var x2 = Image.NewFromFile(filename, new Dictionary<string, object>
+            var x2 = Image.NewFromFile(filename, new VOption
             {
                 {"autorotate", true}
             });
@@ -328,14 +328,14 @@ namespace NetVips.Tests
                 Assert.AreEqual(167, x.Height);
                 var pageHeight = x.Height;
 
-                x = Image.NewFromFile(Helper.OmeFile, new Dictionary<string, object>
+                x = Image.NewFromFile(Helper.OmeFile, new VOption
                 {
                     {"n", -1}
                 });
                 Assert.AreEqual(439, x.Width);
                 Assert.AreEqual(pageHeight * 15, x.Height);
 
-                x = Image.NewFromFile(Helper.OmeFile, new Dictionary<string, object>
+                x = Image.NewFromFile(Helper.OmeFile, new VOption
                 {
                     {"page", 1},
                     {"n", -1}
@@ -343,7 +343,7 @@ namespace NetVips.Tests
                 Assert.AreEqual(439, x.Width);
                 Assert.AreEqual(pageHeight * 14, x.Height);
 
-                x = Image.NewFromFile(Helper.OmeFile, new Dictionary<string, object>
+                x = Image.NewFromFile(Helper.OmeFile, new VOption
                 {
                     {"page", 1},
                     {"n", 2}
@@ -352,7 +352,7 @@ namespace NetVips.Tests
                 Assert.AreEqual(pageHeight * 2, x.Height);
 
 
-                x = Image.NewFromFile(Helper.OmeFile, new Dictionary<string, object>
+                x = Image.NewFromFile(Helper.OmeFile, new VOption
                 {
                     {"n", -1}
                 });
@@ -363,7 +363,7 @@ namespace NetVips.Tests
                 filename = Helper.GetTemporaryFile(_tempDir, ".tif");
                 x.WriteToFile(filename);
 
-                x = Image.NewFromFile(filename, new Dictionary<string, object>
+                x = Image.NewFromFile(filename, new VOption
                 {
                     {"n", -1}
                 });
@@ -378,13 +378,13 @@ namespace NetVips.Tests
             if (Base.AtLeastLibvips(8, 6))
             {
                 x = Image.NewFromFile(Helper.TifFile);
-                var buf = x.TiffsaveBuffer(new Dictionary<string, object>
+                var buf = x.TiffsaveBuffer(new VOption
                 {
                     {"tile", true},
                     {"pyramid", true}
                 });
                 filename = Helper.GetTemporaryFile(_tempDir, ".tif");
-                x.Tiffsave(filename, new Dictionary<string, object>
+                x.Tiffsave(filename, new VOption
                 {
                     {"tile", true},
                     {"pyramid", true}
@@ -392,11 +392,11 @@ namespace NetVips.Tests
                 var buf2 = File.ReadAllBytes(filename);
                 Assert.AreEqual(buf.Length, buf2.Length);
 
-                var a = Image.NewFromBuffer(buf, "", new Dictionary<string, object>
+                var a = Image.NewFromBuffer(buf, "", new VOption
                 {
                     {"page", 2}
                 });
-                var b = Image.NewFromBuffer(buf2, "", new Dictionary<string, object>
+                var b = Image.NewFromBuffer(buf2, "", new VOption
                 {
                     {"page", 2}
                 });
@@ -435,13 +435,13 @@ namespace NetVips.Tests
             Assert.AreEqual(4, x.Bands);
 
             // density should change size of generated svg
-            x = Image.Magickload(Helper.SvgFile, new Dictionary<string, object>
+            x = Image.Magickload(Helper.SvgFile, new VOption
             {
                 {"density", "100"}
             });
             var width = x.Width;
             var height = x.Height;
-            x = Image.Magickload(Helper.SvgFile, new Dictionary<string, object>
+            x = Image.Magickload(Helper.SvgFile, new VOption
             {
                 {"density", "200"}
             });
@@ -456,7 +456,7 @@ namespace NetVips.Tests
             x = Image.Magickload(Helper.GifAnimFile);
             width = x.Width;
             height = x.Height;
-            x = Image.Magickload(Helper.GifAnimFile, new Dictionary<string, object>
+            x = Image.Magickload(Helper.GifAnimFile, new VOption
             {
                 {"all_frames", true}
             });
@@ -470,7 +470,7 @@ namespace NetVips.Tests
                 x = Image.Magickload(Helper.GifAnimFile);
                 width = x.Width;
                 height = x.Height;
-                x = Image.Magickload(Helper.GifAnimFile, new Dictionary<string, object>
+                x = Image.Magickload(Helper.GifAnimFile, new VOption
                 {
                     {"page", 1},
                     {"n", 2}
@@ -517,7 +517,7 @@ namespace NetVips.Tests
 
             // test lossless mode
             var x = Image.NewFromFile(Helper.WebpFile);
-            var buf = x.WebpsaveBuffer(new Dictionary<string, object>
+            var buf = x.WebpsaveBuffer(new VOption
             {
                 {"lossless", true}
             });
@@ -526,11 +526,11 @@ namespace NetVips.Tests
             Assert.AreEqual(x.Avg(), im2.Avg());
 
             // higher Q should mean a bigger buffer
-            var b1 = x.WebpsaveBuffer(new Dictionary<string, object>
+            var b1 = x.WebpsaveBuffer(new VOption
             {
                 {"Q", 10}
             });
-            var b2 = x.WebpsaveBuffer(new Dictionary<string, object>
+            var b2 = x.WebpsaveBuffer(new VOption
             {
                 {"Q", 90}
             });
@@ -713,7 +713,7 @@ namespace NetVips.Tests
             BufferLoader("pdfload_buffer", Helper.PdfFile, PdfValid);
 
             var x = Image.NewFromFile(Helper.PdfFile);
-            var y = Image.NewFromFile(Helper.PdfFile, new Dictionary<string, object>
+            var y = Image.NewFromFile(Helper.PdfFile, new VOption
             {
                 {"scale", 2}
             });
@@ -721,7 +721,7 @@ namespace NetVips.Tests
             Assert.Less(Math.Abs(x.Height * 2 - y.Height), 2);
 
             x = Image.NewFromFile(Helper.PdfFile);
-            y = Image.NewFromFile(Helper.PdfFile, new Dictionary<string, object>
+            y = Image.NewFromFile(Helper.PdfFile, new VOption
             {
                 {"dpi", 144}
             });
@@ -755,7 +755,7 @@ namespace NetVips.Tests
             if (Base.AtLeastLibvips(8, 5))
             {
                 var x1 = Image.NewFromFile(Helper.GifAnimFile);
-                var x2 = Image.NewFromFile(Helper.GifAnimFile, new Dictionary<string, object>
+                var x2 = Image.NewFromFile(Helper.GifAnimFile, new VOption
                 {
                     {"n", 2}
                 });
@@ -763,13 +763,13 @@ namespace NetVips.Tests
                 var pageHeight = x2.Get("page-height");
                 Assert.AreEqual(x1.Height, pageHeight);
 
-                x2 = Image.NewFromFile(Helper.GifAnimFile, new Dictionary<string, object>
+                x2 = Image.NewFromFile(Helper.GifAnimFile, new VOption
                 {
                     {"n", -1}
                 });
                 Assert.AreEqual(5 * x1.Height, x2.Height);
 
-                x2 = Image.NewFromFile(Helper.GifAnimFile, new Dictionary<string, object>
+                x2 = Image.NewFromFile(Helper.GifAnimFile, new VOption
                 {
                     {"page", 1},
                     {"n", -1}
@@ -812,7 +812,7 @@ namespace NetVips.Tests
             FileLoader("svgload", Helper.SvgGzFile, SvgValid);
 
             var x = Image.NewFromFile(Helper.SvgFile);
-            var y = Image.NewFromFile(Helper.SvgFile, new Dictionary<string, object>
+            var y = Image.NewFromFile(Helper.SvgFile, new VOption
             {
                 {"scale", 2}
             });
@@ -821,7 +821,7 @@ namespace NetVips.Tests
             Assert.Less(Math.Abs(x.Height * 2 - y.Height), 2);
 
             x = Image.NewFromFile(Helper.SvgFile);
-            y = Image.NewFromFile(Helper.SvgFile, new Dictionary<string, object>
+            y = Image.NewFromFile(Helper.SvgFile, new VOption
             {
                 {"dpi", 144}
             });
@@ -883,7 +883,7 @@ namespace NetVips.Tests
             // default deepzoom layout ... we must use png here, since we want to
             // test the overlap for equality
             var filename = Helper.GetTemporaryFile(_tempDir, "");
-            _colour.Dzsave(filename, new Dictionary<string, object>
+            _colour.Dzsave(filename, new VOption
             {
                 {"suffix", ".png"}
             });
@@ -919,7 +919,7 @@ namespace NetVips.Tests
 
             // default google layout
             filename = Helper.GetTemporaryFile(_tempDir, "");
-            _colour.Dzsave(filename, new Dictionary<string, object>
+            _colour.Dzsave(filename, new VOption
             {
                 {"layout", "google"}
             });
@@ -940,7 +940,7 @@ namespace NetVips.Tests
             // tiles, though in fact the bottom and right edges will be white
             filename = Helper.GetTemporaryFile(_tempDir, "");
 
-            _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, new Dictionary<string, object>
+            _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, new VOption
             {
                 {"layout", "google"},
                 {"overlap", 1},
@@ -958,7 +958,7 @@ namespace NetVips.Tests
             if (Base.AtLeastLibvips(8, 6))
             {
                 filename = Helper.GetTemporaryFile(_tempDir, "");
-                _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, new Dictionary<string, object>
+                _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, new VOption
                 {
                     {"layout", "google"},
                     {"overlap", 1},
@@ -973,7 +973,7 @@ namespace NetVips.Tests
 
             // default zoomify layout
             filename = Helper.GetTemporaryFile(_tempDir, "");
-            _colour.Dzsave(filename, new Dictionary<string, object>
+            _colour.Dzsave(filename, new VOption
             {
                 {"layout", "zoomify"}
             });
@@ -1001,7 +1001,7 @@ namespace NetVips.Tests
 
             // test compressed zip output
             var filename2 = Helper.GetTemporaryFile(_tempDir, ".zip");
-            _colour.Dzsave(filename2, new Dictionary<string, object>
+            _colour.Dzsave(filename2, new VOption
             {
                 {"compression", -1}
             });
@@ -1018,7 +1018,7 @@ namespace NetVips.Tests
 
             // test suffix
             filename = Helper.GetTemporaryFile(_tempDir, "");
-            _colour.Dzsave(filename, new Dictionary<string, object>
+            _colour.Dzsave(filename, new VOption
             {
                 {"suffix", ".png"}
             });
@@ -1028,7 +1028,7 @@ namespace NetVips.Tests
 
             // test overlap
             filename = Helper.GetTemporaryFile(_tempDir, "");
-            _colour.Dzsave(filename, new Dictionary<string, object>
+            _colour.Dzsave(filename, new VOption
             {
                 {"overlap", 200}
             });
@@ -1038,7 +1038,7 @@ namespace NetVips.Tests
 
             // test tile-size
             filename = Helper.GetTemporaryFile(_tempDir, "");
-            _colour.Dzsave(filename, new Dictionary<string, object>
+            _colour.Dzsave(filename, new VOption
             {
                 {"tile_size", 512}
             });
@@ -1063,7 +1063,7 @@ namespace NetVips.Tests
                 }
 
                 var buf1 = File.ReadAllBytes(filename);
-                var buf2 = _colour.DzsaveBuffer(new Dictionary<string, object>
+                var buf2 = _colour.DzsaveBuffer(new VOption
                 {
                     {"basename", baseName}
                 });

@@ -43,14 +43,14 @@ namespace NetVips.Tests
             }
 
             // tag as complex, run, revert tagging
-            var cmplx = image.Copy(new Dictionary<string, object>
+            var cmplx = image.Copy(new VOption
             {
                 {"bands", 1},
                 {"format", newFormat}
             });
             var cmplxResult = func(cmplx);
 
-            return cmplxResult.Copy(new Dictionary<string, object>
+            return cmplxResult.Copy(new VOption
             {
                 {"bands", 2},
                 {"format", image.Format}
@@ -138,7 +138,7 @@ namespace NetVips.Tests
                 var interpolate = Interpolate.NewFromName(name);
                 for (var i = 0; i < 4; i++)
                 {
-                    x = x.Affine(new double[] {0, 1, 1, 0}, new Dictionary<string, object>
+                    x = x.Affine(new double[] {0, 1, 1, 0}, new VOption
                     {
                         {"interpolate", interpolate}
                     });
@@ -164,7 +164,7 @@ namespace NetVips.Tests
                     foreach (var kernel in new[] {"nearest", "linear", "cubic", "lanczos2", "lanczos3"})
                     {
                         var x = im.Cast(fmt);
-                        var r = x.Reduce(fac, fac, new Dictionary<string, object>
+                        var r = x.Reduce(fac, fac, new VOption
                         {
                             {"kernel", kernel}
                         });
@@ -183,7 +183,7 @@ namespace NetVips.Tests
                 {
                     // Console.WriteLine($"testing kernel = {kernel}");
                     // Console.WriteLine($"testing const = {@const}");
-                    var shr = im.Reduce(2, 2, new Dictionary<string, object>
+                    var shr = im.Reduce(2, 2, new VOption
                     {
                         {"kernel", kernel}
                     });
@@ -247,13 +247,13 @@ namespace NetVips.Tests
             }
 
             // should fit one of width or height
-            im = Image.Thumbnail(Helper.JpegFile, 100, new Dictionary<string, object>
+            im = Image.Thumbnail(Helper.JpegFile, 100, new VOption
             {
                 {"height", 300}
             });
             Assert.AreEqual(100, im.Width);
             Assert.AreNotEqual(300, im.Height);
-            im = Image.Thumbnail(Helper.JpegFile, 300, new Dictionary<string, object>
+            im = Image.Thumbnail(Helper.JpegFile, 300, new VOption
             {
                 {"height", 100}
             });
@@ -261,7 +261,7 @@ namespace NetVips.Tests
             Assert.AreEqual(100, im.Height);
 
             // with @crop, should fit both width and height
-            im = Image.Thumbnail(Helper.JpegFile, 100, new Dictionary<string, object>
+            im = Image.Thumbnail(Helper.JpegFile, 100, new VOption
             {
                 {"height", 300},
                 {"crop", true}
@@ -279,7 +279,7 @@ namespace NetVips.Tests
         public void TestSimilarity()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
-            var im2 = im.Similarity(new Dictionary<string, object>
+            var im2 = im.Similarity(new VOption
             {
                 {"angle", 90}
             });
@@ -294,7 +294,7 @@ namespace NetVips.Tests
         public void TestSimilarityScale()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
-            var im2 = im.Similarity(new Dictionary<string, object>
+            var im2 = im.Similarity(new VOption
             {
                 {"scale", 2}
             });

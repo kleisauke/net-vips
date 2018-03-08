@@ -30,7 +30,7 @@ namespace NetVips.Tests
         public void TestLabelregions()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -44,7 +44,7 @@ namespace NetVips.Tests
         public void TestErode()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -64,7 +64,7 @@ namespace NetVips.Tests
         public void TestDilate()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -84,7 +84,7 @@ namespace NetVips.Tests
         public void TestRank()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });

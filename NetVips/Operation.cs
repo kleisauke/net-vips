@@ -172,7 +172,7 @@ namespace NetVips
         /// <param name="kwargs"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(string operationName, IDictionary<string, object> kwargs, params object[] args)
+        public static object Call(string operationName, VOption kwargs, params object[] args)
         {
             // logger.Debug($"VipsOperation.call: operation_name = {operationName}");
             // logger.Debug($"VipsOperation.call: args = {args}, kwargs = {kwargs}");
@@ -291,7 +291,7 @@ namespace NetVips
             }
 
             // fetch optional output args
-            var opts = new Dictionary<object, object>();
+            var opts = new VOption();
 
             if (kwargs != null)
             {
@@ -461,7 +461,7 @@ namespace NetVips
                     result.Append(", ");
                 }
 
-                result.Append("new Dictionary<string, object>\n")
+                result.Append("new VOption\n")
                     .AppendLine($"{indent}/// {{");
                 for (var i = 0; i < optionalInput.Length; i++)
                 {
@@ -570,7 +570,7 @@ namespace NetVips
                     result.Append(", ");
                 }
 
-                result.Append("IDictionary<string, object> kwargs = null");
+                result.Append("VOption kwargs = null");
             }
 
             result.AppendLine(")")
@@ -579,7 +579,7 @@ namespace NetVips
 
             if (outParameters != null)
             {
-                result.AppendLine("var optionalOutput = new Dictionary<string, object>")
+                result.AppendLine("var optionalOutput = new VOption")
                     .AppendLine($"{indent}    {{");
                 for (var i = 0; i < outParameters.Length; i++)
                 {
@@ -665,7 +665,7 @@ namespace NetVips
             if (outParameters != null)
             {
                 result.AppendLine()
-                    .AppendLine($"{indent}    var opts = results?[1] as Dictionary<object, object>;");
+                    .AppendLine($"{indent}    var opts = results?[1] as VOption;");
                 for (var i = 0; i < outParameters.Length; i++)
                 {
                     var outParameter = outParameters[i];

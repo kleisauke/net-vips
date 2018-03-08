@@ -18,7 +18,7 @@ namespace NetVips.Tests
         {
             Base.VipsInit();
 
-            _image = Image.MaskIdeal(100, 100, 0.5, new Dictionary<string, object>
+            _image = Image.MaskIdeal(100, 100, 0.5, new VOption
             {
                 {"reject", true},
                 {"optical", true}
@@ -565,7 +565,7 @@ namespace NetVips.Tests
         public void TestAvg()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 100, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 100, 50, 0, new VOption
             {
                 {"expand", true}
             });
@@ -580,7 +580,7 @@ namespace NetVips.Tests
         public void TestDeviate()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 100, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 100, 50, 0, new VOption
             {
                 {"expand", true}
             });
@@ -630,7 +630,7 @@ namespace NetVips.Tests
         public void TestHistFind()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 10, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 10, 50, 0, new VOption
             {
                 {"expand", true}
             });
@@ -646,7 +646,7 @@ namespace NetVips.Tests
             test = test * new[] {1, 2, 3};
             foreach (var fmt in Helper.AllFormats)
             {
-                var hist = test.Cast(fmt).HistFind(new Dictionary<string, object>
+                var hist = test.Cast(fmt).HistFind(new VOption
                 {
                     {"band", 0}
                 });
@@ -654,7 +654,7 @@ namespace NetVips.Tests
                 CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(10, 0));
                 CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
 
-                hist = test.Cast(fmt).HistFind(new Dictionary<string, object>
+                hist = test.Cast(fmt).HistFind(new VOption
                 {
                     {"band", 1}
                 });
@@ -668,7 +668,7 @@ namespace NetVips.Tests
         public void TestHistFindIndexed()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 10, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 10, 50, 0, new VOption
             {
                 {"expand", true}
             });
@@ -701,7 +701,7 @@ namespace NetVips.Tests
                 Assert.AreEqual(10000, hist.Getpoint(0, 0)[0]);
                 Assert.AreEqual(0, hist.Getpoint(5, 5)[5]);
 
-                hist = im.Cast(fmt).HistFindNdim(new Dictionary<string, object>
+                hist = im.Cast(fmt).HistFindNdim(new VOption
                 {
                     {"bins", 1}
                 });
@@ -721,7 +721,7 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.AllFormats)
             {
                 var im = test.Cast(fmt);
-                var hough = im.HoughCircle(new Dictionary<string, object>
+                var hough = im.HoughCircle(new VOption
                 {
                     {"min_radius", 35},
                     {"max_radius", 45}
@@ -1039,7 +1039,7 @@ namespace NetVips.Tests
         public void TestMeasure()
         {
             var im = Image.Black(50, 50);
-            var test = im.Insert(im + 10, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 10, 50, 0, new VOption
             {
                 {"expand", true}
             });
@@ -1063,7 +1063,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsOperation", "find_trim") != 0)
             {
                 var im = Image.Black(50, 60) + 100;
-                var test = im.Embed(10, 20, 200, 300, new Dictionary<string, object>
+                var test = im.Embed(10, 20, 200, 300, new VOption
                 {
                     {"extend", "white"}
                 });
@@ -1085,7 +1085,7 @@ namespace NetVips.Tests
                 }
 
                 var testRgb = test.Bandjoin(new[] {test, test});
-                var trim2 = testRgb.FindTrim(new Dictionary<string, object>
+                var trim2 = testRgb.FindTrim(new VOption
                 {
                     {"background", new [] {255, 255, 255}}
                 });
@@ -1136,7 +1136,7 @@ namespace NetVips.Tests
         public void TestProject()
         {
             var im = Image.Black(50, 50);
-            var test = im.Insert(im + 10, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 10, 50, 0, new VOption
             {
                 {"expand", true}
             });
@@ -1158,7 +1158,7 @@ namespace NetVips.Tests
         public void TestStats()
         {
             var im = Image.Black(50, 50);
-            var test = im.Insert(im + 10, 50, 0, new Dictionary<string, object>
+            var test = im.Insert(im + 10, 50, 0, new VOption
             {
                 {"expand", true}
             });

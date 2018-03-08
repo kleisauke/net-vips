@@ -25,7 +25,7 @@ namespace NetVips.Tests
             // mid-grey in Lab ... put 42 in the extra band, it should be copied
             // unmodified
             var test = Image.Black(100, 100) + new[] {50, 0, 0, 42};
-            test = test.Copy(new Dictionary<string, object>
+            test = test.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
@@ -114,12 +114,12 @@ namespace NetVips.Tests
         {
             // put 42 in the extra band, it should be copied unmodified
             var reference = Image.Black(100, 100) + new[] {50, 10, 20, 42};
-            reference = reference.Copy(new Dictionary<string, object>
+            reference = reference.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
             var sample = Image.Black(100, 100) + new[] {40, -20, 10};
-            sample = sample.Copy(new Dictionary<string, object>
+            sample = sample.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
@@ -135,12 +135,12 @@ namespace NetVips.Tests
         {
             // put 42 in the extra band, it should be copied unmodified
             var reference = Image.Black(100, 100) + new[] {50, 10, 20, 42};
-            reference = reference.Copy(new Dictionary<string, object>
+            reference = reference.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
             var sample = Image.Black(100, 100) + new[] {40, -20, 10};
-            sample = sample.Copy(new Dictionary<string, object>
+            sample = sample.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
@@ -161,12 +161,12 @@ namespace NetVips.Tests
         {
             // put 42 in the extra band, it should be copied unmodified
             var reference = Image.Black(100, 100) + new[] {50, 10, 20, 42};
-            reference = reference.Copy(new Dictionary<string, object>
+            reference = reference.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
             var sample = Image.Black(100, 100) + new[] {55, 11, 23};
-            sample = sample.Copy(new Dictionary<string, object>
+            sample = sample.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
@@ -186,7 +186,7 @@ namespace NetVips.Tests
             Assert.Less(im.DE76(test).Max(), 6);
 
             im = test.IccImport();
-            var im2 = im.IccExport(new Dictionary<string, object>
+            var im2 = im.IccExport(new VOption
             {
                 {"depth", 16}
             });
@@ -194,19 +194,19 @@ namespace NetVips.Tests
             var im3 = im2.IccImport();
             Assert.Less((im - im3).Abs().Max(), 3);
 
-            im = test.IccImport(new Dictionary<string, object>
+            im = test.IccImport(new VOption
             {
                 {"intent", Enums.Intent.Absolute}
             });
 
-            im2 = im.IccExport(new Dictionary<string, object>
+            im2 = im.IccExport(new VOption
             {
                 {"intent", Enums.Intent.Absolute}
             });
             Assert.Less(im2.DE76(test).Max(), 6);
 
             im = test.IccImport();
-            im2 = im.IccExport(new Dictionary<string, object>
+            im2 = im.IccExport(new VOption
             {
                 {"output_profile", Helper.SrgbFile}
             });
@@ -221,14 +221,14 @@ namespace NetVips.Tests
             Assert.Less(im2.DE76(im3).Max(), 6);
             Assert.AreNotEqual(beforeProfile.Length, afterProfile.Length);
 
-            im = test.IccImport(new Dictionary<string, object>
+            im = test.IccImport(new VOption
             {
                 {"input_profile", Helper.SrgbFile}
             });
             im2 = test.IccImport();
             Assert.Less(6, im.DE76(im2).Max());
 
-            im = test.IccImport(new Dictionary<string, object>
+            im = test.IccImport(new VOption
             {
                 {"pcs", Enums.PCS.Xyz}
             });

@@ -29,29 +29,25 @@ namespace NetVips
         };
 
         /// <summary>
-        /// Removes the element with the specified key from the <see cref="T:System.Collections.Generic.IDictionary" />
+        /// Removes the element with the specified key from the <see cref="VOption" />
         /// and retrieves the value to <paramref name="target" />.
         /// </summary>
-        /// <typeparam name="TKey"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
         /// <param name="self"></param>
         /// <param name="key">>The key of the element to remove.</param>
         /// <param name="target">The target to retrieve the value to.</param>
         /// <returns><see langword="true" /> if the element is successfully removed; otherwise, <see langword="false" /></returns>
-        public static bool Remove<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, out TValue target)
+        public static bool Remove(this VOption self, string key, out object target)
         {
             self.TryGetValue(key, out target);
             return self.Remove(key);
         }
 
         /// <summary>
-        /// Merges 2 <see cref="T:System.Collections.Generic.IDictionary" />
+        /// Merges 2 <see cref="VOption" />s
         /// </summary>
-        /// <typeparam name="TKey"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
         /// <param name="self"></param>
         /// <param name="merge"></param>
-        public static void Merge<TKey, TValue>(this IDictionary<TKey, TValue> self, IDictionary<TKey, TValue> merge)
+        public static void Merge(this VOption self, VOption merge)
         {
             foreach (var item in merge)
             {
@@ -178,8 +174,7 @@ namespace NetVips
         /// <param name="kwargs"></param>
         /// <param name="arg"></param>
         /// <returns></returns>
-        public static object Call(this Image image, string operationName, IDictionary<string, object> kwargs,
-            object arg)
+        public static object Call(this Image image, string operationName, VOption kwargs, object arg)
         {
             return Operation.Call(operationName, kwargs, image, arg);
         }
@@ -192,8 +187,7 @@ namespace NetVips
         /// <param name="kwargs"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(this Image image, string operationName, IDictionary<string, object> kwargs,
-            params object[] args)
+        public static object Call(this Image image, string operationName, VOption kwargs, params object[] args)
         {
             return Operation.Call(operationName, kwargs, args.PrependImage(image));
         }

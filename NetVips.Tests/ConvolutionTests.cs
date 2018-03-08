@@ -24,18 +24,18 @@ namespace NetVips.Tests
         {
             Base.VipsInit();
 
-            var im = Image.MaskIdeal(100, 100, 0.5, new Dictionary<string, object>
+            var im = Image.MaskIdeal(100, 100, 0.5, new VOption
             {
                 {"reject", true},
                 {"optical", true}
             });
             _colour = im * new[] {1, 2, 3} + new[] {2, 3, 4};
-            _colour = _colour.Copy(new Dictionary<string, object>
+            _colour = _colour.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Srgb}
             });
             _mono = _colour[0];
-            _mono = _mono.Copy(new Dictionary<string, object>
+            _mono = _mono.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Bw}
             });
@@ -121,7 +121,7 @@ namespace NetVips.Tests
                 {
                     foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
                     {
-                        var convolved = im.Conv(msk, new Dictionary<string, object>
+                        var convolved = im.Conv(msk, new VOption
                         {
                             {"precision", prec}
                         });
@@ -152,7 +152,7 @@ namespace NetVips.Tests
                     msk.Matrixprint();
                     Console.WriteLine($"im.bands = {im.Bands}");
 
-                    var convolved = im.Conv(msk, new Dictionary<string, object>
+                    var convolved = im.Conv(msk, new VOption
                     {
                         {"precision", Enums.Precision.Approximate}
                     });
@@ -181,7 +181,7 @@ namespace NetVips.Tests
                     {
                         for (var times = 1; times < 4; times++)
                         {
-                            var convolved = im.Compass(msk, new Dictionary<string, object>
+                            var convolved = im.Compass(msk, new VOption
                             {
                                 {"times", times},
                                 {"angle", Enums.Angle45.D45},
@@ -207,7 +207,7 @@ namespace NetVips.Tests
                     {
                         for (var times = 1; times < 4; times++)
                         {
-                            var convolved = im.Compass(msk, new Dictionary<string, object>
+                            var convolved = im.Compass(msk, new VOption
                             {
                                 {"times", times},
                                 {"angle", Enums.Angle45.D45},
@@ -231,11 +231,11 @@ namespace NetVips.Tests
             {
                 foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
                 {
-                    var gmask = Image.Gaussmat(2, 0.1, new Dictionary<string, object>
+                    var gmask = Image.Gaussmat(2, 0.1, new VOption
                     {
                         {"precision", prec}
                     });
-                    var gmaskSep = Image.Gaussmat(2, 0.1, new Dictionary<string, object>
+                    var gmaskSep = Image.Gaussmat(2, 0.1, new VOption
                     {
                         {"separable", true},
                         {"precision", prec}
@@ -245,11 +245,11 @@ namespace NetVips.Tests
                     Assert.AreEqual(gmask.Width, gmaskSep.Width);
                     Assert.AreEqual(1, gmaskSep.Height);
 
-                    var a = im.Conv(gmask, new Dictionary<string, object>
+                    var a = im.Conv(gmask, new VOption
                     {
                         {"precision", prec}
                     });
-                    var b = im.Convsep(gmaskSep, new Dictionary<string, object>
+                    var b = im.Convsep(gmaskSep, new VOption
                     {
                         {"precision", prec}
                     });
@@ -314,16 +314,16 @@ namespace NetVips.Tests
                     for (var i = 5; i < 10; i++)
                     {
                         var sigma = i / 5.0;
-                        var gmask = Image.Gaussmat(sigma, 0.2, new Dictionary<string, object>
+                        var gmask = Image.Gaussmat(sigma, 0.2, new VOption
                         {
                             {"precision", prec}
                         });
 
-                        var a = im.Conv(gmask, new Dictionary<string, object>
+                        var a = im.Conv(gmask, new VOption
                         {
                             {"precision", prec}
                         });
-                        var b = im.Gaussblur(sigma, new Dictionary<string, object>
+                        var b = im.Gaussblur(sigma, new VOption
                         {
                             {"min_ampl", 0.2},
                             {"precision", prec}
@@ -346,7 +346,7 @@ namespace NetVips.Tests
                 foreach (var fmt in Helper.NonComplexFormats)
                 {
                     // old vipses used "radius", check that that still works
-                    var sharp = im.Sharpen(new Dictionary<string, object>
+                    var sharp = im.Sharpen(new VOption
                     {
                         {"radius", 5}
                     });
@@ -354,7 +354,7 @@ namespace NetVips.Tests
                     foreach (var sigma in new[] {0.5, 1, 1.5, 2})
                     {
                         var im2 = im.Cast(fmt);
-                        sharp = im2.Sharpen(new Dictionary<string, object>
+                        sharp = im2.Sharpen(new VOption
                         {
                             {"sigma", sigma}
                         });
@@ -364,7 +364,7 @@ namespace NetVips.Tests
                         Assert.AreEqual(sharp.Height, im.Height);
 
                         // if m1 and m2 are zero, sharpen should do nothing
-                        sharp = im.Sharpen(new Dictionary<string, object>
+                        sharp = im.Sharpen(new VOption
                         {
                             {"sigma", sigma},
                             {"m1", 0},

@@ -30,7 +30,7 @@ namespace NetVips.Tests
             Assert.AreEqual(0, pixel[0]);
 
             im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {100}, 50, 50, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {100}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -51,7 +51,7 @@ namespace NetVips.Tests
             im = im.DrawFlood(new double[] {100}, 50, 50);
 
             var im2 = Image.Black(100, 100);
-            im2 = im2.DrawCircle(new double[] {100}, 50, 50, 25, new Dictionary<string, object>
+            im2 = im2.DrawCircle(new double[] {100}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -64,7 +64,7 @@ namespace NetVips.Tests
         public void TestDrawImage()
         {
             var im = Image.Black(51, 51);
-            im = im.DrawCircle(new double[] {100}, 25, 25, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {100}, 25, 25, 25, new VOption
             {
                 {"fill", true}
             });
@@ -73,7 +73,7 @@ namespace NetVips.Tests
             im2 = im2.DrawImage(im, 25, 25);
 
             var im3 = Image.Black(100, 100);
-            im3 = im3.DrawCircle(new double[] {100}, 50, 50, 25, new Dictionary<string, object>
+            im3 = im3.DrawCircle(new double[] {100}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -99,7 +99,7 @@ namespace NetVips.Tests
         public void TestDrawMask()
         {
             var mask = Image.Black(51, 51);
-            mask = mask.DrawCircle(new double[] {128}, 25, 25, 25, new Dictionary<string, object>
+            mask = mask.DrawCircle(new double[] {128}, 25, 25, 25, new VOption
             {
                 {"fill", true}
             });
@@ -108,7 +108,7 @@ namespace NetVips.Tests
             im = im.DrawMask(new double[] {200}, mask, 25, 25);
 
             var im2 = Image.Black(100, 100);
-            im2 = im2.DrawCircle(new double[] {100}, 50, 50, 25, new Dictionary<string, object>
+            im2 = im2.DrawCircle(new double[] {100}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });
@@ -121,7 +121,7 @@ namespace NetVips.Tests
         public void TestDrawRect()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawRect(new double[] {100}, 25, 25, 50, 50, new Dictionary<string, object>
+            im = im.DrawRect(new double[] {100}, 25, 25, 50, 50, new VOption
             {
                 {"fill", true}
             });
@@ -140,7 +140,7 @@ namespace NetVips.Tests
         public void TestDrawSmudge()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {100}, 50, 50, 25, new Dictionary<string, object>
+            im = im.DrawCircle(new double[] {100}, 50, 50, 25, new VOption
             {
                 {"fill", true}
             });

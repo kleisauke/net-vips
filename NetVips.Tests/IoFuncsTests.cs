@@ -79,7 +79,7 @@ namespace NetVips.Tests
         [Test]
         public void TestNewFromImage()
         {
-            var im = Image.MaskIdeal(100, 100, 0.5, new Dictionary<string, object>
+            var im = Image.MaskIdeal(100, 100, 0.5, new VOption
             {
                 {"reject", true},
                 {"optical", true}

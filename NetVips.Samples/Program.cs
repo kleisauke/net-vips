@@ -27,7 +27,7 @@ namespace NetVips.Sample
             // make the other pixels in the image by mirroring im up / down / 
             // left / right, see
             // https://jcupitt.github.io/libvips/API/current/libvips-conversion.html#vips-embed
-            im = im.Embed(100, 100, 3000, 3000, new Dictionary<string, object>
+            im = im.Embed(100, 100, 3000, 3000, new VOption
             {
                 {"extend", Enums.Extend.Mirror}
             });
@@ -42,7 +42,7 @@ namespace NetVips.Sample
                 new[] {-1, 16, -1},
                 new[] {-1, -1, -1}
             }, 8);
-            im = im.Conv(mask, new Dictionary<string, object>
+            im = im.Conv(mask, new VOption
             {
                 {"precision", Enums.Precision.Integer}
             });
@@ -55,7 +55,7 @@ namespace NetVips.Sample
 
             Console.WriteLine("Test thumbnail");
 
-            var lichtenstein = Image.NewFromFile("lichtenstein.jpg", new Dictionary<string, object>
+            var lichtenstein = Image.NewFromFile("lichtenstein.jpg", new VOption
             {
                 {"access", Enums.Access.Sequential}
             });

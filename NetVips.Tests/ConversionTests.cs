@@ -18,7 +18,7 @@ namespace NetVips.Tests
         {
             Base.VipsInit();
 
-            var im = Image.MaskIdeal(100, 100, 0.5, new Dictionary<string, object>
+            var im = Image.MaskIdeal(100, 100, 0.5, new VOption
             {
                 {"reject", true},
                 {"optical", true}
@@ -226,7 +226,7 @@ namespace NetVips.Tests
             RunBinary(_allImages, BandRank, Helper.NonComplexFormats);
 
             // we can mix images and constants, and set the index arg
-            var a = _mono.Bandrank(new[] {2}, new Dictionary<string, object>
+            var a = _mono.Bandrank(new[] {2}, new VOption
             {
                 {"index", 0}
             });
@@ -253,32 +253,32 @@ namespace NetVips.Tests
         [Test]
         public void TestCopy()
         {
-            var x = _colour.Copy(new Dictionary<string, object>
+            var x = _colour.Copy(new VOption
             {
                 {"interpretation", Enums.Interpretation.Lab}
             });
             Assert.AreEqual(Enums.Interpretation.Lab, x.Interpretation);
-            x = _colour.Copy(new Dictionary<string, object>
+            x = _colour.Copy(new VOption
             {
                 {"xres", 42}
             });
             Assert.AreEqual(42, x.Xres);
-            x = _colour.Copy(new Dictionary<string, object>
+            x = _colour.Copy(new VOption
             {
                 {"yres", 42}
             });
             Assert.AreEqual(42, x.Yres);
-            x = _colour.Copy(new Dictionary<string, object>
+            x = _colour.Copy(new VOption
             {
                 {"xoffset", 42}
             });
             Assert.AreEqual(42, x.Xoffset);
-            x = _colour.Copy(new Dictionary<string, object>
+            x = _colour.Copy(new VOption
             {
                 {"yoffset", 42}
             });
             Assert.AreEqual(42, x.Yoffset);
-            x = _colour.Copy(new Dictionary<string, object>
+            x = _colour.Copy(new VOption
             {
                 {"coding", Enums.Coding.None}
             });
@@ -297,14 +297,14 @@ namespace NetVips.Tests
             Assert.AreEqual(1, y.Bands);
             Assert.AreEqual(x.Avg(), y.Avg());
 
-            x = _mono.Bandfold(new Dictionary<string, object>
+            x = _mono.Bandfold(new VOption
             {
                 {"factor", 2}
             });
             Assert.AreEqual(_mono.Width / 2, x.Width);
             Assert.AreEqual(2, x.Bands);
 
-            y = x.Bandunfold(new Dictionary<string, object>
+            y = x.Bandunfold(new VOption
             {
                 {"factor", 2}
             });
@@ -339,7 +339,7 @@ namespace NetVips.Tests
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
                 CollectionAssert.AreEqual(new[] {0, 0, 0}, pixel);
 
-                im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, new Dictionary<string, object>
+                im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, new VOption
                 {
                     {"extend", Enums.Extend.Copy}
                 });
@@ -348,7 +348,7 @@ namespace NetVips.Tests
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
                 CollectionAssert.AreEqual(new[] {2, 3, 4}, pixel);
 
-                im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, new Dictionary<string, object>
+                im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, new VOption
                 {
                     {"extend", Enums.Extend.Background},
                     {"background", new[] {7, 8, 9}}
@@ -358,7 +358,7 @@ namespace NetVips.Tests
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
                 CollectionAssert.AreEqual(new[] {7, 8, 9}, pixel);
 
-                im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, new Dictionary<string, object>
+                im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, new VOption
                 {
                     {"extend", Enums.Extend.White}
                 });
@@ -423,7 +423,7 @@ namespace NetVips.Tests
                 pixel = sub.Getpoint(5, 5);
                 CollectionAssert.AreEqual(new[] {2, 3, 4}, pixel);
 
-                sub = test.ExtractBand(1, new Dictionary<string, object>
+                sub = test.ExtractBand(1, new VOption
                 {
                     {"n", 2}
                 });
@@ -447,28 +447,28 @@ namespace NetVips.Tests
             Assert.AreEqual(bands[2], x);
 
             // [1:3]
-            x = test.ExtractBand(1, new Dictionary<string, object>
+            x = test.ExtractBand(1, new VOption
             {
                 {"n", 2}
             }).Avg();
             Assert.AreEqual(bands.Skip(1).Take(2).Average(), x);
 
             // [1:-1]
-            x = test.ExtractBand(1, new Dictionary<string, object>
+            x = test.ExtractBand(1, new VOption
             {
                 {"n", test.Bands - 1}
             }).Avg();
             Assert.AreEqual(bands.Skip(1).Take(test.Bands - 1).Average(), x);
 
             // [:2]
-            x = test.ExtractBand(0, new Dictionary<string, object>
+            x = test.ExtractBand(0, new VOption
             {
                 {"n", 2}
             }).Avg();
             Assert.AreEqual(bands.Take(2).Average(), x);
 
             // [1:]
-            x = test.ExtractBand(1, new Dictionary<string, object>
+            x = test.ExtractBand(1, new VOption
             {
                 {"n", test.Bands - 1}
             }).Avg();
@@ -557,7 +557,7 @@ namespace NetVips.Tests
                     Assert.Less(Math.Abs(x - y), 2);
                 }
 
-                im = test.Flatten(new Dictionary<string, object>
+                im = test.Flatten(new VOption
                 {
                     {"background", new[] {100, 100, 100}}
                 });
@@ -714,7 +714,7 @@ namespace NetVips.Tests
                 var test = (_colour + mx / 2.0).Cast(fmt);
 
                 var norm = Math.Pow(mx, exponent2) / mx;
-                var result = test.Gamma(new Dictionary<string, object>
+                var result = test.Gamma(new VOption
                 {
                     {"exponent", 1.0 / exponent2}
                 });
@@ -827,7 +827,7 @@ namespace NetVips.Tests
                 {
                     var t = (_mono + 10).Cast(x);
                     var e = _mono.Cast(y);
-                    var r = test.Ifthenelse(t, e, new Dictionary<string, object>
+                    var r = test.Ifthenelse(t, e, new VOption
                     {
                         {"blend", true}
                     });
@@ -855,7 +855,7 @@ namespace NetVips.Tests
             CollectionAssert.AreEqual(new[] {1, 2, 3}, result2);
 
             test = _mono;
-            r2 = test.Ifthenelse(new[] {1, 2, 3}, _colour, new Dictionary<string, object>
+            r2 = test.Ifthenelse(new[] {1, 2, 3}, _colour, new VOption
             {
                 {"blend", true}
             });
@@ -902,7 +902,7 @@ namespace NetVips.Tests
                 {
                     var main = _mono.Cast(x);
                     var sub = _colour.Cast(y);
-                    var r = main.Insert(sub, 10, 10, new Dictionary<string, object>
+                    var r = main.Insert(sub, 10, 10, new VOption
                     {
                         {"expand", true},
                         {"background", 100}
@@ -947,7 +947,7 @@ namespace NetVips.Tests
             Assert.AreEqual(maxHeight, im.Height);
             Assert.AreEqual(maxBands, im.Bands);
 
-            im = Image.Arrayjoin(_allImages, new Dictionary<string, object>
+            im = Image.Arrayjoin(_allImages, new VOption
             {
                 {"across", 1}
             });
@@ -956,7 +956,7 @@ namespace NetVips.Tests
             Assert.AreEqual(maxHeight * _allImages.Length, im.Height);
             Assert.AreEqual(maxBands, im.Bands);
 
-            im = Image.Arrayjoin(_allImages, new Dictionary<string, object>
+            im = Image.Arrayjoin(_allImages, new VOption
             {
                 {"shim", 10}
             });
@@ -1010,7 +1010,7 @@ namespace NetVips.Tests
                 var mx = Helper.MaxValue[fmt];
                 var size = Helper.SizeOfFormat[fmt];
                 var test = (_colour + mx / 8.0).Cast(fmt);
-                var im = test.Msb(new Dictionary<string, object>
+                var im = test.Msb(new VOption
                 {
                     {"band", 1}
                 });
@@ -1095,11 +1095,11 @@ namespace NetVips.Tests
                 {
                     var a = zip[0];
                     var b = zip[1];
-                    im2 = im.Rot45(new Dictionary<string, object>
+                    im2 = im.Rot45(new VOption
                     {
                         {"angle", a}
                     });
-                    var after2 = im2.Rot45(new Dictionary<string, object>
+                    var after2 = im2.Rot45(new VOption
                     {
                         {"angle", b}
                     });
@@ -1146,7 +1146,7 @@ namespace NetVips.Tests
                 Assert.AreEqual(255, im.Max());
                 Assert.AreEqual(0, im.Min());
 
-                im = test.ScaleImage(new Dictionary<string, object>
+                im = test.ScaleImage(new VOption
                 {
                     {"log", true}
                 });
