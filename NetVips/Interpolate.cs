@@ -23,12 +23,12 @@ namespace NetVips
         /// Make a new interpolator by name.
         /// </summary>
         /// <remarks>
-        /// Make a new interpolator from the libvips class nickname. For example::
+        /// Make a new interpolator from the libvips class nickname. For example:
         /// 
         ///     var inter = NetVips.Interpolate.NewFromName("bicubic")
         /// 
         /// You can get a list of all supported interpolators from the command-line
-        /// with::
+        /// with:
         /// 
         ///     $ vips -l interpolate
         /// 

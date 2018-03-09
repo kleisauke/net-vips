@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 
@@ -43,18 +42,10 @@ namespace NetVips.Tests
             }
 
             // tag as complex, run, revert tagging
-            var cmplx = image.Copy(new VOption
-            {
-                {"bands", 1},
-                {"format", newFormat}
-            });
+            var cmplx = image.Copy(bands: 1, format: newFormat);
             var cmplxResult = func(cmplx);
 
-            return cmplxResult.Copy(new VOption
-            {
-                {"bands", 2},
-                {"format", image.Format}
-            });
+            return cmplxResult.Copy(bands: 2, format: image.Format);
         }
 
 
@@ -115,7 +106,7 @@ namespace NetVips.Tests
             var index = RunCmplx(x => x.Rect(), xy);
             var scale = Math.Min(image.Width, image.Height) / Convert.ToDouble(image.Width);
             index *= scale / 2.0;
-            index += new []
+            index += new[]
             {
                 image.Width / 2.0,
                 image.Height / 2.0
@@ -138,10 +129,7 @@ namespace NetVips.Tests
                 var interpolate = Interpolate.NewFromName(name);
                 for (var i = 0; i < 4; i++)
                 {
-                    x = x.Affine(new double[] {0, 1, 1, 0}, new VOption
-                    {
-                        {"interpolate", interpolate}
-                    });
+                    x = x.Affine(new double[] {0, 1, 1, 0}, interpolate: interpolate);
                 }
 
                 Assert.AreEqual(0, (x - im).Abs().Max());
@@ -164,10 +152,7 @@ namespace NetVips.Tests
                     foreach (var kernel in new[] {"nearest", "linear", "cubic", "lanczos2", "lanczos3"})
                     {
                         var x = im.Cast(fmt);
-                        var r = x.Reduce(fac, fac, new VOption
-                        {
-                            {"kernel", kernel}
-                        });
+                        var r = x.Reduce(fac, fac, kernel: kernel);
 
                         var d = Math.Abs(r.Avg() - im.Avg());
                         Assert.Less(d, 2);
@@ -183,10 +168,7 @@ namespace NetVips.Tests
                 {
                     // Console.WriteLine($"testing kernel = {kernel}");
                     // Console.WriteLine($"testing const = {@const}");
-                    var shr = im.Reduce(2, 2, new VOption
-                    {
-                        {"kernel", kernel}
-                    });
+                    var shr = im.Reduce(2, 2, kernel: kernel);
                     var d = Math.Abs(shr.Avg() - im.Avg());
                     Assert.AreEqual(0, d);
                 }
@@ -247,25 +229,15 @@ namespace NetVips.Tests
             }
 
             // should fit one of width or height
-            im = Image.Thumbnail(Helper.JpegFile, 100, new VOption
-            {
-                {"height", 300}
-            });
+            im = Image.Thumbnail(Helper.JpegFile, 100, height: 300);
             Assert.AreEqual(100, im.Width);
             Assert.AreNotEqual(300, im.Height);
-            im = Image.Thumbnail(Helper.JpegFile, 300, new VOption
-            {
-                {"height", 100}
-            });
+            im = Image.Thumbnail(Helper.JpegFile, 300, height: 100);
             Assert.AreNotEqual(300, im.Width);
             Assert.AreEqual(100, im.Height);
 
             // with @crop, should fit both width and height
-            im = Image.Thumbnail(Helper.JpegFile, 100, new VOption
-            {
-                {"height", 300},
-                {"crop", true}
-            });
+            im = Image.Thumbnail(Helper.JpegFile, 100, height: 300, crop: "centre");
             Assert.AreEqual(100, im.Width);
             Assert.AreEqual(300, im.Height);
 
@@ -279,10 +251,7 @@ namespace NetVips.Tests
         public void TestSimilarity()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
-            var im2 = im.Similarity(new VOption
-            {
-                {"angle", 90}
-            });
+            var im2 = im.Similarity(angle: 90);
             var im3 = im.Affine(new double[] {0, -1, 1, 0});
 
             // rounding in calculating the affine transform from the angle stops
@@ -294,10 +263,7 @@ namespace NetVips.Tests
         public void TestSimilarityScale()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
-            var im2 = im.Similarity(new VOption
-            {
-                {"scale", 2}
-            });
+            var im2 = im.Similarity(scale: 2);
             var im3 = im.Affine(new double[] {2, 0, 0, 2});
             Assert.AreEqual(0, (im2 - im3).Abs().Max());
         }

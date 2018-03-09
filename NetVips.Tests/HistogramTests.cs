@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace NetVips.Tests
@@ -67,10 +66,7 @@ namespace NetVips.Tests
 
             if (Base.AtLeastLibvips(8, 5))
             {
-                var im3 = im.HistLocal(10, 10, new VOption
-                {
-                    {"max_slope", 3}
-                });
+                var im3 = im.HistLocal(10, 10, maxSlope: 3);
                 Assert.AreEqual(im.Width, im3.Width);
                 Assert.AreEqual(im.Height, im3.Height);
 

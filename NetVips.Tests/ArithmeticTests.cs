@@ -18,12 +18,8 @@ namespace NetVips.Tests
         {
             Base.VipsInit();
 
-            _image = Image.MaskIdeal(100, 100, 0.5, new VOption
-            {
-                {"reject", true},
-                {"optical", true}
-            });
-            _colour = _image * new [] {1, 2, 3} + new [] {2, 3, 4};
+            _image = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
+            _colour = _image * new[] {1, 2, 3} + new[] {2, 3, 4};
             _mono = _colour[1];
             _allImages = new[]
             {
@@ -75,7 +71,7 @@ namespace NetVips.Tests
 
             foreach (var y in formats)
             {
-                Helper.RunConst(func, _colour.Cast(y), new [] {1, 2, 3});
+                Helper.RunConst(func, _colour.Cast(y), new[] {1, 2, 3});
             }
         }
 
@@ -565,10 +561,7 @@ namespace NetVips.Tests
         public void TestAvg()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 100, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 100, 50, 0, expand: true);
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -580,10 +573,7 @@ namespace NetVips.Tests
         public void TestDeviate()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 100, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 100, 50, 0, expand: true);
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
@@ -630,37 +620,28 @@ namespace NetVips.Tests
         public void TestHistFind()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 10, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 10, 50, 0, expand: true);
 
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind();
-                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
+                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(10, 0));
+                CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(5, 0));
             }
 
             test = test * new[] {1, 2, 3};
             foreach (var fmt in Helper.AllFormats)
             {
-                var hist = test.Cast(fmt).HistFind(new VOption
-                {
-                    {"band", 0}
-                });
-                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
+                var hist = test.Cast(fmt).HistFind(band: 0);
+                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(10, 0));
+                CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(5, 0));
 
-                hist = test.Cast(fmt).HistFind(new VOption
-                {
-                    {"band", 1}
-                });
-                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new [] {5000}, hist.Getpoint(20, 0));
-                CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(5, 0));
+                hist = test.Cast(fmt).HistFind(band: 1);
+                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(0, 0));
+                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(20, 0));
+                CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(5, 0));
             }
         }
 
@@ -668,10 +649,7 @@ namespace NetVips.Tests
         public void TestHistFindIndexed()
         {
             var im = Image.Black(50, 100);
-            var test = im.Insert(im + 10, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 10, 50, 0, expand: true);
 
             // There's no  __floordiv__ equivalent in C# :(
             var index = (test / 10).Floor();
@@ -683,8 +661,8 @@ namespace NetVips.Tests
                     var a = test.Cast(x);
                     var b = index.Cast(y);
                     var hist = a.HistFindIndexed(b);
-                    CollectionAssert.AreEqual(new [] {0}, hist.Getpoint(0, 0));
-                    CollectionAssert.AreEqual(new [] {50000}, hist.Getpoint(1, 0));
+                    CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(0, 0));
+                    CollectionAssert.AreEqual(new[] {50000}, hist.Getpoint(1, 0));
                 }
             }
         }
@@ -701,10 +679,7 @@ namespace NetVips.Tests
                 Assert.AreEqual(10000, hist.Getpoint(0, 0)[0]);
                 Assert.AreEqual(0, hist.Getpoint(5, 5)[5]);
 
-                hist = im.Cast(fmt).HistFindNdim(new VOption
-                {
-                    {"bins", 1}
-                });
+                hist = im.Cast(fmt).HistFindNdim(bins: 1);
 
                 Assert.AreEqual(10000, hist.Getpoint(0, 0)[0]);
                 Assert.AreEqual(1, hist.Width);
@@ -721,11 +696,7 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.AllFormats)
             {
                 var im = test.Cast(fmt);
-                var hough = im.HoughCircle(new VOption
-                {
-                    {"min_radius", 35},
-                    {"max_radius", 45}
-                });
+                var hough = im.HoughCircle(minRadius: 35, maxRadius: 45);
 
                 var maxPos = hough.MaxPos();
                 var v = maxPos[0];
@@ -747,26 +718,27 @@ namespace NetVips.Tests
         {
             // hough_line changed the way it codes parameter space in 8.7 ... don't
             // test earlier versions
-            if (Base.AtLeastLibvips(8, 7))
+            if (!Base.AtLeastLibvips(8, 7))
             {
-                var test = Image.Black(100, 100).DrawLine(new double[] {100}, 10, 90, 90, 10);
+                Assert.Ignore();
+            }
 
-                foreach (var fmt in Helper.AllFormats)
-                {
-                    var im = test.Cast(fmt);
-                    var hough = im.HoughLine();
+            var test = Image.Black(100, 100).DrawLine(new double[] {100}, 10, 90, 90, 10);
 
-                    var maxPos = hough.MaxPos();
-                    var x = maxPos[1];
-                    var y = maxPos[2];
+            foreach (var fmt in Helper.AllFormats)
+            {
+                var im = test.Cast(fmt);
+                var hough = im.HoughLine();
 
-                    var angle = Math.Floor(180.0 * x / hough.Width);
-                    var distance = Math.Floor(test.Height * y / hough.Height);
+                var maxPos = hough.MaxPos();
+                var x = maxPos[1];
+                var y = maxPos[2];
 
-                    // TODO 45? 
-                    Assert.AreEqual(22, angle);
-                    Assert.AreEqual(70, distance);
-                }
+                var angle = Math.Floor(180.0 * x / hough.Width);
+                var distance = Math.Floor(test.Height * y / hough.Height);
+
+                Assert.AreEqual(22, angle);
+                Assert.AreEqual(70, distance);
             }
         }
 
@@ -1039,10 +1011,7 @@ namespace NetVips.Tests
         public void TestMeasure()
         {
             var im = Image.Black(50, 50);
-            var test = im.Insert(im + 10, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 10, 50, 0, expand: true);
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
@@ -1063,10 +1032,7 @@ namespace NetVips.Tests
             if (Base.TypeFind("VipsOperation", "find_trim") != 0)
             {
                 var im = Image.Black(50, 60) + 100;
-                var test = im.Embed(10, 20, 200, 300, new VOption
-                {
-                    {"extend", "white"}
-                });
+                var test = im.Embed(10, 20, 200, 300, extend: "white");
 
                 foreach (var x in Helper.UnsignedFormats.Concat(Helper.FloatFormats).ToArray())
                 {
@@ -1085,10 +1051,7 @@ namespace NetVips.Tests
                 }
 
                 var testRgb = test.Bandjoin(new[] {test, test});
-                var trim2 = testRgb.FindTrim(new VOption
-                {
-                    {"background", new [] {255, 255, 255}}
-                });
+                var trim2 = testRgb.FindTrim(background: new double[] {255, 255, 255});
                 var left2 = trim2[0];
                 var top2 = trim2[1];
                 var width2 = trim2[2];
@@ -1136,10 +1099,7 @@ namespace NetVips.Tests
         public void TestProject()
         {
             var im = Image.Black(50, 50);
-            var test = im.Insert(im + 10, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 10, 50, 0, expand: true);
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
@@ -1147,10 +1107,10 @@ namespace NetVips.Tests
                 var columns = profile[0] as Image;
                 var rows = profile[1] as Image;
 
-                CollectionAssert.AreEqual(new [] {0}, columns.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new [] {50 * 10}, columns.Getpoint(70, 0));
+                CollectionAssert.AreEqual(new[] {0}, columns.Getpoint(10, 0));
+                CollectionAssert.AreEqual(new[] {50 * 10}, columns.Getpoint(70, 0));
 
-                CollectionAssert.AreEqual(new [] {50 * 10}, rows.Getpoint(0, 10));
+                CollectionAssert.AreEqual(new[] {50 * 10}, rows.Getpoint(0, 10));
             }
         }
 
@@ -1158,10 +1118,7 @@ namespace NetVips.Tests
         public void TestStats()
         {
             var im = Image.Black(50, 50);
-            var test = im.Insert(im + 10, 50, 0, new VOption
-            {
-                {"expand", true}
-            });
+            var test = im.Insert(im + 10, 50, 0, expand: true);
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
@@ -1170,15 +1127,15 @@ namespace NetVips.Tests
 
                 CollectionAssert.AreEqual(new[] {a.Min()}, matrix.Getpoint(0, 0));
                 CollectionAssert.AreEqual(new[] {a.Max()}, matrix.Getpoint(1, 0));
-                CollectionAssert.AreEqual(new [] {50 * 50 * 10}, matrix.Getpoint(2, 0));
-                CollectionAssert.AreEqual(new [] {50 * 50 * 100}, matrix.Getpoint(3, 0));
+                CollectionAssert.AreEqual(new[] {50 * 50 * 10}, matrix.Getpoint(2, 0));
+                CollectionAssert.AreEqual(new[] {50 * 50 * 100}, matrix.Getpoint(3, 0));
                 CollectionAssert.AreEqual(new[] {a.Avg()}, matrix.Getpoint(4, 0));
                 CollectionAssert.AreEqual(new[] {a.Deviate()}, matrix.Getpoint(5, 0));
 
                 CollectionAssert.AreEqual(new[] {a.Min()}, matrix.Getpoint(0, 1));
                 CollectionAssert.AreEqual(new[] {a.Max()}, matrix.Getpoint(1, 1));
-                CollectionAssert.AreEqual(new [] {50 * 50 * 10}, matrix.Getpoint(2, 1));
-                CollectionAssert.AreEqual(new [] {50 * 50 * 100}, matrix.Getpoint(3, 1));
+                CollectionAssert.AreEqual(new[] {50 * 50 * 10}, matrix.Getpoint(2, 1));
+                CollectionAssert.AreEqual(new[] {50 * 50 * 100}, matrix.Getpoint(3, 1));
                 CollectionAssert.AreEqual(new[] {a.Avg()}, matrix.Getpoint(4, 1));
                 CollectionAssert.AreEqual(new[] {a.Deviate()}, matrix.Getpoint(5, 1));
             }

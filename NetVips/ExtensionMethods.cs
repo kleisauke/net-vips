@@ -237,7 +237,7 @@ namespace NetVips
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static string ToCamelCase(this string str)
+        public static string ToPascalCase(this string str)
         {
             return str.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))

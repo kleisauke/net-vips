@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Reflection;
 
-namespace NetVips.Sample
+namespace NetVips.Samples
 {
     class Program
     {
+        public static List<IGrouping<string, ISample>> Samples = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(x => x.GetInterfaces().Contains(typeof(ISample)) && x.GetConstructor(Type.EmptyTypes) != null)
+            .Select(x => Activator.CreateInstance(x) as ISample)
+            .GroupBy(s => s.Category)
+            .ToList();
+
         static void Main(string[] args)
         {
             if (!Base.VipsInit())
@@ -15,59 +22,65 @@ namespace NetVips.Sample
                 return;
             }
 
-            // File.WriteAllText("functions.txt", Operation.GenerateAllFunctions());
-
             Console.WriteLine("libvips " + Base.Version(0) + "." + Base.Version(1) + "." + Base.Version(2));
 
-            Console.WriteLine("Test example program");
+            Console.WriteLine("Type an item number to execute the specified sample. Type exit to quit.");
+            Console.WriteLine();
+            Console.WriteLine("Menu:");
 
-            var im = Image.NewFromFile("lichtenstein.jpg");
-
-            // put im at position (100, 100) in a 3000 x 3000 pixel image, 
-            // make the other pixels in the image by mirroring im up / down / 
-            // left / right, see
-            // https://jcupitt.github.io/libvips/API/current/libvips-conversion.html#vips-embed
-            im = im.Embed(100, 100, 3000, 3000, new VOption
+            var index = 1;
+            foreach (var group in Samples)
             {
-                {"extend", Enums.Extend.Mirror}
-            });
+                Console.WriteLine($" - {group.Key}");
+                foreach (var item in group)
+                {
+                    Console.WriteLine($"    {index}: {item.Name}");
+                    index++;
+                }
 
-            // multiply the green (middle) band by 2, leave the other two alone
-            im *= new[] {1, 2, 1};
+                Console.WriteLine();
+            }
 
-            // make an image from an array constant, convolve with it
-            var mask = Image.NewFromArray(new[]
+            string input;
+            do
             {
-                new[] {-1, -1, -1},
-                new[] {-1, 16, -1},
-                new[] {-1, -1, -1}
-            }, 8);
-            im = im.Conv(mask, new VOption
+                input = Console.ReadLine();
+                if (int.TryParse(input, out var userChoice) && TryGetSample(userChoice, out var sample))
+                {
+                    Console.WriteLine($"Executing sample: {sample.Name}");
+                    var result = sample.Execute(args);
+                    Console.WriteLine("Sample successfully executed!");
+                    if (result != null)
+                    {
+                        Console.WriteLine($"Result: {result}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Sample doesn't exists, try again");
+                }
+            } while (!string.Equals(input, "exit", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public static bool TryGetSample(int id, out ISample sample)
+        {
+            var index = 1;
+            foreach (var group in Samples)
             {
-                {"precision", Enums.Precision.Integer}
-            });
+                foreach (var item in group)
+                {
+                    if (index == id)
+                    {
+                        sample = item;
+                        return true;
+                    }
 
-            // finally, write the result back to a file on disk
-            im.WriteToFile("output.jpg");
+                    index++;
+                }
+            }
 
-            Console.WriteLine("Press enter to continue...");
-            Console.ReadLine();
-
-            Console.WriteLine("Test thumbnail");
-
-            var lichtenstein = Image.NewFromFile("lichtenstein.jpg", new VOption
-            {
-                {"access", Enums.Access.Sequential}
-            });
-            Console.WriteLine(lichtenstein.ToString());
-
-            var thumbnail = lichtenstein.ThumbnailImage(200);
-            Console.WriteLine(thumbnail.ToString());
-            thumbnail.WriteToFile("lichtenstein-thumb.jpg");
-
-            Console.WriteLine("All done!");
-            Console.WriteLine("Press enter to continue...");
-            Console.ReadLine();
+            sample = null;
+            return false;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace NetVips.Tests
 {
@@ -30,10 +29,7 @@ namespace NetVips.Tests
         public void TestLabelregions()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
-            {
-                {"fill", true}
-            });
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
             var mask = im.Labelregions(out var segments);
 
             Assert.AreEqual(3, segments);
@@ -44,10 +40,7 @@ namespace NetVips.Tests
         public void TestErode()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
-            {
-                {"fill", true}
-            });
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
             var im2 = im.Erode(Image.NewFromArray(new[]
             {
                 new[] {128, 255, 128},
@@ -64,10 +57,7 @@ namespace NetVips.Tests
         public void TestDilate()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
-            {
-                {"fill", true}
-            });
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
             var im2 = im.Dilate(Image.NewFromArray(new[]
             {
                 new[] {128, 255, 128},
@@ -84,10 +74,7 @@ namespace NetVips.Tests
         public void TestRank()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] {255}, 50, 50, 25, new VOption
-            {
-                {"fill", true}
-            });
+            im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
             var im2 = im.Rank(3, 3, 8);
             Assert.AreEqual(im.Width, im2.Width);
             Assert.AreEqual(im.Height, im2.Height);

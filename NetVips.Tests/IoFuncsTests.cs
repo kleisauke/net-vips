@@ -32,38 +32,44 @@ namespace NetVips.Tests
                 return new[] {filename7, mode7};
             }
 
-            var cases = new Dictionary<string, string[]> {
+            var cases = new Dictionary<string, string[]>
+            {
                 {
                     "c:\\silly:dir:name\\fr:ed.tif:jpeg:95,,,,c:\\icc\\srgb.icc",
-                    new []{
+                    new[]
+                    {
                         "c:\\silly:dir:name\\fr:ed.tif",
                         "jpeg:95,,,,c:\\icc\\srgb.icc"
                     }
                 },
                 {
                     "I180:",
-                new [] {
+                    new[]
+                    {
                         "I180",
                         ""
                     }
                 },
-                 {
+                {
                     "c:\\silly:",
-                    new [] {
+                    new[]
+                    {
                         "c:\\silly",
                         ""
                     }
                 },
-               {
+                {
                     "c:\\program files\\x:hello",
-                    new [] {
+                    new[]
+                    {
                         "c:\\program files\\x",
                         "hello"
                     }
                 },
-                 {
+                {
                     "C:\\fixtures\\2569067123_aca715a2ee_o.jpg",
-                    new [] {
+                    new[]
+                    {
                         "C:\\fixtures\\2569067123_aca715a2ee_o.jpg",
                         ""
                     }
@@ -79,11 +85,7 @@ namespace NetVips.Tests
         [Test]
         public void TestNewFromImage()
         {
-            var im = Image.MaskIdeal(100, 100, 0.5, new VOption
-            {
-                {"reject", true},
-                {"optical", true}
-            });
+            var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
 
             var im2 = im.NewFromImage(12);
 
@@ -98,7 +100,8 @@ namespace NetVips.Tests
             Assert.AreEqual(1, im2.Bands);
             Assert.AreEqual(12, im2.Avg());
 
-            im2 = im.NewFromImage(new[]{
+            im2 = im.NewFromImage(new[]
+            {
                 1,
                 2,
                 3
@@ -125,16 +128,18 @@ namespace NetVips.Tests
         [Test]
         public void TestGetFields()
         {
-            if (Base.AtLeastLibvips(8, 5))
+            if (!Base.AtLeastLibvips(8, 5))
             {
-                var im = Image.Black(10, 10);
-                var fields = im.GetFields();
-
-                // we might add more fields later
-                Assert.IsTrue(fields.Length > 10);
-
-                Assert.AreEqual("width", fields[0]);
+                Assert.Ignore();
             }
+
+            var im = Image.Black(10, 10);
+            var fields = im.GetFields();
+
+            // we might add more fields later
+            Assert.IsTrue(fields.Length > 10);
+
+            Assert.AreEqual("width", fields[0]);
         }
 
         [Test]

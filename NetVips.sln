@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetVips.Sample", "NetVips.Samples\NetVips.Sample.csproj", "{E39E7316-D8E4-4EB5-BC41-AECF403C14C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetVips.Samples", "NetVips.Samples\NetVips.Samples.csproj", "{E39E7316-D8E4-4EB5-BC41-AECF403C14C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetVips.Tests", "NetVips.Tests\NetVips.Tests.csproj", "{F9EC4F40-CAA0-437C-9297-E35EF07A3D26}"
 EndProject

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace NetVips.Tests
@@ -35,10 +34,7 @@ namespace NetVips.Tests
                 Assert.AreEqual(0, pixel[0]);
             }
 
-            im = Image.Black(100, 100, new VOption
-            {
-                {"bands", 3}
-            });
+            im = Image.Black(100, 100, bands: 3);
 
             Assert.AreEqual(100, im.Width);
             Assert.AreEqual(100, im.Height);
@@ -100,10 +96,7 @@ namespace NetVips.Tests
             Assert.AreEqual(1.0, im.Max());
             Assert.AreEqual(-1.0, im.Min());
 
-            im = Image.Eye(100, 90, new VOption
-            {
-                {"uchar", true}
-            });
+            im = Image.Eye(100, 90, uchar: true);
             Assert.AreEqual(100, im.Width);
             Assert.AreEqual(90, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -137,11 +130,7 @@ namespace NetVips.Tests
             var p = im.Getpoint(im.Width / 2, im.Height / 2);
             Assert.AreEqual(20.0, p[0]);
 
-            im = Image.Gaussmat(1, 0.1, new VOption
-            {
-                {"separable", true},
-                {"precision", "float"}
-            });
+            im = Image.Gaussmat(1, 0.1, separable: true, precision: Enums.Precision.Float);
             Assert.AreEqual(5, im.Width);
             Assert.AreEqual(1, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -163,11 +152,7 @@ namespace NetVips.Tests
             Assert.AreEqual(1, im.Bands);
             Assert.AreEqual(Enums.BandFormat.Float, im.Format);
 
-            im = Image.Gaussnoise(100, 90, new VOption
-            {
-                {"sigma", 10},
-                {"mean", 100}
-            });
+            im = Image.Gaussnoise(100, 90, sigma: 10, mean: 100);
             Assert.AreEqual(100, im.Width);
             Assert.AreEqual(90, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -198,10 +183,7 @@ namespace NetVips.Tests
             p = im.Getpoint(99, 89);
             Assert.AreEqual(1.0, p[0]);
 
-            im = Image.Grey(100, 90, new VOption
-            {
-                {"uchar", true}
-            });
+            im = Image.Grey(100, 90, uchar: true);
             Assert.AreEqual(100, im.Width);
             Assert.AreEqual(90, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -233,10 +215,7 @@ namespace NetVips.Tests
             p = im.Getpoint(128, 0);
             Assert.AreEqual(128.0, p[0]);
 
-            im = Image.Identity(new VOption
-            {
-                {"ushort", true}
-            });
+            im = Image.Identity(@ushort: true);
             Assert.AreEqual(65536, im.Width);
             Assert.AreEqual(1, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -293,11 +272,7 @@ namespace NetVips.Tests
             var p = im.Getpoint(im.Width / 2, im.Height / 2);
             Assert.AreEqual(20.0, p[0]);
 
-            im = Image.Logmat(1, 0.1, new VOption
-            {
-                {"separable", true},
-                {"precision", "float"}
-            });
+            im = Image.Logmat(1, 0.1, separable: true, precision: Enums.Precision.Float);
             Assert.AreEqual(7, im.Width);
             Assert.AreEqual(1, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -322,11 +297,7 @@ namespace NetVips.Tests
             var p = im.Getpoint(32, 32);
             Assert.AreEqual(1.0, p[0]);
 
-            im = Image.MaskButterworthBand(128, 128, 2, 0.5, 0.5, 0.7, 0.1, new VOption
-            {
-                {"uchar", true},
-                {"optical", true}
-            });
+            im = Image.MaskButterworthBand(128, 128, 2, 0.5, 0.5, 0.7, 0.1, uchar: true, optical: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -337,12 +308,7 @@ namespace NetVips.Tests
             p = im.Getpoint(64, 64);
             Assert.AreEqual(255.0, p[0]);
 
-            im = Image.MaskButterworthBand(128, 128, 2, 0.5, 0.5, 0.7, 0.1, new VOption
-            {
-                {"uchar", true},
-                {"optical", true},
-                {"nodc", true}
-            });
+            im = Image.MaskButterworthBand(128, 128, 2, 0.5, 0.5, 0.7, 0.1, uchar: true, optical: true, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -357,10 +323,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMaskButterworth()
         {
-            var im = Image.MaskButterworth(128, 128, 2, 0.7, 0.1, new VOption
-            {
-                {"nodc", true}
-            });
+            var im = Image.MaskButterworth(128, 128, 2, 0.7, 0.1, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -374,11 +337,7 @@ namespace NetVips.Tests
             Assert.AreEqual(64, x);
             Assert.AreEqual(64, y);
 
-            im = Image.MaskButterworth(128, 128, 2, 0.7, 0.1, new VOption
-            {
-                {"optical", true},
-                {"uchar", true}
-            });
+            im = Image.MaskButterworth(128, 128, 2, 0.7, 0.1, optical: true, uchar: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -391,10 +350,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMaskButterworthRing()
         {
-            var im = Image.MaskButterworthRing(128, 128, 2, 0.7, 0.1, 0.5, new VOption
-            {
-                {"nodc", true}
-            });
+            var im = Image.MaskButterworthRing(128, 128, 2, 0.7, 0.1, 0.5, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -435,10 +391,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMaskGaussian()
         {
-            var im = Image.MaskGaussian(128, 128, 0.7, 0.1, new VOption
-            {
-                {"nodc", true}
-            });
+            var im = Image.MaskGaussian(128, 128, 0.7, 0.1, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -451,10 +404,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMaskGaussianRing()
         {
-            var im = Image.MaskGaussianRing(128, 128, 0.7, 0.1, 0.5, new VOption
-            {
-                {"nodc", true}
-            });
+            var im = Image.MaskGaussianRing(128, 128, 0.7, 0.1, 0.5, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -479,10 +429,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMaskIdeal()
         {
-            var im = Image.MaskIdeal(128, 128, 0.7, new VOption
-            {
-                {"nodc", true}
-            });
+            var im = Image.MaskIdeal(128, 128, 0.7, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);
@@ -495,10 +442,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMaskGaussianRing2()
         {
-            var im = Image.MaskIdealRing(128, 128, 0.7, 0.5, new VOption
-            {
-                {"nodc", true}
-            });
+            var im = Image.MaskIdealRing(128, 128, 0.7, 0.5, nodc: true);
             Assert.AreEqual(128, im.Width);
             Assert.AreEqual(128, im.Height);
             Assert.AreEqual(1, im.Bands);

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace NetVips
 {
     /// <summary>
-    /// Wraps a <see cref="Dictionary{String, Object}" />. 
+    /// This class wraps a <see cref="Dictionary{String, Object}" />.
     /// This is used to call functions with optional arguments. See <see cref="Operation.Call(string, VOption, object[])" />.
     /// </summary>
     public class VOption : IEnumerable<KeyValuePair<string, object>>
@@ -21,10 +21,7 @@ namespace NetVips
             set => Add(key, value);
         }
 
-        public int Count
-        {
-            get => internalDictionary.Count;
-        }
+        public int Count => internalDictionary.Count;
 
         public void Add(string key, object value) => internalDictionary.Add(key, value);
 

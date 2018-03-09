@@ -86,11 +86,7 @@ namespace NetVips
                     ? Enums.BandFormat.Dpcomplex
                     : Enums.BandFormat.Complex;
 
-                image = image.Copy(new VOption
-                {
-                    {"format", newFormat},
-                    {"bands", image.Bands / 2}
-                });
+                image = image.Copy(format: newFormat, bands: image.Bands / 2);
             }
 
             image = func(image);
@@ -100,11 +96,7 @@ namespace NetVips
                     ? Enums.BandFormat.Double
                     : Enums.BandFormat.Float;
 
-                image = image.Copy(new VOption
-                {
-                    {"format", newFormat},
-                    {"bands", image.Bands * 2}
-                });
+                image = image.Copy(format: newFormat, bands: image.Bands * 2);
             }
 
             return image;
@@ -146,15 +138,15 @@ namespace NetVips
         /// This method can load images in any format supported by vips. The
         /// filename can include load options, for example:
         ///
-        ///     image = netvips.Image.NewFromFile('fred.jpg[shrink=2]')
+        ///     image = NetVips.Image.NewFromFile('fred.jpg[shrink=2]')
         ///
-        /// You can also supply options as keyword arguments, for example: 
-        /// <![CDATA[
-        ///     var image = netvips.Image.NewFromFile('fred.jpg', new VOption
+        /// You can also supply options as keyword arguments, for example:
+        ///
+        ///     var image = NetVips.Image.NewFromFile('fred.jpg', new VOption
         ///     {
         ///         {"shrink", 2}
         ///     });
-        /// ]]>
+        ///
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like:
         /// 
@@ -168,24 +160,24 @@ namespace NetVips
         /// </remarks>
         /// <param name="vipsFilename">The disc file to load the image from, with
         /// optional appended arguments.</param>
-        /// <param name="kwargs">
-        /// memory (bool): If set True, load the image via memory rather than
-        ///     via a temporary disc file. See <see cref="NewTempFile"/> for
-        ///     notes on where temporary files are created. Small images are
-        ///     loaded via memory by default, use ``VIPS_DISC_THRESHOLD`` to
-        ///     set the definition of small.
-        /// access (Access): Hint the expected access pattern for the image.
-        /// fail (bool): If set True, the loader will fail with an error on
-        ///     the first serious error in the file. By default, libvips
-        ///     will attempt to read everything it can from a damanged image.
-        /// </param>
+        /// <param name="memory">If set True, load the image via memory rather than
+        /// via a temporary disc file. See <see cref="NewTempFile"/> for
+        /// notes on where temporary files are created. Small images are
+        /// loaded via memory by default, use ``VIPS_DISC_THRESHOLD`` to
+        /// set the definition of small.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="fail">If set True, the loader will fail with an error on
+        /// the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damanged image.</param>
+        /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="T:System.Exception">If unable to load from <paramref name="vipsFilename" />.</exception>
-        public static Image NewFromFile(string vipsFilename, VOption kwargs = null)
+        public static Image NewFromFile(string vipsFilename, bool? memory = null, string access = null,
+            bool? fail = null, VOption kwargs = null)
         {
             var fileNamePtr = vipsFilename.ToUtf8Ptr();
             var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
-            var options = VipsImage.VipsFilenameGetOptions(fileNamePtr);
+            var fileOptions = VipsImage.VipsFilenameGetOptions(fileNamePtr);
 
             var name = VipsForeign.VipsForeignFindLoad(filename.ToUtf8Ptr());
             if (name == null)
@@ -193,21 +185,30 @@ namespace NetVips
                 throw new Exception($"unable to load from file {vipsFilename}");
             }
 
-            var stringOptions = new VOption
-            {
-                {"string_options", options}
-            };
-
+            var options = new VOption();
             if (kwargs != null)
             {
-                stringOptions.Merge(kwargs);
-            }
-            else
-            {
-                kwargs = stringOptions;
+                options.Merge(kwargs);
             }
 
-            return Operation.Call(name, kwargs, filename) as Image;
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("string_options", fileOptions);
+
+            return Operation.Call(name, options, filename) as Image;
         }
 
         /// <summary>
@@ -219,16 +220,16 @@ namespace NetVips
         /// object can be a string or buffer.
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
-        /// <param name="options">Load options as a string. Use ``""`` for no options.</param>
-        /// <param name="kwargs">
-        /// access (Access): Hint the expected access pattern for the image.
-        /// fail (bool): If set True, the loader will fail with an error on the
-        ///     first serious error in the image. By default, libvips will
-        ///     attempt to read everything it can from a damanged image.
-        /// </param>
+        /// <param name="strOptions">Load options as a string. Use ``""`` for no options.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="fail">If set True, the loader will fail with an error on
+        /// the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damanged image.</param>
+        /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="T:System.Exception">If unable to load from <paramref name="data" />.</exception>
-        public static Image NewFromBuffer(object data, string options = "", VOption kwargs = null)
+        public static Image NewFromBuffer(object data, string strOptions = "", string access = null, bool? fail = null,
+            VOption kwargs = null)
         {
             int length;
             IntPtr memory;
@@ -252,28 +253,31 @@ namespace NetVips
                     );
             }
 
-
             var name = VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length);
             if (name == null)
             {
                 throw new Exception("unable to load from buffer");
             }
 
-            var stringOptions = new VOption
-            {
-                {"string_options", options}
-            };
-
+            var options = new VOption();
             if (kwargs != null)
             {
-                kwargs.Merge(stringOptions);
-            }
-            else
-            {
-                kwargs = stringOptions;
+                options.Merge(kwargs);
             }
 
-            return Operation.Call(name, kwargs, data) as Image;
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("string_options", strOptions);
+
+            return Operation.Call(name, options, data) as Image;
         }
 
         /// <summary>
@@ -446,18 +450,9 @@ namespace NetVips
         public Image NewFromImage(object value)
         {
             var pixel = (Black(1, 1) + value).Cast(Format);
-            var image = pixel.Embed(0, 0, Width, Height, new VOption
-            {
-                {"extend", "copy"}
-            });
-            image = image.Copy(new VOption
-            {
-                {"interpretation", Interpretation},
-                {"xres", Xres},
-                {"yres", Yres},
-                {"xoffset", Xoffset},
-                {"yoffset", Yoffset}
-            });
+            var image = pixel.Embed(0, 0, Width, Height, extend: "copy");
+            image = image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
+                yoffset: Yoffset);
             return image;
         }
 
@@ -490,7 +485,6 @@ namespace NetVips
         /// Write an image to a file on disc.
         /// </summary>
         /// <remarks>
-        /// 
         /// This method can save images in any format supported by vips. The format
         /// is selected from the filename suffix. The filename can include embedded
         /// save options, see <see cref="NewFromFile"/>.
@@ -500,13 +494,13 @@ namespace NetVips
         ///     image.WriteToFile('fred.jpg[Q=95]')
         /// 
         /// You can also supply options as keyword arguments, for example: 
-        /// <![CDATA[
+        ///
         ///     image.WriteToFile('fred.jpg', new VOption
         ///     {
         ///         {"Q", 95}
         ///     });
-        /// ]]>
-        /// The full set of options available depend upon the load operation that
+        ///
+        /// The full set of options available depend upon the save operation that
         /// will be executed. Try something like: 
         /// 
         ///     $ vips jpegsave
@@ -516,7 +510,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="vipsFilename">The disc file to save the image to, with
         /// optional appended arguments.</param>
-        /// <param name="kwargs"></param>
+        /// <param name="kwargs">Optional options that depend on the save operation.</param>
         /// <returns>None</returns>
         /// <exception cref="T:System.Exception">If unable to write to <paramref name="vipsFilename" />.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
@@ -561,12 +555,12 @@ namespace NetVips
         ///     var data = image.WriteToBuffer('.jpg[Q=95]')
         /// 
         /// You can also supply options as keyword arguments, for example: 
-        /// <![CDATA[
+        ///
         ///     var data = image.WriteToBuffer('.jpg', new VOption
         ///     {
         ///         {"Q", 95}
         ///     });
-        /// ]]>
+        ///
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like: 
         /// 
@@ -576,8 +570,8 @@ namespace NetVips
         /// JPEG saver.
         /// </remarks>
         /// <param name="formatString">The suffix, plus any string-form arguments.</param>
-        /// <param name="kwargs"></param>
-        /// <returns>A byte string</returns>
+        /// <param name="kwargs">Optional options that depend on the save operation.</param>
+        /// <returns>An array of bytes</returns>
         /// <exception cref="T:System.Exception">If unable to write to buffer.</exception>
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
@@ -621,7 +615,7 @@ namespace NetVips
         /// 
         /// will return a four byte buffer containing the values 1, 2, 3, 4.
         /// </remarks>
-        /// <returns>buffer</returns>
+        /// <returns>An array of bytes</returns>
         public byte[] WriteToMemory()
         {
             ulong psize = 0;
@@ -803,7 +797,7 @@ namespace NetVips
 
         public override string ToString()
         {
-            return $"<netvips.Image {Width}x{Height} {Format}, {Bands} bands, {Interpretation}>";
+            return $"<NetVips.Image {Width}x{Height} {Format}, {Bands} bands, {Interpretation}>";
         }
 
         #endregion
@@ -817,9 +811,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Abs();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -833,9 +825,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Add(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -850,36 +840,66 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Affine(matrix, new VOption
-        /// {
-        ///     {"interpolate", GObject},
-        ///     {"oarea", int[]},
-        ///     {"odx", double},
-        ///     {"ody", double},
-        ///     {"idx", double},
-        ///     {"idy", double},
-        ///     {"background", double[]},
-        ///     {"extend", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], extend: string);
         /// </code>
         /// </example>
         /// <param name="matrix">Transformation matrix</param>
-        /// <param name="kwargs">
-        /// interpolate (GObject): Interpolate pixels with this
-        /// oarea (int[]): Area of output to generate
-        /// odx (double): Horizontal output displacement
-        /// ody (double): Vertical output displacement
-        /// idx (double): Horizontal input displacement
-        /// idy (double): Vertical input displacement
-        /// background (double[]): Background value
-        /// extend (string): How to generate the extra pixels
-        /// </param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
+        /// <param name="oarea">Area of output to generate</param>
+        /// <param name="odx">Horizontal output displacement</param>
+        /// <param name="ody">Vertical output displacement</param>
+        /// <param name="idx">Horizontal input displacement</param>
+        /// <param name="idy">Vertical input displacement</param>
+        /// <param name="background">Background value</param>
+        /// <param name="extend">How to generate the extra pixels</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Affine(double[] matrix, VOption kwargs = null)
+        public Image Affine(double[] matrix, GObject interpolate = null, int[] oarea = null, double? odx = null,
+            double? ody = null, double? idx = null, double? idy = null, double[] background = null,
+            string extend = null)
         {
-            return this.Call("affine", kwargs, matrix) as Image;
+            var options = new VOption();
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            if (oarea != null && oarea.Length > 0)
+            {
+                options.Add("oarea", oarea);
+            }
+
+            if (odx.HasValue)
+            {
+                options.Add("odx", odx);
+            }
+
+            if (ody.HasValue)
+            {
+                options.Add("ody", ody);
+            }
+
+            if (idx.HasValue)
+            {
+                options.Add("idx", idx);
+            }
+
+            if (idy.HasValue)
+            {
+                options.Add("idy", idy);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            if (extend != null)
+            {
+                options.Add("extend", extend);
+            }
+
+            return this.Call("affine", options, matrix) as Image;
         }
 
         /// <summary>
@@ -887,26 +907,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Analyzeload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Analyzeload(string filename, VOption kwargs = null)
+        public static Image Analyzeload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("analyzeload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("analyzeload", options, filename) as Image;
         }
 
         /// <summary>
@@ -914,41 +942,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Analyzeload(string filename, out int flags, VOption kwargs = null)
+        public static Image Analyzeload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("analyzeload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("analyzeload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -961,34 +986,59 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Arrayjoin(@in, new VOption
-        /// {
-        ///     {"across", int},
-        ///     {"shim", int},
-        ///     {"background", double[]},
-        ///     {"halign", string},
-        ///     {"valign", string},
-        ///     {"hspacing", int},
-        ///     {"vspacing", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: string, valign: string, hspacing: int, vspacing: int);
         /// </code>
         /// </example>
         /// <param name="in">Array of input images</param>
-        /// <param name="kwargs">
-        /// across (int): Number of images across grid
-        /// shim (int): Pixels between images
-        /// background (double[]): Colour for new pixels
-        /// halign (string): Align on the left, centre or right
-        /// valign (string): Align on the top, centre or bottom
-        /// hspacing (int): Horizontal spacing between images
-        /// vspacing (int): Vertical spacing between images
-        /// </param>
+        /// <param name="across">Number of images across grid</param>
+        /// <param name="shim">Pixels between images</param>
+        /// <param name="background">Colour for new pixels</param>
+        /// <param name="halign">Align on the left, centre or right</param>
+        /// <param name="valign">Align on the top, centre or bottom</param>
+        /// <param name="hspacing">Horizontal spacing between images</param>
+        /// <param name="vspacing">Vertical spacing between images</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Arrayjoin(Image[] @in, VOption kwargs = null)
+        public static Image Arrayjoin(Image[] @in, int? across = null, int? shim = null, double[] background = null,
+            string halign = null, string valign = null, int? hspacing = null, int? vspacing = null)
         {
-            return Operation.Call("arrayjoin", kwargs, new object[] {@in}) as Image;
+            var options = new VOption();
+
+            if (across.HasValue)
+            {
+                options.Add("across", across);
+            }
+
+            if (shim.HasValue)
+            {
+                options.Add("shim", shim);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            if (halign != null)
+            {
+                options.Add("halign", halign);
+            }
+
+            if (valign != null)
+            {
+                options.Add("valign", valign);
+            }
+
+            if (hspacing.HasValue)
+            {
+                options.Add("hspacing", hspacing);
+            }
+
+            if (vspacing.HasValue)
+            {
+                options.Add("vspacing", vspacing);
+            }
+
+            return Operation.Call("arrayjoin", options, new object[] {@in}) as Image;
         }
 
         /// <summary>
@@ -996,9 +1046,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Autorot();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -1012,9 +1060,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Autorot(out var angle);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="angle">Angle image was rotated by</param>
@@ -1039,9 +1085,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// double @out = in.Avg();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A double</returns>
@@ -1055,9 +1099,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Bandbool(boolean);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="boolean">boolean to perform</param>
@@ -1072,21 +1114,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Bandfold(new VOption
-        /// {
-        ///     {"factor", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Bandfold(factor: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// factor (int): Fold by this factor
-        /// </param>
+        /// <param name="factor">Fold by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Bandfold(VOption kwargs = null)
+        public Image Bandfold(int? factor = null)
         {
-            return this.Call("bandfold", kwargs) as Image;
+            var options = new VOption();
+
+            if (factor.HasValue)
+            {
+                options.Add("factor", factor);
+            }
+
+            return this.Call("bandfold", options) as Image;
         }
 
         /// <summary>
@@ -1094,9 +1136,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.BandjoinConst(c);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="c">Array of constants to add</param>
@@ -1111,9 +1151,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Bandmean();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -1127,21 +1165,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Bandunfold(new VOption
-        /// {
-        ///     {"factor", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Bandunfold(factor: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// factor (int): Unfold by this factor
-        /// </param>
+        /// <param name="factor">Unfold by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Bandunfold(VOption kwargs = null)
+        public Image Bandunfold(int? factor = null)
         {
-            return this.Call("bandunfold", kwargs) as Image;
+            var options = new VOption();
+
+            if (factor.HasValue)
+            {
+                options.Add("factor", factor);
+            }
+
+            return this.Call("bandunfold", options) as Image;
         }
 
         /// <summary>
@@ -1149,23 +1187,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Black(width, height, new VOption
-        /// {
-        ///     {"bands", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Black(width, height, bands: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// bands (int): Number of bands in image
-        /// </param>
+        /// <param name="bands">Number of bands in image</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Black(int width, int height, VOption kwargs = null)
+        public static Image Black(int width, int height, int? bands = null)
         {
-            return Operation.Call("black", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (bands.HasValue)
+            {
+                options.Add("bands", bands);
+            }
+
+            return Operation.Call("black", options, width, height) as Image;
         }
 
         /// <summary>
@@ -1173,9 +1211,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Boolean(right, boolean);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -1191,9 +1227,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.BooleanConst(boolean, c);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="boolean">boolean to perform</param>
@@ -1209,9 +1243,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Buildlut();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -1225,9 +1257,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Byteswap();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -1241,25 +1271,33 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Cache(new VOption
-        /// {
-        ///     {"max_tiles", int},
-        ///     {"tile_height", int},
-        ///     {"tile_width", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Cache(maxTiles: int, tileHeight: int, tileWidth: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// max_tiles (int): Maximum number of tiles to cache
-        /// tile_height (int): Tile height in pixels
-        /// tile_width (int): Tile width in pixels
-        /// </param>
+        /// <param name="maxTiles">Maximum number of tiles to cache</param>
+        /// <param name="tileHeight">Tile height in pixels</param>
+        /// <param name="tileWidth">Tile width in pixels</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Cache(VOption kwargs = null)
+        public Image Cache(int? maxTiles = null, int? tileHeight = null, int? tileWidth = null)
         {
-            return this.Call("cache", kwargs) as Image;
+            var options = new VOption();
+
+            if (maxTiles.HasValue)
+            {
+                options.Add("max_tiles", maxTiles);
+            }
+
+            if (tileHeight.HasValue)
+            {
+                options.Add("tile_height", tileHeight);
+            }
+
+            if (tileWidth.HasValue)
+            {
+                options.Add("tile_width", tileWidth);
+            }
+
+            return this.Call("cache", options) as Image;
         }
 
         /// <summary>
@@ -1267,22 +1305,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Cast(format, new VOption
-        /// {
-        ///     {"shift", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Cast(format, shift: bool);
         /// </code>
         /// </example>
         /// <param name="format">Format to cast to</param>
-        /// <param name="kwargs">
-        /// shift (bool): Shift integer values up and down
-        /// </param>
+        /// <param name="shift">Shift integer values up and down</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Cast(string format, VOption kwargs = null)
+        public Image Cast(string format, bool? shift = null)
         {
-            return this.Call("cast", kwargs, format) as Image;
+            var options = new VOption();
+
+            if (shift.HasValue)
+            {
+                options.Add("shift", shift);
+            }
+
+            return this.Call("cast", options, format) as Image;
         }
 
         /// <summary>
@@ -1290,9 +1328,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.CMC2LCh();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -1306,22 +1342,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Colourspace(space, new VOption
-        /// {
-        ///     {"source_space", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.Colourspace(space, sourceSpace: string);
         /// </code>
         /// </example>
         /// <param name="space">Destination color space</param>
-        /// <param name="kwargs">
-        /// source_space (string): Source color space
-        /// </param>
+        /// <param name="sourceSpace">Source color space</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Colourspace(string space, VOption kwargs = null)
+        public Image Colourspace(string space, string sourceSpace = null)
         {
-            return this.Call("colourspace", kwargs, space) as Image;
+            var options = new VOption();
+
+            if (sourceSpace != null)
+            {
+                options.Add("source_space", sourceSpace);
+            }
+
+            return this.Call("colourspace", options, space) as Image;
         }
 
         /// <summary>
@@ -1329,32 +1365,53 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Compass(mask, new VOption
-        /// {
-        ///     {"times", int},
-        ///     {"angle", string},
-        ///     {"combine", string},
-        ///     {"precision", string},
-        ///     {"layers", int},
-        ///     {"cluster", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Compass(mask, times: int, angle: string, combine: string, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <param name="kwargs">
-        /// times (int): Rotate and convolve this many times
-        /// angle (string): Rotate mask by this much between convolutions
-        /// combine (string): Combine convolution results like this
-        /// precision (string): Convolve with this precision
-        /// layers (int): Use this many layers in approximation
-        /// cluster (int): Cluster lines closer than this in approximation
-        /// </param>
+        /// <param name="times">Rotate and convolve this many times</param>
+        /// <param name="angle">Rotate mask by this much between convolutions</param>
+        /// <param name="combine">Combine convolution results like this</param>
+        /// <param name="precision">Convolve with this precision</param>
+        /// <param name="layers">Use this many layers in approximation</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Compass(Image mask, VOption kwargs = null)
+        public Image Compass(Image mask, int? times = null, string angle = null, string combine = null,
+            string precision = null, int? layers = null, int? cluster = null)
         {
-            return this.Call("compass", kwargs, mask) as Image;
+            var options = new VOption();
+
+            if (times.HasValue)
+            {
+                options.Add("times", times);
+            }
+
+            if (angle != null)
+            {
+                options.Add("angle", angle);
+            }
+
+            if (combine != null)
+            {
+                options.Add("combine", combine);
+            }
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            if (layers.HasValue)
+            {
+                options.Add("layers", layers);
+            }
+
+            if (cluster.HasValue)
+            {
+                options.Add("cluster", cluster);
+            }
+
+            return this.Call("compass", options, mask) as Image;
         }
 
         /// <summary>
@@ -1362,9 +1419,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Complex(cmplx);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="cmplx">complex to perform</param>
@@ -1379,9 +1434,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Complex2(right, cmplx);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -1397,9 +1450,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Complexform(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -1414,9 +1465,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Complexget(get);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="get">complex to perform</param>
@@ -1431,25 +1480,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = base.Composite2(overlay, mode, new VOption
-        /// {
-        ///     {"compositing_space", string},
-        ///     {"premultiplied", bool}
-        /// });
-        /// ]]>
+        /// Image @out = base.Composite2(overlay, mode, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="overlay">Overlay image</param>
         /// <param name="mode">VipsBlendMode to join with</param>
-        /// <param name="kwargs">
-        /// compositing_space (string): Composite images in this colour space
-        /// premultiplied (bool): Images have premultiplied alpha
-        /// </param>
+        /// <param name="compositingSpace">Composite images in this colour space</param>
+        /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite2(Image overlay, string mode, VOption kwargs = null)
+        public Image Composite2(Image overlay, string mode, string compositingSpace = null, bool? premultiplied = null)
         {
-            return this.Call("composite2", kwargs, overlay, mode) as Image;
+            var options = new VOption();
+
+            if (compositingSpace != null)
+            {
+                options.Add("compositing_space", compositingSpace);
+            }
+
+            if (premultiplied.HasValue)
+            {
+                options.Add("premultiplied", premultiplied);
+            }
+
+            return this.Call("composite2", options, overlay, mode) as Image;
         }
 
         /// <summary>
@@ -1457,26 +1510,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Conv(mask, new VOption
-        /// {
-        ///     {"precision", string},
-        ///     {"layers", int},
-        ///     {"cluster", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Conv(mask, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <param name="kwargs">
-        /// precision (string): Convolve with this precision
-        /// layers (int): Use this many layers in approximation
-        /// cluster (int): Cluster lines closer than this in approximation
-        /// </param>
+        /// <param name="precision">Convolve with this precision</param>
+        /// <param name="layers">Use this many layers in approximation</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Conv(Image mask, VOption kwargs = null)
+        public Image Conv(Image mask, string precision = null, int? layers = null, int? cluster = null)
         {
-            return this.Call("conv", kwargs, mask) as Image;
+            var options = new VOption();
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            if (layers.HasValue)
+            {
+                options.Add("layers", layers);
+            }
+
+            if (cluster.HasValue)
+            {
+                options.Add("cluster", cluster);
+            }
+
+            return this.Call("conv", options, mask) as Image;
         }
 
         /// <summary>
@@ -1484,24 +1545,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Conva(mask, new VOption
-        /// {
-        ///     {"layers", int},
-        ///     {"cluster", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Conva(mask, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <param name="kwargs">
-        /// layers (int): Use this many layers in approximation
-        /// cluster (int): Cluster lines closer than this in approximation
-        /// </param>
+        /// <param name="layers">Use this many layers in approximation</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Conva(Image mask, VOption kwargs = null)
+        public Image Conva(Image mask, int? layers = null, int? cluster = null)
         {
-            return this.Call("conva", kwargs, mask) as Image;
+            var options = new VOption();
+
+            if (layers.HasValue)
+            {
+                options.Add("layers", layers);
+            }
+
+            if (cluster.HasValue)
+            {
+                options.Add("cluster", cluster);
+            }
+
+            return this.Call("conva", options, mask) as Image;
         }
 
         /// <summary>
@@ -1509,22 +1574,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Convasep(mask, new VOption
-        /// {
-        ///     {"layers", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Convasep(mask, layers: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <param name="kwargs">
-        /// layers (int): Use this many layers in approximation
-        /// </param>
+        /// <param name="layers">Use this many layers in approximation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Convasep(Image mask, VOption kwargs = null)
+        public Image Convasep(Image mask, int? layers = null)
         {
-            return this.Call("convasep", kwargs, mask) as Image;
+            var options = new VOption();
+
+            if (layers.HasValue)
+            {
+                options.Add("layers", layers);
+            }
+
+            return this.Call("convasep", options, mask) as Image;
         }
 
         /// <summary>
@@ -1532,9 +1597,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Convf(mask);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
@@ -1549,9 +1612,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Convi(mask);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
@@ -1566,26 +1627,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Convsep(mask, new VOption
-        /// {
-        ///     {"precision", string},
-        ///     {"layers", int},
-        ///     {"cluster", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Convsep(mask, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
-        /// <param name="kwargs">
-        /// precision (string): Convolve with this precision
-        /// layers (int): Use this many layers in approximation
-        /// cluster (int): Cluster lines closer than this in approximation
-        /// </param>
+        /// <param name="precision">Convolve with this precision</param>
+        /// <param name="layers">Use this many layers in approximation</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Convsep(Image mask, VOption kwargs = null)
+        public Image Convsep(Image mask, string precision = null, int? layers = null, int? cluster = null)
         {
-            return this.Call("convsep", kwargs, mask) as Image;
+            var options = new VOption();
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            if (layers.HasValue)
+            {
+                options.Add("layers", layers);
+            }
+
+            if (cluster.HasValue)
+            {
+                options.Add("cluster", cluster);
+            }
+
+            return this.Call("convsep", options, mask) as Image;
         }
 
         /// <summary>
@@ -1593,39 +1662,77 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Copy(new VOption
-        /// {
-        ///     {"width", int},
-        ///     {"height", int},
-        ///     {"bands", int},
-        ///     {"format", string},
-        ///     {"coding", string},
-        ///     {"interpretation", string},
-        ///     {"xres", double},
-        ///     {"yres", double},
-        ///     {"xoffset", int},
-        ///     {"yoffset", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Copy(width: int, height: int, bands: int, format: string, coding: string, interpretation: string, xres: double, yres: double, xoffset: int, yoffset: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// width (int): Image width in pixels
-        /// height (int): Image height in pixels
-        /// bands (int): Number of bands in image
-        /// format (string): Pixel format in image
-        /// coding (string): Pixel coding
-        /// interpretation (string): Pixel interpretation
-        /// xres (double): Horizontal resolution in pixels/mm
-        /// yres (double): Vertical resolution in pixels/mm
-        /// xoffset (int): Horizontal offset of origin
-        /// yoffset (int): Vertical offset of origin
-        /// </param>
+        /// <param name="width">Image width in pixels</param>
+        /// <param name="height">Image height in pixels</param>
+        /// <param name="bands">Number of bands in image</param>
+        /// <param name="format">Pixel format in image</param>
+        /// <param name="coding">Pixel coding</param>
+        /// <param name="interpretation">Pixel interpretation</param>
+        /// <param name="xres">Horizontal resolution in pixels/mm</param>
+        /// <param name="yres">Vertical resolution in pixels/mm</param>
+        /// <param name="xoffset">Horizontal offset of origin</param>
+        /// <param name="yoffset">Vertical offset of origin</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Copy(VOption kwargs = null)
+        public Image Copy(int? width = null, int? height = null, int? bands = null, string format = null,
+            string coding = null, string interpretation = null, double? xres = null, double? yres = null,
+            int? xoffset = null, int? yoffset = null)
         {
-            return this.Call("copy", kwargs) as Image;
+            var options = new VOption();
+
+            if (width.HasValue)
+            {
+                options.Add("width", width);
+            }
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            if (bands.HasValue)
+            {
+                options.Add("bands", bands);
+            }
+
+            if (format != null)
+            {
+                options.Add("format", format);
+            }
+
+            if (coding != null)
+            {
+                options.Add("coding", coding);
+            }
+
+            if (interpretation != null)
+            {
+                options.Add("interpretation", interpretation);
+            }
+
+            if (xres.HasValue)
+            {
+                options.Add("xres", xres);
+            }
+
+            if (yres.HasValue)
+            {
+                options.Add("yres", yres);
+            }
+
+            if (xoffset.HasValue)
+            {
+                options.Add("xoffset", xoffset);
+            }
+
+            if (yoffset.HasValue)
+            {
+                options.Add("yoffset", yoffset);
+            }
+
+            return this.Call("copy", options) as Image;
         }
 
         /// <summary>
@@ -1633,9 +1740,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// double nolines = in.Countlines(direction);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="direction">Countlines left-right or up-down</param>
@@ -1650,34 +1755,59 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Csvload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"skip", int},
-        ///     {"lines", int},
-        ///     {"fail", bool},
-        ///     {"whitespace", string},
-        ///     {"separator", string}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Csvload(filename, memory: bool, access: string, skip: int, lines: int, fail: bool, whitespace: string, separator: string);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// skip (int): Skip this many lines at the start of the file
-        /// lines (int): Read this many lines from the file
-        /// fail (bool): Fail on first error
-        /// whitespace (string): Set of whitespace characters
-        /// separator (string): Set of separator characters
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="skip">Skip this many lines at the start of the file</param>
+        /// <param name="lines">Read this many lines from the file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="whitespace">Set of whitespace characters</param>
+        /// <param name="separator">Set of separator characters</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Csvload(string filename, VOption kwargs = null)
+        public static Image Csvload(string filename, bool? memory = null, string access = null, int? skip = null,
+            int? lines = null, bool? fail = null, string whitespace = null, string separator = null)
         {
-            return Operation.Call("csvload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (skip.HasValue)
+            {
+                options.Add("skip", skip);
+            }
+
+            if (lines.HasValue)
+            {
+                options.Add("lines", lines);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (whitespace != null)
+            {
+                options.Add("whitespace", whitespace);
+            }
+
+            if (separator != null)
+            {
+                options.Add("separator", separator);
+            }
+
+            return Operation.Call("csvload", options, filename) as Image;
         }
 
         /// <summary>
@@ -1685,49 +1815,62 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Csvload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"skip", int},
-        ///     {"lines", int},
-        ///     {"fail", bool},
-        ///     {"whitespace", string},
-        ///     {"separator", string}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Csvload(filename, out var flags, memory: bool, access: string, skip: int, lines: int, fail: bool, whitespace: string, separator: string);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// skip (int): Skip this many lines at the start of the file
-        /// lines (int): Read this many lines from the file
-        /// fail (bool): Fail on first error
-        /// whitespace (string): Set of whitespace characters
-        /// separator (string): Set of separator characters
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="skip">Skip this many lines at the start of the file</param>
+        /// <param name="lines">Read this many lines from the file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="whitespace">Set of whitespace characters</param>
+        /// <param name="separator">Set of separator characters</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Csvload(string filename, out int flags, VOption kwargs = null)
+        public static Image Csvload(string filename, out int flags, bool? memory = null, string access = null,
+            int? skip = null, int? lines = null, bool? fail = null, string whitespace = null, string separator = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("csvload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (skip.HasValue)
+            {
+                options.Add("skip", skip);
+            }
+
+            if (lines.HasValue)
+            {
+                options.Add("lines", lines);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (whitespace != null)
+            {
+                options.Add("whitespace", whitespace);
+            }
+
+            if (separator != null)
+            {
+                options.Add("separator", separator);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("csvload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -1740,28 +1883,41 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Csvsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"separator", string},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Csvsave(filename, pageHeight: int, separator: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// separator (string): Separator characters
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="separator">Separator characters</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Csvsave(string filename, VOption kwargs = null)
+        public void Csvsave(string filename, int? pageHeight = null, string separator = null, bool? strip = null,
+            double[] background = null)
         {
-            this.Call("csvsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (separator != null)
+            {
+                options.Add("separator", separator);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("csvsave", options, filename);
         }
 
         /// <summary>
@@ -1769,9 +1925,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.DE00(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image</param>
@@ -1786,9 +1940,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.DE76(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image</param>
@@ -1803,9 +1955,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.DECMC(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image</param>
@@ -1820,9 +1970,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// double @out = in.Deviate();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A double</returns>
@@ -1836,9 +1984,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Divide(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -1853,25 +1999,25 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawCircle(ink, cx, cy, radius, new VOption
-        /// {
-        ///     {"fill", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawCircle(ink, cx, cy, radius, fill: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
         /// <param name="cx">Centre of draw_circle</param>
         /// <param name="cy">Centre of draw_circle</param>
         /// <param name="radius">Radius in pixels</param>
-        /// <param name="kwargs">
-        /// fill (bool): Draw a solid object
-        /// </param>
+        /// <param name="fill">Draw a solid object</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawCircle(double[] ink, int cx, int cy, int radius, VOption kwargs = null)
+        public Image DrawCircle(double[] ink, int cx, int cy, int radius, bool? fill = null)
         {
-            return this.Call("draw_circle", kwargs, ink, cx, cy, radius) as Image;
+            var options = new VOption();
+
+            if (fill.HasValue)
+            {
+                options.Add("fill", fill);
+            }
+
+            return this.Call("draw_circle", options, ink, cx, cy, radius) as Image;
         }
 
         /// <summary>
@@ -1879,26 +2025,30 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawFlood(ink, x, y, new VOption
-        /// {
-        ///     {"test", Image},
-        ///     {"equal", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawFlood(ink, x, y, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
         /// <param name="x">DrawFlood start point</param>
         /// <param name="y">DrawFlood start point</param>
-        /// <param name="kwargs">
-        /// test (Image): Test pixels in this image
-        /// equal (bool): DrawFlood while equal to edge
-        /// </param>
+        /// <param name="test">Test pixels in this image</param>
+        /// <param name="equal">DrawFlood while equal to edge</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawFlood(double[] ink, int x, int y, VOption kwargs = null)
+        public Image DrawFlood(double[] ink, int x, int y, Image test = null, bool? equal = null)
         {
-            return this.Call("draw_flood", kwargs, ink, x, y) as Image;
+            var options = new VOption();
+
+            if (!(test is null))
+            {
+                options.Add("test", test);
+            }
+
+            if (equal.HasValue)
+            {
+                options.Add("equal", equal);
+            }
+
+            return this.Call("draw_flood", options, ink, x, y) as Image;
         }
 
         /// <summary>
@@ -1906,41 +2056,33 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawFlood(ink, x, y, out var left, new VOption
-        /// {
-        ///     {"test", Image},
-        ///     {"equal", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawFlood(ink, x, y, out var left, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
         /// <param name="x">DrawFlood start point</param>
         /// <param name="y">DrawFlood start point</param>
         /// <param name="left">Left edge of modified area</param>
-        /// <param name="kwargs">
-        /// test (Image): Test pixels in this image
-        /// equal (bool): DrawFlood while equal to edge
-        /// </param>
+        /// <param name="test">Test pixels in this image</param>
+        /// <param name="equal">DrawFlood while equal to edge</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawFlood(double[] ink, int x, int y, out int left, VOption kwargs = null)
+        public Image DrawFlood(double[] ink, int x, int y, out int left, Image test = null, bool? equal = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"left", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (!(test is null))
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("test", test);
             }
 
-            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            if (equal.HasValue)
+            {
+                options.Add("equal", equal);
+            }
+
+            options.Add("left", true);
+
+            var results = this.Call("draw_flood", options, ink, x, y) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             left = opts?["left"] is int out1 ? out1 : 0;
@@ -1953,13 +2095,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, new VOption
-        /// {
-        ///     {"test", Image},
-        ///     {"equal", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
@@ -1967,29 +2103,28 @@ namespace NetVips
         /// <param name="y">DrawFlood start point</param>
         /// <param name="left">Left edge of modified area</param>
         /// <param name="top">top edge of modified area</param>
-        /// <param name="kwargs">
-        /// test (Image): Test pixels in this image
-        /// equal (bool): DrawFlood while equal to edge
-        /// </param>
+        /// <param name="test">Test pixels in this image</param>
+        /// <param name="equal">DrawFlood while equal to edge</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, VOption kwargs = null)
+        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, Image test = null,
+            bool? equal = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"left", true},
-                {"top", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (!(test is null))
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("test", test);
             }
 
-            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            if (equal.HasValue)
+            {
+                options.Add("equal", equal);
+            }
+
+            options.Add("left", true);
+            options.Add("top", true);
+
+            var results = this.Call("draw_flood", options, ink, x, y) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             left = opts?["left"] is int out1 ? out1 : 0;
@@ -2003,13 +2138,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, new VOption
-        /// {
-        ///     {"test", Image},
-        ///     {"equal", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
@@ -2018,31 +2147,29 @@ namespace NetVips
         /// <param name="left">Left edge of modified area</param>
         /// <param name="top">top edge of modified area</param>
         /// <param name="width">width of modified area</param>
-        /// <param name="kwargs">
-        /// test (Image): Test pixels in this image
-        /// equal (bool): DrawFlood while equal to edge
-        /// </param>
+        /// <param name="test">Test pixels in this image</param>
+        /// <param name="equal">DrawFlood while equal to edge</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width,
-            VOption kwargs = null)
+        public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width, Image test = null,
+            bool? equal = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"left", true},
-                {"top", true},
-                {"width", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (!(test is null))
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("test", test);
             }
 
-            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            if (equal.HasValue)
+            {
+                options.Add("equal", equal);
+            }
+
+            options.Add("left", true);
+            options.Add("top", true);
+            options.Add("width", true);
+
+            var results = this.Call("draw_flood", options, ink, x, y) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             left = opts?["left"] is int out1 ? out1 : 0;
@@ -2057,13 +2184,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, new VOption
-        /// {
-        ///     {"test", Image},
-        ///     {"equal", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
@@ -2073,32 +2194,30 @@ namespace NetVips
         /// <param name="top">top edge of modified area</param>
         /// <param name="width">width of modified area</param>
         /// <param name="height">height of modified area</param>
-        /// <param name="kwargs">
-        /// test (Image): Test pixels in this image
-        /// equal (bool): DrawFlood while equal to edge
-        /// </param>
+        /// <param name="test">Test pixels in this image</param>
+        /// <param name="equal">DrawFlood while equal to edge</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width, out int height,
-            VOption kwargs = null)
+            Image test = null, bool? equal = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"left", true},
-                {"top", true},
-                {"width", true},
-                {"height", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (!(test is null))
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("test", test);
             }
 
-            var results = this.Call("draw_flood", kwargs, ink, x, y) as object[];
+            if (equal.HasValue)
+            {
+                options.Add("equal", equal);
+            }
+
+            options.Add("left", true);
+            options.Add("top", true);
+            options.Add("width", true);
+            options.Add("height", true);
+
+            var results = this.Call("draw_flood", options, ink, x, y) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             left = opts?["left"] is int out1 ? out1 : 0;
@@ -2114,24 +2233,24 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawImage(sub, x, y, new VOption
-        /// {
-        ///     {"mode", string}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawImage(sub, x, y, mode: string);
         /// </code>
         /// </example>
         /// <param name="sub">Sub-image to insert into main image</param>
         /// <param name="x">Draw image here</param>
         /// <param name="y">Draw image here</param>
-        /// <param name="kwargs">
-        /// mode (string): Combining mode
-        /// </param>
+        /// <param name="mode">Combining mode</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawImage(Image sub, int x, int y, VOption kwargs = null)
+        public Image DrawImage(Image sub, int x, int y, string mode = null)
         {
-            return this.Call("draw_image", kwargs, sub, x, y) as Image;
+            var options = new VOption();
+
+            if (mode != null)
+            {
+                options.Add("mode", mode);
+            }
+
+            return this.Call("draw_image", options, sub, x, y) as Image;
         }
 
         /// <summary>
@@ -2139,9 +2258,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image image = image.DrawLine(ink, x1, y1, x2, y2);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
@@ -2160,9 +2277,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image image = image.DrawMask(ink, mask, x, y);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
@@ -2180,12 +2295,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image image = image.DrawRect(ink, left, top, width, height, new VOption
-        /// {
-        ///     {"fill", bool}
-        /// });
-        /// ]]>
+        /// Image image = image.DrawRect(ink, left, top, width, height, fill: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels</param>
@@ -2193,13 +2303,18 @@ namespace NetVips
         /// <param name="top">Rect to fill</param>
         /// <param name="width">Rect to fill</param>
         /// <param name="height">Rect to fill</param>
-        /// <param name="kwargs">
-        /// fill (bool): Draw a solid object
-        /// </param>
+        /// <param name="fill">Draw a solid object</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image DrawRect(double[] ink, int left, int top, int width, int height, VOption kwargs = null)
+        public Image DrawRect(double[] ink, int left, int top, int width, int height, bool? fill = null)
         {
-            return this.Call("draw_rect", kwargs, ink, left, top, width, height) as Image;
+            var options = new VOption();
+
+            if (fill.HasValue)
+            {
+                options.Add("fill", fill);
+            }
+
+            return this.Call("draw_rect", options, ink, left, top, width, height) as Image;
         }
 
         /// <summary>
@@ -2207,9 +2322,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image image = image.DrawSmudge(left, top, width, height);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="left">Rect to fill</param>
@@ -2227,48 +2340,103 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Dzsave(filename, new VOption
-        /// {
-        ///     {"basename", string},
-        ///     {"layout", string},
-        ///     {"page_height", int},
-        ///     {"suffix", string},
-        ///     {"overlap", int},
-        ///     {"tile_size", int},
-        ///     {"centre", bool},
-        ///     {"depth", string},
-        ///     {"angle", string},
-        ///     {"container", string},
-        ///     {"properties", bool},
-        ///     {"compression", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Dzsave(filename, basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// basename (string): Base name to save to
-        /// layout (string): Directory layout
-        /// page_height (int): Set page height for multipage save
-        /// suffix (string): Filename suffix for tiles
-        /// overlap (int): Tile overlap in pixels
-        /// tile_size (int): Tile size in pixels
-        /// centre (bool): Center image in tile
-        /// depth (string): Pyramid depth
-        /// angle (string): Rotate image during save
-        /// container (string): Pyramid container type
-        /// properties (bool): Write a properties file to the output directory
-        /// compression (int): ZIP deflate compression level
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="basename">Base name to save to</param>
+        /// <param name="layout">Directory layout</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="suffix">Filename suffix for tiles</param>
+        /// <param name="overlap">Tile overlap in pixels</param>
+        /// <param name="tileSize">Tile size in pixels</param>
+        /// <param name="centre">Center image in tile</param>
+        /// <param name="depth">Pyramid depth</param>
+        /// <param name="angle">Rotate image during save</param>
+        /// <param name="container">Pyramid container type</param>
+        /// <param name="properties">Write a properties file to the output directory</param>
+        /// <param name="compression">ZIP deflate compression level</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Dzsave(string filename, VOption kwargs = null)
+        public void Dzsave(string filename, string basename = null, string layout = null, int? pageHeight = null,
+            string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null,
+            string angle = null, string container = null, bool? properties = null, int? compression = null,
+            bool? strip = null, double[] background = null)
         {
-            this.Call("dzsave", kwargs, filename);
+            var options = new VOption();
+
+            if (basename != null)
+            {
+                options.Add("basename", basename);
+            }
+
+            if (layout != null)
+            {
+                options.Add("layout", layout);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (suffix != null)
+            {
+                options.Add("suffix", suffix);
+            }
+
+            if (overlap.HasValue)
+            {
+                options.Add("overlap", overlap);
+            }
+
+            if (tileSize.HasValue)
+            {
+                options.Add("tile_size", tileSize);
+            }
+
+            if (centre.HasValue)
+            {
+                options.Add("centre", centre);
+            }
+
+            if (depth != null)
+            {
+                options.Add("depth", depth);
+            }
+
+            if (angle != null)
+            {
+                options.Add("angle", angle);
+            }
+
+            if (container != null)
+            {
+                options.Add("container", container);
+            }
+
+            if (properties.HasValue)
+            {
+                options.Add("properties", properties);
+            }
+
+            if (compression.HasValue)
+            {
+                options.Add("compression", compression);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("dzsave", options, filename);
         }
 
         /// <summary>
@@ -2276,47 +2444,102 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.DzsaveBuffer(new VOption
-        /// {
-        ///     {"basename", string},
-        ///     {"layout", string},
-        ///     {"page_height", int},
-        ///     {"suffix", string},
-        ///     {"overlap", int},
-        ///     {"tile_size", int},
-        ///     {"centre", bool},
-        ///     {"depth", string},
-        ///     {"angle", string},
-        ///     {"container", string},
-        ///     {"properties", bool},
-        ///     {"compression", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// basename (string): Base name to save to
-        /// layout (string): Directory layout
-        /// page_height (int): Set page height for multipage save
-        /// suffix (string): Filename suffix for tiles
-        /// overlap (int): Tile overlap in pixels
-        /// tile_size (int): Tile size in pixels
-        /// centre (bool): Center image in tile
-        /// depth (string): Pyramid depth
-        /// angle (string): Rotate image during save
-        /// container (string): Pyramid container type
-        /// properties (bool): Write a properties file to the output directory
-        /// compression (int): ZIP deflate compression level
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="basename">Base name to save to</param>
+        /// <param name="layout">Directory layout</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="suffix">Filename suffix for tiles</param>
+        /// <param name="overlap">Tile overlap in pixels</param>
+        /// <param name="tileSize">Tile size in pixels</param>
+        /// <param name="centre">Center image in tile</param>
+        /// <param name="depth">Pyramid depth</param>
+        /// <param name="angle">Rotate image during save</param>
+        /// <param name="container">Pyramid container type</param>
+        /// <param name="properties">Write a properties file to the output directory</param>
+        /// <param name="compression">ZIP deflate compression level</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] DzsaveBuffer(VOption kwargs = null)
+        public byte[] DzsaveBuffer(string basename = null, string layout = null, int? pageHeight = null,
+            string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null,
+            string angle = null, string container = null, bool? properties = null, int? compression = null,
+            bool? strip = null, double[] background = null)
         {
-            return this.Call("dzsave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (basename != null)
+            {
+                options.Add("basename", basename);
+            }
+
+            if (layout != null)
+            {
+                options.Add("layout", layout);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (suffix != null)
+            {
+                options.Add("suffix", suffix);
+            }
+
+            if (overlap.HasValue)
+            {
+                options.Add("overlap", overlap);
+            }
+
+            if (tileSize.HasValue)
+            {
+                options.Add("tile_size", tileSize);
+            }
+
+            if (centre.HasValue)
+            {
+                options.Add("centre", centre);
+            }
+
+            if (depth != null)
+            {
+                options.Add("depth", depth);
+            }
+
+            if (angle != null)
+            {
+                options.Add("angle", angle);
+            }
+
+            if (container != null)
+            {
+                options.Add("container", container);
+            }
+
+            if (properties.HasValue)
+            {
+                options.Add("properties", properties);
+            }
+
+            if (compression.HasValue)
+            {
+                options.Add("compression", compression);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("dzsave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -2324,27 +2547,31 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Embed(x, y, width, height, new VOption
-        /// {
-        ///     {"extend", string},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// Image @out = in.Embed(x, y, width, height, extend: string, background: double[]);
         /// </code>
         /// </example>
         /// <param name="x">Left edge of input in output</param>
         /// <param name="y">Top edge of input in output</param>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// extend (string): How to generate the extra pixels
-        /// background (double[]): Color for background pixels
-        /// </param>
+        /// <param name="extend">How to generate the extra pixels</param>
+        /// <param name="background">Color for background pixels</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Embed(int x, int y, int width, int height, VOption kwargs = null)
+        public Image Embed(int x, int y, int width, int height, string extend = null, double[] background = null)
         {
-            return this.Call("embed", kwargs, x, y, width, height) as Image;
+            var options = new VOption();
+
+            if (extend != null)
+            {
+                options.Add("extend", extend);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("embed", options, x, y, width, height) as Image;
         }
 
         /// <summary>
@@ -2352,9 +2579,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = input.ExtractArea(left, top, width, height);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="left">Left edge of extract area</param>
@@ -2372,22 +2597,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.ExtractBand(band, new VOption
-        /// {
-        ///     {"n", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.ExtractBand(band, n: int);
         /// </code>
         /// </example>
         /// <param name="band">Band to extract</param>
-        /// <param name="kwargs">
-        /// n (int): Number of bands to extract
-        /// </param>
+        /// <param name="n">Number of bands to extract</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image ExtractBand(int band, VOption kwargs = null)
+        public Image ExtractBand(int band, int? n = null)
         {
-            return this.Call("extract_band", kwargs, band) as Image;
+            var options = new VOption();
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            return this.Call("extract_band", options, band) as Image;
         }
 
         /// <summary>
@@ -2395,25 +2620,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Eye(width, height, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"factor", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Eye(width, height, uchar: bool, factor: double);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// factor (double): Maximum spatial frequency
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="factor">Maximum spatial frequency</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Eye(int width, int height, VOption kwargs = null)
+        public static Image Eye(int width, int height, bool? uchar = null, double? factor = null)
         {
-            return Operation.Call("eye", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (factor.HasValue)
+            {
+                options.Add("factor", factor);
+            }
+
+            return Operation.Call("eye", options, width, height) as Image;
         }
 
         /// <summary>
@@ -2421,9 +2650,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Falsecolour();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -2437,9 +2664,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Fastcor(@ref);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="ref">Input reference image</param>
@@ -2454,9 +2679,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.FillNearest();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -2470,9 +2693,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.FillNearest(out var distance);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="distance">Distance to nearest non-zero pixel</param>
@@ -2497,23 +2718,27 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// var output = in.FindTrim(new VOption
-        /// {
-        ///     {"threshold", double},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// var output = in.FindTrim(threshold: double, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// threshold (double): Object threshold
-        /// background (double[]): Color for background pixels
-        /// </param>
+        /// <param name="threshold">Object threshold</param>
+        /// <param name="background">Color for background pixels</param>
         /// <returns>An array of objects</returns>
-        public object[] FindTrim(VOption kwargs = null)
+        public object[] FindTrim(double? threshold = null, double[] background = null)
         {
-            return this.Call("find_trim", kwargs) as object[];
+            var options = new VOption();
+
+            if (threshold.HasValue)
+            {
+                options.Add("threshold", threshold);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("find_trim", options) as object[];
         }
 
         /// <summary>
@@ -2521,23 +2746,27 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Flatten(new VOption
-        /// {
-        ///     {"background", double[]},
-        ///     {"max_alpha", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Flatten(background: double[], maxAlpha: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// background (double[]): Background value
-        /// max_alpha (double): Maximum value of alpha channel
-        /// </param>
+        /// <param name="background">Background value</param>
+        /// <param name="maxAlpha">Maximum value of alpha channel</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Flatten(VOption kwargs = null)
+        public Image Flatten(double[] background = null, double? maxAlpha = null)
         {
-            return this.Call("flatten", kwargs) as Image;
+            var options = new VOption();
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            if (maxAlpha.HasValue)
+            {
+                options.Add("max_alpha", maxAlpha);
+            }
+
+            return this.Call("flatten", options) as Image;
         }
 
         /// <summary>
@@ -2545,9 +2774,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Flip(direction);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="direction">Direction to flip image</param>
@@ -2562,9 +2789,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Float2rad();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -2578,9 +2803,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = NetVips.Image.Fractsurf(width, height, fractalDimension);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -2597,9 +2820,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Freqmult(mask);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="mask">Input mask image</param>
@@ -2614,9 +2835,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Fwfft();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -2630,21 +2849,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Gamma(new VOption
-        /// {
-        ///     {"exponent", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Gamma(exponent: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// exponent (double): Gamma factor
-        /// </param>
+        /// <param name="exponent">Gamma factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Gamma(VOption kwargs = null)
+        public Image Gamma(double? exponent = null)
         {
-            return this.Call("gamma", kwargs) as Image;
+            var options = new VOption();
+
+            if (exponent.HasValue)
+            {
+                options.Add("exponent", exponent);
+            }
+
+            return this.Call("gamma", options) as Image;
         }
 
         /// <summary>
@@ -2652,24 +2871,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Gaussblur(sigma, new VOption
-        /// {
-        ///     {"min_ampl", double},
-        ///     {"precision", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.Gaussblur(sigma, minAmpl: double, precision: string);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian</param>
-        /// <param name="kwargs">
-        /// min_ampl (double): Minimum amplitude of Gaussian
-        /// precision (string): Convolve with this precision
-        /// </param>
+        /// <param name="minAmpl">Minimum amplitude of Gaussian</param>
+        /// <param name="precision">Convolve with this precision</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Gaussblur(double sigma, VOption kwargs = null)
+        public Image Gaussblur(double sigma, double? minAmpl = null, string precision = null)
         {
-            return this.Call("gaussblur", kwargs, sigma) as Image;
+            var options = new VOption();
+
+            if (minAmpl.HasValue)
+            {
+                options.Add("min_ampl", minAmpl);
+            }
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            return this.Call("gaussblur", options, sigma) as Image;
         }
 
         /// <summary>
@@ -2677,25 +2900,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, new VOption
-        /// {
-        ///     {"separable", bool},
-        ///     {"precision", string}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: string);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian</param>
         /// <param name="minAmpl">Minimum amplitude of Gaussian</param>
-        /// <param name="kwargs">
-        /// separable (bool): Generate separable Gaussian
-        /// precision (string): Generate with this precision
-        /// </param>
+        /// <param name="separable">Generate separable Gaussian</param>
+        /// <param name="precision">Generate with this precision</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Gaussmat(double sigma, double minAmpl, VOption kwargs = null)
+        public static Image Gaussmat(double sigma, double minAmpl, bool? separable = null, string precision = null)
         {
-            return Operation.Call("gaussmat", kwargs, sigma, minAmpl) as Image;
+            var options = new VOption();
+
+            if (separable.HasValue)
+            {
+                options.Add("separable", separable);
+            }
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            return Operation.Call("gaussmat", options, sigma, minAmpl) as Image;
         }
 
         /// <summary>
@@ -2703,25 +2930,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Gaussnoise(width, height, new VOption
-        /// {
-        ///     {"sigma", double},
-        ///     {"mean", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Gaussnoise(width, height, sigma: double, mean: double);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// sigma (double): Standard deviation of pixels in generated image
-        /// mean (double): Mean of pixels in generated image
-        /// </param>
+        /// <param name="sigma">Standard deviation of pixels in generated image</param>
+        /// <param name="mean">Mean of pixels in generated image</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Gaussnoise(int width, int height, VOption kwargs = null)
+        public static Image Gaussnoise(int width, int height, double? sigma = null, double? mean = null)
         {
-            return Operation.Call("gaussnoise", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (sigma.HasValue)
+            {
+                options.Add("sigma", sigma);
+            }
+
+            if (mean.HasValue)
+            {
+                options.Add("mean", mean);
+            }
+
+            return Operation.Call("gaussnoise", options, width, height) as Image;
         }
 
         /// <summary>
@@ -2729,9 +2960,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// double[] outArray = in.Getpoint(x, y);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="x">Point to read</param>
@@ -2747,30 +2976,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Gifload(filename, new VOption
-        /// {
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Gifload(filename, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Gifload(string filename, VOption kwargs = null)
+        public static Image Gifload(string filename, int? n = null, bool? memory = null, string access = null,
+            int? page = null, bool? fail = null)
         {
-            return Operation.Call("gifload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("gifload", options, filename) as Image;
         }
 
         /// <summary>
@@ -2778,45 +3024,50 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Gifload(filename, out var flags, new VOption
-        /// {
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Gifload(filename, out var flags, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Gifload(string filename, out int flags, VOption kwargs = null)
+        public static Image Gifload(string filename, out int flags, int? n = null, bool? memory = null,
+            string access = null, int? page = null, bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (n.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("n", n);
             }
 
-            var results = Operation.Call("gifload", kwargs, filename) as object[];
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("gifload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -2829,30 +3080,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.GifloadBuffer(buffer, new VOption
-        /// {
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.GifloadBuffer(buffer, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image GifloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image GifloadBuffer(byte[] buffer, int? n = null, bool? memory = null, string access = null,
+            int? page = null, bool? fail = null)
         {
-            return Operation.Call("gifload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("gifload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -2860,45 +3128,50 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image GifloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image GifloadBuffer(byte[] buffer, out int flags, int? n = null, bool? memory = null,
+            string access = null, int? page = null, bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (n.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("n", n);
             }
 
-            var results = Operation.Call("gifload_buffer", kwargs, buffer) as object[];
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("gifload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -2911,23 +3184,27 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Globalbalance(new VOption
-        /// {
-        ///     {"gamma", double},
-        ///     {"int_output", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Globalbalance(gamma: double, intOutput: bool);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// gamma (double): Image gamma
-        /// int_output (bool): Integer output
-        /// </param>
+        /// <param name="gamma">Image gamma</param>
+        /// <param name="intOutput">Integer output</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Globalbalance(VOption kwargs = null)
+        public Image Globalbalance(double? gamma = null, bool? intOutput = null)
         {
-            return this.Call("globalbalance", kwargs) as Image;
+            var options = new VOption();
+
+            if (gamma.HasValue)
+            {
+                options.Add("gamma", gamma);
+            }
+
+            if (intOutput.HasValue)
+            {
+                options.Add("int_output", intOutput);
+            }
+
+            return this.Call("globalbalance", options) as Image;
         }
 
         /// <summary>
@@ -2935,26 +3212,30 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Gravity(direction, width, height, new VOption
-        /// {
-        ///     {"extend", string},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// Image @out = in.Gravity(direction, width, height, extend: string, background: double[]);
         /// </code>
         /// </example>
         /// <param name="direction">direction to place image within width/height</param>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// extend (string): How to generate the extra pixels
-        /// background (double[]): Color for background pixels
-        /// </param>
+        /// <param name="extend">How to generate the extra pixels</param>
+        /// <param name="background">Color for background pixels</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Gravity(string direction, int width, int height, VOption kwargs = null)
+        public Image Gravity(string direction, int width, int height, string extend = null, double[] background = null)
         {
-            return this.Call("gravity", kwargs, direction, width, height) as Image;
+            var options = new VOption();
+
+            if (extend != null)
+            {
+                options.Add("extend", extend);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("gravity", options, direction, width, height) as Image;
         }
 
         /// <summary>
@@ -2962,23 +3243,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Grey(width, height, new VOption
-        /// {
-        ///     {"uchar", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Grey(width, height, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Grey(int width, int height, VOption kwargs = null)
+        public static Image Grey(int width, int height, bool? uchar = null)
         {
-            return Operation.Call("grey", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            return Operation.Call("grey", options, width, height) as Image;
         }
 
         /// <summary>
@@ -2986,9 +3267,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Grid(tileHeight, across, down);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="tileHeight">chop into tiles this high</param>
@@ -3005,9 +3284,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.HistCum();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3021,9 +3298,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// double @out = in.HistEntropy();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A double</returns>
@@ -3037,21 +3312,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HistEqual(new VOption
-        /// {
-        ///     {"band", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.HistEqual(band: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// band (int): Equalise with this band
-        /// </param>
+        /// <param name="band">Equalise with this band</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HistEqual(VOption kwargs = null)
+        public Image HistEqual(int? band = null)
         {
-            return this.Call("hist_equal", kwargs) as Image;
+            var options = new VOption();
+
+            if (band.HasValue)
+            {
+                options.Add("band", band);
+            }
+
+            return this.Call("hist_equal", options) as Image;
         }
 
         /// <summary>
@@ -3059,21 +3334,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HistFind(new VOption
-        /// {
-        ///     {"band", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.HistFind(band: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// band (int): Find histogram of band
-        /// </param>
+        /// <param name="band">Find histogram of band</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HistFind(VOption kwargs = null)
+        public Image HistFind(int? band = null)
         {
-            return this.Call("hist_find", kwargs) as Image;
+            var options = new VOption();
+
+            if (band.HasValue)
+            {
+                options.Add("band", band);
+            }
+
+            return this.Call("hist_find", options) as Image;
         }
 
         /// <summary>
@@ -3081,22 +3356,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HistFindIndexed(index, new VOption
-        /// {
-        ///     {"combine", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.HistFindIndexed(index, combine: string);
         /// </code>
         /// </example>
         /// <param name="index">Index image</param>
-        /// <param name="kwargs">
-        /// combine (string): Combine bins like this
-        /// </param>
+        /// <param name="combine">Combine bins like this</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HistFindIndexed(Image index, VOption kwargs = null)
+        public Image HistFindIndexed(Image index, string combine = null)
         {
-            return this.Call("hist_find_indexed", kwargs, index) as Image;
+            var options = new VOption();
+
+            if (combine != null)
+            {
+                options.Add("combine", combine);
+            }
+
+            return this.Call("hist_find_indexed", options, index) as Image;
         }
 
         /// <summary>
@@ -3104,21 +3379,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HistFindNdim(new VOption
-        /// {
-        ///     {"bins", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.HistFindNdim(bins: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// bins (int): Number of bins in each dimension
-        /// </param>
+        /// <param name="bins">Number of bins in each dimension</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HistFindNdim(VOption kwargs = null)
+        public Image HistFindNdim(int? bins = null)
         {
-            return this.Call("hist_find_ndim", kwargs) as Image;
+            var options = new VOption();
+
+            if (bins.HasValue)
+            {
+                options.Add("bins", bins);
+            }
+
+            return this.Call("hist_find_ndim", options) as Image;
         }
 
         /// <summary>
@@ -3126,9 +3401,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// bool monotonic = in.HistIsmonotonic();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A bool</returns>
@@ -3142,23 +3415,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HistLocal(width, height, new VOption
-        /// {
-        ///     {"max_slope", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.HistLocal(width, height, maxSlope: int);
         /// </code>
         /// </example>
         /// <param name="width">Window width in pixels</param>
         /// <param name="height">Window height in pixels</param>
-        /// <param name="kwargs">
-        /// max_slope (int): Maximum slope (CLAHE)
-        /// </param>
+        /// <param name="maxSlope">Maximum slope (CLAHE)</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HistLocal(int width, int height, VOption kwargs = null)
+        public Image HistLocal(int width, int height, int? maxSlope = null)
         {
-            return this.Call("hist_local", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (maxSlope.HasValue)
+            {
+                options.Add("max_slope", maxSlope);
+            }
+
+            return this.Call("hist_local", options, width, height) as Image;
         }
 
         /// <summary>
@@ -3166,9 +3439,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.HistMatch(@ref);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="ref">Reference histogram</param>
@@ -3183,9 +3454,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.HistNorm();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3199,9 +3468,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.HistPlot();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3215,25 +3482,33 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HoughCircle(new VOption
-        /// {
-        ///     {"scale", int},
-        ///     {"min_radius", int},
-        ///     {"max_radius", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.HoughCircle(scale: int, minRadius: int, maxRadius: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// scale (int): Scale down dimensions by this factor
-        /// min_radius (int): Smallest radius to search for
-        /// max_radius (int): Largest radius to search for
-        /// </param>
+        /// <param name="scale">Scale down dimensions by this factor</param>
+        /// <param name="minRadius">Smallest radius to search for</param>
+        /// <param name="maxRadius">Largest radius to search for</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HoughCircle(VOption kwargs = null)
+        public Image HoughCircle(int? scale = null, int? minRadius = null, int? maxRadius = null)
         {
-            return this.Call("hough_circle", kwargs) as Image;
+            var options = new VOption();
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            if (minRadius.HasValue)
+            {
+                options.Add("min_radius", minRadius);
+            }
+
+            if (maxRadius.HasValue)
+            {
+                options.Add("max_radius", maxRadius);
+            }
+
+            return this.Call("hough_circle", options) as Image;
         }
 
         /// <summary>
@@ -3241,23 +3516,27 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.HoughLine(new VOption
-        /// {
-        ///     {"width", int},
-        ///     {"height", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.HoughLine(width: int, height: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// width (int): horizontal size of parameter space
-        /// height (int): Vertical size of parameter space
-        /// </param>
+        /// <param name="width">horizontal size of parameter space</param>
+        /// <param name="height">Vertical size of parameter space</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image HoughLine(VOption kwargs = null)
+        public Image HoughLine(int? width = null, int? height = null)
         {
-            return this.Call("hough_line", kwargs) as Image;
+            var options = new VOption();
+
+            if (width.HasValue)
+            {
+                options.Add("width", width);
+            }
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            return this.Call("hough_line", options) as Image;
         }
 
         /// <summary>
@@ -3265,9 +3544,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.HSV2sRGB();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3281,27 +3558,39 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.IccExport(new VOption
-        /// {
-        ///     {"pcs", string},
-        ///     {"intent", string},
-        ///     {"output_profile", string},
-        ///     {"depth", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.IccExport(pcs: string, intent: string, outputProfile: string, depth: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// pcs (string): Set Profile Connection Space
-        /// intent (string): Rendering intent
-        /// output_profile (string): Filename to load output profile from
-        /// depth (int): Output device space depth in bits
-        /// </param>
+        /// <param name="pcs">Set Profile Connection Space</param>
+        /// <param name="intent">Rendering intent</param>
+        /// <param name="outputProfile">Filename to load output profile from</param>
+        /// <param name="depth">Output device space depth in bits</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image IccExport(VOption kwargs = null)
+        public Image IccExport(string pcs = null, string intent = null, string outputProfile = null, int? depth = null)
         {
-            return this.Call("icc_export", kwargs) as Image;
+            var options = new VOption();
+
+            if (pcs != null)
+            {
+                options.Add("pcs", pcs);
+            }
+
+            if (intent != null)
+            {
+                options.Add("intent", intent);
+            }
+
+            if (outputProfile != null)
+            {
+                options.Add("output_profile", outputProfile);
+            }
+
+            if (depth.HasValue)
+            {
+                options.Add("depth", depth);
+            }
+
+            return this.Call("icc_export", options) as Image;
         }
 
         /// <summary>
@@ -3309,27 +3598,40 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.IccImport(new VOption
-        /// {
-        ///     {"pcs", string},
-        ///     {"intent", string},
-        ///     {"embedded", bool},
-        ///     {"input_profile", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.IccImport(pcs: string, intent: string, embedded: bool, inputProfile: string);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// pcs (string): Set Profile Connection Space
-        /// intent (string): Rendering intent
-        /// embedded (bool): Use embedded input profile, if available
-        /// input_profile (string): Filename to load input profile from
-        /// </param>
+        /// <param name="pcs">Set Profile Connection Space</param>
+        /// <param name="intent">Rendering intent</param>
+        /// <param name="embedded">Use embedded input profile, if available</param>
+        /// <param name="inputProfile">Filename to load input profile from</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image IccImport(VOption kwargs = null)
+        public Image IccImport(string pcs = null, string intent = null, bool? embedded = null,
+            string inputProfile = null)
         {
-            return this.Call("icc_import", kwargs) as Image;
+            var options = new VOption();
+
+            if (pcs != null)
+            {
+                options.Add("pcs", pcs);
+            }
+
+            if (intent != null)
+            {
+                options.Add("intent", intent);
+            }
+
+            if (embedded.HasValue)
+            {
+                options.Add("embedded", embedded);
+            }
+
+            if (inputProfile != null)
+            {
+                options.Add("input_profile", inputProfile);
+            }
+
+            return this.Call("icc_import", options) as Image;
         }
 
         /// <summary>
@@ -3337,30 +3639,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.IccTransform(outputProfile, new VOption
-        /// {
-        ///     {"pcs", string},
-        ///     {"intent", string},
-        ///     {"embedded", bool},
-        ///     {"input_profile", string},
-        ///     {"depth", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.IccTransform(outputProfile, pcs: string, intent: string, embedded: bool, inputProfile: string, depth: int);
         /// </code>
         /// </example>
         /// <param name="outputProfile">Filename to load output profile from</param>
-        /// <param name="kwargs">
-        /// pcs (string): Set Profile Connection Space
-        /// intent (string): Rendering intent
-        /// embedded (bool): Use embedded input profile, if available
-        /// input_profile (string): Filename to load input profile from
-        /// depth (int): Output device space depth in bits
-        /// </param>
+        /// <param name="pcs">Set Profile Connection Space</param>
+        /// <param name="intent">Rendering intent</param>
+        /// <param name="embedded">Use embedded input profile, if available</param>
+        /// <param name="inputProfile">Filename to load input profile from</param>
+        /// <param name="depth">Output device space depth in bits</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image IccTransform(string outputProfile, VOption kwargs = null)
+        public Image IccTransform(string outputProfile, string pcs = null, string intent = null, bool? embedded = null,
+            string inputProfile = null, int? depth = null)
         {
-            return this.Call("icc_transform", kwargs, outputProfile) as Image;
+            var options = new VOption();
+
+            if (pcs != null)
+            {
+                options.Add("pcs", pcs);
+            }
+
+            if (intent != null)
+            {
+                options.Add("intent", intent);
+            }
+
+            if (embedded.HasValue)
+            {
+                options.Add("embedded", embedded);
+            }
+
+            if (inputProfile != null)
+            {
+                options.Add("input_profile", inputProfile);
+            }
+
+            if (depth.HasValue)
+            {
+                options.Add("depth", depth);
+            }
+
+            return this.Call("icc_transform", options, outputProfile) as Image;
         }
 
         /// <summary>
@@ -3368,25 +3687,33 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Identity(new VOption
-        /// {
-        ///     {"bands", int},
-        ///     {"ushort", bool},
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Identity(bands: int, @ushort: bool, size: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// bands (int): Number of bands in LUT
-        /// ushort (bool): Create a 16-bit LUT
-        /// size (int): Size of 16-bit LUT
-        /// </param>
+        /// <param name="bands">Number of bands in LUT</param>
+        /// <param name="ushort">Create a 16-bit LUT</param>
+        /// <param name="size">Size of 16-bit LUT</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Identity(VOption kwargs = null)
+        public static Image Identity(int? bands = null, bool? @ushort = null, int? size = null)
         {
-            return Operation.Call("identity", kwargs) as Image;
+            var options = new VOption();
+
+            if (bands.HasValue)
+            {
+                options.Add("bands", bands);
+            }
+
+            if (@ushort.HasValue)
+            {
+                options.Add("ushort", @ushort);
+            }
+
+            if (size.HasValue)
+            {
+                options.Add("size", size);
+            }
+
+            return Operation.Call("identity", options) as Image;
         }
 
         /// <summary>
@@ -3394,26 +3721,30 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = main.Insert(sub, x, y, new VOption
-        /// {
-        ///     {"expand", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// Image @out = main.Insert(sub, x, y, expand: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="sub">Sub-image to insert into main image</param>
         /// <param name="x">Left edge of sub in main</param>
         /// <param name="y">Top edge of sub in main</param>
-        /// <param name="kwargs">
-        /// expand (bool): Expand output to hold all of both inputs
-        /// background (double[]): Color for new pixels
-        /// </param>
+        /// <param name="expand">Expand output to hold all of both inputs</param>
+        /// <param name="background">Color for new pixels</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Insert(Image sub, int x, int y, VOption kwargs = null)
+        public Image Insert(Image sub, int x, int y, bool? expand = null, double[] background = null)
         {
-            return this.Call("insert", kwargs, sub, x, y) as Image;
+            var options = new VOption();
+
+            if (expand.HasValue)
+            {
+                options.Add("expand", expand);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("insert", options, sub, x, y) as Image;
         }
 
         /// <summary>
@@ -3421,9 +3752,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Invert();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3437,21 +3766,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Invertlut(new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Invertlut(size: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// size (int): LUT size to generate
-        /// </param>
+        /// <param name="size">LUT size to generate</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Invertlut(VOption kwargs = null)
+        public Image Invertlut(int? size = null)
         {
-            return this.Call("invertlut", kwargs) as Image;
+            var options = new VOption();
+
+            if (size.HasValue)
+            {
+                options.Add("size", size);
+            }
+
+            return this.Call("invertlut", options) as Image;
         }
 
         /// <summary>
@@ -3459,21 +3788,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Invfft(new VOption
-        /// {
-        ///     {"real", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Invfft(real: bool);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// real (bool): Output only the real part of the transform
-        /// </param>
+        /// <param name="real">Output only the real part of the transform</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Invfft(VOption kwargs = null)
+        public Image Invfft(bool? real = null)
         {
-            return this.Call("invfft", kwargs) as Image;
+            var options = new VOption();
+
+            if (real.HasValue)
+            {
+                options.Add("real", real);
+            }
+
+            return this.Call("invfft", options) as Image;
         }
 
         /// <summary>
@@ -3481,29 +3810,42 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in1.Join(in2, direction, new VOption
-        /// {
-        ///     {"expand", bool},
-        ///     {"shim", int},
-        ///     {"background", double[]},
-        ///     {"align", string}
-        /// });
-        /// ]]>
+        /// Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: string);
         /// </code>
         /// </example>
         /// <param name="in2">Second input image</param>
         /// <param name="direction">Join left-right or up-down</param>
-        /// <param name="kwargs">
-        /// expand (bool): Expand output to hold all of both inputs
-        /// shim (int): Pixels between images
-        /// background (double[]): Colour for new pixels
-        /// align (string): Align on the low, centre or high coordinate edge
-        /// </param>
+        /// <param name="expand">Expand output to hold all of both inputs</param>
+        /// <param name="shim">Pixels between images</param>
+        /// <param name="background">Colour for new pixels</param>
+        /// <param name="align">Align on the low, centre or high coordinate edge</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Join(Image in2, string direction, VOption kwargs = null)
+        public Image Join(Image in2, string direction, bool? expand = null, int? shim = null,
+            double[] background = null, string align = null)
         {
-            return this.Call("join", kwargs, in2, direction) as Image;
+            var options = new VOption();
+
+            if (expand.HasValue)
+            {
+                options.Add("expand", expand);
+            }
+
+            if (shim.HasValue)
+            {
+                options.Add("shim", shim);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            if (align != null)
+            {
+                options.Add("align", align);
+            }
+
+            return this.Call("join", options, in2, direction) as Image;
         }
 
         /// <summary>
@@ -3511,30 +3853,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Jpegload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Jpegload(filename, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using exif orientation
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using exif orientation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Jpegload(string filename, VOption kwargs = null)
+        public static Image Jpegload(string filename, bool? memory = null, string access = null, int? shrink = null,
+            bool? fail = null, bool? autorotate = null)
         {
-            return Operation.Call("jpegload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            return Operation.Call("jpegload", options, filename) as Image;
         }
 
         /// <summary>
@@ -3542,45 +3901,50 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Jpegload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Jpegload(filename, out var flags, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using exif orientation
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using exif orientation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Jpegload(string filename, out int flags, VOption kwargs = null)
+        public static Image Jpegload(string filename, out int flags, bool? memory = null, string access = null,
+            int? shrink = null, bool? fail = null, bool? autorotate = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("jpegload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("jpegload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -3593,30 +3957,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using exif orientation
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using exif orientation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image JpegloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image JpegloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? shrink = null,
+            bool? fail = null, bool? autorotate = null)
         {
-            return Operation.Call("jpegload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            return Operation.Call("jpegload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -3624,45 +4005,50 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using exif orientation
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using exif orientation</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image JpegloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image JpegloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null,
+            int? shrink = null, bool? fail = null, bool? autorotate = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("jpegload_buffer", kwargs, buffer) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("jpegload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -3675,44 +4061,91 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Jpegsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"Q", int},
-        ///     {"profile", string},
-        ///     {"optimize_coding", bool},
-        ///     {"interlace", bool},
-        ///     {"no_subsample", bool},
-        ///     {"trellis_quant", bool},
-        ///     {"overshoot_deringing", bool},
-        ///     {"optimize_scans", bool},
-        ///     {"quant_table", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Jpegsave(filename, pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// Q (int): Q factor
-        /// profile (string): ICC profile to embed
-        /// optimize_coding (bool): Compute optimal Huffman coding tables
-        /// interlace (bool): Generate an interlaced (progressive) jpeg
-        /// no_subsample (bool): Disable chroma subsample
-        /// trellis_quant (bool): Apply trellis quantisation to each 8x8 block
-        /// overshoot_deringing (bool): Apply overshooting to samples with extreme values
-        /// optimize_scans (bool): Split the spectrum of DCT coefficients into separate scans
-        /// quant_table (int): Use predefined quantization table with given index
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg</param>
+        /// <param name="noSubsample">Disable chroma subsample</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values</param>
+        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans</param>
+        /// <param name="quantTable">Use predefined quantization table with given index</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Jpegsave(string filename, VOption kwargs = null)
+        public void Jpegsave(string filename, int? pageHeight = null, int? q = null, string profile = null,
+            bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null,
+            bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null,
+            double[] background = null)
         {
-            this.Call("jpegsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (optimizeCoding.HasValue)
+            {
+                options.Add("optimize_coding", optimizeCoding);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add("interlace", interlace);
+            }
+
+            if (noSubsample.HasValue)
+            {
+                options.Add("no_subsample", noSubsample);
+            }
+
+            if (trellisQuant.HasValue)
+            {
+                options.Add("trellis_quant", trellisQuant);
+            }
+
+            if (overshootDeringing.HasValue)
+            {
+                options.Add("overshoot_deringing", overshootDeringing);
+            }
+
+            if (optimizeScans.HasValue)
+            {
+                options.Add("optimize_scans", optimizeScans);
+            }
+
+            if (quantTable.HasValue)
+            {
+                options.Add("quant_table", quantTable);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("jpegsave", options, filename);
         }
 
         /// <summary>
@@ -3720,43 +4153,90 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.JpegsaveBuffer(new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"Q", int},
-        ///     {"profile", string},
-        ///     {"optimize_coding", bool},
-        ///     {"interlace", bool},
-        ///     {"no_subsample", bool},
-        ///     {"trellis_quant", bool},
-        ///     {"overshoot_deringing", bool},
-        ///     {"optimize_scans", bool},
-        ///     {"quant_table", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.JpegsaveBuffer(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// Q (int): Q factor
-        /// profile (string): ICC profile to embed
-        /// optimize_coding (bool): Compute optimal Huffman coding tables
-        /// interlace (bool): Generate an interlaced (progressive) jpeg
-        /// no_subsample (bool): Disable chroma subsample
-        /// trellis_quant (bool): Apply trellis quantisation to each 8x8 block
-        /// overshoot_deringing (bool): Apply overshooting to samples with extreme values
-        /// optimize_scans (bool): Split the spectrum of DCT coefficients into separate scans
-        /// quant_table (int): Use predefined quantization table with given index
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg</param>
+        /// <param name="noSubsample">Disable chroma subsample</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values</param>
+        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans</param>
+        /// <param name="quantTable">Use predefined quantization table with given index</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] JpegsaveBuffer(VOption kwargs = null)
+        public byte[] JpegsaveBuffer(int? pageHeight = null, int? q = null, string profile = null,
+            bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null,
+            bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null,
+            double[] background = null)
         {
-            return this.Call("jpegsave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (optimizeCoding.HasValue)
+            {
+                options.Add("optimize_coding", optimizeCoding);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add("interlace", interlace);
+            }
+
+            if (noSubsample.HasValue)
+            {
+                options.Add("no_subsample", noSubsample);
+            }
+
+            if (trellisQuant.HasValue)
+            {
+                options.Add("trellis_quant", trellisQuant);
+            }
+
+            if (overshootDeringing.HasValue)
+            {
+                options.Add("overshoot_deringing", overshootDeringing);
+            }
+
+            if (optimizeScans.HasValue)
+            {
+                options.Add("optimize_scans", optimizeScans);
+            }
+
+            if (quantTable.HasValue)
+            {
+                options.Add("quant_table", quantTable);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("jpegsave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -3764,43 +4244,90 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.JpegsaveMime(new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"Q", int},
-        ///     {"profile", string},
-        ///     {"optimize_coding", bool},
-        ///     {"interlace", bool},
-        ///     {"no_subsample", bool},
-        ///     {"trellis_quant", bool},
-        ///     {"overshoot_deringing", bool},
-        ///     {"optimize_scans", bool},
-        ///     {"quant_table", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.JpegsaveMime(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// Q (int): Q factor
-        /// profile (string): ICC profile to embed
-        /// optimize_coding (bool): Compute optimal Huffman coding tables
-        /// interlace (bool): Generate an interlaced (progressive) jpeg
-        /// no_subsample (bool): Disable chroma subsample
-        /// trellis_quant (bool): Apply trellis quantisation to each 8x8 block
-        /// overshoot_deringing (bool): Apply overshooting to samples with extreme values
-        /// optimize_scans (bool): Split the spectrum of DCT coefficients into separate scans
-        /// quant_table (int): Use predefined quantization table with given index
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg</param>
+        /// <param name="noSubsample">Disable chroma subsample</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values</param>
+        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans</param>
+        /// <param name="quantTable">Use predefined quantization table with given index</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void JpegsaveMime(VOption kwargs = null)
+        public void JpegsaveMime(int? pageHeight = null, int? q = null, string profile = null,
+            bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null,
+            bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null,
+            double[] background = null)
         {
-            this.Call("jpegsave_mime", kwargs);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (optimizeCoding.HasValue)
+            {
+                options.Add("optimize_coding", optimizeCoding);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add("interlace", interlace);
+            }
+
+            if (noSubsample.HasValue)
+            {
+                options.Add("no_subsample", noSubsample);
+            }
+
+            if (trellisQuant.HasValue)
+            {
+                options.Add("trellis_quant", trellisQuant);
+            }
+
+            if (overshootDeringing.HasValue)
+            {
+                options.Add("overshoot_deringing", overshootDeringing);
+            }
+
+            if (optimizeScans.HasValue)
+            {
+                options.Add("optimize_scans", optimizeScans);
+            }
+
+            if (quantTable.HasValue)
+            {
+                options.Add("quant_table", quantTable);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("jpegsave_mime", options);
         }
 
         /// <summary>
@@ -3808,9 +4335,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Lab2LabQ();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3824,9 +4349,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Lab2LabS();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3840,9 +4363,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Lab2LCh();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3856,21 +4377,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Lab2XYZ(new VOption
-        /// {
-        ///     {"temp", double[]}
-        /// });
-        /// ]]>
+        /// Image @out = in.Lab2XYZ(temp: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// temp (double[]): Color temperature
-        /// </param>
+        /// <param name="temp">Color temperature</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Lab2XYZ(VOption kwargs = null)
+        public Image Lab2XYZ(double[] temp = null)
         {
-            return this.Call("Lab2XYZ", kwargs) as Image;
+            var options = new VOption();
+
+            if (temp != null && temp.Length > 0)
+            {
+                options.Add("temp", temp);
+            }
+
+            return this.Call("Lab2XYZ", options) as Image;
         }
 
         /// <summary>
@@ -3878,9 +4399,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image mask = in.Labelregions();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3894,9 +4413,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image mask = in.Labelregions(out var segments);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="segments">Number of discrete contigious regions</param>
@@ -3921,9 +4438,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LabQ2Lab();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3937,9 +4452,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LabQ2LabS();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3953,9 +4466,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LabQ2sRGB();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3969,9 +4480,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LabS2Lab();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -3985,9 +4494,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LabS2LabQ();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -4001,9 +4508,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LCh2CMC();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -4017,9 +4522,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.LCh2Lab();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -4033,23 +4536,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Linear(a, b, new VOption
-        /// {
-        ///     {"uchar", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Linear(a, b, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="a">Multiply by this</param>
         /// <param name="b">Add this</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output should be uchar
-        /// </param>
+        /// <param name="uchar">Output should be uchar</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Linear(double[] a, double[] b, VOption kwargs = null)
+        public Image Linear(double[] a, double[] b, bool? uchar = null)
         {
-            return this.Call("linear", kwargs, a, b) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            return this.Call("linear", options, a, b) as Image;
         }
 
         /// <summary>
@@ -4057,27 +4560,40 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Linecache(new VOption
-        /// {
-        ///     {"tile_height", int},
-        ///     {"access", string},
-        ///     {"threaded", bool},
-        ///     {"persistent", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Linecache(tileHeight: int, access: string, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// tile_height (int): Tile height in pixels
-        /// access (string): Expected access pattern
-        /// threaded (bool): Allow threaded access
-        /// persistent (bool): Keep cache between evaluations
-        /// </param>
+        /// <param name="tileHeight">Tile height in pixels</param>
+        /// <param name="access">Expected access pattern</param>
+        /// <param name="threaded">Allow threaded access</param>
+        /// <param name="persistent">Keep cache between evaluations</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Linecache(VOption kwargs = null)
+        public Image Linecache(int? tileHeight = null, string access = null, bool? threaded = null,
+            bool? persistent = null)
         {
-            return this.Call("linecache", kwargs) as Image;
+            var options = new VOption();
+
+            if (tileHeight.HasValue)
+            {
+                options.Add("tile_height", tileHeight);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (threaded.HasValue)
+            {
+                options.Add("threaded", threaded);
+            }
+
+            if (persistent.HasValue)
+            {
+                options.Add("persistent", persistent);
+            }
+
+            return this.Call("linecache", options) as Image;
         }
 
         /// <summary>
@@ -4085,25 +4601,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, new VOption
-        /// {
-        ///     {"separable", bool},
-        ///     {"precision", string}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: string);
         /// </code>
         /// </example>
         /// <param name="sigma">Radius of Logmatian</param>
         /// <param name="minAmpl">Minimum amplitude of Logmatian</param>
-        /// <param name="kwargs">
-        /// separable (bool): Generate separable Logmatian
-        /// precision (string): Generate with this precision
-        /// </param>
+        /// <param name="separable">Generate separable Logmatian</param>
+        /// <param name="precision">Generate with this precision</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Logmat(double sigma, double minAmpl, VOption kwargs = null)
+        public static Image Logmat(double sigma, double minAmpl, bool? separable = null, string precision = null)
         {
-            return Operation.Call("logmat", kwargs, sigma, minAmpl) as Image;
+            var options = new VOption();
+
+            if (separable.HasValue)
+            {
+                options.Add("separable", separable);
+            }
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            return Operation.Call("logmat", options, sigma, minAmpl) as Image;
         }
 
         /// <summary>
@@ -4111,32 +4631,53 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Magickload(filename, new VOption
-        /// {
-        ///     {"density", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// density (string): Canvas resolution for rendering vector formats like SVG
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Magickload(string filename, VOption kwargs = null)
+        public static Image Magickload(string filename, string density = null, int? page = null, int? n = null,
+            bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("magickload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (density != null)
+            {
+                options.Add("density", density);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("magickload", options, filename) as Image;
         }
 
         /// <summary>
@@ -4144,47 +4685,56 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Magickload(filename, out var flags, new VOption
-        /// {
-        ///     {"density", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// density (string): Canvas resolution for rendering vector formats like SVG
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Magickload(string filename, out int flags, VOption kwargs = null)
+        public static Image Magickload(string filename, out int flags, string density = null, int? page = null,
+            int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (density != null)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("density", density);
             }
 
-            var results = Operation.Call("magickload", kwargs, filename) as object[];
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("magickload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -4197,32 +4747,53 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, new VOption
-        /// {
-        ///     {"density", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// density (string): Canvas resolution for rendering vector formats like SVG
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image MagickloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image MagickloadBuffer(byte[] buffer, string density = null, int? page = null, int? n = null,
+            bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("magickload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (density != null)
+            {
+                options.Add("density", density);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("magickload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -4230,47 +4801,56 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"density", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// density (string): Canvas resolution for rendering vector formats like SVG
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image MagickloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image MagickloadBuffer(byte[] buffer, out int flags, string density = null, int? page = null,
+            int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (density != null)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("density", density);
             }
 
-            var results = Operation.Call("magickload_buffer", kwargs, buffer) as object[];
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("magickload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -4283,30 +4863,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Magicksave(filename, new VOption
-        /// {
-        ///     {"format", string},
-        ///     {"quality", int},
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Magicksave(filename, format: string, quality: int, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// format (string): Format to save in
-        /// quality (int): Quality to use
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="format">Format to save in</param>
+        /// <param name="quality">Quality to use</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Magicksave(string filename, VOption kwargs = null)
+        public void Magicksave(string filename, string format = null, int? quality = null, int? pageHeight = null,
+            bool? strip = null, double[] background = null)
         {
-            this.Call("magicksave", kwargs, filename);
+            var options = new VOption();
+
+            if (format != null)
+            {
+                options.Add("format", format);
+            }
+
+            if (quality.HasValue)
+            {
+                options.Add("quality", quality);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("magicksave", options, filename);
         }
 
         /// <summary>
@@ -4314,29 +4911,46 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.MagicksaveBuffer(new VOption
-        /// {
-        ///     {"format", string},
-        ///     {"quality", int},
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.MagicksaveBuffer(format: string, quality: int, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// format (string): Format to save in
-        /// quality (int): Quality to use
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="format">Format to save in</param>
+        /// <param name="quality">Quality to use</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] MagicksaveBuffer(VOption kwargs = null)
+        public byte[] MagicksaveBuffer(string format = null, int? quality = null, int? pageHeight = null,
+            bool? strip = null, double[] background = null)
         {
-            return this.Call("magicksave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (format != null)
+            {
+                options.Add("format", format);
+            }
+
+            if (quality.HasValue)
+            {
+                options.Add("quality", quality);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("magicksave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -4344,22 +4958,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Mapim(index, new VOption
-        /// {
-        ///     {"interpolate", GObject}
-        /// });
-        /// ]]>
+        /// Image @out = in.Mapim(index, interpolate: GObject);
         /// </code>
         /// </example>
         /// <param name="index">Index pixels with this</param>
-        /// <param name="kwargs">
-        /// interpolate (GObject): Interpolate pixels with this
-        /// </param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Mapim(Image index, VOption kwargs = null)
+        public Image Mapim(Image index, GObject interpolate = null)
         {
-            return this.Call("mapim", kwargs, index) as Image;
+            var options = new VOption();
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            return this.Call("mapim", options, index) as Image;
         }
 
         /// <summary>
@@ -4367,22 +4981,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Maplut(lut, new VOption
-        /// {
-        ///     {"band", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Maplut(lut, band: int);
         /// </code>
         /// </example>
         /// <param name="lut">Look-up table image</param>
-        /// <param name="kwargs">
-        /// band (int): apply one-band lut to this band of in
-        /// </param>
+        /// <param name="band">apply one-band lut to this band of in</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Maplut(Image lut, VOption kwargs = null)
+        public Image Maplut(Image lut, int? band = null)
         {
-            return this.Call("maplut", kwargs, lut) as Image;
+            var options = new VOption();
+
+            if (band.HasValue)
+            {
+                options.Add("band", band);
+            }
+
+            return this.Call("maplut", options, lut) as Image;
         }
 
         /// <summary>
@@ -4390,15 +5004,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -4406,17 +5012,37 @@ namespace NetVips
         /// <param name="order">Filter order</param>
         /// <param name="frequencyCutoff">Frequency cutoff</param>
         /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskButterworth(int width, int height, double order, double frequencyCutoff,
-            double amplitudeCutoff, VOption kwargs = null)
+            double amplitudeCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_butterworth", kwargs, width, height, order, frequencyCutoff,
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_butterworth", options, width, height, order, frequencyCutoff,
                 amplitudeCutoff) as Image;
         }
 
@@ -4425,15 +5051,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -4443,17 +5061,38 @@ namespace NetVips
         /// <param name="frequencyCutoffY">Frequency cutoff y</param>
         /// <param name="radius">radius of circle</param>
         /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskButterworthBand(int width, int height, double order, double frequencyCutoffX,
-            double frequencyCutoffY, double radius, double amplitudeCutoff, VOption kwargs = null)
+            double frequencyCutoffY, double radius, double amplitudeCutoff, bool? uchar = null, bool? nodc = null,
+            bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_butterworth_band", kwargs, width, height, order, frequencyCutoffX,
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_butterworth_band", options, width, height, order, frequencyCutoffX,
                 frequencyCutoffY, radius, amplitudeCutoff) as Image;
         }
 
@@ -4462,15 +5101,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -4479,17 +5110,38 @@ namespace NetVips
         /// <param name="frequencyCutoff">Frequency cutoff</param>
         /// <param name="amplitudeCutoff">Amplitude cutoff</param>
         /// <param name="ringwidth">Ringwidth</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskButterworthRing(int width, int height, double order, double frequencyCutoff,
-            double amplitudeCutoff, double ringwidth, VOption kwargs = null)
+            double amplitudeCutoff, double ringwidth, bool? uchar = null, bool? nodc = null, bool? reject = null,
+            bool? optical = null)
         {
-            return Operation.Call("mask_butterworth_ring", kwargs, width, height, order, frequencyCutoff,
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_butterworth_ring", options, width, height, order, frequencyCutoff,
                 amplitudeCutoff, ringwidth) as Image;
         }
 
@@ -4498,30 +5150,43 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         /// <param name="fractalDimension">Fractal dimension</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image MaskFractal(int width, int height, double fractalDimension, VOption kwargs = null)
+        public static Image MaskFractal(int width, int height, double fractalDimension, bool? uchar = null,
+            bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_fractal", kwargs, width, height, fractalDimension) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_fractal", options, width, height, fractalDimension) as Image;
         }
 
         /// <summary>
@@ -4529,32 +5194,44 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         /// <param name="frequencyCutoff">Frequency cutoff</param>
         /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskGaussian(int width, int height, double frequencyCutoff, double amplitudeCutoff,
-            VOption kwargs = null)
+            bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_gaussian", kwargs, width, height, frequencyCutoff, amplitudeCutoff) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_gaussian", options, width, height, frequencyCutoff, amplitudeCutoff) as Image;
         }
 
         /// <summary>
@@ -4562,15 +5239,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -4579,17 +5248,38 @@ namespace NetVips
         /// <param name="frequencyCutoffY">Frequency cutoff y</param>
         /// <param name="radius">radius of circle</param>
         /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskGaussianBand(int width, int height, double frequencyCutoffX, double frequencyCutoffY,
-            double radius, double amplitudeCutoff, VOption kwargs = null)
+            double radius, double amplitudeCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null,
+            bool? optical = null)
         {
-            return Operation.Call("mask_gaussian_band", kwargs, width, height, frequencyCutoffX, frequencyCutoffY,
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_gaussian_band", options, width, height, frequencyCutoffX, frequencyCutoffY,
                 radius, amplitudeCutoff) as Image;
         }
 
@@ -4598,15 +5288,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -4614,17 +5296,37 @@ namespace NetVips
         /// <param name="frequencyCutoff">Frequency cutoff</param>
         /// <param name="amplitudeCutoff">Amplitude cutoff</param>
         /// <param name="ringwidth">Ringwidth</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskGaussianRing(int width, int height, double frequencyCutoff, double amplitudeCutoff,
-            double ringwidth, VOption kwargs = null)
+            double ringwidth, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_gaussian_ring", kwargs, width, height, frequencyCutoff, amplitudeCutoff,
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_gaussian_ring", options, width, height, frequencyCutoff, amplitudeCutoff,
                 ringwidth) as Image;
         }
 
@@ -4633,30 +5335,43 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image MaskIdeal(int width, int height, double frequencyCutoff, VOption kwargs = null)
+        public static Image MaskIdeal(int width, int height, double frequencyCutoff, bool? uchar = null,
+            bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_ideal", kwargs, width, height, frequencyCutoff) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_ideal", options, width, height, frequencyCutoff) as Image;
         }
 
         /// <summary>
@@ -4664,15 +5379,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
@@ -4680,17 +5387,37 @@ namespace NetVips
         /// <param name="frequencyCutoffX">Frequency cutoff x</param>
         /// <param name="frequencyCutoffY">Frequency cutoff y</param>
         /// <param name="radius">radius of circle</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskIdealBand(int width, int height, double frequencyCutoffX, double frequencyCutoffY,
-            double radius, VOption kwargs = null)
+            double radius, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_ideal_band", kwargs, width, height, frequencyCutoffX, frequencyCutoffY,
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_ideal_band", options, width, height, frequencyCutoffX, frequencyCutoffY,
                 radius) as Image;
         }
 
@@ -4699,32 +5426,44 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"nodc", bool},
-        ///     {"reject", bool},
-        ///     {"optical", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         /// <param name="frequencyCutoff">Frequency cutoff</param>
         /// <param name="ringwidth">Ringwidth</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// nodc (bool): Remove DC component
-        /// reject (bool): Invert the sense of the filter
-        /// optical (bool): Rotate quadrants to optical space
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="nodc">Remove DC component</param>
+        /// <param name="reject">Invert the sense of the filter</param>
+        /// <param name="optical">Rotate quadrants to optical space</param>
         /// <returns>A new <see cref="Image"/></returns>
         public static Image MaskIdealRing(int width, int height, double frequencyCutoff, double ringwidth,
-            VOption kwargs = null)
+            bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
-            return Operation.Call("mask_ideal_ring", kwargs, width, height, frequencyCutoff, ringwidth) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (nodc.HasValue)
+            {
+                options.Add("nodc", nodc);
+            }
+
+            if (reject.HasValue)
+            {
+                options.Add("reject", reject);
+            }
+
+            if (optical.HasValue)
+            {
+                options.Add("optical", optical);
+            }
+
+            return Operation.Call("mask_ideal_ring", options, width, height, frequencyCutoff, ringwidth) as Image;
         }
 
         /// <summary>
@@ -4732,15 +5471,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"search", bool},
-        ///     {"interpolate", GObject}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -4752,17 +5483,37 @@ namespace NetVips
         /// <param name="yr2">Position of second reference tie-point</param>
         /// <param name="xs2">Position of second secondary tie-point</param>
         /// <param name="ys2">Position of second secondary tie-point</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// search (bool): Search to improve tie-points
-        /// interpolate (GObject): Interpolate pixels with this
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="search">Search to improve tie-points</param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Match(Image sec, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2,
-            VOption kwargs = null)
+            int? hwindow = null, int? harea = null, bool? search = null, GObject interpolate = null)
         {
-            return this.Call("match", kwargs, sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) as Image;
+            var options = new VOption();
+
+            if (hwindow.HasValue)
+            {
+                options.Add("hwindow", hwindow);
+            }
+
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (search.HasValue)
+            {
+                options.Add("search", search);
+            }
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            return this.Call("match", options, sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) as Image;
         }
 
         /// <summary>
@@ -4770,9 +5521,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Math(math);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="math">math to perform</param>
@@ -4787,9 +5536,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Math2(right, math2);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -4805,9 +5552,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Math2Const(math2, c);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="math2">math to perform</param>
@@ -4823,26 +5568,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Matload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Matload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Matload(string filename, VOption kwargs = null)
+        public static Image Matload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("matload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("matload", options, filename) as Image;
         }
 
         /// <summary>
@@ -4850,41 +5603,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Matload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Matload(string filename, out int flags, VOption kwargs = null)
+        public static Image Matload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("matload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("matload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -4897,26 +5647,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Matrixload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Matrixload(string filename, VOption kwargs = null)
+        public static Image Matrixload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("matrixload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("matrixload", options, filename) as Image;
         }
 
         /// <summary>
@@ -4924,41 +5682,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Matrixload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Matrixload(string filename, out int flags, VOption kwargs = null)
+        public static Image Matrixload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("matrixload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("matrixload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -4971,25 +5726,33 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Matrixprint(new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Matrixprint(pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Matrixprint(VOption kwargs = null)
+        public void Matrixprint(int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            this.Call("matrixprint", kwargs);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("matrixprint", options);
         }
 
         /// <summary>
@@ -4997,26 +5760,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Matrixsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Matrixsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Matrixsave(string filename, VOption kwargs = null)
+        public void Matrixsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            this.Call("matrixsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("matrixsave", options, filename);
         }
 
         /// <summary>
@@ -5024,21 +5795,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Max(new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Max(size: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// size (int): Number of maximum values to find
-        /// </param>
+        /// <param name="size">Number of maximum values to find</param>
         /// <returns>A double</returns>
-        public double Max(VOption kwargs = null)
+        public double Max(int? size = null)
         {
-            return this.Call("max", kwargs) is double result ? result : 0;
+            var options = new VOption();
+
+            if (size.HasValue)
+            {
+                options.Add("size", size);
+            }
+
+            return this.Call("max", options) is double result ? result : 0;
         }
 
         /// <summary>
@@ -5046,36 +5817,24 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Max(out var x, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Max(out var x, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of maximum</param>
-        /// <param name="kwargs">
-        /// size (int): Number of maximum values to find
-        /// </param>
+        /// <param name="size">Number of maximum values to find</param>
         /// <returns>A double</returns>
-        public double Max(out int x, VOption kwargs = null)
+        public double Max(out int x, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("max", kwargs) as object[];
+            options.Add("x", true);
+
+            var results = this.Call("max", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5088,38 +5847,26 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Max(out var x, out var y, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Max(out var x, out var y, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of maximum</param>
         /// <param name="y">Vertical position of maximum</param>
-        /// <param name="kwargs">
-        /// size (int): Number of maximum values to find
-        /// </param>
+        /// <param name="size">Number of maximum values to find</param>
         /// <returns>A double</returns>
-        public double Max(out int x, out int y, VOption kwargs = null)
+        public double Max(out int x, out int y, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("max", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+
+            var results = this.Call("max", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5133,40 +5880,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Max(out var x, out var y, out var outArray, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Max(out var x, out var y, out var outArray, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of maximum</param>
         /// <param name="y">Vertical position of maximum</param>
         /// <param name="outArray">Array of output values</param>
-        /// <param name="kwargs">
-        /// size (int): Number of maximum values to find
-        /// </param>
+        /// <param name="size">Number of maximum values to find</param>
         /// <returns>A double</returns>
-        public double Max(out int x, out int y, out double[] outArray, VOption kwargs = null)
+        public double Max(out int x, out int y, out double[] outArray, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true},
-                {"out_array", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("max", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+            options.Add("out_array", true);
+
+            var results = this.Call("max", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5181,42 +5916,30 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of maximum</param>
         /// <param name="y">Vertical position of maximum</param>
         /// <param name="outArray">Array of output values</param>
         /// <param name="xArray">Array of horizontal positions</param>
-        /// <param name="kwargs">
-        /// size (int): Number of maximum values to find
-        /// </param>
+        /// <param name="size">Number of maximum values to find</param>
         /// <returns>A double</returns>
-        public double Max(out int x, out int y, out double[] outArray, out int[] xArray, VOption kwargs = null)
+        public double Max(out int x, out int y, out double[] outArray, out int[] xArray, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true},
-                {"out_array", true},
-                {"x_array", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("max", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+            options.Add("out_array", true);
+            options.Add("x_array", true);
+
+            var results = this.Call("max", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5232,12 +5955,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, out var yArray, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, out var yArray, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of maximum</param>
@@ -5245,32 +5963,25 @@ namespace NetVips
         /// <param name="outArray">Array of output values</param>
         /// <param name="xArray">Array of horizontal positions</param>
         /// <param name="yArray">Array of vertical positions</param>
-        /// <param name="kwargs">
-        /// size (int): Number of maximum values to find
-        /// </param>
+        /// <param name="size">Number of maximum values to find</param>
         /// <returns>A double</returns>
         public double Max(out int x, out int y, out double[] outArray, out int[] xArray, out int[] yArray,
-            VOption kwargs = null)
+            int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true},
-                {"out_array", true},
-                {"x_array", true},
-                {"y_array", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("max", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+            options.Add("out_array", true);
+            options.Add("x_array", true);
+            options.Add("y_array", true);
+
+            var results = this.Call("max", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5287,29 +5998,41 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Measure(h, v, new VOption
-        /// {
-        ///     {"left", int},
-        ///     {"top", int},
-        ///     {"width", int},
-        ///     {"height", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Measure(h, v, left: int, top: int, width: int, height: int);
         /// </code>
         /// </example>
         /// <param name="h">Number of patches across chart</param>
         /// <param name="v">Number of patches down chart</param>
-        /// <param name="kwargs">
-        /// left (int): Left edge of extract area
-        /// top (int): Top edge of extract area
-        /// width (int): Width of extract area
-        /// height (int): Height of extract area
-        /// </param>
+        /// <param name="left">Left edge of extract area</param>
+        /// <param name="top">Top edge of extract area</param>
+        /// <param name="width">Width of extract area</param>
+        /// <param name="height">Height of extract area</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Measure(int h, int v, VOption kwargs = null)
+        public Image Measure(int h, int v, int? left = null, int? top = null, int? width = null, int? height = null)
         {
-            return this.Call("measure", kwargs, h, v) as Image;
+            var options = new VOption();
+
+            if (left.HasValue)
+            {
+                options.Add("left", left);
+            }
+
+            if (top.HasValue)
+            {
+                options.Add("top", top);
+            }
+
+            if (width.HasValue)
+            {
+                options.Add("width", width);
+            }
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            return this.Call("measure", options, h, v) as Image;
         }
 
         /// <summary>
@@ -5317,25 +6040,25 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Merge(sec, direction, dx, dy, new VOption
-        /// {
-        ///     {"mblend", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Merge(sec, direction, dx, dy, mblend: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
         /// <param name="direction">Horizontal or vertcial merge</param>
         /// <param name="dx">Horizontal displacement from sec to ref</param>
         /// <param name="dy">Vertical displacement from sec to ref</param>
-        /// <param name="kwargs">
-        /// mblend (int): Maximum blend size
-        /// </param>
+        /// <param name="mblend">Maximum blend size</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Merge(Image sec, string direction, int dx, int dy, VOption kwargs = null)
+        public Image Merge(Image sec, string direction, int dx, int dy, int? mblend = null)
         {
-            return this.Call("merge", kwargs, sec, direction, dx, dy) as Image;
+            var options = new VOption();
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            return this.Call("merge", options, sec, direction, dx, dy) as Image;
         }
 
         /// <summary>
@@ -5343,21 +6066,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Min(new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Min(size: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// size (int): Number of minimum values to find
-        /// </param>
+        /// <param name="size">Number of minimum values to find</param>
         /// <returns>A double</returns>
-        public double Min(VOption kwargs = null)
+        public double Min(int? size = null)
         {
-            return this.Call("min", kwargs) is double result ? result : 0;
+            var options = new VOption();
+
+            if (size.HasValue)
+            {
+                options.Add("size", size);
+            }
+
+            return this.Call("min", options) is double result ? result : 0;
         }
 
         /// <summary>
@@ -5365,36 +6088,24 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Min(out var x, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Min(out var x, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of minimum</param>
-        /// <param name="kwargs">
-        /// size (int): Number of minimum values to find
-        /// </param>
+        /// <param name="size">Number of minimum values to find</param>
         /// <returns>A double</returns>
-        public double Min(out int x, VOption kwargs = null)
+        public double Min(out int x, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("min", kwargs) as object[];
+            options.Add("x", true);
+
+            var results = this.Call("min", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5407,38 +6118,26 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Min(out var x, out var y, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Min(out var x, out var y, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of minimum</param>
         /// <param name="y">Vertical position of minimum</param>
-        /// <param name="kwargs">
-        /// size (int): Number of minimum values to find
-        /// </param>
+        /// <param name="size">Number of minimum values to find</param>
         /// <returns>A double</returns>
-        public double Min(out int x, out int y, VOption kwargs = null)
+        public double Min(out int x, out int y, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("min", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+
+            var results = this.Call("min", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5452,40 +6151,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Min(out var x, out var y, out var outArray, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Min(out var x, out var y, out var outArray, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of minimum</param>
         /// <param name="y">Vertical position of minimum</param>
         /// <param name="outArray">Array of output values</param>
-        /// <param name="kwargs">
-        /// size (int): Number of minimum values to find
-        /// </param>
+        /// <param name="size">Number of minimum values to find</param>
         /// <returns>A double</returns>
-        public double Min(out int x, out int y, out double[] outArray, VOption kwargs = null)
+        public double Min(out int x, out int y, out double[] outArray, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true},
-                {"out_array", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("min", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+            options.Add("out_array", true);
+
+            var results = this.Call("min", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5500,42 +6187,30 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of minimum</param>
         /// <param name="y">Vertical position of minimum</param>
         /// <param name="outArray">Array of output values</param>
         /// <param name="xArray">Array of horizontal positions</param>
-        /// <param name="kwargs">
-        /// size (int): Number of minimum values to find
-        /// </param>
+        /// <param name="size">Number of minimum values to find</param>
         /// <returns>A double</returns>
-        public double Min(out int x, out int y, out double[] outArray, out int[] xArray, VOption kwargs = null)
+        public double Min(out int x, out int y, out double[] outArray, out int[] xArray, int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true},
-                {"out_array", true},
-                {"x_array", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("min", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+            options.Add("out_array", true);
+            options.Add("x_array", true);
+
+            var results = this.Call("min", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5551,12 +6226,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, out var yArray, new VOption
-        /// {
-        ///     {"size", int}
-        /// });
-        /// ]]>
+        /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, out var yArray, size: int);
         /// </code>
         /// </example>
         /// <param name="x">Horizontal position of minimum</param>
@@ -5564,32 +6234,25 @@ namespace NetVips
         /// <param name="outArray">Array of output values</param>
         /// <param name="xArray">Array of horizontal positions</param>
         /// <param name="yArray">Array of vertical positions</param>
-        /// <param name="kwargs">
-        /// size (int): Number of minimum values to find
-        /// </param>
+        /// <param name="size">Number of minimum values to find</param>
         /// <returns>A double</returns>
         public double Min(out int x, out int y, out double[] outArray, out int[] xArray, out int[] yArray,
-            VOption kwargs = null)
+            int? size = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"x", true},
-                {"y", true},
-                {"out_array", true},
-                {"x_array", true},
-                {"y_array", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (size.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("size", size);
             }
 
-            var results = this.Call("min", kwargs) as object[];
+            options.Add("x", true);
+            options.Add("y", true);
+            options.Add("out_array", true);
+            options.Add("x_array", true);
+            options.Add("y_array", true);
+
+            var results = this.Call("min", options) as object[];
             var finalResult = results?[0] is double result ? result : 0;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
@@ -5606,9 +6269,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Morph(mask, morph);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image</param>
@@ -5624,15 +6285,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5641,16 +6294,37 @@ namespace NetVips
         /// <param name="yref">Position of reference tie-point</param>
         /// <param name="xsec">Position of secondary tie-point</param>
         /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, VOption kwargs = null)
+        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, int? hwindow = null,
+            int? harea = null, int? mblend = null, int? bandno = null)
         {
-            return this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as Image;
+            var options = new VOption();
+
+            if (hwindow.HasValue)
+            {
+                options.Add("hwindow", hwindow);
+            }
+
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            return this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as Image;
         }
 
         /// <summary>
@@ -5658,15 +6332,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5676,31 +6342,39 @@ namespace NetVips
         /// <param name="xsec">Position of secondary tie-point</param>
         /// <param name="ysec">Position of secondary tie-point</param>
         /// <param name="dx0">Detected integer offset</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
-            VOption kwargs = null)
+            int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"dx0", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (hwindow.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("hwindow", hwindow);
             }
 
-            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            options.Add("dx0", true);
+
+            var results = this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
@@ -5713,15 +6387,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5732,32 +6398,40 @@ namespace NetVips
         /// <param name="ysec">Position of secondary tie-point</param>
         /// <param name="dx0">Detected integer offset</param>
         /// <param name="dy0">Detected integer offset</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
-            out int dy0, VOption kwargs = null)
+            out int dy0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"dx0", true},
-                {"dy0", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (hwindow.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("hwindow", hwindow);
             }
 
-            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            options.Add("dx0", true);
+            options.Add("dy0", true);
+
+            var results = this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
@@ -5771,15 +6445,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5791,33 +6457,42 @@ namespace NetVips
         /// <param name="dx0">Detected integer offset</param>
         /// <param name="dy0">Detected integer offset</param>
         /// <param name="scale1">Detected scale</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
-            out int dy0, out double scale1, VOption kwargs = null)
+            out int dy0, out double scale1, int? hwindow = null, int? harea = null, int? mblend = null,
+            int? bandno = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"dx0", true},
-                {"dy0", true},
-                {"scale1", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (hwindow.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("hwindow", hwindow);
             }
 
-            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            options.Add("dx0", true);
+            options.Add("dy0", true);
+            options.Add("scale1", true);
+
+            var results = this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
@@ -5832,15 +6507,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5853,34 +6520,43 @@ namespace NetVips
         /// <param name="dy0">Detected integer offset</param>
         /// <param name="scale1">Detected scale</param>
         /// <param name="angle1">Detected rotation</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
-            out int dy0, out double scale1, out double angle1, VOption kwargs = null)
+            out int dy0, out double scale1, out double angle1, int? hwindow = null, int? harea = null,
+            int? mblend = null, int? bandno = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"dx0", true},
-                {"dy0", true},
-                {"scale1", true},
-                {"angle1", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (hwindow.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("hwindow", hwindow);
             }
 
-            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            options.Add("dx0", true);
+            options.Add("dy0", true);
+            options.Add("scale1", true);
+            options.Add("angle1", true);
+
+            var results = this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
@@ -5896,15 +6572,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5918,35 +6586,44 @@ namespace NetVips
         /// <param name="scale1">Detected scale</param>
         /// <param name="angle1">Detected rotation</param>
         /// <param name="dy1">Detected first-order displacement</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
-            out int dy0, out double scale1, out double angle1, out double dy1, VOption kwargs = null)
+            out int dy0, out double scale1, out double angle1, out double dy1, int? hwindow = null, int? harea = null,
+            int? mblend = null, int? bandno = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"dx0", true},
-                {"dy0", true},
-                {"scale1", true},
-                {"angle1", true},
-                {"dy1", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (hwindow.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("hwindow", hwindow);
             }
 
-            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            options.Add("dx0", true);
+            options.Add("dy0", true);
+            options.Add("scale1", true);
+            options.Add("angle1", true);
+            options.Add("dy1", true);
+
+            var results = this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
@@ -5963,15 +6640,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -5986,36 +6655,45 @@ namespace NetVips
         /// <param name="angle1">Detected rotation</param>
         /// <param name="dy1">Detected first-order displacement</param>
         /// <param name="dx1">Detected first-order displacement</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0,
-            out int dy0, out double scale1, out double angle1, out double dy1, out double dx1, VOption kwargs = null)
+            out int dy0, out double scale1, out double angle1, out double dy1, out double dx1, int? hwindow = null,
+            int? harea = null, int? mblend = null, int? bandno = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"dx0", true},
-                {"dy0", true},
-                {"scale1", true},
-                {"angle1", true},
-                {"dy1", true},
-                {"dx1", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (hwindow.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("hwindow", hwindow);
             }
 
-            var results = this.Call("mosaic", kwargs, sec, direction, xref, yref, xsec, ysec) as object[];
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            options.Add("dx0", true);
+            options.Add("dy0", true);
+            options.Add("scale1", true);
+            options.Add("angle1", true);
+            options.Add("dy1", true);
+            options.Add("dx1", true);
+
+            var results = this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
@@ -6033,17 +6711,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, new VOption
-        /// {
-        ///     {"hwindow", int},
-        ///     {"harea", int},
-        ///     {"search", bool},
-        ///     {"interpolate", GObject},
-        ///     {"mblend", int},
-        ///     {"bandno", int}
-        /// });
-        /// ]]>
+        /// Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image</param>
@@ -6056,19 +6724,50 @@ namespace NetVips
         /// <param name="yr2">Position of second reference tie-point</param>
         /// <param name="xs2">Position of second secondary tie-point</param>
         /// <param name="ys2">Position of second secondary tie-point</param>
-        /// <param name="kwargs">
-        /// hwindow (int): Half window size
-        /// harea (int): Half area size
-        /// search (bool): Search to improve tie-points
-        /// interpolate (GObject): Interpolate pixels with this
-        /// mblend (int): Maximum blend size
-        /// bandno (int): Band to search for features on
-        /// </param>
+        /// <param name="hwindow">Half window size</param>
+        /// <param name="harea">Half area size</param>
+        /// <param name="search">Search to improve tie-points</param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
+        /// <param name="mblend">Maximum blend size</param>
+        /// <param name="bandno">Band to search for features on</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Mosaic1(Image sec, string direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2,
-            int ys2, VOption kwargs = null)
+            int ys2, int? hwindow = null, int? harea = null, bool? search = null, GObject interpolate = null,
+            int? mblend = null, int? bandno = null)
         {
-            return this.Call("mosaic1", kwargs, sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) as Image;
+            var options = new VOption();
+
+            if (hwindow.HasValue)
+            {
+                options.Add("hwindow", hwindow);
+            }
+
+            if (harea.HasValue)
+            {
+                options.Add("harea", harea);
+            }
+
+            if (search.HasValue)
+            {
+                options.Add("search", search);
+            }
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            if (mblend.HasValue)
+            {
+                options.Add("mblend", mblend);
+            }
+
+            if (bandno.HasValue)
+            {
+                options.Add("bandno", bandno);
+            }
+
+            return this.Call("mosaic1", options, sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) as Image;
         }
 
         /// <summary>
@@ -6076,21 +6775,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Msb(new VOption
-        /// {
-        ///     {"band", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Msb(band: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// band (int): Band to msb
-        /// </param>
+        /// <param name="band">Band to msb</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Msb(VOption kwargs = null)
+        public Image Msb(int? band = null)
         {
-            return this.Call("msb", kwargs) as Image;
+            var options = new VOption();
+
+            if (band.HasValue)
+            {
+                options.Add("band", band);
+            }
+
+            return this.Call("msb", options) as Image;
         }
 
         /// <summary>
@@ -6098,9 +6797,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Multiply(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -6115,34 +6812,59 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Openslideload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"level", int},
-        ///     {"autocrop", bool},
-        ///     {"fail", bool},
-        ///     {"associated", string},
-        ///     {"attach_associated", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Openslideload(filename, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string, attachAssociated: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// level (int): Load this level from the file
-        /// autocrop (bool): Crop to image bounds
-        /// fail (bool): Fail on first error
-        /// associated (string): Load this associated image
-        /// attach_associated (bool): Attach all asssociated images
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="level">Load this level from the file</param>
+        /// <param name="autocrop">Crop to image bounds</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="associated">Load this associated image</param>
+        /// <param name="attachAssociated">Attach all asssociated images</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Openslideload(string filename, VOption kwargs = null)
+        public static Image Openslideload(string filename, bool? memory = null, string access = null, int? level = null,
+            bool? autocrop = null, bool? fail = null, string associated = null, bool? attachAssociated = null)
         {
-            return Operation.Call("openslideload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (level.HasValue)
+            {
+                options.Add("level", level);
+            }
+
+            if (autocrop.HasValue)
+            {
+                options.Add("autocrop", autocrop);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (associated != null)
+            {
+                options.Add("associated", associated);
+            }
+
+            if (attachAssociated.HasValue)
+            {
+                options.Add("attach_associated", attachAssociated);
+            }
+
+            return Operation.Call("openslideload", options, filename) as Image;
         }
 
         /// <summary>
@@ -6150,49 +6872,63 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"level", int},
-        ///     {"autocrop", bool},
-        ///     {"fail", bool},
-        ///     {"associated", string},
-        ///     {"attach_associated", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string, attachAssociated: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// level (int): Load this level from the file
-        /// autocrop (bool): Crop to image bounds
-        /// fail (bool): Fail on first error
-        /// associated (string): Load this associated image
-        /// attach_associated (bool): Attach all asssociated images
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="level">Load this level from the file</param>
+        /// <param name="autocrop">Crop to image bounds</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="associated">Load this associated image</param>
+        /// <param name="attachAssociated">Attach all asssociated images</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Openslideload(string filename, out int flags, VOption kwargs = null)
+        public static Image Openslideload(string filename, out int flags, bool? memory = null, string access = null,
+            int? level = null, bool? autocrop = null, bool? fail = null, string associated = null,
+            bool? attachAssociated = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("openslideload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (level.HasValue)
+            {
+                options.Add("level", level);
+            }
+
+            if (autocrop.HasValue)
+            {
+                options.Add("autocrop", autocrop);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (associated != null)
+            {
+                options.Add("associated", associated);
+            }
+
+            if (attachAssociated.HasValue)
+            {
+                options.Add("attach_associated", attachAssociated);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("openslideload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6205,34 +6941,59 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Pdfload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"dpi", double},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Pdfload(filename, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// dpi (double): Render at this DPI
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Pdfload(string filename, VOption kwargs = null)
+        public static Image Pdfload(string filename, bool? memory = null, string access = null, int? page = null,
+            int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
         {
-            return Operation.Call("pdfload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            return Operation.Call("pdfload", options, filename) as Image;
         }
 
         /// <summary>
@@ -6240,49 +7001,62 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"dpi", double},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// dpi (double): Render at this DPI
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Pdfload(string filename, out int flags, VOption kwargs = null)
+        public static Image Pdfload(string filename, out int flags, bool? memory = null, string access = null,
+            int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("pdfload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("pdfload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6295,34 +7069,59 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"dpi", double},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// dpi (double): Render at this DPI
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image PdfloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image PdfloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? page = null,
+            int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
         {
-            return Operation.Call("pdfload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            return Operation.Call("pdfload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -6330,49 +7129,62 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"dpi", double},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the file
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// dpi (double): Render at this DPI
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the file</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image PdfloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image PdfloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null,
+            int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("pdfload_buffer", kwargs, buffer) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("pdfload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6385,9 +7197,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// int threshold = in.Percent(percent);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="percent">Percent of pixels</param>
@@ -6402,25 +7212,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Perlin(width, height, new VOption
-        /// {
-        ///     {"cell_size", int},
-        ///     {"uchar", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Perlin(width, height, cellSize: int, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// cell_size (int): Size of Perlin cells
-        /// uchar (bool): Output an unsigned char image
-        /// </param>
+        /// <param name="cellSize">Size of Perlin cells</param>
+        /// <param name="uchar">Output an unsigned char image</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Perlin(int width, int height, VOption kwargs = null)
+        public static Image Perlin(int width, int height, int? cellSize = null, bool? uchar = null)
         {
-            return Operation.Call("perlin", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (cellSize.HasValue)
+            {
+                options.Add("cell_size", cellSize);
+            }
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            return Operation.Call("perlin", options, width, height) as Image;
         }
 
         /// <summary>
@@ -6428,9 +7242,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Phasecor(in2);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="in2">Second input image</param>
@@ -6445,26 +7257,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Pngload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Pngload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Pngload(string filename, VOption kwargs = null)
+        public static Image Pngload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("pngload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("pngload", options, filename) as Image;
         }
 
         /// <summary>
@@ -6472,41 +7292,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Pngload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Pngload(string filename, out int flags, VOption kwargs = null)
+        public static Image Pngload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("pngload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("pngload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6519,26 +7336,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.PngloadBuffer(buffer, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image PngloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image PngloadBuffer(byte[] buffer, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("pngload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("pngload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -6546,41 +7371,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image PngloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image PngloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("pngload_buffer", kwargs, buffer) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("pngload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6593,34 +7415,59 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Pngsave(filename, new VOption
-        /// {
-        ///     {"compression", int},
-        ///     {"interlace", bool},
-        ///     {"page_height", int},
-        ///     {"profile", string},
-        ///     {"filter", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Pngsave(filename, compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// compression (int): Compression factor
-        /// interlace (bool): Interlace image
-        /// page_height (int): Set page height for multipage save
-        /// profile (string): ICC profile to embed
-        /// filter (int): libpng row filter flag(s)
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="compression">Compression factor</param>
+        /// <param name="interlace">Interlace image</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="filter">libpng row filter flag(s)</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Pngsave(string filename, VOption kwargs = null)
+        public void Pngsave(string filename, int? compression = null, bool? interlace = null, int? pageHeight = null,
+            string profile = null, int? filter = null, bool? strip = null, double[] background = null)
         {
-            this.Call("pngsave", kwargs, filename);
+            var options = new VOption();
+
+            if (compression.HasValue)
+            {
+                options.Add("compression", compression);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add("interlace", interlace);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (filter.HasValue)
+            {
+                options.Add("filter", filter);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("pngsave", options, filename);
         }
 
         /// <summary>
@@ -6628,33 +7475,58 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.PngsaveBuffer(new VOption
-        /// {
-        ///     {"compression", int},
-        ///     {"interlace", bool},
-        ///     {"page_height", int},
-        ///     {"profile", string},
-        ///     {"filter", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// compression (int): Compression factor
-        /// interlace (bool): Interlace image
-        /// page_height (int): Set page height for multipage save
-        /// profile (string): ICC profile to embed
-        /// filter (int): libpng row filter flag(s)
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="compression">Compression factor</param>
+        /// <param name="interlace">Interlace image</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="filter">libpng row filter flag(s)</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] PngsaveBuffer(VOption kwargs = null)
+        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, int? pageHeight = null,
+            string profile = null, int? filter = null, bool? strip = null, double[] background = null)
         {
-            return this.Call("pngsave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (compression.HasValue)
+            {
+                options.Add("compression", compression);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add("interlace", interlace);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (filter.HasValue)
+            {
+                options.Add("filter", filter);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("pngsave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -6662,26 +7534,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Ppmload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Ppmload(string filename, VOption kwargs = null)
+        public static Image Ppmload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("ppmload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("ppmload", options, filename) as Image;
         }
 
         /// <summary>
@@ -6689,41 +7569,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Ppmload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Ppmload(string filename, out int flags, VOption kwargs = null)
+        public static Image Ppmload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("ppmload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("ppmload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6736,30 +7613,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Ppmsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"ascii", bool},
-        ///     {"squash", bool},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Ppmsave(filename, pageHeight: int, ascii: bool, squash: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// ascii (bool): save as ascii
-        /// squash (bool): save as one bit
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="ascii">save as ascii</param>
+        /// <param name="squash">save as one bit</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Ppmsave(string filename, VOption kwargs = null)
+        public void Ppmsave(string filename, int? pageHeight = null, bool? ascii = null, bool? squash = null,
+            bool? strip = null, double[] background = null)
         {
-            this.Call("ppmsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (ascii.HasValue)
+            {
+                options.Add("ascii", ascii);
+            }
+
+            if (squash.HasValue)
+            {
+                options.Add("squash", squash);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("ppmsave", options, filename);
         }
 
         /// <summary>
@@ -6767,21 +7661,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Premultiply(new VOption
-        /// {
-        ///     {"max_alpha", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Premultiply(maxAlpha: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// max_alpha (double): Maximum value of alpha channel
-        /// </param>
+        /// <param name="maxAlpha">Maximum value of alpha channel</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Premultiply(VOption kwargs = null)
+        public Image Premultiply(double? maxAlpha = null)
         {
-            return this.Call("premultiply", kwargs) as Image;
+            var options = new VOption();
+
+            if (maxAlpha.HasValue)
+            {
+                options.Add("max_alpha", maxAlpha);
+            }
+
+            return this.Call("premultiply", options) as Image;
         }
 
         /// <summary>
@@ -6789,9 +7683,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// var output = in.Profile();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>An array of objects</returns>
@@ -6805,9 +7697,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// var output = in.Project();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>An array of objects</returns>
@@ -6821,22 +7711,22 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Quadratic(coeff, new VOption
-        /// {
-        ///     {"interpolate", GObject}
-        /// });
-        /// ]]>
+        /// Image @out = in.Quadratic(coeff, interpolate: GObject);
         /// </code>
         /// </example>
         /// <param name="coeff">Coefficient matrix</param>
-        /// <param name="kwargs">
-        /// interpolate (GObject): Interpolate values with this
-        /// </param>
+        /// <param name="interpolate">Interpolate values with this</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Quadratic(Image coeff, VOption kwargs = null)
+        public Image Quadratic(Image coeff, GObject interpolate = null)
         {
-            return this.Call("quadratic", kwargs, coeff) as Image;
+            var options = new VOption();
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            return this.Call("quadratic", options, coeff) as Image;
         }
 
         /// <summary>
@@ -6844,9 +7734,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Rad2float();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -6860,26 +7748,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Radload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Radload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Radload(string filename, VOption kwargs = null)
+        public static Image Radload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("radload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("radload", options, filename) as Image;
         }
 
         /// <summary>
@@ -6887,41 +7783,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Radload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Radload(string filename, out int flags, VOption kwargs = null)
+        public static Image Radload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("radload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("radload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -6934,26 +7827,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Radsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Radsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Radsave(string filename, VOption kwargs = null)
+        public void Radsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            this.Call("radsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("radsave", options, filename);
         }
 
         /// <summary>
@@ -6961,25 +7862,33 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.RadsaveBuffer(new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.RadsaveBuffer(pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] RadsaveBuffer(VOption kwargs = null)
+        public byte[] RadsaveBuffer(int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            return this.Call("radsave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("radsave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -6987,9 +7896,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Rank(width, height, index);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="width">Window width in pixels</param>
@@ -7002,115 +7909,38 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load raw data from a file
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool},
-        ///     {"offset", object}
-        /// });
-        /// ]]>
-        /// </code>
-        /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="bands">Number of bands in image</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// offset (object): Offset in bytes from start of file
-        /// </param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image Rawload(string filename, int width, int height, int bands, VOption kwargs = null)
-        {
-            return Operation.Call("rawload", kwargs, filename, width, height, bands) as Image;
-        }
-
-        /// <summary>
-        /// Load raw data from a file
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool},
-        ///     {"offset", object}
-        /// });
-        /// ]]>
-        /// </code>
-        /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="bands">Number of bands in image</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// offset (object): Offset in bytes from start of file
-        /// </param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image Rawload(string filename, int width, int height, int bands, out int flags,
-            VOption kwargs = null)
-        {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
-
-            if (kwargs != null)
-            {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
-            }
-
-            var results = Operation.Call("rawload", kwargs, filename, width, height, bands) as object[];
-            var finalResult = results?[0] as Image;
-            var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
-
-            return finalResult;
-        }
-
-        /// <summary>
         /// Save image to raw file
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Rawsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Rawsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Rawsave(string filename, VOption kwargs = null)
+        public void Rawsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            this.Call("rawsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("rawsave", options, filename);
         }
 
         /// <summary>
@@ -7118,26 +7948,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.RawsaveFd(fd, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.RawsaveFd(fd, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="fd">File descriptor to write to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void RawsaveFd(int fd, VOption kwargs = null)
+        public void RawsaveFd(int fd, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            this.Call("rawsave_fd", kwargs, fd);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("rawsave_fd", options, fd);
         }
 
         /// <summary>
@@ -7145,9 +7983,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Recomb(m);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="m">matrix of coefficients</param>
@@ -7162,25 +7998,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Reduce(hshrink, vshrink, new VOption
-        /// {
-        ///     {"kernel", string},
-        ///     {"centre", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Reduce(hshrink, vshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor</param>
         /// <param name="vshrink">Vertical shrink factor</param>
-        /// <param name="kwargs">
-        /// kernel (string): Resampling kernel
-        /// centre (bool): Use centre sampling convention
-        /// </param>
+        /// <param name="kernel">Resampling kernel</param>
+        /// <param name="centre">Use centre sampling convention</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Reduce(double hshrink, double vshrink, VOption kwargs = null)
+        public Image Reduce(double hshrink, double vshrink, string kernel = null, bool? centre = null)
         {
-            return this.Call("reduce", kwargs, hshrink, vshrink) as Image;
+            var options = new VOption();
+
+            if (kernel != null)
+            {
+                options.Add("kernel", kernel);
+            }
+
+            if (centre.HasValue)
+            {
+                options.Add("centre", centre);
+            }
+
+            return this.Call("reduce", options, hshrink, vshrink) as Image;
         }
 
         /// <summary>
@@ -7188,24 +8028,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Reduceh(hshrink, new VOption
-        /// {
-        ///     {"kernel", string},
-        ///     {"centre", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Reduceh(hshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor</param>
-        /// <param name="kwargs">
-        /// kernel (string): Resampling kernel
-        /// centre (bool): Use centre sampling convention
-        /// </param>
+        /// <param name="kernel">Resampling kernel</param>
+        /// <param name="centre">Use centre sampling convention</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Reduceh(double hshrink, VOption kwargs = null)
+        public Image Reduceh(double hshrink, string kernel = null, bool? centre = null)
         {
-            return this.Call("reduceh", kwargs, hshrink) as Image;
+            var options = new VOption();
+
+            if (kernel != null)
+            {
+                options.Add("kernel", kernel);
+            }
+
+            if (centre.HasValue)
+            {
+                options.Add("centre", centre);
+            }
+
+            return this.Call("reduceh", options, hshrink) as Image;
         }
 
         /// <summary>
@@ -7213,24 +8057,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Reducev(vshrink, new VOption
-        /// {
-        ///     {"kernel", string},
-        ///     {"centre", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Reducev(vshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
         /// <param name="vshrink">Vertical shrink factor</param>
-        /// <param name="kwargs">
-        /// kernel (string): Resampling kernel
-        /// centre (bool): Use centre sampling convention
-        /// </param>
+        /// <param name="kernel">Resampling kernel</param>
+        /// <param name="centre">Use centre sampling convention</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Reducev(double vshrink, VOption kwargs = null)
+        public Image Reducev(double vshrink, string kernel = null, bool? centre = null)
         {
-            return this.Call("reducev", kwargs, vshrink) as Image;
+            var options = new VOption();
+
+            if (kernel != null)
+            {
+                options.Add("kernel", kernel);
+            }
+
+            if (centre.HasValue)
+            {
+                options.Add("centre", centre);
+            }
+
+            return this.Call("reducev", options, vshrink) as Image;
         }
 
         /// <summary>
@@ -7238,9 +8086,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Relational(right, relational);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -7256,9 +8102,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.RelationalConst(relational, c);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="relational">relational to perform</param>
@@ -7274,9 +8118,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Remainder(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -7291,9 +8133,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.RemainderConst(c);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="c">Array of constants</param>
@@ -7308,9 +8148,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Replicate(across, down);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="across">Repeat this many times horizontally</param>
@@ -7326,24 +8164,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Resize(scale, new VOption
-        /// {
-        ///     {"kernel", string},
-        ///     {"vscale", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Resize(scale, kernel: string, vscale: double);
         /// </code>
         /// </example>
         /// <param name="scale">Scale image by this factor</param>
-        /// <param name="kwargs">
-        /// kernel (string): Resampling kernel
-        /// vscale (double): Vertical scale image by this factor
-        /// </param>
+        /// <param name="kernel">Resampling kernel</param>
+        /// <param name="vscale">Vertical scale image by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Resize(double scale, VOption kwargs = null)
+        public Image Resize(double scale, string kernel = null, double? vscale = null)
         {
-            return this.Call("resize", kwargs, scale) as Image;
+            var options = new VOption();
+
+            if (kernel != null)
+            {
+                options.Add("kernel", kernel);
+            }
+
+            if (vscale.HasValue)
+            {
+                options.Add("vscale", vscale);
+            }
+
+            return this.Call("resize", options, scale) as Image;
         }
 
         /// <summary>
@@ -7351,9 +8193,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Rot(angle);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="angle">Angle to rotate image</param>
@@ -7368,21 +8208,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Rot45(new VOption
-        /// {
-        ///     {"angle", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.Rot45(angle: string);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// angle (string): Angle to rotate image
-        /// </param>
+        /// <param name="angle">Angle to rotate image</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Rot45(VOption kwargs = null)
+        public Image Rot45(string angle = null)
         {
-            return this.Call("rot45", kwargs) as Image;
+            var options = new VOption();
+
+            if (angle != null)
+            {
+                options.Add("angle", angle);
+            }
+
+            return this.Call("rot45", options) as Image;
         }
 
         /// <summary>
@@ -7390,9 +8230,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Round(round);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="round">rounding operation to perform</param>
@@ -7407,21 +8245,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.ScRGB2BW(new VOption
-        /// {
-        ///     {"depth", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.ScRGB2BW(depth: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// depth (int): Output device space depth in bits
-        /// </param>
+        /// <param name="depth">Output device space depth in bits</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image ScRGB2BW(VOption kwargs = null)
+        public Image ScRGB2BW(int? depth = null)
         {
-            return this.Call("scRGB2BW", kwargs) as Image;
+            var options = new VOption();
+
+            if (depth.HasValue)
+            {
+                options.Add("depth", depth);
+            }
+
+            return this.Call("scRGB2BW", options) as Image;
         }
 
         /// <summary>
@@ -7429,21 +8267,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.ScRGB2sRGB(new VOption
-        /// {
-        ///     {"depth", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.ScRGB2sRGB(depth: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// depth (int): Output device space depth in bits
-        /// </param>
+        /// <param name="depth">Output device space depth in bits</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image ScRGB2sRGB(VOption kwargs = null)
+        public Image ScRGB2sRGB(int? depth = null)
         {
-            return this.Call("scRGB2sRGB", kwargs) as Image;
+            var options = new VOption();
+
+            if (depth.HasValue)
+            {
+                options.Add("depth", depth);
+            }
+
+            return this.Call("scRGB2sRGB", options) as Image;
         }
 
         /// <summary>
@@ -7451,9 +8289,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.ScRGB2XYZ();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -7467,21 +8303,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Sequential(new VOption
-        /// {
-        ///     {"tile_height", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Sequential(tileHeight: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// tile_height (int): Tile height in pixels
-        /// </param>
+        /// <param name="tileHeight">Tile height in pixels</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Sequential(VOption kwargs = null)
+        public Image Sequential(int? tileHeight = null)
         {
-            return this.Call("sequential", kwargs) as Image;
+            var options = new VOption();
+
+            if (tileHeight.HasValue)
+            {
+                options.Add("tile_height", tileHeight);
+            }
+
+            return this.Call("sequential", options) as Image;
         }
 
         /// <summary>
@@ -7489,31 +8325,52 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Sharpen(new VOption
-        /// {
-        ///     {"sigma", double},
-        ///     {"x1", double},
-        ///     {"y2", double},
-        ///     {"y3", double},
-        ///     {"m1", double},
-        ///     {"m2", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Sharpen(sigma: double, x1: double, y2: double, y3: double, m1: double, m2: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// sigma (double): Sigma of Gaussian
-        /// x1 (double): Flat/jaggy threshold
-        /// y2 (double): Maximum brightening
-        /// y3 (double): Maximum darkening
-        /// m1 (double): Slope for flat areas
-        /// m2 (double): Slope for jaggy areas
-        /// </param>
+        /// <param name="sigma">Sigma of Gaussian</param>
+        /// <param name="x1">Flat/jaggy threshold</param>
+        /// <param name="y2">Maximum brightening</param>
+        /// <param name="y3">Maximum darkening</param>
+        /// <param name="m1">Slope for flat areas</param>
+        /// <param name="m2">Slope for jaggy areas</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Sharpen(VOption kwargs = null)
+        public Image Sharpen(double? sigma = null, double? x1 = null, double? y2 = null, double? y3 = null,
+            double? m1 = null, double? m2 = null)
         {
-            return this.Call("sharpen", kwargs) as Image;
+            var options = new VOption();
+
+            if (sigma.HasValue)
+            {
+                options.Add("sigma", sigma);
+            }
+
+            if (x1.HasValue)
+            {
+                options.Add("x1", x1);
+            }
+
+            if (y2.HasValue)
+            {
+                options.Add("y2", y2);
+            }
+
+            if (y3.HasValue)
+            {
+                options.Add("y3", y3);
+            }
+
+            if (m1.HasValue)
+            {
+                options.Add("m1", m1);
+            }
+
+            if (m2.HasValue)
+            {
+                options.Add("m2", m2);
+            }
+
+            return this.Call("sharpen", options) as Image;
         }
 
         /// <summary>
@@ -7521,9 +8378,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Shrink(hshrink, vshrink);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor</param>
@@ -7539,9 +8394,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Shrinkh(hshrink);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor</param>
@@ -7556,9 +8409,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Shrinkv(vshrink);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="vshrink">Vertical shrink factor</param>
@@ -7573,9 +8424,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Sign();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -7589,35 +8438,64 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Similarity(new VOption
-        /// {
-        ///     {"background", double[]},
-        ///     {"interpolate", GObject},
-        ///     {"scale", double},
-        ///     {"angle", double},
-        ///     {"odx", double},
-        ///     {"ody", double},
-        ///     {"idx", double},
-        ///     {"idy", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Similarity(background: double[], interpolate: GObject, scale: double, angle: double, odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// background (double[]): Background value
-        /// interpolate (GObject): Interpolate pixels with this
-        /// scale (double): Scale by this factor
-        /// angle (double): Rotate anticlockwise by this many degrees
-        /// odx (double): Horizontal output displacement
-        /// ody (double): Vertical output displacement
-        /// idx (double): Horizontal input displacement
-        /// idy (double): Vertical input displacement
-        /// </param>
+        /// <param name="background">Background value</param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
+        /// <param name="scale">Scale by this factor</param>
+        /// <param name="angle">Rotate anticlockwise by this many degrees</param>
+        /// <param name="odx">Horizontal output displacement</param>
+        /// <param name="ody">Vertical output displacement</param>
+        /// <param name="idx">Horizontal input displacement</param>
+        /// <param name="idy">Vertical input displacement</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Similarity(VOption kwargs = null)
+        public Image Similarity(double[] background = null, GObject interpolate = null, double? scale = null,
+            double? angle = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null)
         {
-            return this.Call("similarity", kwargs) as Image;
+            var options = new VOption();
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            if (angle.HasValue)
+            {
+                options.Add("angle", angle);
+            }
+
+            if (odx.HasValue)
+            {
+                options.Add("odx", odx);
+            }
+
+            if (ody.HasValue)
+            {
+                options.Add("ody", ody);
+            }
+
+            if (idx.HasValue)
+            {
+                options.Add("idx", idx);
+            }
+
+            if (idy.HasValue)
+            {
+                options.Add("idy", idy);
+            }
+
+            return this.Call("similarity", options) as Image;
         }
 
         /// <summary>
@@ -7625,27 +8503,35 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Sines(width, height, new VOption
-        /// {
-        ///     {"uchar", bool},
-        ///     {"hfreq", double},
-        ///     {"vfreq", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Sines(width, height, uchar: bool, hfreq: double, vfreq: double);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// hfreq (double): Horizontal spatial frequency
-        /// vfreq (double): Vertical spatial frequency
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
+        /// <param name="hfreq">Horizontal spatial frequency</param>
+        /// <param name="vfreq">Vertical spatial frequency</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Sines(int width, int height, VOption kwargs = null)
+        public static Image Sines(int width, int height, bool? uchar = null, double? hfreq = null, double? vfreq = null)
         {
-            return Operation.Call("sines", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            if (hfreq.HasValue)
+            {
+                options.Add("hfreq", hfreq);
+            }
+
+            if (vfreq.HasValue)
+            {
+                options.Add("vfreq", vfreq);
+            }
+
+            return Operation.Call("sines", options, width, height) as Image;
         }
 
         /// <summary>
@@ -7653,23 +8539,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = input.Smartcrop(width, height, new VOption
-        /// {
-        ///     {"interesting", string}
-        /// });
-        /// ]]>
+        /// Image @out = input.Smartcrop(width, height, interesting: string);
         /// </code>
         /// </example>
         /// <param name="width">Width of extract area</param>
         /// <param name="height">Height of extract area</param>
-        /// <param name="kwargs">
-        /// interesting (string): How to measure interestingness
-        /// </param>
+        /// <param name="interesting">How to measure interestingness</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Smartcrop(int width, int height, VOption kwargs = null)
+        public Image Smartcrop(int width, int height, string interesting = null)
         {
-            return this.Call("smartcrop", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (interesting != null)
+            {
+                options.Add("interesting", interesting);
+            }
+
+            return this.Call("smartcrop", options, width, height) as Image;
         }
 
         /// <summary>
@@ -7677,9 +8563,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Spcor(@ref);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="ref">Input reference image</param>
@@ -7694,9 +8578,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Spectrum();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -7710,9 +8592,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.SRGB2HSV();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -7726,9 +8606,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.SRGB2scRGB();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -7742,9 +8620,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Stats();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -7758,29 +8634,42 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Stdif(width, height, new VOption
-        /// {
-        ///     {"s0", double},
-        ///     {"b", double},
-        ///     {"m0", double},
-        ///     {"a", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Stdif(width, height, s0: double, b: double, m0: double, a: double);
         /// </code>
         /// </example>
         /// <param name="width">Window width in pixels</param>
         /// <param name="height">Window height in pixels</param>
-        /// <param name="kwargs">
-        /// s0 (double): New deviation
-        /// b (double): Weight of new deviation
-        /// m0 (double): New mean
-        /// a (double): Weight of new mean
-        /// </param>
+        /// <param name="s0">New deviation</param>
+        /// <param name="b">Weight of new deviation</param>
+        /// <param name="m0">New mean</param>
+        /// <param name="a">Weight of new mean</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Stdif(int width, int height, VOption kwargs = null)
+        public Image Stdif(int width, int height, double? s0 = null, double? b = null, double? m0 = null,
+            double? a = null)
         {
-            return this.Call("stdif", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (s0.HasValue)
+            {
+                options.Add("s0", s0);
+            }
+
+            if (b.HasValue)
+            {
+                options.Add("b", b);
+            }
+
+            if (m0.HasValue)
+            {
+                options.Add("m0", m0);
+            }
+
+            if (a.HasValue)
+            {
+                options.Add("a", a);
+            }
+
+            return this.Call("stdif", options, width, height) as Image;
         }
 
         /// <summary>
@@ -7788,23 +8677,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = input.Subsample(xfac, yfac, new VOption
-        /// {
-        ///     {"point", bool}
-        /// });
-        /// ]]>
+        /// Image @out = input.Subsample(xfac, yfac, point: bool);
         /// </code>
         /// </example>
         /// <param name="xfac">Horizontal subsample factor</param>
         /// <param name="yfac">Vertical subsample factor</param>
-        /// <param name="kwargs">
-        /// point (bool): Point sample
-        /// </param>
+        /// <param name="point">Point sample</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Subsample(int xfac, int yfac, VOption kwargs = null)
+        public Image Subsample(int xfac, int yfac, bool? point = null)
         {
-            return this.Call("subsample", kwargs, xfac, yfac) as Image;
+            var options = new VOption();
+
+            if (point.HasValue)
+            {
+                options.Add("point", point);
+            }
+
+            return this.Call("subsample", options, xfac, yfac) as Image;
         }
 
         /// <summary>
@@ -7812,9 +8701,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = left.Subtract(right);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument</param>
@@ -7829,9 +8716,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = NetVips.Image.Sum(@in);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="in">Array of input images</param>
@@ -7846,30 +8731,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Svgload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"dpi", double},
-        ///     {"fail", bool},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Svgload(filename, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// dpi (double): Render at this DPI
-        /// fail (bool): Fail on first error
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Svgload(string filename, VOption kwargs = null)
+        public static Image Svgload(string filename, bool? memory = null, string access = null, double? dpi = null,
+            bool? fail = null, double? scale = null)
         {
-            return Operation.Call("svgload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            return Operation.Call("svgload", options, filename) as Image;
         }
 
         /// <summary>
@@ -7877,45 +8779,50 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Svgload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"dpi", double},
-        ///     {"fail", bool},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Svgload(filename, out var flags, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// dpi (double): Render at this DPI
-        /// fail (bool): Fail on first error
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Svgload(string filename, out int flags, VOption kwargs = null)
+        public static Image Svgload(string filename, out int flags, bool? memory = null, string access = null,
+            double? dpi = null, bool? fail = null, double? scale = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("svgload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("svgload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -7928,30 +8835,47 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"dpi", double},
-        ///     {"fail", bool},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// dpi (double): Render at this DPI
-        /// fail (bool): Fail on first error
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image SvgloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image SvgloadBuffer(byte[] buffer, bool? memory = null, string access = null, double? dpi = null,
+            bool? fail = null, double? scale = null)
         {
-            return Operation.Call("svgload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            return Operation.Call("svgload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -7959,45 +8883,50 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"dpi", double},
-        ///     {"fail", bool},
-        ///     {"scale", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// dpi (double): Render at this DPI
-        /// fail (bool): Fail on first error
-        /// scale (double): Scale output by this factor
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="dpi">Render at this DPI</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="scale">Scale output by this factor</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image SvgloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image SvgloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null,
+            double? dpi = null, bool? fail = null, double? scale = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("svgload_buffer", kwargs, buffer) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add("scale", scale);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("svgload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -8010,26 +8939,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// NetVips.Image.System(cmdFormat, new VOption
-        /// {
-        ///     {"in", Image[]},
-        ///     {"out_format", string},
-        ///     {"in_format", string}
-        /// });
-        /// ]]>
+        /// NetVips.Image.System(cmdFormat, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
         /// <param name="cmdFormat">Command to run</param>
-        /// <param name="kwargs">
-        /// in (Image[]): Array of input images
-        /// out_format (string): Format for output filename
-        /// in_format (string): Format for input filename
-        /// </param>
+        /// <param name="in">Array of input images</param>
+        /// <param name="outFormat">Format for output filename</param>
+        /// <param name="inFormat">Format for input filename</param>
         /// <returns>None</returns>
-        public static void System(string cmdFormat, VOption kwargs = null)
+        public static void System(string cmdFormat, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
-            Operation.Call("system", kwargs, cmdFormat);
+            var options = new VOption();
+
+            if (@in != null && @in.Length > 0)
+            {
+                options.Add("in", @in);
+            }
+
+            if (outFormat != null)
+            {
+                options.Add("out_format", outFormat);
+            }
+
+            if (inFormat != null)
+            {
+                options.Add("in_format", inFormat);
+            }
+
+            Operation.Call("system", options, cmdFormat);
         }
 
         /// <summary>
@@ -8037,41 +8974,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// NetVips.Image.System(cmdFormat, out var @out, new VOption
-        /// {
-        ///     {"in", Image[]},
-        ///     {"out_format", string},
-        ///     {"in_format", string}
-        /// });
-        /// ]]>
+        /// NetVips.Image.System(cmdFormat, out var @out, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
         /// <param name="cmdFormat">Command to run</param>
         /// <param name="out">Output image</param>
-        /// <param name="kwargs">
-        /// in (Image[]): Array of input images
-        /// out_format (string): Format for output filename
-        /// in_format (string): Format for input filename
-        /// </param>
+        /// <param name="in">Array of input images</param>
+        /// <param name="outFormat">Format for output filename</param>
+        /// <param name="inFormat">Format for input filename</param>
         /// <returns>None</returns>
-        public static void System(string cmdFormat, out Image @out, VOption kwargs = null)
+        public static void System(string cmdFormat, out Image @out, Image[] @in = null, string outFormat = null,
+            string inFormat = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"out", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (@in != null && @in.Length > 0)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("in", @in);
             }
 
-            var results = Operation.Call("system", kwargs, cmdFormat) as object[];
+            if (outFormat != null)
+            {
+                options.Add("out_format", outFormat);
+            }
+
+            if (inFormat != null)
+            {
+                options.Add("in_format", inFormat);
+            }
+
+            options.Add("out", true);
+
+            var results = Operation.Call("system", options, cmdFormat) as object[];
 
             var opts = results?[1] as VOption;
             @out = opts?["out"] as Image;
@@ -8082,43 +9016,40 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// NetVips.Image.System(cmdFormat, out var @out, out var log, new VOption
-        /// {
-        ///     {"in", Image[]},
-        ///     {"out_format", string},
-        ///     {"in_format", string}
-        /// });
-        /// ]]>
+        /// NetVips.Image.System(cmdFormat, out var @out, out var log, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
         /// <param name="cmdFormat">Command to run</param>
         /// <param name="out">Output image</param>
         /// <param name="log">Command log</param>
-        /// <param name="kwargs">
-        /// in (Image[]): Array of input images
-        /// out_format (string): Format for output filename
-        /// in_format (string): Format for input filename
-        /// </param>
+        /// <param name="in">Array of input images</param>
+        /// <param name="outFormat">Format for output filename</param>
+        /// <param name="inFormat">Format for input filename</param>
         /// <returns>None</returns>
-        public static void System(string cmdFormat, out Image @out, out string log, VOption kwargs = null)
+        public static void System(string cmdFormat, out Image @out, out string log, Image[] @in = null,
+            string outFormat = null, string inFormat = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"out", true},
-                {"log", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (@in != null && @in.Length > 0)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("in", @in);
             }
 
-            var results = Operation.Call("system", kwargs, cmdFormat) as object[];
+            if (outFormat != null)
+            {
+                options.Add("out_format", outFormat);
+            }
+
+            if (inFormat != null)
+            {
+                options.Add("in_format", inFormat);
+            }
+
+            options.Add("out", true);
+            options.Add("log", true);
+
+            var results = Operation.Call("system", options, cmdFormat) as object[];
 
             var opts = results?[1] as VOption;
             @out = opts?["out"] as Image;
@@ -8130,32 +9061,53 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Text(text, new VOption
-        /// {
-        ///     {"font", string},
-        ///     {"width", int},
-        ///     {"height", int},
-        ///     {"align", string},
-        ///     {"dpi", int},
-        ///     {"spacing", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: string, dpi: int, spacing: int);
         /// </code>
         /// </example>
         /// <param name="text">Text to render</param>
-        /// <param name="kwargs">
-        /// font (string): Font to render with
-        /// width (int): Maximum image width in pixels
-        /// height (int): Maximum image height in pixels
-        /// align (string): Align on the low, centre or high edge
-        /// dpi (int): DPI to render at
-        /// spacing (int): Line spacing
-        /// </param>
+        /// <param name="font">Font to render with</param>
+        /// <param name="width">Maximum image width in pixels</param>
+        /// <param name="height">Maximum image height in pixels</param>
+        /// <param name="align">Align on the low, centre or high edge</param>
+        /// <param name="dpi">DPI to render at</param>
+        /// <param name="spacing">Line spacing</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Text(string text, VOption kwargs = null)
+        public static Image Text(string text, string font = null, int? width = null, int? height = null,
+            string align = null, int? dpi = null, int? spacing = null)
         {
-            return Operation.Call("text", kwargs, text) as Image;
+            var options = new VOption();
+
+            if (font != null)
+            {
+                options.Add("font", font);
+            }
+
+            if (width.HasValue)
+            {
+                options.Add("width", width);
+            }
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            if (align != null)
+            {
+                options.Add("align", align);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (spacing.HasValue)
+            {
+                options.Add("spacing", spacing);
+            }
+
+            return Operation.Call("text", options, text) as Image;
         }
 
         /// <summary>
@@ -8163,47 +9115,56 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, new VOption
-        /// {
-        ///     {"font", string},
-        ///     {"width", int},
-        ///     {"height", int},
-        ///     {"align", string},
-        ///     {"dpi", int},
-        ///     {"spacing", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: string, dpi: int, spacing: int);
         /// </code>
         /// </example>
         /// <param name="text">Text to render</param>
         /// <param name="autofitDpi">DPI selected by autofit</param>
-        /// <param name="kwargs">
-        /// font (string): Font to render with
-        /// width (int): Maximum image width in pixels
-        /// height (int): Maximum image height in pixels
-        /// align (string): Align on the low, centre or high edge
-        /// dpi (int): DPI to render at
-        /// spacing (int): Line spacing
-        /// </param>
+        /// <param name="font">Font to render with</param>
+        /// <param name="width">Maximum image width in pixels</param>
+        /// <param name="height">Maximum image height in pixels</param>
+        /// <param name="align">Align on the low, centre or high edge</param>
+        /// <param name="dpi">DPI to render at</param>
+        /// <param name="spacing">Line spacing</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Text(string text, out int autofitDpi, VOption kwargs = null)
+        public static Image Text(string text, out int autofitDpi, string font = null, int? width = null,
+            int? height = null, string align = null, int? dpi = null, int? spacing = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"autofit_dpi", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (font != null)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("font", font);
             }
 
-            var results = Operation.Call("text", kwargs, text) as object[];
+            if (width.HasValue)
+            {
+                options.Add("width", width);
+            }
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            if (align != null)
+            {
+                options.Add("align", align);
+            }
+
+            if (dpi.HasValue)
+            {
+                options.Add("dpi", dpi);
+            }
+
+            if (spacing.HasValue)
+            {
+                options.Add("spacing", spacing);
+            }
+
+            options.Add("autofit_dpi", true);
+
+            var results = Operation.Call("text", options, text) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             autofitDpi = opts?["autofit_dpi"] is int out1 ? out1 : 0;
@@ -8216,37 +9177,67 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Thumbnail(filename, width, new VOption
-        /// {
-        ///     {"height", int},
-        ///     {"size", string},
-        ///     {"auto_rotate", bool},
-        ///     {"crop", string},
-        ///     {"linear", bool},
-        ///     {"import_profile", string},
-        ///     {"export_profile", string},
-        ///     {"intent", string}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to read from</param>
         /// <param name="width">Size to this width</param>
-        /// <param name="kwargs">
-        /// height (int): Size to this height
-        /// size (string): Only upsize, only downsize, or both
-        /// auto_rotate (bool): Use orientation tags to rotate image upright
-        /// crop (string): Reduce to fill target rectangle, then crop
-        /// linear (bool): Reduce in linear light
-        /// import_profile (string): Fallback import profile
-        /// export_profile (string): Fallback export profile
-        /// intent (string): Rendering intent
-        /// </param>
+        /// <param name="height">Size to this height</param>
+        /// <param name="size">Only upsize, only downsize, or both</param>
+        /// <param name="autoRotate">Use orientation tags to rotate image upright</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop</param>
+        /// <param name="linear">Reduce in linear light</param>
+        /// <param name="importProfile">Fallback import profile</param>
+        /// <param name="exportProfile">Fallback export profile</param>
+        /// <param name="intent">Rendering intent</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Thumbnail(string filename, int width, VOption kwargs = null)
+        public static Image Thumbnail(string filename, int width, int? height = null, string size = null,
+            bool? autoRotate = null, string crop = null, bool? linear = null, string importProfile = null,
+            string exportProfile = null, string intent = null)
         {
-            return Operation.Call("thumbnail", kwargs, filename, width) as Image;
+            var options = new VOption();
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            if (size != null)
+            {
+                options.Add("size", size);
+            }
+
+            if (autoRotate.HasValue)
+            {
+                options.Add("auto_rotate", autoRotate);
+            }
+
+            if (crop != null)
+            {
+                options.Add("crop", crop);
+            }
+
+            if (linear.HasValue)
+            {
+                options.Add("linear", linear);
+            }
+
+            if (importProfile != null)
+            {
+                options.Add("import_profile", importProfile);
+            }
+
+            if (exportProfile != null)
+            {
+                options.Add("export_profile", exportProfile);
+            }
+
+            if (intent != null)
+            {
+                options.Add("intent", intent);
+            }
+
+            return Operation.Call("thumbnail", options, filename, width) as Image;
         }
 
         /// <summary>
@@ -8254,37 +9245,67 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, new VOption
-        /// {
-        ///     {"height", int},
-        ///     {"size", string},
-        ///     {"auto_rotate", bool},
-        ///     {"crop", string},
-        ///     {"linear", bool},
-        ///     {"import_profile", string},
-        ///     {"export_profile", string},
-        ///     {"intent", string}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="width">Size to this width</param>
-        /// <param name="kwargs">
-        /// height (int): Size to this height
-        /// size (string): Only upsize, only downsize, or both
-        /// auto_rotate (bool): Use orientation tags to rotate image upright
-        /// crop (string): Reduce to fill target rectangle, then crop
-        /// linear (bool): Reduce in linear light
-        /// import_profile (string): Fallback import profile
-        /// export_profile (string): Fallback export profile
-        /// intent (string): Rendering intent
-        /// </param>
+        /// <param name="height">Size to this height</param>
+        /// <param name="size">Only upsize, only downsize, or both</param>
+        /// <param name="autoRotate">Use orientation tags to rotate image upright</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop</param>
+        /// <param name="linear">Reduce in linear light</param>
+        /// <param name="importProfile">Fallback import profile</param>
+        /// <param name="exportProfile">Fallback export profile</param>
+        /// <param name="intent">Rendering intent</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image ThumbnailBuffer(byte[] buffer, int width, VOption kwargs = null)
+        public static Image ThumbnailBuffer(byte[] buffer, int width, int? height = null, string size = null,
+            bool? autoRotate = null, string crop = null, bool? linear = null, string importProfile = null,
+            string exportProfile = null, string intent = null)
         {
-            return Operation.Call("thumbnail_buffer", kwargs, buffer, width) as Image;
+            var options = new VOption();
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            if (size != null)
+            {
+                options.Add("size", size);
+            }
+
+            if (autoRotate.HasValue)
+            {
+                options.Add("auto_rotate", autoRotate);
+            }
+
+            if (crop != null)
+            {
+                options.Add("crop", crop);
+            }
+
+            if (linear.HasValue)
+            {
+                options.Add("linear", linear);
+            }
+
+            if (importProfile != null)
+            {
+                options.Add("import_profile", importProfile);
+            }
+
+            if (exportProfile != null)
+            {
+                options.Add("export_profile", exportProfile);
+            }
+
+            if (intent != null)
+            {
+                options.Add("intent", intent);
+            }
+
+            return Operation.Call("thumbnail_buffer", options, buffer, width) as Image;
         }
 
         /// <summary>
@@ -8292,36 +9313,66 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.ThumbnailImage(width, new VOption
-        /// {
-        ///     {"height", int},
-        ///     {"size", string},
-        ///     {"auto_rotate", bool},
-        ///     {"crop", string},
-        ///     {"linear", bool},
-        ///     {"import_profile", string},
-        ///     {"export_profile", string},
-        ///     {"intent", string}
-        /// });
-        /// ]]>
+        /// Image @out = in.ThumbnailImage(width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
         /// <param name="width">Size to this width</param>
-        /// <param name="kwargs">
-        /// height (int): Size to this height
-        /// size (string): Only upsize, only downsize, or both
-        /// auto_rotate (bool): Use orientation tags to rotate image upright
-        /// crop (string): Reduce to fill target rectangle, then crop
-        /// linear (bool): Reduce in linear light
-        /// import_profile (string): Fallback import profile
-        /// export_profile (string): Fallback export profile
-        /// intent (string): Rendering intent
-        /// </param>
+        /// <param name="height">Size to this height</param>
+        /// <param name="size">Only upsize, only downsize, or both</param>
+        /// <param name="autoRotate">Use orientation tags to rotate image upright</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop</param>
+        /// <param name="linear">Reduce in linear light</param>
+        /// <param name="importProfile">Fallback import profile</param>
+        /// <param name="exportProfile">Fallback export profile</param>
+        /// <param name="intent">Rendering intent</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image ThumbnailImage(int width, VOption kwargs = null)
+        public Image ThumbnailImage(int width, int? height = null, string size = null, bool? autoRotate = null,
+            string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null,
+            string intent = null)
         {
-            return this.Call("thumbnail_image", kwargs, width) as Image;
+            var options = new VOption();
+
+            if (height.HasValue)
+            {
+                options.Add("height", height);
+            }
+
+            if (size != null)
+            {
+                options.Add("size", size);
+            }
+
+            if (autoRotate.HasValue)
+            {
+                options.Add("auto_rotate", autoRotate);
+            }
+
+            if (crop != null)
+            {
+                options.Add("crop", crop);
+            }
+
+            if (linear.HasValue)
+            {
+                options.Add("linear", linear);
+            }
+
+            if (importProfile != null)
+            {
+                options.Add("import_profile", importProfile);
+            }
+
+            if (exportProfile != null)
+            {
+                options.Add("export_profile", exportProfile);
+            }
+
+            if (intent != null)
+            {
+                options.Add("intent", intent);
+            }
+
+            return this.Call("thumbnail_image", options, width) as Image;
         }
 
         /// <summary>
@@ -8329,32 +9380,53 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Tiffload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Tiffload(filename, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the image
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using orientation tag
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the image</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using orientation tag</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Tiffload(string filename, VOption kwargs = null)
+        public static Image Tiffload(string filename, bool? memory = null, string access = null, int? page = null,
+            int? n = null, bool? fail = null, bool? autorotate = null)
         {
-            return Operation.Call("tiffload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            return Operation.Call("tiffload", options, filename) as Image;
         }
 
         /// <summary>
@@ -8362,47 +9434,56 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Tiffload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Tiffload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the image
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using orientation tag
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the image</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using orientation tag</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Tiffload(string filename, out int flags, VOption kwargs = null)
+        public static Image Tiffload(string filename, out int flags, bool? memory = null, string access = null,
+            int? page = null, int? n = null, bool? fail = null, bool? autorotate = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("tiffload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("tiffload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -8415,32 +9496,53 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the image
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using orientation tag
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the image</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using orientation tag</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image TiffloadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image TiffloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? page = null,
+            int? n = null, bool? fail = null, bool? autorotate = null)
         {
-            return Operation.Call("tiffload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            return Operation.Call("tiffload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -8448,47 +9550,56 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"page", int},
-        ///     {"n", int},
-        ///     {"fail", bool},
-        ///     {"autorotate", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// page (int): Load this page from the image
-        /// n (int): Load this many pages
-        /// fail (bool): Fail on first error
-        /// autorotate (bool): Rotate image using orientation tag
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="page">Load this page from the image</param>
+        /// <param name="n">Load this many pages</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <param name="autorotate">Rotate image using orientation tag</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image TiffloadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image TiffloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null,
+            int? page = null, int? n = null, bool? fail = null, bool? autorotate = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("tiffload_buffer", kwargs, buffer) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (page.HasValue)
+            {
+                options.Add("page", page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add("n", n);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add("autorotate", autorotate);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("tiffload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -8501,56 +9612,128 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Tiffsave(filename, new VOption
-        /// {
-        ///     {"compression", string},
-        ///     {"Q", int},
-        ///     {"predictor", string},
-        ///     {"page_height", int},
-        ///     {"profile", string},
-        ///     {"tile", bool},
-        ///     {"tile_width", int},
-        ///     {"tile_height", int},
-        ///     {"pyramid", bool},
-        ///     {"miniswhite", bool},
-        ///     {"squash", bool},
-        ///     {"resunit", string},
-        ///     {"xres", double},
-        ///     {"yres", double},
-        ///     {"bigtiff", bool},
-        ///     {"properties", bool},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Tiffsave(filename, compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// compression (string): Compression for this file
-        /// Q (int): Q factor
-        /// predictor (string): Compression prediction
-        /// page_height (int): Set page height for multipage save
-        /// profile (string): ICC profile to embed
-        /// tile (bool): Write a tiled tiff
-        /// tile_width (int): Tile width in pixels
-        /// tile_height (int): Tile height in pixels
-        /// pyramid (bool): Write a pyramidal tiff
-        /// miniswhite (bool): Use 0 for white in 1-bit images
-        /// squash (bool): Squash images down to 1 bit
-        /// resunit (string): Resolution unit
-        /// xres (double): Horizontal resolution in pixels/mm
-        /// yres (double): Vertical resolution in pixels/mm
-        /// bigtiff (bool): Write a bigtiff image
-        /// properties (bool): Write a properties document to IMAGEDESCRIPTION
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="compression">Compression for this file</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="predictor">Compression prediction</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="tile">Write a tiled tiff</param>
+        /// <param name="tileWidth">Tile width in pixels</param>
+        /// <param name="tileHeight">Tile height in pixels</param>
+        /// <param name="pyramid">Write a pyramidal tiff</param>
+        /// <param name="miniswhite">Use 0 for white in 1-bit images</param>
+        /// <param name="squash">Squash images down to 1 bit</param>
+        /// <param name="resunit">Resolution unit</param>
+        /// <param name="xres">Horizontal resolution in pixels/mm</param>
+        /// <param name="yres">Vertical resolution in pixels/mm</param>
+        /// <param name="bigtiff">Write a bigtiff image</param>
+        /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Tiffsave(string filename, VOption kwargs = null)
+        public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null,
+            int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null,
+            int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null,
+            string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null,
+            bool? properties = null, bool? strip = null, double[] background = null)
         {
-            this.Call("tiffsave", kwargs, filename);
+            var options = new VOption();
+
+            if (compression != null)
+            {
+                options.Add("compression", compression);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (predictor != null)
+            {
+                options.Add("predictor", predictor);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (tile.HasValue)
+            {
+                options.Add("tile", tile);
+            }
+
+            if (tileWidth.HasValue)
+            {
+                options.Add("tile_width", tileWidth);
+            }
+
+            if (tileHeight.HasValue)
+            {
+                options.Add("tile_height", tileHeight);
+            }
+
+            if (pyramid.HasValue)
+            {
+                options.Add("pyramid", pyramid);
+            }
+
+            if (miniswhite.HasValue)
+            {
+                options.Add("miniswhite", miniswhite);
+            }
+
+            if (squash.HasValue)
+            {
+                options.Add("squash", squash);
+            }
+
+            if (resunit != null)
+            {
+                options.Add("resunit", resunit);
+            }
+
+            if (xres.HasValue)
+            {
+                options.Add("xres", xres);
+            }
+
+            if (yres.HasValue)
+            {
+                options.Add("yres", yres);
+            }
+
+            if (bigtiff.HasValue)
+            {
+                options.Add("bigtiff", bigtiff);
+            }
+
+            if (properties.HasValue)
+            {
+                options.Add("properties", properties);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("tiffsave", options, filename);
         }
 
         /// <summary>
@@ -8558,55 +9741,127 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.TiffsaveBuffer(new VOption
-        /// {
-        ///     {"compression", string},
-        ///     {"Q", int},
-        ///     {"predictor", string},
-        ///     {"page_height", int},
-        ///     {"profile", string},
-        ///     {"tile", bool},
-        ///     {"tile_width", int},
-        ///     {"tile_height", int},
-        ///     {"pyramid", bool},
-        ///     {"miniswhite", bool},
-        ///     {"squash", bool},
-        ///     {"resunit", string},
-        ///     {"xres", double},
-        ///     {"yres", double},
-        ///     {"bigtiff", bool},
-        ///     {"properties", bool},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// compression (string): Compression for this file
-        /// Q (int): Q factor
-        /// predictor (string): Compression prediction
-        /// page_height (int): Set page height for multipage save
-        /// profile (string): ICC profile to embed
-        /// tile (bool): Write a tiled tiff
-        /// tile_width (int): Tile width in pixels
-        /// tile_height (int): Tile height in pixels
-        /// pyramid (bool): Write a pyramidal tiff
-        /// miniswhite (bool): Use 0 for white in 1-bit images
-        /// squash (bool): Squash images down to 1 bit
-        /// resunit (string): Resolution unit
-        /// xres (double): Horizontal resolution in pixels/mm
-        /// yres (double): Vertical resolution in pixels/mm
-        /// bigtiff (bool): Write a bigtiff image
-        /// properties (bool): Write a properties document to IMAGEDESCRIPTION
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="compression">Compression for this file</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="predictor">Compression prediction</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="profile">ICC profile to embed</param>
+        /// <param name="tile">Write a tiled tiff</param>
+        /// <param name="tileWidth">Tile width in pixels</param>
+        /// <param name="tileHeight">Tile height in pixels</param>
+        /// <param name="pyramid">Write a pyramidal tiff</param>
+        /// <param name="miniswhite">Use 0 for white in 1-bit images</param>
+        /// <param name="squash">Squash images down to 1 bit</param>
+        /// <param name="resunit">Resolution unit</param>
+        /// <param name="xres">Horizontal resolution in pixels/mm</param>
+        /// <param name="yres">Vertical resolution in pixels/mm</param>
+        /// <param name="bigtiff">Write a bigtiff image</param>
+        /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] TiffsaveBuffer(VOption kwargs = null)
+        public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null,
+            int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null,
+            int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null,
+            string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null,
+            bool? properties = null, bool? strip = null, double[] background = null)
         {
-            return this.Call("tiffsave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (compression != null)
+            {
+                options.Add("compression", compression);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (predictor != null)
+            {
+                options.Add("predictor", predictor);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (profile != null)
+            {
+                options.Add("profile", profile);
+            }
+
+            if (tile.HasValue)
+            {
+                options.Add("tile", tile);
+            }
+
+            if (tileWidth.HasValue)
+            {
+                options.Add("tile_width", tileWidth);
+            }
+
+            if (tileHeight.HasValue)
+            {
+                options.Add("tile_height", tileHeight);
+            }
+
+            if (pyramid.HasValue)
+            {
+                options.Add("pyramid", pyramid);
+            }
+
+            if (miniswhite.HasValue)
+            {
+                options.Add("miniswhite", miniswhite);
+            }
+
+            if (squash.HasValue)
+            {
+                options.Add("squash", squash);
+            }
+
+            if (resunit != null)
+            {
+                options.Add("resunit", resunit);
+            }
+
+            if (xres.HasValue)
+            {
+                options.Add("xres", xres);
+            }
+
+            if (yres.HasValue)
+            {
+                options.Add("yres", yres);
+            }
+
+            if (bigtiff.HasValue)
+            {
+                options.Add("bigtiff", bigtiff);
+            }
+
+            if (properties.HasValue)
+            {
+                options.Add("properties", properties);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("tiffsave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -8614,31 +9869,52 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Tilecache(new VOption
-        /// {
-        ///     {"tile_width", int},
-        ///     {"tile_height", int},
-        ///     {"max_tiles", int},
-        ///     {"access", string},
-        ///     {"threaded", bool},
-        ///     {"persistent", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: string, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// tile_width (int): Tile width in pixels
-        /// tile_height (int): Tile height in pixels
-        /// max_tiles (int): Maximum number of tiles to cache
-        /// access (string): Expected access pattern
-        /// threaded (bool): Allow threaded access
-        /// persistent (bool): Keep cache between evaluations
-        /// </param>
+        /// <param name="tileWidth">Tile width in pixels</param>
+        /// <param name="tileHeight">Tile height in pixels</param>
+        /// <param name="maxTiles">Maximum number of tiles to cache</param>
+        /// <param name="access">Expected access pattern</param>
+        /// <param name="threaded">Allow threaded access</param>
+        /// <param name="persistent">Keep cache between evaluations</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Tilecache(VOption kwargs = null)
+        public Image Tilecache(int? tileWidth = null, int? tileHeight = null, int? maxTiles = null,
+            string access = null, bool? threaded = null, bool? persistent = null)
         {
-            return this.Call("tilecache", kwargs) as Image;
+            var options = new VOption();
+
+            if (tileWidth.HasValue)
+            {
+                options.Add("tile_width", tileWidth);
+            }
+
+            if (tileHeight.HasValue)
+            {
+                options.Add("tile_height", tileHeight);
+            }
+
+            if (maxTiles.HasValue)
+            {
+                options.Add("max_tiles", maxTiles);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (threaded.HasValue)
+            {
+                options.Add("threaded", threaded);
+            }
+
+            if (persistent.HasValue)
+            {
+                options.Add("persistent", persistent);
+            }
+
+            return this.Call("tilecache", options) as Image;
         }
 
         /// <summary>
@@ -8646,39 +9922,77 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Tonelut(new VOption
-        /// {
-        ///     {"in_max", int},
-        ///     {"out_max", int},
-        ///     {"Lb", double},
-        ///     {"Lw", double},
-        ///     {"Ps", double},
-        ///     {"Pm", double},
-        ///     {"Ph", double},
-        ///     {"S", double},
-        ///     {"M", double},
-        ///     {"H", double}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Tonelut(inMax: int, outMax: int, lb: double, lw: double, ps: double, pm: double, ph: double, s: double, m: double, h: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// in_max (int): Size of LUT to build
-        /// out_max (int): Maximum value in output LUT
-        /// Lb (double): Lowest value in output
-        /// Lw (double): Highest value in output
-        /// Ps (double): Position of shadow
-        /// Pm (double): Position of mid-tones
-        /// Ph (double): Position of highlights
-        /// S (double): Adjust shadows by this much
-        /// M (double): Adjust mid-tones by this much
-        /// H (double): Adjust highlights by this much
-        /// </param>
+        /// <param name="inMax">Size of LUT to build</param>
+        /// <param name="outMax">Maximum value in output LUT</param>
+        /// <param name="lb">Lowest value in output</param>
+        /// <param name="lw">Highest value in output</param>
+        /// <param name="ps">Position of shadow</param>
+        /// <param name="pm">Position of mid-tones</param>
+        /// <param name="ph">Position of highlights</param>
+        /// <param name="s">Adjust shadows by this much</param>
+        /// <param name="m">Adjust mid-tones by this much</param>
+        /// <param name="h">Adjust highlights by this much</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Tonelut(VOption kwargs = null)
+        public static Image Tonelut(int? inMax = null, int? outMax = null, double? lb = null, double? lw = null,
+            double? ps = null, double? pm = null, double? ph = null, double? s = null, double? m = null,
+            double? h = null)
         {
-            return Operation.Call("tonelut", kwargs) as Image;
+            var options = new VOption();
+
+            if (inMax.HasValue)
+            {
+                options.Add("in_max", inMax);
+            }
+
+            if (outMax.HasValue)
+            {
+                options.Add("out_max", outMax);
+            }
+
+            if (lb.HasValue)
+            {
+                options.Add("Lb", lb);
+            }
+
+            if (lw.HasValue)
+            {
+                options.Add("Lw", lw);
+            }
+
+            if (ps.HasValue)
+            {
+                options.Add("Ps", ps);
+            }
+
+            if (pm.HasValue)
+            {
+                options.Add("Pm", pm);
+            }
+
+            if (ph.HasValue)
+            {
+                options.Add("Ph", ph);
+            }
+
+            if (s.HasValue)
+            {
+                options.Add("S", s);
+            }
+
+            if (m.HasValue)
+            {
+                options.Add("M", m);
+            }
+
+            if (h.HasValue)
+            {
+                options.Add("H", h);
+            }
+
+            return Operation.Call("tonelut", options) as Image;
         }
 
         /// <summary>
@@ -8686,21 +10000,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Unpremultiply(new VOption
-        /// {
-        ///     {"max_alpha", double}
-        /// });
-        /// ]]>
+        /// Image @out = in.Unpremultiply(maxAlpha: double);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// max_alpha (double): Maximum value of alpha channel
-        /// </param>
+        /// <param name="maxAlpha">Maximum value of alpha channel</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Unpremultiply(VOption kwargs = null)
+        public Image Unpremultiply(double? maxAlpha = null)
         {
-            return this.Call("unpremultiply", kwargs) as Image;
+            var options = new VOption();
+
+            if (maxAlpha.HasValue)
+            {
+                options.Add("max_alpha", maxAlpha);
+            }
+
+            return this.Call("unpremultiply", options) as Image;
         }
 
         /// <summary>
@@ -8708,26 +10022,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Vipsload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Vipsload(string filename, VOption kwargs = null)
+        public static Image Vipsload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
-            return Operation.Call("vipsload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("vipsload", options, filename) as Image;
         }
 
         /// <summary>
@@ -8735,41 +10057,38 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Vipsload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Vipsload(string filename, out int flags, VOption kwargs = null)
+        public static Image Vipsload(string filename, out int flags, bool? memory = null, string access = null,
+            bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("vipsload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("vipsload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -8782,26 +10101,34 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Vipssave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Vipssave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Vipssave(string filename, VOption kwargs = null)
+        public void Vipssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
-            this.Call("vipssave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("vipssave", options, filename);
         }
 
         /// <summary>
@@ -8809,28 +10136,41 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Webpload(filename, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Webpload(filename, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Webpload(string filename, VOption kwargs = null)
+        public static Image Webpload(string filename, bool? memory = null, string access = null, int? shrink = null,
+            bool? fail = null)
         {
-            return Operation.Call("webpload", kwargs, filename) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("webpload", options, filename) as Image;
         }
 
         /// <summary>
@@ -8838,43 +10178,44 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Webpload(filename, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Webpload(filename, out var flags, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Webpload(string filename, out int flags, VOption kwargs = null)
+        public static Image Webpload(string filename, out int flags, bool? memory = null, string access = null,
+            int? shrink = null, bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("webpload", kwargs, filename) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("webpload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -8887,28 +10228,41 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image WebploadBuffer(byte[] buffer, VOption kwargs = null)
+        public static Image WebploadBuffer(byte[] buffer, bool? memory = null, string access = null, int? shrink = null,
+            bool? fail = null)
         {
-            return Operation.Call("webpload_buffer", kwargs, buffer) as Image;
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("webpload_buffer", options, buffer) as Image;
         }
 
         /// <summary>
@@ -8916,43 +10270,44 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, new VOption
-        /// {
-        ///     {"memory", bool},
-        ///     {"access", string},
-        ///     {"shrink", int},
-        ///     {"fail", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="flags">Flags for this file</param>
-        /// <param name="kwargs">
-        /// memory (bool): Force open via memory
-        /// access (string): Required access pattern for this file
-        /// shrink (int): Shrink factor on load
-        /// fail (bool): Fail on first error
-        /// </param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="shrink">Shrink factor on load</param>
+        /// <param name="fail">Fail on first error</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image WebploadBuffer(byte[] buffer, out int flags, VOption kwargs = null)
+        public static Image WebploadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null,
+            int? shrink = null, bool? fail = null)
         {
-            var optionalOutput = new VOption
-            {
-                {"flags", true}
-            };
+            var options = new VOption();
 
-            if (kwargs != null)
+            if (memory.HasValue)
             {
-                kwargs.Merge(optionalOutput);
-            }
-            else
-            {
-                kwargs = optionalOutput;
+                options.Add("memory", memory);
             }
 
-            var results = Operation.Call("webpload_buffer", kwargs, buffer) as object[];
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (shrink.HasValue)
+            {
+                options.Add("shrink", shrink);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("webpload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
             flags = opts?["flags"] is int out1 ? out1 : 0;
@@ -8965,38 +10320,72 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// in.Webpsave(filename, new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"Q", int},
-        ///     {"lossless", bool},
-        ///     {"preset", string},
-        ///     {"smart_subsample", bool},
-        ///     {"near_lossless", bool},
-        ///     {"alpha_q", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// in.Webpsave(filename, pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// Q (int): Q factor
-        /// lossless (bool): enable lossless compression
-        /// preset (string): Preset for lossy compression
-        /// smart_subsample (bool): Enable high quality chroma subsampling
-        /// near_lossless (bool): Enable preprocessing in lossless mode (uses Q)
-        /// alpha_q (int): Change alpha plane fidelity for lossy compression
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="lossless">enable lossless compression</param>
+        /// <param name="preset">Preset for lossy compression</param>
+        /// <param name="smartSubsample">Enable high quality chroma subsampling</param>
+        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q)</param>
+        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>None</returns>
-        public void Webpsave(string filename, VOption kwargs = null)
+        public void Webpsave(string filename, int? pageHeight = null, int? q = null, bool? lossless = null,
+            string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null,
+            bool? strip = null, double[] background = null)
         {
-            this.Call("webpsave", kwargs, filename);
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (lossless.HasValue)
+            {
+                options.Add("lossless", lossless);
+            }
+
+            if (preset != null)
+            {
+                options.Add("preset", preset);
+            }
+
+            if (smartSubsample.HasValue)
+            {
+                options.Add("smart_subsample", smartSubsample);
+            }
+
+            if (nearLossless.HasValue)
+            {
+                options.Add("near_lossless", nearLossless);
+            }
+
+            if (alphaQ.HasValue)
+            {
+                options.Add("alpha_q", alphaQ);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("webpsave", options, filename);
         }
 
         /// <summary>
@@ -9004,37 +10393,71 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// byte[] buffer = in.WebpsaveBuffer(new VOption
-        /// {
-        ///     {"page_height", int},
-        ///     {"Q", int},
-        ///     {"lossless", bool},
-        ///     {"preset", string},
-        ///     {"smart_subsample", bool},
-        ///     {"near_lossless", bool},
-        ///     {"alpha_q", int},
-        ///     {"strip", bool},
-        ///     {"background", double[]}
-        /// });
-        /// ]]>
+        /// byte[] buffer = in.WebpsaveBuffer(pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// page_height (int): Set page height for multipage save
-        /// Q (int): Q factor
-        /// lossless (bool): enable lossless compression
-        /// preset (string): Preset for lossy compression
-        /// smart_subsample (bool): Enable high quality chroma subsampling
-        /// near_lossless (bool): Enable preprocessing in lossless mode (uses Q)
-        /// alpha_q (int): Change alpha plane fidelity for lossy compression
-        /// strip (bool): Strip all metadata from image
-        /// background (double[]): Background value
-        /// </param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="q">Q factor</param>
+        /// <param name="lossless">enable lossless compression</param>
+        /// <param name="preset">Preset for lossy compression</param>
+        /// <param name="smartSubsample">Enable high quality chroma subsampling</param>
+        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q)</param>
+        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] WebpsaveBuffer(VOption kwargs = null)
+        public byte[] WebpsaveBuffer(int? pageHeight = null, int? q = null, bool? lossless = null, string preset = null,
+            bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? strip = null,
+            double[] background = null)
         {
-            return this.Call("webpsave_buffer", kwargs) as byte[];
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (lossless.HasValue)
+            {
+                options.Add("lossless", lossless);
+            }
+
+            if (preset != null)
+            {
+                options.Add("preset", preset);
+            }
+
+            if (smartSubsample.HasValue)
+            {
+                options.Add("smart_subsample", smartSubsample);
+            }
+
+            if (nearLossless.HasValue)
+            {
+                options.Add("near_lossless", nearLossless);
+            }
+
+            if (alphaQ.HasValue)
+            {
+                options.Add("alpha_q", alphaQ);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            return this.Call("webpsave_buffer", options) as byte[];
         }
 
         /// <summary>
@@ -9042,23 +10465,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Worley(width, height, new VOption
-        /// {
-        ///     {"cell_size", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Worley(width, height, cellSize: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// cell_size (int): Size of Worley cells
-        /// </param>
+        /// <param name="cellSize">Size of Worley cells</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Worley(int width, int height, VOption kwargs = null)
+        public static Image Worley(int width, int height, int? cellSize = null)
         {
-            return Operation.Call("worley", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (cellSize.HasValue)
+            {
+                options.Add("cell_size", cellSize);
+            }
+
+            return Operation.Call("worley", options, width, height) as Image;
         }
 
         /// <summary>
@@ -9066,23 +10489,27 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.Wrap(new VOption
-        /// {
-        ///     {"x", int},
-        ///     {"y", int}
-        /// });
-        /// ]]>
+        /// Image @out = in.Wrap(x: int, y: int);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// x (int): Left edge of input in output
-        /// y (int): Top edge of input in output
-        /// </param>
+        /// <param name="x">Left edge of input in output</param>
+        /// <param name="y">Top edge of input in output</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Wrap(VOption kwargs = null)
+        public Image Wrap(int? x = null, int? y = null)
         {
-            return this.Call("wrap", kwargs) as Image;
+            var options = new VOption();
+
+            if (x.HasValue)
+            {
+                options.Add("x", x);
+            }
+
+            if (y.HasValue)
+            {
+                options.Add("y", y);
+            }
+
+            return this.Call("wrap", options) as Image;
         }
 
         /// <summary>
@@ -9090,27 +10517,35 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Xyz(width, height, new VOption
-        /// {
-        ///     {"csize", int},
-        ///     {"dsize", int},
-        ///     {"esize", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Xyz(width, height, csize: int, dsize: int, esize: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// csize (int): Size of third dimension
-        /// dsize (int): Size of fourth dimension
-        /// esize (int): Size of fifth dimension
-        /// </param>
+        /// <param name="csize">Size of third dimension</param>
+        /// <param name="dsize">Size of fourth dimension</param>
+        /// <param name="esize">Size of fifth dimension</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Xyz(int width, int height, VOption kwargs = null)
+        public static Image Xyz(int width, int height, int? csize = null, int? dsize = null, int? esize = null)
         {
-            return Operation.Call("xyz", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (csize.HasValue)
+            {
+                options.Add("csize", csize);
+            }
+
+            if (dsize.HasValue)
+            {
+                options.Add("dsize", dsize);
+            }
+
+            if (esize.HasValue)
+            {
+                options.Add("esize", esize);
+            }
+
+            return Operation.Call("xyz", options, width, height) as Image;
         }
 
         /// <summary>
@@ -9118,21 +10553,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.XYZ2Lab(new VOption
-        /// {
-        ///     {"temp", double[]}
-        /// });
-        /// ]]>
+        /// Image @out = in.XYZ2Lab(temp: double[]);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// temp (double[]): Colour temperature
-        /// </param>
+        /// <param name="temp">Colour temperature</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image XYZ2Lab(VOption kwargs = null)
+        public Image XYZ2Lab(double[] temp = null)
         {
-            return this.Call("XYZ2Lab", kwargs) as Image;
+            var options = new VOption();
+
+            if (temp != null && temp.Length > 0)
+            {
+                options.Add("temp", temp);
+            }
+
+            return this.Call("XYZ2Lab", options) as Image;
         }
 
         /// <summary>
@@ -9140,9 +10575,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.XYZ2scRGB();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -9156,9 +10589,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.XYZ2Yxy();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -9172,9 +10603,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = in.Yxy2XYZ();
-        /// ]]>
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/></returns>
@@ -9188,23 +10617,23 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Zone(width, height, new VOption
-        /// {
-        ///     {"uchar", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Zone(width, height, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        /// <param name="kwargs">
-        /// uchar (bool): Output an unsigned char image
-        /// </param>
+        /// <param name="uchar">Output an unsigned char image</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Zone(int width, int height, VOption kwargs = null)
+        public static Image Zone(int width, int height, bool? uchar = null)
         {
-            return Operation.Call("zone", kwargs, width, height) as Image;
+            var options = new VOption();
+
+            if (uchar.HasValue)
+            {
+                options.Add("uchar", uchar);
+            }
+
+            return Operation.Call("zone", options, width, height) as Image;
         }
 
         /// <summary>
@@ -9212,9 +10641,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = input.Zoom(xfac, yfac);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="xfac">Horizontal zoom factor</param>
@@ -9238,23 +10665,27 @@ namespace NetVips
         /// </remarks>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = in.ScaleImage(new VOption
-        /// {
-        ///     {"exp", double}
-        ///     {"log", bool}
-        /// });
-        /// ]]>
+        /// Image @out = in.Scale(exp: double, log: bool);
         /// </code>
         /// </example>
-        /// <param name="kwargs">
-        /// exp (double): Exponent for log scale
-        /// log (bool): Log scale
-        /// </param>
+        /// <param name="exp">Exponent for log scale</param>
+        /// <param name="log">Log scale</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image ScaleImage(VOption kwargs = null)
+        public Image ScaleImage(double? exp = null, bool? log = null)
         {
-            return this.Call("scale", kwargs) as Image;
+            var options = new VOption();
+
+            if (exp.HasValue)
+            {
+                options.Add("exp", exp);
+            }
+
+            if (log.HasValue)
+            {
+                options.Add("log", log);
+            }
+
+            return this.Call("scale", options) as Image;
         }
 
         /// <summary>
@@ -9262,21 +10693,14 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = cond.Ifthenelse(in1, in2, new VOption
-        /// {
-        ///     {"blend", bool}
-        /// });
-        /// ]]>
+        /// Image @out = cond.Ifthenelse(in1, in2, blend: bool);
         /// </code>
         /// </example>
         /// <param name="in1">Source for TRUE pixels</param>
         /// <param name="in2">Source for FALSE pixels</param>
-        /// <param name="kwargs">
-        /// blend (bool): Blend smoothly between then and else parts
-        /// </param>
+        /// <param name="blend">Blend smoothly between then and else parts</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Ifthenelse(object in1, object in2, VOption kwargs = null)
+        public Image Ifthenelse(object in1, object in2, bool? blend = null)
         {
             Image matchImage;
             if (in1 is Image th)
@@ -9302,7 +10726,14 @@ namespace NetVips
                 in1 = Imageize(matchImage, in2);
             }
 
-            return this.Call("ifthenelse", kwargs, in1, in2) as Image;
+            var options = new VOption();
+
+            if (blend.HasValue)
+            {
+                options.Add("blend", blend);
+            }
+
+            return this.Call("ifthenelse", options, in1, in2) as Image;
         }
 
         /// <summary>
@@ -9310,9 +10741,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = NetVips.Image.Bandjoin(@in);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="other">Array of input images</param>
@@ -9347,27 +10776,28 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = NetVips.Image.Bandrank(@in, new VOption
-        /// {
-        ///     {"index", int}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Bandrank(@in, index: int);
         /// </code>
         /// </example>
-        /// <param name="other">Array of input images</param>
-        /// <param name="kwargs">
-        /// index (int): Select this band element from sorted list
-        /// </param>
+        /// <param name="in">Array of input images</param>
+        /// <param name="index">Select this band element from sorted list</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Bandrank(object other, VOption kwargs = null)
+        public Image Bandrank(object other, int? index = null)
         {
             if (!(other is IEnumerable))
             {
                 other = new[] {other};
             }
 
-            return Operation.Call("bandrank", kwargs, new object[] {((IEnumerable) other).PrependImage(this)}) as Image;
+            var options = new VOption();
+
+            if (index.HasValue)
+            {
+                options.Add("index", index);
+            }
+
+            return Operation.Call("bandrank", options,
+                new object[] {((IEnumerable) other).PrependImage(this)}) as Image;
         }
 
         /// <summary>
@@ -9375,23 +10805,15 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
-        /// Image @out = baseImage.Composite(other, mode, new VOption
-        /// {
-        ///     {"compositing_space", string}
-        ///     {"premultiplied", bool}
-        /// });
-        /// ]]>
+        /// Image @out = NetVips.Image.Composite(@in, mode, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
-        /// <param name="other">Array of input images</param>
+        /// <param name="in">Array of input images</param>
         /// <param name="mode">Array of VipsBlendMode to join with</param>
-        /// <param name="kwargs">
-        /// compositing_space (string): Composite images in this colour space
-        /// premultiplied (bool): Images have premultiplied alpha
-        /// </param>
+        /// <param name="compositingSpace">Composite images in this colour space</param>
+        /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite(object other, object mode, VOption kwargs = null)
+        public Image Composite(object other, object mode, string compositingSpace = null, bool? premultiplied = null)
         {
             if (!(other is IEnumerable))
             {
@@ -9425,7 +10847,19 @@ namespace NetVips
                     break;
             }
 
-            return Operation.Call("composite", kwargs, images.PrependImage(this), blendModes) as Image;
+            var options = new VOption();
+
+            if (compositingSpace != null)
+            {
+                options.Add("compositing_space", compositingSpace);
+            }
+
+            if (premultiplied.HasValue)
+            {
+                options.Add("premultiplied", premultiplied);
+            }
+
+            return Operation.Call("composite", options, images.PrependImage(this), blendModes) as Image;
         }
 
         /// <summary>
@@ -9433,9 +10867,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// <![CDATA[
         /// Image @out = input.Crop(left, top, width, height);
-        /// ]]>
         /// </code>
         /// </example>
         /// <param name="left">Left edge of extract area</param>

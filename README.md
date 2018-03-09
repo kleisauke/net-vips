@@ -13,10 +13,7 @@ var im = Image.NewFromFile("image.jpg");
 // make the other pixels in the image by mirroring im up / down / 
 // left / right, see
 // https://jcupitt.github.io/libvips/API/current/libvips-conversion.html#vips-embed
-im = im.Embed(100, 100, 3000, 3000, new VOption
-{
-    {"extend", Enums.Extend.Mirror}
-});
+im = im.Embed(100, 100, 3000, 3000, extend: Enums.Extend.Mirror);
 
 // multiply the green (middle) band by 2, leave the other two alone
 im *= new[] {1, 2, 1};
@@ -28,10 +25,7 @@ var mask = Image.NewFromArray(new[]
     new[] {-1, 16, -1},
     new[] {-1, -1, -1}
 }, 8);
-im = im.Conv(mask, new VOption
-{
-    {"precision", Enums.Precision.Integer}
-});
+im = im.Conv(mask, precision: Enums.Precision.Integer);
 
 // finally, write the result back to a file on disk
 im.WriteToFile("output.jpg");

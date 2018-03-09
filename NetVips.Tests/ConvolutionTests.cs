@@ -24,21 +24,11 @@ namespace NetVips.Tests
         {
             Base.VipsInit();
 
-            var im = Image.MaskIdeal(100, 100, 0.5, new VOption
-            {
-                {"reject", true},
-                {"optical", true}
-            });
+            var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
             _colour = im * new[] {1, 2, 3} + new[] {2, 3, 4};
-            _colour = _colour.Copy(new VOption
-            {
-                {"interpretation", Enums.Interpretation.Srgb}
-            });
+            _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
             _mono = _colour[0];
-            _mono = _mono.Copy(new VOption
-            {
-                {"interpretation", Enums.Interpretation.Bw}
-            });
+            _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
             _allImages = new[]
             {
                 _mono,
@@ -121,10 +111,7 @@ namespace NetVips.Tests
                 {
                     foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
                     {
-                        var convolved = im.Conv(msk, new VOption
-                        {
-                            {"precision", prec}
-                        });
+                        var convolved = im.Conv(msk, precision: prec);
 
                         var result = convolved.Getpoint(25, 50);
                         var @true = Conv(im, msk, 24, 49) as IEnumerable;
@@ -152,10 +139,7 @@ namespace NetVips.Tests
                     msk.Matrixprint();
                     Console.WriteLine($"im.bands = {im.Bands}");
 
-                    var convolved = im.Conv(msk, new VOption
-                    {
-                        {"precision", Enums.Precision.Approximate}
-                    });
+                    var convolved = im.Conv(msk, precision: Enums.Precision.Approximate);
 
                     var result = convolved.Getpoint(25, 50);
                     var @true = Conv(im, msk, 24, 49);
@@ -181,13 +165,8 @@ namespace NetVips.Tests
                     {
                         for (var times = 1; times < 4; times++)
                         {
-                            var convolved = im.Compass(msk, new VOption
-                            {
-                                {"times", times},
-                                {"angle", Enums.Angle45.D45},
-                                {"combine", Enums.Combine.Max},
-                                {"precision", prec}
-                            });
+                            var convolved = im.Compass(msk, times: times, angle: Enums.Angle45.D45,
+                                combine: Enums.Combine.Max, precision: prec);
 
                             var result = convolved.Getpoint(25, 50);
                             var @true =
@@ -207,13 +186,8 @@ namespace NetVips.Tests
                     {
                         for (var times = 1; times < 4; times++)
                         {
-                            var convolved = im.Compass(msk, new VOption
-                            {
-                                {"times", times},
-                                {"angle", Enums.Angle45.D45},
-                                {"combine", Enums.Combine.Sum},
-                                {"precision", prec}
-                            });
+                            var convolved = im.Compass(msk, times: times, angle: Enums.Angle45.D45,
+                                combine: Enums.Combine.Sum, precision: prec);
 
                             var result = convolved.Getpoint(25, 50);
                             var @true = Compass(im, msk, 24, 49, times, (dynamic a, dynamic b) => a + b) as IEnumerable;
@@ -231,28 +205,15 @@ namespace NetVips.Tests
             {
                 foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
                 {
-                    var gmask = Image.Gaussmat(2, 0.1, new VOption
-                    {
-                        {"precision", prec}
-                    });
-                    var gmaskSep = Image.Gaussmat(2, 0.1, new VOption
-                    {
-                        {"separable", true},
-                        {"precision", prec}
-                    });
+                    var gmask = Image.Gaussmat(2, 0.1, precision: prec);
+                    var gmaskSep = Image.Gaussmat(2, 0.1, separable: true, precision: prec);
 
                     Assert.AreEqual(gmask.Width, gmask.Height);
                     Assert.AreEqual(gmask.Width, gmaskSep.Width);
                     Assert.AreEqual(1, gmaskSep.Height);
 
-                    var a = im.Conv(gmask, new VOption
-                    {
-                        {"precision", prec}
-                    });
-                    var b = im.Convsep(gmaskSep, new VOption
-                    {
-                        {"precision", prec}
-                    });
+                    var a = im.Conv(gmask, precision: prec);
+                    var b = im.Convsep(gmaskSep, precision: prec);
 
                     var aPoint = a.Getpoint(25, 50);
                     var bPoint = b.Getpoint(25, 50);
@@ -314,20 +275,10 @@ namespace NetVips.Tests
                     for (var i = 5; i < 10; i++)
                     {
                         var sigma = i / 5.0;
-                        var gmask = Image.Gaussmat(sigma, 0.2, new VOption
-                        {
-                            {"precision", prec}
-                        });
+                        var gmask = Image.Gaussmat(sigma, 0.2, precision: prec);
 
-                        var a = im.Conv(gmask, new VOption
-                        {
-                            {"precision", prec}
-                        });
-                        var b = im.Gaussblur(sigma, new VOption
-                        {
-                            {"min_ampl", 0.2},
-                            {"precision", prec}
-                        });
+                        var a = im.Conv(gmask, precision: prec);
+                        var b = im.Gaussblur(sigma, minAmpl: 0.2, precision: prec);
 
                         var aPoint = a.Getpoint(25, 50);
                         var bPoint = b.Getpoint(25, 50);
@@ -345,31 +296,17 @@ namespace NetVips.Tests
             {
                 foreach (var fmt in Helper.NonComplexFormats)
                 {
-                    // old vipses used "radius", check that that still works
-                    var sharp = im.Sharpen(new VOption
-                    {
-                        {"radius", 5}
-                    });
-
                     foreach (var sigma in new[] {0.5, 1, 1.5, 2})
                     {
                         var im2 = im.Cast(fmt);
-                        sharp = im2.Sharpen(new VOption
-                        {
-                            {"sigma", sigma}
-                        });
+                        var sharp = im2.Sharpen(sigma: sigma);
 
                         // hard to test much more than this
                         Assert.AreEqual(sharp.Width, im.Width);
                         Assert.AreEqual(sharp.Height, im.Height);
 
                         // if m1 and m2 are zero, sharpen should do nothing
-                        sharp = im.Sharpen(new VOption
-                        {
-                            {"sigma", sigma},
-                            {"m1", 0},
-                            {"m2", 0}
-                        });
+                        sharp = im.Sharpen(sigma: sigma, m1: 0, m2: 0);
                         sharp = sharp.Colourspace(im.Interpretation);
                         // Console.WriteLine($"testing sig = {sigma}");
                         // Console.WriteLine($"testing fmt = {fmt}");
