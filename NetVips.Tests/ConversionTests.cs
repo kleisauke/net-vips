@@ -950,9 +950,9 @@ namespace NetVips.Tests
         [Test]
         public void TestRecomb()
         {
-            var array = new[]
+            var array = new[,]
             {
-                new[] {0.2, 0.5, 0.3}
+                {0.2, 0.5, 0.3}
             };
 
             dynamic Recomb(dynamic x)
@@ -962,7 +962,7 @@ namespace NetVips.Tests
                     return image.Recomb(Image.NewFromArray(array));
                 }
 
-                var sum = array[0]
+                var sum = array.Cast<double>()
                     .Zip((IEnumerable<double>) x, (d, o) => new[] {d, o})
                     .Select(zip => zip[0] * zip[1])
                     .Sum();

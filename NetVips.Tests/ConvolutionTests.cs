@@ -34,29 +34,29 @@ namespace NetVips.Tests
                 _mono,
                 _colour
             };
-            _sharp = Image.NewFromArray(new[]
+            _sharp = Image.NewFromArray(new[,]
             {
-                new[] {-1, -1, -1},
-                new[] {-1, 16, -1},
-                new[] {-1, -1, -1}
+                {-1, -1, -1},
+                {-1, 16, -1},
+                {-1, -1, -1}
             }, 8);
-            _blur = Image.NewFromArray(new[]
+            _blur = Image.NewFromArray(new[,]
             {
-                new[] {1, 1, 1},
-                new[] {1, 1, 1},
-                new[] {1, 1, 1}
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
             }, 9);
-            _line = Image.NewFromArray(new[]
+            _line = Image.NewFromArray(new[,]
             {
-                new[] {1, 1, 1},
-                new[] {-2, -2, -2},
-                new[] {1, 1, 1}
+                {1, 1, 1},
+                {-2, -2, -2},
+                {1, 1, 1}
             });
-            _sobel = Image.NewFromArray(new[]
+            _sobel = Image.NewFromArray(new[,]
             {
-                new[] {1, 2, 1},
-                new[] {0, 0, 0},
-                new[] {-1, -2, -1}
+                {1, 2, 1},
+                {0, 0, 0},
+                {-1, -2, -1}
             });
             _allMasks = new[] {_sharp, _blur, _line, _sobel};
         }

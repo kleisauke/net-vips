@@ -52,10 +52,10 @@ namespace NetVips.Tests
         [Test]
         public void TestBuildlut()
         {
-            var m = Image.NewFromArray(new[]
+            var m = Image.NewFromArray(new[,]
             {
-                new[] {0, 0},
-                new[] {255, 100}
+                {0, 0},
+                {255, 100}
             });
             var lut = m.Buildlut();
             Assert.AreEqual(256, lut.Width);
@@ -68,11 +68,11 @@ namespace NetVips.Tests
             p = lut.Getpoint(10, 0);
             Assert.AreEqual(100 * 10.0 / 255.0, p[0]);
 
-            m = Image.NewFromArray(new[]
+            m = Image.NewFromArray(new[,]
             {
-                new[] {0, 0, 100},
-                new[] {255, 100, 0},
-                new[] {128, 10, 90}
+                {0, 0, 100},
+                {255, 100, 0},
+                {128, 10, 90}
             });
             lut = m.Buildlut();
             Assert.AreEqual(256, lut.Width);
@@ -232,11 +232,11 @@ namespace NetVips.Tests
         [Test]
         public void TestInvertlut()
         {
-            var lut = Image.NewFromArray(new[]
+            var lut = Image.NewFromArray(new[,]
             {
-                new[] {0.1, 0.2, 0.3, 0.1},
-                new[] {0.2, 0.4, 0.4, 0.2},
-                new[] {0.7, 0.5, 0.6, 0.3}
+                {0.1, 0.2, 0.3, 0.1},
+                {0.2, 0.4, 0.4, 0.2},
+                {0.7, 0.5, 0.6, 0.3}
             });
             var im = lut.Invertlut();
             Assert.AreEqual(256, im.Width);

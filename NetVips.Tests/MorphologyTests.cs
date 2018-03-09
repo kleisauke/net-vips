@@ -41,11 +41,11 @@ namespace NetVips.Tests
         {
             var im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
-            var im2 = im.Erode(Image.NewFromArray(new[]
+            var im2 = im.Erode(Image.NewFromArray(new[,]
             {
-                new[] {128, 255, 128},
-                new[] {255, 255, 255},
-                new[] {128, 255, 128}
+                {128, 255, 128},
+                {255, 255, 255},
+                {128, 255, 128}
             }));
             Assert.AreEqual(im.Width, im2.Width);
             Assert.AreEqual(im.Height, im2.Height);
@@ -58,11 +58,11 @@ namespace NetVips.Tests
         {
             var im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
-            var im2 = im.Dilate(Image.NewFromArray(new[]
+            var im2 = im.Dilate(Image.NewFromArray(new[,]
             {
-                new[] {128, 255, 128},
-                new[] {255, 255, 255},
-                new[] {128, 255, 128}
+                {128, 255, 128},
+                {255, 255, 255},
+                {128, 255, 128}
             }));
             Assert.AreEqual(im.Width, im2.Width);
             Assert.AreEqual(im.Height, im2.Height);

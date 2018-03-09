@@ -308,8 +308,10 @@ namespace NetVips
                 throw new Exception("can't create image from unknown object");
             }
 
-            var height = arr.Length;
-            var width = arr.GetValue(0) is Array arrWidth ? arrWidth.Length : 1;
+            var is2D = arr.Rank == 2;
+
+            var height = is2D ? arr.GetLength(0) : arr.Length;
+            var width = is2D ? arr.GetLength(1) : (arr.GetValue(0) is Array arrWidth ? arrWidth.Length : 1);
             var n = width * height;
 
             var a = new double[n];
@@ -317,8 +319,17 @@ namespace NetVips
             {
                 for (var x = 0; x < width; x++)
                 {
-                    var yValue = arr.GetValue(y);
-                    var value = yValue is Array yArray ? (yArray.Length <= x ? 0 : yArray.GetValue(x)) : yValue;
+                    object value;
+                    if (is2D)
+                    {
+                        value = arr.GetValue(y, x);
+                    }
+                    else
+                    {
+                        var yValue = arr.GetValue(y);
+                        value = yValue is Array yArray ? (yArray.Length <= x ? 0 : yArray.GetValue(x)) : yValue;
+                    }
+
                     a[x + y * width] = Convert.ToDouble(value);
                 }
             }

@@ -19,11 +19,11 @@ im = im.Embed(100, 100, 3000, 3000, extend: Enums.Extend.Mirror);
 im *= new[] {1, 2, 1};
 
 // make an image from an array constant, convolve with it
-var mask = Image.NewFromArray(new[]
+var mask = Image.NewFromArray(new[,]
 {
-    new[] {-1, -1, -1},
-    new[] {-1, 16, -1},
-    new[] {-1, -1, -1}
+    {-1, -1, -1},
+    {-1, 16, -1},
+    {-1, -1, -1}
 }, 8);
 im = im.Conv(mask, precision: Enums.Precision.Integer);
 
