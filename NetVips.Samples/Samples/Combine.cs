@@ -1,5 +1,8 @@
 ﻿namespace NetVips.Samples.Samples
 {
+    /// <summary>
+    /// From: https://github.com/jcupitt/lua-vips/blob/master/example/combine.lua
+    /// </summary>
     public class Combine : ISample
     {
         public string Name => "Combine";

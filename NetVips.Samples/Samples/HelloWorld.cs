@@ -1,5 +1,8 @@
 ﻿namespace NetVips.Samples.Samples
 {
+    /// <summary>
+    /// From: https://github.com/jcupitt/lua-vips/blob/master/example/hello-world.lua
+    /// </summary>
     public class HelloWorld : ISample
     {
         public string Name => "Hello world";

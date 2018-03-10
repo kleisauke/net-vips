@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using NetVips.Internal;
 using NLog;
 
@@ -285,18 +286,30 @@ namespace NetVips
             }
             else if (gtype == BlobType)
             {
-                if (!(value is byte[] blob))
+                int length;
+                IntPtr memory;
+                switch (value)
                 {
-                    throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                    );
+                    case string strValue:
+                        length = Encoding.UTF8.GetByteCount(strValue);
+
+                        // We need to set the blob to a copy of the string that vips
+                        // can own
+                        memory = strValue.ToUtf8Ptr();
+                        break;
+                    case byte[] byteArrValue:
+                        length = byteArrValue.Length;
+                        memory = byteArrValue.ToPtr();
+                        break;
+                    case char[] charArrValue:
+                        length = Encoding.UTF8.GetByteCount(charArrValue);
+                        memory = Encoding.UTF8.GetBytes(charArrValue).ToPtr();
+                        break;
+                    default:
+                        throw new Exception(
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                        );
                 }
-
-                var length = blob.Length;
-
-                // We need to set the blob to a copy of the string that vips
-                // can own
-                var memory = blob.ToPtr();
 
                 if (Base.AtLeastLibvips(8, 6))
                 {

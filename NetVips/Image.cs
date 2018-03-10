@@ -10734,7 +10734,7 @@ namespace NetVips
 
             if (!(in2 is Image))
             {
-                in1 = Imageize(matchImage, in2);
+                in2 = Imageize(matchImage, in2);
             }
 
             var options = new VOption();
@@ -11170,6 +11170,22 @@ namespace NetVips
         public Image BandEor()
         {
             return this.Call("bandbool", "eor") as Image;
+        }
+
+        /// <summary>
+        /// Does this image have an alpha channel?
+        /// </summary>
+        /// <remarks>
+        /// Uses colour space interpretation with number of channels to guess
+        /// this.
+        /// </remarks>
+        /// <returns><see langword="true" /> if this image has an alpha channel; 
+        /// otherwise, <see langword="false" /></returns>
+        public bool HasAlpha()
+        {
+            return Bands == 2 ||
+                   (Bands == 4 && Interpretation != Enums.Interpretation.Cmyk) ||
+                   Bands > 4;
         }
 
         #endregion

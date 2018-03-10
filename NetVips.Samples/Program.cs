@@ -2,44 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace NetVips.Samples
 {
     class Program
     {
-        public static List<IGrouping<string, ISample>> Samples = Assembly.GetExecutingAssembly().GetTypes()
+        public static List<ISample> Samples = Assembly.GetExecutingAssembly().GetTypes()
             .Where(x => x.GetInterfaces().Contains(typeof(ISample)) && x.GetConstructor(Type.EmptyTypes) != null)
             .Select(x => Activator.CreateInstance(x) as ISample)
-            .GroupBy(s => s.Category)
+            .OrderBy(s => s?.Category)
             .ToList();
 
         static void Main(string[] args)
         {
             if (!Base.VipsInit())
             {
-                Console.WriteLine("Unable to init libvips");
+                Console.WriteLine("Error: Unable to init libvips. Please check your PATH environment variable.");
                 Console.ReadLine();
                 return;
             }
 
-            Console.WriteLine("libvips " + Base.Version(0) + "." + Base.Version(1) + "." + Base.Version(2));
+            Console.WriteLine($"libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
 
-            Console.WriteLine("Type an item number to execute the specified sample. Type exit to quit.");
-            Console.WriteLine();
-            Console.WriteLine("Menu:");
+            Console.WriteLine($"Type a number (1-{Samples.Count}) to execute a sample of your choice. Press <Enter> or type 'Q' to quit.");
 
-            var index = 1;
-            foreach (var group in Samples)
-            {
-                Console.WriteLine($" - {group.Key}");
-                foreach (var item in group)
-                {
-                    Console.WriteLine($"    {index}: {item.Name}");
-                    index++;
-                }
-
-                Console.WriteLine();
-            }
+            DisplayMenu();
 
             string input;
             do
@@ -59,28 +47,44 @@ namespace NetVips.Samples
                 {
                     Console.WriteLine("Sample doesn't exists, try again");
                 }
-            } while (!string.Equals(input, "exit", StringComparison.OrdinalIgnoreCase));
+            } while (!string.IsNullOrEmpty(input) && !string.Equals(input, "Q", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public static void DisplayMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Menu:");
+
+            string currCategory = null;
+            var menu = Samples.Select((value, index) => new {Index = index + 1, value.Name, value.Category})
+                .Aggregate(new StringBuilder(), (builder, pair) =>
+                {
+                    if (currCategory != pair.Category)
+                    {
+                        if (pair.Index > 1)
+                        {
+                            builder.AppendLine();
+                        }
+
+                        builder.AppendLine($" - {pair.Category}");
+
+                        currCategory = pair.Category;
+                    }
+
+                    builder.AppendLine($"    {pair.Index}: {pair.Name}");
+                    return builder;
+                });
+
+            Console.WriteLine(menu);
         }
 
         public static bool TryGetSample(int id, out ISample sample)
         {
-            var index = 1;
-            foreach (var group in Samples)
-            {
-                foreach (var item in group)
-                {
-                    if (index == id)
-                    {
-                        sample = item;
-                        return true;
-                    }
+            sample = Samples
+                .Select((value, index) => new {Index = index + 1, Sample = value})
+                .FirstOrDefault(pair => pair.Index == id)?.Sample;
 
-                    index++;
-                }
-            }
-
-            sample = null;
-            return false;
+            return sample != null;
         }
     }
 }

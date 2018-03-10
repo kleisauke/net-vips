@@ -1,5 +1,8 @@
 ﻿namespace NetVips.Samples.Samples
 {
+    /// <summary>
+    /// From: https://github.com/jcupitt/ruby-vips#example
+    /// </summary>
     public class EmbedMultiplyConv : ISample
     {
         public string Name => "Embed / Multiply / Convolution";
