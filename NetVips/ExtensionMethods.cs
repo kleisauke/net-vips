@@ -8,7 +8,7 @@ using NetVips.Internal;
 
 namespace NetVips
 {
-    public static class ExtensionMethods
+    internal static class ExtensionMethods
     {
         /// <summary>
         /// All numeric types. Used by <see cref="IsNumeric(Type)"/>.

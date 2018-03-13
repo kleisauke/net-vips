@@ -82,7 +82,7 @@
     <Compile Include="Samples\ShapeCropping.cs" />
     <Compile Include="Samples\Combine.cs" />
     <Compile Include="Samples\EmbedMultiplyConv.cs" />
-    <Compile Include="Samples\GenerateFunctions.cs" />
+    <Compile Include="Samples\GenerateImageClass.cs" />
     <Compile Include="Samples\CaptchaGenerator.cs" />
     <Compile Include="Samples\HelloWorld.cs" />
   </ItemGroup>

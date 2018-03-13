@@ -737,7 +737,7 @@ namespace NetVips.Tests
                 var angle = Math.Floor(180.0 * x / hough.Width);
                 var distance = Math.Floor(test.Height * y / hough.Height);
 
-                Assert.AreEqual(22, angle);
+                Assert.AreEqual(45, angle);
                 Assert.AreEqual(70, distance);
             }
         }

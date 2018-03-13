@@ -57,6 +57,7 @@
     <Compile Include="Image.cs" />
     <Compile Include="GObject.cs" />
     <Compile Include="GValue.cs" />
+    <Compile Include="Image.Generated.cs" />
     <Compile Include="Internal\Enums.cs" />
     <Compile Include="Internal\GLib.cs" />
     <Compile Include="Internal\GObject.cs" />
