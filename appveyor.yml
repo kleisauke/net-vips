@@ -10,9 +10,9 @@ environment:
 
 # Build script
 build_script:
-  - ps: $env:VIPS_HOME = "C:\vips-dev-$env:VIPS_VERSION"	
+  - ps: $env:VIPS_HOME = "C:\vips-dev-$env:VIPS_VERSION"
   - ps: $env:PATH = "$env:VIPS_HOME\bin;$env:PATH"
-  - ps: .\build.ps1 -Target "AppVeyor"
+  - ps: .\build.ps1
 
 # Tests
 test: off

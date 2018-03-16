@@ -61,4 +61,4 @@ before_install:
     --without-orc
     --without-python
 
-script: ./build.sh --target Travis
+script: ./build.sh
