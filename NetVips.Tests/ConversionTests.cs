@@ -337,7 +337,7 @@ namespace NetVips.Tests
         [Test]
         public void TestGravity()
         {
-            if (Base.TypeFind("VipsOperation", "gravity") == 0)
+            if (!Helper.Have("gravity"))
             {
                 Console.WriteLine("no gravity in this vips, skipping test");
                 Assert.Ignore();
@@ -441,7 +441,7 @@ namespace NetVips.Tests
         [Test]
         public void TestSmartcrop()
         {
-            if (Base.TypeFind("VipsOperation", "smartcrop") == 0)
+            if (!Helper.Have("smartcrop"))
             {
                 Console.WriteLine("no smartcrop, skipping test");
                 Assert.Ignore();
@@ -558,7 +558,7 @@ namespace NetVips.Tests
         [Test]
         public void TestComposite()
         {
-            if (Base.TypeFind("VipsConversion", "composite") == 0)
+            if (!Helper.Have("composite"))
             {
                 Console.WriteLine("no composite support, skipping test");
                 Assert.Ignore();

@@ -464,16 +464,19 @@ namespace NetVips.Tests
         [Test]
         public void TestText()
         {
-            if (Base.TypeFind("VipsOperation", "text") != 0)
+            if (!Helper.Have("text"))
             {
-                var im = Image.Text("Hello, world!");
-                Assert.IsTrue(im.Width > 10);
-                Assert.IsTrue(im.Height > 10);
-                Assert.AreEqual(1, im.Bands);
-                Assert.AreEqual(Enums.BandFormat.Uchar, im.Format);
-                Assert.AreEqual(255, im.Max());
-                Assert.AreEqual(0, im.Min());
+                Console.WriteLine("no text in this vips, skipping test");
+                Assert.Ignore();
             }
+
+            var im = Image.Text("Hello, world!");
+            Assert.IsTrue(im.Width > 10);
+            Assert.IsTrue(im.Height > 10);
+            Assert.AreEqual(1, im.Bands);
+            Assert.AreEqual(Enums.BandFormat.Uchar, im.Format);
+            Assert.AreEqual(255, im.Max());
+            Assert.AreEqual(0, im.Min());
         }
 
         [Test]
@@ -512,7 +515,7 @@ namespace NetVips.Tests
         [Test]
         public void TestWorley()
         {
-            if (Base.TypeFind("VipsOperation", "worley") == 0)
+            if (!Helper.Have("worley"))
             {
                 Console.WriteLine("no worley, skipping test");
                 Assert.Ignore();
@@ -528,7 +531,7 @@ namespace NetVips.Tests
         [Test]
         public void TestPerlin()
         {
-            if (Base.TypeFind("VipsOperation", "perlin") == 0)
+            if (!Helper.Have("perlin"))
             {
                 Console.WriteLine("no perlin, skipping test");
                 Assert.Ignore();

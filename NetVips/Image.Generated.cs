@@ -5937,7 +5937,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// Image @out = NetVips.Image.Openslideload(filename, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string, attachAssociated: bool);
+        /// Image @out = NetVips.Image.Openslideload(filename, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
@@ -5947,9 +5947,8 @@ namespace NetVips
         /// <param name="autocrop">Crop to image bounds</param>
         /// <param name="fail">Fail on first error</param>
         /// <param name="associated">Load this associated image</param>
-        /// <param name="attachAssociated">Attach all asssociated images</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Openslideload(string filename, bool? memory = null, string access = null, int? level = null, bool? autocrop = null, bool? fail = null, string associated = null, bool? attachAssociated = null)
+        public static Image Openslideload(string filename, bool? memory = null, string access = null, int? level = null, bool? autocrop = null, bool? fail = null, string associated = null)
         {
             var options = new VOption();
 
@@ -5981,11 +5980,6 @@ namespace NetVips
             if (associated != null)
             {
                 options.Add("associated", associated);
-            }
-
-            if (attachAssociated.HasValue)
-            {
-                options.Add("attach_associated", attachAssociated);
             }
 
             return Operation.Call("openslideload", options, filename) as Image;
@@ -5996,7 +5990,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string, attachAssociated: bool);
+        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
@@ -6007,9 +6001,8 @@ namespace NetVips
         /// <param name="autocrop">Crop to image bounds</param>
         /// <param name="fail">Fail on first error</param>
         /// <param name="associated">Load this associated image</param>
-        /// <param name="attachAssociated">Attach all asssociated images</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Openslideload(string filename, out int flags, bool? memory = null, string access = null, int? level = null, bool? autocrop = null, bool? fail = null, string associated = null, bool? attachAssociated = null)
+        public static Image Openslideload(string filename, out int flags, bool? memory = null, string access = null, int? level = null, bool? autocrop = null, bool? fail = null, string associated = null)
         {
             var options = new VOption();
 
@@ -6041,11 +6034,6 @@ namespace NetVips
             if (associated != null)
             {
                 options.Add("associated", associated);
-            }
-
-            if (attachAssociated.HasValue)
-            {
-                options.Add("attach_associated", attachAssociated);
             }
 
             options.Add("flags", true);
@@ -7337,6 +7325,59 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Rotate an image by a number of degrees
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Image @out = in.Rotate(angle, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
+        /// </code>
+        /// </example>
+        /// <param name="angle">Rotate anticlockwise by this many degrees</param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
+        /// <param name="background">Background value</param>
+        /// <param name="odx">Horizontal output displacement</param>
+        /// <param name="ody">Vertical output displacement</param>
+        /// <param name="idx">Horizontal input displacement</param>
+        /// <param name="idy">Vertical input displacement</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Rotate(double angle, GObject interpolate = null, double[] background = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null)
+        {
+            var options = new VOption();
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            if (odx.HasValue)
+            {
+                options.Add("odx", odx);
+            }
+
+            if (ody.HasValue)
+            {
+                options.Add("ody", ody);
+            }
+
+            if (idx.HasValue)
+            {
+                options.Add("idx", idx);
+            }
+
+            if (idy.HasValue)
+            {
+                options.Add("idy", idy);
+            }
+
+            return this.Call("rotate", options, angle) as Image;
+        }
+
+        /// <summary>
         /// Perform a round function on an image
         /// </summary>
         /// <example>
@@ -7548,31 +7589,21 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code>
-        /// Image @out = in.Similarity(background: double[], interpolate: GObject, scale: double, angle: double, odx: double, ody: double, idx: double, idy: double);
+        /// Image @out = in.Similarity(scale: double, angle: double, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
-        /// <param name="background">Background value</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
         /// <param name="scale">Scale by this factor</param>
         /// <param name="angle">Rotate anticlockwise by this many degrees</param>
+        /// <param name="interpolate">Interpolate pixels with this</param>
+        /// <param name="background">Background value</param>
         /// <param name="odx">Horizontal output displacement</param>
         /// <param name="ody">Vertical output displacement</param>
         /// <param name="idx">Horizontal input displacement</param>
         /// <param name="idy">Vertical input displacement</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Similarity(double[] background = null, GObject interpolate = null, double? scale = null, double? angle = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null)
+        public Image Similarity(double? scale = null, double? angle = null, GObject interpolate = null, double[] background = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null)
         {
             var options = new VOption();
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add("background", background);
-            }
-
-            if (interpolate != null)
-            {
-                options.Add("interpolate", interpolate);
-            }
 
             if (scale.HasValue)
             {
@@ -7582,6 +7613,16 @@ namespace NetVips
             if (angle.HasValue)
             {
                 options.Add("angle", angle);
+            }
+
+            if (interpolate != null)
+            {
+                options.Add("interpolate", interpolate);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
             }
 
             if (odx.HasValue)

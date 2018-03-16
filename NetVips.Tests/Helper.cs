@@ -31,6 +31,7 @@ namespace NetVips.Tests
         public static readonly string SvgGzFile = Path.Combine(Images, "vips-profile.svg.gz");
         public static readonly string GifAnimFile = Path.Combine(Images, "cogs.gif");
         public static readonly string DicomFile = Path.Combine(Images, "dicom_test_image.dcm");
+        public static readonly string BmpFile = Path.Combine(Images, "MARBLES.BMP");
 
         public static readonly string[] UnsignedFormats =
         {
@@ -426,6 +427,16 @@ namespace NetVips.Tests
         {
             var fileName = Guid.NewGuid() + extension;
             return Path.Combine(path, fileName);
+        }
+
+        /// <summary>
+        /// Test if an operator exists.
+        /// </summary>
+        /// <param name="name">Name of the operator</param>
+        /// <returns><see langword="true" /> if the operator exists; otherwise, <see langword="false" /></returns>
+        public static bool Have(string name)
+        {
+            return Base.TypeFind("VipsOperation", name) != 0;
         }
     }
 }

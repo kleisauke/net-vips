@@ -269,6 +269,24 @@ namespace NetVips.Tests
         }
 
         [Test]
+        public void TestRotate()
+        {
+            // added in 8.7
+            if (!Helper.Have("rotate"))
+            {
+                Console.WriteLine("no rotate support in this vips, skipping test");
+                Assert.Ignore();
+            }
+
+            var im = Image.NewFromFile(Helper.JpegFile);
+            var im2 = im.Rotate(90);
+            var im3 = im.Affine(new double[] { 0, -1, 1, 0 });
+            // rounding in calculating the affine transform from the angle stops
+            // this being exactly true
+            Assert.Less((im2 - im3).Abs().Max(), 50);
+        }
+
+        [Test]
         public void TestMapim()
         {
             var im = Image.NewFromFile(Helper.JpegFile);

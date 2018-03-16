@@ -1029,39 +1029,42 @@ namespace NetVips.Tests
         [Test]
         public void TestFindTrim()
         {
-            if (Base.TypeFind("VipsOperation", "find_trim") != 0)
+            if (!Helper.Have("find_trim"))
             {
-                var im = Image.Black(50, 60) + 100;
-                var test = im.Embed(10, 20, 200, 300, extend: "white");
-
-                foreach (var x in Helper.UnsignedFormats.Concat(Helper.FloatFormats).ToArray())
-                {
-                    var a = test.Cast(x);
-                    var trim = a.FindTrim();
-                    var left = trim[0];
-                    var top = trim[1];
-                    var width = trim[2];
-                    var height = trim[3];
-
-
-                    Assert.AreEqual(10, left);
-                    Assert.AreEqual(20, top);
-                    Assert.AreEqual(50, width);
-                    Assert.AreEqual(60, height);
-                }
-
-                var testRgb = test.Bandjoin(new[] {test, test});
-                var trim2 = testRgb.FindTrim(background: new double[] {255, 255, 255});
-                var left2 = trim2[0];
-                var top2 = trim2[1];
-                var width2 = trim2[2];
-                var height2 = trim2[3];
-
-                Assert.AreEqual(10, left2);
-                Assert.AreEqual(20, top2);
-                Assert.AreEqual(50, width2);
-                Assert.AreEqual(60, height2);
+                Console.WriteLine("no find_trim in this vips, skipping test");
+                Assert.Ignore();
             }
+
+            var im = Image.Black(50, 60) + 100;
+            var test = im.Embed(10, 20, 200, 300, extend: "white");
+
+            foreach (var x in Helper.UnsignedFormats.Concat(Helper.FloatFormats).ToArray())
+            {
+                var a = test.Cast(x);
+                var trim = a.FindTrim();
+                var left = trim[0];
+                var top = trim[1];
+                var width = trim[2];
+                var height = trim[3];
+
+
+                Assert.AreEqual(10, left);
+                Assert.AreEqual(20, top);
+                Assert.AreEqual(50, width);
+                Assert.AreEqual(60, height);
+            }
+
+            var testRgb = test.Bandjoin(new[] {test, test});
+            var trim2 = testRgb.FindTrim(background: new double[] {255, 255, 255});
+            var left2 = trim2[0];
+            var top2 = trim2[1];
+            var width2 = trim2[2];
+            var height2 = trim2[3];
+
+            Assert.AreEqual(10, left2);
+            Assert.AreEqual(20, top2);
+            Assert.AreEqual(50, width2);
+            Assert.AreEqual(60, height2);
         }
 
         [Test]

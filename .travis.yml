@@ -1,0 +1,64 @@
+sudo: false
+
+language: csharp
+
+os:
+  - linux
+
+dist: trusty
+
+mono:
+  - 4.4.2
+
+dotnet: 2.1.4
+
+env:
+  global:
+    - VIPS_VERSION=8.6.3
+    - VIPS_TAR_VERSION=$VIPS_VERSION
+    - VIPS_WARNING=0
+    - PATH=$HOME/vips/bin:$PATH
+    - LD_LIBRARY_PATH=$HOME/vips/lib:$LD_LIBRARY_PATH
+    - PKG_CONFIG_PATH=$HOME/vips/lib/pkgconfig:$PKG_CONFIG_PATH
+    - PYTHONPATH=$HOME/vips/lib/python2.7/site-packages:$PYTHONPATH
+    - GI_TYPELIB_PATH=$HOME/vips/lib/girepository-1.0:$GI_TYPELIB_PATH
+
+cache:
+  directories:
+    - packages
+    - tools
+
+addons:
+  apt:
+    packages:
+      - libexpat1-dev
+      - liblcms2-dev
+      - libmagickwand-dev
+      - libopenexr-dev
+      - libcfitsio3-dev
+      - libfftw3-dev
+      - libgif-dev
+      - libgs-dev
+      - libgsf-1-dev
+      - libmatio-dev
+      - libopenslide-dev
+      - liborc-0.4-dev
+      - libpango1.0-dev
+      - libpoppler-glib-dev
+      - librsvg2-dev
+      - libwebp-dev
+      - libglib2.0-dev
+
+before_install:
+  - bash install-vips.sh
+    --disable-debug
+    --disable-dependency-tracking
+    --disable-introspection
+    --disable-static
+    --enable-gtk-doc-html=no
+    --enable-gtk-doc=no
+    --enable-pyvips8=no
+    --without-orc
+    --without-python
+
+script: ./build.sh --target Travis

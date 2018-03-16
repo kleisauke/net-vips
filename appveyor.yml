@@ -1,0 +1,31 @@
+image: Visual Studio 2017
+init:
+  - git config --global core.autocrlf true
+
+# Environment
+environment:
+  VIPS_VERSION: "8.6.3"
+  VIPS_ZIP_VERSION: "dev-w64-all-8.6.3-1"
+  VIPS_WARNING: 0
+
+# Build script
+build_script:
+  - ps: $env:VIPS_HOME = "C:\vips-dev-$env:VIPS_VERSION"	
+  - ps: $env:PATH = "$env:VIPS_HOME\bin;$env:PATH"
+  - ps: .\build.ps1 -Target "AppVeyor"
+
+# Tests
+test: off
+
+# Branches to build
+branches:
+  # Whitelist
+  only:
+    - master
+    - dev
+
+# Build cache
+cache:
+- download -> appveyor.yml
+- tools -> build.cake
+- packages -> build.cake

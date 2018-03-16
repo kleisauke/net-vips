@@ -95,9 +95,9 @@ namespace NetVips.Tests
         }
 
 
-        public void SaveLoadBuffer(string saver, string loader, Image im, int maxDiff = 0)
+        public void SaveLoadBuffer(string saver, string loader, Image im, int maxDiff = 0, VOption kwargs = null)
         {
-            var buf = Operation.Call(saver, im) as byte[];
+            var buf = Operation.Call(saver, kwargs, im) as byte[];
             var x = Operation.Call(loader, buf) as Image;
 
             Assert.AreEqual(x.Width, im.Width);
@@ -141,7 +141,7 @@ namespace NetVips.Tests
         [Test]
         public void TestJpeg()
         {
-            if (Base.TypeFind("VipsForeign", "jpegload") == 0)
+            if (!Helper.Have("jpegload"))
             {
                 Console.WriteLine("no jpeg support in this vips, skipping test");
                 Assert.Ignore();
@@ -211,7 +211,7 @@ namespace NetVips.Tests
         [Test]
         public void TestPng()
         {
-            if (Base.TypeFind("VipsForeign", "pngload") == 0 || !File.Exists(Helper.PngFile))
+            if (!Helper.Have("pngload") || !File.Exists(Helper.PngFile))
             {
                 Console.WriteLine("no png support, skipping test");
                 Assert.Ignore();
@@ -237,7 +237,7 @@ namespace NetVips.Tests
         [Test]
         public void TestTiff()
         {
-            if (Base.TypeFind("VipsForeign", "tiffload") == 0 || !File.Exists(Helper.TifFile))
+            if (!Helper.Have("tiffload") || !File.Exists(Helper.TifFile))
             {
                 Console.WriteLine("no tiff support, skipping test");
                 Assert.Ignore();
@@ -397,26 +397,23 @@ namespace NetVips.Tests
         [Test]
         public void TestMagickLoad()
         {
-            if (Base.TypeFind("VipsForeign", "magickload") == 0 || !File.Exists(Helper.GifFile))
+            if (!Helper.Have("magickload") || !File.Exists(Helper.BmpFile))
             {
                 Console.WriteLine("no magick support, skipping test");
                 Assert.Ignore();
             }
 
-            void GifValid(Image im)
+            void BmpValid(Image im)
             {
-                // some libMagick produce an RGB for this image, some a mono, some
-                // rgba, some have a valid alpha, some don't :-(
-                // therefore ... just test channel 0
-                var a = im.Getpoint(10, 10)[0];
+                var a = im.Getpoint(100, 100);
 
-                Assert.AreEqual(33, a);
-                Assert.AreEqual(159, im.Width);
-                Assert.AreEqual(203, im.Height);
+                Helper.AssertAlmostEqualObjects(new[] {227, 216, 201}, a);
+                Assert.AreEqual(1419, im.Width);
+                Assert.AreEqual(1001, im.Height);
             }
 
-            FileLoader("magickload", Helper.GifFile, GifValid);
-            BufferLoader("magickload_buffer", Helper.GifFile, GifValid);
+            FileLoader("magickload", Helper.BmpFile, BmpValid);
+            BufferLoader("magickload_buffer", Helper.BmpFile, BmpValid);
 
             // we should have rgba for svg files
             var x = Image.Magickload(Helper.SvgFile);
@@ -455,12 +452,23 @@ namespace NetVips.Tests
 
             // some IMs are 3 bands, some are 1, can't really test
             // Assert.AreEqual(1, x.Bands);
+
+            // added in 8.7
+            if (Helper.Have("magicksave"))
+            {
+                SaveLoadFile(".bmp", "", _colour, 0);
+                SaveLoadBuffer("magicksave_buffer", "magickload_buffer", _colour, 0, new VOption
+                {
+                    {"format", "BMP"}
+                });
+                SaveLoad("%s.bmp", _colour);
+            }
         }
 
         [Test]
         public void TestWebp()
         {
-            if (Base.TypeFind("VipsForeign", "webpload") == 0 || !File.Exists(Helper.WebpFile))
+            if (!Helper.Have("webpload") || !File.Exists(Helper.WebpFile))
             {
                 Console.WriteLine("no webp support, skipping test");
                 Assert.Ignore();
@@ -512,8 +520,8 @@ namespace NetVips.Tests
                 var z = Image.NewFromFile(Helper.JpegFile);
                 if (z.GetTypeOf("exif-ifd0-Orientation") != 0)
                 {
-                    var w = _colour.Copy();
-                    w.Set("orientation", 6);
+                    x = _colour.Copy();
+                    x.Set("orientation", 6);
                     buf = x.WebpsaveBuffer();
                     var y = Image.NewFromBuffer(buf);
                     Assert.AreEqual(6, y.Get("orientation"));
@@ -524,7 +532,7 @@ namespace NetVips.Tests
         [Test]
         public void TestAnalyzeLoad()
         {
-            if (Base.TypeFind("VipsForeign", "analyzeload") == 0 || !File.Exists(Helper.AnalyzeFile))
+            if (!Helper.Have("analyzeload") || !File.Exists(Helper.AnalyzeFile))
             {
                 Console.WriteLine("no analyze support, skipping test");
                 Assert.Ignore();
@@ -546,7 +554,7 @@ namespace NetVips.Tests
         [Test]
         public void TestMatLoad()
         {
-            if (Base.TypeFind("VipsForeign", "matload") == 0 || !File.Exists(Helper.MatlabFile))
+            if (!Helper.Have("matload") || !File.Exists(Helper.MatlabFile))
             {
                 Console.WriteLine("no matlab support, skipping test");
                 Assert.Ignore();
@@ -568,7 +576,7 @@ namespace NetVips.Tests
         [Test]
         public void TestOpenexrLoad()
         {
-            if (Base.TypeFind("VipsForeign", "openexrload") == 0 || !File.Exists(Helper.ExrFile))
+            if (!Helper.Have("openexrload") || !File.Exists(Helper.ExrFile))
             {
                 Console.WriteLine("no openexr support, skipping test");
                 Assert.Ignore();
@@ -596,7 +604,7 @@ namespace NetVips.Tests
         [Test]
         public void TestsFitsLoad()
         {
-            if (Base.TypeFind("VipsForeign", "fitsload") == 0 || !File.Exists(Helper.FitsFile))
+            if (!Helper.Have("fitsload") || !File.Exists(Helper.FitsFile))
             {
                 Console.WriteLine("no fits support, skipping test");
                 Assert.Ignore();
@@ -626,7 +634,7 @@ namespace NetVips.Tests
         [Test]
         public void TestOpenslideLoad()
         {
-            if (Base.TypeFind("VipsForeign", "openslideload") == 0 || !File.Exists(Helper.OpenslideFile))
+            if (!Helper.Have("openslideload") || !File.Exists(Helper.OpenslideFile))
             {
                 Console.WriteLine("no openslide support, skipping test");
                 Assert.Ignore();
@@ -648,7 +656,7 @@ namespace NetVips.Tests
         [Test]
         public void TestPdfLoad()
         {
-            if (Base.TypeFind("VipsForeign", "pdfload") == 0 || !File.Exists(Helper.PdfFile))
+            if (!Helper.Have("pdfload") || !File.Exists(Helper.PdfFile))
             {
                 Console.WriteLine("no pdf support, skipping test");
                 Assert.Ignore();
@@ -688,7 +696,7 @@ namespace NetVips.Tests
         [Test]
         public void TestGifLoad()
         {
-            if (Base.TypeFind("VipsForeign", "gifload") == 0 || !File.Exists(Helper.GifFile))
+            if (!Helper.Have("gifload") || !File.Exists(Helper.GifFile))
             {
                 Console.WriteLine("no gif support, skipping test");
                 Assert.Ignore();
@@ -737,7 +745,7 @@ namespace NetVips.Tests
         [Test]
         public void TestSvgLoad()
         {
-            if (Base.TypeFind("VipsForeign", "svgload") == 0 || !File.Exists(Helper.SvgFile))
+            if (!Helper.Have("svgload") || File.Exists(Helper.SvgFile))
             {
                 Console.WriteLine("no svg support, skipping test");
                 Assert.Ignore();
@@ -800,7 +808,7 @@ namespace NetVips.Tests
         [Test]
         public void TestPpm()
         {
-            if (Base.TypeFind("VipsForeign", "ppmload") == 0)
+            if (!Helper.Have("ppmload"))
             {
                 Console.WriteLine("no PPM support, skipping test");
                 Assert.Ignore();
@@ -813,7 +821,7 @@ namespace NetVips.Tests
         [Test]
         public void TestRad()
         {
-            if (Base.TypeFind("VipsForeign", "radload") == 0)
+            if (!Helper.Have("radload"))
             {
                 Console.WriteLine("no Radiance support, skipping test");
                 Assert.Ignore();
@@ -826,7 +834,7 @@ namespace NetVips.Tests
         [Test]
         public void TestDzSave()
         {
-            if (Base.TypeFind("VipsForeign", "dzsave") == 0)
+            if (!Helper.Have("dzsave"))
             {
                 Console.WriteLine("no dzsave support, skipping test");
                 Assert.Ignore();
@@ -973,7 +981,7 @@ namespace NetVips.Tests
             Assert.AreEqual(513, y.Height);
 
             // test save to memory buffer
-            if (Base.TypeFind("VipsForeign", "dzsave_buffer") != 0)
+            if (Helper.Have("dzsave_buffer"))
             {
                 filename = Helper.GetTemporaryFile(_tempDir, ".zip");
                 var baseName = Path.GetFileNameWithoutExtension(filename);
