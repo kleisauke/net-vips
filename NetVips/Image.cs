@@ -387,8 +387,7 @@ namespace NetVips
             VipsImage vi;
             try
             {
-                var pointer = handle.AddrOfPinnedObject();
-                vi = VipsImage.VipsImageNewFromMemory(pointer, (ulong) data.Length,
+                vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), (ulong) data.Length,
                     width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
             }
             finally

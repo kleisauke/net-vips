@@ -332,7 +332,7 @@ namespace NetVips.Internal
 
         public static string GValueGetString(GValue value)
         {
-            return Internal.GValueGetString(value.Pointer).ToUtf8String(true);
+            return Internal.GValueGetString(value.Pointer).ToUtf8String();
         }
 
         public static void GValueSetEnum(GValue value, int vEnum)

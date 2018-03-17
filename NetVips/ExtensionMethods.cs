@@ -270,10 +270,9 @@ namespace NetVips
         /// </summary>
         /// <returns>The managed string string.</returns>
         /// <param name="ptr">Pointer to the GLib string.</param>
-        /// <param name="freePtr">If set to <see langword="true" />, free the GLib string.</param>
-        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false)
+        public static string ToUtf8String(this IntPtr ptr)
         {
-            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr));
+            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString());
         }
 
         /// <summary>
@@ -320,10 +319,9 @@ namespace NetVips
         /// The byte array does not include the null terminator.
         /// </remarks>
         /// <param name="ptr">Pointer to the unmanaged string.</param>
-        /// <param name="freePtr">If set to <see langword="true" /> free the unmanaged memory.</param>
         /// <param name="length">The number of characters to copy.</param>
         /// <returns>The string as a byte array.</returns>
-        public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int length = 0)
+        public static byte[] ToByteString(this IntPtr ptr, int length = 0)
         {
             if (ptr == IntPtr.Zero)
             {
@@ -349,12 +347,6 @@ namespace NetVips
                     bytes.Add(Marshal.ReadByte(ptr, i));
                 }
             }
-
-            if (freePtr)
-            {
-                GLib.GFree(ptr);
-            }
-
 
             return bytes.ToArray();
         }

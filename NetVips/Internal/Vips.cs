@@ -113,12 +113,12 @@ namespace NetVips.Internal
 
         public static string VipsPathFilename7(IntPtr path)
         {
-            return Internal.VipsPathFilename7(path).ToUtf8String(true);
+            return Internal.VipsPathFilename7(path).ToUtf8String();
         }
 
         public static string VipsPathMode7(IntPtr path)
         {
-            return Internal.VipsPathMode7(path).ToUtf8String(true);
+            return Internal.VipsPathMode7(path).ToUtf8String();
         }
 
         public static ulong VipsBlendModeGetType()
@@ -462,7 +462,7 @@ namespace NetVips.Internal
 
         public static string VipsValueGetRefString(GValue value, ref ulong length)
         {
-            return Internal.VipsValueGetRefString(value.Pointer, ref length).ToUtf8String(true);
+            return Internal.VipsValueGetRefString(value.Pointer, ref length).ToUtf8String();
         }
 
         public static void VipsValueSetRefString(GValue value, string str)
@@ -624,7 +624,7 @@ namespace NetVips.Internal
 
         public static string VipsFilenameGetFilename(IntPtr vipsFilename)
         {
-            return Internal.VipsFilenameGetFilename(vipsFilename).ToUtf8String(true);
+            return Internal.VipsFilenameGetFilename(vipsFilename).ToUtf8String();
         }
 
         public static string VipsFilenameGetOptions(IntPtr vipsFilename)
