@@ -25,7 +25,6 @@ env:
 
 cache:
   directories:
-    - packages
     - tools
 
 addons:
