@@ -1,59 +1,47 @@
 ﻿using System.Collections;
 using System.IO;
 using NetVips.Internal;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    public class GValueTests
+    public class GValueTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TestBool()
         {
             var gv = new GValue();
             gv.SetType(GValue.GBoolType);
             gv.Set(true);
             var value = gv.Get();
-            Assert.AreEqual(true, value);
+            Assert.True(value as bool?);
 
             gv.Set(false);
             value = gv.Get();
-            Assert.AreEqual(false, value);
+            Assert.False(value as bool?);
         }
 
-        [Test]
+        [Fact]
         public void TestInt()
         {
             var gv = new GValue();
             gv.SetType(GValue.GIntType);
             gv.Set(12);
             var value = gv.Get();
-            Assert.AreEqual(12, value);
+            Assert.Equal(12, value);
         }
 
-        [Test]
+        [Fact]
         public void TestDouble()
         {
             var gv = new GValue();
             gv.SetType(GValue.GDoubleType);
             gv.Set(3.1415);
             var value = gv.Get();
-            Assert.AreEqual(3.1415, value);
+            Assert.Equal(3.1415, value);
         }
 
-        [Test]
+        [Fact]
         public void TestEnum()
         {
             // the Interpretation enum is created when the first image is made --
@@ -64,10 +52,10 @@ namespace NetVips.Tests
             gv.SetType(interpretationGtype);
             gv.Set("xyz");
             var value = gv.Get();
-            Assert.AreEqual("xyz", value);
+            Assert.Equal("xyz", value);
         }
 
-        [Test]
+        [Fact]
         public void TestFlags()
         {
             // the OperationFlags enum is created when the first op is made --
@@ -78,40 +66,40 @@ namespace NetVips.Tests
             gv.SetType(operationflagsGtype);
             gv.Set(12);
             var value = gv.Get();
-            Assert.AreEqual(12, value);
+            Assert.Equal(12u, value);
         }
 
-        [Test]
+        [Fact]
         public void TestString()
         {
             var gv = new GValue();
             gv.SetType(GValue.GStrType);
             gv.Set("banana");
             var value = gv.Get();
-            Assert.AreEqual("banana", value);
+            Assert.Equal("banana", value);
         }
 
-        [Test]
+        [Fact]
         public void TestArrayInt()
         {
             var gv = new GValue();
             gv.SetType(GValue.ArrayIntType);
             gv.Set(new[] {1, 2, 3});
             var value = gv.Get();
-            CollectionAssert.AreEqual(new[] {1, 2, 3}, value as IEnumerable);
+            Assert.Equal(new[] {1, 2, 3}, value as IEnumerable);
         }
 
-        [Test]
+        [Fact]
         public void TestArrayDouble()
         {
             var gv = new GValue();
             gv.SetType(GValue.ArrayDoubleType);
             gv.Set(new[] {1.1, 2.1, 3.1});
             var value = gv.Get();
-            CollectionAssert.AreEqual(new[] {1.1, 2.1, 3.1}, value as IEnumerable);
+            Assert.Equal(new[] {1.1, 2.1, 3.1}, value as IEnumerable);
         }
 
-        [Test]
+        [Fact]
         public void TestImage()
         {
             var image = Image.NewFromFile(Helper.JpegFile);
@@ -119,10 +107,10 @@ namespace NetVips.Tests
             gv.SetType(GValue.ImageType);
             gv.Set(image);
             var value = gv.Get();
-            Assert.AreEqual(image, value);
+            Assert.Equal(image, value);
         }
 
-        [Test]
+        [Fact]
         public void TestArrayImage()
         {
             var image = Image.NewFromFile(Helper.JpegFile);
@@ -136,10 +124,10 @@ namespace NetVips.Tests
             gv.Set(new[] {r, g, b});
             var value = gv.Get();
 
-            CollectionAssert.AreEqual(new[] {r, g, b}, value as IEnumerable);
+            Assert.Equal(new[] {r, g, b}, value as IEnumerable);
         }
 
-        [Test]
+        [Fact]
         public void TestBlob()
         {
             var blob = File.ReadAllBytes(Helper.JpegFile);
@@ -147,7 +135,7 @@ namespace NetVips.Tests
             gv.SetType(GValue.BlobType);
             gv.Set(blob);
             var value = gv.Get();
-            Assert.AreEqual(blob, value);
+            Assert.Equal(blob, value);
         }
     }
 }

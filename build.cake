@@ -1,15 +1,25 @@
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.8.0
-
 // Arguments
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 
 // Variables
-
 // Define directories.
 var buildDir = Directory("./NetVips/bin") + Directory(configuration);
 
 const string downloadDir = "./download/";
+
+// Setup / teardown
+Setup(ctx =>
+{
+   // Executed BEFORE the first task.
+   Information("Running tasks...");
+});
+
+Teardown(ctx =>
+{
+   // Executed AFTER the last task.
+   Information("Finished running tasks.");
+});
 
 // Tasks
 Task("Clean")
@@ -28,8 +38,8 @@ Task("Install-Libvips")
 
     var zipVersion = EnvironmentVariable("VIPS_ZIP_VERSION");
 
-    var fileName = "vips-" + zipVersion + ".zip";
-    var vipsZip = "https://github.com/jcupitt/libvips/releases/download/v" + version + preVersion + "/" + fileName;
+    var fileName = $"vips-{zipVersion}.zip";
+    var vipsZip = $"https://github.com/jcupitt/libvips/releases/download/v{version}{preVersion}/{fileName}";
 
     var outputPath = File(downloadDir + fileName);
 
@@ -63,45 +73,41 @@ Task("Install-Libvips")
     });
 });
 
-Task("Restore-NuGet-Packages")
+// Run dotnet restore to restore all package references.
+Task("Restore")  
     .IsDependentOn("Install-Libvips")
     .Does(() =>
 {
-    NuGetRestore("./NetVips.sln");
+    DotNetCoreRestore();
 });
 
 Task("Build")
-    .IsDependentOn("Restore-NuGet-Packages")
+    .IsDependentOn("Restore")
     .Does(() =>
 {
-    if(IsRunningOnWindows())
+    DotNetCoreBuild("./NetVips.sln", new DotNetCoreBuildSettings()
     {
-      // Use MSBuild
-      MSBuild("./NetVips.sln", settings =>
-        settings.SetConfiguration(configuration));
-    }
-    else
-    {
-      // Use XBuild
-      XBuild("./NetVips.sln", settings =>
-        settings.SetConfiguration(configuration));
-    }
-});
-
-Task("Run-Unit-Tests")
-    .IsDependentOn("Build")
-    .Does(() =>
-{
-    NUnit3("./**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
-        NoResults = true
+        Configuration = configuration
     });
 });
 
-// Task targets
+Task("Test")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    foreach(var project in GetFiles("./NetVips.Tests/**/*Tests.csproj"))
+    {
+        DotNetCoreTool(
+            project,
+            "xunit",
+            arguments: $"-configuration {configuration} -diagnostics -stoponfail --fx-version 2.0.6"
+        );
+    }
+});
 
+// Task targets
 Task("Default")
-    .IsDependentOn("Run-Unit-Tests");
+    .IsDependentOn("Test");
 
 // Execution
-
 RunTarget(target);

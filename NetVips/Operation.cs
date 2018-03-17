@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using NetVips.Internal;
-using NLog;
 
 namespace NetVips
 {
@@ -100,24 +100,33 @@ namespace NetVips
         {
             var args = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
 
-            IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance, IntPtr a,
-                IntPtr b)
+            VipsArgumentMapFn addConstruct = (self, pspec, argumentClass, argumentInstance, a, b) =>
             {
                 var flags = new VipsArgumentClass(argumentClass).Flags;
                 if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) != 0)
                 {
                     var name = new GParamSpec(pspec).Name;
+
                     // libvips uses '-' to separate parts of arg names, but we
                     // need '_' for C#
-                    name = name.Replace("-", "_");
+                    name = name?.Replace("-", "_");
 
                     args.Add(name, flags);
                 }
 
                 return IntPtr.Zero;
-            }
+            };
 
-            Internal.VipsObject.VipsArgumentMap(IntlVipsObject, AddConstruct, IntPtr.Zero, IntPtr.Zero);
+            // prevent it from being re-located or disposed of by the garbage collector
+            var gchCallbackDelegate = GCHandle.Alloc(addConstruct);
+
+            Internal.VipsObject.VipsArgumentMap(IntlVipsObject, addConstruct, IntPtr.Zero, IntPtr.Zero);
+
+            if (gchCallbackDelegate.IsAllocated)
+            {
+                // release reference to delegate
+                gchCallbackDelegate.Free();
+            }
 
             return args;
         }

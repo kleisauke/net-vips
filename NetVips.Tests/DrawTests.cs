@@ -1,45 +1,33 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class DrawTests
+    public class DrawTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TestDrawCircle()
         {
             var im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] {100}, 50, 50, 25);
             var pixel = im.Getpoint(25, 50);
-            Assert.AreEqual(1, pixel.Length);
-            Assert.AreEqual(100, pixel[0]);
+            Assert.Single(pixel);
+            Assert.Equal(100, pixel[0]);
             pixel = im.Getpoint(26, 50);
-            Assert.AreEqual(1, pixel.Length);
-            Assert.AreEqual(0, pixel[0]);
+            Assert.Single(pixel);
+            Assert.Equal(0, pixel[0]);
 
             im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] {100}, 50, 50, 25, fill: true);
             pixel = im.Getpoint(25, 50);
-            Assert.AreEqual(1, pixel.Length);
-            Assert.AreEqual(100, pixel[0]);
+            Assert.Single(pixel);
+            Assert.Equal(100, pixel[0]);
             pixel = im.Getpoint(26, 50);
-            Assert.AreEqual(100, pixel[0]);
+            Assert.Equal(100, pixel[0]);
             pixel = im.Getpoint(24, 50);
-            Assert.AreEqual(0, pixel[0]);
+            Assert.Equal(0, pixel[0]);
         }
 
-        [Test]
+        [Fact]
         public void TestDrawFlood()
         {
             var im = Image.Black(100, 100);
@@ -50,10 +38,10 @@ namespace NetVips.Tests
             im2 = im2.DrawCircle(new double[] {100}, 50, 50, 25, fill: true);
 
             var diff = (im - im2).Abs().Max();
-            Assert.AreEqual(0, diff);
+            Assert.Equal(0, diff);
         }
 
-        [Test]
+        [Fact]
         public void TestDrawImage()
         {
             var im = Image.Black(51, 51);
@@ -66,23 +54,23 @@ namespace NetVips.Tests
             im3 = im3.DrawCircle(new double[] {100}, 50, 50, 25, fill: true);
 
             var diff = (im2 - im3).Abs().Max();
-            Assert.AreEqual(0, diff);
+            Assert.Equal(0, diff);
         }
 
-        [Test]
+        [Fact]
         public void TestDrawLine()
         {
             var im = Image.Black(100, 100);
             im = im.DrawLine(new double[] {100}, 0, 0, 100, 0);
             var pixel = im.Getpoint(0, 0);
-            Assert.AreEqual(1, pixel.Length);
-            Assert.AreEqual(100, pixel[0]);
+            Assert.Single(pixel);
+            Assert.Equal(100, pixel[0]);
             pixel = im.Getpoint(0, 1);
-            Assert.AreEqual(1, pixel.Length);
-            Assert.AreEqual(0, pixel[0]);
+            Assert.Single(pixel);
+            Assert.Equal(0, pixel[0]);
         }
 
-        [Test]
+        [Fact]
         public void TestDrawMask()
         {
             var mask = Image.Black(51, 51);
@@ -95,10 +83,10 @@ namespace NetVips.Tests
             im2 = im2.DrawCircle(new double[] {100}, 50, 50, 25, fill: true);
 
             var diff = (im - im2).Abs().Max();
-            Assert.AreEqual(0, diff);
+            Assert.Equal(0, diff);
         }
 
-        [Test]
+        [Fact]
         public void TestDrawRect()
         {
             var im = Image.Black(100, 100);
@@ -111,10 +99,10 @@ namespace NetVips.Tests
             }
 
             var diff = (im - im2).Abs().Max();
-            Assert.AreEqual(0, diff);
+            Assert.Equal(0, diff);
         }
 
-        [Test]
+        [Fact]
         public void TestDrawSmudge()
         {
             var im = Image.Black(100, 100);
@@ -127,7 +115,7 @@ namespace NetVips.Tests
             var im4 = im2.DrawImage(im3, 10, 10);
 
             var diff = (im4 - im).Abs().Max();
-            Assert.AreEqual(0, diff);
+            Assert.Equal(0, diff);
         }
     }
 }

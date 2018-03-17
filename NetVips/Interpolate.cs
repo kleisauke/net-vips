@@ -1,6 +1,5 @@
 ﻿using System;
 using NetVips.Internal;
-using NLog;
 
 namespace NetVips
 {

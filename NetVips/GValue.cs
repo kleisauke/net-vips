@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using NetVips.Internal;
-using NLog;
 
 namespace NetVips
 {

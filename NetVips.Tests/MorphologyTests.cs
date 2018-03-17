@@ -1,42 +1,30 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class MorphologyTests
+    public class MorphologyTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TestCountlines()
         {
             var im = Image.Black(100, 100);
             im = im.DrawLine(new double[] {255}, 0, 50, 100, 50);
             var nLines = im.Countlines(Enums.Direction.Horizontal);
-            Assert.AreEqual(1, nLines);
+            Assert.Equal(1, nLines);
         }
 
-        [Test]
+        [Fact]
         public void TestLabelregions()
         {
             var im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
             var mask = im.Labelregions(out var segments);
 
-            Assert.AreEqual(3, segments);
-            Assert.AreEqual(2, mask.Max());
+            Assert.Equal(3, segments);
+            Assert.Equal(2, mask.Max());
         }
 
-        [Test]
+        [Fact]
         public void TestErode()
         {
             var im = Image.Black(100, 100);
@@ -47,13 +35,13 @@ namespace NetVips.Tests
                 {255, 255, 255},
                 {128, 255, 128}
             }));
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
-            Assert.AreEqual(im.Bands, im2.Bands);
-            Assert.IsTrue(im.Avg() > im2.Avg());
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
+            Assert.Equal(im.Bands, im2.Bands);
+            Assert.True(im.Avg() > im2.Avg());
         }
 
-        [Test]
+        [Fact]
         public void TestDilate()
         {
             var im = Image.Black(100, 100);
@@ -64,22 +52,22 @@ namespace NetVips.Tests
                 {255, 255, 255},
                 {128, 255, 128}
             }));
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
-            Assert.AreEqual(im.Bands, im2.Bands);
-            Assert.IsTrue(im2.Avg() > im.Avg());
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
+            Assert.Equal(im.Bands, im2.Bands);
+            Assert.True(im2.Avg() > im.Avg());
         }
 
-        [Test]
+        [Fact]
         public void TestRank()
         {
             var im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] {255}, 50, 50, 25, fill: true);
             var im2 = im.Rank(3, 3, 8);
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
-            Assert.AreEqual(im.Bands, im2.Bands);
-            Assert.IsTrue(im2.Avg() > im.Avg());
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
+            Assert.Equal(im.Bands, im2.Bands);
+            Assert.True(im2.Avg() > im.Avg());
         }
     }
 }

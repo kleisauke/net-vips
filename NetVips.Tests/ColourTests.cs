@@ -1,24 +1,12 @@
 ﻿using System;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class ColourTests
+    public class ColourTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TestColourspace()
         {
             // mid-grey in Lab ... put 42 in the extra band, it should be copied
@@ -31,17 +19,17 @@ namespace NetVips.Tests
             foreach (var col in Helper.ColourColourspaces.Concat(new[] {Enums.Interpretation.Lab}))
             {
                 im = im.Colourspace(col);
-                Assert.AreEqual(col, im.Interpretation);
+                Assert.Equal(col, im.Interpretation);
 
                 for (var i = 0; i < 4; i++)
                 {
                     var minL = im[i].Min();
                     var maxH = im[i].Max();
-                    Assert.AreEqual(minL, maxH);
+                    Assert.Equal(minL, maxH);
                 }
 
                 var pixel = im.Getpoint(10, 10);
-                Assert.AreEqual(pixel[3], 42, 0.01);
+                Assert.Equal(42, pixel[3], 2);
             }
 
             // alpha won't be equal for RGB16, but it should be preserved if we go
@@ -87,17 +75,18 @@ namespace NetVips.Tests
                 foreach (var col in Helper.ColourColourspaces.Concat(new[] {monoFmt}))
                 {
                     im = im.Colourspace(col);
-                    Assert.AreEqual(col, im.Interpretation);
+                    Assert.Equal(col, im.Interpretation);
                 }
 
                 var pixelBefore = testGrey.Getpoint(10, 10);
                 var alphaBefore = pixelBefore[1];
                 var pixelAfter = im.Getpoint(10, 10);
                 var alphaAfter = pixelAfter[1];
-                Assert.Less(Math.Abs(alphaAfter - alphaBefore), 1);
+                Assert.True(Math.Abs(alphaAfter - alphaBefore) < 1);
 
                 // GREY16 can wind up rather different due to rounding but 8-bit we should hit exactly
-                Assert.Less(Math.Abs(pixelAfter[0] - pixelBefore[0]), monoFmt == Enums.Interpretation.Grey16 ? 30 : 1);
+                Assert.True(
+                    Math.Abs(pixelAfter[0] - pixelBefore[0]) < (monoFmt == Enums.Interpretation.Grey16 ? 30 : 1));
             }
         }
 
@@ -105,7 +94,7 @@ namespace NetVips.Tests
         /// test results from Bruce Lindbloom's calculator:s
         /// http://www.brucelindbloom.com
         /// </summary>
-        [Test]
+        [Fact]
         public void TestDE00()
         {
             // put 42 in the extra band, it should be copied unmodified
@@ -116,11 +105,11 @@ namespace NetVips.Tests
 
             var difference = reference.DE00(sample);
             var diffPixel = difference.Getpoint(10, 10);
-            Assert.AreEqual(30.238, diffPixel[0], 0.001);
-            Assert.AreEqual(42.0, diffPixel[1], 0.001);
+            Assert.Equal(30.238, diffPixel[0], 3);
+            Assert.Equal(42.0, diffPixel[1], 3);
         }
 
-        [Test]
+        [Fact]
         public void TestDE76()
         {
             // put 42 in the extra band, it should be copied unmodified
@@ -131,8 +120,8 @@ namespace NetVips.Tests
 
             var difference = reference.DE76(sample);
             var diffPixel = difference.Getpoint(10, 10);
-            Assert.AreEqual(33.166, diffPixel[0], 0.001);
-            Assert.AreEqual(42.0, diffPixel[1], 0.001);
+            Assert.Equal(33.166, diffPixel[0], 3);
+            Assert.Equal(42.0, diffPixel[1], 3);
         }
 
         /// <summary>
@@ -140,7 +129,7 @@ namespace NetVips.Tests
         /// derived from the CMC formula, so it won't match exactly ...
         /// see vips_LCh2CMC() for details
         /// </summary>
-        [Test]
+        [Fact]
         public void TestDECMC()
         {
             // put 42 in the extra band, it should be copied unmodified
@@ -151,50 +140,50 @@ namespace NetVips.Tests
 
             var difference = reference.DECMC(sample);
             var diffPixel = difference.Getpoint(10, 10);
-            Assert.Less(Math.Abs(diffPixel[0] - 4.97), 0.5);
-            Assert.AreEqual(42.0, diffPixel[1], 0.001);
+            Assert.True(Math.Abs(diffPixel[0] - 4.97) < 0.5);
+            Assert.Equal(42.0, diffPixel[1], 3);
         }
 
-        [Test]
+        [Fact]
         public void TestIcc()
         {
             var test = Image.NewFromFile(Helper.JpegFile);
 
             var im = test.IccImport().IccExport();
-            Assert.Less(im.DE76(test).Max(), 6);
+            Assert.True(im.DE76(test).Max() < 6);
 
             im = test.IccImport();
             var im2 = im.IccExport(depth: 16);
-            Assert.AreEqual(Enums.BandFormat.Ushort, im2.Format);
+            Assert.Equal(Enums.BandFormat.Ushort, im2.Format);
             var im3 = im2.IccImport();
-            Assert.Less((im - im3).Abs().Max(), 3);
+            Assert.True((im - im3).Abs().Max() < 3);
 
             im = test.IccImport(intent: Enums.Intent.Absolute);
 
             im2 = im.IccExport(intent: Enums.Intent.Absolute);
-            Assert.Less(im2.DE76(test).Max(), 6);
+            Assert.True(im2.DE76(test).Max() < 6);
 
             im = test.IccImport();
             im2 = im.IccExport(outputProfile: Helper.SrgbFile);
             im3 = im.Colourspace(Enums.Interpretation.Srgb);
-            Assert.Less(im2.DE76(im3).Max(), 6);
+            Assert.True(im2.DE76(im3).Max() < 6);
 
             var beforeProfile = test.Get("icc-profile-data") as byte[];
             im = test.IccTransform(Helper.SrgbFile);
             var afterProfile = im.Get("icc-profile-data") as byte[];
             im2 = test.IccImport();
             im3 = im2.Colourspace(Enums.Interpretation.Srgb);
-            Assert.Less(im2.DE76(im3).Max(), 6);
-            Assert.AreNotEqual(beforeProfile.Length, afterProfile.Length);
+            Assert.True(im2.DE76(im3).Max() < 6);
+            Assert.NotEqual(beforeProfile.Length, afterProfile.Length);
 
             im = test.IccImport(inputProfile: Helper.SrgbFile);
             im2 = test.IccImport();
-            Assert.Less(6, im.DE76(im2).Max());
+            Assert.True(6 < im.DE76(im2).Max());
 
             im = test.IccImport(pcs: Enums.PCS.Xyz);
-            Assert.AreEqual(Enums.Interpretation.Xyz, im.Interpretation);
+            Assert.Equal(Enums.Interpretation.Xyz, im.Interpretation);
             im = test.IccImport();
-            Assert.AreEqual(Enums.Interpretation.Lab, im.Interpretation);
+            Assert.Equal(Enums.Interpretation.Lab, im.Interpretation);
         }
     }
 }

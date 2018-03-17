@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    public class ArithmeticTests
+    public class ArithmeticTests : IClassFixture<NetVipsFixture>
     {
         private Image _image;
         private Image _colour;
         private Image _mono;
         private Image[] _allImages;
 
-        [SetUp]
-        public void Init()
+        public ArithmeticTests()
         {
-            Base.VipsInit();
-
             _image = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
             _colour = _image * new[] {1, 2, 3} + new[] {2, 3, 4};
             _mono = _colour[1];
@@ -28,14 +24,9 @@ namespace NetVips.Tests
             };
         }
 
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
         #region helpers
 
-        public void RunArith(Func<object, object, object> func, string[] formats = null)
+        internal void RunArith(Func<object, object, object> func, string[] formats = null)
         {
             if (formats == null)
             {
@@ -54,7 +45,7 @@ namespace NetVips.Tests
             }
         }
 
-        public void RunArithConst(Func<object, object, object> func, string[] formats = null)
+        internal void RunArithConst(Func<object, object, object> func, string[] formats = null)
         {
             if (formats == null)
             {
@@ -82,13 +73,13 @@ namespace NetVips.Tests
         /// <param name="im"></param>
         /// <param name="func"></param>
         /// <returns>None</returns>
-        public void RunImageunary(Image im, Func<object, object> func)
+        internal void RunImageunary(Image im, Func<object, object> func)
         {
             Helper.RunCmp(im, 50, 50, x => Helper.RunFn(func, x));
             Helper.RunCmp(im, 10, 10, x => Helper.RunFn(func, x));
         }
 
-        public void RunUnary(IEnumerable<Image> images, Func<object, object> func, string[] formats = null)
+        internal void RunUnary(IEnumerable<Image> images, Func<object, object> func, string[] formats = null)
         {
             if (formats == null)
             {
@@ -108,7 +99,7 @@ namespace NetVips.Tests
 
         #region test overloadable operators
 
-        [Test]
+        [Fact]
         public void TestAdd()
         {
             dynamic Add(dynamic x, dynamic y)
@@ -125,7 +116,7 @@ namespace NetVips.Tests
             RunArith(Add);
         }
 
-        [Test]
+        [Fact]
         public void TestSub()
         {
             dynamic Sub(dynamic x, dynamic y)
@@ -143,7 +134,7 @@ namespace NetVips.Tests
             RunArith(Sub);
         }
 
-        [Test]
+        [Fact]
         public void TestMul()
         {
             dynamic Mul(dynamic x, dynamic y)
@@ -160,7 +151,7 @@ namespace NetVips.Tests
             RunArith(Mul);
         }
 
-        [Test]
+        [Fact]
         public void TestDiv()
         {
             dynamic Div(dynamic x, dynamic y)
@@ -179,7 +170,7 @@ namespace NetVips.Tests
             RunArith(Div);
         }
 
-        [Test]
+        [Fact]
         public void TestFloorDiv()
         {
             dynamic FloorDiv(dynamic x, dynamic y)
@@ -204,7 +195,7 @@ namespace NetVips.Tests
             RunArith(FloorDiv, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestPow()
         {
             dynamic Pow(dynamic x, dynamic y)
@@ -229,7 +220,7 @@ namespace NetVips.Tests
             RunArith(Pow, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestAnd()
         {
             dynamic And(dynamic x, dynamic y)
@@ -257,7 +248,7 @@ namespace NetVips.Tests
             RunArith(And, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestOr()
         {
             dynamic Or(dynamic x, dynamic y)
@@ -285,7 +276,7 @@ namespace NetVips.Tests
             RunArith(Or, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestXor()
         {
             dynamic Xor(dynamic x, dynamic y)
@@ -313,7 +304,7 @@ namespace NetVips.Tests
             RunArith(Xor, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestMore()
         {
             dynamic More(dynamic x, dynamic y)
@@ -335,7 +326,7 @@ namespace NetVips.Tests
             RunArith(More);
         }
 
-        [Test]
+        [Fact]
         public void TestMoreEq()
         {
             dynamic MoreEq(dynamic x, dynamic y)
@@ -357,7 +348,7 @@ namespace NetVips.Tests
             RunArith(MoreEq);
         }
 
-        [Test]
+        [Fact]
         public void TestLess()
         {
             dynamic Less(dynamic x, dynamic y)
@@ -379,7 +370,7 @@ namespace NetVips.Tests
             RunArith(Less);
         }
 
-        [Test]
+        [Fact]
         public void TestLessEq()
         {
             dynamic LessEq(dynamic x, dynamic y)
@@ -401,7 +392,7 @@ namespace NetVips.Tests
             RunArith(LessEq);
         }
 
-        [Test]
+        [Fact]
         public void TestEqual()
         {
             dynamic Equal(dynamic x, dynamic y)
@@ -423,7 +414,7 @@ namespace NetVips.Tests
             RunArith(Equal);
         }
 
-        [Test]
+        [Fact]
         public void TestNotEq()
         {
             dynamic NotEq(dynamic x, dynamic y)
@@ -445,7 +436,7 @@ namespace NetVips.Tests
             RunArith(NotEq);
         }
 
-        [Test]
+        [Fact]
         public void TestAbs()
         {
             dynamic Abs(dynamic x)
@@ -465,7 +456,7 @@ namespace NetVips.Tests
             }, Abs);
         }
 
-        [Test]
+        [Fact]
         public void TestLShift()
         {
             dynamic LShift(dynamic x)
@@ -483,7 +474,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, LShift, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestRShift()
         {
             dynamic RShift(dynamic x)
@@ -501,7 +492,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, RShift, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestMod()
         {
             dynamic Mod(dynamic x)
@@ -513,7 +504,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Mod, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestPos()
         {
             dynamic Pos(dynamic x)
@@ -524,7 +515,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Pos);
         }
 
-        [Test]
+        [Fact]
         public void TestNeg()
         {
             dynamic Neg(dynamic x)
@@ -535,7 +526,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Neg);
         }
 
-        [Test]
+        [Fact]
         public void TestInvert()
         {
             dynamic Invert(dynamic x)
@@ -557,7 +548,7 @@ namespace NetVips.Tests
 
         #region test the rest of VipsArithmetic
 
-        [Test]
+        [Fact]
         public void TestAvg()
         {
             var im = Image.Black(50, 100);
@@ -565,11 +556,11 @@ namespace NetVips.Tests
 
             foreach (var fmt in Helper.AllFormats)
             {
-                Assert.AreEqual(50, test.Cast(fmt).Avg());
+                Assert.Equal(50, test.Cast(fmt).Avg());
             }
         }
 
-        [Test]
+        [Fact]
         public void TestDeviate()
         {
             var im = Image.Black(50, 100);
@@ -577,11 +568,11 @@ namespace NetVips.Tests
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
-                Assert.AreEqual(50, test.Cast(fmt).Deviate(), 0.01);
+                Assert.Equal(50, test.Cast(fmt).Deviate(), 2);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestPolar()
         {
             var im = Image.Black(100, 100) + 100;
@@ -589,22 +580,22 @@ namespace NetVips.Tests
 
             im = im.Polar();
 
-            Assert.AreEqual(100 * Math.Pow(2, 0.5), im.Real().Avg(), 0.0001);
-            Assert.AreEqual(45, im.Imag().Avg());
+            Assert.Equal(100 * Math.Pow(2, 0.5), im.Real().Avg(), 4);
+            Assert.Equal(45, im.Imag().Avg());
         }
 
-        [Test]
+        [Fact]
         public void TestRect()
         {
             var im = Image.Black(100, 100);
             im = (im + 100 * Math.Pow(2, 0.5)).Complexform(im + 45);
             im = im.Rect();
 
-            Assert.AreEqual(100, im.Real().Avg());
-            Assert.AreEqual(100, im.Imag().Avg());
+            Assert.Equal(100, im.Real().Avg());
+            Assert.Equal(100, im.Imag().Avg());
         }
 
-        [Test]
+        [Fact]
         public void TestConjugate()
         {
             var im = Image.Black(100, 100) + 100;
@@ -612,11 +603,11 @@ namespace NetVips.Tests
 
             im = im.Conj();
 
-            Assert.AreEqual(100, im.Real().Avg());
-            Assert.AreEqual(-100, im.Imag().Avg());
+            Assert.Equal(100, im.Real().Avg());
+            Assert.Equal(-100, im.Imag().Avg());
         }
 
-        [Test]
+        [Fact]
         public void TestHistFind()
         {
             var im = Image.Black(50, 100);
@@ -625,27 +616,27 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind();
-                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] {5000}, hist.Getpoint(0, 0));
+                Assert.Equal(new double[] {5000}, hist.Getpoint(10, 0));
+                Assert.Equal(new double[] {0}, hist.Getpoint(5, 0));
             }
 
             test = test * new[] {1, 2, 3};
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind(band: 0);
-                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] {5000}, hist.Getpoint(0, 0));
+                Assert.Equal(new double[] {5000}, hist.Getpoint(10, 0));
+                Assert.Equal(new double[] {0}, hist.Getpoint(5, 0));
 
                 hist = test.Cast(fmt).HistFind(band: 1);
-                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new[] {5000}, hist.Getpoint(20, 0));
-                CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] {5000}, hist.Getpoint(0, 0));
+                Assert.Equal(new double[] {5000}, hist.Getpoint(20, 0));
+                Assert.Equal(new double[] {0}, hist.Getpoint(5, 0));
             }
         }
 
-        [Test]
+        [Fact]
         public void TestHistFindIndexed()
         {
             var im = Image.Black(50, 100);
@@ -661,13 +652,13 @@ namespace NetVips.Tests
                     var a = test.Cast(x);
                     var b = index.Cast(y);
                     var hist = a.HistFindIndexed(b);
-                    CollectionAssert.AreEqual(new[] {0}, hist.Getpoint(0, 0));
-                    CollectionAssert.AreEqual(new[] {50000}, hist.Getpoint(1, 0));
+                    Assert.Equal(new double[] {0}, hist.Getpoint(0, 0));
+                    Assert.Equal(new double[] {50000}, hist.Getpoint(1, 0));
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void TestHistFindNdim()
         {
             var im = Image.Black(100, 100) + new[] {1, 2, 3};
@@ -676,19 +667,19 @@ namespace NetVips.Tests
             {
                 var hist = im.Cast(fmt).HistFindNdim();
 
-                Assert.AreEqual(10000, hist.Getpoint(0, 0)[0]);
-                Assert.AreEqual(0, hist.Getpoint(5, 5)[5]);
+                Assert.Equal(10000, hist.Getpoint(0, 0)[0]);
+                Assert.Equal(0, hist.Getpoint(5, 5)[5]);
 
                 hist = im.Cast(fmt).HistFindNdim(bins: 1);
 
-                Assert.AreEqual(10000, hist.Getpoint(0, 0)[0]);
-                Assert.AreEqual(1, hist.Width);
-                Assert.AreEqual(1, hist.Height);
-                Assert.AreEqual(1, hist.Bands);
+                Assert.Equal(10000, hist.Getpoint(0, 0)[0]);
+                Assert.Equal(1, hist.Width);
+                Assert.Equal(1, hist.Height);
+                Assert.Equal(1, hist.Bands);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestHoughCircle()
         {
             var test = Image.Black(100, 100).DrawCircle(new double[] {100}, 50, 50, 40);
@@ -707,21 +698,18 @@ namespace NetVips.Tests
                 var r = Array.IndexOf(vec, vec.Min(d => v)) + 35;
 
 
-                Assert.AreEqual(50, x);
-                Assert.AreEqual(50, y);
-                Assert.AreEqual(40, r);
+                Assert.Equal(50, x);
+                Assert.Equal(50, y);
+                Assert.Equal(40, r);
             }
         }
 
-        [Test]
+        [SkippableFact]
         public void TestHoughLine()
         {
             // hough_line changed the way it codes parameter space in 8.7 ... don't
             // test earlier versions
-            if (!Base.AtLeastLibvips(8, 7))
-            {
-                Assert.Ignore();
-            }
+            Skip.IfNot(Base.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
 
             var test = Image.Black(100, 100).DrawLine(new double[] {100}, 10, 90, 90, 10);
 
@@ -737,12 +725,12 @@ namespace NetVips.Tests
                 var angle = Math.Floor(180.0 * x / hough.Width);
                 var distance = Math.Floor(test.Height * y / hough.Height);
 
-                Assert.AreEqual(45, angle);
-                Assert.AreEqual(70, distance);
+                Assert.Equal(45, angle);
+                Assert.Equal(70, distance);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestSin()
         {
             dynamic Sin(dynamic x)
@@ -758,7 +746,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Sin, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestCos()
         {
             dynamic Cos(dynamic x)
@@ -774,7 +762,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Cos, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestTan()
         {
             dynamic Tan(dynamic x)
@@ -790,7 +778,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Tan, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestASin()
         {
             dynamic ASin(dynamic x)
@@ -807,7 +795,7 @@ namespace NetVips.Tests
             RunUnary(new[] {im}, ASin, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestACos()
         {
             dynamic ACos(dynamic x)
@@ -824,7 +812,7 @@ namespace NetVips.Tests
             RunUnary(new[] {im}, ACos, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestATan()
         {
             dynamic ACos(dynamic x)
@@ -841,7 +829,7 @@ namespace NetVips.Tests
             RunUnary(new[] {im}, ACos, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestLog()
         {
             dynamic Log(dynamic x)
@@ -857,7 +845,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Log, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestExp()
         {
             dynamic Exp(dynamic x)
@@ -873,7 +861,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Exp, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestExp10()
         {
             dynamic Exp10(dynamic x)
@@ -889,7 +877,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Exp10, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestFloor()
         {
             dynamic Floor(dynamic x)
@@ -905,7 +893,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Floor, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestCeil()
         {
             dynamic Ceil(dynamic x)
@@ -921,7 +909,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Ceil, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestRint()
         {
             dynamic Rint(dynamic x)
@@ -937,7 +925,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Rint, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestSign()
         {
             dynamic Sign(dynamic x)
@@ -963,7 +951,7 @@ namespace NetVips.Tests
             RunUnary(_allImages, Sign, Helper.NonComplexFormats);
         }
 
-        [Test]
+        [Fact]
         public void TestMax()
         {
             var test = Image.Black(100, 100).DrawRect(new double[] {100}, 40, 50, 1, 1);
@@ -972,20 +960,20 @@ namespace NetVips.Tests
             {
                 var v = test.Cast(fmt).Max();
 
-                Assert.AreEqual(100, v);
+                Assert.Equal(100, v);
 
                 var maxPos = test.Cast(fmt).MaxPos();
                 v = maxPos[0];
                 var x = maxPos[1];
                 var y = maxPos[2];
 
-                Assert.AreEqual(100, v);
-                Assert.AreEqual(40, x);
-                Assert.AreEqual(50, y);
+                Assert.Equal(100, v);
+                Assert.Equal(40, x);
+                Assert.Equal(50, y);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestMin()
         {
             var test = (Image.Black(100, 100) + 100).DrawRect(new double[] {0}, 40, 50, 1, 1);
@@ -994,20 +982,20 @@ namespace NetVips.Tests
             {
                 var v = test.Cast(fmt).Min();
 
-                Assert.AreEqual(0, v);
+                Assert.Equal(0, v);
 
                 var minPos = test.Cast(fmt).MinPos();
                 v = minPos[0];
                 var x = minPos[1];
                 var y = minPos[2];
 
-                Assert.AreEqual(0, v);
-                Assert.AreEqual(40, x);
-                Assert.AreEqual(50, y);
+                Assert.Equal(0, v);
+                Assert.Equal(40, x);
+                Assert.Equal(50, y);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestMeasure()
         {
             var im = Image.Black(50, 50);
@@ -1021,19 +1009,15 @@ namespace NetVips.Tests
                 var p2 = matrix.Getpoint(0, 1)[0];
 
 
-                Assert.AreEqual(0, p1);
-                Assert.AreEqual(10, p2);
+                Assert.Equal(0, p1);
+                Assert.Equal(10, p2);
             }
         }
 
-        [Test]
+        [SkippableFact]
         public void TestFindTrim()
         {
-            if (!Helper.Have("find_trim"))
-            {
-                Console.WriteLine("no find_trim in this vips, skipping test");
-                Assert.Ignore();
-            }
+            Skip.IfNot(Helper.Have("find_trim"), "no find_trim in this vips, skipping test");
 
             var im = Image.Black(50, 60) + 100;
             var test = im.Embed(10, 20, 200, 300, extend: "white");
@@ -1048,10 +1032,10 @@ namespace NetVips.Tests
                 var height = trim[3];
 
 
-                Assert.AreEqual(10, left);
-                Assert.AreEqual(20, top);
-                Assert.AreEqual(50, width);
-                Assert.AreEqual(60, height);
+                Assert.Equal(10, left);
+                Assert.Equal(20, top);
+                Assert.Equal(50, width);
+                Assert.Equal(60, height);
             }
 
             var testRgb = test.Bandjoin(new[] {test, test});
@@ -1061,13 +1045,13 @@ namespace NetVips.Tests
             var width2 = trim2[2];
             var height2 = trim2[3];
 
-            Assert.AreEqual(10, left2);
-            Assert.AreEqual(20, top2);
-            Assert.AreEqual(50, width2);
-            Assert.AreEqual(60, height2);
+            Assert.Equal(10, left2);
+            Assert.Equal(20, top2);
+            Assert.Equal(50, width2);
+            Assert.Equal(60, height2);
         }
 
-        [Test]
+        [Fact]
         public void TestProfile()
         {
             var test = Image.Black(100, 100).DrawRect(new double[] {100}, 40, 50, 1, 1);
@@ -1083,22 +1067,22 @@ namespace NetVips.Tests
                 var x = minPos[1];
                 var y = minPos[2];
 
-                Assert.AreEqual(50, v);
-                Assert.AreEqual(40, x);
-                Assert.AreEqual(0, y);
+                Assert.Equal(50, v);
+                Assert.Equal(40, x);
+                Assert.Equal(0, y);
 
                 minPos = rows.MinPos();
                 v = minPos[0];
                 x = minPos[1];
                 y = minPos[2];
 
-                Assert.AreEqual(40, v);
-                Assert.AreEqual(0, x);
-                Assert.AreEqual(50, y);
+                Assert.Equal(40, v);
+                Assert.Equal(0, x);
+                Assert.Equal(50, y);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestProject()
         {
             var im = Image.Black(50, 50);
@@ -1110,14 +1094,14 @@ namespace NetVips.Tests
                 var columns = profile[0] as Image;
                 var rows = profile[1] as Image;
 
-                CollectionAssert.AreEqual(new[] {0}, columns.Getpoint(10, 0));
-                CollectionAssert.AreEqual(new[] {50 * 10}, columns.Getpoint(70, 0));
+                Assert.Equal(new double[] {0}, columns.Getpoint(10, 0));
+                Assert.Equal(new double[] {50 * 10}, columns.Getpoint(70, 0));
 
-                CollectionAssert.AreEqual(new[] {50 * 10}, rows.Getpoint(0, 10));
+                Assert.Equal(new double[] {50 * 10}, rows.Getpoint(0, 10));
             }
         }
 
-        [Test]
+        [Fact]
         public void TestStats()
         {
             var im = Image.Black(50, 50);
@@ -1128,23 +1112,23 @@ namespace NetVips.Tests
                 var a = test.Cast(fmt);
                 var matrix = a.Stats();
 
-                CollectionAssert.AreEqual(new[] {a.Min()}, matrix.Getpoint(0, 0));
-                CollectionAssert.AreEqual(new[] {a.Max()}, matrix.Getpoint(1, 0));
-                CollectionAssert.AreEqual(new[] {50 * 50 * 10}, matrix.Getpoint(2, 0));
-                CollectionAssert.AreEqual(new[] {50 * 50 * 100}, matrix.Getpoint(3, 0));
-                CollectionAssert.AreEqual(new[] {a.Avg()}, matrix.Getpoint(4, 0));
-                CollectionAssert.AreEqual(new[] {a.Deviate()}, matrix.Getpoint(5, 0));
+                Assert.Equal(new[] {a.Min()}, matrix.Getpoint(0, 0));
+                Assert.Equal(new[] {a.Max()}, matrix.Getpoint(1, 0));
+                Assert.Equal(new double[] {50 * 50 * 10}, matrix.Getpoint(2, 0));
+                Assert.Equal(new double[] {50 * 50 * 100}, matrix.Getpoint(3, 0));
+                Assert.Equal(new[] {a.Avg()}, matrix.Getpoint(4, 0));
+                Assert.Equal(new[] {a.Deviate()}, matrix.Getpoint(5, 0));
 
-                CollectionAssert.AreEqual(new[] {a.Min()}, matrix.Getpoint(0, 1));
-                CollectionAssert.AreEqual(new[] {a.Max()}, matrix.Getpoint(1, 1));
-                CollectionAssert.AreEqual(new[] {50 * 50 * 10}, matrix.Getpoint(2, 1));
-                CollectionAssert.AreEqual(new[] {50 * 50 * 100}, matrix.Getpoint(3, 1));
-                CollectionAssert.AreEqual(new[] {a.Avg()}, matrix.Getpoint(4, 1));
-                CollectionAssert.AreEqual(new[] {a.Deviate()}, matrix.Getpoint(5, 1));
+                Assert.Equal(new[] {a.Min()}, matrix.Getpoint(0, 1));
+                Assert.Equal(new[] {a.Max()}, matrix.Getpoint(1, 1));
+                Assert.Equal(new double[] {50 * 50 * 10}, matrix.Getpoint(2, 1));
+                Assert.Equal(new double[] {50 * 50 * 100}, matrix.Getpoint(3, 1));
+                Assert.Equal(new[] {a.Avg()}, matrix.Getpoint(4, 1));
+                Assert.Equal(new[] {a.Deviate()}, matrix.Getpoint(5, 1));
             }
         }
 
-        [Test]
+        [Fact]
         public void TestSum()
         {
             foreach (var fmt in Helper.AllFormats)
@@ -1153,7 +1137,7 @@ namespace NetVips.Tests
                 var im2 = Enumerable.Range(0, 100).Where(i => i % 10 == 0).Select(x => (im + x).Cast(fmt)).ToArray();
                 var im3 = Image.Sum(im2);
 
-                Assert.AreEqual(Enumerable.Range(0, 100).Where(i => i % 10 == 0).Sum(), im3.Max());
+                Assert.Equal(Enumerable.Range(0, 100).Where(i => i % 10 == 0).Sum(), im3.Max());
             }
         }
 

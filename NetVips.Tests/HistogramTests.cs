@@ -1,23 +1,11 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class HistogramTests
+    public class HistogramTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TestHistCum()
         {
             var im = Image.Identity();
@@ -27,54 +15,54 @@ namespace NetVips.Tests
             var cum = im.HistCum();
 
             var p = cum.Getpoint(255, 0);
-            Assert.AreEqual(sum, p[0]);
+            Assert.Equal(sum, p[0]);
         }
 
-        [Test]
+        [Fact]
         public void TestHistEqual()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
 
             var im2 = im.HistEqual();
 
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
 
-            Assert.IsTrue(im.Avg() < im2.Avg());
-            Assert.IsTrue(im.Deviate() < im2.Deviate());
+            Assert.True(im.Avg() < im2.Avg());
+            Assert.True(im.Deviate() < im2.Deviate());
         }
 
-        [Test]
+        [Fact]
         public void TestHistIsmonotonic()
         {
             var im = Image.Identity();
-            Assert.IsTrue(im.HistIsmonotonic());
+            Assert.True(im.HistIsmonotonic());
         }
 
-        [Test]
+        [Fact]
         public void TestHistLocal()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
 
             var im2 = im.HistLocal(10, 10);
 
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
 
-            Assert.IsTrue(im.Avg() < im2.Avg());
-            Assert.IsTrue(im.Deviate() < im2.Deviate());
+            Assert.True(im.Avg() < im2.Avg());
+            Assert.True(im.Deviate() < im2.Deviate());
 
             if (Base.AtLeastLibvips(8, 5))
             {
                 var im3 = im.HistLocal(10, 10, maxSlope: 3);
-                Assert.AreEqual(im.Width, im3.Width);
-                Assert.AreEqual(im.Height, im3.Height);
+                Assert.Equal(im.Width, im3.Width);
+                Assert.Equal(im.Height, im3.Height);
 
-                Assert.IsTrue(im3.Deviate() < im2.Deviate());
+                Assert.True(im3.Deviate() < im2.Deviate());
             }
         }
 
-        [Test]
+        [Fact]
         public void TestHistMatch()
         {
             var im = Image.Identity();
@@ -82,40 +70,40 @@ namespace NetVips.Tests
 
             var matched = im.HistMatch(im2);
 
-            Assert.AreEqual(0.0, (im - matched).Abs().Max());
+            Assert.Equal(0.0, (im - matched).Abs().Max());
         }
 
-        [Test]
+        [Fact]
         public void TestHistNorm()
         {
             var im = Image.Identity();
             var im2 = im.HistNorm();
-            Assert.AreEqual(0.0, (im - im2).Abs().Max());
+            Assert.Equal(0.0, (im - im2).Abs().Max());
         }
 
-        [Test]
+        [Fact]
         public void TestHistPlot()
         {
             var im = Image.Identity();
             var im2 = im.HistPlot();
 
-            Assert.AreEqual(256, im2.Width);
-            Assert.AreEqual(256, im2.Height);
-            Assert.AreEqual(Enums.BandFormat.Uchar, im2.Format);
-            Assert.AreEqual(1, im2.Bands);
+            Assert.Equal(256, im2.Width);
+            Assert.Equal(256, im2.Height);
+            Assert.Equal(Enums.BandFormat.Uchar, im2.Format);
+            Assert.Equal(1, im2.Bands);
         }
 
-        [Test]
+        [Fact]
         public void TestHistMap()
         {
             var im = Image.Identity();
 
             var im2 = im.Maplut(im);
 
-            Assert.AreEqual(0.0, (im - im2).Abs().Max());
+            Assert.Equal(0.0, (im - im2).Abs().Max());
         }
 
-        [Test]
+        [Fact]
         public void TestPercent()
         {
             var im = Image.NewFromFile(Helper.JpegFile)[1];
@@ -126,31 +114,31 @@ namespace NetVips.Tests
             var nSet = (msk.Avg() * msk.Width * msk.Height) / 255.0;
             var pcSet = 100 * nSet / (msk.Width * msk.Height);
 
-            Assert.AreEqual(90, pcSet, 0.5);
+            Assert.Equal(90, pcSet, 0);
         }
 
-        [Test]
+        [Fact]
         public void TestHistEntropy()
         {
             var im = Image.NewFromFile(Helper.JpegFile)[1];
 
             var ent = im.HistFind().HistEntropy();
 
-            Assert.AreEqual(4.37, ent, 0.01);
+            Assert.Equal(4.37, ent, 2);
         }
 
-        [Test]
+        [Fact]
         public void TestStdif()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
 
             var im2 = im.Stdif(10, 10);
 
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
 
             // new mean should be closer to target mean
-            Assert.IsTrue(Math.Abs(im.Avg() - 128) > Math.Abs(im2.Avg() - 128));
+            Assert.True(Math.Abs(im.Avg() - 128) > Math.Abs(im2.Avg() - 128));
         }
     }
 }

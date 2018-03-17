@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NUnit.Framework;
+using System.Reflection;
+using Xunit;
 
 namespace NetVips.Tests
 {
     public static class Helper
     {
         public static readonly string Images =
-            Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", "TestData"));
+            Path.Combine(Path.GetDirectoryName(typeof(Helper).GetTypeInfo().Assembly.Location), "TestData");
 
         public static readonly string JpegFile = Path.Combine(Images, "йцук.jpg");
         public static readonly string SrgbFile = Path.Combine(Images, "sRGB.icm");
@@ -103,27 +104,27 @@ namespace NetVips.Tests
         {
             {
                 Enums.BandFormat.Uchar,
-                255
+                0xff
             },
             {
                 Enums.BandFormat.Ushort,
-                65535
+                0xffff
             },
             {
                 Enums.BandFormat.Uint,
-                -1
+                0xffffffff
             },
             {
                 Enums.BandFormat.Char,
-                127
+                0x7f
             },
             {
                 Enums.BandFormat.Short,
-                32767
+                0x7fff
             },
             {
                 Enums.BandFormat.Int,
-                2147483647
+                0x7fffffff
             },
             {
                 Enums.BandFormat.Float,
@@ -391,12 +392,7 @@ namespace NetVips.Tests
         /// <param name="delta"></param>
         public static void AssertAlmostEqualObjects(IEnumerable expected, IEnumerable actual, double delta = 0.0001)
         {
-            CollectionAssert.AreEqual(expected, actual, Comparer<object>.Create((x, y) =>
-            {
-                var a = Convert.ToDouble(x);
-                var b = Convert.ToDouble(y);
-                return Math.Abs(a - b) < delta ? 0 : a.CompareTo(b);
-            }));
+            Assert.True(expected.Cast<object>().SequenceEqual(actual.Cast<object>(), new ObjectComparerDelta(delta)));
         }
 
         /// <summary>
@@ -412,7 +408,7 @@ namespace NetVips.Tests
             {
                 var x = Convert.ToDouble(expand[0]);
                 var y = Convert.ToDouble(expand[1]);
-                Assert.Less(Math.Abs(x - y), diff);
+                Assert.True(Math.Abs(x - y) < diff);
             }
         }
 
@@ -437,6 +433,29 @@ namespace NetVips.Tests
         public static bool Have(string name)
         {
             return Base.TypeFind("VipsOperation", name) != 0;
+        }
+    }
+
+    internal class ObjectComparerDelta : IEqualityComparer<object>
+    {
+        private double delta;
+
+        public ObjectComparerDelta(double delta)
+        {
+            this.delta = delta;
+        }
+
+        public new bool Equals(object x, object y)
+        {
+            var a = Convert.ToDouble(x);
+            var b = Convert.ToDouble(y);
+
+            return Math.Abs(a - b) < delta;
+        }
+
+        public int GetHashCode(object obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }

@@ -1,28 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class IoFuncsTests
+    public class IoFuncsTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
         /// <summary>
         // test the vips7 filename splitter ... this is very fragile and annoying
         // code with lots of cases
         /// </summary>
-        [Test]
+        [Fact]
         public void TestSplit7()
         {
             string[] Split(string path)
@@ -78,27 +66,27 @@ namespace NetVips.Tests
 
             foreach (var entry in cases)
             {
-                CollectionAssert.AreEqual(entry.Value, Split(entry.Key));
+                Assert.Equal(entry.Value, Split(entry.Key));
             }
         }
 
-        [Test]
+        [Fact]
         public void TestNewFromImage()
         {
             var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
 
             var im2 = im.NewFromImage(12);
 
-            Assert.AreEqual(im.Width, im2.Width);
-            Assert.AreEqual(im.Height, im2.Height);
-            Assert.AreEqual(im.Interpretation, im2.Interpretation);
-            Assert.AreEqual(im.Format, im2.Format);
-            Assert.AreEqual(im.Xres, im2.Xres);
-            Assert.AreEqual(im.Yres, im2.Yres);
-            Assert.AreEqual(im.Xoffset, im2.Xoffset);
-            Assert.AreEqual(im.Yoffset, im2.Yoffset);
-            Assert.AreEqual(1, im2.Bands);
-            Assert.AreEqual(12, im2.Avg());
+            Assert.Equal(im.Width, im2.Width);
+            Assert.Equal(im.Height, im2.Height);
+            Assert.Equal(im.Interpretation, im2.Interpretation);
+            Assert.Equal(im.Format, im2.Format);
+            Assert.Equal(im.Xres, im2.Xres);
+            Assert.Equal(im.Yres, im2.Yres);
+            Assert.Equal(im.Xoffset, im2.Xoffset);
+            Assert.Equal(im.Yoffset, im2.Yoffset);
+            Assert.Equal(1, im2.Bands);
+            Assert.Equal(12, im2.Avg());
 
             im2 = im.NewFromImage(new[]
             {
@@ -106,49 +94,46 @@ namespace NetVips.Tests
                 2,
                 3
             });
-            Assert.AreEqual(3, im2.Bands);
-            Assert.AreEqual(2, im2.Avg());
+            Assert.Equal(3, im2.Bands);
+            Assert.Equal(2, im2.Avg());
         }
 
-        [Test]
+        [Fact]
         public void TestNewFromMemory()
         {
             var s = Enumerable.Repeat((byte) 0, 200).ToArray();
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
-            Assert.AreEqual(20, im.Width);
-            Assert.AreEqual(10, im.Height);
-            Assert.AreEqual("uchar", im.Format);
-            Assert.AreEqual(1, im.Bands);
-            Assert.AreEqual(0, im.Avg());
+            Assert.Equal(20, im.Width);
+            Assert.Equal(10, im.Height);
+            Assert.Equal("uchar", im.Format);
+            Assert.Equal(1, im.Bands);
+            Assert.Equal(0, im.Avg());
 
             im += 10;
-            Assert.AreEqual(im.Avg(), 10);
+            Assert.Equal(10, im.Avg());
         }
 
-        [Test]
+        [SkippableFact]
         public void TestGetFields()
         {
-            if (!Base.AtLeastLibvips(8, 5))
-            {
-                Assert.Ignore();
-            }
+            Skip.IfNot(Base.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
 
             var im = Image.Black(10, 10);
             var fields = im.GetFields();
 
             // we might add more fields later
-            Assert.IsTrue(fields.Length > 10);
+            Assert.True(fields.Length > 10);
 
-            Assert.AreEqual("width", fields[0]);
+            Assert.Equal("width", fields[0]);
         }
 
-        [Test]
+        [Fact]
         public void TestWriteToMemory()
         {
             var s = Enumerable.Repeat((byte) 0, 200).ToArray();
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             var t = im.WriteToMemory();
-            CollectionAssert.AreEqual(s, t);
+            Assert.Equal(s, t);
         }
     }
 }

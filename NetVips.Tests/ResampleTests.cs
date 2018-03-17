@@ -1,23 +1,11 @@
 ﻿using System;
 using System.IO;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class ResampleTests
+    public class ResampleTests : IClassFixture<NetVipsFixture>
     {
-        [SetUp]
-        public void Init()
-        {
-            Base.VipsInit();
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
         #region helpers
 
         /// <summary>
@@ -117,7 +105,7 @@ namespace NetVips.Tests
 
         #endregion
 
-        [Test]
+        [Fact]
         public void TestAffine()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
@@ -132,11 +120,11 @@ namespace NetVips.Tests
                     x = x.Affine(new double[] {0, 1, 1, 0}, interpolate: interpolate);
                 }
 
-                Assert.AreEqual(0, (x - im).Abs().Max());
+                Assert.Equal(0, (x - im).Abs().Max());
             }
         }
 
-        [Test]
+        [Fact]
         public void TestReduce()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
@@ -155,7 +143,7 @@ namespace NetVips.Tests
                         var r = x.Reduce(fac, fac, kernel: kernel);
 
                         var d = Math.Abs(r.Avg() - im.Avg());
-                        Assert.Less(d, 2);
+                        Assert.True(d < 2);
                     }
                 }
             }
@@ -170,84 +158,81 @@ namespace NetVips.Tests
                     // Console.WriteLine($"testing const = {@const}");
                     var shr = im.Reduce(2, 2, kernel: kernel);
                     var d = Math.Abs(shr.Avg() - im.Avg());
-                    Assert.AreEqual(0, d);
+                    Assert.Equal(0, d);
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void TestResize()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Resize(0.25);
-            Assert.AreEqual(Math.Round(im.Width / 4.0), im2.Width);
-            Assert.AreEqual(Math.Round(im.Height / 4.0), im2.Height);
+            Assert.Equal(Math.Round(im.Width / 4.0), im2.Width);
+            Assert.Equal(Math.Round(im.Height / 4.0), im2.Height);
 
             // test geometry rounding corner case
             im = Image.Black(100, 1);
             var x = im.Resize(0.5);
-            Assert.AreEqual(50, x.Width);
-            Assert.AreEqual(1, x.Height);
+            Assert.Equal(50, x.Width);
+            Assert.Equal(1, x.Height);
         }
 
-        [Test]
+        [Fact]
         public void TestShrink()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Shrink(4, 4);
-            Assert.AreEqual(Math.Round(im.Width / 4.0), im2.Width);
-            Assert.AreEqual(Math.Round(im.Height / 4.0), im2.Height);
-            Assert.IsTrue(Math.Abs(im.Avg() - im2.Avg()) < 1);
+            Assert.Equal(Math.Round(im.Width / 4.0), im2.Width);
+            Assert.Equal(Math.Round(im.Height / 4.0), im2.Height);
+            Assert.True(Math.Abs(im.Avg() - im2.Avg()) < 1);
 
             im2 = im.Shrink(2.5, 2.5);
-            Assert.AreEqual(Math.Round(im.Width / 2.5), im2.Width);
-            Assert.AreEqual(Math.Round(im.Height / 2.5), im2.Height);
-            Assert.IsTrue(Math.Abs(im.Avg() - im2.Avg()) < 1);
+            Assert.Equal(Math.Round(im.Width / 2.5), im2.Width);
+            Assert.Equal(Math.Round(im.Height / 2.5), im2.Height);
+            Assert.True(Math.Abs(im.Avg() - im2.Avg()) < 1);
         }
 
-        [Test]
+        [SkippableFact]
         public void TestThumbnail()
         {
-            if (!Base.AtLeastLibvips(8, 5))
-            {
-                Assert.Ignore();
-            }
+            Skip.IfNot(Base.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
 
             var im = Image.Thumbnail(Helper.JpegFile, 100);
-            Assert.AreEqual(100, im.Width);
-            Assert.AreEqual(3, im.Bands);
+            Assert.Equal(100, im.Width);
+            Assert.Equal(3, im.Bands);
 
             // the average shouldn't move too much
             var imOrig = Image.NewFromFile(Helper.JpegFile);
-            Assert.Less(Math.Abs(imOrig.Avg() - im.Avg()), 1);
+            Assert.True(Math.Abs(imOrig.Avg() - im.Avg()) < 1);
 
             // make sure we always get the right width
             for (var width = 1000; width >= 1; width -= 13)
             {
                 im = Image.Thumbnail(Helper.JpegFile, width);
-                Assert.AreEqual(width, im.Width);
+                Assert.Equal(width, im.Width);
             }
 
             // should fit one of width or height
             im = Image.Thumbnail(Helper.JpegFile, 100, height: 300);
-            Assert.AreEqual(100, im.Width);
-            Assert.AreNotEqual(300, im.Height);
+            Assert.Equal(100, im.Width);
+            Assert.NotEqual(300, im.Height);
             im = Image.Thumbnail(Helper.JpegFile, 300, height: 100);
-            Assert.AreNotEqual(300, im.Width);
-            Assert.AreEqual(100, im.Height);
+            Assert.NotEqual(300, im.Width);
+            Assert.Equal(100, im.Height);
 
             // with @crop, should fit both width and height
             im = Image.Thumbnail(Helper.JpegFile, 100, height: 300, crop: "centre");
-            Assert.AreEqual(100, im.Width);
-            Assert.AreEqual(300, im.Height);
+            Assert.Equal(100, im.Width);
+            Assert.Equal(300, im.Height);
 
             var im1 = Image.Thumbnail(Helper.JpegFile, 100);
             var buf = File.ReadAllBytes(Helper.JpegFile);
             var im2 = Image.ThumbnailBuffer(buf, 100);
-            Assert.Less(Math.Abs(im1.Avg() - im2.Avg()), 1);
+            Assert.True(Math.Abs(im1.Avg() - im2.Avg()) < 1);
         }
 
-        [Test]
+        [Fact]
         public void TestSimilarity()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
@@ -256,37 +241,33 @@ namespace NetVips.Tests
 
             // rounding in calculating the affine transform from the angle stops
             // this being exactly true
-            Assert.Less((im2 - im3).Abs().Max(), 50);
+            Assert.True((im2 - im3).Abs().Max() < 50);
         }
 
-        [Test]
+        [Fact]
         public void TestSimilarityScale()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Similarity(scale: 2);
             var im3 = im.Affine(new double[] {2, 0, 0, 2});
-            Assert.AreEqual(0, (im2 - im3).Abs().Max());
+            Assert.Equal(0, (im2 - im3).Abs().Max());
         }
 
-        [Test]
+        [SkippableFact]
         public void TestRotate()
         {
             // added in 8.7
-            if (!Helper.Have("rotate"))
-            {
-                Console.WriteLine("no rotate support in this vips, skipping test");
-                Assert.Ignore();
-            }
+            Skip.IfNot(Helper.Have("rotate"), "no rotate support in this vips, skipping test");
 
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Rotate(90);
-            var im3 = im.Affine(new double[] { 0, -1, 1, 0 });
+            var im3 = im.Affine(new double[] {0, -1, 1, 0});
             // rounding in calculating the affine transform from the angle stops
             // this being exactly true
-            Assert.Less((im2 - im3).Abs().Max(), 50);
+            Assert.True((im2 - im3).Abs().Max() < 50);
         }
 
-        [Test]
+        [Fact]
         public void TestMapim()
         {
             var im = Image.NewFromFile(Helper.JpegFile);
@@ -298,7 +279,7 @@ namespace NetVips.Tests
             // distorted, but the rest should not be too bad
             var a = r.Crop(50, 0, im.Width - 50, im.Height).Gaussblur(2);
             var b = im.Crop(50, 0, im.Width - 50, im.Height).Gaussblur(2);
-            Assert.Less((a - b).Abs().Max(), 20);
+            Assert.True((a - b).Abs().Max() < 20);
         }
     }
 }

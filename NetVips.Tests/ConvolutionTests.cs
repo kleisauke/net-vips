@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 
 namespace NetVips.Tests
 {
-    [TestFixture]
-    class ConvolutionTests
+    public class ConvolutionTests : IClassFixture<NetVipsFixture>
     {
         private Image _colour;
         private Image _mono;
@@ -19,11 +18,8 @@ namespace NetVips.Tests
         private Image _sobel;
         private Image[] _allMasks;
 
-        [SetUp]
-        public void Init()
+        public ConvolutionTests()
         {
-            Base.VipsInit();
-
             var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
             _colour = im * new[] {1, 2, 3} + new[] {2, 3, 4};
             _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
@@ -61,14 +57,9 @@ namespace NetVips.Tests
             _allMasks = new[] {_sharp, _blur, _line, _sobel};
         }
 
-        [TearDown]
-        public void Dispose()
-        {
-        }
-
         #region helpers
 
-        public object Conv(Image image, Image mask, int xPosition, int yPosition)
+        internal object Conv(Image image, Image mask, int xPosition, int yPosition)
         {
             var s = new object[] {0.0};
             for (var x = 0; x < mask.Width; x++)
@@ -85,7 +76,7 @@ namespace NetVips.Tests
             return Helper.RunFn2((dynamic a, dynamic b) => a / b, s, mask.Get("scale"));
         }
 
-        public object Compass(Image image, Image mask, int xPosition, int yPosition, int nRot,
+        internal object Compass(Image image, Image mask, int xPosition, int yPosition, int nRot,
             Func<object, object, object> func)
         {
             var acc = new List<object>();
@@ -102,7 +93,7 @@ namespace NetVips.Tests
 
         #endregion
 
-        [Test]
+        [Fact]
         public void TestConv()
         {
             foreach (var im in _allImages)
@@ -125,12 +116,9 @@ namespace NetVips.Tests
             }
         }
 
-        [Test]
+        [Fact(Skip = "don't test conva, it's still not done")]
         public void TestConva()
         {
-            // don't test conva, it's still not done
-            Assert.Ignore();
-
             foreach (var im in _allImages)
             {
                 foreach (var msk in _allMasks)
@@ -154,7 +142,7 @@ namespace NetVips.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void TestCompass()
         {
             foreach (var im in _allImages)
@@ -198,7 +186,7 @@ namespace NetVips.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void TestConvsep()
         {
             foreach (var im in _allImages)
@@ -208,9 +196,9 @@ namespace NetVips.Tests
                     var gmask = Image.Gaussmat(2, 0.1, precision: prec);
                     var gmaskSep = Image.Gaussmat(2, 0.1, separable: true, precision: prec);
 
-                    Assert.AreEqual(gmask.Width, gmask.Height);
-                    Assert.AreEqual(gmask.Width, gmaskSep.Width);
-                    Assert.AreEqual(1, gmaskSep.Height);
+                    Assert.Equal(gmask.Width, gmask.Height);
+                    Assert.Equal(gmask.Width, gmaskSep.Width);
+                    Assert.Equal(1, gmaskSep.Height);
 
                     var a = im.Conv(gmask, precision: prec);
                     var b = im.Convsep(gmaskSep, precision: prec);
@@ -223,7 +211,7 @@ namespace NetVips.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void TestFastcor()
         {
             foreach (var im in _allImages)
@@ -237,14 +225,14 @@ namespace NetVips.Tests
                     var x = minPos[1];
                     var y = minPos[2];
 
-                    Assert.AreEqual(0, v);
-                    Assert.AreEqual(25, x);
-                    Assert.AreEqual(50, y);
+                    Assert.Equal(0, v);
+                    Assert.Equal(25, x);
+                    Assert.Equal(50, y);
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void TestSpcor()
         {
             foreach (var im in _allImages)
@@ -258,14 +246,14 @@ namespace NetVips.Tests
                     var x = maxPos[1];
                     var y = maxPos[2];
 
-                    Assert.AreEqual(1.0, v);
-                    Assert.AreEqual(25, x);
-                    Assert.AreEqual(50, y);
+                    Assert.Equal(1.0, v);
+                    Assert.Equal(25, x);
+                    Assert.Equal(50, y);
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void TestGaussblur()
         {
             foreach (var im in _allImages)
@@ -289,7 +277,7 @@ namespace NetVips.Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void TestSharpen()
         {
             foreach (var im in _allImages)
@@ -302,8 +290,8 @@ namespace NetVips.Tests
                         var sharp = im2.Sharpen(sigma: sigma);
 
                         // hard to test much more than this
-                        Assert.AreEqual(sharp.Width, im.Width);
-                        Assert.AreEqual(sharp.Height, im.Height);
+                        Assert.Equal(sharp.Width, im.Width);
+                        Assert.Equal(sharp.Height, im.Height);
 
                         // if m1 and m2 are zero, sharpen should do nothing
                         sharp = im.Sharpen(sigma: sigma, m1: 0, m2: 0);
@@ -311,7 +299,7 @@ namespace NetVips.Tests
                         // Console.WriteLine($"testing sig = {sigma}");
                         // Console.WriteLine($"testing fmt = {fmt}");
                         // Console.WriteLine($"max diff = {(im - sharp).Abs().Max()}");
-                        Assert.AreEqual(0, (im - sharp).Abs().Max());
+                        Assert.Equal(0, (im - sharp).Abs().Max());
                     }
                 }
             }

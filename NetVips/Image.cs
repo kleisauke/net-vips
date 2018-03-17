@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using NetVips.Internal;
 using SMath = System.Math;
-using NLog;
 
 namespace NetVips
 {
