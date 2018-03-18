@@ -9,17 +9,17 @@ namespace NetVips.Internal
         private struct Internal
         {
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libglib-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
+            [DllImport(Interop.Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "g_free")]
             internal static extern void GFree(IntPtr mem);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libglib-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
+            [DllImport(Interop.Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "g_malloc")]
             internal static extern IntPtr GMalloc(ulong nBytes);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libglib-2.0-0.dll", CallingConvention = CallingConvention.Cdecl,
+            [DllImport(Interop.Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
                 EntryPoint = "g_log_remove_handler")]
             internal static extern void GLogRemoveHandler([MarshalAs(UnmanagedType.LPStr)] string logDomain, uint handlerId);
         }

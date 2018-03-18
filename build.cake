@@ -1,3 +1,5 @@
+#tool "nuget:?package=xunit.runner.console"
+
 // Arguments
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -87,7 +89,8 @@ Task("Build")
 {
     DotNetCoreBuild("./NetVips.sln", new DotNetCoreBuildSettings()
     {
-        Configuration = configuration
+        Configuration = configuration,
+        NoRestore = true
     });
 });
 
@@ -95,14 +98,11 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    foreach(var project in GetFiles("./NetVips.Tests/**/*Tests.csproj"))
+    DotNetCoreTest("./NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
     {
-        DotNetCoreTool(
-            project,
-            "xunit",
-            arguments: $"-configuration {configuration} -diagnostics -stoponfail --fx-version 2.0.6"
-        );
-    }
+        Configuration = configuration,
+        NoBuild = true
+    });
 });
 
 // Task targets

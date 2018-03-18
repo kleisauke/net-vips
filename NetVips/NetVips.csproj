@@ -26,6 +26,27 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
+  <!-- Give an initial value based on the operating system where it's currently running on. -->
+  <PropertyGroup Condition="'$(TargetOS)' == ''">
+    <TargetOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">Linux</TargetOS>
+    <TargetOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">OSX</TargetOS>
+    <TargetOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">Windows</TargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Interop\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetOS)' == 'Linux'">
+    <Compile Include="Interop\Linux\Interop.Libraries.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetOS)' == 'OSX'">
+    <Compile Include="Interop\OSX\Interop.Libraries.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetOS)' == 'Windows'">
+    <Compile Include="Interop\Windows\Interop.Libraries.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" Version="2.0.6" />
   </ItemGroup>

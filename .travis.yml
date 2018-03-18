@@ -7,10 +7,9 @@ os:
 
 dist: trusty
 
-mono:
-  - 4.4.2
+mono: 5.10.0
 
-dotnet: 2.1.4
+dotnet: 2.1.101
 
 env:
   global:
