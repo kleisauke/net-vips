@@ -9,7 +9,7 @@ dist: trusty
 
 mono: 5.10.0
 
-dotnet: 2.1.101
+dotnet: 2.1.4
 
 env:
   global:
