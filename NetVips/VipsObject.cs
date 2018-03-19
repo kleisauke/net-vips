@@ -10,9 +10,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        protected Internal.VipsObject IntlVipsObject;
+        internal Internal.VipsObject IntlVipsObject;
 
-        protected VipsObject(Internal.VipsObject vipsObject) : base(vipsObject.ParentInstance)
+        internal VipsObject(Internal.VipsObject vipsObject) : base(vipsObject.ParentInstance)
         {
             IntlVipsObject = vipsObject;
             // logger.Debug($"VipsObject = {vipsObject}");
@@ -33,7 +33,7 @@ namespace NetVips
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public GParamSpec GetPspec(string name)
+        internal GParamSpec GetPspec(string name)
         {
             // logger.Debug($"GetPspec: this = {this}, name = {name}");
             var pspec = new GParamSpec();

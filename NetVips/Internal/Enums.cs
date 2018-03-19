@@ -2,9 +2,10 @@
 
 namespace NetVips.Internal
 {
-    public static class Enums
+    internal static class Enums
     {
-        public enum GParamFlags
+        [Flags]
+        internal enum GParamFlags
         {
             G_PARAM_READABLE = 1,
             G_PARAM_WRITABLE = 2,
@@ -21,7 +22,7 @@ namespace NetVips.Internal
         }
 
         [Flags]
-        public enum VipsArgumentFlags
+        internal enum VipsArgumentFlags
         {
             VIPS_ARGUMENT_NONE = 0,
             VIPS_ARGUMENT_REQUIRED = 1,
@@ -34,7 +35,7 @@ namespace NetVips.Internal
             VIPS_ARGUMENT_MODIFY = 128
         }
 
-        public enum VipsBandFormat
+        internal enum VipsBandFormat
         {
             VIPS_FORMAT_NOTSET = -1,
             VIPS_FORMAT_UCHAR = 0,
@@ -50,7 +51,7 @@ namespace NetVips.Internal
             VIPS_FORMAT_LAST = 10
         }
 
-        public enum VipsCoding
+        internal enum VipsCoding
         {
             VIPS_CODING_ERROR = -1,
             VIPS_CODING_NONE = 0,
@@ -59,7 +60,7 @@ namespace NetVips.Internal
             VIPS_CODING_LAST = 7
         }
 
-        public enum VipsInterpretation
+        internal enum VipsInterpretation
         {
             VIPS_INTERPRETATION_ERROR = -1,
             VIPS_INTERPRETATION_MULTIBAND = 0,
@@ -84,7 +85,7 @@ namespace NetVips.Internal
             VIPS_INTERPRETATION_LAST = 30
         }
 
-        public enum VipsImageType
+        internal enum VipsImageType
         {
             VIPS_IMAGE_ERROR = -1,
             VIPS_IMAGE_NONE = 0,
@@ -97,7 +98,7 @@ namespace NetVips.Internal
             VIPS_IMAGE_PARTIAL = 7
         }
 
-        public enum VipsDemandStyle
+        internal enum VipsDemandStyle
         {
             VIPS_DEMAND_STYLE_ERROR = -1,
             VIPS_DEMAND_STYLE_SMALLTILE = 0,
@@ -107,7 +108,7 @@ namespace NetVips.Internal
         }
 
         [Flags]
-        public enum VipsOperationFlags
+        internal enum VipsOperationFlags
         {
             VIPS_OPERATION_NONE = 0,
             VIPS_OPERATION_SEQUENTIAL = 1,

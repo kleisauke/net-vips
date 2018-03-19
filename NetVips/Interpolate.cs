@@ -10,9 +10,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public VipsInterpolate IntlVipsInterpolate;
+        internal VipsInterpolate IntlVipsInterpolate;
 
-        public Interpolate(VipsInterpolate interpolate) : base(interpolate.ParentObject)
+        internal Interpolate(VipsInterpolate interpolate) : base(interpolate.ParentObject)
         {
             // logger.Debug($"VipsInterpolate = {interpolate}");
             IntlVipsInterpolate = interpolate;

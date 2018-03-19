@@ -16,7 +16,7 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public VipsImage IntlImage;
+        internal VipsImage IntlImage;
 
         /// <summary>
         /// Secret ref for NewFromMemory
@@ -25,7 +25,7 @@ namespace NetVips
         private Array _data;
 #pragma warning restore 414
 
-        public Image(VipsImage vImage) : base(vImage.ParentInstance)
+        internal Image(VipsImage vImage) : base(vImage.ParentInstance)
         {
             // logger.Debug($"VipsImage = {vImage}");
             IntlImage = vImage;
@@ -176,9 +176,9 @@ namespace NetVips
         {
             var fileNamePtr = vipsFilename.ToUtf8Ptr();
             var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
-            var fileOptions = VipsImage.VipsFilenameGetOptions(fileNamePtr);
+            var fileOptions = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(fileNamePtr));
 
-            var name = VipsForeign.VipsForeignFindLoad(filename.ToUtf8Ptr());
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoad(filename));
             if (name == null)
             {
                 throw new Exception($"unable to load from file {vipsFilename}");
@@ -207,7 +207,7 @@ namespace NetVips
 
             options.Add("string_options", fileOptions);
 
-            return Operation.Call(name, options, filename) as Image;
+            return Operation.Call(name, options, filename.ToUtf8String()) as Image;
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace NetVips
                     );
             }
 
-            var name = VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length));
             if (name == null)
             {
                 throw new Exception("unable to load from buffer");
@@ -340,7 +340,7 @@ namespace NetVips
                 throw new Exception("unable to make image from matrix");
             }
 
-            var image = new Image(vi);
+            var image = new Image(new VipsImage(vi));
             image.SetType(GValue.GDoubleType, "scale", scale);
             image.SetType(GValue.GDoubleType, "offset", offset);
             return image;
@@ -387,8 +387,7 @@ namespace NetVips
             VipsImage vi;
             try
             {
-                vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), (ulong) data.Length,
-                    width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
+                vi = VipsImage.VipsImageNewFromMemory(handle, (ulong) data.Length, width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
             }
             finally
             {
@@ -436,7 +435,7 @@ namespace NetVips
         /// <exception cref="T:System.Exception">If unable to make temp file from <paramref name="format" />.</exception>
         public static Image NewTempFile(string format)
         {
-            var vi = VipsImage.VipsImageNewTempFile(format.ToUtf8Ptr());
+            var vi = VipsImage.VipsImageNewTempFile(format);
             if (vi == null)
             {
                 throw new Exception("unable to make temp file");
@@ -526,9 +525,9 @@ namespace NetVips
         {
             var fileNamePtr = vipsFilename.ToUtf8Ptr();
             var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
-            var options = VipsImage.VipsFilenameGetOptions(fileNamePtr);
+            var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(fileNamePtr));
 
-            var name = VipsForeign.VipsForeignFindSave(filename.ToUtf8Ptr());
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSave(filename));
             if (name == null)
             {
                 throw new Exception($"unable to write to file {vipsFilename}");
@@ -548,7 +547,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            Operation.Call(name, kwargs, this, filename);
+            Operation.Call(name, kwargs, this, filename.ToUtf8String());
         }
 
         /// <summary>
@@ -585,9 +584,9 @@ namespace NetVips
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
             var formatStrPtr = formatString.ToUtf8Ptr();
-            var options = VipsImage.VipsFilenameGetOptions(formatStrPtr);
+            var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(formatStrPtr));
 
-            var name = VipsForeign.VipsForeignFindSaveBuffer(formatString);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
             if (name == null)
             {
                 throw new Exception("unable to write to buffer");

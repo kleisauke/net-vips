@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using NetVips.Internal;
 
 namespace NetVips
@@ -58,15 +59,29 @@ namespace NetVips
             return major > x || major == x && minor >= y;
         }
 
+        #region unit test functions
+
         public static string PathFilename7(string filename)
         {
-            return Vips.VipsPathFilename7(filename.ToUtf8Ptr());
+            return Vips.VipsPathFilename7(filename);
         }
 
         public static string PathMode7(string filename)
         {
-            return Vips.VipsPathMode7(filename.ToUtf8Ptr());
+            return Vips.VipsPathMode7(filename);
         }
+
+        public static void VipsInterpretationGetType()
+        {
+            Vips.VipsInterpretationGetType();
+        }
+
+        public static void VipsOperationFlagsGetType()
+        {
+            Vips.VipsOperationFlagsGetType();
+        }
+
+        #endregion
 
         /// <summary>
         /// Get the GType for a name.
@@ -90,7 +105,7 @@ namespace NetVips
         /// <returns></returns>
         public static string TypeName(ulong type)
         {
-            return GType.GTypeName(type);
+            return Marshal.PtrToStringAnsi(GType.GTypeName(type));
         }
 
         /// <summary>
@@ -100,7 +115,7 @@ namespace NetVips
         /// <returns></returns>
         public static string NicknameFind(ulong type)
         {
-            return Internal.VipsObject.VipsNicknameFind(type);
+            return Marshal.PtrToStringAnsi(Internal.VipsObject.VipsNicknameFind(type));
         }
 
         /// <summary>
@@ -109,7 +124,7 @@ namespace NetVips
         /// <param name="type"></param>
         /// <param name="fn"></param>
         /// <returns></returns>
-        public static IntPtr TypeMap(ulong type, VipsTypeMap2Fn fn)
+        internal static IntPtr TypeMap(ulong type, VipsTypeMap2Fn fn)
         {
             return Internal.VipsObject.VipsTypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
         }

@@ -4,63 +4,25 @@ using System.Security;
 
 namespace NetVips.Internal
 {
-    public static class GTypeInstance
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    internal struct GTypeInstance
     {
-        [StructLayout(LayoutKind.Explicit, Size = 8)]
-        public struct Fields
-        {
-            [FieldOffset(0)] internal IntPtr GClass;
-        }
+        [FieldOffset(0)] internal IntPtr GClass;
     }
 
-    public unsafe class GObject : IDisposable
+    internal unsafe class GObject : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 24)]
-        public struct Fields
+        internal struct Fields
         {
-            [FieldOffset(0)] internal GTypeInstance.Fields GTypeInstance;
+            [FieldOffset(0)] internal GTypeInstance GTypeInstance;
 
             [FieldOffset(8)] internal uint RefCount;
 
             [FieldOffset(16)] internal IntPtr Qdata;
         }
 
-        private struct Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_object_set_property")]
-            internal static extern void GObjectSetProperty(IntPtr @object,
-                [MarshalAs(UnmanagedType.LPStr)] string propertyName, IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_object_get_property")]
-            internal static extern void GObjectGetProperty(IntPtr @object,
-                [MarshalAs(UnmanagedType.LPStr)] string propertyName, IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_object_ref")]
-            internal static extern IntPtr GObjectRef(IntPtr @object);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_object_unref")]
-            internal static extern void GObjectUnref(IntPtr @object);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_object")]
-            internal static extern void GValueSetObject(IntPtr value, IntPtr vObject);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_object")]
-            internal static extern IntPtr GValueGetObject(IntPtr value);
-        }
-
-        public IntPtr Pointer { get; private set; }
+        internal IntPtr Pointer { get; private set; }
 
         private static void* CopyValue(Fields native)
         {
@@ -69,15 +31,15 @@ namespace NetVips.Internal
             return ret.ToPointer();
         }
 
-        public GObject() : this(CopyValue(new Fields()))
+        internal GObject() : this(CopyValue(new Fields()))
         {
         }
 
-        public GObject(Fields native) : this(CopyValue(native))
+        internal GObject(Fields native) : this(CopyValue(native))
         {
         }
 
-        public GObject(IntPtr native) : this(native.ToPointer())
+        internal GObject(IntPtr native) : this(native.ToPointer())
         {
         }
 
@@ -86,34 +48,55 @@ namespace NetVips.Internal
             Pointer = new IntPtr(ptr);
         }
 
-        public static void GObjectSetProperty(GObject @object, string propertyName, GValue value)
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_object_set_property")]
+        internal static extern void GObjectSetProperty(IntPtr @object,
+            [MarshalAs(UnmanagedType.LPStr)] string propertyName, IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_object_get_property")]
+        internal static extern void GObjectGetProperty(IntPtr @object,
+            [MarshalAs(UnmanagedType.LPStr)] string propertyName, IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_object_ref")]
+        internal static extern IntPtr GObjectRef(IntPtr @object);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_object_unref")]
+        internal static extern void GObjectUnref(IntPtr @object);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_object")]
+        internal static extern void GValueSetObject(IntPtr value, IntPtr vObject);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_object")]
+        internal static extern IntPtr GValueGetObject(IntPtr value);
+
+        internal static void GObjectSetProperty(GObject @object, string propertyName, GValue value)
         {
-            Internal.GObjectSetProperty(@object.Pointer, propertyName, value.Pointer);
+            GObjectSetProperty(@object.Pointer, propertyName, value.Pointer);
         }
 
-        public static void GObjectGetProperty(GObject @object, string propertyName, GValue value)
+        internal static void GObjectGetProperty(GObject @object, string propertyName, GValue value)
         {
-            Internal.GObjectGetProperty(@object.Pointer, propertyName, value.Pointer);
+            GObjectGetProperty(@object.Pointer, propertyName, value.Pointer);
         }
 
-        public static IntPtr GObjectRef(IntPtr @object)
+        internal static void GValueSetObject(GValue value, IntPtr vObject)
         {
-            return Internal.GObjectRef(@object);
+            GValueSetObject(value.Pointer, vObject);
         }
 
-        public static void GObjectUnref(IntPtr @object)
+        internal static IntPtr GValueGetObject(GValue value)
         {
-            Internal.GObjectUnref(@object);
-        }
-
-        public static void GValueSetObject(GValue value, IntPtr vObject)
-        {
-            Internal.GValueSetObject(value.Pointer, vObject);
-        }
-
-        public static IntPtr GValueGetObject(GValue value)
-        {
-            return Internal.GValueGetObject(value.Pointer);
+            return GValueGetObject(value.Pointer);
         }
 
         ~GObject()
@@ -127,7 +110,7 @@ namespace NetVips.Internal
             GC.SuppressFinalize(this);
         }
 
-        public void Dispose(bool disposing)
+        internal void Dispose(bool disposing)
         {
             if (Pointer == IntPtr.Zero)
             {
@@ -135,131 +118,39 @@ namespace NetVips.Internal
             }
 
             // on GC, unref
-            Internal.GObjectUnref(Pointer);
+            GObjectUnref(Pointer);
             Pointer = IntPtr.Zero;
         }
     }
 
-    public static class GType
+    internal static class GType
     {
-        private struct Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_type_name")]
-            internal static extern IntPtr GTypeName(ulong type);
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_type_name")]
+        internal static extern IntPtr GTypeName(ulong type);
 
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_type_from_name")]
-            internal static extern ulong GTypeFromName([MarshalAs(UnmanagedType.LPStr)] string name);
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_type_from_name")]
+        internal static extern ulong GTypeFromName([MarshalAs(UnmanagedType.LPStr)] string name);
 
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_type_fundamental")]
-            internal static extern ulong GTypeFundamental(ulong typeId);
-        }
-
-        public static string GTypeName(ulong type)
-        {
-            return Marshal.PtrToStringAnsi(Internal.GTypeName(type));
-        }
-
-        public static ulong GTypeFromName(string name)
-        {
-            return Internal.GTypeFromName(name);
-        }
-
-        public static ulong GTypeFundamental(ulong typeId)
-        {
-            return Internal.GTypeFundamental(typeId);
-        }
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_type_fundamental")]
+        internal static extern ulong GTypeFundamental(ulong typeId);
     }
 
-    public unsafe class GValue : IDisposable
+    internal unsafe class GValue : IDisposable
     {
         [StructLayout(LayoutKind.Explicit, Size = 24)]
-        public struct Fields
+        internal struct Fields
         {
             [FieldOffset(0)] internal ulong GType;
 
             [FieldOffset(8)] internal fixed byte Data[16];
         }
 
-        private struct Internal
-        {
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_init")]
-            internal static extern IntPtr GValueInit(IntPtr value, ulong gType);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_unset")]
-            internal static extern void GValueUnset(IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_boolean")]
-            internal static extern void GValueSetBoolean(IntPtr value, int vBoolean);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_boolean")]
-            internal static extern int GValueGetBoolean(IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_int")]
-            internal static extern void GValueSetInt(IntPtr value, int vInt);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_int")]
-            internal static extern int GValueGetInt(IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_double")]
-            internal static extern void GValueSetDouble(IntPtr value, double vDouble);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_double")]
-            internal static extern double GValueGetDouble(IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_string")]
-            internal static extern void GValueSetString(IntPtr value, IntPtr vString);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_string")]
-            internal static extern IntPtr GValueGetString(IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_enum")]
-            internal static extern void GValueSetEnum(IntPtr value, int vEnum);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_enum")]
-            internal static extern int GValueGetEnum(IntPtr value);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_set_flags")]
-            internal static extern void GValueSetFlags(IntPtr value, uint vFlags);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_value_get_flags")]
-            internal static extern uint GValueGetFlags(IntPtr value);
-        }
-
-        public IntPtr Pointer { get; private set; }
+        internal IntPtr Pointer { get; private set; }
 
         private static void* CopyValue(Fields native)
         {
@@ -268,15 +159,15 @@ namespace NetVips.Internal
             return ret.ToPointer();
         }
 
-        public GValue() : this(CopyValue(new Fields()))
+        internal GValue() : this(CopyValue(new Fields()))
         {
         }
 
-        public GValue(Fields native) : this(CopyValue(native))
+        internal GValue(Fields native) : this(CopyValue(native))
         {
         }
 
-        public GValue(IntPtr native) : this(native.ToPointer())
+        internal GValue(IntPtr native) : this(native.ToPointer())
         {
         }
 
@@ -285,74 +176,143 @@ namespace NetVips.Internal
             Pointer = new IntPtr(ptr);
         }
 
-        public static void GValueInit(GValue value, ulong gType)
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_init")]
+        internal static extern IntPtr GValueInit(IntPtr value, ulong gType);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_unset")]
+        internal static extern void GValueUnset(IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_boolean")]
+        internal static extern void GValueSetBoolean(IntPtr value, int vBoolean);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_boolean")]
+        internal static extern int GValueGetBoolean(IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_int")]
+        internal static extern void GValueSetInt(IntPtr value, int vInt);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_int")]
+        internal static extern int GValueGetInt(IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_double")]
+        internal static extern void GValueSetDouble(IntPtr value, double vDouble);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_double")]
+        internal static extern double GValueGetDouble(IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_string")]
+        internal static extern void GValueSetString(IntPtr value, IntPtr vString);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_string")]
+        internal static extern IntPtr GValueGetString(IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_enum")]
+        internal static extern void GValueSetEnum(IntPtr value, int vEnum);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_enum")]
+        internal static extern int GValueGetEnum(IntPtr value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_flags")]
+        internal static extern void GValueSetFlags(IntPtr value, uint vFlags);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_flags")]
+        internal static extern uint GValueGetFlags(IntPtr value);
+
+        internal static void GValueInit(GValue value, ulong gType)
         {
-            Internal.GValueInit(value.Pointer, gType);
+            GValueInit(value.Pointer, gType);
         }
 
-        public static void GValueUnset(GValue value)
+        internal static void GValueUnset(GValue value)
         {
-            Internal.GValueUnset(value.Pointer);
+            GValueUnset(value.Pointer);
         }
 
-        public static void GValueSetBoolean(GValue value, int vBoolean)
+        internal static void GValueSetBoolean(GValue value, int vBoolean)
         {
-            Internal.GValueSetBoolean(value.Pointer, vBoolean);
+            GValueSetBoolean(value.Pointer, vBoolean);
         }
 
-        public static int GValueGetBoolean(GValue value)
+        internal static int GValueGetBoolean(GValue value)
         {
-            return Internal.GValueGetBoolean(value.Pointer);
+            return GValueGetBoolean(value.Pointer);
         }
 
-        public static void GValueSetInt(GValue value, int vInt)
+        internal static void GValueSetInt(GValue value, int vInt)
         {
-            Internal.GValueSetInt(value.Pointer, vInt);
+            GValueSetInt(value.Pointer, vInt);
         }
 
-        public static int GValueGetInt(GValue value)
+        internal static int GValueGetInt(GValue value)
         {
-            return Internal.GValueGetInt(value.Pointer);
+            return GValueGetInt(value.Pointer);
         }
 
-        public static void GValueSetDouble(GValue value, double vDouble)
+        internal static void GValueSetDouble(GValue value, double vDouble)
         {
-            Internal.GValueSetDouble(value.Pointer, vDouble);
+            GValueSetDouble(value.Pointer, vDouble);
         }
 
-        public static double GValueGetDouble(GValue value)
+        internal static double GValueGetDouble(GValue value)
         {
-            return Internal.GValueGetDouble(value.Pointer);
+            return GValueGetDouble(value.Pointer);
         }
 
-        public static void GValueSetString(GValue value, string vString)
+        internal static void GValueSetString(GValue value, string vString)
         {
-            Internal.GValueSetString(value.Pointer, vString.ToUtf8Ptr());
+            GValueSetString(value.Pointer, vString.ToUtf8Ptr());
         }
 
-        public static string GValueGetString(GValue value)
+        internal static string GValueGetString(GValue value)
         {
-            return Internal.GValueGetString(value.Pointer).ToUtf8String();
+            return GValueGetString(value.Pointer).ToUtf8String();
         }
 
-        public static void GValueSetEnum(GValue value, int vEnum)
+        internal static void GValueSetEnum(GValue value, int vEnum)
         {
-            Internal.GValueSetEnum(value.Pointer, vEnum);
+            GValueSetEnum(value.Pointer, vEnum);
         }
 
-        public static int GValueGetEnum(GValue value)
+        internal static int GValueGetEnum(GValue value)
         {
-            return Internal.GValueGetEnum(value.Pointer);
+            return GValueGetEnum(value.Pointer);
         }
 
-        public static void GValueSetFlags(GValue value, uint vFlags)
+        internal static void GValueSetFlags(GValue value, uint vFlags)
         {
-            Internal.GValueSetFlags(value.Pointer, vFlags);
+            GValueSetFlags(value.Pointer, vFlags);
         }
 
-        public static uint GValueGetFlags(GValue value)
+        internal static uint GValueGetFlags(GValue value)
         {
-            return Internal.GValueGetFlags(value.Pointer);
+            return GValueGetFlags(value.Pointer);
         }
 
         ~GValue()
@@ -366,7 +326,7 @@ namespace NetVips.Internal
             GC.SuppressFinalize(this);
         }
 
-        public void Dispose(bool disposing)
+        internal void Dispose(bool disposing)
         {
             if (Pointer == IntPtr.Zero)
             {
@@ -374,19 +334,19 @@ namespace NetVips.Internal
             }
 
             // and tag it to be unset on GC as well
-            Internal.GValueUnset(Pointer);
+            GValueUnset(Pointer);
             Pointer = IntPtr.Zero;
         }
 
-        public ulong GType => ((Fields*)Pointer)->GType;
+        internal ulong GType => ((Fields*) Pointer)->GType;
     }
 
-    public unsafe class GParamSpec
+    internal unsafe class GParamSpec
     {
         [StructLayout(LayoutKind.Explicit, Size = 72)]
-        public struct Fields
+        internal struct Fields
         {
-            [FieldOffset(0)] internal GTypeInstance.Fields GTypeInstance;
+            [FieldOffset(0)] internal GTypeInstance GTypeInstance;
 
             [FieldOffset(8)] internal IntPtr Name;
 
@@ -399,13 +359,9 @@ namespace NetVips.Internal
 
         private struct Internal
         {
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
-                EntryPoint = "g_param_spec_get_blurb")]
-            internal static extern IntPtr GParamSpecGetBlurb(IntPtr pspec);
         }
 
-        public IntPtr Pointer { get; }
+        internal IntPtr Pointer { get; }
 
         private static void* CopyValue(Fields native)
         {
@@ -414,15 +370,15 @@ namespace NetVips.Internal
             return ret.ToPointer();
         }
 
-        public GParamSpec() : this(CopyValue(new Fields()))
+        internal GParamSpec() : this(CopyValue(new Fields()))
         {
         }
 
-        public GParamSpec(Fields native) : this(CopyValue(native))
+        internal GParamSpec(Fields native) : this(CopyValue(native))
         {
         }
 
-        public GParamSpec(IntPtr native) : this(native.ToPointer())
+        internal GParamSpec(IntPtr native) : this(native.ToPointer())
         {
         }
 
@@ -431,13 +387,18 @@ namespace NetVips.Internal
             Pointer = new IntPtr(ptr);
         }
 
-        public static string GParamSpecGetBlurb(GParamSpec pspec)
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Interop.Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_param_spec_get_blurb")]
+        internal static extern IntPtr GParamSpecGetBlurb(IntPtr pspec);
+
+        internal static string GParamSpecGetBlurb(GParamSpec pspec)
         {
-            return Marshal.PtrToStringAnsi(Internal.GParamSpecGetBlurb(pspec.Pointer));
+            return Marshal.PtrToStringAnsi(GParamSpecGetBlurb(pspec.Pointer));
         }
 
-        public string Name => Marshal.PtrToStringAnsi(Marshal.PtrToStructure<Fields>(Pointer).Name);
+        internal string Name => Marshal.PtrToStringAnsi(((Fields*) Pointer)->Name);
 
-        public ulong ValueType => ((Fields*) Pointer)->ValueType;
+        internal ulong ValueType => ((Fields*) Pointer)->ValueType;
     }
 }

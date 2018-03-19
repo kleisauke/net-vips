@@ -16,7 +16,7 @@ namespace NetVips
 
         private readonly VipsOperation _intlOperation;
 
-        public Operation(VipsOperation vOperation) : base(vOperation.ParentInstance)
+        internal Operation(VipsOperation vOperation) : base(vOperation.ParentInstance)
         {
             _intlOperation = vOperation;
             // logger.Debug($"VipsOperation = {vOperation}");
@@ -90,13 +90,13 @@ namespace NetVips
             Set(name, value);
         }
 
-        public Internal.Enums.VipsOperationFlags GetFlags()
+        internal Internal.Enums.VipsOperationFlags GetFlags()
         {
             return VipsOperation.VipsOperationGetFlags(_intlOperation);
         }
 
         // this is slow ... call as little as possible
-        public IDictionary<string, Internal.Enums.VipsArgumentFlags> GetArgs()
+        internal IDictionary<string, Internal.Enums.VipsArgumentFlags> GetArgs()
         {
             var args = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
 

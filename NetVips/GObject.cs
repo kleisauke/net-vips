@@ -9,7 +9,7 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public Internal.GObject IntlGObject;
+        internal Internal.GObject IntlGObject;
 
         // Track whether Dispose has been called.
         private bool _disposed;
@@ -22,7 +22,7 @@ namespace NetVips
         /// instance is garbage-collected, the underlying object is unreferenced.
         /// </remarks>
         /// <param name="gObject"></param>
-        protected GObject(Internal.GObject gObject)
+        internal GObject(Internal.GObject gObject)
         {
             // record the GValue we were given to manage
             IntlGObject = gObject;

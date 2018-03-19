@@ -24,7 +24,7 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public readonly Internal.GValue IntlGValue;
+        internal readonly Internal.GValue IntlGValue;
 
         // Track whether Dispose has been called.
         private bool _disposed;
@@ -118,7 +118,7 @@ namespace NetVips
         /// <returns></returns>
         public static string FromEnum(ulong gtype, int enumValue)
         {
-            var cstr = Vips.VipsEnumNick(gtype, enumValue);
+            var cstr = Marshal.PtrToStringAnsi(Vips.VipsEnumNick(gtype, enumValue));
             if (cstr == null)
             {
                 throw new Exception("value not in enum");
