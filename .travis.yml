@@ -7,7 +7,7 @@ os:
 
 dist: trusty
 
-mono: 5.10.0
+mono: none
 
 dotnet: 2.1.4
 
