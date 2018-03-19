@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class ColourTests : IClassFixture<NetVipsFixture>
+    public class ColourTests
     {
         [Fact]
         public void TestColourspace()

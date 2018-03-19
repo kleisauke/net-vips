@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class IoFuncsTests : IClassFixture<NetVipsFixture>
+    public class IoFuncsTests
     {
         /// <summary>
         // test the vips7 filename splitter ... this is very fragile and annoying
@@ -134,6 +134,13 @@ namespace NetVips.Tests
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             var t = im.WriteToMemory();
             Assert.Equal(s, t);
+        }
+
+        [Fact]
+        public void TestModuleInitializer()
+        {
+            // vips should have been initialized when this assembly was loaded.
+            Assert.True(ModuleInitializer.VipsInitialized);
         }
     }
 }

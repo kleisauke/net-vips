@@ -2,7 +2,7 @@
 
 namespace NetVips.Tests
 {
-    public class DrawTests : IClassFixture<NetVipsFixture>
+    public class DrawTests
     {
         [Fact]
         public void TestDrawCircle()

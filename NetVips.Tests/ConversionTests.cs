@@ -5,7 +5,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class ConversionTests : IClassFixture<NetVipsFixture>
+    public class ConversionTests
     {
         private Image _image;
         private Image _colour;

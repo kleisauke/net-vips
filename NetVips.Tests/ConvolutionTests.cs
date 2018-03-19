@@ -6,7 +6,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class ConvolutionTests : IClassFixture<NetVipsFixture>
+    public class ConvolutionTests
     {
         private Image _colour;
         private Image _mono;
