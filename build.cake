@@ -6,7 +6,7 @@ var configuration = Argument("configuration", "Release");
 
 // Variables
 // Define directories.
-var buildDir = Directory("./NetVips/bin") + Directory(configuration);
+var buildDir = Directory("./src/NetVips/bin") + Directory(configuration);
 
 const string downloadDir = "./download/";
 
@@ -98,7 +98,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    DotNetCoreTest("./NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
+    DotNetCoreTest("./tests/NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
     {
         Configuration = configuration,
         NoBuild = true

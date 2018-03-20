@@ -303,3 +303,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# BenchmarkDotNet
+**/BenchmarkDotNet.Artifacts/

@@ -1,0 +1,1 @@
+# NetVips core libraries
