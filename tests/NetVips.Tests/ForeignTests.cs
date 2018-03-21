@@ -867,13 +867,6 @@ namespace NetVips.Tests
             // test zip output
             filename = Helper.GetTemporaryFile(_tempDir, ".zip");
             _colour.Dzsave(filename);
-            // before 8.5.8, you needed a gc on pypy to flush small zip output to
-            // disc
-            // TODO Is this needed for C#?
-            if (!Base.AtLeastLibvips(8, 6))
-            {
-                GC.Collect();
-            }
 
             Assert.True(File.Exists(filename));
             Assert.False(Directory.Exists(filename + "_files"));
@@ -882,13 +875,6 @@ namespace NetVips.Tests
             // test compressed zip output
             var filename2 = Helper.GetTemporaryFile(_tempDir, ".zip");
             _colour.Dzsave(filename2, compression: -1);
-            // before 8.5.8, you needed a gc on pypy to flush small zip output to
-            // disc
-            // TODO Is this needed for C#?
-            if (!Base.AtLeastLibvips(8, 6))
-            {
-                GC.Collect();
-            }
 
             Assert.True(File.Exists(filename2));
             Assert.True(new FileInfo(filename2).Length < new FileInfo(filename).Length);
@@ -922,13 +908,6 @@ namespace NetVips.Tests
                 var baseName = Path.GetFileNameWithoutExtension(filename);
 
                 _colour.Dzsave(filename);
-                // before 8.5.8, you needed a gc on pypy to flush small zip
-                // output to disc
-                // TODO Is this needed for C#?
-                if (!Base.AtLeastLibvips(8, 6))
-                {
-                    GC.Collect();
-                }
 
                 var buf1 = File.ReadAllBytes(filename);
                 var buf2 = _colour.DzsaveBuffer(basename: baseName);

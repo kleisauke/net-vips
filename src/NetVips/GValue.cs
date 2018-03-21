@@ -375,6 +375,8 @@ namespace NetVips
             }
             else if (gtype == RefStrType)
             {
+                // don't bother getting the size -- assume these are always
+                // null-terminated C strings
                 ulong psize = 0;
                 result = VipsType.VipsValueGetRefString(IntlGValue, ref psize);
             }
@@ -383,13 +385,12 @@ namespace NetVips
                 // GValueGetObject() will not add a ref ... that is
                 // held by the gvalue
                 var go = Internal.GObject.GValueGetObject(IntlGValue);
+                var vi = new VipsImage(go);
 
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
                 // by GObject
                 Internal.GObject.GObjectRef(go);
-
-                var vi = new VipsImage(go);
 
                 result = new Image(vi);
             }
