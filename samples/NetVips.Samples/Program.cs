@@ -25,18 +25,31 @@ namespace NetVips.Samples
 
             Console.WriteLine($"libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
 
-            Console.WriteLine($"Type a number (1-{Samples.Count}) to execute a sample of your choice. Press <Enter> or type 'Q' to quit.");
+            Console.WriteLine(
+                $"Type a number (1-{Samples.Count}) to execute a sample of your choice. Press <Enter> or type 'Q' to quit.");
 
             DisplayMenu();
 
             string input;
             do
             {
-                input = Console.ReadLine();
+                string[] sampleArgs = { };
+                if (args.Length > 0)
+                {
+                    var sampleId = Samples.Select((value, index) => new {Index = index + 1, value.Name})
+                        .FirstOrDefault(s => s.Name.Equals(args[0]))?.Index;
+                    input = sampleId != null ? $"{sampleId}" : "0";
+                    sampleArgs = args.Skip(1).ToArray();
+                }
+                else
+                {
+                    input = Console.ReadLine();
+                }
+
                 if (int.TryParse(input, out var userChoice) && TryGetSample(userChoice, out var sample))
                 {
                     Console.WriteLine($"Executing sample: {sample.Name}");
-                    var result = sample.Execute(args);
+                    var result = sample.Execute(sampleArgs);
                     Console.WriteLine("Sample successfully executed!");
                     if (result != null)
                     {
@@ -47,6 +60,9 @@ namespace NetVips.Samples
                 {
                     Console.WriteLine("Sample doesn't exists, try again");
                 }
+
+                // Clear any arguments
+                args = new string[] { };
             } while (!string.IsNullOrEmpty(input) && !string.Equals(input, "Q", StringComparison.OrdinalIgnoreCase));
         }
 

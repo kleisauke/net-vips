@@ -279,8 +279,9 @@ namespace NetVips
 
                 for (var i = 0; i < size; i++)
                 {
-                    var gObject = Internal.GObject.GObjectRef(images[i].IntlGObject.Pointer);
-                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, gObject);
+                    var pointer = images[i].IntlGObject.Pointer;
+                    Internal.GObject.GObjectRef(pointer);
+                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, pointer);
                 }
             }
             else if (gtype == BlobType)
@@ -386,7 +387,9 @@ namespace NetVips
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
                 // by GObject
-                var vi = new VipsImage(Internal.GObject.GObjectRef(go));
+                Internal.GObject.GObjectRef(go);
+
+                var vi = new VipsImage(go);
 
                 result = new Image(vi);
             }
@@ -416,9 +419,9 @@ namespace NetVips
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
                 {
-                    var go = Internal.GObject.GObjectRef(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
-
-                    images[i] = new Image(new VipsImage(go));
+                    var vi = Marshal.ReadIntPtr(ptr, i * IntPtr.Size);
+                    Internal.GObject.GObjectRef(vi);
+                    images[i] = new Image(new VipsImage(vi));
                 }
 
                 result = images;

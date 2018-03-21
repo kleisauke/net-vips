@@ -11,6 +11,9 @@ namespace NetVips
 
         internal Internal.GObject IntlGObject;
 
+        // Handy for debugging
+        // public static int NObjects;
+
         // Track whether Dispose has been called.
         private bool _disposed;
 
@@ -26,6 +29,7 @@ namespace NetVips
         {
             // record the GValue we were given to manage
             IntlGObject = gObject;
+            // NObjects++;
             // logger.Debug($"GValue = {gObject}");
         }
 
@@ -42,6 +46,7 @@ namespace NetVips
         {
             // logger.Debug($"GC: GObject = {IntlGObject}");
             IntlGObject.Dispose();
+            // NObjects--;
             // logger.Debug($"GC: GObject = {IntlGObject}");
         }
 
