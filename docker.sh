@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if ! type docker > /dev/null; then
   echo "Please install docker"
@@ -13,4 +13,4 @@ docker build . -t netvips
 docker run --rm -t \
 	-v $PWD:/app \
 	netvips \
-	sh -c ./build.sh
+	bash ./build.sh
