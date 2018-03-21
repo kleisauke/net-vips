@@ -1,9 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
-using ImageMagick;
+﻿using BenchmarkDotNet.Running;
 
 namespace NetVips.Benchmarks
 {
@@ -11,6 +6,7 @@ namespace NetVips.Benchmarks
     {
         public static void Main(string[] args)
         {
+            // TestImage.BuildTestImages(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Images"));
             BenchmarkRunner.Run<Benchmark>();
         }
     }

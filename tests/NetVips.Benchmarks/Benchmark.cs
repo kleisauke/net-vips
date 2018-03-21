@@ -1,74 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
 using ImageMagick;
+using SixLabors.ImageSharp;
+using SixLabors.Primitives;
 
 namespace NetVips.Benchmarks
 {
     [Config(typeof(Config))]
     public class Benchmark
     {
-        private class Config : ManualConfig
-        {
-            public Config()
-            {
-                var variables = new[]
-                {
-                    new EnvironmentVariable("OutputDir", Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
-                };
-
-                Add(Job.Core.With(variables));
-            }
-        }
-
-        private readonly string _outputDir = Environment.GetEnvironmentVariable("OutputDir");
-
-        // much larger than this and im falls over with cache resources exhausted
-        public const int TileSize = 5;
-
-        [ParamsSource(nameof(InputFiles))] public string InputFile;
-
-        [ParamsSource(nameof(OutputFiles))] public string OutputFile;
-
-        public IEnumerable<string> InputFiles =>
-            new[] {"t.tif", "t.jpg"};
-
-        public IEnumerable<string> OutputFiles =>
-            new[] {"t2.tif", "t2.jpg"};
-
         [GlobalSetup]
         public void GlobalSetup()
         {
-            // Disable OpenCL
+            // Turn off OpenCL acceleration
             OpenCL.IsEnabled = false;
-
-            var tmpDir = Path.Combine(_outputDir, "tmp");
-            var imageDir = Path.Combine(_outputDir, "Images");
-            var outputFile = Path.Combine(tmpDir, "t.v");
-
-            Directory.CreateDirectory(tmpDir);
-
-            // building test image
-            var im = Image.NewFromFile(Path.Combine(imageDir, "sample2.v"));
-            im = im.Replicate(TileSize, TileSize);
-            im.WriteToFile(outputFile);
-
-            // making tiff and jpeg derivatives
-            im = Image.NewFromFile(outputFile);
-            im.WriteToFile(Path.Combine(tmpDir, "t.tif"));
-
-            im = Image.NewFromFile(outputFile);
-            im.WriteToFile(Path.Combine(tmpDir, "t.jpg"));
         }
 
         [Benchmark(Description = "NetVips", Baseline = true)]
-        public void NetVips()
+        [Arguments("t.tif", "t2.tif")]
+        [Arguments("t.jpg", "t2.jpg")]
+        public void NetVips(string input, string output)
         {
-            var im = Image.NewFromFile(Path.Combine(_outputDir, "tmp", InputFile), access: Enums.Access.Sequential);
+            var im = Image.NewFromFile(input, access: Enums.Access.Sequential);
 
             im = im.Crop(100, 100, im.Width - 200, im.Height - 200);
             im = im.Similarity(scale: 0.9);
@@ -80,13 +33,15 @@ namespace NetVips.Benchmarks
             }, 8);
             im = im.Conv(mask, precision: Enums.Precision.Integer);
 
-            im.WriteToFile(Path.Combine(_outputDir, "tmp", OutputFile));
+            im.WriteToFile(output);
         }
 
         [Benchmark(Description = "Magick.NET")]
-        public void MagickNet()
+        [Arguments("t.tif", "t2.tif")]
+        [Arguments("t.jpg", "t2.jpg")]
+        public void MagickNet(string input, string output)
         {
-            using (var im = new MagickImage(Path.Combine(_outputDir, "tmp", InputFile)))
+            using (var im = new MagickImage(input))
             {
                 im.Shave(100, 100);
                 im.Resize(new Percentage(90.0));
@@ -95,7 +50,22 @@ namespace NetVips.Benchmarks
                 var kernel = new ConvolveMatrix(3, -0.125, -0.125, -0.125, -0.125, 2, -0.125, -0.125, -0.125, -0.125);
                 im.Convolve(kernel);
 
-                im.Write(Path.Combine(_outputDir, "tmp", OutputFile));
+                im.Write(output);
+            }
+        }
+
+        [Benchmark(Description = "ImageSharp")]
+        [Arguments("t.jpg", "t2.jpg")] // ImageSharp doesn't have TIFF support
+        public void ImageSharp(string input, string output)
+        {
+            using (var image = SixLabors.ImageSharp.Image.Load(input))
+            {
+                image.Mutate(x => x
+                    .Crop(new Rectangle(100, 100, image.Width - 200, image.Height - 200))
+                    .Resize(new Size((int) Math.Round(image.Width * .9F), (int) Math.Round(image.Height * .9F)))
+                    .GaussianSharpen(.75f));
+
+                image.Save(output);
             }
         }
     }

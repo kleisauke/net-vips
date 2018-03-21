@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.10.13" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.4.3" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.13.477" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.4.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,15 +21,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Magick.NET-Q16-AnyCPU">
-      <HintPath>..\..\..\..\..\.nuget\packages\magick.net-q16-anycpu\7.4.3\lib\netstandard13\Magick.NET-Q16-AnyCPU.dll</HintPath>
-    </Reference>
+    <ContentWithTargetPath Include="Images\t.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>t.jpg</TargetPath>
+    </ContentWithTargetPath>
+
+    <ContentWithTargetPath Include="Images\t.tif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>t.tif</TargetPath>
+    </ContentWithTargetPath>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\sample2.v">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.0.5" />
   </ItemGroup>
 
 </Project>
