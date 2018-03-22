@@ -170,7 +170,7 @@ namespace NetVips
         /// will attempt to read everything it can from a damanged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
-        /// <exception cref="T:System.Exception">If unable to load from <paramref name="vipsFilename" />.</exception>
+        /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename" />.</exception>
         public static Image NewFromFile(string vipsFilename, bool? memory = null, string access = null,
             bool? fail = null, VOption kwargs = null)
         {
@@ -181,7 +181,7 @@ namespace NetVips
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoad(filename));
             if (name == null)
             {
-                throw new Exception($"unable to load from file {vipsFilename}");
+                throw new VipsException($"unable to load from file {vipsFilename}");
             }
 
             var options = new VOption();
@@ -226,7 +226,7 @@ namespace NetVips
         /// will attempt to read everything it can from a damanged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
-        /// <exception cref="T:System.Exception">If unable to load from <paramref name="data" />.</exception>
+        /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
         public static Image NewFromBuffer(object data, string strOptions = "", string access = null, bool? fail = null,
             VOption kwargs = null)
         {
@@ -255,7 +255,7 @@ namespace NetVips
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length));
             if (name == null)
             {
-                throw new Exception("unable to load from buffer");
+                throw new VipsException("unable to load from buffer");
             }
 
             var options = new VOption();
@@ -294,7 +294,7 @@ namespace NetVips
         /// <param name="offset">Default to 0.0. What to subtract from each pixel
         /// after convolution.  Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/></returns>
-        /// <exception cref="T:System.Exception">If unable to make image from <paramref name="array" />.</exception>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="array" />.</exception>
         public static Image NewFromArray(object array, double scale = 1.0, double offset = 0.0)
         {
             if (!array.Is2D())
@@ -304,7 +304,7 @@ namespace NetVips
 
             if (!(array is Array arr))
             {
-                throw new Exception("can't create image from unknown object");
+                throw new ArgumentException("can't create image from unknown object");
             }
 
             var is2D = arr.Rank == 2;
@@ -337,7 +337,7 @@ namespace NetVips
 
             if (vi == null)
             {
-                throw new Exception("unable to make image from matrix");
+                throw new VipsException("unable to make image from matrix");
             }
 
             var image = new Image(new VipsImage(vi));
@@ -373,7 +373,7 @@ namespace NetVips
         /// <param name="bands">Number of bands</param>
         /// <param name="format">Band format.</param>
         /// <returns>A new <see cref="Image"/></returns>
-        /// <exception cref="T:System.Exception">If unable to make image from <paramref name="data" />.</exception>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="data" />.</exception>
         public static Image NewFromMemory(
             Array data,
             int width,
@@ -399,7 +399,7 @@ namespace NetVips
 
             if (vi == null)
             {
-                throw new Exception("unable to make image from memory");
+                throw new VipsException("unable to make image from memory");
             }
 
             var image = new Image(vi)
@@ -432,13 +432,13 @@ namespace NetVips
         /// ``"%s.v"`` for a vips format file. The ``%s`` is
         /// substituted by the file path.</param>
         /// <returns>A new <see cref="Image"/></returns>
-        /// <exception cref="T:System.Exception">If unable to make temp file from <paramref name="format" />.</exception>
+        /// <exception cref="VipsException">If unable to make temp file from <paramref name="format" />.</exception>
         public static Image NewTempFile(string format)
         {
             var vi = VipsImage.VipsImageNewTempFile(format);
             if (vi == null)
             {
-                throw new Exception("unable to make temp file");
+                throw new VipsException("unable to make temp file");
             }
 
             return new Image(vi);
@@ -473,13 +473,13 @@ namespace NetVips
         /// area.
         /// </remarks>
         /// <returns>A new <see cref="Image"/></returns>
-        /// <exception cref="T:System.Exception">If unable to copy to memory.</exception>
+        /// <exception cref="VipsException">If unable to copy to memory.</exception>
         public Image CopyMemory()
         {
             var vi = VipsImage.VipsImageCopyMemory(IntlImage);
             if (vi == null)
             {
-                throw new Exception("unable to copy to memory");
+                throw new VipsException("unable to copy to memory");
             }
 
             return new Image(vi);
@@ -520,7 +520,7 @@ namespace NetVips
         /// optional appended arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
         /// <returns>None</returns>
-        /// <exception cref="T:System.Exception">If unable to write to <paramref name="vipsFilename" />.</exception>
+        /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename" />.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
             var fileNamePtr = vipsFilename.ToUtf8Ptr();
@@ -530,7 +530,7 @@ namespace NetVips
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSave(filename));
             if (name == null)
             {
-                throw new Exception($"unable to write to file {vipsFilename}");
+                throw new VipsException($"unable to write to file {vipsFilename}");
             }
 
             var stringOptions = new VOption
@@ -580,7 +580,7 @@ namespace NetVips
         /// <param name="formatString">The suffix, plus any string-form arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
         /// <returns>An array of bytes</returns>
-        /// <exception cref="T:System.Exception">If unable to write to buffer.</exception>
+        /// <exception cref="VipsException">If unable to write to buffer.</exception>
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
             var formatStrPtr = formatString.ToUtf8Ptr();
@@ -589,7 +589,7 @@ namespace NetVips
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
             if (name == null)
             {
-                throw new Exception("unable to write to buffer");
+                throw new VipsException("unable to write to buffer");
             }
 
             var stringOptions = new VOption
@@ -646,13 +646,13 @@ namespace NetVips
         /// </remarks>
         /// <param name="other">The <see cref="Image"/> to write to.</param>
         /// <returns></returns>
-        /// <exception cref="T:System.Exception">If unable to write to image.</exception>
+        /// <exception cref="VipsException">If unable to write to image.</exception>
         public void Write(Image other)
         {
             var result = VipsImage.VipsImageWrite(IntlImage, other.IntlImage);
             if (result != 0)
             {
-                throw new Exception("unable to write to image");
+                throw new VipsException("unable to write to image");
             }
         }
 
@@ -695,7 +695,7 @@ namespace NetVips
         /// would fetch the image orientation.
         /// <param name="name">The name of the piece of metadata to get.</param>
         /// <returns>The metadata item as a C# value</returns>
-        /// <exception cref="T:System.Exception">If unable to get <paramref name="name" />.</exception>
+        /// <exception cref="VipsException">If unable to get <paramref name="name" />.</exception>
         public override object Get(string name)
         {
             // scale and offset have default values
@@ -724,7 +724,7 @@ namespace NetVips
             var result = VipsImage.VipsImageGet(IntlImage, name, gv.IntlGValue);
             if (result != 0)
             {
-                throw new Exception($"unable to get {name}");
+                throw new VipsException($"unable to get {name}");
             }
 
             return gv.Get();
@@ -921,7 +921,7 @@ namespace NetVips
                 case IEnumerable objects:
                     return Operation.Call("bandjoin", null, new object[] {objects.PrependImage(this)}) as Image;
                 default:
-                    throw new Exception(
+                    throw new ArgumentException(
                         $"unsupported value type {other.GetType()} for Bandjoin"
                     );
             }

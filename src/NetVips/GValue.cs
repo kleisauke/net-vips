@@ -121,7 +121,7 @@ namespace NetVips
             var cstr = Marshal.PtrToStringAnsi(Vips.VipsEnumNick(gtype, enumValue));
             if (cstr == null)
             {
-                throw new Exception("value not in enum");
+                throw new VipsException("value not in enum");
             }
 
             return cstr;

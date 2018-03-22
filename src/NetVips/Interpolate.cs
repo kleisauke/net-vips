@@ -41,7 +41,7 @@ namespace NetVips
             var vi = VipsInterpolate.VipsInterpolateNew(name);
             if (vi == IntPtr.Zero)
             {
-                throw new Exception($"no such interpolator {name}");
+                throw new VipsException($"no such interpolator {name}");
             }
 
             return new Interpolate(new VipsInterpolate(vi));

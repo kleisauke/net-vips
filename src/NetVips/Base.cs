@@ -40,7 +40,7 @@ namespace NetVips
             var value = Vips.VipsVersion(flag);
             if (value < 0)
             {
-                throw new Exception("Unable to get library version");
+                throw new VipsException("Unable to get library version");
             }
 
             return value;

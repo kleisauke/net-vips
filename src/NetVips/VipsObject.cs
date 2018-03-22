@@ -101,7 +101,7 @@ namespace NetVips
             var pspec = GetPspec(name);
             if (pspec == null)
             {
-                throw new Exception("Property not found.");
+                throw new VipsException("Property not found.");
             }
 
             var gtype = pspec.ValueType;

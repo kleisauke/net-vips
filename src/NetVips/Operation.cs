@@ -48,7 +48,7 @@ namespace NetVips
             var vop = VipsOperation.VipsOperationNew(operationName);
             if (vop == IntPtr.Zero)
             {
-                throw new Exception($"no such operation {operationName}");
+                throw new VipsException($"no such operation {operationName}");
             }
 
             return new Operation(new VipsOperation(vop));
@@ -218,7 +218,7 @@ namespace NetVips
 
             if (nRequired != args.Length)
             {
-                throw new Exception(
+                throw new ArgumentException(
                     $"unable to call {operationName}: {args.Length} arguments given, but {nRequired} required");
             }
 
@@ -233,7 +233,7 @@ namespace NetVips
             // overridden
             if (stringOptions != null && !op.SetString(stringOptions as string))
             {
-                throw new Exception($"unable to call {operationName}");
+                throw new VipsException($"unable to call {operationName}");
             }
 
             // set required and optional args
@@ -272,7 +272,7 @@ namespace NetVips
             var vop = VipsOperation.VipsCacheOperationBuild(op._intlOperation);
             if (vop == IntPtr.Zero)
             {
-                throw new Exception($"unable to call {operationName}");
+                throw new VipsException($"unable to call {operationName}");
             }
 
             op = new Operation(new VipsOperation(vop));
