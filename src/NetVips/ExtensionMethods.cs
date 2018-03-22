@@ -319,36 +319,23 @@ namespace NetVips
         /// The byte array does not include the null terminator.
         /// </remarks>
         /// <param name="ptr">Pointer to the unmanaged string.</param>
-        /// <param name="length">The number of characters to copy.</param>
         /// <returns>The string as a byte array.</returns>
-        public static byte[] ToByteString(this IntPtr ptr, int length = 0)
+        public static byte[] ToByteString(this IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
             {
                 return null;
             }
 
-            var bytes = new List<byte>();
-
-            if (length == 0)
-            {
-                var offset = 0;
-
-                byte b;
-                while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
-                {
-                    bytes.Add(b);
-                }
-            }
-            else
-            {
-                for (var i = 0; i < length; i++)
-                {
-                    bytes.Add(Marshal.ReadByte(ptr, i));
-                }
+            var len = 0;
+            while (Marshal.ReadByte(ptr, len) != 0) {
+                len++;
             }
 
-            return bytes.ToArray();
+            var array = new byte[len];
+            Marshal.Copy(ptr, array, 0, len);
+
+            return array;
         }
     }
 }

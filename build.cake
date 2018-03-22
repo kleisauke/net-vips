@@ -80,16 +80,20 @@ Task("Restore")
     .IsDependentOn("Install-Libvips")
     .Does(() =>
 {
-    DotNetCoreRestore();
+    DotNetCoreRestore("./src/NetVips/NetVips.csproj", new DotNetCoreRestoreSettings
+    {
+        NoDependencies = true
+    });
 });
 
 Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
 {
-    DotNetCoreBuild("./NetVips.sln", new DotNetCoreBuildSettings()
+    DotNetCoreBuild("./src/NetVips/NetVips.csproj", new DotNetCoreBuildSettings
     {
         Configuration = configuration,
+        NoDependencies = true,
         NoRestore = true
     });
 });
@@ -100,8 +104,7 @@ Task("Test")
 {
     DotNetCoreTest("./tests/NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
     {
-        Configuration = configuration,
-        NoBuild = true
+        Configuration = configuration
     });
 });
 

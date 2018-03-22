@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace NetVips.Samples
+namespace NetVips
 {
     class Program
     {

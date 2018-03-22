@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NetVips.Samples.Samples
+namespace NetVips.Samples
 {
     /// <summary>
     /// From: https://github.com/andrieslouw/imagesweserv/blob/3.x/src/Manipulators/Shape.php

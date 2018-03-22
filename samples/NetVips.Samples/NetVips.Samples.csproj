@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <ApplicationIcon />
+    <OutputType>Exe</OutputType>
     <StartupObject />
     <Platforms>AnyCPU;x64</Platforms>
+    <RootNamespace>NetVips</RootNamespace>
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -21,18 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\equus_quagga.jpg">
+    <Content Include="Images\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Images\Gugg_coloured.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Images\lichtenstein.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Images\PNG_transparency_demonstration_1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace NetVips.Samples.Samples
+﻿namespace NetVips.Samples
 {
     /// <summary>
     /// From: https://github.com/jcupitt/ruby-vips#example

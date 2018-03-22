@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace NetVips.Samples.Samples
+namespace NetVips.Samples
 {
     /// <summary>
     /// From: https://raw.githubusercontent.com/jcupitt/node-vips/master/example/thumb.js

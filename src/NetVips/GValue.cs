@@ -433,7 +433,9 @@ namespace NetVips
                 var array = VipsType.VipsValueGetBlob(IntlGValue, ref psize);
 
                 // Blob types are returned as an array of bytes.
-                result = array.ToByteString((int) psize);
+                var byteArr = new byte[psize];
+                Marshal.Copy(array, byteArr, 0, (int) psize);
+                result = byteArr;
             }
             else
             {

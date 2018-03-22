@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetVips.Samples
+namespace NetVips
 {
     public static class SampleExtensions
     {

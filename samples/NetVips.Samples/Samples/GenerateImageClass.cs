@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace NetVips.Samples.Samples
+namespace NetVips.Samples
 {
     public class GenerateImageClass : ISample
     {

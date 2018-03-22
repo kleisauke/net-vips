@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 version=$VIPS_VERSION
 pre_version=$VIPS_PRE_VERSION
