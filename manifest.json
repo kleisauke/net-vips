@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "+4Egshc+4gv42kQP9zShzw=="
+          "hash": "rLlLxeUlqddV1RLc2LbJrQ=="
         }
       },
       "is_incremental": false,
@@ -43,7 +43,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "bkVbWK3MPn0rh8X7+1tuqg=="
+          "hash": "o3giiM+o+VwlK+xrdXIIMA=="
         }
       },
       "is_incremental": false,
@@ -55,7 +55,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Base.html",
-          "hash": "wErllQqWeVZYtiwjZQWAYg=="
+          "hash": "4+rWTUpiYu1T02VoA++dSg=="
         }
       },
       "is_incremental": false,
@@ -67,7 +67,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Access.html",
-          "hash": "M34mnpkOvRRoqbFmkfgfmw=="
+          "hash": "rGdKXqkOYkB4mrONpFsXrQ=="
         }
       },
       "is_incremental": false,
@@ -79,7 +79,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Align.html",
-          "hash": "Hqls8acmvJwlE7AGaXJpHQ=="
+          "hash": "spaSA/DFwiUE7IJhS8s5iQ=="
         }
       },
       "is_incremental": false,
@@ -91,7 +91,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Angle.html",
-          "hash": "VIm1hVTntntyMwpjT46ZfQ=="
+          "hash": "zcybTrZfK+HiMQM+ai49yQ=="
         }
       },
       "is_incremental": false,
@@ -103,7 +103,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Angle45.html",
-          "hash": "iYJIibTbgQpgAXUBOMZJ2A=="
+          "hash": "qA5t5Nk3scVQYIvg3Ln8Fg=="
         }
       },
       "is_incremental": false,
@@ -115,7 +115,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.BandFormat.html",
-          "hash": "qVsaLDOrCoPrd5JM1uFqsQ=="
+          "hash": "zfCYo7qws4TpB1cHmX4nIQ=="
         }
       },
       "is_incremental": false,
@@ -127,7 +127,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.BlendMode.html",
-          "hash": "/L9ex5UOzLLQdITj1qaNKA=="
+          "hash": "pTq53tt8Uzdx7R4iUxdQLg=="
         }
       },
       "is_incremental": false,
@@ -139,7 +139,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Coding.html",
-          "hash": "Cyi0D2TRQsOZ3Z+BkGgD3Q=="
+          "hash": "t95oatR44qeyDkResjnhOg=="
         }
       },
       "is_incremental": false,
@@ -151,7 +151,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Combine.html",
-          "hash": "D/ZfuPxuBQSrMyF369sU9Q=="
+          "hash": "hmcMg1/RANupqFmxK1iv6w=="
         }
       },
       "is_incremental": false,
@@ -163,7 +163,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Direction.html",
-          "hash": "HA4PXrH+1H0iHUFYqj5rWQ=="
+          "hash": "scu+cFnSMr5pSJvTQjY79A=="
         }
       },
       "is_incremental": false,
@@ -175,7 +175,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Extend.html",
-          "hash": "TVfGJL0iWWZc2nutHYyyiw=="
+          "hash": "B62iHsWhzukPGiDr+kAsqg=="
         }
       },
       "is_incremental": false,
@@ -187,7 +187,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Intent.html",
-          "hash": "33qAOts/Tt308rHrohf26Q=="
+          "hash": "pmgcedYsmzL/nU0eafBAAA=="
         }
       },
       "is_incremental": false,
@@ -199,7 +199,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Interpretation.html",
-          "hash": "+hU2WTXQXRZ24MK8Y9louQ=="
+          "hash": "nPncR9n76fi7wIwnNv7F/w=="
         }
       },
       "is_incremental": false,
@@ -211,7 +211,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.PCS.html",
-          "hash": "Ypk2T/qxRxblW3JcmHxsWw=="
+          "hash": "t2Cp+ZMGLgl/oAjp3bwkow=="
         }
       },
       "is_incremental": false,
@@ -223,7 +223,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Precision.html",
-          "hash": "C+kHAO+nnPItclyItA7Rtw=="
+          "hash": "LAxz1enqXQ/gVFPGy2PrvA=="
         }
       },
       "is_incremental": false,
@@ -235,7 +235,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.html",
-          "hash": "zXcT7gB6p9nD/pU4bUxLeg=="
+          "hash": "K+PCt4YdByvYrEYoW5McQQ=="
         }
       },
       "is_incremental": false,
@@ -247,7 +247,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.GObject.html",
-          "hash": "adohL19gNpE+O4NBz/26Pg=="
+          "hash": "gvr+CcAXLLHQSYLUA/I7mg=="
         }
       },
       "is_incremental": false,
@@ -259,7 +259,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.GValue.html",
-          "hash": "aQ+7L+rjjezzdhPQMqPDJA=="
+          "hash": "94gYgGCe19ve5YjRtADocQ=="
         }
       },
       "is_incremental": false,
@@ -271,7 +271,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Image.html",
-          "hash": "CcJA36M7QuU4kf3Ptbpnag=="
+          "hash": "PMVsipJhND6llgY+Jg3tZg=="
         }
       },
       "is_incremental": false,
@@ -283,7 +283,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Interpolate.html",
-          "hash": "J4ALmoRrqENS6Z8oZmKARw=="
+          "hash": "2I9o7rgj8dH60UFTCeZW9A=="
         }
       },
       "is_incremental": false,
@@ -295,7 +295,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.ModuleInitializer.html",
-          "hash": "FezOR3aEE3d0COWkbVP45w=="
+          "hash": "pz5catYU7lPdNo4KMWQ2Lg=="
         }
       },
       "is_incremental": false,
@@ -307,7 +307,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Operation.html",
-          "hash": "WkApM0N0omQzPiq+ru0rEQ=="
+          "hash": "mx0S1bu70N15uRi7xXLttA=="
         }
       },
       "is_incremental": false,
@@ -319,7 +319,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.VOption.html",
-          "hash": "48qR3hCGcj4mTxYEANOc7g=="
+          "hash": "OPiGsqi6uNBucfQ43C7zbw=="
         }
       },
       "is_incremental": false,
@@ -331,7 +331,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.VipsException.html",
-          "hash": "w88nOzYMGY51oRXN/DrpMQ=="
+          "hash": "U56XHXiqFIoJuRtfnw9zyw=="
         }
       },
       "is_incremental": false,
@@ -343,7 +343,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.VipsObject.html",
-          "hash": "0EwuIw6qJGEWvfNLJNvUvw=="
+          "hash": "0SpCTOKUZ2h0hdlHA+8mdw=="
         }
       },
       "is_incremental": false,
@@ -355,7 +355,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.html",
-          "hash": "43nLpJg2lh+YfBeI8kvKEw=="
+          "hash": "Pih8K3Zv76jy+DMoq1XNVA=="
         }
       },
       "is_incremental": false,
@@ -391,7 +391,7 @@
       "output": {
         ".html": {
           "relative_path": "tutorial/getting_started.html",
-          "hash": "z8PhsVBGVNBgOljbFuBq2g=="
+          "hash": "25yg/ln3Za7VJEqgweQcNg=="
         }
       },
       "is_incremental": false,
@@ -414,15 +414,10 @@
     {
       "status": {
         "can_incremental": false,
-        "details": "Disable incremental build by force rebuild option.",
+        "details": "Cannot build incrementally because last build info is missing.",
         "incrementalPhase": "build"
       },
       "processors": {
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build"
-        },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor ResourceDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
@@ -435,13 +430,18 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build"
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
         }
       }
     },
     {
       "status": {
         "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: it's disabled.",
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
         "incrementalPhase": "postProcessing"
       },
       "processors": {}
