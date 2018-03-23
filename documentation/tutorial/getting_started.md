@@ -104,8 +104,8 @@ friends. For example:
 
 ```csharp
 var image = Image.NewFromFile("some-image.jpg");
-var ipct_string = image.Get("ipct-data");
-var exif_date_string = image.Get("exif-ifd0-DateTime");
+var iptcString = image.Get("iptc-data");
+var exifDateString = image.Get("exif-ifd0-DateTime");
 ```
 
 Use [`GetFields()`](xref:NetVips.Image.GetFields*) to get a list of all the field names you can use with
@@ -239,8 +239,7 @@ https://jcupitt.github.io/libvips/API/current
 Exceptions
 ----------
 
-The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException).
-exception. You can catch it in the usual way.
+The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException). You can catch it in the usual way.
 
 Enums
 -----
