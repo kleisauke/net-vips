@@ -327,15 +327,16 @@ namespace NetVips
                 return null;
             }
 
-            var len = 0;
-            while (Marshal.ReadByte(ptr, len) != 0) {
-                len++;
+            var bytes = new List<byte>();
+            var offset = 0;
+
+            byte b;
+            while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
+            {
+                bytes.Add(b);
             }
 
-            var array = new byte[len];
-            Marshal.Copy(ptr, array, 0, len);
-
-            return array;
+            return bytes.ToArray();
         }
     }
 }
