@@ -135,8 +135,8 @@ see <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Width_"><code>
 that libvips keeps for images with <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a> and
 friends. For example:</p>
 <pre><code class="lang-csharp">var image = Image.NewFromFile(&quot;some-image.jpg&quot;);
-var ipct_string = image.Get(&quot;ipct-data&quot;);
-var exif_date_string = image.Get(&quot;exif-ifd0-DateTime&quot;);
+var iptcString = image.Get(&quot;iptc-data&quot;);
+var exifDateString = image.Get(&quot;exif-ifd0-DateTime&quot;);
 </code></pre><p>Use <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_GetFields_"><code>GetFields()</code></a> to get a list of all the field names you can use with
 <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a>.</p>
 <p>libvips caches and shares images behind your back, so you can&#39;t change an image
@@ -205,8 +205,7 @@ It examines libvips and writes the XML documentation and the corresponding code 
 <p>Use the C API docs for more detail:</p>
 <p><a href="https://jcupitt.github.io/libvips/API/current">https://jcupitt.github.io/libvips/API/current</a></p>
 <h2 id="exceptions">Exceptions</h2>
-<p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>.
-exception. You can catch it in the usual way.</p>
+<p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>. You can catch it in the usual way.</p>
 <h2 id="enums">Enums</h2>
 <p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as strings constants
 like <code>&quot;uchar&quot;</code>. They are documented as a set of classes for convenience, see 
