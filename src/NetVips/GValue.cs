@@ -198,10 +198,10 @@ namespace NetVips
                 switch (value)
                 {
                     case Image image:
-                        Internal.GObject.GValueSetObject(IntlGValue, image.IntlImage.Pointer);
+                        Internal.GObject.GValueSetObject(IntlGValue, image.IntlGObject);
                         break;
                     case Interpolate interpolate:
-                        Internal.GObject.GValueSetObject(IntlGValue, interpolate.IntlVipsInterpolate.Pointer);
+                        Internal.GObject.GValueSetObject(IntlGValue, interpolate.IntlGObject);
                         break;
                     default:
                         throw new Exception(

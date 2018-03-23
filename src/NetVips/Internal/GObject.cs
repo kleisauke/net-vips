@@ -89,9 +89,9 @@ namespace NetVips.Internal
             GObjectGetProperty(@object.Pointer, propertyName, value.Pointer);
         }
 
-        internal static void GValueSetObject(GValue value, IntPtr vObject)
+        internal static void GValueSetObject(GValue value, GObject vObject)
         {
-            GValueSetObject(value.Pointer, vObject);
+            GValueSetObject(value.Pointer, vObject.Pointer);
         }
 
         internal static IntPtr GValueGetObject(GValue value)
