@@ -1,5 +1,9 @@
 ﻿namespace NetVips
 {
+    /// <summary>
+    /// This module contains the various libvips enums as C# classes
+    /// Enums values are represented in NetVips as strings. These classes contain the valid strings for each enum.
+    /// </summary>
     public static class Enums
     {
         /// <summary>

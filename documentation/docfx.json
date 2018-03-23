@@ -1,0 +1,64 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "*.csproj"
+          ],
+          "cwd": ".",
+          "exclude": [
+            "**/obj/**",
+            "**/bin/**",
+            "_site/**"
+          ],
+          "src": "../src/NetVips"
+        }
+      ],
+      "dest": "obj/temp/api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "**/*.yml" ],
+        "src": "obj/temp/api",
+        "dest": "api"
+      },
+      {
+        "files": "CHANGELOG.md",
+        "src": ".."
+      },
+      {
+        "files": [
+          "tutorial/**/*.{md,yml}",
+          "*.{md,yml}"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "globalMetadata": {
+      "_appFaviconPath": "images/favicon.ico",
+      "_appLogoPath": "images/logo.svg"
+    },
+    "dest": "_site",
+    "template": [
+      "default",
+      "custom_template"
+    ]
+  }
+}

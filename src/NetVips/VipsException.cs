@@ -4,6 +4,9 @@ using NetVips.Internal;
 
 namespace NetVips
 {
+    /// <summary>
+    /// Our own exception class which handles the libvips error buffer.
+    /// </summary>
     public class VipsException : Exception
     {
         public VipsException()

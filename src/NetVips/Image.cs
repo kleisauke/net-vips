@@ -103,7 +103,7 @@ namespace NetVips
 
         /// <summary>
         /// Turn a constant (eg. 1, '12', new []{1, 2, 3}, {new []{1}}) into an image using
-        /// <see cref="matchImage"></see> as a guide.
+        /// <paramref name="matchImage" /> as a guide.
         /// </summary>
         /// <param name="matchImage"></param>
         /// <param name="value"></param>

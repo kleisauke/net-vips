@@ -4,6 +4,9 @@ using NetVips.Internal;
 
 namespace NetVips
 {
+    /// <summary>
+    /// Basic utility stuff.
+    /// </summary>
     public static class Base
     {
         /// <summary>
