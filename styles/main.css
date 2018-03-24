@@ -67,6 +67,15 @@ svg:hover path {
     border-image-slice: 1;
 }
 
+.key-section h2:before, .counter-key-section h2:before {
+    content: normal;
+    display: inline;
+    position: initial;
+    width: auto;
+    height: auto;
+    margin-top: 0;
+}
+
 .value-prop-heading {
     font-size: 24px;
 }
