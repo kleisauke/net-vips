@@ -18,7 +18,7 @@ namespace NetVips
         /// Absolute value of an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Abs();
         /// </code>
         /// </example>
@@ -32,7 +32,7 @@ namespace NetVips
         /// Add two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Add(right);
         /// </code>
         /// </example>
@@ -47,7 +47,7 @@ namespace NetVips
         /// Affine transform of an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], extend: string);
         /// </code>
         /// </example>
@@ -112,7 +112,7 @@ namespace NetVips
         /// Load an Analyze6 image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -147,7 +147,7 @@ namespace NetVips
         /// Load an Analyze6 image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -190,7 +190,7 @@ namespace NetVips
         /// Join an array of images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: string, valign: string, hspacing: int, vspacing: int);
         /// </code>
         /// </example>
@@ -249,7 +249,7 @@ namespace NetVips
         /// Autorotate image by exif tag
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Autorot();
         /// </code>
         /// </example>
@@ -263,7 +263,7 @@ namespace NetVips
         /// Autorotate image by exif tag
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Autorot(out var angle);
         /// </code>
         /// </example>
@@ -288,7 +288,7 @@ namespace NetVips
         /// Find image average
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Avg();
         /// </code>
         /// </example>
@@ -302,7 +302,7 @@ namespace NetVips
         /// Boolean operation across image bands
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Bandbool(boolean);
         /// </code>
         /// </example>
@@ -317,7 +317,7 @@ namespace NetVips
         /// Fold up x axis into bands
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Bandfold(factor: int);
         /// </code>
         /// </example>
@@ -339,7 +339,7 @@ namespace NetVips
         /// Append a constant band to an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.BandjoinConst(c);
         /// </code>
         /// </example>
@@ -354,7 +354,7 @@ namespace NetVips
         /// Band-wise average
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Bandmean();
         /// </code>
         /// </example>
@@ -368,7 +368,7 @@ namespace NetVips
         /// Unfold image bands into x axis
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Bandunfold(factor: int);
         /// </code>
         /// </example>
@@ -390,7 +390,7 @@ namespace NetVips
         /// Make a black image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Black(width, height, bands: int);
         /// </code>
         /// </example>
@@ -414,7 +414,7 @@ namespace NetVips
         /// Boolean operation on two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Boolean(right, boolean);
         /// </code>
         /// </example>
@@ -430,7 +430,7 @@ namespace NetVips
         /// Boolean operations against a constant
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.BooleanConst(boolean, c);
         /// </code>
         /// </example>
@@ -446,7 +446,7 @@ namespace NetVips
         /// Build a look-up table
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Buildlut();
         /// </code>
         /// </example>
@@ -460,7 +460,7 @@ namespace NetVips
         /// Byteswap an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Byteswap();
         /// </code>
         /// </example>
@@ -474,7 +474,7 @@ namespace NetVips
         /// Cache an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Cache(maxTiles: int, tileHeight: int, tileWidth: int);
         /// </code>
         /// </example>
@@ -508,7 +508,7 @@ namespace NetVips
         /// Cast an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Cast(format, shift: bool);
         /// </code>
         /// </example>
@@ -531,7 +531,7 @@ namespace NetVips
         /// Transform LCh to CMC
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.CMC2LCh();
         /// </code>
         /// </example>
@@ -545,7 +545,7 @@ namespace NetVips
         /// Convert to a new colorspace
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Colourspace(space, sourceSpace: string);
         /// </code>
         /// </example>
@@ -568,7 +568,7 @@ namespace NetVips
         /// Convolve with rotating mask
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Compass(mask, times: int, angle: string, combine: string, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
@@ -621,7 +621,7 @@ namespace NetVips
         /// Perform a complex operation on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Complex(cmplx);
         /// </code>
         /// </example>
@@ -636,7 +636,7 @@ namespace NetVips
         /// Complex binary operations on two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Complex2(right, cmplx);
         /// </code>
         /// </example>
@@ -652,7 +652,7 @@ namespace NetVips
         /// Form a complex image from two real images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Complexform(right);
         /// </code>
         /// </example>
@@ -667,7 +667,7 @@ namespace NetVips
         /// Get a component from a complex image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Complexget(get);
         /// </code>
         /// </example>
@@ -682,7 +682,7 @@ namespace NetVips
         /// Blend a pair of images with a blend mode
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = base.Composite2(overlay, mode, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
@@ -712,7 +712,7 @@ namespace NetVips
         /// Convolution operation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Conv(mask, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
@@ -747,7 +747,7 @@ namespace NetVips
         /// Approximate integer convolution
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Conva(mask, layers: int, cluster: int);
         /// </code>
         /// </example>
@@ -776,7 +776,7 @@ namespace NetVips
         /// Approximate separable integer convolution
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Convasep(mask, layers: int);
         /// </code>
         /// </example>
@@ -799,7 +799,7 @@ namespace NetVips
         /// Float convolution operation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Convf(mask);
         /// </code>
         /// </example>
@@ -814,7 +814,7 @@ namespace NetVips
         /// Int convolution operation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Convi(mask);
         /// </code>
         /// </example>
@@ -829,7 +829,7 @@ namespace NetVips
         /// Seperable convolution operation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Convsep(mask, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
@@ -864,7 +864,7 @@ namespace NetVips
         /// Copy an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Copy(width: int, height: int, bands: int, format: string, coding: string, interpretation: string, xres: double, yres: double, xoffset: int, yoffset: int);
         /// </code>
         /// </example>
@@ -940,7 +940,7 @@ namespace NetVips
         /// Count lines in an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double nolines = in.Countlines(direction);
         /// </code>
         /// </example>
@@ -955,7 +955,7 @@ namespace NetVips
         /// Load csv from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Csvload(filename, memory: bool, access: string, skip: int, lines: int, fail: bool, whitespace: string, separator: string);
         /// </code>
         /// </example>
@@ -1014,7 +1014,7 @@ namespace NetVips
         /// Load csv from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Csvload(filename, out var flags, memory: bool, access: string, skip: int, lines: int, fail: bool, whitespace: string, separator: string);
         /// </code>
         /// </example>
@@ -1081,7 +1081,7 @@ namespace NetVips
         /// Save image to csv file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Csvsave(filename, pageHeight: int, separator: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -1122,7 +1122,7 @@ namespace NetVips
         /// Calculate dE00
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.DE00(right);
         /// </code>
         /// </example>
@@ -1137,7 +1137,7 @@ namespace NetVips
         /// Calculate dE76
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.DE76(right);
         /// </code>
         /// </example>
@@ -1152,7 +1152,7 @@ namespace NetVips
         /// Calculate dECMC
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.DECMC(right);
         /// </code>
         /// </example>
@@ -1167,7 +1167,7 @@ namespace NetVips
         /// Find image standard deviation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Deviate();
         /// </code>
         /// </example>
@@ -1181,7 +1181,7 @@ namespace NetVips
         /// Divide two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Divide(right);
         /// </code>
         /// </example>
@@ -1196,7 +1196,7 @@ namespace NetVips
         /// Draw a circle on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawCircle(ink, cx, cy, radius, fill: bool);
         /// </code>
         /// </example>
@@ -1222,7 +1222,7 @@ namespace NetVips
         /// Flood-fill an area
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, test: Image, equal: bool);
         /// </code>
         /// </example>
@@ -1253,7 +1253,7 @@ namespace NetVips
         /// Flood-fill an area
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, test: Image, equal: bool);
         /// </code>
         /// </example>
@@ -1292,7 +1292,7 @@ namespace NetVips
         /// Flood-fill an area
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, test: Image, equal: bool);
         /// </code>
         /// </example>
@@ -1334,7 +1334,7 @@ namespace NetVips
         /// Flood-fill an area
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, test: Image, equal: bool);
         /// </code>
         /// </example>
@@ -1379,7 +1379,7 @@ namespace NetVips
         /// Flood-fill an area
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, test: Image, equal: bool);
         /// </code>
         /// </example>
@@ -1427,7 +1427,7 @@ namespace NetVips
         /// Paint an image into another image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawImage(sub, x, y, mode: string);
         /// </code>
         /// </example>
@@ -1452,7 +1452,7 @@ namespace NetVips
         /// Draw a line on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawLine(ink, x1, y1, x2, y2);
         /// </code>
         /// </example>
@@ -1471,7 +1471,7 @@ namespace NetVips
         /// Draw a mask on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawMask(ink, mask, x, y);
         /// </code>
         /// </example>
@@ -1489,7 +1489,7 @@ namespace NetVips
         /// Paint a rectangle on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawRect(ink, left, top, width, height, fill: bool);
         /// </code>
         /// </example>
@@ -1516,7 +1516,7 @@ namespace NetVips
         /// Blur a rectangle on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image image = image.DrawSmudge(left, top, width, height);
         /// </code>
         /// </example>
@@ -1534,7 +1534,7 @@ namespace NetVips
         /// Save image to deepzoom file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Dzsave(filename, basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -1635,7 +1635,7 @@ namespace NetVips
         /// Save image to dz buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -1735,7 +1735,7 @@ namespace NetVips
         /// Embed an image in a larger image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Embed(x, y, width, height, extend: string, background: double[]);
         /// </code>
         /// </example>
@@ -1767,7 +1767,7 @@ namespace NetVips
         /// Extract an area from an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = input.ExtractArea(left, top, width, height);
         /// </code>
         /// </example>
@@ -1785,7 +1785,7 @@ namespace NetVips
         /// Extract band from an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.ExtractBand(band, n: int);
         /// </code>
         /// </example>
@@ -1808,7 +1808,7 @@ namespace NetVips
         /// Make an image showing the eye's spatial response
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Eye(width, height, uchar: bool, factor: double);
         /// </code>
         /// </example>
@@ -1838,7 +1838,7 @@ namespace NetVips
         /// False-color an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Falsecolour();
         /// </code>
         /// </example>
@@ -1852,7 +1852,7 @@ namespace NetVips
         /// Fast correlation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Fastcor(@ref);
         /// </code>
         /// </example>
@@ -1867,7 +1867,7 @@ namespace NetVips
         /// Fill image zeros with nearest non-zero pixel
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.FillNearest();
         /// </code>
         /// </example>
@@ -1881,7 +1881,7 @@ namespace NetVips
         /// Fill image zeros with nearest non-zero pixel
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.FillNearest(out var distance);
         /// </code>
         /// </example>
@@ -1906,7 +1906,7 @@ namespace NetVips
         /// Search an image for non-edge areas
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// var output = in.FindTrim(threshold: double, background: double[]);
         /// </code>
         /// </example>
@@ -1934,7 +1934,7 @@ namespace NetVips
         /// Flatten alpha out of an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Flatten(background: double[], maxAlpha: double);
         /// </code>
         /// </example>
@@ -1962,7 +1962,7 @@ namespace NetVips
         /// Flip an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Flip(direction);
         /// </code>
         /// </example>
@@ -1977,7 +1977,7 @@ namespace NetVips
         /// Transform float RGB to Radiance coding
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Float2rad();
         /// </code>
         /// </example>
@@ -1991,7 +1991,7 @@ namespace NetVips
         /// Make a fractal surface
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Fractsurf(width, height, fractalDimension);
         /// </code>
         /// </example>
@@ -2008,7 +2008,7 @@ namespace NetVips
         /// Frequency-domain filtering
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Freqmult(mask);
         /// </code>
         /// </example>
@@ -2023,7 +2023,7 @@ namespace NetVips
         /// Forward FFT
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Fwfft();
         /// </code>
         /// </example>
@@ -2037,7 +2037,7 @@ namespace NetVips
         /// Gamma an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Gamma(exponent: double);
         /// </code>
         /// </example>
@@ -2059,7 +2059,7 @@ namespace NetVips
         /// Gaussian blur
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Gaussblur(sigma, minAmpl: double, precision: string);
         /// </code>
         /// </example>
@@ -2088,7 +2088,7 @@ namespace NetVips
         /// Make a gaussian image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: string);
         /// </code>
         /// </example>
@@ -2118,7 +2118,7 @@ namespace NetVips
         /// Make a gaussnoise image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gaussnoise(width, height, sigma: double, mean: double);
         /// </code>
         /// </example>
@@ -2148,7 +2148,7 @@ namespace NetVips
         /// Read a point from an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double[] outArray = in.Getpoint(x, y);
         /// </code>
         /// </example>
@@ -2164,7 +2164,7 @@ namespace NetVips
         /// Load GIF with giflib
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gifload(filename, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
@@ -2211,7 +2211,7 @@ namespace NetVips
         /// Load GIF with giflib
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gifload(filename, out var flags, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
@@ -2266,7 +2266,7 @@ namespace NetVips
         /// Load GIF with giflib
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.GifloadBuffer(buffer, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
@@ -2313,7 +2313,7 @@ namespace NetVips
         /// Load GIF with giflib
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
@@ -2368,7 +2368,7 @@ namespace NetVips
         /// Global balance an image mosaic
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Globalbalance(gamma: double, intOutput: bool);
         /// </code>
         /// </example>
@@ -2396,7 +2396,7 @@ namespace NetVips
         /// Place an image within a larger image with a certain gravity
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Gravity(direction, width, height, extend: string, background: double[]);
         /// </code>
         /// </example>
@@ -2427,7 +2427,7 @@ namespace NetVips
         /// Make a grey ramp image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Grey(width, height, uchar: bool);
         /// </code>
         /// </example>
@@ -2451,7 +2451,7 @@ namespace NetVips
         /// Grid an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Grid(tileHeight, across, down);
         /// </code>
         /// </example>
@@ -2468,7 +2468,7 @@ namespace NetVips
         /// Form cumulative histogram
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistCum();
         /// </code>
         /// </example>
@@ -2482,7 +2482,7 @@ namespace NetVips
         /// Estimate image entropy
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.HistEntropy();
         /// </code>
         /// </example>
@@ -2496,7 +2496,7 @@ namespace NetVips
         /// Histogram equalisation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistEqual(band: int);
         /// </code>
         /// </example>
@@ -2518,7 +2518,7 @@ namespace NetVips
         /// Find image histogram
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistFind(band: int);
         /// </code>
         /// </example>
@@ -2540,7 +2540,7 @@ namespace NetVips
         /// Find indexed image histogram
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistFindIndexed(index, combine: string);
         /// </code>
         /// </example>
@@ -2563,7 +2563,7 @@ namespace NetVips
         /// Find n-dimensional image histogram
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistFindNdim(bins: int);
         /// </code>
         /// </example>
@@ -2585,7 +2585,7 @@ namespace NetVips
         /// Test for monotonicity
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// bool monotonic = in.HistIsmonotonic();
         /// </code>
         /// </example>
@@ -2599,7 +2599,7 @@ namespace NetVips
         /// Local histogram equalisation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistLocal(width, height, maxSlope: int);
         /// </code>
         /// </example>
@@ -2623,7 +2623,7 @@ namespace NetVips
         /// Match two histograms
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistMatch(@ref);
         /// </code>
         /// </example>
@@ -2638,7 +2638,7 @@ namespace NetVips
         /// Normalise histogram
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistNorm();
         /// </code>
         /// </example>
@@ -2652,7 +2652,7 @@ namespace NetVips
         /// Plot histogram
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HistPlot();
         /// </code>
         /// </example>
@@ -2666,7 +2666,7 @@ namespace NetVips
         /// Find hough circle transform
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HoughCircle(scale: int, minRadius: int, maxRadius: int);
         /// </code>
         /// </example>
@@ -2700,7 +2700,7 @@ namespace NetVips
         /// Find hough line transform
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HoughLine(width: int, height: int);
         /// </code>
         /// </example>
@@ -2728,7 +2728,7 @@ namespace NetVips
         /// Transform HSV to sRGB
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.HSV2sRGB();
         /// </code>
         /// </example>
@@ -2742,7 +2742,7 @@ namespace NetVips
         /// Output to device with ICC profile
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.IccExport(pcs: string, intent: string, outputProfile: string, depth: int);
         /// </code>
         /// </example>
@@ -2782,7 +2782,7 @@ namespace NetVips
         /// Import from device with ICC profile
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.IccImport(pcs: string, intent: string, embedded: bool, inputProfile: string);
         /// </code>
         /// </example>
@@ -2822,7 +2822,7 @@ namespace NetVips
         /// Transform between devices with ICC profiles
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.IccTransform(outputProfile, pcs: string, intent: string, embedded: bool, inputProfile: string, depth: int);
         /// </code>
         /// </example>
@@ -2869,7 +2869,7 @@ namespace NetVips
         /// Make a 1D image where pixel values are indexes
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Identity(bands: int, @ushort: bool, size: int);
         /// </code>
         /// </example>
@@ -2903,7 +2903,7 @@ namespace NetVips
         /// Insert image @sub into @main at @x, @y
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = main.Insert(sub, x, y, expand: bool, background: double[]);
         /// </code>
         /// </example>
@@ -2934,7 +2934,7 @@ namespace NetVips
         /// Invert an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Invert();
         /// </code>
         /// </example>
@@ -2948,7 +2948,7 @@ namespace NetVips
         /// Build an inverted look-up table
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Invertlut(size: int);
         /// </code>
         /// </example>
@@ -2970,7 +2970,7 @@ namespace NetVips
         /// Inverse FFT
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Invfft(real: bool);
         /// </code>
         /// </example>
@@ -2992,7 +2992,7 @@ namespace NetVips
         /// Join a pair of images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: string);
         /// </code>
         /// </example>
@@ -3034,7 +3034,7 @@ namespace NetVips
         /// Load jpeg from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Jpegload(filename, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -3081,7 +3081,7 @@ namespace NetVips
         /// Load jpeg from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Jpegload(filename, out var flags, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -3136,7 +3136,7 @@ namespace NetVips
         /// Load jpeg from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.JpegloadBuffer(buffer, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -3183,7 +3183,7 @@ namespace NetVips
         /// Load jpeg from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -3238,7 +3238,7 @@ namespace NetVips
         /// Save image to jpeg file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Jpegsave(filename, pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -3327,7 +3327,7 @@ namespace NetVips
         /// Save image to jpeg buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.JpegsaveBuffer(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -3415,7 +3415,7 @@ namespace NetVips
         /// Save image to jpeg mime
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.JpegsaveMime(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -3503,7 +3503,7 @@ namespace NetVips
         /// Transform float Lab to LabQ coding
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Lab2LabQ();
         /// </code>
         /// </example>
@@ -3517,7 +3517,7 @@ namespace NetVips
         /// Transform float Lab to signed short
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Lab2LabS();
         /// </code>
         /// </example>
@@ -3531,7 +3531,7 @@ namespace NetVips
         /// Transform Lab to LCh
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Lab2LCh();
         /// </code>
         /// </example>
@@ -3545,7 +3545,7 @@ namespace NetVips
         /// Transform CIELAB to XYZ
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Lab2XYZ(temp: double[]);
         /// </code>
         /// </example>
@@ -3567,7 +3567,7 @@ namespace NetVips
         /// Label regions in an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image mask = in.Labelregions();
         /// </code>
         /// </example>
@@ -3581,7 +3581,7 @@ namespace NetVips
         /// Label regions in an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image mask = in.Labelregions(out var segments);
         /// </code>
         /// </example>
@@ -3606,7 +3606,7 @@ namespace NetVips
         /// Unpack a LabQ image to float Lab
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LabQ2Lab();
         /// </code>
         /// </example>
@@ -3620,7 +3620,7 @@ namespace NetVips
         /// Unpack a LabQ image to short Lab
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LabQ2LabS();
         /// </code>
         /// </example>
@@ -3634,7 +3634,7 @@ namespace NetVips
         /// Convert a LabQ image to sRGB
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LabQ2sRGB();
         /// </code>
         /// </example>
@@ -3648,7 +3648,7 @@ namespace NetVips
         /// Transform signed short Lab to float
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LabS2Lab();
         /// </code>
         /// </example>
@@ -3662,7 +3662,7 @@ namespace NetVips
         /// Transform short Lab to LabQ coding
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LabS2LabQ();
         /// </code>
         /// </example>
@@ -3676,7 +3676,7 @@ namespace NetVips
         /// Transform LCh to CMC
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LCh2CMC();
         /// </code>
         /// </example>
@@ -3690,7 +3690,7 @@ namespace NetVips
         /// Transform LCh to Lab
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.LCh2Lab();
         /// </code>
         /// </example>
@@ -3704,7 +3704,7 @@ namespace NetVips
         /// Calculate (a * in + b)
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Linear(a, b, uchar: bool);
         /// </code>
         /// </example>
@@ -3728,7 +3728,7 @@ namespace NetVips
         /// Cache an image as a set of lines
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Linecache(tileHeight: int, access: string, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
@@ -3768,7 +3768,7 @@ namespace NetVips
         /// Make a laplacian of gaussian image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: string);
         /// </code>
         /// </example>
@@ -3798,7 +3798,7 @@ namespace NetVips
         /// Load file with ImageMagick
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -3851,7 +3851,7 @@ namespace NetVips
         /// Load file with ImageMagick
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -3912,7 +3912,7 @@ namespace NetVips
         /// Load buffer with ImageMagick
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -3965,7 +3965,7 @@ namespace NetVips
         /// Load buffer with ImageMagick
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -4026,7 +4026,7 @@ namespace NetVips
         /// Save file with ImageMagick
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Magicksave(filename, format: string, quality: int, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -4073,7 +4073,7 @@ namespace NetVips
         /// Save image to magick buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.MagicksaveBuffer(format: string, quality: int, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -4119,7 +4119,7 @@ namespace NetVips
         /// Resample with an mapim image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Mapim(index, interpolate: GObject);
         /// </code>
         /// </example>
@@ -4142,7 +4142,7 @@ namespace NetVips
         /// Map an image though a lut
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Maplut(lut, band: int);
         /// </code>
         /// </example>
@@ -4165,7 +4165,7 @@ namespace NetVips
         /// Make a butterworth filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4210,7 +4210,7 @@ namespace NetVips
         /// Make a butterworth_band filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4257,7 +4257,7 @@ namespace NetVips
         /// Make a butterworth ring filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4303,7 +4303,7 @@ namespace NetVips
         /// Make fractal filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4346,7 +4346,7 @@ namespace NetVips
         /// Make a gaussian filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4390,7 +4390,7 @@ namespace NetVips
         /// Make a gaussian filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4436,7 +4436,7 @@ namespace NetVips
         /// Make a gaussian ring filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4481,7 +4481,7 @@ namespace NetVips
         /// Make an ideal filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4524,7 +4524,7 @@ namespace NetVips
         /// Make an ideal band filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4569,7 +4569,7 @@ namespace NetVips
         /// Make an ideal ring filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
@@ -4613,7 +4613,7 @@ namespace NetVips
         /// First-order match of two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject);
         /// </code>
         /// </example>
@@ -4662,7 +4662,7 @@ namespace NetVips
         /// Apply a math operation to an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Math(math);
         /// </code>
         /// </example>
@@ -4677,7 +4677,7 @@ namespace NetVips
         /// Binary math operations
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Math2(right, math2);
         /// </code>
         /// </example>
@@ -4693,7 +4693,7 @@ namespace NetVips
         /// Binary math operations with a constant
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Math2Const(math2, c);
         /// </code>
         /// </example>
@@ -4709,7 +4709,7 @@ namespace NetVips
         /// Load mat from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -4744,7 +4744,7 @@ namespace NetVips
         /// Load mat from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -4787,7 +4787,7 @@ namespace NetVips
         /// Load matrix from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -4822,7 +4822,7 @@ namespace NetVips
         /// Load matrix from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -4865,7 +4865,7 @@ namespace NetVips
         /// Print matrix
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Matrixprint(pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -4899,7 +4899,7 @@ namespace NetVips
         /// Save image to matrix file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Matrixsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -4934,7 +4934,7 @@ namespace NetVips
         /// Find image maximum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Max(size: int);
         /// </code>
         /// </example>
@@ -4956,7 +4956,7 @@ namespace NetVips
         /// Find image maximum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, size: int);
         /// </code>
         /// </example>
@@ -4986,7 +4986,7 @@ namespace NetVips
         /// Find image maximum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, size: int);
         /// </code>
         /// </example>
@@ -5019,7 +5019,7 @@ namespace NetVips
         /// Find image maximum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, out var outArray, size: int);
         /// </code>
         /// </example>
@@ -5055,7 +5055,7 @@ namespace NetVips
         /// Find image maximum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, size: int);
         /// </code>
         /// </example>
@@ -5094,7 +5094,7 @@ namespace NetVips
         /// Find image maximum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, out var yArray, size: int);
         /// </code>
         /// </example>
@@ -5136,7 +5136,7 @@ namespace NetVips
         /// Measure a set of patches on a color chart
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Measure(h, v, left: int, top: int, width: int, height: int);
         /// </code>
         /// </example>
@@ -5178,7 +5178,7 @@ namespace NetVips
         /// Merge two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Merge(sec, direction, dx, dy, mblend: int);
         /// </code>
         /// </example>
@@ -5204,7 +5204,7 @@ namespace NetVips
         /// Find image minimum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Min(size: int);
         /// </code>
         /// </example>
@@ -5226,7 +5226,7 @@ namespace NetVips
         /// Find image minimum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, size: int);
         /// </code>
         /// </example>
@@ -5256,7 +5256,7 @@ namespace NetVips
         /// Find image minimum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, size: int);
         /// </code>
         /// </example>
@@ -5289,7 +5289,7 @@ namespace NetVips
         /// Find image minimum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, out var outArray, size: int);
         /// </code>
         /// </example>
@@ -5325,7 +5325,7 @@ namespace NetVips
         /// Find image minimum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, size: int);
         /// </code>
         /// </example>
@@ -5364,7 +5364,7 @@ namespace NetVips
         /// Find image minimum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, out var yArray, size: int);
         /// </code>
         /// </example>
@@ -5406,7 +5406,7 @@ namespace NetVips
         /// Morphology operation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Morph(mask, morph);
         /// </code>
         /// </example>
@@ -5422,7 +5422,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5468,7 +5468,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5522,7 +5522,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5579,7 +5579,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5639,7 +5639,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5702,7 +5702,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5768,7 +5768,7 @@ namespace NetVips
         /// Mosaic two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5837,7 +5837,7 @@ namespace NetVips
         /// First-order mosaic of two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject, mblend: int, bandno: int);
         /// </code>
         /// </example>
@@ -5899,7 +5899,7 @@ namespace NetVips
         /// Pick most-significant byte from an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Msb(band: int);
         /// </code>
         /// </example>
@@ -5921,7 +5921,7 @@ namespace NetVips
         /// Multiply two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Multiply(right);
         /// </code>
         /// </example>
@@ -5936,7 +5936,7 @@ namespace NetVips
         /// Load file with OpenSlide
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Openslideload(filename, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string);
         /// </code>
         /// </example>
@@ -5989,7 +5989,7 @@ namespace NetVips
         /// Load file with OpenSlide
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Openslideload(filename, out var flags, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string);
         /// </code>
         /// </example>
@@ -6050,7 +6050,7 @@ namespace NetVips
         /// Load PDF with libpoppler
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pdfload(filename, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
@@ -6109,7 +6109,7 @@ namespace NetVips
         /// Load PDF with libpoppler
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pdfload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
@@ -6176,7 +6176,7 @@ namespace NetVips
         /// Load PDF with libpoppler
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PdfloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
@@ -6235,7 +6235,7 @@ namespace NetVips
         /// Load PDF with libpoppler
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
         /// </code>
         /// </example>
@@ -6302,7 +6302,7 @@ namespace NetVips
         /// Find threshold for percent of pixels
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// int threshold = in.Percent(percent);
         /// </code>
         /// </example>
@@ -6317,7 +6317,7 @@ namespace NetVips
         /// Make a perlin noise image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Perlin(width, height, cellSize: int, uchar: bool);
         /// </code>
         /// </example>
@@ -6347,7 +6347,7 @@ namespace NetVips
         /// Calculate phase correlation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Phasecor(in2);
         /// </code>
         /// </example>
@@ -6362,7 +6362,7 @@ namespace NetVips
         /// Load png from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pngload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6397,7 +6397,7 @@ namespace NetVips
         /// Load png from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6440,7 +6440,7 @@ namespace NetVips
         /// Load png from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6475,7 +6475,7 @@ namespace NetVips
         /// Load png from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6518,7 +6518,7 @@ namespace NetVips
         /// Save image to png file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Pngsave(filename, compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -6577,7 +6577,7 @@ namespace NetVips
         /// Save image to png buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -6635,7 +6635,7 @@ namespace NetVips
         /// Load ppm from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6670,7 +6670,7 @@ namespace NetVips
         /// Load ppm from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6713,7 +6713,7 @@ namespace NetVips
         /// Save image to ppm file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Ppmsave(filename, pageHeight: int, ascii: bool, squash: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -6760,7 +6760,7 @@ namespace NetVips
         /// Premultiply image alpha
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Premultiply(maxAlpha: double);
         /// </code>
         /// </example>
@@ -6782,7 +6782,7 @@ namespace NetVips
         /// Find image profiles
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// var output = in.Profile();
         /// </code>
         /// </example>
@@ -6796,7 +6796,7 @@ namespace NetVips
         /// Find image projections
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// var output = in.Project();
         /// </code>
         /// </example>
@@ -6810,7 +6810,7 @@ namespace NetVips
         /// Resample an image with a quadratic transform
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Quadratic(coeff, interpolate: GObject);
         /// </code>
         /// </example>
@@ -6833,7 +6833,7 @@ namespace NetVips
         /// Unpack Radiance coding to float RGB
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Rad2float();
         /// </code>
         /// </example>
@@ -6847,7 +6847,7 @@ namespace NetVips
         /// Load a Radiance image from a file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Radload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6882,7 +6882,7 @@ namespace NetVips
         /// Load a Radiance image from a file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -6925,7 +6925,7 @@ namespace NetVips
         /// Save image to Radiance file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Radsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -6960,7 +6960,7 @@ namespace NetVips
         /// Save image to Radiance buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.RadsaveBuffer(pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -6994,7 +6994,7 @@ namespace NetVips
         /// Rank filter
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Rank(width, height, index);
         /// </code>
         /// </example>
@@ -7011,7 +7011,7 @@ namespace NetVips
         /// Save image to raw file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Rawsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -7046,7 +7046,7 @@ namespace NetVips
         /// Write raw image to file descriptor
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.RawsaveFd(fd, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -7081,7 +7081,7 @@ namespace NetVips
         /// Linear recombination with matrix
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Recomb(m);
         /// </code>
         /// </example>
@@ -7096,7 +7096,7 @@ namespace NetVips
         /// Reduce an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Reduce(hshrink, vshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
@@ -7126,7 +7126,7 @@ namespace NetVips
         /// Shrink an image horizontally
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Reduceh(hshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
@@ -7155,7 +7155,7 @@ namespace NetVips
         /// Shrink an image vertically
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Reducev(vshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
@@ -7184,7 +7184,7 @@ namespace NetVips
         /// Relational operation on two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Relational(right, relational);
         /// </code>
         /// </example>
@@ -7200,7 +7200,7 @@ namespace NetVips
         /// Relational operations against a constant
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.RelationalConst(relational, c);
         /// </code>
         /// </example>
@@ -7216,7 +7216,7 @@ namespace NetVips
         /// Remainder after integer division of two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Remainder(right);
         /// </code>
         /// </example>
@@ -7231,7 +7231,7 @@ namespace NetVips
         /// Remainder after integer division of an image and a constant
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.RemainderConst(c);
         /// </code>
         /// </example>
@@ -7246,7 +7246,7 @@ namespace NetVips
         /// Replicate an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Replicate(across, down);
         /// </code>
         /// </example>
@@ -7262,7 +7262,7 @@ namespace NetVips
         /// Resize an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Resize(scale, kernel: string, vscale: double);
         /// </code>
         /// </example>
@@ -7291,7 +7291,7 @@ namespace NetVips
         /// Rotate an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Rot(angle);
         /// </code>
         /// </example>
@@ -7306,7 +7306,7 @@ namespace NetVips
         /// Rotate an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Rot45(angle: string);
         /// </code>
         /// </example>
@@ -7328,7 +7328,7 @@ namespace NetVips
         /// Rotate an image by a number of degrees
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Rotate(angle, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
@@ -7381,7 +7381,7 @@ namespace NetVips
         /// Perform a round function on an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Round(round);
         /// </code>
         /// </example>
@@ -7396,7 +7396,7 @@ namespace NetVips
         /// Convert scRGB to BW
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.ScRGB2BW(depth: int);
         /// </code>
         /// </example>
@@ -7418,7 +7418,7 @@ namespace NetVips
         /// Convert an scRGB image to sRGB
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.ScRGB2sRGB(depth: int);
         /// </code>
         /// </example>
@@ -7440,7 +7440,7 @@ namespace NetVips
         /// Transform scRGB to XYZ
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.ScRGB2XYZ();
         /// </code>
         /// </example>
@@ -7454,7 +7454,7 @@ namespace NetVips
         /// Check sequential access
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Sequential(tileHeight: int);
         /// </code>
         /// </example>
@@ -7476,7 +7476,7 @@ namespace NetVips
         /// Unsharp masking for print
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Sharpen(sigma: double, x1: double, y2: double, y3: double, m1: double, m2: double);
         /// </code>
         /// </example>
@@ -7528,7 +7528,7 @@ namespace NetVips
         /// Shrink an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Shrink(hshrink, vshrink);
         /// </code>
         /// </example>
@@ -7544,7 +7544,7 @@ namespace NetVips
         /// Shrink an image horizontally
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Shrinkh(hshrink);
         /// </code>
         /// </example>
@@ -7559,7 +7559,7 @@ namespace NetVips
         /// Shrink an image vertically
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Shrinkv(vshrink);
         /// </code>
         /// </example>
@@ -7574,7 +7574,7 @@ namespace NetVips
         /// Unit vector of pixel
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Sign();
         /// </code>
         /// </example>
@@ -7588,7 +7588,7 @@ namespace NetVips
         /// Similarity transform of an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Similarity(scale: double, angle: double, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
@@ -7652,7 +7652,7 @@ namespace NetVips
         /// Make a 2D sine wave
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Sines(width, height, uchar: bool, hfreq: double, vfreq: double);
         /// </code>
         /// </example>
@@ -7688,7 +7688,7 @@ namespace NetVips
         /// Extract an area from an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = input.Smartcrop(width, height, interesting: string);
         /// </code>
         /// </example>
@@ -7712,7 +7712,7 @@ namespace NetVips
         /// Spatial correlation
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Spcor(@ref);
         /// </code>
         /// </example>
@@ -7727,7 +7727,7 @@ namespace NetVips
         /// Make displayable power spectrum
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Spectrum();
         /// </code>
         /// </example>
@@ -7741,7 +7741,7 @@ namespace NetVips
         /// Transform sRGB to HSV
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.SRGB2HSV();
         /// </code>
         /// </example>
@@ -7755,7 +7755,7 @@ namespace NetVips
         /// Convert an sRGB image to scRGB
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.SRGB2scRGB();
         /// </code>
         /// </example>
@@ -7769,7 +7769,7 @@ namespace NetVips
         /// Find image average
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Stats();
         /// </code>
         /// </example>
@@ -7783,7 +7783,7 @@ namespace NetVips
         /// Statistical difference
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Stdif(width, height, s0: double, b: double, m0: double, a: double);
         /// </code>
         /// </example>
@@ -7825,7 +7825,7 @@ namespace NetVips
         /// Subsample an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = input.Subsample(xfac, yfac, point: bool);
         /// </code>
         /// </example>
@@ -7849,7 +7849,7 @@ namespace NetVips
         /// Subtract two images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = left.Subtract(right);
         /// </code>
         /// </example>
@@ -7864,7 +7864,7 @@ namespace NetVips
         /// Sum an array of images
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Sum(@in);
         /// </code>
         /// </example>
@@ -7879,7 +7879,7 @@ namespace NetVips
         /// Load SVG with rsvg
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Svgload(filename, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
@@ -7926,7 +7926,7 @@ namespace NetVips
         /// Load SVG with rsvg
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Svgload(filename, out var flags, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
@@ -7981,7 +7981,7 @@ namespace NetVips
         /// Load SVG with rsvg
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.SvgloadBuffer(buffer, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
@@ -8028,7 +8028,7 @@ namespace NetVips
         /// Load SVG with rsvg
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
@@ -8083,7 +8083,7 @@ namespace NetVips
         /// Run an external command
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// NetVips.Image.System(cmdFormat, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
@@ -8118,7 +8118,7 @@ namespace NetVips
         /// Run an external command
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// NetVips.Image.System(cmdFormat, out var @out, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
@@ -8159,7 +8159,7 @@ namespace NetVips
         /// Run an external command
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// NetVips.Image.System(cmdFormat, out var @out, out var log, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
@@ -8203,7 +8203,7 @@ namespace NetVips
         /// Make a text image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: string, dpi: int, spacing: int);
         /// </code>
         /// </example>
@@ -8256,7 +8256,7 @@ namespace NetVips
         /// Make a text image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: string, dpi: int, spacing: int);
         /// </code>
         /// </example>
@@ -8317,7 +8317,7 @@ namespace NetVips
         /// Generate thumbnail from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
@@ -8383,7 +8383,7 @@ namespace NetVips
         /// Generate thumbnail from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
@@ -8449,7 +8449,7 @@ namespace NetVips
         /// Generate thumbnail from image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.ThumbnailImage(width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
@@ -8514,7 +8514,7 @@ namespace NetVips
         /// Load tiff from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Tiffload(filename, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -8567,7 +8567,7 @@ namespace NetVips
         /// Load tiff from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Tiffload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -8628,7 +8628,7 @@ namespace NetVips
         /// Load tiff from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.TiffloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -8681,7 +8681,7 @@ namespace NetVips
         /// Load tiff from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
@@ -8742,7 +8742,7 @@ namespace NetVips
         /// Save image to tiff file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Tiffsave(filename, compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -8867,7 +8867,7 @@ namespace NetVips
         /// Save image to tiff buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -8991,7 +8991,7 @@ namespace NetVips
         /// Cache an image as a set of tiles
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: string, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
@@ -9043,7 +9043,7 @@ namespace NetVips
         /// Build a look-up table
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Tonelut(inMax: int, outMax: int, lb: double, lw: double, ps: double, pm: double, ph: double, s: double, m: double, h: double);
         /// </code>
         /// </example>
@@ -9119,7 +9119,7 @@ namespace NetVips
         /// Unpremultiply image alpha
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Unpremultiply(maxAlpha: double);
         /// </code>
         /// </example>
@@ -9141,7 +9141,7 @@ namespace NetVips
         /// Load vips from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -9176,7 +9176,7 @@ namespace NetVips
         /// Load vips from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
@@ -9219,7 +9219,7 @@ namespace NetVips
         /// Save image to vips file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Vipssave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -9254,7 +9254,7 @@ namespace NetVips
         /// Load webp from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Webpload(filename, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
@@ -9295,7 +9295,7 @@ namespace NetVips
         /// Load webp from file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Webpload(filename, out var flags, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
@@ -9344,7 +9344,7 @@ namespace NetVips
         /// Load webp from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.WebploadBuffer(buffer, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
@@ -9385,7 +9385,7 @@ namespace NetVips
         /// Load webp from buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
@@ -9434,7 +9434,7 @@ namespace NetVips
         /// Save image to webp file
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// in.Webpsave(filename, pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -9505,7 +9505,7 @@ namespace NetVips
         /// Save image to webp buffer
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// byte[] buffer = in.WebpsaveBuffer(pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
@@ -9575,7 +9575,7 @@ namespace NetVips
         /// Make a worley noise image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Worley(width, height, cellSize: int);
         /// </code>
         /// </example>
@@ -9599,7 +9599,7 @@ namespace NetVips
         /// Wrap image origin
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Wrap(x: int, y: int);
         /// </code>
         /// </example>
@@ -9627,7 +9627,7 @@ namespace NetVips
         /// Make an image where pixel values are coordinates
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Xyz(width, height, csize: int, dsize: int, esize: int);
         /// </code>
         /// </example>
@@ -9663,7 +9663,7 @@ namespace NetVips
         /// Transform XYZ to Lab
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.XYZ2Lab(temp: double[]);
         /// </code>
         /// </example>
@@ -9685,7 +9685,7 @@ namespace NetVips
         /// Transform XYZ to scRGB
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.XYZ2scRGB();
         /// </code>
         /// </example>
@@ -9699,7 +9699,7 @@ namespace NetVips
         /// Transform XYZ to Yxy
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.XYZ2Yxy();
         /// </code>
         /// </example>
@@ -9713,7 +9713,7 @@ namespace NetVips
         /// Transform Yxy to XYZ
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Yxy2XYZ();
         /// </code>
         /// </example>
@@ -9727,7 +9727,7 @@ namespace NetVips
         /// Make a zone plate
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Zone(width, height, uchar: bool);
         /// </code>
         /// </example>
@@ -9751,7 +9751,7 @@ namespace NetVips
         /// Zoom an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = input.Zoom(xfac, yfac);
         /// </code>
         /// </example>

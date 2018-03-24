@@ -4,7 +4,7 @@ using NetVips.Internal;
 namespace NetVips
 {
     /// <summary>
-    /// Manage a <see cref="NetVips.Internal.VipsObject"/>.
+    /// Manage a <see cref="Internal.VipsObject"/>.
     /// </summary>
     public class VipsObject : GObject
     {
@@ -132,8 +132,8 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example:
-        /// 'fred=12, tile'
-        /// '[fred=12]'
+        /// "fred=12, tile"
+        /// "[fred=12]"
         /// </remarks>
         /// <param name="stringOptions"></param>
         /// <returns></returns>

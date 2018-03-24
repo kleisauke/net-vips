@@ -136,9 +136,9 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
-        /// 
-        /// var blackImage = NetVips.Operation.call('black', 10, 10)
-        /// 
+        /// <code language="lang-csharp">
+        /// var blackImage = Operation.call("black", 10, 10);
+        /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
         /// <param name="operationName"></param>
@@ -154,9 +154,9 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
-        /// 
-        /// var blackImage = NetVips.Operation.call('black', 10, 10)
-        /// 
+        /// <code language="lang-csharp">
+        /// var blackImage = Operation.call("black", 10, 10);
+        /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
         /// <param name="operationName"></param>
@@ -172,9 +172,9 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
-        /// 
-        /// var blackImage = NetVips.Operation.call('black', 10, 10)
-        /// 
+        /// <code language="lang-csharp">
+        /// var blackImage = Operation.call("black", 10, 10);
+        /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
         /// <param name="operationName"></param>
@@ -334,7 +334,7 @@ namespace NetVips
         /// Make a C#-style docstring + function.
         /// </summary>
         /// <remarks>
-        /// This is used to generate the functions in NetVips.Image (<see cref="Image"/>).
+        /// This is used to generate the functions in <see cref="Image"/>.
         /// </remarks>
         /// <param name="operationName"></param>
         /// <param name="indent"></param>
@@ -479,7 +479,7 @@ namespace NetVips
             result.AppendLine($"{indent}/// {description.FirstLetterToUpper()}")
                 .AppendLine($"{indent}/// </summary>")
                 .AppendLine($"{indent}/// <example>")
-                .AppendLine($"{indent}/// <code>")
+                .AppendLine($"{indent}/// <code language=\"lang-csharp\">")
                 .Append($"{indent}/// ");
 
             if (requiredOutput.Length == 1)
@@ -785,13 +785,14 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Generate the 'Image.Generated.cs' file.
+        /// Generate the `Image.Generated.cs` file.
         /// </summary>
         /// <remarks>
-        /// This is used to generate the 'Image.Generated.cs' file (<see cref="Image"/>).
+        /// This is used to generate the `Image.Generated.cs` file (<see cref="Image"/>).
         /// Use it with something like:
-        /// 
-        ///     File.WriteAllText("Image.Generated.cs", Operation.GenerateImageClass());
+        /// <code language="lang-csharp">
+        /// File.WriteAllText("Image.Generated.cs", Operation.GenerateImageClass());
+        /// </code>
         /// </remarks>
         /// <returns></returns>
         public static string GenerateImageClass(string indent = "        ")

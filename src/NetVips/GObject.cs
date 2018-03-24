@@ -55,7 +55,7 @@ namespace NetVips
         /// </summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
         /// <see langword="false" /> to release only unmanaged resources.</param>
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.
             if (!_disposed)

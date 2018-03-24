@@ -10,7 +10,7 @@ using SMath = System.Math;
 namespace NetVips
 {
     /// <summary>
-    /// Wrap a <see cref="NetVips.Internal.VipsImage"/> object.
+    /// Wrap a <see cref="Internal.VipsImage"/> object.
     /// </summary>
     public sealed partial class Image : VipsObject
     {
@@ -19,11 +19,9 @@ namespace NetVips
         internal VipsImage IntlImage;
 
         /// <summary>
-        /// Secret ref for NewFromMemory
+        /// Secret ref for <see cref="NewFromMemory" />
         /// </summary>
-#pragma warning disable 414
-        private Array _data;
-#pragma warning restore 414
+        private GCHandle _data;
 
         internal Image(VipsImage vImage) : base(vImage.ParentInstance)
         {
@@ -102,7 +100,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Turn a constant (eg. 1, '12', new []{1, 2, 3}, {new []{1}}) into an image using
+        /// Turn a constant (eg. 1, "12", new[] {1, 2, 3}, new[] {new[] {1}}) into an image using
         /// <paramref name="matchImage" /> as a guide.
         /// </summary>
         /// <param name="matchImage"></param>
@@ -136,21 +134,21 @@ namespace NetVips
         /// <remarks>
         /// This method can load images in any format supported by vips. The
         /// filename can include load options, for example:
-        ///
-        ///     image = NetVips.Image.NewFromFile('fred.jpg[shrink=2]')
-        ///
+        /// <code language="lang-csharp">
+        /// var image = Image.NewFromFile("fred.jpg[shrink=2]");
+        /// </code>
         /// You can also supply options as keyword arguments, for example:
-        ///
-        ///     var image = NetVips.Image.NewFromFile('fred.jpg', new VOption
-        ///     {
-        ///         {"shrink", 2}
-        ///     });
-        ///
+        /// <code language="lang-csharp">
+        /// var image = Image.NewFromFile("fred.jpg", new VOption
+        /// {
+        ///     {"shrink", 2}
+        /// });
+        /// </code>
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like:
-        /// 
-        ///     $ vips jpegload
-        ///
+        /// <code language="lang-shell">
+        /// $ vips jpegload
+        /// </code>
         /// at the command-line to see a summary of the available options for the
         /// JPEG loader.
         /// 
@@ -162,7 +160,7 @@ namespace NetVips
         /// <param name="memory">If set True, load the image via memory rather than
         /// via a temporary disc file. See <see cref="NewTempFile"/> for
         /// notes on where temporary files are created. Small images are
-        /// loaded via memory by default, use ``VIPS_DISC_THRESHOLD`` to
+        /// loaded via memory by default, use `VIPS_DISC_THRESHOLD` to
         /// set the definition of small.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
@@ -219,7 +217,7 @@ namespace NetVips
         /// object can be a string or buffer.
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
-        /// <param name="strOptions">Load options as a string. Use ``""`` for no options.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
@@ -351,12 +349,12 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// Wraps an Image around an area of memory containing a C-style array. For
-        /// example, if the ``data`` memory array contains four bytes with the
+        /// example, if the `data` memory array contains four bytes with the
         /// values 1, 2, 3, 4, you can make a one-band, 2x2 uchar image from
         /// it like this: 
-        /// 
-        ///     var image = NetVips.Image.NewFromMemory(data, 2, 2, 1, "uchar")
-        /// 
+        /// <code language="lang-csharp">
+        /// var image = Image.NewFromMemory(data, 2, 2, 1, "uchar");
+        /// </code>
         /// A reference is kept to the data object, so it will not be
         /// garbage-collected until the returned image is garbage-collected.
         /// 
@@ -384,28 +382,22 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            VipsImage vi;
-            try
-            {
-                vi = VipsImage.VipsImageNewFromMemory(handle, (ulong) data.Length, width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
-            }
-            finally
+            var vi = VipsImage.VipsImageNewFromMemory(handle, (ulong) data.Length, width, height, bands,
+                (Internal.Enums.VipsBandFormat) formatValue);
+
+            if (vi == null)
             {
                 if (handle.IsAllocated)
                 {
                     handle.Free();
                 }
-            }
-
-            if (vi == null)
-            {
                 throw new VipsException("unable to make image from memory");
             }
 
             var image = new Image(vi)
             {
                 // keep a secret ref to the underlying object
-                _data = data
+                _data = handle
             };
 
             return image;
@@ -421,15 +413,15 @@ namespace NetVips
         /// automatically.
         ///
         /// The file is created in the temporary directory. This is set with
-        /// the environment variable ``TMPDIR``. If this is not set, then on
-        /// Unix systems, vips will default to ``/tmp``. On Windows, vips uses
-        /// ``GetTempPath()`` to find the temporary directory.
+        /// the environment variable `TMPDIR`. If this is not set, then on
+        /// Unix systems, vips will default to `/tmp`. On Windows, vips uses
+        /// `GetTempPath()` to find the temporary directory.
         /// 
-        /// vips uses ``g_mkstemp()`` to make the temporary filename. They
-        /// generally look something like ``"vips-12-EJKJFGH.v"``.
+        /// vips uses `g_mkstemp()` to make the temporary filename. They
+        /// generally look something like `vips-12-EJKJFGH.v`.
         /// </remarks>
         /// <param name="format">The format for the temp file, for example
-        /// ``"%s.v"`` for a vips format file. The ``%s`` is
+        /// `%s.v` for a vips format file. The `%s` is
         /// substituted by the file path.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="VipsException">If unable to make temp file from <paramref name="format" />.</exception>
@@ -449,7 +441,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// A new image is created which has the same size, format, interpretation
-        /// and resolution as ``this``, but with every pixel set to ``value``.
+        /// and resolution as `this`, but with every pixel set to `value`.
         /// </remarks>
         /// <param name="value">The value for the pixels. Use a
         /// single number to make a one-band image; use an array constant
@@ -498,21 +490,21 @@ namespace NetVips
         /// save options, see <see cref="NewFromFile"/>.
         /// 
         /// For example:
-        /// 
-        ///     image.WriteToFile('fred.jpg[Q=95]')
-        /// 
+        /// <code language="lang-csharp">
+        /// image.WriteToFile("fred.jpg[Q=95]");
+        /// </code>
         /// You can also supply options as keyword arguments, for example: 
-        ///
-        ///     image.WriteToFile('fred.jpg', new VOption
-        ///     {
-        ///         {"Q", 95}
-        ///     });
-        ///
+        /// <code language="lang-csharp">
+        /// image.WriteToFile("fred.jpg", new VOption
+        /// {
+        ///     {"Q", 95}
+        /// });
+        /// </code>
         /// The full set of options available depend upon the save operation that
         /// will be executed. Try something like: 
-        /// 
-        ///     $ vips jpegsave
-        /// 
+        /// <code language="lang-shell">
+        /// $ vips jpegsave
+        /// </code>
         /// at the command-line to see a summary of the available options for the
         /// JPEG saver.
         /// </remarks>
@@ -559,21 +551,21 @@ namespace NetVips
         /// embedded save options, see <see cref="NewFromFile"/>.
         /// 
         /// For example: 
-        /// 
-        ///     var data = image.WriteToBuffer('.jpg[Q=95]')
-        /// 
+        /// <code language="lang-csharp">
+        /// var data = image.WriteToBuffer(".jpg[Q=95]");
+        /// </code>
         /// You can also supply options as keyword arguments, for example: 
-        ///
-        ///     var data = image.WriteToBuffer('.jpg', new VOption
-        ///     {
-        ///         {"Q", 95}
-        ///     });
-        ///
+        /// <code language="lang-csharp">
+        /// var data = image.WriteToBuffer(".jpg", new VOption
+        /// {
+        ///     {"Q", 95}
+        /// });
+        /// </code>
         /// The full set of options available depend upon the load operation that
         /// will be executed. Try something like: 
-        /// 
-        ///     $ vips jpegsave_buffer
-        /// 
+        /// <code language="lang-shell">
+        /// $ vips jpegsave_buffer
+        /// </code>
         /// at the command-line to see a summary of the available options for the
         /// JPEG saver.
         /// </remarks>
@@ -618,9 +610,9 @@ namespace NetVips
         /// 
         /// For example, if you have a 2x2 uchar image containing the bytes 1, 2,
         /// 3, 4, read left-to-right, top-to-bottom, then: 
-        /// 
-        ///     var buf = image.WriteToMemory()
-        /// 
+        /// <code language="lang-csharp">
+        /// var buf = image.WriteToMemory();
+        /// </code>
         /// will return a four byte buffer containing the values 1, 2, 3, 4.
         /// </remarks>
         /// <returns>An array of bytes</returns>
@@ -641,7 +633,7 @@ namespace NetVips
         /// Write an image to another image.
         /// </summary>
         /// <remarks>
-        /// This function writes ``this`` to another image. Use something like
+        /// This function writes `this` to another image. Use something like
         /// <see cref="NewTempFile"/> to make an image that can be written to.
         /// </remarks>
         /// <param name="other">The <see cref="Image"/> to write to.</param>
@@ -668,7 +660,7 @@ namespace NetVips
         /// exist. See <see cref="GValue"/>.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to get the type of.</param>
-        /// <returns>The ``GType``, or 0</returns>
+        /// <returns>The `GType`, or 0</returns>
         public override ulong GetTypeOf(string name)
         {
             // on libvips before 8.5, property types must be fetched separately,
@@ -689,9 +681,9 @@ namespace NetVips
         /// Get an item of metadata.
         /// </summary>
         /// Fetches an item of metadata as a C# value. For example:
-        /// 
-        ///     orientation = image.get("orientation")
-        /// 
+        /// <code language="lang-csharp">
+        /// var orientation = image.Get("orientation");
+        /// </code>
         /// would fetch the image orientation.
         /// <param name="name">The name of the piece of metadata to get.</param>
         /// <returns>The metadata item as a C# value</returns>
@@ -736,7 +728,7 @@ namespace NetVips
         /// <remarks>
         /// At least libvips 8.5 is needed
         /// </remarks>
-        /// <returns>string[] or null</returns>
+        /// <returns>An array of strings or <see langword="null" />.</returns>
         public string[] GetFields()
         {
             if (!Base.AtLeastLibvips(8, 5))
@@ -757,7 +749,7 @@ namespace NetVips
         /// <param name="gtype">The GType of the metadata item to create.</param>
         /// <param name="name">The name of the piece of metadata to create.</param>
         /// <param name="value">The value to set as a C# value. It is
-        /// converted to the ``gtype``, if possible.</param>
+        /// converted to the `gtype`, if possible.</param>
         /// <returns></returns>
         public void SetType(ulong gtype, string name, object value)
         {
@@ -816,11 +808,11 @@ namespace NetVips
         /// Scale an image to 0 - 255.
         /// </summary>
         /// <remarks>
-        /// This is the libvips ``scale`` operation, renamed to avoid a clash with
-        /// the ``scale`` for convolution masks.
+        /// This is the libvips `scale` operation, renamed to avoid a clash with
+        /// the `scale` for convolution masks.
         /// </remarks>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = in.Scale(exp: double, log: bool);
         /// </code>
         /// </example>
@@ -848,7 +840,7 @@ namespace NetVips
         /// Ifthenelse an image
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = cond.Ifthenelse(in1, in2, blend: bool);
         /// </code>
         /// </example>
@@ -896,8 +888,8 @@ namespace NetVips
         /// Append a set of images or constants bandwise.
         /// </summary>
         /// <example>
-        /// <code>
-        /// Image @out = NetVips.Image.Bandjoin(other);
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandjoin(other);
         /// </code>
         /// </example>
         /// <param name="other">Array of input images</param>
@@ -931,8 +923,8 @@ namespace NetVips
         /// Band-wise rank of a set of images
         /// </summary>
         /// <example>
-        /// <code>
-        /// Image @out = NetVips.Image.Bandrank(other, index: int);
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
         /// <param name="other">Array of input images</param>
@@ -960,8 +952,8 @@ namespace NetVips
         /// Blend an array of images with an array of blend modes
         /// </summary>
         /// <example>
-        /// <code>
-        /// Image @out = NetVips.Image.Composite(other, mode, compositingSpace: string, premultiplied: bool);
+        /// <code language="lang-csharp">
+        /// Image @out = image.Composite(other, mode, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="other">Array of input images</param>
@@ -1022,7 +1014,7 @@ namespace NetVips
         /// A synonym for <see cref="ExtractArea"/>.
         /// </summary>
         /// <example>
-        /// <code>
+        /// <code language="lang-csharp">
         /// Image @out = input.Crop(left, top, width, height);
         /// </code>
         /// </example>
@@ -1479,13 +1471,13 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Overload []
+        /// Overload `[]`
         /// </summary>
         /// <remarks>
-        /// Use [] to pull out band elements from an image. For example:
-        ///
-        ///     green = rgbImage[1]
-        ///
+        /// Use `[]` to pull out band elements from an image. For example:
+        /// <code language="lang-csharp">
+        /// var green = rgbImage[1];
+        /// </code>
         /// Will make a new one-band image from band 1 (the middle band).
         /// </remarks>
         /// <param name="i"></param>
@@ -1571,5 +1563,17 @@ namespace NetVips
         }
 
         #endregion
+
+        /// <inheritdoc />
+        protected override void Dispose(bool disposing)
+        {
+            if (_data.IsAllocated)
+            {
+                _data.Free();
+            }
+
+            // Call our base Dispose method
+            base.Dispose(disposing);
+        }
     }
 }
