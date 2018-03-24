@@ -1963,6 +1963,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Dilate
   nameWithType: Image.Dilate
+- uid: NetVips.Image.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/NetVips.Image.html#NetVips_Image_Dispose_System_Boolean_
+  commentId: M:NetVips.Image.Dispose(System.Boolean)
+  fullName: NetVips.Image.Dispose(System.Boolean)
+  nameWithType: Image.Dispose(Boolean)
+- uid: NetVips.Image.Dispose*
+  name: Dispose
+  href: api/NetVips.Image.html#NetVips_Image_Dispose_
+  commentId: Overload:NetVips.Image.Dispose
+  isSpec: "True"
+  fullName: NetVips.Image.Dispose
+  nameWithType: Image.Dispose
 - uid: NetVips.Image.Divide(NetVips.Image)
   name: Divide(Image)
   href: api/NetVips.Image.html#NetVips_Image_Divide_NetVips_Image_
