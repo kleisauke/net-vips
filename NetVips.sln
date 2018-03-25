@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 		build.cake = build.cake
+		CHANGELOG.md = CHANGELOG.md
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -31,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Samples", "samples\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Benchmarks", "tests\NetVips.Benchmarks\NetVips.Benchmarks.csproj", "{A614F10E-DDE3-45C1-8734-1B388BF46FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "documentation\Generator.csproj", "{305AB2BA-D951-4CEF-85D1-22660B0F065C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "documentation\Generator.csproj", "{305AB2BA-D951-4CEF-85D1-22660B0F065C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

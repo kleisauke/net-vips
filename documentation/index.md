@@ -2,12 +2,6 @@
 title: NetVips documentation
 documentType: index
 ---
-<style type="text/css">
-footer{
-  position: relative;
-}
-</style>
-
 <div class="hero">
   <div class="wrap">
     <div class="text">
@@ -61,7 +55,8 @@ footer{
         <i class="glyphicon glyphicon-tags"></i>
         <section>
           <h2>Many image formats supported</h2>
-          <p class="lead">It supports a good range of image formats, including JPEG, TIFF, OME-TIFF, PNG, WebP, FITS, Matlab, OpenEXR, PDF, SVG, HDR, PPM, CSV, GIF, Analyze, DeepZoom, and OpenSlide. It can also load images via ImageMagick or GraphicsMagick, letting it load formats like DICOM.</p>
+          <p class="lead">It supports a good range of image formats, including JPEG, TIFF, OME-TIFF, PNG, WebP, FITS, Matlab, OpenEXR, PDF, SVG, HDR, PPM, CSV, GIF, Analyze, DeepZoom, and OpenSlide.
+          It can also load images via ImageMagick or GraphicsMagick, letting it load formats like DICOM.</p>
         </section>
       </div>
     </div>
