@@ -19,9 +19,9 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     brew install vips \
       --env=std \
       --with-imagemagick \
+      --without-graphicsmagick \
       --with-openexr \
-      --with-openslide \
-      --with-webp
+      --with-openslide
 else
     uname -a
 
