@@ -16,7 +16,9 @@ namespace NetVips.Tests
         {
             var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
             _colour = im * new[] {1, 2, 3} + new[] {2, 3, 4};
+            _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
             _mono = _colour[1];
+            _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
             _allImages = new[]
             {
                 _mono,

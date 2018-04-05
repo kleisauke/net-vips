@@ -8,7 +8,7 @@ documentType: index
       <strong>NetVips</strong>
     </div>
     <div class="buttons-unit-small">
-      <a class="changelog-link" href="../CHANGELOG.md">Changelog</a><span>|</span><a class="github-link" href="https://github.com/kleisauke/net-vips">View in Github</a>
+      <a class="changelog-link" href="../CHANGELOG.md">Changelog</a><span>|</span><a class="github-link" href="https://github.com/kleisauke/net-vips">View on Github</a>
     </div>
     <div class="minitext">
     Mono/.NET binding for the <a href="https://jcupitt.github.io/libvips">libvips image processing library</a>.
