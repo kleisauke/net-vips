@@ -60,6 +60,6 @@ addons:
         # - libwebpmux2
       - libglib2.0-dev
 
-before_install: ./travis.sh
+before_install: ./build/travis.sh
 
 script: ./build.sh

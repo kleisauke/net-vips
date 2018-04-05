@@ -25,6 +25,6 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 else
     uname -a
 
-    . $TRAVIS_BUILD_DIR/install-vips.sh \
+    . $TRAVIS_BUILD_DIR/build/install-vips.sh \
       --without-python
 fi

@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <Product>NetVips</Product>
+    <Description>Mono/.NET bindings for libvips</Description>
+    <Copyright>Kleis Auke Wolthuizen and contributors</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Kleis Auke Wolthuizen and contributors</Authors>
+    <PackageTags>libvips;bindings;image-processing</PackageTags>
+    <PackageProjectUrl>https://github.com/kleisauke/net-vips</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/kleisauke/net-vips/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/kleisauke/net-vips</RepositoryUrl>
+
+    <CLSCompliant>false</CLSCompliant>
+    <ComVisible>false</ComVisible>
+	
+    <LangVersion>7.2</LangVersion>
+    
+    <Major>1</Major>
+    <Minor>0</Minor>
+    <Revision>0</Revision>
+
+    <BuildNumber Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' ">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
+    <BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
+
+    <PrereleaseLabel>-develop</PrereleaseLabel>
+    <PrereleaseLabel Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' "></PrereleaseLabel>
+
+    <PrereleaseLabelConstants></PrereleaseLabelConstants>
+    <PrereleaseLabelConstants Condition=" '$(PrereleaseLabel)' == '-develop' ">PRERELEASE_DEVELOP</PrereleaseLabelConstants>
+    <PrereleaseLabelConstants Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' ">PRERELEASE_NIGHTLY</PrereleaseLabelConstants>
+    <DefineConstants>$(DefineConstants);$(PrereleaseLabelConstants)</DefineConstants>
+
+    <AssemblyVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)</AssemblyVersion>
+    <AssemblyFileVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)</AssemblyFileVersion>
+    <InformationalVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)$(PrereleaseLabel)</InformationalVersion>
+    <PackageVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)$(PrereleaseLabel)</PackageVersion>
+  </PropertyGroup>
+</Project>

@@ -1,4 +1,8 @@
 image: Visual Studio 2017
+
+# Version format
+version: 1.0.0.{build}
+
 init:
   - git config --global core.autocrlf true
 
@@ -14,17 +18,26 @@ build_script:
   - ps: $env:PATH = "$env:VIPS_HOME\bin;$env:PATH"
   - ps: .\build.ps1
 
-# Tests
+# Do not build on tags (GitHub only)
+skip_tags: true
+
+pull_requests:
+  do_not_increment_build_number: true
+
+# Disable automatic tests and deployment
 test: off
+deploy: off
 
 # Branches to build
 branches:
-  # Whitelist
-  only:
-    - master
-    - dev
+  # Blacklist
+  except:
+    - gh-pages
 
 # Build cache
 cache:
 - download -> appveyor.yml
 - tools -> build.cake
+
+artifacts:
+  - path: '**\NetVips.*.nupkg' # find all NuGet packages recursively
