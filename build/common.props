@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Product>NetVips</Product>
     <Description>Mono/.NET bindings for libvips</Description>
-    <Copyright>Kleis Auke Wolthuizen and contributors</Copyright>
+    <Copyright>Kleis Auke Wolthuizen</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Authors>Kleis Auke Wolthuizen and contributors</Authors>
+    <Authors>Kleis Auke Wolthuizen</Authors>
     <PackageTags>libvips;bindings;image-processing</PackageTags>
     <PackageProjectUrl>https://github.com/kleisauke/net-vips</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/kleisauke/net-vips/blob/master/LICENSE</PackageLicenseUrl>
