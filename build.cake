@@ -110,7 +110,8 @@ Task("Test")
 
 // Task targets
 Task("Default")
-    .IsDependentOn("Test");
+    .IsDependentOn("Test")
+    .IsDependentOn("Pack");
 
 // Execution
 RunTarget(target);
