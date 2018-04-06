@@ -35,29 +35,47 @@
     <TargetOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">Windows</TargetOS>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);Interop\**</DefaultItemExcludes>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetOS)' == 'Linux'">
-    <Compile Include="Interop\Linux\Interop.Libraries.cs">
-        <Link>Interop\Interop.Libraries.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetOS)' == 'OSX'">
-    <Compile Include="Interop\OSX\Interop.Libraries.cs">
-        <Link>Interop\Interop.Libraries.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetOS)' == 'Windows'">
-    <Compile Include="Interop\Windows\Interop.Libraries.cs">
-        <Link>Interop\Interop.Libraries.cs</Link>
-    </Compile>
+  <ItemGroup>
+    <Reference Include="NetVips.Interop" Condition="'$(TargetOS)' != ''">
+      <SpecificVersion>false</SpecificVersion>
+      <HintPath>..\NetVips.Interop\references\$(TargetOS)\NetVips.Interop.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fody" Version="3.0.1" />
-    <PackageReference Include="ModuleInit.Fody" Version="1.8.0" />
+    <Content Include="..\..\build\NetVips.targets">
+      <PackagePath>build\netcoreapp2.0\NetVips.targets</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="..\NetVips.Interop\references\Linux\NetVips.Interop.dll">
+      <PackagePath>tools\netcoreapp2.0\linux\NetVips.Interop.dll</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="..\NetVips.Interop\references\OSX\NetVips.Interop.dll">
+      <PackagePath>tools\netcoreapp2.0\osx\NetVips.Interop.dll</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="..\NetVips.Interop\references\Windows\NetVips.Interop.dll">
+      <PackagePath>tools\netcoreapp2.0\windows\NetVips.Interop.dll</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="3.0.1">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="ModuleInit.Fody" Version="1.8.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetVips.Interop\NetVips.Interop.csproj">
+      <PrivateAssets>all</PrivateAssets>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly> 
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
