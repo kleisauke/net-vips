@@ -6401,19 +6401,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Operation.GenerateImageClass
   nameWithType: Operation.GenerateImageClass
-- uid: NetVips.Operation.NewFromName(System.String)
-  name: NewFromName(String)
-  href: api/NetVips.Operation.html#NetVips_Operation_NewFromName_System_String_
-  commentId: M:NetVips.Operation.NewFromName(System.String)
-  fullName: NetVips.Operation.NewFromName(System.String)
-  nameWithType: Operation.NewFromName(String)
-- uid: NetVips.Operation.NewFromName*
-  name: NewFromName
-  href: api/NetVips.Operation.html#NetVips_Operation_NewFromName_
-  commentId: Overload:NetVips.Operation.NewFromName
-  isSpec: "True"
-  fullName: NetVips.Operation.NewFromName
-  nameWithType: Operation.NewFromName
 - uid: NetVips.Operation.Set(System.String,System.Int32,NetVips.Image,System.Object)
   name: Set(String, Int32, Image, Object)
   href: api/NetVips.Operation.html#NetVips_Operation_Set_System_String_System_Int32_NetVips_Image_System_Object_

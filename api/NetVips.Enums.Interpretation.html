@@ -114,26 +114,6 @@
   <h5 id="NetVips_Enums_Interpretation_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>For example, a three-band float image of type LAB should have its
 pixels interpreted as coordinates in CIE Lab space.</p>
-<p>Attributes:
-Multiband (string): generic many-band image
-Bw (string): some kind of single-band image
-Histogram (string): a 1D image, eg. histogram or lookup table
-Fourier (string): image is in fourier space
-Xyz (string): the first three bands are CIE XYZ
-Lab (string): pixels are in CIE Lab space
-Cmyk (string): the first four bands are in CMYK space
-Labq (string): implies #VIPS_CODING_LABQ
-Rgb (string): generic RGB space
-Cmc (string): a uniform colourspace based on CMC(1:1)
-Lch (string): pixels are in CIE LCh space
-Labs (string): CIE LAB coded as three signed 16-bit values
-Srgb (string): pixels are sRGB
-Hsv (string): pixels are HSV
-Scrgb (string): pixels are scRGB
-Yxy (string): pixels are CIE Yxy
-Rgb16 (string): generic 16-bit RGB
-Grey16 (string): generic 16-bit mono
-Matrix (string): a matrix</p>
 </div>
   <h3 id="fields">Fields
   </h3>
@@ -142,10 +122,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Bw.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Bw%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L154">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L172">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Bw" data-uid="NetVips.Enums.Interpretation.Bw">Bw</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>some kind of single-band image</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -171,10 +152,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Cmc.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Cmc%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L161">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L193">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Cmc" data-uid="NetVips.Enums.Interpretation.Cmc">Cmc</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>a uniform colourspace based on CMC(1:1)</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -200,10 +182,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Cmyk.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Cmyk%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L158">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L184">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Cmyk" data-uid="NetVips.Enums.Interpretation.Cmyk">Cmyk</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>the first four bands are in CMYK space</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -229,10 +212,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Fourier.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Fourier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L166">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L208">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Fourier" data-uid="NetVips.Enums.Interpretation.Fourier">Fourier</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>image is in fourier space</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -258,10 +242,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Grey16.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Grey16%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L168">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L214">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Grey16" data-uid="NetVips.Enums.Interpretation.Grey16">Grey16</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>generic 16-bit mono</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -287,10 +272,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Histogram.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Histogram%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L155">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L175">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Histogram" data-uid="NetVips.Enums.Interpretation.Histogram">Histogram</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>a 1D image, eg. histogram or lookup table</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -316,10 +302,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Hsv.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Hsv%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L171">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L223">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Hsv" data-uid="NetVips.Enums.Interpretation.Hsv">Hsv</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>pixels are HSV</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -345,10 +332,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Lab.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Lab%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L157">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L181">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Lab" data-uid="NetVips.Enums.Interpretation.Lab">Lab</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>pixels are in CIE Lab space</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -374,10 +362,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Labq.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Labq%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L159">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L187">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Labq" data-uid="NetVips.Enums.Interpretation.Labq">Labq</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>implies #VIPS_CODING_LABQ</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -403,10 +392,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Labs.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Labs%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L163">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L199">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Labs" data-uid="NetVips.Enums.Interpretation.Labs">Labs</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>CIE LAB coded as three signed 16-bit values</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -432,10 +422,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Lch.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Lch%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L162">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L196">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Lch" data-uid="NetVips.Enums.Interpretation.Lch">Lch</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>pixels are in CIE LCh space</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -461,10 +452,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Matrix.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Matrix%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L169">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L217">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Matrix" data-uid="NetVips.Enums.Interpretation.Matrix">Matrix</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>a matrix</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -490,10 +482,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Multiband.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Multiband%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L153">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L169">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Multiband" data-uid="NetVips.Enums.Interpretation.Multiband">Multiband</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>generic many-band image</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -519,10 +512,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Rgb.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Rgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L160">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L190">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Rgb" data-uid="NetVips.Enums.Interpretation.Rgb">Rgb</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>generic RGB space</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -548,10 +542,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Rgb16.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Rgb16%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L167">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L211">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Rgb16" data-uid="NetVips.Enums.Interpretation.Rgb16">Rgb16</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>generic 16-bit RGB</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -577,10 +572,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Scrgb.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Scrgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L170">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L220">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Scrgb" data-uid="NetVips.Enums.Interpretation.Scrgb">Scrgb</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>pixels are scRGB</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -606,10 +602,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Srgb.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Srgb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L164">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L202">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Srgb" data-uid="NetVips.Enums.Interpretation.Srgb">Srgb</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>pixels are sRGB</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -635,10 +632,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Xyz.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Xyz%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L156">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L178">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Xyz" data-uid="NetVips.Enums.Interpretation.Xyz">Xyz</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>the first three bands are CIE XYZ</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -664,10 +662,11 @@ Matrix (string): a matrix</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation_Yxy.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation.Yxy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L165">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L205">View Source</a>
   </span>
   <h4 id="NetVips_Enums_Interpretation_Yxy" data-uid="NetVips.Enums.Interpretation.Yxy">Yxy</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>pixels are CIE Yxy</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -698,7 +697,7 @@ Matrix (string): a matrix</p>
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Interpretation.md&amp;value=---%0Auid%3A%20NetVips.Enums.Interpretation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L151" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L166" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
