@@ -77,7 +77,7 @@
   <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
     <ItemGroup>
       <ReferencePath Condition="'%(FileName)' == 'NetVips.Interop'">
-        <Aliases>Interop</Aliases>
+        <Aliases>global</Aliases>
       </ReferencePath>
     </ItemGroup>
   </Target>
