@@ -1,8 +1,10 @@
+extern alias Interop;
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
-using NetVips.Interop;
+using Interop::NetVips.Interop;
 
 namespace NetVips.Internal
 {

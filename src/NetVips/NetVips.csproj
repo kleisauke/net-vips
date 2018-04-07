@@ -36,7 +36,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="NetVips.Interop" Condition="'$(TargetOS)' != ''">
+    <Reference Include="NetVips.Interop">
       <SpecificVersion>false</SpecificVersion>
       <HintPath>..\NetVips.Interop\references\$(TargetOS)\NetVips.Interop.dll</HintPath>
       <Private>true</Private>
@@ -44,22 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\build\NetVips.targets">
+    <None Include="..\..\build\NetVips.targets">
       <PackagePath>build\netcoreapp2.0\NetVips.targets</PackagePath>
       <Pack>true</Pack>
-    </Content>
-    <Content Include="..\NetVips.Interop\references\Linux\NetVips.Interop.dll">
-      <PackagePath>tools\netcoreapp2.0\linux\NetVips.Interop.dll</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="..\NetVips.Interop\references\OSX\NetVips.Interop.dll">
-      <PackagePath>tools\netcoreapp2.0\osx\NetVips.Interop.dll</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="..\NetVips.Interop\references\Windows\NetVips.Interop.dll">
-      <PackagePath>tools\netcoreapp2.0\windows\NetVips.Interop.dll</PackagePath>
-      <Pack>true</Pack>
-    </Content>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -74,12 +62,21 @@
   <ItemGroup>
     <ProjectReference Include="..\NetVips.Interop\NetVips.Interop.csproj">
       <PrivateAssets>all</PrivateAssets>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly> 
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>false</Private>
     </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" Version="2.0.6" />
   </ItemGroup>
+
+  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'NetVips.Interop'">
+        <Aliases>Interop</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
 
 </Project>

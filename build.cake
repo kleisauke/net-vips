@@ -81,7 +81,6 @@ Task("Build")
         DotNetCoreBuild("./src/NetVips/NetVips.csproj", new DotNetCoreBuildSettings
         {
             Configuration = configuration,
-            NoDependencies = true,
             NoRestore = true
         });
     });
