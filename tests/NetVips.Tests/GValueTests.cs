@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace NetVips.Tests
@@ -130,11 +131,22 @@ namespace NetVips.Tests
         public void TestBlob()
         {
             var blob = File.ReadAllBytes(Helper.JpegFile);
-            var gv = new GValue();
-            gv.SetType(GValue.BlobType);
-            gv.Set(blob);
-            var value = gv.Get();
-            Assert.Equal(blob, value);
+            var handle = GCHandle.Alloc(blob, GCHandleType.Pinned);
+            try
+            {
+                var gv = new GValue();
+                gv.SetType(GValue.BlobType);
+                gv.Set(blob);
+                var value = gv.Get();
+                Assert.Equal(blob, value);
+            }
+            finally
+            {
+                if (handle.IsAllocated)
+                {
+                    handle.Free();
+                }
+            }
         }
     }
 }
