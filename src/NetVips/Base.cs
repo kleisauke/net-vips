@@ -64,21 +64,39 @@ namespace NetVips
 
         #region unit test functions
 
-        public static string PathFilename7(string filename)
+        /// <summary>
+        /// For testing only.
+        /// </summary>
+        /// <param name="path">path to split</param>
+        /// <returns>The filename part of a vips7 path</returns>
+        public static string PathFilename7(string path)
         {
-            return Vips.VipsPathFilename7(filename);
+            return Vips.VipsPathFilename7(path);
         }
 
-        public static string PathMode7(string filename)
+        /// <summary>
+        /// For testing only.
+        /// </summary>
+        /// <param name="path">path to split</param>
+        /// <returns>The mode part of a vips7 path</returns>
+        public static string PathMode7(string path)
         {
-            return Vips.VipsPathMode7(filename);
+            return Vips.VipsPathMode7(path);
         }
 
+        /// <summary>
+        /// For testing only.
+        /// </summary>
+        /// <returns></returns>
         public static void VipsInterpretationGetType()
         {
             Vips.VipsInterpretationGetType();
         }
 
+        /// <summary>
+        /// For testing only.
+        /// </summary>
+        /// <returns></returns>
         public static void VipsOperationFlagsGetType()
         {
             Vips.VipsOperationFlagsGetType();

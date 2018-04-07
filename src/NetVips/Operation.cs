@@ -23,7 +23,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Recursive search for <see cref="T" /> into an array and the underlying
+        /// Recursive search for <see cref="Image" /> into an array and the underlying
         /// subarrays. This is used to find the matchImage for an operation
         /// </summary>
         /// <param name="thing"></param>
@@ -54,6 +54,14 @@ namespace NetVips
             return new Operation(new VipsOperation(vop));
         }
 
+        /// <summary>
+        /// Set a GObject property. The value is converted to the property type, if possible.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="matchImage"></param>
+        /// <param name="value"></param>
+        /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/></param>
+        /// <returns></returns>
         public void Set(string name, int flags, Image matchImage, object value)
         {
             // logger.Debug($"Operation.Set: name = {name}, flags = {flags}, " +

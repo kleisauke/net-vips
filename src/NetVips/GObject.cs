@@ -33,6 +33,10 @@ namespace NetVips
             // logger.Debug($"GValue = {gObject}");
         }
 
+        /// <summary>
+        /// Allows an object to try to free resources and perform other cleanup 
+        /// operations before it is reclaimed by garbage collection.
+        /// </summary>
         ~GObject()
         {
             // Do not re-create Dispose clean-up code here.
@@ -68,6 +72,10 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, 
+        /// or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);

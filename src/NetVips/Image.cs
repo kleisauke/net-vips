@@ -391,6 +391,7 @@ namespace NetVips
                 {
                     handle.Free();
                 }
+
                 throw new VipsException("unable to make image from memory");
             }
 
@@ -795,6 +796,10 @@ namespace NetVips
             return VipsImage.VipsImageRemove(IntlImage, name) != 0;
         }
 
+        /// <summary>
+        /// Returns a string that represents the current image.
+        /// </summary>
+        /// <returns>A string that represents the current image.</returns>
         public override string ToString()
         {
             return $"<NetVips.Image {Width}x{Height} {Format}, {Bands} bands, {Interpretation}>";
@@ -1329,6 +1334,12 @@ namespace NetVips
 
         #region overloadable operators
 
+        /// <summary>
+        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image operator +(Image left, object right)
         {
             if (right is Image image)
@@ -1341,6 +1352,12 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image operator -(Image left, object right)
         {
             if (right is Image image)
@@ -1353,6 +1370,12 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image operator *(Image left, object right)
         {
             if (right is Image image)
@@ -1365,6 +1388,12 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image operator /(Image left, object right)
         {
             if (right is Image image)
@@ -1377,6 +1406,13 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+        /// (remainder after integer division).
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static Image operator %(Image left, object right)
         {
             if (right is Image image)
@@ -1389,31 +1425,54 @@ namespace NetVips
             }
         }
 
-        public static Image operator &(Image left, object right)
-        {
-            return CallEnum(left, right, "boolean", "and") as Image;
-        }
 
-        public static Image operator |(Image left, object right)
-        {
-            return CallEnum(left, right, "boolean", "or") as Image;
-        }
+        /// <summary>
+        /// This operation computes the logical bitwise AND of its operands.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator &(Image left, object right) => CallEnum(left, right, "boolean", "and") as Image;
 
-        public static Image operator ^(Image left, object right)
-        {
-            return CallEnum(left, right, "boolean", "eor") as Image;
-        }
+        /// <summary>
+        /// This operation computes the bitwise OR of its operands.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator |(Image left, object right) => CallEnum(left, right, "boolean", "or") as Image;
 
-        public static Image operator <<(Image left, int right)
-        {
-            return CallEnum(left, right, "boolean", "lshift") as Image;
-        }
+        /// <summary>
+        /// This operation computes the bitwise exclusive-OR of its operands.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator ^(Image left, object right) => CallEnum(left, right, "boolean", "eor") as Image;
 
-        public static Image operator >>(Image left, int right)
-        {
-            return CallEnum(left, right, "boolean", "rshift") as Image;
-        }
+        /// <summary>
+        /// This operation shifts its first operand left by the number of bits specified by its second operand.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator <<(Image left, int right) => CallEnum(left, right, "boolean", "lshift") as Image;
 
+        /// <summary>
+        /// This operation shifts its first operand right by the number of bits specified by its second operand.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator >>(Image left, int right) => CallEnum(left, right, "boolean", "rshift") as Image;
+
+
+        /// <summary>
+        /// This operation compares two images on equality.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static object operator ==(Image left, object right)
         {
             // == version allows comparison to null
@@ -1425,6 +1484,12 @@ namespace NetVips
             return CallEnum(left, right, "relational", "equal") as Image;
         }
 
+        /// <summary>
+        /// This operation compares two images on inequality.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
         public static object operator !=(Image left, object right)
         {
             // == version allows comparison to null
@@ -1436,25 +1501,41 @@ namespace NetVips
             return CallEnum(left, right, "relational", "noteq") as Image;
         }
 
-        public static Image operator <(Image left, object right)
-        {
-            return CallEnum(left, right, "relational", "less") as Image;
-        }
+        /// <summary>
+        /// This operation compares if the left operand is less than the right operand.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator <(Image left, object right) =>
+            CallEnum(left, right, "relational", "less") as Image;
 
-        public static Image operator >(Image left, object right)
-        {
-            return CallEnum(left, right, "relational", "more") as Image;
-        }
+        /// <summary>
+        /// This operation compares if the left operand is greater than the right operand.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator >(Image left, object right) =>
+            CallEnum(left, right, "relational", "more") as Image;
 
-        public static Image operator <=(Image left, object right)
-        {
-            return CallEnum(left, right, "relational", "lesseq") as Image;
-        }
+        /// <summary>
+        /// This operation compares if the left operand is less than or equal to the right operand.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator <=(Image left, object right) =>
+            CallEnum(left, right, "relational", "lesseq") as Image;
 
-        public static Image operator >=(Image left, object right)
-        {
-            return CallEnum(left, right, "relational", "moreeq") as Image;
-        }
+        /// <summary>
+        /// This operation compares if the left operand is greater than or equal to the right operand.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image operator >=(Image left, object right) =>
+            CallEnum(left, right, "relational", "moreeq") as Image;
 
         #endregion
 
@@ -1544,11 +1625,21 @@ namespace NetVips
             return images;
         }
 
+        /// <summary>
+        /// Compares the hashcode of two images.
+        /// </summary>
+        /// <param name="other">The <see cref="Image"/> to compare.</param>
+        /// <returns><see langword="true" /> if equal; otherwise, <see langword="false" /></returns>
         public bool Equals(Image other)
         {
             return Equals(GetHashCode(), other.GetHashCode());
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current image.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current image.</param>
+        /// <returns><see langword="true" /> if the specified object  is equal to the current image; otherwise, <see langword="false" />.</returns>
         public override bool Equals(object obj)
         {
             if (obj is null) return false;
@@ -1557,6 +1648,10 @@ namespace NetVips
             return Equals((Image) obj);
         }
 
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current immage.</returns>
         public override int GetHashCode()
         {
             return ToString().GetHashCode();

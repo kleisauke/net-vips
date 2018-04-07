@@ -30,20 +30,80 @@ namespace NetVips
         private bool _disposed;
 
         // look up some common gtypes at init for speed
+
+        /// <summary>
+        /// The GType for gboolean.
+        /// </summary>
         public static readonly ulong GBoolType = Base.TypeFromName("gboolean");
+
+        /// <summary>
+        /// The GType for gint.
+        /// </summary>
         public static readonly ulong GIntType = Base.TypeFromName("gint");
+
+        /// <summary>
+        /// The GType for gdouble.
+        /// </summary>
         public static readonly ulong GDoubleType = Base.TypeFromName("gdouble");
+
+        /// <summary>
+        /// The GType for gchararray.
+        /// </summary>
         public static readonly ulong GStrType = Base.TypeFromName("gchararray");
+
+        /// <summary>
+        /// The GType for GEnum.
+        /// </summary>
         public static readonly ulong GEnumType = Base.TypeFromName("GEnum");
+
+        /// <summary>
+        /// The GType for GFlags.
+        /// </summary>
         public static readonly ulong GFlagsType = Base.TypeFromName("GFlags");
+
+        /// <summary>
+        /// The GType for GObject.
+        /// </summary>
         public static readonly ulong GObjectType = Base.TypeFromName("GObject");
+
+        /// <summary>
+        /// The GType for VipsImage.
+        /// </summary>
         public static readonly ulong ImageType = Base.TypeFromName("VipsImage");
+
+        /// <summary>
+        /// The GType for VipsArrayInt.
+        /// </summary>
         public static readonly ulong ArrayIntType = Base.TypeFromName("VipsArrayInt");
+
+        /// <summary>
+        /// The GType for VipsArrayDouble.
+        /// </summary>
         public static readonly ulong ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
+
+        /// <summary>
+        /// The GType for VipsArrayImage.
+        /// </summary>
         public static readonly ulong ArrayImageType = Base.TypeFromName("VipsArrayImage");
+
+        /// <summary>
+        /// The GType for VipsRefString.
+        /// </summary>
         public static readonly ulong RefStrType = Base.TypeFromName("VipsRefString");
+
+        /// <summary>
+        /// The GType for VipsBlob.
+        /// </summary>
         public static readonly ulong BlobType = Base.TypeFromName("VipsBlob");
+
+        /// <summary>
+        /// The GType for VipsBandFormat. See <see cref="Enums.BandFormat"/>.
+        /// </summary>
         public static readonly ulong BandFormatType;
+
+        /// <summary>
+        /// The GType for VipsBlendMode. See <see cref="Enums.BlendMode"/>.
+        /// </summary>
         public static readonly ulong BlendModeType;
 
         static GValue()
@@ -127,6 +187,9 @@ namespace NetVips
             return cstr;
         }
 
+        /// <summary>
+        /// Wrap GValue in a C# class.
+        /// </summary>
         public GValue()
         {
             // allocate memory for the gvalue which will be freed on GC
@@ -445,6 +508,10 @@ namespace NetVips
             return result;
         }
 
+        /// <summary>
+        /// Allows an object to try to free resources and perform other cleanup 
+        /// operations before it is reclaimed by garbage collection.
+        /// </summary>
         ~GValue()
         {
             // Do not re-create Dispose clean-up code here.
@@ -479,6 +546,10 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, 
+        /// or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);

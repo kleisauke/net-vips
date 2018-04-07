@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.10.13.498" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.13.507" />
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.4.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0003" />
   </ItemGroup>
