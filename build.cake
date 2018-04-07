@@ -87,6 +87,13 @@ Task("Pack")
     .WithCriteria((isOnAppVeyorAndNotPR || string.Equals(target, "pack", StringComparison.OrdinalIgnoreCase)) && IsRunningOnWindows())
     .Does(() =>
     {
+        // Need to build the OSX and Linux DLL first.
+        DotNetCoreBuild("./build/NetVips.batch.csproj", new DotNetCoreBuildSettings
+        {
+            Configuration = configuration,
+            NoRestore = true
+        });
+
         DotNetCorePack("./src/NetVips/NetVips.csproj", new DotNetCorePackSettings
         {
             Configuration = configuration,

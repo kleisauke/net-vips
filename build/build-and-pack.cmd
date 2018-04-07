@@ -2,8 +2,8 @@
 
 git clean -xfd
 dotnet restore
-dotnet build .\src\NetVips\NetVips.csproj -c Release
-dotnet pack .\src\NetVips\NetVips.csproj -c Release
+dotnet build .\build\NetVips.batch.csproj
+dotnet pack .\src\NetVips\NetVips.csproj -c Release /p:TargetOS=Windows /p:Platform="Any CPU"
 rmdir artifacts /s /q
 mkdir artifacts
-for /R %%x in (BenchmarkDotNet*.nupkg) do copy "%%x" "artifacts/" /Y
+for /R %%x in (NetVips*.nupkg) do copy "%%x" "artifacts/" /Y

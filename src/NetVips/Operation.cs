@@ -43,7 +43,7 @@ namespace NetVips
             return FindInside<T>(enumerable);
         }
 
-        public static Operation NewFromName(string operationName)
+        private static Operation NewFromName(string operationName)
         {
             var vop = VipsOperation.VipsOperationNew(operationName);
             if (vop == IntPtr.Zero)

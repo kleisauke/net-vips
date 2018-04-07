@@ -4,6 +4,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
@@ -11,6 +12,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeInPackage</TargetsForTfmSpecificContentInPackage>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Interop\Libraries.*.cs</DefaultItemExcludes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -37,11 +39,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="NetVips.Interop">
-      <SpecificVersion>false</SpecificVersion>
-      <HintPath>..\NetVips.Interop\references\$(TargetOS)\NetVips.Interop.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+    <Compile Include="Interop\Libraries.$(TargetOS).cs">
+        <Link>Interop\Libraries.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -53,33 +53,19 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NetVips.Interop\NetVips.Interop.csproj">
-      <PrivateAssets>all</PrivateAssets>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>false</Private>
-    </ProjectReference>
-  </ItemGroup>
-
   <Target Name="IncludeInPackage">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="..\..\build\NetVips.targets" PackagePath="build\NetVips.targets" />
-      <TfmSpecificPackageFile Include="..\NetVips.Interop\references\Linux\NetVips.Interop.dll" PackagePath="tools\netcoreapp2.0\linux\NetVips.Interop.dll" />
-      <TfmSpecificPackageFile Include="..\NetVips.Interop\references\OSX\NetVips.Interop.dll" PackagePath="tools\netcoreapp2.0\osx\NetVips.Interop.dll" />
-      <TfmSpecificPackageFile Include="..\NetVips.Interop\references\Windows\NetVips.Interop.dll" PackagePath="tools\netcoreapp2.0\win\NetVips.Interop.dll" />
+      <TfmSpecificPackageFile Include="bin\$(Configuration)\$(TargetFramework)\Linux\NetVips.dll">
+        <PackagePath>runtimes\linux\lib\$(TargetFramework)\NetVips.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="bin\$(Configuration)\$(TargetFramework)\OSX\NetVips.dll">
+        <PackagePath>runtimes\osx\lib\$(TargetFramework)\NetVips.dll</PackagePath>
+      </TfmSpecificPackageFile>
     </ItemGroup>
   </Target>
 
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" Version="2.0.6" />
   </ItemGroup>
-
-  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
-    <ItemGroup>
-      <ReferencePath Condition="'%(FileName)' == 'NetVips.Interop'">
-        <Aliases>global</Aliases>
-      </ReferencePath>
-    </ItemGroup>
-  </Target>
 
 </Project>

@@ -13,6 +13,9 @@
             VipsInitialized = Base.VipsInit();
         }
 
+        /// <summary>
+        /// Is vips initialized?
+        /// </summary>
         public static bool VipsInitialized;
     }
 }
