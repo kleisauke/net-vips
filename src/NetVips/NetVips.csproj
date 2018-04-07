@@ -63,7 +63,7 @@
 
   <Target Name="IncludeInPackage">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="..\..\build\NetVips.targets" PackagePath="build\netcoreapp2.0\NetVips.targets" />
+      <TfmSpecificPackageFile Include="..\..\build\NetVips.targets" PackagePath="build\NetVips.targets" />
       <TfmSpecificPackageFile Include="..\NetVips.Interop\references\Linux\NetVips.Interop.dll" PackagePath="tools\netcoreapp2.0\linux\NetVips.Interop.dll" />
       <TfmSpecificPackageFile Include="..\NetVips.Interop\references\OSX\NetVips.Interop.dll" PackagePath="tools\netcoreapp2.0\osx\NetVips.Interop.dll" />
       <TfmSpecificPackageFile Include="..\NetVips.Interop\references\Windows\NetVips.Interop.dll" PackagePath="tools\netcoreapp2.0\win\NetVips.Interop.dll" />
