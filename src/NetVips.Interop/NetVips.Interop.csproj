@@ -29,21 +29,6 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="references\Linux\NetVips.Interop.dll">
-      <PackagePath>tools\netcoreapp2.0\linux\NetVips.Interop.dll</PackagePath>
-      <Pack>true</Pack>
-    </None>
-    <None Include="references\OSX\NetVips.Interop.dll">
-      <PackagePath>tools\netcoreapp2.0\osx\NetVips.Interop.dll</PackagePath>
-      <Pack>true</Pack>
-    </None>
-    <None Include="references\Windows\NetVips.Interop.dll">
-      <PackagePath>tools\netcoreapp2.0\windows\NetVips.Interop.dll</PackagePath>
-      <Pack>true</Pack>
-    </None>
-  </ItemGroup>
-
   <!-- Plugin building -->
   <!-- Define each plugin -->
   <ItemGroup>

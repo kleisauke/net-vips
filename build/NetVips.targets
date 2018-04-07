@@ -20,7 +20,7 @@
     </Reference>
     <Reference Include="NetVips.Interop" Condition="'$(TargetOS)' == 'Windows'">
       <SpecificVersion>false</SpecificVersion>
-      <HintPath>$(InteropDir)\windows\NetVips.Interop.dll</HintPath>
+      <HintPath>$(InteropDir)\win\NetVips.Interop.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>
