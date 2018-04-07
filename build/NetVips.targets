@@ -12,19 +12,16 @@
       <SpecificVersion>false</SpecificVersion>
       <HintPath>$(InteropDir)\linux\NetVips.Interop.dll</HintPath>
       <Private>true</Private>
-      <Message Importance="high" Text="Linux" />
     </Reference>
     <Reference Include="NetVips.Interop" Condition="'$(TargetOS)' == 'OSX'">
       <SpecificVersion>false</SpecificVersion>
       <HintPath>$(InteropDir)\osx\NetVips.Interop.dll</HintPath>
       <Private>true</Private>
-      <Message Importance="high" Text="OSX" />
     </Reference>
     <Reference Include="NetVips.Interop" Condition="'$(TargetOS)' == 'Windows'">
       <SpecificVersion>false</SpecificVersion>
       <HintPath>$(InteropDir)\win\NetVips.Interop.dll</HintPath>
       <Private>true</Private>
-      <Message Importance="high" Text="Windows" />
     </Reference>
   </ItemGroup>
 
