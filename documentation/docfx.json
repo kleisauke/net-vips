@@ -4,18 +4,19 @@
       "src": [
         {
           "files": [
-            "*.csproj"
+            "**/*.csproj"
           ],
-          "cwd": ".",
           "exclude": [
             "**/obj/**",
-            "**/bin/**",
-            "_site/**"
+            "**/bin/**"
           ],
-          "src": "../src/NetVips"
+          "src": "../src"
         }
       ],
-      "dest": "obj/temp/api"
+      "dest": "obj/temp/api",
+      "properties": {
+        "TargetFramework": "netcoreapp2.0"
+      }
     }
   ],
   "build": {
