@@ -27,7 +27,7 @@ namespace NetVips.Benchmarks
             var im = Image.NewFromFile(input, access: Enums.Access.Sequential);
 
             im = im.Crop(100, 100, im.Width - 200, im.Height - 200);
-            im = im.Similarity(scale: 0.9);
+            im = im.Reduce(1.0 / 0.9, 1.0 / 0.9, kernel: Enums.Kernel.Linear);
             var mask = Image.NewFromArray(new[,]
             {
                 {-1, -1, -1},

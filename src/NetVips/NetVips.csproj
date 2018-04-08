@@ -45,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fody" Version="3.0.1">
+    <PackageReference Include="Fody" Version="3.0.2">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ModuleInit.Fody" Version="1.8.0">

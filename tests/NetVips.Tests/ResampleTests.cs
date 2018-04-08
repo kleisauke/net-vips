@@ -137,7 +137,14 @@ namespace NetVips.Tests
             {
                 foreach (var fmt in Helper.AllFormats)
                 {
-                    foreach (var kernel in new[] {"nearest", "linear", "cubic", "lanczos2", "lanczos3"})
+                    foreach (var kernel in new[]
+                    {
+                        Enums.Kernel.Nearest,
+                        Enums.Kernel.Linear,
+                        Enums.Kernel.Cubic,
+                        Enums.Kernel.Lanczos2,
+                        Enums.Kernel.Lanczos3
+                    })
                     {
                         var x = im.Cast(fmt);
                         var r = x.Reduce(fac, fac, kernel: kernel);
@@ -152,7 +159,14 @@ namespace NetVips.Tests
             foreach (var @const in new[] {0, 1, 2, 254, 255})
             {
                 im = (Image.Black(10, 10) + @const).Cast("uchar");
-                foreach (var kernel in new[] {"nearest", "linear", "cubic", "lanczos2", "lanczos3"})
+                foreach (var kernel in new[]
+                {
+                    Enums.Kernel.Nearest,
+                    Enums.Kernel.Linear,
+                    Enums.Kernel.Cubic,
+                    Enums.Kernel.Lanczos2,
+                    Enums.Kernel.Lanczos3
+                })
                 {
                     // Console.WriteLine($"testing kernel = {kernel}");
                     // Console.WriteLine($"testing const = {@const}");

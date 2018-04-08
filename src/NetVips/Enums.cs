@@ -328,6 +328,28 @@
         }
 
         /// <summary>
+        /// A resizing kernel. One of these can be given to operations like
+        /// <see cref="Image.Reduce"/> or <see cref="Image.Resize"/> to select the resizing kernel to use. 
+        /// </summary>
+        public static class Kernel
+        {
+            /// <summary>Nearest-neighbour interpolation</summary>
+            public const string Nearest = "nearest";
+
+            /// <summary>Linear interpolation</summary>
+            public const string Linear = "linear";
+
+            /// <summary>Cubic interpolation</summary>
+            public const string Cubic = "cubic";
+
+            /// <summary>Two-lobe Lanczos</summary>
+            public const string Lanczos2 = "lanczos2";
+
+            /// <summary>Three-lobe Lanczos</summary>
+            public const string Lanczos3 = "lanczos3";
+        }
+
+        /// <summary>
         /// Computation precision.
         /// </summary>
         /// <remarks>

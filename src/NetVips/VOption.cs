@@ -14,7 +14,7 @@ namespace NetVips
         /// <summary>
         /// Returns an enumerator that iterates through the <see cref="_internalDictionary" />.
         /// </summary>
-        /// <returns>A <see cref="T:System.Collections.Generic.Dictionary`2.Enumerator"></see> structure for the <see cref="_internalDictionary" />.</returns>
+        /// <returns>A <see cref="T:System.Collections.Generic.Dictionary`2.Enumerator" /> structure for the <see cref="_internalDictionary" />.</returns>
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _internalDictionary.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _internalDictionary.GetEnumerator();
