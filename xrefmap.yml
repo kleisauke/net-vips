@@ -775,6 +775,42 @@ references:
   commentId: F:NetVips.Enums.Interpretation.Yxy
   fullName: NetVips.Enums.Interpretation.Yxy
   nameWithType: Enums.Interpretation.Yxy
+- uid: NetVips.Enums.Kernel
+  name: Enums.Kernel
+  href: api/NetVips.Enums.Kernel.html
+  commentId: T:NetVips.Enums.Kernel
+  fullName: NetVips.Enums.Kernel
+  nameWithType: Enums.Kernel
+- uid: NetVips.Enums.Kernel.Cubic
+  name: Cubic
+  href: api/NetVips.Enums.Kernel.html#NetVips_Enums_Kernel_Cubic
+  commentId: F:NetVips.Enums.Kernel.Cubic
+  fullName: NetVips.Enums.Kernel.Cubic
+  nameWithType: Enums.Kernel.Cubic
+- uid: NetVips.Enums.Kernel.Lanczos2
+  name: Lanczos2
+  href: api/NetVips.Enums.Kernel.html#NetVips_Enums_Kernel_Lanczos2
+  commentId: F:NetVips.Enums.Kernel.Lanczos2
+  fullName: NetVips.Enums.Kernel.Lanczos2
+  nameWithType: Enums.Kernel.Lanczos2
+- uid: NetVips.Enums.Kernel.Lanczos3
+  name: Lanczos3
+  href: api/NetVips.Enums.Kernel.html#NetVips_Enums_Kernel_Lanczos3
+  commentId: F:NetVips.Enums.Kernel.Lanczos3
+  fullName: NetVips.Enums.Kernel.Lanczos3
+  nameWithType: Enums.Kernel.Lanczos3
+- uid: NetVips.Enums.Kernel.Linear
+  name: Linear
+  href: api/NetVips.Enums.Kernel.html#NetVips_Enums_Kernel_Linear
+  commentId: F:NetVips.Enums.Kernel.Linear
+  fullName: NetVips.Enums.Kernel.Linear
+  nameWithType: Enums.Kernel.Linear
+- uid: NetVips.Enums.Kernel.Nearest
+  name: Nearest
+  href: api/NetVips.Enums.Kernel.html#NetVips_Enums_Kernel_Nearest
+  commentId: F:NetVips.Enums.Kernel.Nearest
+  fullName: NetVips.Enums.Kernel.Nearest
+  nameWithType: Enums.Kernel.Nearest
 - uid: NetVips.Enums.PCS
   name: Enums.PCS
   href: api/NetVips.Enums.PCS.html

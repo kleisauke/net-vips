@@ -43,7 +43,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "ZBN1cbfbCj7a8eXxUgg21w=="
+          "hash": "b6cse7DD1TImUZPv5YV0sA=="
         }
       },
       "is_incremental": false,
@@ -79,7 +79,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Align.html",
-          "hash": "lBtzw57DmJC5hvOeugLJVA=="
+          "hash": "VvpUTrFFVNIitwil3jclZg=="
         }
       },
       "is_incremental": false,
@@ -139,7 +139,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Coding.html",
-          "hash": "3loGHyxJoYjzQT7s8rHPRw=="
+          "hash": "AvHkbfHD2JpILKjpxD7fWw=="
         }
       },
       "is_incremental": false,
@@ -151,7 +151,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Combine.html",
-          "hash": "S9n1BWAT74hAdXM4CmskKQ=="
+          "hash": "JptoX0N+YqQVngXJ/yK1sg=="
         }
       },
       "is_incremental": false,
@@ -163,7 +163,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Direction.html",
-          "hash": "wDZq7+efUKdMwRMqpWS28A=="
+          "hash": "CyHldhcacsOcYIbEa/o2og=="
         }
       },
       "is_incremental": false,
@@ -207,11 +207,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.Enums.Kernel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.Enums.Kernel.html",
+          "hash": "ZTBz6XhZ6sNt/B2hujVaRQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "obj/temp/api/NetVips.Enums.PCS.yml",
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.PCS.html",
-          "hash": "QyflqRdrKWqBpWzSV2A3GQ=="
+          "hash": "EJAfWTeFSuV++yxJaAku6w=="
         }
       },
       "is_incremental": false,
@@ -223,7 +235,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Precision.html",
-          "hash": "pYHeCkgX/Ig4zsAn7QmHLQ=="
+          "hash": "Az4iWGoN9E6yeiKrtMzjKA=="
         }
       },
       "is_incremental": false,
@@ -355,7 +367,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.html",
-          "hash": "K7RN2XeNDUlP2a4BOBIkDQ=="
+          "hash": "64HiH/JYiUxwRoLnIrgH8A=="
         }
       },
       "is_incremental": false,
@@ -367,7 +379,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "gurwe9bbyJ8NqVeg3VhZcg=="
+          "hash": "4y6N5/ajB6JFlTcV9U330w=="
         }
       },
       "is_incremental": false,
@@ -418,21 +430,21 @@
         "incrementalPhase": "build"
       },
       "processors": {
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build"
-        },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor ResourceDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
-        "ConceptualDocumentProcessor": {
+        "TocDocumentProcessor": {
           "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build"
+        },
+        "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build"
         }
