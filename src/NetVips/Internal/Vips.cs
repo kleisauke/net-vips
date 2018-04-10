@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 using NetVips.Interop;
@@ -87,38 +86,12 @@ namespace NetVips.Internal
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate IntPtr VipsTypeMap2Fn(ulong type, IntPtr a, IntPtr b);
 
-    internal unsafe class VipsObject
+    internal static class VipsObject
     {
         [StructLayout(LayoutKind.Explicit, Size = 80)]
         internal struct Fields
         {
             [FieldOffset(0)] internal GObject.Fields ParentInstance;
-        }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsObject() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsObject(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsObject(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsObject(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -167,23 +140,10 @@ namespace NetVips.Internal
             EntryPoint = "vips_object_get_description")]
         internal static extern IntPtr VipsObjectGetDescription(IntPtr @object);
 
-        internal static IntPtr VipsArgumentMap(VipsObject @object, VipsArgumentMapFn fn, IntPtr a, IntPtr b)
+        internal static IntPtr VipsArgumentMap(IntPtr pointer, VipsArgumentMapFn fn, IntPtr a, IntPtr b)
         {
             var funcPtr = fn == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(fn);
-            return VipsArgumentMap(@object.Pointer, funcPtr, a, b);
-        }
-
-        internal static int VipsObjectGetArgument(VipsObject @object, string name, GParamSpec pspec,
-            VipsArgumentClass argumentClass,
-            VipsArgumentInstance argumentInstance)
-        {
-            return VipsObjectGetArgument(@object.Pointer, name, pspec.Pointer, argumentClass.Pointer,
-                argumentInstance.Pointer);
-        }
-
-        internal static int VipsObjectSetFromString(VipsObject @object, string @string)
-        {
-            return VipsObjectSetFromString(@object.Pointer, @string);
+            return VipsArgumentMap(pointer, funcPtr, a, b);
         }
 
         internal static IntPtr VipsTypeMap(ulong @base, VipsTypeMap2Fn fn, IntPtr a, IntPtr b)
@@ -191,58 +151,18 @@ namespace NetVips.Internal
             var funcPtr = fn == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(fn);
             return VipsTypeMap(@base, funcPtr, a, b);
         }
-
-        internal static void VipsObjectUnrefOutputs(VipsObject @object)
-        {
-            VipsObjectUnrefOutputs(@object.Pointer);
-        }
-
-        internal static string VipsObjectGetDescription(VipsObject @object)
-        {
-            return Marshal.PtrToStringAnsi(VipsObjectGetDescription(@object.Pointer));
-        }
-
-        internal GObject ParentInstance => new GObject(new IntPtr(&((Fields*) Pointer)->ParentInstance));
     }
 
-    internal unsafe class VipsArgument
+    internal static class VipsArgument
     {
         [StructLayout(LayoutKind.Explicit, Size = 8)]
         internal struct Fields
         {
             [FieldOffset(0)] internal IntPtr Pspec;
         }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsArgument() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsArgument(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsArgument(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsArgument(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
-        }
-
-        internal GParamSpec Pspec => new GParamSpec(((Fields*) Pointer)->Pspec);
     }
 
-    internal unsafe class VipsArgumentClass
+    internal static class VipsArgumentClass
     {
         [StructLayout(LayoutKind.Explicit, Size = 32)]
         internal struct Fields
@@ -257,37 +177,9 @@ namespace NetVips.Internal
 
             [FieldOffset(24)] internal uint Offset;
         }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsArgumentClass() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsArgumentClass(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsArgumentClass(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsArgumentClass(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
-        }
-
-        internal Enums.VipsArgumentFlags Flags => ((Fields*) Pointer)->Flags;
     }
 
-    internal unsafe class VipsArgumentInstance
+    internal static class VipsArgumentInstance
     {
         [StructLayout(LayoutKind.Explicit, Size = 40)]
         internal struct Fields
@@ -295,32 +187,6 @@ namespace NetVips.Internal
             [FieldOffset(0)] internal VipsArgument.Fields Parent;
 
             // More
-        }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsArgumentInstance() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsArgumentInstance(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsArgumentInstance(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsArgumentInstance(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
         }
     }
 
@@ -374,85 +240,19 @@ namespace NetVips.Internal
             EntryPoint = "vips_value_set_array_int")]
         internal static extern void VipsValueSetArrayInt(IntPtr value, int[] array, int n);
 
-        internal static string VipsValueGetRefString(GValue value, ref ulong length)
-        {
-            return VipsValueGetRefString(value.Pointer, ref length).ToUtf8String();
-        }
-
-        internal static void VipsValueSetRefString(GValue value, string str)
-        {
-            VipsValueSetRefString(value.Pointer, str.ToUtf8Ptr());
-        }
-
-        internal static IntPtr VipsValueGetBlob(GValue value, ref ulong length)
-        {
-            return VipsValueGetBlob(value.Pointer, ref length);
-        }
-
-        internal static void VipsValueSetBlob(GValue value, VipsCallbackFn freeFn, IntPtr data, ulong length)
+        internal static void VipsValueSetBlob(IntPtr value, VipsCallbackFn freeFn, IntPtr data, ulong length)
         {
             var funcPtr = freeFn == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(freeFn);
-            VipsValueSetBlob(value.Pointer, funcPtr, data, length);
-        }
-
-        internal static void VipsValueSetBlobFree(GValue value, IntPtr data, ulong length)
-        {
-            VipsValueSetBlobFree(value.Pointer, data, length);
-        }
-
-        internal static IntPtr VipsValueGetArrayDouble(GValue value, ref int n)
-        {
-            return VipsValueGetArrayDouble(value.Pointer, ref n);
-        }
-
-        internal static void VipsValueSetArrayDouble(GValue value, double[] array, int n)
-        {
-            VipsValueSetArrayDouble(value.Pointer, array, n);
-        }
-
-        internal static IntPtr VipsValueGetArrayInt(GValue value, ref int n)
-        {
-            return VipsValueGetArrayInt(value.Pointer, ref n);
-        }
-
-        internal static void VipsValueSetArrayInt(GValue value, int[] array, int n)
-        {
-            VipsValueSetArrayInt(value.Pointer, array, n);
+            VipsValueSetBlob(value, funcPtr, data, length);
         }
     }
 
-    internal unsafe class VipsImage
+    internal static class VipsImage
     {
         [StructLayout(LayoutKind.Explicit, Size = 392)]
         internal struct Fields
         {
             [FieldOffset(0)] internal VipsObject.Fields ParentInstance;
-        }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsImage() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsImage(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsImage(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsImage(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -468,10 +268,12 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_new_from_memory")]
-        internal static extern IntPtr VipsImageNewFromMemory(IntPtr data, ulong size, int width, int height, int bands, Enums.VipsBandFormat format);
+        internal static extern IntPtr VipsImageNewFromMemory(IntPtr data, ulong size, int width, int height,
+            int bands, Enums.VipsBandFormat format);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_image_new_matrix_from_array")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_image_new_matrix_from_array")]
         internal static extern IntPtr VipsImageNewMatrixFromArray(int width, int height, double[] array, int size);
 
         [SuppressUnmanagedCodeSecurity]
@@ -529,86 +331,19 @@ namespace NetVips.Internal
             EntryPoint = "vips_image_get_fields")]
         internal static extern IntPtr VipsImageGetFields(IntPtr image);
 
-        internal static VipsImage VipsImageNewFromMemory(GCHandle data, ulong size, int width, int height, int bands, Enums.VipsBandFormat format)
+        internal static IntPtr VipsImageNewFromMemory(GCHandle data, ulong size, int width, int height, int bands,
+            Enums.VipsBandFormat format)
         {
-            return new VipsImage(VipsImageNewFromMemory(data.AddrOfPinnedObject(), size, width, height, bands, format));
+            return VipsImageNewFromMemory(data.AddrOfPinnedObject(), size, width, height, bands, format);
         }
 
-        internal static VipsImage VipsImageNewTempFile(string format)
+        internal static IntPtr VipsImageNewTempFile(string format)
         {
-            return new VipsImage(VipsImageNewTempFile(format.ToUtf8Ptr()));
+            return VipsImageNewTempFile(format.ToUtf8Ptr());
         }
-
-        internal static int VipsImageWrite(VipsImage image, VipsImage @out)
-        {
-            return VipsImageWrite(image.Pointer, @out.Pointer);
-        }
-
-        internal static IntPtr VipsImageWriteToMemory(VipsImage @in, ref ulong size)
-        {
-            return VipsImageWriteToMemory(@in.Pointer, ref size);
-        }
-
-        internal static VipsImage VipsImageCopyMemory(VipsImage image)
-        {
-            return new VipsImage(VipsImageCopyMemory(image.Pointer));
-        }
-
-        internal static IntPtr VipsValueGetArrayImage(GValue value, ref int n)
-        {
-            return VipsValueGetArrayImage(value.Pointer, ref n);
-        }
-
-        internal static void VipsValueSetArrayImage(GValue value, int n)
-        {
-            VipsValueSetArrayImage(value.Pointer, n);
-        }
-
-        internal static void VipsImageSet(VipsImage image, string name, GValue value)
-        {
-            VipsImageSet(image.Pointer, name, value.Pointer);
-        }
-
-        internal static int VipsImageGet(VipsImage image, string name, GValue valueCopy)
-        {
-            return VipsImageGet(image.Pointer, name, valueCopy.Pointer);
-        }
-
-        internal static ulong VipsImageGetTypeof(VipsImage image, string name)
-        {
-            return VipsImageGetTypeof(image.Pointer, name);
-        }
-
-        internal static int VipsImageRemove(VipsImage image, string name)
-        {
-            return VipsImageRemove(image.Pointer, name);
-        }
-
-        internal static string[] VipsImageGetFields(VipsImage image)
-        {
-            var ptrArr = VipsImageGetFields(image.Pointer);
-
-            var names = new List<string>();
-
-            var count = 0;
-            IntPtr strPtr;
-            while ((strPtr = Marshal.ReadIntPtr(ptrArr, count * IntPtr.Size)) != IntPtr.Zero)
-            {
-                var name = Marshal.PtrToStringAnsi(strPtr);
-                names.Add(name);
-                GLib.GFree(strPtr);
-                ++count;
-            }
-
-            GLib.GFree(ptrArr);
-
-            return names.ToArray();
-        }
-
-        internal VipsObject ParentInstance => new VipsObject(new IntPtr(&((Fields*) Pointer)->ParentInstance));
     }
 
-    internal unsafe class VipsInterpolate
+    internal static class VipsInterpolate
     {
         [StructLayout(LayoutKind.Explicit, Size = 80)]
         internal struct Fields
@@ -618,41 +353,13 @@ namespace NetVips.Internal
             // More
         }
 
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsInterpolate() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsInterpolate(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsInterpolate(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsInterpolate(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
-        }
-
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_interpolate_new")]
         internal static extern IntPtr VipsInterpolateNew([MarshalAs(UnmanagedType.LPStr)] string nickname);
-
-        internal VipsObject ParentObject => new VipsObject(new IntPtr(&((Fields*) Pointer)->ParentObject));
     }
 
-    internal unsafe class VipsOperation
+    internal static class VipsOperation
     {
         [StructLayout(LayoutKind.Explicit, Size = 96)]
         internal struct Fields
@@ -660,32 +367,6 @@ namespace NetVips.Internal
             [FieldOffset(0)] internal VipsObject.Fields ParentInstance;
 
             // More
-        }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal VipsOperation() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal VipsOperation(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal VipsOperation(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected VipsOperation(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -722,18 +403,6 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_cache_set_trace")]
         internal static extern void VipsCacheSetTrace(int trace);
-
-        internal static Enums.VipsOperationFlags VipsOperationGetFlags(VipsOperation operation)
-        {
-            return VipsOperationGetFlags(operation.Pointer);
-        }
-
-        internal static IntPtr VipsCacheOperationBuild(VipsOperation operation)
-        {
-            return VipsCacheOperationBuild(operation.Pointer);
-        }
-
-        internal VipsObject ParentInstance => new VipsObject(new IntPtr(&((Fields*) Pointer)->ParentInstance));
     }
 
     internal static class VipsForeign

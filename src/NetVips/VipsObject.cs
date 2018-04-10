@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using NetVips.Internal;
 
 namespace NetVips
@@ -10,12 +11,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal Internal.VipsObject IntlVipsObject;
-
-        internal VipsObject(Internal.VipsObject vipsObject) : base(vipsObject.ParentInstance)
+        internal VipsObject(IntPtr pointer) : base(pointer)
         {
-            IntlVipsObject = vipsObject;
-            // logger.Debug($"VipsObject = {vipsObject}");
+            // logger.Debug($"VipsObject = {pointer}");
         }
 
         /// <summary>
@@ -33,21 +31,16 @@ namespace NetVips
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        internal GParamSpec GetPspec(string name)
+        internal IntPtr GetPspec(string name)
         {
             // logger.Debug($"GetPspec: this = {this}, name = {name}");
-            var pspec = new GParamSpec();
-            var argumentClass = new VipsArgumentClass();
-            var argumentInstance = new VipsArgumentInstance();
-
+            var pspec = new GParamSpec.Fields().ToIntPtr<GParamSpec.Fields>();
+            var argumentClass = new VipsArgumentClass.Fields().ToIntPtr<VipsArgumentClass.Fields>();
+            var argumentInstance = new VipsArgumentInstance.Fields().ToIntPtr<VipsArgumentInstance.Fields>();
             var result =
-                Internal.VipsObject.VipsObjectGetArgument(IntlVipsObject, name, pspec, argumentClass, argumentInstance);
-            if (result != 0)
-            {
-                return null;
-            }
+                Internal.VipsObject.VipsObjectGetArgument(Pointer, name, pspec, argumentClass, argumentInstance);
 
-            return new GParamSpec(pspec.Pointer.Dereference<IntPtr>());
+            return result != 0 ? IntPtr.Zero : pspec.Dereference<IntPtr>();
         }
 
         /// <summary>
@@ -60,14 +53,14 @@ namespace NetVips
             // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
             var pspec = GetPspec(name);
 
-            if (pspec == null)
+            if (pspec == IntPtr.Zero)
             {
                 // need to clear any error, this is horrible
                 Vips.VipsErrorClear();
                 return 0;
             }
 
-            return pspec.ValueType;
+            return pspec.Dereference<GParamSpec.Fields>().ValueType;
         }
 
         /// <summary>
@@ -79,12 +72,7 @@ namespace NetVips
         {
             var pspec = GetPspec(name);
 
-            if (pspec == null)
-            {
-                return null;
-            }
-
-            return GParamSpec.GParamSpecGetBlurb(GetPspec(name));
+            return pspec == IntPtr.Zero ? null : Marshal.PtrToStringAnsi(GParamSpec.GParamSpecGetBlurb(pspec));
         }
 
         /// <summary>
@@ -99,15 +87,15 @@ namespace NetVips
         {
             // logger.Debug($"Get: name = {name}");
             var pspec = GetPspec(name);
-            if (pspec == null)
+            if (pspec == IntPtr.Zero)
             {
                 throw new VipsException("Property not found.");
             }
 
-            var gtype = pspec.ValueType;
+            var gtype = pspec.Dereference<GParamSpec.Fields>().ValueType;
             var gv = new GValue();
             gv.SetType(gtype);
-            Internal.GObject.GObjectGetProperty(IntlGObject, name, gv.IntlGValue);
+            Internal.GObject.GObjectGetProperty(Pointer, name, gv.Pointer);
             return gv.Get();
         }
 
@@ -124,7 +112,7 @@ namespace NetVips
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            Internal.GObject.GObjectSetProperty(IntlGObject, name, gv.IntlGValue);
+            Internal.GObject.GObjectSetProperty(Pointer, name, gv.Pointer);
         }
 
         /// <summary>
@@ -139,7 +127,7 @@ namespace NetVips
         /// <returns></returns>
         public bool SetString(string stringOptions)
         {
-            var result = Internal.VipsObject.VipsObjectSetFromString(IntlVipsObject, stringOptions);
+            var result = Internal.VipsObject.VipsObjectSetFromString(Pointer, stringOptions);
             return result == 0;
         }
 
@@ -149,7 +137,7 @@ namespace NetVips
         /// <returns></returns>
         public string GetDescription()
         {
-            return Internal.VipsObject.VipsObjectGetDescription(IntlVipsObject);
+            return Marshal.PtrToStringAnsi(Internal.VipsObject.VipsObjectGetDescription(Pointer));
         }
     }
 }

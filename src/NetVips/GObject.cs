@@ -3,13 +3,13 @@ using System;
 namespace NetVips
 {
     /// <summary>
-    /// Manage <see cref="NetVips.Internal.GObject"/> lifetime.
+    /// Manage <see cref="Internal.GObject"/> lifetime.
     /// </summary>
     public class GObject : IDisposable
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal Internal.GObject IntlGObject;
+        internal IntPtr Pointer;
 
         // Handy for debugging
         // public static int NObjects;
@@ -24,13 +24,13 @@ namespace NetVips
         /// Wraps a GObject instance around an underlying GValue. When the
         /// instance is garbage-collected, the underlying object is unreferenced.
         /// </remarks>
-        /// <param name="gObject"></param>
-        internal GObject(Internal.GObject gObject)
+        /// <param name="pointer"></param>
+        internal GObject(IntPtr pointer)
         {
-            // record the GValue we were given to manage
-            IntlGObject = gObject;
+            // record the pointer we were given to manage
+            Pointer = pointer;
             // NObjects++;
-            // logger.Debug($"GValue = {gObject}");
+            // logger.Debug($"GObject = {pointer}");
         }
 
         /// <summary>
@@ -48,10 +48,17 @@ namespace NetVips
         /// </summary>
         private void ReleaseUnmanagedResources()
         {
-            // logger.Debug($"GC: GObject = {IntlGObject}");
-            IntlGObject.Dispose();
+            // logger.Debug($"GC: GObject = {Pointer}");
+            if (Pointer != IntPtr.Zero)
+            {
+                // on GC, unref
+                Internal.GObject.GObjectUnref(Pointer);
+
+                Pointer = IntPtr.Zero;
+            }
+
             // NObjects--;
-            // logger.Debug($"GC: GObject = {IntlGObject}");
+            // logger.Debug($"GC: GObject = {Pointer}");
         }
 
         /// <summary>

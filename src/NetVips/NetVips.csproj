@@ -10,7 +10,6 @@
     <OutputType>Library</OutputType>
     <StartupObject />
     <Platforms>AnyCPU;x64</Platforms>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeInPackage</TargetsForTfmSpecificContentInPackage>
     <DefaultItemExcludes>$(DefaultItemExcludes);Interop\Libraries.*.cs</DefaultItemExcludes>

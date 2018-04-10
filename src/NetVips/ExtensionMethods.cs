@@ -136,10 +136,29 @@ namespace NetVips
         /// <typeparam name="T">The type of object to be created. This object
         /// must represent a formatted class or a structure.</typeparam>
         /// <param name="ptr">A pointer to an unmanaged block of memory.</param>
-        /// <returns></returns>
+        /// <returns>A newly allocated managed object of the specified type.</returns>
         public static T Dereference<T>(this IntPtr ptr)
         {
             return (T) Marshal.PtrToStructure(ptr, typeof(T));
+        }
+
+        /// <summary>
+        /// Creates a new pointer to an unmanaged block of memory 
+        /// from an structure of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of structure to be created.</typeparam>
+        /// <param name="structure">A managed object that holds the data to be marshaled. 
+        /// This object must be a structure or an instance of a formatted class.</param>
+        /// <returns>A pointer to an pre-allocated block of memory of the specified type.</returns>
+        public static IntPtr ToIntPtr<T>(this object structure) where T : struct
+        {
+            // Initialize unmanged memory to hold the struct.
+            var ptr = GLib.GMalloc((ulong) Marshal.SizeOf(typeof(T)));
+
+            // Copy the struct to unmanaged memory.
+            Marshal.StructureToPtr(structure, ptr, false);
+
+            return ptr;
         }
 
         /// <summary>

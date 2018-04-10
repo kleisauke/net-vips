@@ -8,22 +8,19 @@ using NetVips.Internal;
 namespace NetVips
 {
     /// <summary>
-    /// Wrap a <see cref="NetVips.Internal.VipsOperation"/> object.
+    /// Wrap a <see cref="VipsOperation"/> object.
     /// </summary>
     public class Operation : VipsObject
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly VipsOperation _intlOperation;
-
-        internal Operation(VipsOperation vOperation) : base(vOperation.ParentInstance)
+        internal Operation(IntPtr pointer) : base(pointer)
         {
-            _intlOperation = vOperation;
-            // logger.Debug($"VipsOperation = {vOperation}");
+            // logger.Debug($"VipsOperation = {pointer}");
         }
 
         /// <summary>
-        /// Recursive search for <see cref="Image" /> into an array and the underlying
+        /// Recursive search for <typeparamref name="T"/> into an array and the underlying
         /// subarrays. This is used to find the matchImage for an operation
         /// </summary>
         /// <param name="thing"></param>
@@ -51,7 +48,7 @@ namespace NetVips
                 throw new VipsException($"no such operation {operationName}");
             }
 
-            return new Operation(new VipsOperation(vop));
+            return new Operation(vop);
         }
 
         /// <summary>
@@ -100,7 +97,7 @@ namespace NetVips
 
         internal Internal.Enums.VipsOperationFlags GetFlags()
         {
-            return VipsOperation.VipsOperationGetFlags(_intlOperation);
+            return VipsOperation.VipsOperationGetFlags(Pointer);
         }
 
         // this is slow ... call as little as possible
@@ -110,10 +107,10 @@ namespace NetVips
 
             VipsArgumentMapFn addConstruct = (self, pspec, argumentClass, argumentInstance, a, b) =>
             {
-                var flags = new VipsArgumentClass(argumentClass).Flags;
+                var flags = argumentClass.Dereference<VipsArgumentClass.Fields>().Flags;
                 if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) != 0)
                 {
-                    var name = new GParamSpec(pspec).Name;
+                    var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Fields>().Name);
 
                     // libvips uses '-' to separate parts of arg names, but we
                     // need '_' for C#
@@ -128,7 +125,7 @@ namespace NetVips
             // prevent it from being re-located or disposed of by the garbage collector
             var gchCallbackDelegate = GCHandle.Alloc(addConstruct);
 
-            Internal.VipsObject.VipsArgumentMap(IntlVipsObject, addConstruct, IntPtr.Zero, IntPtr.Zero);
+            Internal.VipsObject.VipsArgumentMap(Pointer, addConstruct, IntPtr.Zero, IntPtr.Zero);
 
             if (gchCallbackDelegate.IsAllocated)
             {
@@ -191,7 +188,7 @@ namespace NetVips
         /// <returns></returns>
         public static object Call(string operationName, VOption kwargs, params object[] args)
         {
-            // logger.Debug($"VipsOperation.call: operation_name = {operationName}");
+            // logger.Debug($"VipsOperation.call: operationName = {operationName}");
             // logger.Debug($"VipsOperation.call: args = {args}, kwargs = {kwargs}");
 
             // pull out the special string_options kwarg
@@ -277,13 +274,13 @@ namespace NetVips
             }
 
             // build operation
-            var vop = VipsOperation.VipsCacheOperationBuild(op._intlOperation);
+            var vop = VipsOperation.VipsCacheOperationBuild(op.Pointer);
             if (vop == IntPtr.Zero)
             {
                 throw new VipsException($"unable to call {operationName}");
             }
 
-            op = new Operation(new VipsOperation(vop));
+            op = new Operation(vop);
 
             // fetch required output args, plus modified input images
             var result = new List<object>();
@@ -326,7 +323,7 @@ namespace NetVips
                 }
             }
 
-            Internal.VipsObject.VipsObjectUnrefOutputs(op.IntlVipsObject);
+            Internal.VipsObject.VipsObjectUnrefOutputs(op.Pointer);
 
             if (opts.Count > 0)
             {

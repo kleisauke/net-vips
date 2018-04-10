@@ -10,12 +10,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal VipsInterpolate IntlVipsInterpolate;
-
-        internal Interpolate(VipsInterpolate interpolate) : base(interpolate.ParentObject)
+        internal Interpolate(IntPtr pointer) : base(pointer)
         {
-            // logger.Debug($"VipsInterpolate = {interpolate}");
-            IntlVipsInterpolate = interpolate;
+            // logger.Debug($"VipsInterpolate = {pointer}");
         }
 
         /// <summary>
@@ -44,7 +41,7 @@ namespace NetVips
                 throw new VipsException($"no such interpolator {name}");
             }
 
-            return new Interpolate(new VipsInterpolate(vi));
+            return new Interpolate(vi);
         }
     }
 }

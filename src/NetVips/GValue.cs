@@ -11,10 +11,10 @@ namespace NetVips
     /// Wrap GValue in a C# class.
     /// </summary>
     /// <remarks>
-    /// This class wraps <see cref="NetVips.Internal.GValue"/> in a convenient interface. You can use
+    /// This class wraps <see cref="Internal.GValue"/> in a convenient interface. You can use
     /// instances of this class to get and set <see cref="GObject"/> properties.
     /// 
-    /// On construction, <see cref="NetVips.Internal.GValue"/> is all zero (empty). You can pass it to
+    /// On construction, <see cref="Internal.GValue"/> is all zero (empty). You can pass it to
     /// a get function to have it filled by <see cref="GObject"/>, or use init to
     /// set a type, set to set a value, then use it to set an object property.
     /// 
@@ -24,7 +24,7 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal readonly Internal.GValue IntlGValue;
+        internal IntPtr Pointer;
 
         // Track whether Dispose has been called.
         private bool _disposed;
@@ -193,8 +193,8 @@ namespace NetVips
         public GValue()
         {
             // allocate memory for the gvalue which will be freed on GC
-            IntlGValue = new Internal.GValue();
-            // logger.Debug($"GValue = {IntlGValue}");
+            Pointer = new Internal.GValue.Fields().ToIntPtr<Internal.GValue.Fields>();
+            // logger.Debug($"GValue = {Pointer}");
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace NetVips
         /// <returns></returns>
         public void SetType(ulong gtype)
         {
-            Internal.GValue.GValueInit(IntlGValue, gtype);
+            Internal.GValue.GValueInit(Pointer, gtype);
         }
 
         /// <summary>
@@ -226,45 +226,45 @@ namespace NetVips
         public void Set(object value)
         {
             // logger.Debug($"Set: value = {value}");
-            var gtype = IntlGValue.GType;
+            var gtype = Pointer.Dereference<Internal.GValue.Fields>().GType;
             var fundamental = GType.GTypeFundamental(gtype);
             if (gtype == GBoolType)
             {
-                Internal.GValue.GValueSetBoolean(IntlGValue, Convert.ToBoolean(value) ? 1 : 0);
+                Internal.GValue.GValueSetBoolean(Pointer, Convert.ToBoolean(value) ? 1 : 0);
             }
             else if (gtype == GIntType)
             {
-                Internal.GValue.GValueSetInt(IntlGValue, Convert.ToInt32(value));
+                Internal.GValue.GValueSetInt(Pointer, Convert.ToInt32(value));
             }
             else if (gtype == GDoubleType)
             {
-                Internal.GValue.GValueSetDouble(IntlGValue, Convert.ToDouble(value));
+                Internal.GValue.GValueSetDouble(Pointer, Convert.ToDouble(value));
             }
             else if (fundamental == GEnumType)
             {
-                Internal.GValue.GValueSetEnum(IntlGValue, ToEnum(gtype, value));
+                Internal.GValue.GValueSetEnum(Pointer, ToEnum(gtype, value));
             }
             else if (fundamental == GFlagsType)
             {
-                Internal.GValue.GValueSetFlags(IntlGValue, Convert.ToUInt32(value));
+                Internal.GValue.GValueSetFlags(Pointer, Convert.ToUInt32(value));
             }
             else if (gtype == GStrType)
             {
-                Internal.GValue.GValueSetString(IntlGValue, Convert.ToString(value));
+                Internal.GValue.GValueSetString(Pointer, Convert.ToString(value).ToUtf8Ptr());
             }
             else if (gtype == RefStrType)
             {
-                VipsType.VipsValueSetRefString(IntlGValue, Convert.ToString(value));
+                VipsType.VipsValueSetRefString(Pointer, Convert.ToString(value).ToUtf8Ptr());
             }
             else if (fundamental == GObjectType)
             {
                 switch (value)
                 {
                     case Image image:
-                        Internal.GObject.GValueSetObject(IntlGValue, image.IntlGObject);
+                        Internal.GObject.GValueSetObject(Pointer, image.Pointer);
                         break;
                     case Interpolate interpolate:
-                        Internal.GObject.GValueSetObject(IntlGValue, interpolate.IntlGObject);
+                        Internal.GObject.GValueSetObject(Pointer, interpolate.Pointer);
                         break;
                     default:
                         throw new Exception(
@@ -282,14 +282,14 @@ namespace NetVips
                 switch (value)
                 {
                     case int[] ints:
-                        VipsType.VipsValueSetArrayInt(IntlGValue, ints, ints.Length);
+                        VipsType.VipsValueSetArrayInt(Pointer, ints, ints.Length);
                         break;
                     case double[] doubles:
-                        VipsType.VipsValueSetArrayInt(IntlGValue, Array.ConvertAll(doubles, Convert.ToInt32),
+                        VipsType.VipsValueSetArrayInt(Pointer, Array.ConvertAll(doubles, Convert.ToInt32),
                             doubles.Length);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayInt(IntlGValue, Array.ConvertAll(objects, Convert.ToInt32),
+                        VipsType.VipsValueSetArrayInt(Pointer, Array.ConvertAll(objects, Convert.ToInt32),
                             objects.Length);
                         break;
                     default:
@@ -308,14 +308,14 @@ namespace NetVips
                 switch (value)
                 {
                     case double[] doubles:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue, doubles, doubles.Length);
+                        VipsType.VipsValueSetArrayDouble(Pointer, doubles, doubles.Length);
                         break;
                     case int[] ints:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue, Array.ConvertAll(ints, Convert.ToDouble),
+                        VipsType.VipsValueSetArrayDouble(Pointer, Array.ConvertAll(ints, Convert.ToDouble),
                             ints.Length);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayDouble(IntlGValue, Array.ConvertAll(objects, Convert.ToDouble),
+                        VipsType.VipsValueSetArrayDouble(Pointer, Array.ConvertAll(objects, Convert.ToDouble),
                             objects.Length);
                         break;
                     default:
@@ -334,15 +334,15 @@ namespace NetVips
                 }
 
                 var size = images.Length;
-                VipsImage.VipsValueSetArrayImage(IntlGValue, size);
+                VipsImage.VipsValueSetArrayImage(Pointer, size);
 
                 var psize = 0;
 
-                var ptrArr = VipsImage.VipsValueGetArrayImage(IntlGValue, ref psize);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(Pointer, ref psize);
 
                 for (var i = 0; i < size; i++)
                 {
-                    var pointer = images[i].IntlGObject.Pointer;
+                    var pointer = images[i].Pointer;
                     Internal.GObject.GObjectRef(pointer);
                     Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, pointer);
                 }
@@ -376,7 +376,7 @@ namespace NetVips
 
                 if (Base.AtLeastLibvips(8, 6))
                 {
-                    VipsType.VipsValueSetBlobFree(IntlGValue, memory, (ulong) length);
+                    VipsType.VipsValueSetBlobFree(Pointer, memory, (ulong) length);
                 }
                 else
                 {
@@ -387,7 +387,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsType.VipsValueSetBlob(IntlGValue, FreeFn, memory, (ulong) length);
+                    VipsType.VipsValueSetBlob(Pointer, FreeFn, memory, (ulong) length);
                 }
             }
             else
@@ -408,59 +408,58 @@ namespace NetVips
         public object Get()
         {
             // logger.Debug($"Get: this = {this}");
-            var gtype = IntlGValue.GType;
+            var gtype = Pointer.Dereference<Internal.GValue.Fields>().GType;
             var fundamental = GType.GTypeFundamental(gtype);
 
             object result;
             if (gtype == GBoolType)
             {
-                result = Internal.GValue.GValueGetBoolean(IntlGValue) != 0;
+                result = Internal.GValue.GValueGetBoolean(Pointer) != 0;
             }
             else if (gtype == GIntType)
             {
-                result = Internal.GValue.GValueGetInt(IntlGValue);
+                result = Internal.GValue.GValueGetInt(Pointer);
             }
             else if (gtype == GDoubleType)
             {
-                result = Internal.GValue.GValueGetDouble(IntlGValue);
+                result = Internal.GValue.GValueGetDouble(Pointer);
             }
             else if (fundamental == GEnumType)
             {
-                result = FromEnum(gtype, Internal.GValue.GValueGetEnum(IntlGValue));
+                result = FromEnum(gtype, Internal.GValue.GValueGetEnum(Pointer));
             }
             else if (fundamental == GFlagsType)
             {
-                result = Internal.GValue.GValueGetFlags(IntlGValue);
+                result = Internal.GValue.GValueGetFlags(Pointer);
             }
             else if (gtype == GStrType)
             {
-                result = Internal.GValue.GValueGetString(IntlGValue);
+                result = Internal.GValue.GValueGetString(Pointer).ToUtf8String();
             }
             else if (gtype == RefStrType)
             {
                 // don't bother getting the size -- assume these are always
                 // null-terminated C strings
                 ulong psize = 0;
-                result = VipsType.VipsValueGetRefString(IntlGValue, ref psize);
+                result = VipsType.VipsValueGetRefString(Pointer, ref psize).ToUtf8String();
             }
             else if (gtype == ImageType)
             {
                 // GValueGetObject() will not add a ref ... that is
                 // held by the gvalue
-                var go = Internal.GObject.GValueGetObject(IntlGValue);
-                var vi = new VipsImage(go);
+                var vo = Internal.GObject.GValueGetObject(Pointer);
 
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
                 // by GObject
-                Internal.GObject.GObjectRef(go);
+                Internal.GObject.GObjectRef(vo);
 
-                result = new Image(vi);
+                result = new Image(vo);
             }
             else if (gtype == ArrayIntType)
             {
                 var psize = 0;
-                var intPtr = VipsType.VipsValueGetArrayInt(IntlGValue, ref psize);
+                var intPtr = VipsType.VipsValueGetArrayInt(Pointer, ref psize);
 
                 var intArr = new int[psize];
                 Marshal.Copy(intPtr, intArr, 0, psize);
@@ -469,7 +468,7 @@ namespace NetVips
             else if (gtype == ArrayDoubleType)
             {
                 var psize = 0;
-                var intPtr = VipsType.VipsValueGetArrayDouble(IntlGValue, ref psize);
+                var intPtr = VipsType.VipsValueGetArrayDouble(Pointer, ref psize);
 
                 var doubleArr = new double[psize];
                 Marshal.Copy(intPtr, doubleArr, 0, psize);
@@ -478,14 +477,14 @@ namespace NetVips
             else if (gtype == ArrayImageType)
             {
                 var psize = 0;
-                var ptr = VipsImage.VipsValueGetArrayImage(IntlGValue, ref psize);
+                var ptr = VipsImage.VipsValueGetArrayImage(Pointer, ref psize);
 
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
                 {
                     var vi = Marshal.ReadIntPtr(ptr, i * IntPtr.Size);
                     Internal.GObject.GObjectRef(vi);
-                    images[i] = new Image(new VipsImage(vi));
+                    images[i] = new Image(vi);
                 }
 
                 result = images;
@@ -493,7 +492,7 @@ namespace NetVips
             else if (gtype == BlobType)
             {
                 ulong psize = 0;
-                var array = VipsType.VipsValueGetBlob(IntlGValue, ref psize);
+                var array = VipsType.VipsValueGetBlob(Pointer, ref psize);
 
                 // Blob types are returned as an array of bytes.
                 var byteArr = new byte[psize];
@@ -523,9 +522,16 @@ namespace NetVips
         /// </summary>
         private void ReleaseUnmanagedResources()
         {
-            // logger.Debug($"GC: GValue = {IntlGValue}");
-            IntlGValue.Dispose();
-            // logger.Debug($"GC: GValue = {IntlGValue}");
+            // logger.Debug($"GC: GValue = {Pointer}");
+            if (Pointer != IntPtr.Zero)
+            {
+                // and tag it to be unset on GC as well
+                Internal.GValue.GValueUnset(Pointer);
+
+                Pointer = IntPtr.Zero;
+            }
+
+            // logger.Debug($"GC: GValue = {Pointer}");
         }
 
         /// <summary>

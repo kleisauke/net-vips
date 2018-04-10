@@ -11,7 +11,7 @@ namespace NetVips.Internal
         [FieldOffset(0)] internal IntPtr GClass;
     }
 
-    internal unsafe class GObject : IDisposable
+    internal static class GObject
     {
         [StructLayout(LayoutKind.Explicit, Size = 24)]
         internal struct Fields
@@ -21,32 +21,6 @@ namespace NetVips.Internal
             [FieldOffset(8)] internal uint RefCount;
 
             [FieldOffset(16)] internal IntPtr Qdata;
-        }
-
-        internal IntPtr Pointer { get; private set; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal GObject() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal GObject(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal GObject(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected GObject(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -79,49 +53,6 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_get_object")]
         internal static extern IntPtr GValueGetObject(IntPtr value);
-
-        internal static void GObjectSetProperty(GObject @object, string propertyName, GValue value)
-        {
-            GObjectSetProperty(@object.Pointer, propertyName, value.Pointer);
-        }
-
-        internal static void GObjectGetProperty(GObject @object, string propertyName, GValue value)
-        {
-            GObjectGetProperty(@object.Pointer, propertyName, value.Pointer);
-        }
-
-        internal static void GValueSetObject(GValue value, GObject vObject)
-        {
-            GValueSetObject(value.Pointer, vObject.Pointer);
-        }
-
-        internal static IntPtr GValueGetObject(GValue value)
-        {
-            return GValueGetObject(value.Pointer);
-        }
-
-        ~GObject()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        internal void Dispose(bool disposing)
-        {
-            if (Pointer == IntPtr.Zero)
-            {
-                return;
-            }
-
-            // on GC, unref
-            GObjectUnref(Pointer);
-            Pointer = IntPtr.Zero;
-        }
     }
 
     internal static class GType
@@ -141,40 +72,37 @@ namespace NetVips.Internal
         internal static extern ulong GTypeFundamental(ulong typeId);
     }
 
-    internal unsafe class GValue : IDisposable
+    internal static class GValue
     {
         [StructLayout(LayoutKind.Explicit, Size = 24)]
         internal struct Fields
         {
             [FieldOffset(0)] internal ulong GType;
 
-            [FieldOffset(8)] internal fixed byte Data[16];
+            [FieldOffset(8)] [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            internal Padding[] data;
         }
 
-        internal IntPtr Pointer { get; private set; }
-
-        private static void* CopyValue(Fields native)
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct Padding
         {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
+            [FieldOffset(0)] int vInt;
 
-        internal GValue() : this(CopyValue(new Fields()))
-        {
-        }
+            [FieldOffset(0)] uint vUInt;
 
-        internal GValue(Fields native) : this(CopyValue(native))
-        {
-        }
+            [FieldOffset(0)] int vLong;
 
-        internal GValue(IntPtr native) : this(native.ToPointer())
-        {
-        }
+            [FieldOffset(0)] uint vULong;
 
-        protected GValue(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
+            [FieldOffset(0)] long vInt64;
+
+            [FieldOffset(0)] ulong vUInt64;
+
+            [FieldOffset(0)] float vFloat;
+
+            [FieldOffset(0)] double vDouble;
+
+            [FieldOffset(0)] IntPtr vPointer;
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -245,104 +173,9 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_get_flags")]
         internal static extern uint GValueGetFlags(IntPtr value);
-
-        internal static void GValueInit(GValue value, ulong gType)
-        {
-            GValueInit(value.Pointer, gType);
-        }
-
-        internal static void GValueUnset(GValue value)
-        {
-            GValueUnset(value.Pointer);
-        }
-
-        internal static void GValueSetBoolean(GValue value, int vBoolean)
-        {
-            GValueSetBoolean(value.Pointer, vBoolean);
-        }
-
-        internal static int GValueGetBoolean(GValue value)
-        {
-            return GValueGetBoolean(value.Pointer);
-        }
-
-        internal static void GValueSetInt(GValue value, int vInt)
-        {
-            GValueSetInt(value.Pointer, vInt);
-        }
-
-        internal static int GValueGetInt(GValue value)
-        {
-            return GValueGetInt(value.Pointer);
-        }
-
-        internal static void GValueSetDouble(GValue value, double vDouble)
-        {
-            GValueSetDouble(value.Pointer, vDouble);
-        }
-
-        internal static double GValueGetDouble(GValue value)
-        {
-            return GValueGetDouble(value.Pointer);
-        }
-
-        internal static void GValueSetString(GValue value, string vString)
-        {
-            GValueSetString(value.Pointer, vString.ToUtf8Ptr());
-        }
-
-        internal static string GValueGetString(GValue value)
-        {
-            return GValueGetString(value.Pointer).ToUtf8String();
-        }
-
-        internal static void GValueSetEnum(GValue value, int vEnum)
-        {
-            GValueSetEnum(value.Pointer, vEnum);
-        }
-
-        internal static int GValueGetEnum(GValue value)
-        {
-            return GValueGetEnum(value.Pointer);
-        }
-
-        internal static void GValueSetFlags(GValue value, uint vFlags)
-        {
-            GValueSetFlags(value.Pointer, vFlags);
-        }
-
-        internal static uint GValueGetFlags(GValue value)
-        {
-            return GValueGetFlags(value.Pointer);
-        }
-
-        ~GValue()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        internal void Dispose(bool disposing)
-        {
-            if (Pointer == IntPtr.Zero)
-            {
-                return;
-            }
-
-            // and tag it to be unset on GC as well
-            GValueUnset(Pointer);
-            Pointer = IntPtr.Zero;
-        }
-
-        internal ulong GType => ((Fields*) Pointer)->GType;
     }
 
-    internal unsafe class GParamSpec
+    internal static class GParamSpec
     {
         [StructLayout(LayoutKind.Explicit, Size = 72)]
         internal struct Fields
@@ -358,48 +191,9 @@ namespace NetVips.Internal
             [FieldOffset(32)] internal ulong OwnerType;
         }
 
-        private struct Internal
-        {
-        }
-
-        internal IntPtr Pointer { get; }
-
-        private static void* CopyValue(Fields native)
-        {
-            var ret = GLib.GMalloc((ulong) sizeof(Fields));
-            *(Fields*) ret = native;
-            return ret.ToPointer();
-        }
-
-        internal GParamSpec() : this(CopyValue(new Fields()))
-        {
-        }
-
-        internal GParamSpec(Fields native) : this(CopyValue(native))
-        {
-        }
-
-        internal GParamSpec(IntPtr native) : this(native.ToPointer())
-        {
-        }
-
-        protected GParamSpec(void* ptr)
-        {
-            Pointer = new IntPtr(ptr);
-        }
-
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_param_spec_get_blurb")]
         internal static extern IntPtr GParamSpecGetBlurb(IntPtr pspec);
-
-        internal static string GParamSpecGetBlurb(GParamSpec pspec)
-        {
-            return Marshal.PtrToStringAnsi(GParamSpecGetBlurb(pspec.Pointer));
-        }
-
-        internal string Name => Marshal.PtrToStringAnsi(((Fields*) Pointer)->Name);
-
-        internal ulong ValueType => ((Fields*) Pointer)->ValueType;
     }
 }

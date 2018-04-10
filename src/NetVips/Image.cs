@@ -10,23 +10,20 @@ using SMath = System.Math;
 namespace NetVips
 {
     /// <summary>
-    /// Wrap a <see cref="Internal.VipsImage"/> object.
+    /// Wrap a <see cref="VipsImage"/> object.
     /// </summary>
     public sealed partial class Image : VipsObject
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
-
-        internal VipsImage IntlImage;
 
         /// <summary>
         /// Secret ref for <see cref="NewFromMemory" />
         /// </summary>
         private GCHandle _data;
 
-        internal Image(VipsImage vImage) : base(vImage.ParentInstance)
+        internal Image(IntPtr pointer) : base(pointer)
         {
-            // logger.Debug($"VipsImage = {vImage}");
-            IntlImage = vImage;
+            // logger.Debug($"VipsImage = {pointer}");
         }
 
         #region helpers
@@ -333,12 +330,12 @@ namespace NetVips
 
             var vi = VipsImage.VipsImageNewMatrixFromArray(width, height, a, n);
 
-            if (vi == null)
+            if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to make image from matrix");
             }
 
-            var image = new Image(new VipsImage(vi));
+            var image = new Image(vi);
             image.SetType(GValue.GDoubleType, "scale", scale);
             image.SetType(GValue.GDoubleType, "offset", offset);
             return image;
@@ -385,7 +382,7 @@ namespace NetVips
             var vi = VipsImage.VipsImageNewFromMemory(handle, (ulong) data.Length, width, height, bands,
                 (Internal.Enums.VipsBandFormat) formatValue);
 
-            if (vi == null)
+            if (vi == IntPtr.Zero)
             {
                 if (handle.IsAllocated)
                 {
@@ -429,7 +426,7 @@ namespace NetVips
         public static Image NewTempFile(string format)
         {
             var vi = VipsImage.VipsImageNewTempFile(format);
-            if (vi == null)
+            if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to make temp file");
             }
@@ -469,8 +466,8 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to copy to memory.</exception>
         public Image CopyMemory()
         {
-            var vi = VipsImage.VipsImageCopyMemory(IntlImage);
-            if (vi == null)
+            var vi = VipsImage.VipsImageCopyMemory(Pointer);
+            if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to copy to memory");
             }
@@ -620,7 +617,7 @@ namespace NetVips
         public byte[] WriteToMemory()
         {
             ulong psize = 0;
-            var pointer = VipsImage.VipsImageWriteToMemory(IntlImage, ref psize);
+            var pointer = VipsImage.VipsImageWriteToMemory(Pointer, ref psize);
 
             var managedArray = new byte[psize];
             Marshal.Copy(pointer, managedArray, 0, (int) psize);
@@ -642,7 +639,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to image.</exception>
         public void Write(Image other)
         {
-            var result = VipsImage.VipsImageWrite(IntlImage, other.IntlImage);
+            var result = VipsImage.VipsImageWrite(Pointer, other.Pointer);
             if (result != 0)
             {
                 throw new VipsException("unable to write to image");
@@ -675,7 +672,7 @@ namespace NetVips
                 }
             }
 
-            return VipsImage.VipsImageGetTypeof(IntlImage, name);
+            return VipsImage.VipsImageGetTypeof(Pointer, name);
         }
 
         /// <summary>
@@ -714,7 +711,7 @@ namespace NetVips
             }
 
             var gv = new GValue();
-            var result = VipsImage.VipsImageGet(IntlImage, name, gv.IntlGValue);
+            var result = VipsImage.VipsImageGet(Pointer, name, gv.Pointer);
             if (result != 0)
             {
                 throw new VipsException($"unable to get {name}");
@@ -737,7 +734,23 @@ namespace NetVips
                 return null;
             }
 
-            return VipsImage.VipsImageGetFields(IntlImage);
+            var ptrArr = VipsImage.VipsImageGetFields(Pointer);
+
+            var names = new List<string>();
+
+            var count = 0;
+            IntPtr strPtr;
+            while ((strPtr = Marshal.ReadIntPtr(ptrArr, count * IntPtr.Size)) != IntPtr.Zero)
+            {
+                var name = Marshal.PtrToStringAnsi(strPtr);
+                names.Add(name);
+                GLib.GFree(strPtr);
+                ++count;
+            }
+
+            GLib.GFree(ptrArr);
+
+            return names.ToArray();
         }
 
         /// <summary>
@@ -757,7 +770,7 @@ namespace NetVips
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            VipsImage.VipsImageSet(IntlImage, name, gv.IntlGValue);
+            VipsImage.VipsImageSet(Pointer, name, gv.Pointer);
         }
 
         /// <summary>
@@ -793,7 +806,7 @@ namespace NetVips
         /// <returns></returns>
         public bool Remove(string name)
         {
-            return VipsImage.VipsImageRemove(IntlImage, name) != 0;
+            return VipsImage.VipsImageRemove(Pointer, name) != 0;
         }
 
         /// <summary>
@@ -1603,9 +1616,7 @@ namespace NetVips
 
                 if (this.Call("bandjoin", head, components) is Image bandImage)
                 {
-                    IntlImage = bandImage.IntlImage;
-                    IntlVipsObject = bandImage.IntlVipsObject;
-                    IntlGObject = bandImage.IntlGObject;
+                    Pointer = bandImage.Pointer;
                 }
             }
         }
