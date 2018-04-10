@@ -34,6 +34,35 @@ some more background.
 
 http://libvips.blogspot.co.uk/2012/06/how-libvips-opens-file.html
 
+## Install
+
+You need the libvips shared library on your library search path, version 8.2 or
+later. On Linux and macOS, you can install via your package manager; on 
+Windows you can download a pre-compiled binary from the libvips website:
+
+https://jcupitt.github.io/libvips/
+
+Then just install this package, perhaps:
+
+    Install-Package NetVips
+
+To test your install, try this test program:
+
+```csharp
+Console.WriteLine(ModuleInitializer.VipsInitialized
+? $"Inited libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}"
+: "Unable to init libvips");
+Console.ReadLine();
+```
+
+If NetVips was able to find the libvips shared library, you should see:
+
+    Inited libvips [VERSION_NUMBER]
+
+If NetVips was not able to find libvips you might see:
+
+    Unable to init libvips
+
 ## Example
 
 ```csharp

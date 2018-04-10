@@ -214,7 +214,7 @@ course you can also write:
 ```
 var resultImage = image1.Bandjoin(image2);
 resultImage = image1.Bandjoin(new[] {image2, image3});
-resultImage = image1.bandjoin(new[] {image2, 255});
+resultImage = image1.Bandjoin(new[] {image2, 255});
 ```
 
 and so on.

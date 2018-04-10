@@ -1,6 +1,6 @@
 # NetVips benchmarks
 
-The goal of this project is to demonstrate the performance of the netvips
+The goal of this project is to demonstrate the performance of the NetVips
 library compared to other image processing libraries on .NET.
 
 Be sure to check out the official benchmarks page: [VIPS - Speed and Memory
