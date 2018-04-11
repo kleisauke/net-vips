@@ -88,12 +88,7 @@ namespace NetVips.Tests
             Assert.Equal(1, im2.Bands);
             Assert.Equal(12, im2.Avg());
 
-            im2 = im.NewFromImage(new[]
-            {
-                1,
-                2,
-                3
-            });
+            im2 = im.NewFromImage(new[] {1, 2, 3});
             Assert.Equal(3, im2.Bands);
             Assert.Equal(2, im2.Avg());
         }

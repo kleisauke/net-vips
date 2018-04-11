@@ -115,38 +115,24 @@ namespace NetVips.Tests
         {
             var image = Image.NewFromFile(Helper.JpegFile);
             var values = image.Bandsplit();
-            var r = values[0];
-            var g = values[1];
-            var b = values[2];
 
             var gv = new GValue();
             gv.SetType(GValue.ArrayImageType);
-            gv.Set(new[] {r, g, b});
+            gv.Set(values);
             var value = gv.Get();
 
-            Assert.Equal(new[] {r, g, b}, value as IEnumerable);
+            Assert.Equal(values, value as IEnumerable);
         }
 
         [Fact]
         public void TestBlob()
         {
             var blob = File.ReadAllBytes(Helper.JpegFile);
-            var handle = GCHandle.Alloc(blob, GCHandleType.Pinned);
-            try
-            {
-                var gv = new GValue();
-                gv.SetType(GValue.BlobType);
-                gv.Set(blob);
-                var value = gv.Get();
-                Assert.Equal(blob, value);
-            }
-            finally
-            {
-                if (handle.IsAllocated)
-                {
-                    handle.Free();
-                }
-            }
+            var gv = new GValue();
+            gv.SetType(GValue.BlobType);
+            gv.Set(blob);
+            var value = gv.Get();
+            Assert.Equal(blob, value);
         }
     }
 }

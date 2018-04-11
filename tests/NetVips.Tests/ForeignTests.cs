@@ -70,7 +70,6 @@ namespace NetVips.Tests
 
             Assert.Equal(x.Width, im.Width);
             Assert.Equal(x.Height, im.Height);
-            ;
             Assert.Equal(x.Bands, im.Bands);
             var maxDiff = (im - x).Abs().Max();
             Assert.Equal(0, maxDiff);
@@ -89,7 +88,6 @@ namespace NetVips.Tests
             Assert.Equal(x.Height, im.Height);
             Assert.Equal(x.Bands, im.Bands);
             Assert.True((im - x).Abs().Max() <= thresh);
-            x.Dispose();
         }
 
         internal void SaveLoadBuffer(string saver, string loader, Image im, int maxDiff = 0, VOption kwargs = null)
@@ -134,7 +132,6 @@ namespace NetVips.Tests
 
             Assert.Equal(beforeExif.Length, afterExif.Length);
             Assert.Equal(beforeExif, afterExif);
-            x.Dispose();
         }
 
         [SkippableFact]
@@ -487,7 +484,7 @@ namespace NetVips.Tests
             {
                 // verify that the profile comes back unharmed
                 var p1 = _colour.Get("icc-profile-data");
-                var p2 = _colour.Get("icc-profile-data");
+                var p2 = x.Get("icc-profile-data");
                 Assert.Equal(p1, p2);
 
                 // add tests for exif, xmp, ipct

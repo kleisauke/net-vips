@@ -342,9 +342,10 @@ namespace NetVips
 
                 for (var i = 0; i < size; i++)
                 {
-                    var pointer = images[i].Pointer;
-                    Internal.GObject.GObjectRef(pointer);
-                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, pointer);
+                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, images[i].Pointer);
+
+                    // the gvalue needs a ref on each of the images
+                    Internal.GObject.GObjectRef(images[i].Pointer);
                 }
             }
             else if (gtype == BlobType)
@@ -477,12 +478,12 @@ namespace NetVips
             else if (gtype == ArrayImageType)
             {
                 var psize = 0;
-                var ptr = VipsImage.VipsValueGetArrayImage(Pointer, ref psize);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(Pointer, ref psize);
 
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
                 {
-                    var vi = Marshal.ReadIntPtr(ptr, i * IntPtr.Size);
+                    var vi = Marshal.ReadIntPtr(ptrArr, i * IntPtr.Size);
                     Internal.GObject.GObjectRef(vi);
                     images[i] = new Image(vi);
                 }
