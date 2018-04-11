@@ -14,9 +14,6 @@ namespace NetVips
         // Handy for debugging
         // public static int NObjects;
 
-        // Track whether Dispose has been called.
-        private bool _disposed;
-
         /// <summary>
         /// Wrap around a pointer.
         /// </summary>
@@ -68,15 +65,8 @@ namespace NetVips
         /// <see langword="false" /> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            // Check to see if Dispose has already been called.
-            if (!_disposed)
-            {
-                // Dispose unmanaged resources.
-                ReleaseUnmanagedResources();
-
-                // Note disposing has been done.
-                _disposed = true;
-            }
+            // Dispose unmanaged resources.
+            ReleaseUnmanagedResources();
         }
 
         /// <summary>

@@ -26,9 +26,6 @@ namespace NetVips
 
         internal IntPtr Pointer;
 
-        // Track whether Dispose has been called.
-        private bool _disposed;
-
         // look up some common gtypes at init for speed
 
         /// <summary>
@@ -542,15 +539,8 @@ namespace NetVips
         /// <see langword="false" /> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
-            // Check to see if Dispose has already been called.
-            if (!_disposed)
-            {
-                // Dispose unmanaged resources.
-                ReleaseUnmanagedResources();
-
-                // Note disposing has been done.
-                _disposed = true;
-            }
+            // Dispose unmanaged resources.
+            ReleaseUnmanagedResources();
         }
 
         /// <summary>
