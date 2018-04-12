@@ -303,6 +303,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_value_get_array_image")]
+        internal static extern IntPtr VipsValueGetArrayImage(IntPtr value, IntPtr n);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_array_image")]
         internal static extern void VipsValueSetArrayImage(IntPtr value, int n);
 

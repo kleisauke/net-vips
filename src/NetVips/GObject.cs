@@ -41,21 +41,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// Increases the reference count of object.
         /// </summary>
-        private void ReleaseUnmanagedResources()
+        internal void ObjectRef()
         {
-            // logger.Debug($"GC: GObject = {Pointer}");
-            if (Pointer != IntPtr.Zero)
-            {
-                // on GC, unref
-                Internal.GObject.GObjectUnref(Pointer);
+            Internal.GObject.GObjectRef(Pointer);
+        }
 
-                Pointer = IntPtr.Zero;
-            }
-
-            // NObjects--;
-            // logger.Debug($"GC: GObject = {Pointer}");
+        /// <summary>
+        /// Decreases the reference count of object. 
+        /// When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
+        /// </summary>
+        internal void ObjectUnref()
+        {
+            Internal.GObject.GObjectUnref(Pointer);
         }
 
         /// <summary>
@@ -65,8 +64,17 @@ namespace NetVips
         /// <see langword="false" /> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            // Dispose unmanaged resources.
-            ReleaseUnmanagedResources();
+            // logger.Debug($"GC: GObject = {Pointer}");
+            if (Pointer != IntPtr.Zero)
+            {
+                // on GC, unref
+                ObjectUnref();
+
+                Pointer = IntPtr.Zero;
+            }
+
+            // NObjects--;
+            // logger.Debug($"GC: GObject = {Pointer}");
         }
 
         /// <summary>

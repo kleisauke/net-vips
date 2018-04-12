@@ -333,16 +333,14 @@ namespace NetVips
                 var size = images.Length;
                 VipsImage.VipsValueSetArrayImage(Pointer, size);
 
-                var psize = 0;
-
-                var ptrArr = VipsImage.VipsValueGetArrayImage(Pointer, ref psize);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(Pointer, IntPtr.Zero);
 
                 for (var i = 0; i < size; i++)
                 {
                     Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, images[i].Pointer);
 
                     // the gvalue needs a ref on each of the images
-                    Internal.GObject.GObjectRef(images[i].Pointer);
+                    images[i].ObjectRef();
                 }
             }
             else if (gtype == BlobType)
@@ -445,14 +443,15 @@ namespace NetVips
             {
                 // GValueGetObject() will not add a ref ... that is
                 // held by the gvalue
-                var vo = Internal.GObject.GValueGetObject(Pointer);
+                var vi = Internal.GObject.GValueGetObject(Pointer);
 
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
                 // by GObject
-                Internal.GObject.GObjectRef(vo);
+                var image = new Image(vi);
+                image.ObjectRef();
 
-                result = new Image(vo);
+                result = image;
             }
             else if (gtype == ArrayIntType)
             {
@@ -481,8 +480,8 @@ namespace NetVips
                 for (var i = 0; i < psize; i++)
                 {
                     var vi = Marshal.ReadIntPtr(ptrArr, i * IntPtr.Size);
-                    Internal.GObject.GObjectRef(vi);
                     images[i] = new Image(vi);
+                    images[i].ObjectRef();
                 }
 
                 result = images;
@@ -516,9 +515,11 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        private void ReleaseUnmanagedResources()
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
+        /// <see langword="false" /> to release only unmanaged resources.</param>
+        protected void Dispose(bool disposing)
         {
             // logger.Debug($"GC: GValue = {Pointer}");
             if (Pointer != IntPtr.Zero)
@@ -530,17 +531,6 @@ namespace NetVips
             }
 
             // logger.Debug($"GC: GValue = {Pointer}");
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
-        /// <see langword="false" /> to release only unmanaged resources.</param>
-        protected void Dispose(bool disposing)
-        {
-            // Dispose unmanaged resources.
-            ReleaseUnmanagedResources();
         }
 
         /// <summary>
