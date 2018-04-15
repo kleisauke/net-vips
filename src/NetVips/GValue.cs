@@ -255,19 +255,14 @@ namespace NetVips
             }
             else if (fundamental == GObjectType)
             {
-                switch (value)
+                if (!(value is GObject gObject))
                 {
-                    case Image image:
-                        Internal.GObject.GValueSetObject(Pointer, image.Pointer);
-                        break;
-                    case Interpolate interpolate:
-                        Internal.GObject.GValueSetObject(Pointer, interpolate.Pointer);
-                        break;
-                    default:
-                        throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                        );
+                    throw new Exception(
+                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
+                    );
                 }
+
+                Internal.GObject.GValueSetObject(Pointer, gObject.Pointer);
             }
             else if (gtype == ArrayIntType)
             {
