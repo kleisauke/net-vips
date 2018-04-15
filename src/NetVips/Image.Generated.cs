@@ -505,6 +505,34 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Canny edge detector
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = in.Canny(sigma: double, precision: string);
+        /// </code>
+        /// </example>
+        /// <param name="sigma">Sigma of Gaussian</param>
+        /// <param name="precision">Convolve with this precision</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Canny(double? sigma = null, string precision = null)
+        {
+            var options = new VOption();
+
+            if (sigma.HasValue)
+            {
+                options.Add("sigma", sigma);
+            }
+
+            if (precision != null)
+            {
+                options.Add("precision", precision);
+            }
+
+            return this.Call("canny", options) as Image;
+        }
+
+        /// <summary>
         /// Cast an image
         /// </summary>
         /// <example>
@@ -7706,6 +7734,20 @@ namespace NetVips
             }
 
             return this.Call("smartcrop", options, width, height) as Image;
+        }
+
+        /// <summary>
+        /// Sobel edge detector
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = in.Sobel();
+        /// </code>
+        /// </example>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Sobel()
+        {
+            return this.Call("sobel") as Image;
         }
 
         /// <summary>
