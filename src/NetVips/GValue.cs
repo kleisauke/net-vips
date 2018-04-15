@@ -223,7 +223,7 @@ namespace NetVips
         public void Set(object value)
         {
             // logger.Debug($"Set: value = {value}");
-            var gtype = Pointer.Dereference<Internal.GValue.Fields>().GType;
+            var gtype = GetTypeOf();
             var fundamental = GType.GTypeFundamental(gtype);
             if (gtype == GBoolType)
             {
@@ -376,14 +376,23 @@ namespace NetVips
                 }
                 else
                 {
-                    int FreeFn(IntPtr a, IntPtr b)
+                    VipsCallbackFn freeFn = (a, b) =>
                     {
                         GLib.GFree(a);
 
                         return 0;
-                    }
+                    };
 
-                    VipsType.VipsValueSetBlob(Pointer, FreeFn, memory, (ulong) length);
+                    // prevent it from being re-located or disposed of by the garbage collector
+                    var gchCallbackDelegate = GCHandle.Alloc(freeFn);
+
+                    VipsType.VipsValueSetBlob(Pointer, freeFn, memory, (ulong) length);
+
+                    if (gchCallbackDelegate.IsAllocated)
+                    {
+                        // release reference to delegate
+                        gchCallbackDelegate.Free();
+                    }
                 }
             }
             else
@@ -404,7 +413,7 @@ namespace NetVips
         public object Get()
         {
             // logger.Debug($"Get: this = {this}");
-            var gtype = Pointer.Dereference<Internal.GValue.Fields>().GType;
+            var gtype = GetTypeOf();
             var fundamental = GType.GTypeFundamental(gtype);
 
             object result;
@@ -502,6 +511,15 @@ namespace NetVips
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Get the GType of this GValue.
+        /// </summary>
+        /// <returns>The GType of this GValue.</returns>
+        public ulong GetTypeOf()
+        {
+            return Pointer.Dereference<Internal.GValue.Fields>().GType;
         }
 
         /// <summary>

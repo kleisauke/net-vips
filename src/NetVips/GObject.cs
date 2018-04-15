@@ -45,6 +45,7 @@ namespace NetVips
         /// </summary>
         internal void ObjectRef()
         {
+            // logger.Debug($"Ref: GObject = {Pointer}");
             Internal.GObject.GObjectRef(Pointer);
         }
 
@@ -54,6 +55,7 @@ namespace NetVips
         /// </summary>
         internal void ObjectUnref()
         {
+            // logger.Debug($"Unref: GObject = {Pointer}");
             Internal.GObject.GObjectUnref(Pointer);
         }
 

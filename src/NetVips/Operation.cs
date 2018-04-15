@@ -62,7 +62,7 @@ namespace NetVips
         public void Set(string name, int flags, Image matchImage, object value)
         {
             // logger.Debug($"Operation.Set: name = {name}, flags = {flags}, " +
-            //           $"matchImage = {matchImage} value = {value}");
+            //             $"matchImage = {matchImage} value = {value}");
 
             // if the object wants an image and we have a constant, Imageize it
             //
@@ -75,24 +75,21 @@ namespace NetVips
                 {
                     value = Image.Imageize(matchImage, value);
                 }
-                else if (gtype == GValue.ArrayImageType)
+                else if (gtype == GValue.ArrayImageType && value is object[] values)
                 {
-                    if (value is object[] values)
-                    {
-                        value = values.Smap(x => Image.Imageize(matchImage, x));
-                    }
+                    value = values.Smap(x => Image.Imageize(matchImage, x));
                 }
             }
 
             // MODIFY args need to be copied before they are set
-            if ((flags & (int) Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
+            if ((flags & (int) Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0 && value is Image image)
             {
                 // logger.Debug($"copying MODIFY arg {name}");
                 // make sure we have a unique copy
-                value = (value as Image)?.Copy().CopyMemory();
+                value = image.Copy().CopyMemory();
             }
 
-            Set(name, value);
+            base.Set(name, value);
         }
 
         internal Internal.Enums.VipsOperationFlags GetFlags()
@@ -101,9 +98,9 @@ namespace NetVips
         }
 
         // this is slow ... call as little as possible
-        internal IDictionary<string, Internal.Enums.VipsArgumentFlags> GetArgs()
+        internal List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
         {
-            var args = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
+            var args = new List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>>();
 
             VipsArgumentMapFn addConstruct = (self, pspec, argumentClass, argumentInstance, a, b) =>
             {
@@ -114,9 +111,9 @@ namespace NetVips
 
                     // libvips uses '-' to separate parts of arg names, but we
                     // need '_' for C#
-                    name = name?.Replace("-", "_");
+                    name = name.Replace("-", "_");
 
-                    args.Add(name, flags);
+                    args.Add(new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(name, flags));
                 }
 
                 return IntPtr.Zero;
@@ -357,8 +354,7 @@ namespace NetVips
             // we are only interested in non-deprecated args
             var arguments = op.GetArgs()
                 .Where(x => (x.Value & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
-                .Select(x => new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(x.Key, x.Value))
-                .ToDictionary(x => x.Key, x => x.Value);
+                .ToList();
 
             // find the first required input image arg, if any ... that will be self
             string memberX = null;
