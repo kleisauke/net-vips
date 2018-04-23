@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.IO;
-using System.Runtime.InteropServices;
 using Xunit;
 
 namespace NetVips.Tests
 {
-    public class GValueTests
+    public class GValueTests : IClassFixture<TestsFixture>
     {
         [Fact]
         public void TestBool()

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class ArithmeticTests
+    public class ArithmeticTests : IClassFixture<TestsFixture>
     {
         private Image _image;
         private Image _colour;

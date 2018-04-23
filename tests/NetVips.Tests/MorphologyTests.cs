@@ -2,7 +2,7 @@
 
 namespace NetVips.Tests
 {
-    public class MorphologyTests
+    public class MorphologyTests : IClassFixture<TestsFixture>
     {
         [Fact]
         public void TestCountlines()

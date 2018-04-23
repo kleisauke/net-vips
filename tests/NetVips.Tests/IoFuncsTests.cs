@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class IoFuncsTests
+    public class IoFuncsTests : IClassFixture<TestsFixture>
     {
         /// <summary>
         // test the vips7 filename splitter ... this is very fragile and annoying

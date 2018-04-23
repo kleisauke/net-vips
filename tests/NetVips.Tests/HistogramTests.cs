@@ -3,7 +3,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class HistogramTests
+    public class HistogramTests : IClassFixture<TestsFixture>
     {
         [Fact]
         public void TestHistCum()

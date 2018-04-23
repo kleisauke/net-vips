@@ -1,4 +1,6 @@
-﻿namespace NetVips
+﻿using System;
+
+namespace NetVips
 {
     /// <summary>
     /// This module contains the various libvips enums as C# classes
@@ -6,6 +8,81 @@
     /// </summary>
     public static class Enums
     {
+        /// <summary>
+        /// Flags specifying the level of log messages.
+        /// </summary>
+        [Flags]
+        public enum LogLevelFlags
+        {
+            /* log flags */
+            /// <summary>
+            /// internal flag
+            /// </summary>
+            FlagRecursion = 1 << 0,
+
+            /// <summary>
+            /// internal flag
+            /// </summary>
+            FlagFatal = 1 << 1,
+
+            /* GLib log levels */
+            /// <summary>
+            /// log level for errors
+            /// </summary>
+            Error = 1 << 2, /* always fatal */
+
+            /// <summary>
+            /// log level for critical warning messages
+            /// </summary>
+            Critical = 1 << 3,
+
+            /// <summary>
+            /// log level for warnings
+            /// </summary>
+            Warning = 1 << 4,
+
+            /// <summary>
+            /// log level for messages
+            /// </summary>
+            Message = 1 << 5,
+
+            /// <summary>
+            /// log level for informational messages
+            /// </summary>
+            Info = 1 << 6,
+
+            /// <summary>
+            /// log level for debug messages
+            /// </summary>
+            Debug = 1 << 7,
+
+            /* Convenience values */
+            /// <summary>
+            /// all log levels except fatal
+            /// </summary>
+            AllButFatal = 253,
+
+            /// <summary>
+            /// all log levels except recursion
+            /// </summary>
+            AllButRecursion = 254,
+
+            /// <summary>
+            /// All log levels
+            /// </summary>
+            All = 255,
+
+            /// <summary>
+            /// flag mask
+            /// </summary>
+            FlagMask = 3,
+
+            /// <summary>
+            /// a mask including all log levels
+            /// </summary>
+            LevelMask = unchecked((int) 0xFFFFFFFC)
+        }
+
         /// <summary>
         /// The format of image bands.
         /// </summary>

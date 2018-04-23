@@ -2,7 +2,7 @@
 
 namespace NetVips.Tests
 {
-    public class CreateTests
+    public class CreateTests : IClassFixture<TestsFixture>
     {
         [Fact]
         public void TestBlack()

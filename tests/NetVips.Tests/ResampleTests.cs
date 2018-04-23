@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class ResampleTests
+    public class ResampleTests : IClassFixture<TestsFixture>
     {
         #region helpers
 

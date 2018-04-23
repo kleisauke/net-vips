@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NetVips.Tests
 {
-    public class ForeignTests : IDisposable
+    public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     {
         private string _tempDir;
 
