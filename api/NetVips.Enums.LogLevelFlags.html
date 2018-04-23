@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Enums
+    <title>Enum Enums.LogLevelFlags
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Enums
+    <meta name="title" content="Enum Enums.LogLevelFlags
    ">
     <meta name="generator" content="docfx 2.33.2.0">
     
@@ -68,50 +68,98 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums">
+            <article class="content wrap" id="_content" data-uid="NetVips.Enums.LogLevelFlags">
   
   
-  <h1 id="NetVips_Enums" data-uid="NetVips.Enums" class="text-break">Class Enums
+  <h1 id="NetVips_Enums_LogLevelFlags" data-uid="NetVips.Enums.LogLevelFlags" class="text-break">Enum Enums.LogLevelFlags
   </h1>
-  <div class="markdown level0 summary"><p>This module contains the various libvips enums as C# classes
-Enums values are represented in NetVips as strings. These classes contain the valid strings for each enum.</p>
+  <div class="markdown level0 summary"><p>Flags specifying the level of log messages.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Enums</span></div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_syntax">Syntax</h5>
+  <h5 id="NetVips_Enums_LogLevelFlags_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Enums</code></pre>
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum LogLevelFlags</code></pre>
   </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_All">All</td>
+        <td><p>All log levels</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_AllButFatal">AllButFatal</td>
+        <td><p>all log levels except fatal</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_AllButRecursion">AllButRecursion</td>
+        <td><p>all log levels except recursion</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_Critical">Critical</td>
+        <td><p>log level for critical warning messages</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_Debug">Debug</td>
+        <td><p>log level for debug messages</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_Error">Error</td>
+        <td><p>log level for errors</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_FlagFatal">FlagFatal</td>
+        <td><p>internal flag</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_FlagMask">FlagMask</td>
+        <td><p>flag mask</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_FlagRecursion">FlagRecursion</td>
+        <td><p>internal flag</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_Info">Info</td>
+        <td><p>log level for informational messages</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_LevelMask">LevelMask</td>
+        <td><p>a mask including all log levels</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_Message">Message</td>
+        <td><p>log level for messages</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_LogLevelFlags_Warning">Warning</td>
+        <td><p>log level for warnings</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -119,10 +167,10 @@ Enums values are represented in NetVips as strings. These classes contain the va
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums.md&amp;value=---%0Auid%3A%20NetVips.Enums%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_LogLevelFlags.md&amp;value=---%0Auid%3A%20NetVips.Enums.LogLevelFlags%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

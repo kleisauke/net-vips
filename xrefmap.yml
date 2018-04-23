@@ -811,6 +811,90 @@ references:
   commentId: F:NetVips.Enums.Kernel.Nearest
   fullName: NetVips.Enums.Kernel.Nearest
   nameWithType: Enums.Kernel.Nearest
+- uid: NetVips.Enums.LogLevelFlags
+  name: Enums.LogLevelFlags
+  href: api/NetVips.Enums.LogLevelFlags.html
+  commentId: T:NetVips.Enums.LogLevelFlags
+  fullName: NetVips.Enums.LogLevelFlags
+  nameWithType: Enums.LogLevelFlags
+- uid: NetVips.Enums.LogLevelFlags.All
+  name: All
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_All
+  commentId: F:NetVips.Enums.LogLevelFlags.All
+  fullName: NetVips.Enums.LogLevelFlags.All
+  nameWithType: Enums.LogLevelFlags.All
+- uid: NetVips.Enums.LogLevelFlags.AllButFatal
+  name: AllButFatal
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_AllButFatal
+  commentId: F:NetVips.Enums.LogLevelFlags.AllButFatal
+  fullName: NetVips.Enums.LogLevelFlags.AllButFatal
+  nameWithType: Enums.LogLevelFlags.AllButFatal
+- uid: NetVips.Enums.LogLevelFlags.AllButRecursion
+  name: AllButRecursion
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_AllButRecursion
+  commentId: F:NetVips.Enums.LogLevelFlags.AllButRecursion
+  fullName: NetVips.Enums.LogLevelFlags.AllButRecursion
+  nameWithType: Enums.LogLevelFlags.AllButRecursion
+- uid: NetVips.Enums.LogLevelFlags.Critical
+  name: Critical
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_Critical
+  commentId: F:NetVips.Enums.LogLevelFlags.Critical
+  fullName: NetVips.Enums.LogLevelFlags.Critical
+  nameWithType: Enums.LogLevelFlags.Critical
+- uid: NetVips.Enums.LogLevelFlags.Debug
+  name: Debug
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_Debug
+  commentId: F:NetVips.Enums.LogLevelFlags.Debug
+  fullName: NetVips.Enums.LogLevelFlags.Debug
+  nameWithType: Enums.LogLevelFlags.Debug
+- uid: NetVips.Enums.LogLevelFlags.Error
+  name: Error
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_Error
+  commentId: F:NetVips.Enums.LogLevelFlags.Error
+  fullName: NetVips.Enums.LogLevelFlags.Error
+  nameWithType: Enums.LogLevelFlags.Error
+- uid: NetVips.Enums.LogLevelFlags.FlagFatal
+  name: FlagFatal
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_FlagFatal
+  commentId: F:NetVips.Enums.LogLevelFlags.FlagFatal
+  fullName: NetVips.Enums.LogLevelFlags.FlagFatal
+  nameWithType: Enums.LogLevelFlags.FlagFatal
+- uid: NetVips.Enums.LogLevelFlags.FlagMask
+  name: FlagMask
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_FlagMask
+  commentId: F:NetVips.Enums.LogLevelFlags.FlagMask
+  fullName: NetVips.Enums.LogLevelFlags.FlagMask
+  nameWithType: Enums.LogLevelFlags.FlagMask
+- uid: NetVips.Enums.LogLevelFlags.FlagRecursion
+  name: FlagRecursion
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_FlagRecursion
+  commentId: F:NetVips.Enums.LogLevelFlags.FlagRecursion
+  fullName: NetVips.Enums.LogLevelFlags.FlagRecursion
+  nameWithType: Enums.LogLevelFlags.FlagRecursion
+- uid: NetVips.Enums.LogLevelFlags.Info
+  name: Info
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_Info
+  commentId: F:NetVips.Enums.LogLevelFlags.Info
+  fullName: NetVips.Enums.LogLevelFlags.Info
+  nameWithType: Enums.LogLevelFlags.Info
+- uid: NetVips.Enums.LogLevelFlags.LevelMask
+  name: LevelMask
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_LevelMask
+  commentId: F:NetVips.Enums.LogLevelFlags.LevelMask
+  fullName: NetVips.Enums.LogLevelFlags.LevelMask
+  nameWithType: Enums.LogLevelFlags.LevelMask
+- uid: NetVips.Enums.LogLevelFlags.Message
+  name: Message
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_Message
+  commentId: F:NetVips.Enums.LogLevelFlags.Message
+  fullName: NetVips.Enums.LogLevelFlags.Message
+  nameWithType: Enums.LogLevelFlags.Message
+- uid: NetVips.Enums.LogLevelFlags.Warning
+  name: Warning
+  href: api/NetVips.Enums.LogLevelFlags.html#NetVips_Enums_LogLevelFlags_Warning
+  commentId: F:NetVips.Enums.LogLevelFlags.Warning
+  fullName: NetVips.Enums.LogLevelFlags.Warning
+  nameWithType: Enums.LogLevelFlags.Warning
 - uid: NetVips.Enums.PCS
   name: Enums.PCS
   href: api/NetVips.Enums.PCS.html
@@ -859,38 +943,32 @@ references:
   commentId: T:NetVips.GObject
   fullName: NetVips.GObject
   nameWithType: GObject
-- uid: NetVips.GObject.Dispose
-  name: Dispose()
-  href: api/NetVips.GObject.html#NetVips_GObject_Dispose
-  commentId: M:NetVips.GObject.Dispose
-  fullName: NetVips.GObject.Dispose()
-  nameWithType: GObject.Dispose()
-- uid: NetVips.GObject.Dispose(System.Boolean)
-  name: Dispose(Boolean)
-  href: api/NetVips.GObject.html#NetVips_GObject_Dispose_System_Boolean_
-  commentId: M:NetVips.GObject.Dispose(System.Boolean)
-  fullName: NetVips.GObject.Dispose(System.Boolean)
-  nameWithType: GObject.Dispose(Boolean)
-- uid: NetVips.GObject.Dispose*
-  name: Dispose
-  href: api/NetVips.GObject.html#NetVips_GObject_Dispose_
-  commentId: Overload:NetVips.GObject.Dispose
+- uid: NetVips.GObject.IsInvalid
+  name: IsInvalid
+  href: api/NetVips.GObject.html#NetVips_GObject_IsInvalid
+  commentId: P:NetVips.GObject.IsInvalid
+  fullName: NetVips.GObject.IsInvalid
+  nameWithType: GObject.IsInvalid
+- uid: NetVips.GObject.IsInvalid*
+  name: IsInvalid
+  href: api/NetVips.GObject.html#NetVips_GObject_IsInvalid_
+  commentId: Overload:NetVips.GObject.IsInvalid
   isSpec: "True"
-  fullName: NetVips.GObject.Dispose
-  nameWithType: GObject.Dispose
-- uid: NetVips.GObject.Finalize
-  name: Finalize()
-  href: api/NetVips.GObject.html#NetVips_GObject_Finalize
-  commentId: M:NetVips.GObject.Finalize
-  fullName: NetVips.GObject.Finalize()
-  nameWithType: GObject.Finalize()
-- uid: NetVips.GObject.Finalize*
-  name: Finalize
-  href: api/NetVips.GObject.html#NetVips_GObject_Finalize_
-  commentId: Overload:NetVips.GObject.Finalize
+  fullName: NetVips.GObject.IsInvalid
+  nameWithType: GObject.IsInvalid
+- uid: NetVips.GObject.ReleaseHandle
+  name: ReleaseHandle()
+  href: api/NetVips.GObject.html#NetVips_GObject_ReleaseHandle
+  commentId: M:NetVips.GObject.ReleaseHandle
+  fullName: NetVips.GObject.ReleaseHandle()
+  nameWithType: GObject.ReleaseHandle()
+- uid: NetVips.GObject.ReleaseHandle*
+  name: ReleaseHandle
+  href: api/NetVips.GObject.html#NetVips_GObject_ReleaseHandle_
+  commentId: Overload:NetVips.GObject.ReleaseHandle
   isSpec: "True"
-  fullName: NetVips.GObject.Finalize
-  nameWithType: GObject.Finalize
+  fullName: NetVips.GObject.ReleaseHandle
+  nameWithType: GObject.ReleaseHandle
 - uid: NetVips.GValue
   name: GValue
   href: api/NetVips.GValue.html
@@ -1022,6 +1100,19 @@ references:
   isSpec: "True"
   fullName: NetVips.GValue.Get
   nameWithType: GValue.Get
+- uid: NetVips.GValue.GetTypeOf
+  name: GetTypeOf()
+  href: api/NetVips.GValue.html#NetVips_GValue_GetTypeOf
+  commentId: M:NetVips.GValue.GetTypeOf
+  fullName: NetVips.GValue.GetTypeOf()
+  nameWithType: GValue.GetTypeOf()
+- uid: NetVips.GValue.GetTypeOf*
+  name: GetTypeOf
+  href: api/NetVips.GValue.html#NetVips_GValue_GetTypeOf_
+  commentId: Overload:NetVips.GValue.GetTypeOf
+  isSpec: "True"
+  fullName: NetVips.GValue.GetTypeOf
+  nameWithType: GValue.GetTypeOf
 - uid: NetVips.GValue.GFlagsType
   name: GFlagsType
   href: api/NetVips.GValue.html#NetVips_GValue_GFlagsType
@@ -1554,6 +1645,22 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.CallEnum
   nameWithType: Image.CallEnum
+- uid: NetVips.Image.Canny(System.Nullable{System.Double},System.String)
+  name: Canny(Nullable<Double>, String)
+  href: api/NetVips.Image.html#NetVips_Image_Canny_System_Nullable_System_Double__System_String_
+  commentId: M:NetVips.Image.Canny(System.Nullable{System.Double},System.String)
+  name.vb: Canny(Nullable(Of Double), String)
+  fullName: NetVips.Image.Canny(System.Nullable<System.Double>, System.String)
+  fullName.vb: NetVips.Image.Canny(System.Nullable(Of System.Double), System.String)
+  nameWithType: Image.Canny(Nullable<Double>, String)
+  nameWithType.vb: Image.Canny(Nullable(Of Double), String)
+- uid: NetVips.Image.Canny*
+  name: Canny
+  href: api/NetVips.Image.html#NetVips_Image_Canny_
+  commentId: Overload:NetVips.Image.Canny
+  isSpec: "True"
+  fullName: NetVips.Image.Canny
+  nameWithType: Image.Canny
 - uid: NetVips.Image.Cast(System.String,System.Nullable{System.Boolean})
   name: Cast(String, Nullable<Boolean>)
   href: api/NetVips.Image.html#NetVips_Image_Cast_System_String_System_Nullable_System_Boolean__
@@ -5516,6 +5623,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Smartcrop
   nameWithType: Image.Smartcrop
+- uid: NetVips.Image.Sobel
+  name: Sobel()
+  href: api/NetVips.Image.html#NetVips_Image_Sobel
+  commentId: M:NetVips.Image.Sobel
+  fullName: NetVips.Image.Sobel()
+  nameWithType: Image.Sobel()
+- uid: NetVips.Image.Sobel*
+  name: Sobel
+  href: api/NetVips.Image.html#NetVips_Image_Sobel_
+  commentId: Overload:NetVips.Image.Sobel
+  isSpec: "True"
+  fullName: NetVips.Image.Sobel
+  nameWithType: Image.Sobel
 - uid: NetVips.Image.Spcor(NetVips.Image)
   name: Spcor(Image)
   href: api/NetVips.Image.html#NetVips_Image_Spcor_NetVips_Image_
@@ -6346,6 +6466,157 @@ references:
   isSpec: "True"
   fullName: NetVips.Interpolate.NewFromName
   nameWithType: Interpolate.NewFromName
+- uid: NetVips.Log
+  name: Log
+  href: api/NetVips.Log.html
+  commentId: T:NetVips.Log
+  fullName: NetVips.Log
+  nameWithType: Log
+- uid: NetVips.Log.DefaultHandler(System.String,NetVips.Enums.LogLevelFlags,System.String)
+  name: DefaultHandler(String, Enums.LogLevelFlags, String)
+  href: api/NetVips.Log.html#NetVips_Log_DefaultHandler_System_String_NetVips_Enums_LogLevelFlags_System_String_
+  commentId: M:NetVips.Log.DefaultHandler(System.String,NetVips.Enums.LogLevelFlags,System.String)
+  fullName: NetVips.Log.DefaultHandler(System.String, NetVips.Enums.LogLevelFlags, System.String)
+  nameWithType: Log.DefaultHandler(String, Enums.LogLevelFlags, String)
+- uid: NetVips.Log.DefaultHandler*
+  name: DefaultHandler
+  href: api/NetVips.Log.html#NetVips_Log_DefaultHandler_
+  commentId: Overload:NetVips.Log.DefaultHandler
+  isSpec: "True"
+  fullName: NetVips.Log.DefaultHandler
+  nameWithType: Log.DefaultHandler
+- uid: NetVips.Log.PrintLogFunction(System.String,NetVips.Enums.LogLevelFlags,System.String)
+  name: PrintLogFunction(String, Enums.LogLevelFlags, String)
+  href: api/NetVips.Log.html#NetVips_Log_PrintLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String_
+  commentId: M:NetVips.Log.PrintLogFunction(System.String,NetVips.Enums.LogLevelFlags,System.String)
+  fullName: NetVips.Log.PrintLogFunction(System.String, NetVips.Enums.LogLevelFlags, System.String)
+  nameWithType: Log.PrintLogFunction(String, Enums.LogLevelFlags, String)
+- uid: NetVips.Log.PrintLogFunction*
+  name: PrintLogFunction
+  href: api/NetVips.Log.html#NetVips_Log_PrintLogFunction_
+  commentId: Overload:NetVips.Log.PrintLogFunction
+  isSpec: "True"
+  fullName: NetVips.Log.PrintLogFunction
+  nameWithType: Log.PrintLogFunction
+- uid: NetVips.Log.PrintTraceLogFunction(System.String,NetVips.Enums.LogLevelFlags,System.String)
+  name: PrintTraceLogFunction(String, Enums.LogLevelFlags, String)
+  href: api/NetVips.Log.html#NetVips_Log_PrintTraceLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String_
+  commentId: M:NetVips.Log.PrintTraceLogFunction(System.String,NetVips.Enums.LogLevelFlags,System.String)
+  fullName: NetVips.Log.PrintTraceLogFunction(System.String, NetVips.Enums.LogLevelFlags, System.String)
+  nameWithType: Log.PrintTraceLogFunction(String, Enums.LogLevelFlags, String)
+- uid: NetVips.Log.PrintTraceLogFunction*
+  name: PrintTraceLogFunction
+  href: api/NetVips.Log.html#NetVips_Log_PrintTraceLogFunction_
+  commentId: Overload:NetVips.Log.PrintTraceLogFunction
+  isSpec: "True"
+  fullName: NetVips.Log.PrintTraceLogFunction
+  nameWithType: Log.PrintTraceLogFunction
+- uid: NetVips.Log.RemoveLogHandler(System.String,System.UInt32)
+  name: RemoveLogHandler(String, UInt32)
+  href: api/NetVips.Log.html#NetVips_Log_RemoveLogHandler_System_String_System_UInt32_
+  commentId: M:NetVips.Log.RemoveLogHandler(System.String,System.UInt32)
+  fullName: NetVips.Log.RemoveLogHandler(System.String, System.UInt32)
+  nameWithType: Log.RemoveLogHandler(String, UInt32)
+- uid: NetVips.Log.RemoveLogHandler*
+  name: RemoveLogHandler
+  href: api/NetVips.Log.html#NetVips_Log_RemoveLogHandler_
+  commentId: Overload:NetVips.Log.RemoveLogHandler
+  isSpec: "True"
+  fullName: NetVips.Log.RemoveLogHandler
+  nameWithType: Log.RemoveLogHandler
+- uid: NetVips.Log.SetAlwaysFatal(NetVips.Enums.LogLevelFlags)
+  name: SetAlwaysFatal(Enums.LogLevelFlags)
+  href: api/NetVips.Log.html#NetVips_Log_SetAlwaysFatal_NetVips_Enums_LogLevelFlags_
+  commentId: M:NetVips.Log.SetAlwaysFatal(NetVips.Enums.LogLevelFlags)
+  fullName: NetVips.Log.SetAlwaysFatal(NetVips.Enums.LogLevelFlags)
+  nameWithType: Log.SetAlwaysFatal(Enums.LogLevelFlags)
+- uid: NetVips.Log.SetAlwaysFatal(System.String,NetVips.Enums.LogLevelFlags)
+  name: SetAlwaysFatal(String, Enums.LogLevelFlags)
+  href: api/NetVips.Log.html#NetVips_Log_SetAlwaysFatal_System_String_NetVips_Enums_LogLevelFlags_
+  commentId: M:NetVips.Log.SetAlwaysFatal(System.String,NetVips.Enums.LogLevelFlags)
+  fullName: NetVips.Log.SetAlwaysFatal(System.String, NetVips.Enums.LogLevelFlags)
+  nameWithType: Log.SetAlwaysFatal(String, Enums.LogLevelFlags)
+- uid: NetVips.Log.SetAlwaysFatal*
+  name: SetAlwaysFatal
+  href: api/NetVips.Log.html#NetVips_Log_SetAlwaysFatal_
+  commentId: Overload:NetVips.Log.SetAlwaysFatal
+  isSpec: "True"
+  fullName: NetVips.Log.SetAlwaysFatal
+  nameWithType: Log.SetAlwaysFatal
+- uid: NetVips.Log.SetDefaultHandler(NetVips.LogFunc)
+  name: SetDefaultHandler(LogFunc)
+  href: api/NetVips.Log.html#NetVips_Log_SetDefaultHandler_NetVips_LogFunc_
+  commentId: M:NetVips.Log.SetDefaultHandler(NetVips.LogFunc)
+  fullName: NetVips.Log.SetDefaultHandler(NetVips.LogFunc)
+  nameWithType: Log.SetDefaultHandler(LogFunc)
+- uid: NetVips.Log.SetDefaultHandler*
+  name: SetDefaultHandler
+  href: api/NetVips.Log.html#NetVips_Log_SetDefaultHandler_
+  commentId: Overload:NetVips.Log.SetDefaultHandler
+  isSpec: "True"
+  fullName: NetVips.Log.SetDefaultHandler
+  nameWithType: Log.SetDefaultHandler
+- uid: NetVips.Log.SetLogHandler(System.String,NetVips.Enums.LogLevelFlags,NetVips.LogFunc)
+  name: SetLogHandler(String, Enums.LogLevelFlags, LogFunc)
+  href: api/NetVips.Log.html#NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_
+  commentId: M:NetVips.Log.SetLogHandler(System.String,NetVips.Enums.LogLevelFlags,NetVips.LogFunc)
+  fullName: NetVips.Log.SetLogHandler(System.String, NetVips.Enums.LogLevelFlags, NetVips.LogFunc)
+  nameWithType: Log.SetLogHandler(String, Enums.LogLevelFlags, LogFunc)
+- uid: NetVips.Log.SetLogHandler*
+  name: SetLogHandler
+  href: api/NetVips.Log.html#NetVips_Log_SetLogHandler_
+  commentId: Overload:NetVips.Log.SetLogHandler
+  isSpec: "True"
+  fullName: NetVips.Log.SetLogHandler
+  nameWithType: Log.SetLogHandler
+- uid: NetVips.Log.SetPrintErrorHandler(NetVips.PrintFunc)
+  name: SetPrintErrorHandler(PrintFunc)
+  href: api/NetVips.Log.html#NetVips_Log_SetPrintErrorHandler_NetVips_PrintFunc_
+  commentId: M:NetVips.Log.SetPrintErrorHandler(NetVips.PrintFunc)
+  fullName: NetVips.Log.SetPrintErrorHandler(NetVips.PrintFunc)
+  nameWithType: Log.SetPrintErrorHandler(PrintFunc)
+- uid: NetVips.Log.SetPrintErrorHandler*
+  name: SetPrintErrorHandler
+  href: api/NetVips.Log.html#NetVips_Log_SetPrintErrorHandler_
+  commentId: Overload:NetVips.Log.SetPrintErrorHandler
+  isSpec: "True"
+  fullName: NetVips.Log.SetPrintErrorHandler
+  nameWithType: Log.SetPrintErrorHandler
+- uid: NetVips.Log.SetPrintHandler(NetVips.PrintFunc)
+  name: SetPrintHandler(PrintFunc)
+  href: api/NetVips.Log.html#NetVips_Log_SetPrintHandler_NetVips_PrintFunc_
+  commentId: M:NetVips.Log.SetPrintHandler(NetVips.PrintFunc)
+  fullName: NetVips.Log.SetPrintHandler(NetVips.PrintFunc)
+  nameWithType: Log.SetPrintHandler(PrintFunc)
+- uid: NetVips.Log.SetPrintHandler*
+  name: SetPrintHandler
+  href: api/NetVips.Log.html#NetVips_Log_SetPrintHandler_
+  commentId: Overload:NetVips.Log.SetPrintHandler
+  isSpec: "True"
+  fullName: NetVips.Log.SetPrintHandler
+  nameWithType: Log.SetPrintHandler
+- uid: NetVips.Log.WriteLog(System.String,NetVips.Enums.LogLevelFlags,System.String,System.Object[])
+  name: WriteLog(String, Enums.LogLevelFlags, String, Object[])
+  href: api/NetVips.Log.html#NetVips_Log_WriteLog_System_String_NetVips_Enums_LogLevelFlags_System_String_System_Object___
+  commentId: M:NetVips.Log.WriteLog(System.String,NetVips.Enums.LogLevelFlags,System.String,System.Object[])
+  name.vb: WriteLog(String, Enums.LogLevelFlags, String, Object())
+  fullName: NetVips.Log.WriteLog(System.String, NetVips.Enums.LogLevelFlags, System.String, System.Object[])
+  fullName.vb: NetVips.Log.WriteLog(System.String, NetVips.Enums.LogLevelFlags, System.String, System.Object())
+  nameWithType: Log.WriteLog(String, Enums.LogLevelFlags, String, Object[])
+  nameWithType.vb: Log.WriteLog(String, Enums.LogLevelFlags, String, Object())
+- uid: NetVips.Log.WriteLog*
+  name: WriteLog
+  href: api/NetVips.Log.html#NetVips_Log_WriteLog_
+  commentId: Overload:NetVips.Log.WriteLog
+  isSpec: "True"
+  fullName: NetVips.Log.WriteLog
+  nameWithType: Log.WriteLog
+- uid: NetVips.LogFunc
+  name: LogFunc
+  href: api/NetVips.LogFunc.html
+  commentId: T:NetVips.LogFunc
+  fullName: NetVips.LogFunc
+  nameWithType: LogFunc
 - uid: NetVips.ModuleInitializer
   name: ModuleInitializer
   href: api/NetVips.ModuleInitializer.html
@@ -6408,22 +6679,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Operation.Call
   nameWithType: Operation.Call
-- uid: NetVips.Operation.GenerateFunction(System.String,System.String,System.String[])
-  name: GenerateFunction(String, String, String[])
-  href: api/NetVips.Operation.html#NetVips_Operation_GenerateFunction_System_String_System_String_System_String___
-  commentId: M:NetVips.Operation.GenerateFunction(System.String,System.String,System.String[])
-  name.vb: GenerateFunction(String, String, String())
-  fullName: NetVips.Operation.GenerateFunction(System.String, System.String, System.String[])
-  fullName.vb: NetVips.Operation.GenerateFunction(System.String, System.String, System.String())
-  nameWithType: Operation.GenerateFunction(String, String, String[])
-  nameWithType.vb: Operation.GenerateFunction(String, String, String())
-- uid: NetVips.Operation.GenerateFunction*
-  name: GenerateFunction
-  href: api/NetVips.Operation.html#NetVips_Operation_GenerateFunction_
-  commentId: Overload:NetVips.Operation.GenerateFunction
-  isSpec: "True"
-  fullName: NetVips.Operation.GenerateFunction
-  nameWithType: Operation.GenerateFunction
 - uid: NetVips.Operation.GenerateImageClass(System.String)
   name: GenerateImageClass(String)
   href: api/NetVips.Operation.html#NetVips_Operation_GenerateImageClass_System_String_
@@ -6437,19 +6692,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Operation.GenerateImageClass
   nameWithType: Operation.GenerateImageClass
-- uid: NetVips.Operation.Set(System.String,System.Int32,NetVips.Image,System.Object)
-  name: Set(String, Int32, Image, Object)
-  href: api/NetVips.Operation.html#NetVips_Operation_Set_System_String_System_Int32_NetVips_Image_System_Object_
-  commentId: M:NetVips.Operation.Set(System.String,System.Int32,NetVips.Image,System.Object)
-  fullName: NetVips.Operation.Set(System.String, System.Int32, NetVips.Image, System.Object)
-  nameWithType: Operation.Set(String, Int32, Image, Object)
-- uid: NetVips.Operation.Set*
-  name: Set
-  href: api/NetVips.Operation.html#NetVips_Operation_Set_
-  commentId: Overload:NetVips.Operation.Set
-  isSpec: "True"
-  fullName: NetVips.Operation.Set
-  nameWithType: Operation.Set
 - uid: NetVips.Operation.VipsCacheSetMax(System.Int32)
   name: VipsCacheSetMax(Int32)
   href: api/NetVips.Operation.html#NetVips_Operation_VipsCacheSetMax_System_Int32_
@@ -6502,6 +6744,12 @@ references:
   isSpec: "True"
   fullName: NetVips.Operation.VipsCacheSetTrace
   nameWithType: Operation.VipsCacheSetTrace
+- uid: NetVips.PrintFunc
+  name: PrintFunc
+  href: api/NetVips.PrintFunc.html
+  commentId: T:NetVips.PrintFunc
+  fullName: NetVips.PrintFunc
+  nameWithType: PrintFunc
 - uid: NetVips.VipsException
   name: VipsException
   href: api/NetVips.VipsException.html
@@ -6552,19 +6800,6 @@ references:
   isSpec: "True"
   fullName: NetVips.VipsObject.Get
   nameWithType: VipsObject.Get
-- uid: NetVips.VipsObject.GetBlurb(System.String)
-  name: GetBlurb(String)
-  href: api/NetVips.VipsObject.html#NetVips_VipsObject_GetBlurb_System_String_
-  commentId: M:NetVips.VipsObject.GetBlurb(System.String)
-  fullName: NetVips.VipsObject.GetBlurb(System.String)
-  nameWithType: VipsObject.GetBlurb(String)
-- uid: NetVips.VipsObject.GetBlurb*
-  name: GetBlurb
-  href: api/NetVips.VipsObject.html#NetVips_VipsObject_GetBlurb_
-  commentId: Overload:NetVips.VipsObject.GetBlurb
-  isSpec: "True"
-  fullName: NetVips.VipsObject.GetBlurb
-  nameWithType: VipsObject.GetBlurb
 - uid: NetVips.VipsObject.GetDescription
   name: GetDescription()
   href: api/NetVips.VipsObject.html#NetVips_VipsObject_GetDescription
@@ -6591,19 +6826,6 @@ references:
   isSpec: "True"
   fullName: NetVips.VipsObject.GetTypeOf
   nameWithType: VipsObject.GetTypeOf
-- uid: NetVips.VipsObject.PrintAll
-  name: PrintAll()
-  href: api/NetVips.VipsObject.html#NetVips_VipsObject_PrintAll
-  commentId: M:NetVips.VipsObject.PrintAll
-  fullName: NetVips.VipsObject.PrintAll()
-  nameWithType: VipsObject.PrintAll()
-- uid: NetVips.VipsObject.PrintAll*
-  name: PrintAll
-  href: api/NetVips.VipsObject.html#NetVips_VipsObject_PrintAll_
-  commentId: Overload:NetVips.VipsObject.PrintAll
-  isSpec: "True"
-  fullName: NetVips.VipsObject.PrintAll
-  nameWithType: VipsObject.PrintAll
 - uid: NetVips.VipsObject.Set(System.String,System.Object)
   name: Set(String, Object)
   href: api/NetVips.VipsObject.html#NetVips_VipsObject_Set_System_String_System_Object_

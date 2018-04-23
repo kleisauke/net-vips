@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "mhWgl/+34GvR9Uq4xMl77w=="
+          "hash": "2hDK79nnHG02aZPWmrprIg=="
         }
       },
       "is_incremental": false,
@@ -67,7 +67,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Access.html",
-          "hash": "rNPLhLpjp5qZaIXUeqFMkw=="
+          "hash": "Uxa+Zt1VomLCmE5UVN5ynw=="
         }
       },
       "is_incremental": false,
@@ -79,7 +79,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Align.html",
-          "hash": "VvpUTrFFVNIitwil3jclZg=="
+          "hash": "//Ocj4VbJZCzKDNRcg8e1A=="
         }
       },
       "is_incremental": false,
@@ -91,7 +91,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Angle.html",
-          "hash": "uxUXlQPuHIUWrq3xoCGrTw=="
+          "hash": "8gSag1FIKHAN1yblsIScjA=="
         }
       },
       "is_incremental": false,
@@ -103,7 +103,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Angle45.html",
-          "hash": "uzttEN4BnscB8pTWSRfiuQ=="
+          "hash": "QTLnTBevqzbV5VeoKmDAXQ=="
         }
       },
       "is_incremental": false,
@@ -115,7 +115,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.BandFormat.html",
-          "hash": "QY+d6Pv+f+pa7bRzHfSKDg=="
+          "hash": "XbgML+HvW+yyzzfanQlQiA=="
         }
       },
       "is_incremental": false,
@@ -127,7 +127,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.BlendMode.html",
-          "hash": "iqeBBZjlyxwI8fGqPn40gA=="
+          "hash": "sgJuNvjrAWaws+0hoQpCTg=="
         }
       },
       "is_incremental": false,
@@ -139,7 +139,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Coding.html",
-          "hash": "AvHkbfHD2JpILKjpxD7fWw=="
+          "hash": "M6X/hd8NdMmi2VMG9VFlVQ=="
         }
       },
       "is_incremental": false,
@@ -151,7 +151,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Combine.html",
-          "hash": "JptoX0N+YqQVngXJ/yK1sg=="
+          "hash": "lMfKw1mkWONwxAtcF2yFFQ=="
         }
       },
       "is_incremental": false,
@@ -163,7 +163,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Direction.html",
-          "hash": "CyHldhcacsOcYIbEa/o2og=="
+          "hash": "WSvJIgFJ4qTuRo+30WNhWQ=="
         }
       },
       "is_incremental": false,
@@ -175,7 +175,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Extend.html",
-          "hash": "k5XmLat93NKHodqvPEq/6g=="
+          "hash": "pyKTlreP/4mT0G8EXX7t7A=="
         }
       },
       "is_incremental": false,
@@ -187,7 +187,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Intent.html",
-          "hash": "jOfpaLaRP7Cxyapoepw/Qw=="
+          "hash": "iRtIqVp63zz1s+dWmXDFuQ=="
         }
       },
       "is_incremental": false,
@@ -199,7 +199,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Interpretation.html",
-          "hash": "kLeZmZaP574ffGhmF29EcA=="
+          "hash": "AGEq/b6cM49lVtBRMn0znQ=="
         }
       },
       "is_incremental": false,
@@ -211,7 +211,19 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Kernel.html",
-          "hash": "ZTBz6XhZ6sNt/B2hujVaRQ=="
+          "hash": "dfQSL9VnDGrlP6Ac9oe/KA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.Enums.LogLevelFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.Enums.LogLevelFlags.html",
+          "hash": "Ug1axapx8l20/tPxksLN6A=="
         }
       },
       "is_incremental": false,
@@ -223,7 +235,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.PCS.html",
-          "hash": "EJAfWTeFSuV++yxJaAku6w=="
+          "hash": "MVlcDkI/+0/Z6bZyGanbgw=="
         }
       },
       "is_incremental": false,
@@ -235,7 +247,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.Precision.html",
-          "hash": "Az4iWGoN9E6yeiKrtMzjKA=="
+          "hash": "vudD9Srpgz1Ngk5CcS83Ug=="
         }
       },
       "is_incremental": false,
@@ -247,7 +259,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Enums.html",
-          "hash": "QLphqtKO1KrSapwJi/BfJg=="
+          "hash": "TMekDWcr/ZixtGqXpurI0g=="
         }
       },
       "is_incremental": false,
@@ -259,7 +271,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.GObject.html",
-          "hash": "FlVC4NyhNHWyaVK5gikp8w=="
+          "hash": "YQEA+JRWEVySMoSdX6l+rg=="
         }
       },
       "is_incremental": false,
@@ -271,7 +283,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.GValue.html",
-          "hash": "H/gkRS/MBJ9oL8OkaqkZcw=="
+          "hash": "tYRGjiPTuuzRu1hJZuk/Fw=="
         }
       },
       "is_incremental": false,
@@ -283,7 +295,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Image.html",
-          "hash": "bDgXkyTDhmMjDOnQmcKawg=="
+          "hash": "UzVCjXx0d3yajJCySmxubg=="
         }
       },
       "is_incremental": false,
@@ -295,7 +307,31 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Interpolate.html",
-          "hash": "uIDj2zIv+cbvyvmCuw8sFw=="
+          "hash": "Ow7bSg8ncyOQNz4IZk64fw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.Log.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.Log.html",
+          "hash": "s40nWtKuaeB2DzvjIey66A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.LogFunc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.LogFunc.html",
+          "hash": "KLAl196t4le/TcmVbQV45g=="
         }
       },
       "is_incremental": false,
@@ -319,7 +355,19 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Operation.html",
-          "hash": "vCQi9WQwZb0IvXWVqAh4pg=="
+          "hash": "KuiMP3iB2ma69o0xkSGslQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.PrintFunc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.PrintFunc.html",
+          "hash": "sFuCINZoOCmNmGu+UeSqKQ=="
         }
       },
       "is_incremental": false,
@@ -355,7 +403,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.VipsObject.html",
-          "hash": "0IIlnfn+fQSjl9wF4B6aFA=="
+          "hash": "fLsno9knDDv7HGHkUdyvcA=="
         }
       },
       "is_incremental": false,
@@ -367,7 +415,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.html",
-          "hash": "64HiH/JYiUxwRoLnIrgH8A=="
+          "hash": "AREit7u+WzVR8+mdt7QnTQ=="
         }
       },
       "is_incremental": false,
@@ -379,7 +427,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "4y6N5/ajB6JFlTcV9U330w=="
+          "hash": "l+YGNeILxQ4oNnEwqGsT4g=="
         }
       },
       "is_incremental": false,
@@ -403,7 +451,7 @@
       "output": {
         ".html": {
           "relative_path": "tutorial/getting_started.html",
-          "hash": "sRaYc/l9chQNV8u3PTACCw=="
+          "hash": "CRoXYKHPq0GFT4HKRy/5uw=="
         }
       },
       "is_incremental": false,
@@ -430,9 +478,9 @@
         "incrementalPhase": "build"
       },
       "processors": {
-        "ResourceDocumentProcessor": {
+        "TocDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "ConceptualDocumentProcessor": {
@@ -443,9 +491,9 @@
           "can_incremental": false,
           "incrementalPhase": "build"
         },
-        "TocDocumentProcessor": {
+        "ResourceDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "details": "Processor ResourceDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         }
       }

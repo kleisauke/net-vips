@@ -79,8 +79,10 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">GObject</span></div>
-      <div class="level2"><a class="xref" href="NetVips.VipsObject.html">VipsObject</a></div>
+    <div class="level1"><span class="xref">System.Runtime.ConstrainedExecution.CriticalFinalizerObject</span></div>
+    <div class="level2"><span class="xref">System.Runtime.InteropServices.SafeHandle</span></div>
+    <div class="level3"><span class="xref">GObject</span></div>
+      <div class="level4"><a class="xref" href="NetVips.VipsObject.html">VipsObject</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -88,6 +90,36 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.handle</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.Close()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.DangerousAddRef(System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.DangerousGetHandle()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.DangerousRelease()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.Dispose(System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.SetHandle(System.IntPtr)</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.IsClosed</span>
+    </div>
     <div>
       <span class="xref">System.Object.Equals(System.Object)</span>
     </div>
@@ -114,79 +146,81 @@
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
   <h5 id="NetVips_GObject_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class GObject : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class GObject : SafeHandle, IDisposable</code></pre>
   </div>
-  <h3 id="methods">Methods
+  <h3 id="properties">Properties
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_Dispose.md&amp;value=---%0Auid%3A%20NetVips.GObject.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_IsInvalid.md&amp;value=---%0Auid%3A%20NetVips.GObject.IsInvalid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L86">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L63">View Source</a>
   </span>
-  <a id="NetVips_GObject_Dispose_" data-uid="NetVips.GObject.Dispose*"></a>
-  <h4 id="NetVips_GObject_Dispose" data-uid="NetVips.GObject.Dispose">Dispose()</h4>
-  <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, 
-or resetting unmanaged resources.</p>
+  <a id="NetVips_GObject_IsInvalid_" data-uid="NetVips.GObject.IsInvalid*"></a>
+  <h4 id="NetVips_GObject_IsInvalid" data-uid="NetVips.GObject.IsInvalid">IsInvalid</h4>
+  <div class="markdown level1 summary"><p>Gets a value that indicates whether the handle is invalid.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+    <pre><code class="lang-csharp hljs">public override bool IsInvalid { get; }</code></pre>
   </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20NetVips.GObject.Dispose(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L69">View Source</a>
-  </span>
-  <a id="NetVips_GObject_Dispose_" data-uid="NetVips.GObject.Dispose*"></a>
-  <h4 id="NetVips_GObject_Dispose_System_Boolean_" data-uid="NetVips.GObject.Dispose(System.Boolean)">Dispose(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Releases unmanaged and - optionally - managed resources</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual void Dispose(bool disposing)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">disposing</span></td>
-        <td><p><span class="xref">true</span> to release both managed and unmanaged resources;
-<span class="xref">false</span> to release only unmanaged resources.</p>
+        <td><p>true if the handle is not valid; otherwise, false.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Runtime.InteropServices.SafeHandle.IsInvalid</span></div>
+  <h3 id="methods">Methods
+  </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_Finalize.md&amp;value=---%0Auid%3A%20NetVips.GObject.Finalize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_ReleaseHandle.md&amp;value=---%0Auid%3A%20NetVips.GObject.ReleaseHandle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L40">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L38">View Source</a>
   </span>
-  <a id="NetVips_GObject_Finalize_" data-uid="NetVips.GObject.Finalize*"></a>
-  <h4 id="NetVips_GObject_Finalize" data-uid="NetVips.GObject.Finalize">Finalize()</h4>
-  <div class="markdown level1 summary"><p>Allows an object to try to free resources and perform other cleanup 
-operations before it is reclaimed by garbage collection.</p>
+  <a id="NetVips_GObject_ReleaseHandle_" data-uid="NetVips.GObject.ReleaseHandle*"></a>
+  <h4 id="NetVips_GObject_ReleaseHandle" data-uid="NetVips.GObject.ReleaseHandle">ReleaseHandle()</h4>
+  <div class="markdown level1 summary"><p>Decreases the reference count of object.
+When its reference count drops to 0, the object is finalized (i.e. its memory is freed).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override bool ReleaseHandle()</code></pre>
   </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if the handle is released successfully; otherwise, in the event of a catastrophic failure, false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Runtime.InteropServices.SafeHandle.ReleaseHandle()</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">System.IDisposable</span>
@@ -201,7 +235,7 @@ operations before it is reclaimed by garbage collection.</p>
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject.md&amp;value=---%0Auid%3A%20NetVips.GObject%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L8" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L9" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

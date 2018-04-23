@@ -79,11 +79,13 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><a class="xref" href="NetVips.GObject.html">GObject</a></div>
-    <div class="level2"><span class="xref">VipsObject</span></div>
-      <div class="level3"><a class="xref" href="NetVips.Image.html">Image</a></div>
-      <div class="level3"><a class="xref" href="NetVips.Interpolate.html">Interpolate</a></div>
-      <div class="level3"><a class="xref" href="NetVips.Operation.html">Operation</a></div>
+    <div class="level1"><span class="xref">System.Runtime.ConstrainedExecution.CriticalFinalizerObject</span></div>
+    <div class="level2"><span class="xref">System.Runtime.InteropServices.SafeHandle</span></div>
+    <div class="level3"><a class="xref" href="NetVips.GObject.html">GObject</a></div>
+    <div class="level4"><span class="xref">VipsObject</span></div>
+      <div class="level5"><a class="xref" href="NetVips.Image.html">Image</a></div>
+      <div class="level5"><a class="xref" href="NetVips.Interpolate.html">Interpolate</a></div>
+      <div class="level5"><a class="xref" href="NetVips.Operation.html">Operation</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -92,10 +94,40 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_Dispose_System_Boolean_">GObject.Dispose(Boolean)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_Dispose">GObject.Dispose()</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_IsInvalid">GObject.IsInvalid</a>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.handle</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.Close()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.DangerousAddRef(System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.DangerousGetHandle()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.DangerousRelease()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.Dispose(System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.SetHandle(System.IntPtr)</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid()</span>
+    </div>
+    <div>
+      <span class="xref">System.Runtime.InteropServices.SafeHandle.IsClosed</span>
     </div>
     <div>
       <span class="xref">System.Object.Equals(System.Object)</span>
@@ -132,7 +164,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_Get_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.Get(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L86">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L93">View Source</a>
   </span>
   <a id="NetVips_VipsObject_Get_" data-uid="NetVips.VipsObject.Get*"></a>
   <h4 id="NetVips_VipsObject_Get_System_String_" data-uid="NetVips.VipsObject.Get(System.String)">Get(String)</h4>
@@ -180,58 +212,10 @@
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_GetBlurb_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.GetBlurb(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L71">View Source</a>
-  </span>
-  <a id="NetVips_VipsObject_GetBlurb_" data-uid="NetVips.VipsObject.GetBlurb*"></a>
-  <h4 id="NetVips_VipsObject_GetBlurb_System_String_" data-uid="NetVips.VipsObject.GetBlurb(System.String)">GetBlurb(String)</h4>
-  <div class="markdown level1 summary"><p>Get the blurb for a GObject property.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string GetBlurb(string name)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_GetDescription.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.GetDescription%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L138">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L149">View Source</a>
   </span>
   <a id="NetVips_VipsObject_GetDescription_" data-uid="NetVips.VipsObject.GetDescription*"></a>
   <h4 id="NetVips_VipsObject_GetDescription" data-uid="NetVips.VipsObject.GetDescription">GetDescription()</h4>
@@ -262,7 +246,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_GetTypeOf_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.GetTypeOf(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L51">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L52">View Source</a>
   </span>
   <a id="NetVips_VipsObject_GetTypeOf_" data-uid="NetVips.VipsObject.GetTypeOf*"></a>
   <h4 id="NetVips_VipsObject_GetTypeOf_System_String_" data-uid="NetVips.VipsObject.GetTypeOf(System.String)">GetTypeOf(String)</h4>
@@ -308,26 +292,10 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_PrintAll.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.PrintAll%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L23">View Source</a>
-  </span>
-  <a id="NetVips_VipsObject_PrintAll_" data-uid="NetVips.VipsObject.PrintAll*"></a>
-  <h4 id="NetVips_VipsObject_PrintAll" data-uid="NetVips.VipsObject.PrintAll">PrintAll()</h4>
-  <div class="markdown level1 summary"><p>Print a table of all active libvips objects. Handy for debugging.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void PrintAll()</code></pre>
-  </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_Set_System_String_System_Object_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.Set(System.String%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L108">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L119">View Source</a>
   </span>
   <a id="NetVips_VipsObject_Set_" data-uid="NetVips.VipsObject.Set*"></a>
   <h4 id="NetVips_VipsObject_Set_System_String_System_Object_" data-uid="NetVips.VipsObject.Set(System.String,System.Object)">Set(String, Object)</h4>
@@ -365,7 +333,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_SetString_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.SetString(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L128">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L139">View Source</a>
   </span>
   <a id="NetVips_VipsObject_SetString_" data-uid="NetVips.VipsObject.SetString*"></a>
   <h4 id="NetVips_VipsObject_SetString_System_String_" data-uid="NetVips.VipsObject.SetString(System.String)">SetString(String)</h4>

@@ -188,14 +188,25 @@ else, it will be expanded to match the condition image. For example:</p>
 </code></pre><p>Will make an image where true pixels are green and false pixels are red.</p>
 <p>This is useful for <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Bandjoin_"><code>Bandjoin</code></a>, the thing to join two or more
 images up bandwise. You can write:</p>
-<pre><code>var rgba = rgb.Bandjoin(255);
+<pre><code class="lang-csharp">var rgba = rgb.Bandjoin(255);
 </code></pre><p>to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 course you can also write:</p>
-<pre><code>var resultImage = image1.Bandjoin(image2);
+<pre><code class="lang-csharp">var resultImage = image1.Bandjoin(image2);
 resultImage = image1.Bandjoin(new[] {image2, image3});
-resultImage = image1.bandjoin(new[] {image2, 255});
+resultImage = image1.Bandjoin(new[] {image2, 255});
 </code></pre><p>and so on.</p>
-<h2 id="automatic-documentation">Automatic documentation</h2>
+<h2 id="logging-and-warnings">Logging and warnings</h2>
+<p>NetVips can log warnings and debug messages from libvips. Some warnings are important, 
+for example truncated files, and you might want to see them.</p>
+<p>Add these lines somewhere near the start of your program:</p>
+<pre><code class="lang-csharp">_handlerId = Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, (domain, level, message) =&gt;
+{
+    Console.WriteLine(&quot;Domain: &#39;{0}&#39; Level: {1}&quot;, domain, level);
+    Console.WriteLine(&quot;Message: {0}&quot;, message);
+});
+</code></pre><p>Make sure to remove the log handler, if you do not need it anymore:</p>
+<pre><code class="lang-csharp">Log.RemoveLogHandler(&quot;VIPS&quot;, _handlerId);
+</code></pre><h2 id="automatic-documentation">Automatic documentation</h2>
 <p>These API docs are generated automatically by DocFX. It generates API reference documentation
 from triple-slash comments in our source code.</p>
 <h2 id="generated-methods">Generated methods</h2>
@@ -205,7 +216,8 @@ It examines libvips and writes the XML documentation and the corresponding code 
 <p>Use the C API docs for more detail:</p>
 <p><a href="https://jcupitt.github.io/libvips/API/current">https://jcupitt.github.io/libvips/API/current</a></p>
 <h2 id="exceptions">Exceptions</h2>
-<p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>. You can catch it in the usual way.</p>
+<p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>.
+You can catch it in the usual way.</p>
 <h2 id="enums">Enums</h2>
 <p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as strings constants
 like <code>&quot;uchar&quot;</code>. They are documented as a set of classes for convenience, see 
