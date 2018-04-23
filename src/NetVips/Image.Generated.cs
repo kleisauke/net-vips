@@ -1118,7 +1118,6 @@ namespace NetVips
         /// <param name="separator">Separator characters</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Csvsave(string filename, int? pageHeight = null, string separator = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -1581,7 +1580,6 @@ namespace NetVips
         /// <param name="compression">ZIP deflate compression level</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Dzsave(string filename, string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -3283,7 +3281,6 @@ namespace NetVips
         /// <param name="quantTable">Use predefined quantization table with given index</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Jpegsave(string filename, int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -3459,7 +3456,6 @@ namespace NetVips
         /// <param name="quantTable">Use predefined quantization table with given index</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void JpegsaveMime(int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -4064,7 +4060,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Magicksave(string filename, string format = null, int? quality = null, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -4900,7 +4895,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Matrixprint(int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -4935,7 +4929,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Matrixsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -6558,7 +6551,6 @@ namespace NetVips
         /// <param name="filter">libpng row filter flag(s)</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Pngsave(string filename, int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -6751,7 +6743,6 @@ namespace NetVips
         /// <param name="squash">save as one bit</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Ppmsave(string filename, int? pageHeight = null, bool? ascii = null, bool? squash = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -6961,7 +6952,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Radsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7047,7 +7037,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Rawsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7082,7 +7071,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void RawsaveFd(int fd, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -8133,7 +8121,6 @@ namespace NetVips
         /// <param name="in">Array of input images</param>
         /// <param name="outFormat">Format for output filename</param>
         /// <param name="inFormat">Format for input filename</param>
-        /// <returns>None</returns>
         public static void System(string cmdFormat, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
             var options = new VOption();
@@ -8169,7 +8156,6 @@ namespace NetVips
         /// <param name="in">Array of input images</param>
         /// <param name="outFormat">Format for output filename</param>
         /// <param name="inFormat">Format for input filename</param>
-        /// <returns>None</returns>
         public static void System(string cmdFormat, out Image @out, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
             var options = new VOption();
@@ -8211,7 +8197,6 @@ namespace NetVips
         /// <param name="in">Array of input images</param>
         /// <param name="outFormat">Format for output filename</param>
         /// <param name="inFormat">Format for input filename</param>
-        /// <returns>None</returns>
         public static void System(string cmdFormat, out Image @out, out string log, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
             var options = new VOption();
@@ -8807,7 +8792,6 @@ namespace NetVips
         /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -9269,7 +9253,6 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Vipssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -9490,7 +9473,6 @@ namespace NetVips
         /// <param name="alphaQ">Change alpha plane fidelity for lossy compression</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        /// <returns>None</returns>
         public void Webpsave(string filename, int? pageHeight = null, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
