@@ -204,20 +204,42 @@ Will make an image where true pixels are green and false pixels are red.
 This is useful for [`Bandjoin`](xref:NetVips.Image.Bandjoin*), the thing to join two or more
 images up bandwise. You can write:
 
-```
+```csharp
 var rgba = rgb.Bandjoin(255);
 ```
 
 to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 course you can also write:
 
-```
+```csharp
 var resultImage = image1.Bandjoin(image2);
 resultImage = image1.Bandjoin(new[] {image2, image3});
 resultImage = image1.Bandjoin(new[] {image2, 255});
 ```
 
 and so on.
+
+Logging and warnings
+--------------------
+
+NetVips can log warnings and debug messages from libvips. Some warnings are important, 
+for example truncated files, and you might want to see them.
+
+Add these lines somewhere near the start of your program:
+
+```csharp
+_handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Critical, (domain, level, message) =>
+{
+    Console.WriteLine("Domain: '{0}' Level: {1}", domain, level);
+    Console.WriteLine("Message: {0}", message);
+});
+```
+
+Make sure to remove the log handler, if you do not need it anymore:
+
+```csharp
+Log.RemoveLogHandler("VIPS", _handlerId);
+```
 
 Automatic documentation
 -----------------------
@@ -239,7 +261,8 @@ https://jcupitt.github.io/libvips/API/current
 Exceptions
 ----------
 
-The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException). You can catch it in the usual way.
+The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException).
+You can catch it in the usual way.
 
 Enums
 -----
