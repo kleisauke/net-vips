@@ -1,15 +1,14 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace NetVips
 {
     /// <summary>
     /// Manage <see cref="Internal.GObject"/> lifetime.
     /// </summary>
-    public class GObject : IDisposable
+    public class GObject : SafeHandle
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
-
-        internal IntPtr Pointer;
 
         // Handy for debugging
         // public static int NObjects;
@@ -22,22 +21,30 @@ namespace NetVips
         /// instance is garbage-collected, the underlying object is unreferenced.
         /// </remarks>
         /// <param name="pointer"></param>
-        internal GObject(IntPtr pointer)
+        internal GObject(IntPtr pointer) : base(IntPtr.Zero, true)
         {
             // record the pointer we were given to manage
-            Pointer = pointer;
+            SetHandle(pointer);
+
             // NObjects++;
             // logger.Debug($"GObject = {pointer}");
         }
 
         /// <summary>
-        /// Allows an object to try to free resources and perform other cleanup 
-        /// operations before it is reclaimed by garbage collection.
+        /// Decreases the reference count of object.
+        /// When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
         /// </summary>
-        ~GObject()
+        /// <returns>true if the handle is released successfully; otherwise, in the event of a catastrophic failure, false.</returns>
+        protected override bool ReleaseHandle()
         {
-            // Do not re-create Dispose clean-up code here.
-            Dispose(false);
+            // logger.Debug($"Unref: GObject = {handle}");
+            if (!IsInvalid)
+            {
+                Internal.GObject.GObjectUnref(handle);
+            }
+            // NObjects--;
+
+            return true;
         }
 
         /// <summary>
@@ -45,50 +52,17 @@ namespace NetVips
         /// </summary>
         internal void ObjectRef()
         {
-            // logger.Debug($"Ref: GObject = {Pointer}");
-            Internal.GObject.GObjectRef(Pointer);
+            // logger.Debug($"Ref: GObject = {handle}");
+            Internal.GObject.GObjectRef(handle);
         }
 
         /// <summary>
-        /// Decreases the reference count of object. 
-        /// When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
+        /// Gets a value that indicates whether the handle is invalid.
         /// </summary>
-        internal void ObjectUnref()
-        {
-            // logger.Debug($"Unref: GObject = {Pointer}");
-            Internal.GObject.GObjectUnref(Pointer);
-        }
+        /// <returns>true if the handle is not valid; otherwise, false.</returns>
+        public override bool IsInvalid => handle == IntPtr.Zero;
 
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
-        /// <see langword="false" /> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            // logger.Debug($"GC: GObject = {Pointer}");
-            if (Pointer != IntPtr.Zero)
-            {
-                // on GC, unref
-                ObjectUnref();
-
-                Pointer = IntPtr.Zero;
-            }
-
-            // NObjects--;
-            // logger.Debug($"GC: GObject = {Pointer}");
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, 
-        /// or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-
-            // This object will be cleaned up by the Dispose method.
-            GC.SuppressFinalize(this);
-        }
+        // Do not provide a finalizer - SafeHandle's critical finalizer will
+        // call ReleaseHandle for us.
     }
 }

@@ -70,12 +70,20 @@ namespace NetVips.Internal
 
         internal static string VipsPathFilename7(string path)
         {
-            return VipsPathFilename7(path.ToUtf8Ptr()).ToUtf8String();
+            var pointer = path.ToUtf8Ptr();
+            var result = VipsPathFilename7(pointer).ToUtf8String();
+            GLib.GFree(pointer);
+
+            return result;
         }
 
         internal static string VipsPathMode7(string path)
         {
-            return VipsPathMode7(path.ToUtf8Ptr()).ToUtf8String();
+            var pointer = path.ToUtf8Ptr();
+            var result = VipsPathMode7(pointer).ToUtf8String();
+            GLib.GFree(pointer);
+
+            return result;
         }
     }
 
@@ -89,31 +97,32 @@ namespace NetVips.Internal
     internal static class VipsObject
     {
         [StructLayout(LayoutKind.Explicit, Size = 80)]
-        internal struct Fields
+        internal struct Struct
         {
-            [FieldOffset(0)] internal GObject.Fields ParentInstance;
+            [FieldOffset(0)] internal GObject.Struct ParentInstance;
         }
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_argument_map")]
-        internal static extern IntPtr VipsArgumentMap(IntPtr @object, IntPtr fn, IntPtr a, IntPtr b);
+        internal static extern IntPtr VipsArgumentMap(NetVips.VipsObject @object, VipsArgumentMapFn fn, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_get_argument")]
-        internal static extern int VipsObjectGetArgument(IntPtr @object, [MarshalAs(UnmanagedType.LPStr)] string name,
-            IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance);
+        internal static extern int VipsObjectGetArgument(NetVips.VipsObject @object, [MarshalAs(UnmanagedType.LPStr)] string name,
+            ref GParamSpec.Struct pspec, ref VipsArgumentClass.Struct argumentClass,
+            ref VipsArgumentInstance.Struct argumentInstance);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_set_from_string")]
-        internal static extern int VipsObjectSetFromString(IntPtr @object,
+        internal static extern int VipsObjectSetFromString(NetVips.VipsObject @object,
             [MarshalAs(UnmanagedType.LPStr)] string @string);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_type_map")]
-        internal static extern IntPtr VipsTypeMap(ulong @base, IntPtr fn, IntPtr a, IntPtr b);
+        internal static extern IntPtr VipsTypeMap(ulong @base, VipsTypeMap2Fn fn, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_type_find")]
@@ -133,30 +142,18 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_unref_outputs")]
-        internal static extern void VipsObjectUnrefOutputs(IntPtr @object);
+        internal static extern void VipsObjectUnrefOutputs(NetVips.VipsObject @object);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_get_description")]
-        internal static extern IntPtr VipsObjectGetDescription(IntPtr @object);
-
-        internal static IntPtr VipsArgumentMap(IntPtr pointer, VipsArgumentMapFn fn, IntPtr a, IntPtr b)
-        {
-            var funcPtr = fn == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(fn);
-            return VipsArgumentMap(pointer, funcPtr, a, b);
-        }
-
-        internal static IntPtr VipsTypeMap(ulong @base, VipsTypeMap2Fn fn, IntPtr a, IntPtr b)
-        {
-            var funcPtr = fn == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(fn);
-            return VipsTypeMap(@base, funcPtr, a, b);
-        }
+        internal static extern IntPtr VipsObjectGetDescription(NetVips.VipsObject @object);
     }
 
     internal static class VipsArgument
     {
         [StructLayout(LayoutKind.Explicit, Size = 8)]
-        internal struct Fields
+        internal struct Struct
         {
             [FieldOffset(0)] internal IntPtr Pspec;
         }
@@ -165,9 +162,9 @@ namespace NetVips.Internal
     internal static class VipsArgumentClass
     {
         [StructLayout(LayoutKind.Explicit, Size = 32)]
-        internal struct Fields
+        internal struct Struct
         {
-            [FieldOffset(0)] internal VipsArgument.Fields Parent;
+            [FieldOffset(0)] internal VipsArgument.Struct Parent;
 
             [FieldOffset(8)] internal IntPtr ObjectClass;
 
@@ -182,9 +179,9 @@ namespace NetVips.Internal
     internal static class VipsArgumentInstance
     {
         [StructLayout(LayoutKind.Explicit, Size = 40)]
-        internal struct Fields
+        internal struct Struct
         {
-            [FieldOffset(0)] internal VipsArgument.Fields Parent;
+            [FieldOffset(0)] internal VipsArgument.Struct Parent;
 
             // More
         }
@@ -198,61 +195,56 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_get_ref_string")]
-        internal static extern IntPtr VipsValueGetRefString(IntPtr value, ref ulong length);
+        internal static extern IntPtr VipsValueGetRefString(ref GValue.Struct value, ref ulong length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_ref_string")]
-        internal static extern void VipsValueSetRefString(IntPtr value, IntPtr str);
+        internal static extern void VipsValueSetRefString(ref GValue.Struct value, IntPtr str);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_get_blob")]
-        internal static extern IntPtr VipsValueGetBlob(IntPtr value, ref ulong length);
+        internal static extern IntPtr VipsValueGetBlob(ref GValue.Struct value, ref ulong length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_blob")]
-        internal static extern void VipsValueSetBlob(IntPtr value, IntPtr freeFn, IntPtr data, ulong length);
+        internal static extern void VipsValueSetBlob(ref GValue.Struct value, VipsCallbackFn freeFn, IntPtr data,
+            ulong length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_blob_free")]
-        internal static extern void VipsValueSetBlobFree(IntPtr value, IntPtr data, ulong length);
+        internal static extern void VipsValueSetBlobFree(ref GValue.Struct value, IntPtr data, ulong length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_get_array_double")]
-        internal static extern IntPtr VipsValueGetArrayDouble(IntPtr value, ref int n);
+        internal static extern IntPtr VipsValueGetArrayDouble(ref GValue.Struct value, ref int n);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_array_double")]
-        internal static extern void VipsValueSetArrayDouble(IntPtr value, double[] array, int n);
+        internal static extern void VipsValueSetArrayDouble(ref GValue.Struct value, double[] array, int n);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_get_array_int")]
-        internal static extern IntPtr VipsValueGetArrayInt(IntPtr value, ref int n);
+        internal static extern IntPtr VipsValueGetArrayInt(ref GValue.Struct value, ref int n);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_array_int")]
-        internal static extern void VipsValueSetArrayInt(IntPtr value, int[] array, int n);
-
-        internal static void VipsValueSetBlob(IntPtr value, VipsCallbackFn freeFn, IntPtr data, ulong length)
-        {
-            var funcPtr = freeFn == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(freeFn);
-            VipsValueSetBlob(value, funcPtr, data, length);
-        }
+        internal static extern void VipsValueSetArrayInt(ref GValue.Struct value, int[] array, int n);
     }
 
     internal static class VipsImage
     {
         [StructLayout(LayoutKind.Explicit, Size = 392)]
-        internal struct Fields
+        internal struct Struct
         {
-            [FieldOffset(0)] internal VipsObject.Fields ParentInstance;
+            [FieldOffset(0)] internal VipsObject.Struct ParentInstance;
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -284,76 +276,74 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_write")]
-        internal static extern int VipsImageWrite(IntPtr image, IntPtr @out);
+        internal static extern int VipsImageWrite(Image image, Image @out);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_write_to_memory")]
-        internal static extern IntPtr VipsImageWriteToMemory(IntPtr @in, ref ulong size);
+        internal static extern IntPtr VipsImageWriteToMemory(Image @in, ref ulong size);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_copy_memory")]
-        internal static extern IntPtr VipsImageCopyMemory(IntPtr image);
+        internal static extern IntPtr VipsImageCopyMemory(Image image);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_get_array_image")]
-        internal static extern IntPtr VipsValueGetArrayImage(IntPtr value, ref int n);
+        internal static extern IntPtr VipsValueGetArrayImage(ref GValue.Struct value, ref int n);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_get_array_image")]
-        internal static extern IntPtr VipsValueGetArrayImage(IntPtr value, IntPtr n);
+        internal static extern IntPtr VipsValueGetArrayImage(ref GValue.Struct value, IntPtr n);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_array_image")]
-        internal static extern void VipsValueSetArrayImage(IntPtr value, int n);
+        internal static extern void VipsValueSetArrayImage(ref GValue.Struct value, int n);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_image_set")]
-        internal static extern void VipsImageSet(IntPtr image, [MarshalAs(UnmanagedType.LPStr)] string name,
-            IntPtr value);
+        internal static extern void VipsImageSet(Image image, [MarshalAs(UnmanagedType.LPStr)] string name,
+            ref GValue.Struct value);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_image_get")]
-        internal static extern int VipsImageGet(IntPtr image, [MarshalAs(UnmanagedType.LPStr)] string name,
-            IntPtr valueCopy);
+        internal static extern int VipsImageGet(Image image, [MarshalAs(UnmanagedType.LPStr)] string name,
+            ref GValue.Struct valueCopy);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_get_typeof")]
-        internal static extern ulong VipsImageGetTypeof(IntPtr image, [MarshalAs(UnmanagedType.LPStr)] string name);
+        internal static extern ulong VipsImageGetTypeof(Image image, [MarshalAs(UnmanagedType.LPStr)] string name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_remove")]
-        internal static extern int VipsImageRemove(IntPtr image, [MarshalAs(UnmanagedType.LPStr)] string name);
+        internal static extern int VipsImageRemove(Image image, [MarshalAs(UnmanagedType.LPStr)] string name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_get_fields")]
-        internal static extern IntPtr VipsImageGetFields(IntPtr image);
-
-        internal static IntPtr VipsImageNewFromMemory(GCHandle data, ulong size, int width, int height, int bands,
-            Enums.VipsBandFormat format)
-        {
-            return VipsImageNewFromMemory(data.AddrOfPinnedObject(), size, width, height, bands, format);
-        }
+        internal static extern IntPtr VipsImageGetFields(Image image);
 
         internal static IntPtr VipsImageNewTempFile(string format)
         {
-            return VipsImageNewTempFile(format.ToUtf8Ptr());
+            var pointer = format.ToUtf8Ptr();
+            var result = VipsImageNewTempFile(pointer);
+            GLib.GFree(pointer);
+
+            return result;
         }
     }
 
     internal static class VipsInterpolate
     {
         [StructLayout(LayoutKind.Explicit, Size = 80)]
-        internal struct Fields
+        internal struct Struct
         {
-            [FieldOffset(0)] internal VipsObject.Fields ParentObject;
+            [FieldOffset(0)] internal VipsObject.Struct ParentObject;
 
             // More
         }
@@ -367,9 +357,9 @@ namespace NetVips.Internal
     internal static class VipsOperation
     {
         [StructLayout(LayoutKind.Explicit, Size = 96)]
-        internal struct Fields
+        internal struct Struct
         {
-            [FieldOffset(0)] internal VipsObject.Fields ParentInstance;
+            [FieldOffset(0)] internal VipsObject.Struct ParentInstance;
 
             // More
         }
@@ -377,7 +367,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_operation_get_flags")]
-        internal static extern Enums.VipsOperationFlags VipsOperationGetFlags(IntPtr operation);
+        internal static extern Enums.VipsOperationFlags VipsOperationGetFlags(Operation operation);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -387,7 +377,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_cache_operation_build")]
-        internal static extern IntPtr VipsCacheOperationBuild(IntPtr operation);
+        internal static extern IntPtr VipsCacheOperationBuild(Operation operation);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

@@ -19,7 +19,6 @@ namespace NetVips
         /// <summary>
         /// Print a table of all active libvips objects. Handy for debugging.
         /// </summary>
-        /// <returns></returns>
         internal static void PrintAll()
         {
             GC.Collect();
@@ -31,18 +30,18 @@ namespace NetVips
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        internal GParamSpec.Fields? GetPspec(string name)
+        private GParamSpec.Struct? GetPspec(string name)
         {
             // logger.Debug($"GetPspec: this = {this}, name = {name}");
-            var pspec = new GParamSpec.Fields().ToIntPtr<GParamSpec.Fields>();
-            var argumentClass = new VipsArgumentClass.Fields().ToIntPtr<VipsArgumentClass.Fields>();
-            var argumentInstance = new VipsArgumentInstance.Fields().ToIntPtr<VipsArgumentInstance.Fields>();
-            var result =
-                Internal.VipsObject.VipsObjectGetArgument(Pointer, name, pspec, argumentClass, argumentInstance);
+            var pspec = new GParamSpec.Struct();
+            var argumentClass = new VipsArgumentClass.Struct();
+            var argumentInstance = new VipsArgumentInstance.Struct();
+            var argument = Internal.VipsObject.VipsObjectGetArgument(this, name, ref pspec, ref argumentClass,
+                ref argumentInstance);
 
-            return result != 0
-                ? default(GParamSpec.Fields?)
-                : pspec.Dereference<IntPtr>().Dereference<GParamSpec.Fields>();
+            return argument != 0
+                ? default(GParamSpec.Struct?)
+                : pspec.ToIntPtr<GParamSpec.Struct>().Dereference<IntPtr>().Dereference<GParamSpec.Struct>();
         }
 
         /// <summary>
@@ -74,9 +73,13 @@ namespace NetVips
         {
             var pspec = GetPspec(name);
 
-            return !pspec.HasValue
-                ? null
-                : Marshal.PtrToStringAnsi(GParamSpec.GParamSpecGetBlurb(pspec.Value.ToIntPtr<GParamSpec.Fields>()));
+            if (!pspec.HasValue)
+            {
+                return null;
+            }
+
+            var pspecValue = pspec.Value;
+            return Marshal.PtrToStringAnsi(GParamSpec.GParamSpecGetBlurb(ref pspecValue));
         }
 
         /// <summary>
@@ -99,7 +102,11 @@ namespace NetVips
             var gtype = pspec.Value.ValueType;
             var gv = new GValue();
             gv.SetType(gtype);
-            Internal.GObject.GObjectGetProperty(Pointer, name, gv.Pointer);
+
+            // this will add a ref for GObject properties, that ref will be
+            // unreffed when the gvalue is finalized
+            Internal.GObject.GObjectGetProperty(this, name, ref gv.Struct);
+
             return gv.Get();
         }
 
@@ -116,12 +123,7 @@ namespace NetVips
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            Internal.GObject.GObjectSetProperty(Pointer, name, gv.Pointer);
-
-            // We must have this extra, operation on gv or we could
-            // get a GC between gv.Set and GObjectSetProperty which would unset 
-            // the gvalue ... this just keeps gv alive until we're done.
-            gv.GetTypeOf();
+            Internal.GObject.GObjectSetProperty(this, name, ref gv.Struct);
         }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace NetVips
         /// <returns></returns>
         public bool SetString(string stringOptions)
         {
-            var result = Internal.VipsObject.VipsObjectSetFromString(Pointer, stringOptions);
+            var result = Internal.VipsObject.VipsObjectSetFromString(this, stringOptions);
             return result == 0;
         }
 
@@ -146,7 +148,7 @@ namespace NetVips
         /// <returns></returns>
         public string GetDescription()
         {
-            return Marshal.PtrToStringAnsi(Internal.VipsObject.VipsObjectGetDescription(Pointer));
+            return Marshal.PtrToStringAnsi(Internal.VipsObject.VipsObjectGetDescription(this));
         }
     }
 }

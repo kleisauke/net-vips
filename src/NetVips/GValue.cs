@@ -24,7 +24,10 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal IntPtr Pointer;
+        internal Internal.GValue.Struct Struct;
+
+        // Track whether Dispose has been called.		
+        private bool _disposed;
 
         // look up some common gtypes at init for speed
 
@@ -189,9 +192,8 @@ namespace NetVips
         /// </summary>
         public GValue()
         {
-            // allocate memory for the gvalue which will be freed on GC
-            Pointer = new Internal.GValue.Fields().ToIntPtr<Internal.GValue.Fields>();
-            // logger.Debug($"GValue = {Pointer}");
+            Struct = new Internal.GValue.Struct();
+            // logger.Debug($"GValue = {Struct}");
         }
 
         /// <summary>
@@ -205,10 +207,9 @@ namespace NetVips
         /// TypeFind.
         /// </remarks>
         /// <param name="gtype"></param>
-        /// <returns></returns>
         public void SetType(ulong gtype)
         {
-            Internal.GValue.GValueInit(Pointer, gtype);
+            Internal.GValue.GValueInit(ref Struct, gtype);
         }
 
         /// <summary>
@@ -219,7 +220,6 @@ namespace NetVips
         /// assigned.
         /// </remarks>
         /// <param name="value"></param>
-        /// <returns></returns>
         public void Set(object value)
         {
             // logger.Debug($"Set: value = {value}");
@@ -227,31 +227,35 @@ namespace NetVips
             var fundamental = GType.GTypeFundamental(gtype);
             if (gtype == GBoolType)
             {
-                Internal.GValue.GValueSetBoolean(Pointer, Convert.ToBoolean(value) ? 1 : 0);
+                Internal.GValue.GValueSetBoolean(ref Struct, Convert.ToBoolean(value) ? 1 : 0);
             }
             else if (gtype == GIntType)
             {
-                Internal.GValue.GValueSetInt(Pointer, Convert.ToInt32(value));
+                Internal.GValue.GValueSetInt(ref Struct, Convert.ToInt32(value));
             }
             else if (gtype == GDoubleType)
             {
-                Internal.GValue.GValueSetDouble(Pointer, Convert.ToDouble(value));
+                Internal.GValue.GValueSetDouble(ref Struct, Convert.ToDouble(value));
             }
             else if (fundamental == GEnumType)
             {
-                Internal.GValue.GValueSetEnum(Pointer, ToEnum(gtype, value));
+                Internal.GValue.GValueSetEnum(ref Struct, ToEnum(gtype, value));
             }
             else if (fundamental == GFlagsType)
             {
-                Internal.GValue.GValueSetFlags(Pointer, Convert.ToUInt32(value));
+                Internal.GValue.GValueSetFlags(ref Struct, Convert.ToUInt32(value));
             }
             else if (gtype == GStrType)
             {
-                Internal.GValue.GValueSetString(Pointer, Convert.ToString(value).ToUtf8Ptr());
+                var pointer = Convert.ToString(value).ToUtf8Ptr();
+                Internal.GValue.GValueSetString(ref Struct, pointer);
+                GLib.GFree(pointer);
             }
             else if (gtype == RefStrType)
             {
-                VipsType.VipsValueSetRefString(Pointer, Convert.ToString(value).ToUtf8Ptr());
+                var pointer = Convert.ToString(value).ToUtf8Ptr();
+                VipsType.VipsValueSetRefString(ref Struct, pointer);
+                GLib.GFree(pointer);
             }
             else if (fundamental == GObjectType)
             {
@@ -262,7 +266,7 @@ namespace NetVips
                     );
                 }
 
-                Internal.GObject.GValueSetObject(Pointer, gObject.Pointer);
+                Internal.GObject.GValueSetObject(ref Struct, gObject);
             }
             else if (gtype == ArrayIntType)
             {
@@ -274,14 +278,14 @@ namespace NetVips
                 switch (value)
                 {
                     case int[] ints:
-                        VipsType.VipsValueSetArrayInt(Pointer, ints, ints.Length);
+                        VipsType.VipsValueSetArrayInt(ref Struct, ints, ints.Length);
                         break;
                     case double[] doubles:
-                        VipsType.VipsValueSetArrayInt(Pointer, Array.ConvertAll(doubles, Convert.ToInt32),
+                        VipsType.VipsValueSetArrayInt(ref Struct, Array.ConvertAll(doubles, Convert.ToInt32),
                             doubles.Length);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayInt(Pointer, Array.ConvertAll(objects, Convert.ToInt32),
+                        VipsType.VipsValueSetArrayInt(ref Struct, Array.ConvertAll(objects, Convert.ToInt32),
                             objects.Length);
                         break;
                     default:
@@ -300,14 +304,14 @@ namespace NetVips
                 switch (value)
                 {
                     case double[] doubles:
-                        VipsType.VipsValueSetArrayDouble(Pointer, doubles, doubles.Length);
+                        VipsType.VipsValueSetArrayDouble(ref Struct, doubles, doubles.Length);
                         break;
                     case int[] ints:
-                        VipsType.VipsValueSetArrayDouble(Pointer, Array.ConvertAll(ints, Convert.ToDouble),
+                        VipsType.VipsValueSetArrayDouble(ref Struct, Array.ConvertAll(ints, Convert.ToDouble),
                             ints.Length);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayDouble(Pointer, Array.ConvertAll(objects, Convert.ToDouble),
+                        VipsType.VipsValueSetArrayDouble(ref Struct, Array.ConvertAll(objects, Convert.ToDouble),
                             objects.Length);
                         break;
                     default:
@@ -326,13 +330,13 @@ namespace NetVips
                 }
 
                 var size = images.Length;
-                VipsImage.VipsValueSetArrayImage(Pointer, size);
+                VipsImage.VipsValueSetArrayImage(ref Struct, size);
 
-                var ptrArr = VipsImage.VipsValueGetArrayImage(Pointer, IntPtr.Zero);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(ref Struct, IntPtr.Zero);
 
                 for (var i = 0; i < size; i++)
                 {
-                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, images[i].Pointer);
+                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, images[i].DangerousGetHandle());
 
                     // the gvalue needs a ref on each of the images
                     images[i].ObjectRef();
@@ -367,27 +371,18 @@ namespace NetVips
 
                 if (Base.AtLeastLibvips(8, 6))
                 {
-                    VipsType.VipsValueSetBlobFree(Pointer, memory, (ulong) length);
+                    VipsType.VipsValueSetBlobFree(ref Struct, memory, (ulong) length);
                 }
                 else
                 {
-                    VipsCallbackFn freeFn = (a, b) =>
+                    int FreeFn(IntPtr a, IntPtr b)
                     {
                         GLib.GFree(a);
 
                         return 0;
-                    };
-
-                    // prevent it from being re-located or disposed of by the garbage collector
-                    var gchCallbackDelegate = GCHandle.Alloc(freeFn);
-
-                    VipsType.VipsValueSetBlob(Pointer, freeFn, memory, (ulong) length);
-
-                    if (gchCallbackDelegate.IsAllocated)
-                    {
-                        // release reference to delegate
-                        gchCallbackDelegate.Free();
                     }
+
+                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, memory, (ulong) length);
                 }
             }
             else
@@ -414,40 +409,40 @@ namespace NetVips
             object result;
             if (gtype == GBoolType)
             {
-                result = Internal.GValue.GValueGetBoolean(Pointer) != 0;
+                result = Internal.GValue.GValueGetBoolean(ref Struct) != 0;
             }
             else if (gtype == GIntType)
             {
-                result = Internal.GValue.GValueGetInt(Pointer);
+                result = Internal.GValue.GValueGetInt(ref Struct);
             }
             else if (gtype == GDoubleType)
             {
-                result = Internal.GValue.GValueGetDouble(Pointer);
+                result = Internal.GValue.GValueGetDouble(ref Struct);
             }
             else if (fundamental == GEnumType)
             {
-                result = FromEnum(gtype, Internal.GValue.GValueGetEnum(Pointer));
+                result = FromEnum(gtype, Internal.GValue.GValueGetEnum(ref Struct));
             }
             else if (fundamental == GFlagsType)
             {
-                result = Internal.GValue.GValueGetFlags(Pointer);
+                result = Internal.GValue.GValueGetFlags(ref Struct);
             }
             else if (gtype == GStrType)
             {
-                result = Internal.GValue.GValueGetString(Pointer).ToUtf8String();
+                result = Internal.GValue.GValueGetString(ref Struct).ToUtf8String();
             }
             else if (gtype == RefStrType)
             {
                 // don't bother getting the size -- assume these are always
                 // null-terminated C strings
                 ulong psize = 0;
-                result = VipsType.VipsValueGetRefString(Pointer, ref psize).ToUtf8String();
+                result = VipsType.VipsValueGetRefString(ref Struct, ref psize).ToUtf8String();
             }
             else if (gtype == ImageType)
             {
                 // GValueGetObject() will not add a ref ... that is
                 // held by the gvalue
-                var vi = Internal.GObject.GValueGetObject(Pointer);
+                var vi = Internal.GObject.GValueGetObject(ref Struct);
 
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
@@ -460,7 +455,7 @@ namespace NetVips
             else if (gtype == ArrayIntType)
             {
                 var psize = 0;
-                var intPtr = VipsType.VipsValueGetArrayInt(Pointer, ref psize);
+                var intPtr = VipsType.VipsValueGetArrayInt(ref Struct, ref psize);
 
                 var intArr = new int[psize];
                 Marshal.Copy(intPtr, intArr, 0, psize);
@@ -469,7 +464,7 @@ namespace NetVips
             else if (gtype == ArrayDoubleType)
             {
                 var psize = 0;
-                var intPtr = VipsType.VipsValueGetArrayDouble(Pointer, ref psize);
+                var intPtr = VipsType.VipsValueGetArrayDouble(ref Struct, ref psize);
 
                 var doubleArr = new double[psize];
                 Marshal.Copy(intPtr, doubleArr, 0, psize);
@@ -478,7 +473,7 @@ namespace NetVips
             else if (gtype == ArrayImageType)
             {
                 var psize = 0;
-                var ptrArr = VipsImage.VipsValueGetArrayImage(Pointer, ref psize);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(ref Struct, ref psize);
 
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
@@ -493,7 +488,7 @@ namespace NetVips
             else if (gtype == BlobType)
             {
                 ulong psize = 0;
-                var array = VipsType.VipsValueGetBlob(Pointer, ref psize);
+                var array = VipsType.VipsValueGetBlob(ref Struct, ref psize);
 
                 // Blob types are returned as an array of bytes.
                 var byteArr = new byte[psize];
@@ -514,7 +509,7 @@ namespace NetVips
         /// <returns>The GType of this GValue.</returns>
         public ulong GetTypeOf()
         {
-            return Pointer.Dereference<Internal.GValue.Fields>().GType;
+            return Struct.GType;
         }
 
         /// <summary>
@@ -534,16 +529,19 @@ namespace NetVips
         /// <see langword="false" /> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
-            // logger.Debug($"GC: GValue = {Pointer}");
-            if (Pointer != IntPtr.Zero)
-            {
-                // and tag it to be unset on GC as well
-                Internal.GValue.GValueUnset(Pointer);
+            // logger.Debug($"GC: GValue = {Struct}");
 
-                Pointer = IntPtr.Zero;
+            // Check to see if Dispose has already been called.
+            if (!_disposed)
+            {
+                // and tag it to be unset on GC as well	
+                Internal.GValue.GValueUnset(ref Struct);
+
+                // Note disposing has been done.		
+                _disposed = true;
             }
 
-            // logger.Debug($"GC: GValue = {Pointer}");
+            // logger.Debug($"GC: GValue = {Struct}");
         }
 
         /// <summary>

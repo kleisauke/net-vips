@@ -37,7 +37,6 @@ namespace NetVips
         /// <param name="other">The right-hand argument.</param>
         /// <param name="operationName">The base part of the operation name.</param>
         /// <param name="operation">The operation to call.</param>
-        /// <returns></returns>
         public static object CallEnum(object image, object other, string operationName, string operation)
         {
             if (other.IsPixel())
@@ -172,6 +171,7 @@ namespace NetVips
             var fileNamePtr = vipsFilename.ToUtf8Ptr();
             var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
             var fileOptions = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(fileNamePtr));
+            GLib.GFree(fileNamePtr);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoad(filename));
             if (name == null)
@@ -248,6 +248,7 @@ namespace NetVips
             }
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length));
+            GLib.GFree(memory);
             if (name == null)
             {
                 throw new VipsException("unable to load from buffer");
@@ -379,8 +380,8 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var vi = VipsImage.VipsImageNewFromMemory(handle, (ulong) data.Length, width, height, bands,
-                (Internal.Enums.VipsBandFormat) formatValue);
+            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), (ulong) data.Length, width, height,
+                bands, (Internal.Enums.VipsBandFormat) formatValue);
 
             if (vi == IntPtr.Zero)
             {
@@ -466,7 +467,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to copy to memory.</exception>
         public Image CopyMemory()
         {
-            var vi = VipsImage.VipsImageCopyMemory(Pointer);
+            var vi = VipsImage.VipsImageCopyMemory(this);
             if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to copy to memory");
@@ -516,6 +517,7 @@ namespace NetVips
             var fileNamePtr = vipsFilename.ToUtf8Ptr();
             var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
             var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(fileNamePtr));
+            GLib.GFree(fileNamePtr);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSave(filename));
             if (name == null)
@@ -575,6 +577,7 @@ namespace NetVips
         {
             var formatStrPtr = formatString.ToUtf8Ptr();
             var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(formatStrPtr));
+            GLib.GFree(formatStrPtr);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
             if (name == null)
@@ -617,7 +620,7 @@ namespace NetVips
         public byte[] WriteToMemory()
         {
             ulong psize = 0;
-            var pointer = VipsImage.VipsImageWriteToMemory(Pointer, ref psize);
+            var pointer = VipsImage.VipsImageWriteToMemory(this, ref psize);
 
             var managedArray = new byte[psize];
             Marshal.Copy(pointer, managedArray, 0, (int) psize);
@@ -635,11 +638,10 @@ namespace NetVips
         /// <see cref="NewTempFile"/> to make an image that can be written to.
         /// </remarks>
         /// <param name="other">The <see cref="Image"/> to write to.</param>
-        /// <returns></returns>
         /// <exception cref="VipsException">If unable to write to image.</exception>
         public void Write(Image other)
         {
-            var result = VipsImage.VipsImageWrite(Pointer, other.Pointer);
+            var result = VipsImage.VipsImageWrite(this, other);
             if (result != 0)
             {
                 throw new VipsException("unable to write to image");
@@ -672,7 +674,7 @@ namespace NetVips
                 }
             }
 
-            return VipsImage.VipsImageGetTypeof(Pointer, name);
+            return VipsImage.VipsImageGetTypeof(this, name);
         }
 
         /// <summary>
@@ -711,7 +713,7 @@ namespace NetVips
             }
 
             var gv = new GValue();
-            var result = VipsImage.VipsImageGet(Pointer, name, gv.Pointer);
+            var result = VipsImage.VipsImageGet(this, name, ref gv.Struct);
             if (result != 0)
             {
                 throw new VipsException($"unable to get {name}");
@@ -734,7 +736,7 @@ namespace NetVips
                 return null;
             }
 
-            var ptrArr = VipsImage.VipsImageGetFields(Pointer);
+            var ptrArr = VipsImage.VipsImageGetFields(this);
 
             var names = new List<string>();
 
@@ -764,13 +766,12 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to create.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the `gtype`, if possible.</param>
-        /// <returns></returns>
         public void SetType(ulong gtype, string name, object value)
         {
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            VipsImage.VipsImageSet(Pointer, name, gv.Pointer);
+            VipsImage.VipsImageSet(this, name, ref gv.Struct);
         }
 
         /// <summary>
@@ -783,7 +784,6 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to set the value of.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the type of the metadata item, if possible.</param>
-        /// <returns></returns>
         /// <exception cref="T:System.Exception">If metadata item <paramref name="name" /> does not exist.</exception>
         public override void Set(string name, object value)
         {
@@ -803,10 +803,9 @@ namespace NetVips
         /// The named metadata item is removed.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to remove.</param>
-        /// <returns></returns>
         public bool Remove(string name)
         {
-            return VipsImage.VipsImageRemove(Pointer, name) != 0;
+            return VipsImage.VipsImageRemove(this, name) != 0;
         }
 
         /// <summary>
@@ -1616,7 +1615,7 @@ namespace NetVips
 
                 if (this.Call("bandjoin", head, components) is Image bandImage)
                 {
-                    Pointer = bandImage.Pointer;
+                    SetHandle(bandImage.handle);
                 }
             }
         }

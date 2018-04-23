@@ -14,7 +14,7 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal Operation(IntPtr pointer) : base(pointer)
+        private Operation(IntPtr pointer) : base(pointer)
         {
             // logger.Debug($"VipsOperation = {pointer}");
         }
@@ -58,8 +58,7 @@ namespace NetVips
         /// <param name="matchImage"></param>
         /// <param name="value"></param>
         /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/></param>
-        /// <returns></returns>
-        public void Set(string name, int flags, Image matchImage, object value)
+        private void Set(string name, Internal.Enums.VipsArgumentFlags flags, Image matchImage, object value)
         {
             // logger.Debug($"Operation.Set: name = {name}, flags = {flags}, " +
             //             $"matchImage = {matchImage} value = {value}");
@@ -82,7 +81,7 @@ namespace NetVips
             }
 
             // MODIFY args need to be copied before they are set
-            if ((flags & (int) Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0 && value is Image image)
+            if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0 && value is Image image)
             {
                 // logger.Debug($"copying MODIFY arg {name}");
                 // make sure we have a unique copy
@@ -92,22 +91,23 @@ namespace NetVips
             base.Set(name, value);
         }
 
-        internal Internal.Enums.VipsOperationFlags GetFlags()
+        private Internal.Enums.VipsOperationFlags GetFlags()
         {
-            return VipsOperation.VipsOperationGetFlags(Pointer);
+            return VipsOperation.VipsOperationGetFlags(this);
         }
 
         // this is slow ... call as little as possible
-        internal List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
+        private List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
         {
             var args = new List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>>();
 
-            VipsArgumentMapFn addConstruct = (self, pspec, argumentClass, argumentInstance, a, b) =>
+            IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance, IntPtr a,
+                IntPtr b)
             {
-                var flags = argumentClass.Dereference<VipsArgumentClass.Fields>().Flags;
+                var flags = argumentClass.Dereference<VipsArgumentClass.Struct>().Flags;
                 if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) != 0)
                 {
-                    var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Fields>().Name);
+                    var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Struct>().Name);
 
                     // libvips uses '-' to separate parts of arg names, but we
                     // need '_' for C#
@@ -117,18 +117,9 @@ namespace NetVips
                 }
 
                 return IntPtr.Zero;
-            };
-
-            // prevent it from being re-located or disposed of by the garbage collector
-            var gchCallbackDelegate = GCHandle.Alloc(addConstruct);
-
-            Internal.VipsObject.VipsArgumentMap(Pointer, addConstruct, IntPtr.Zero, IntPtr.Zero);
-
-            if (gchCallbackDelegate.IsAllocated)
-            {
-                // release reference to delegate
-                gchCallbackDelegate.Free();
             }
+
+            Internal.VipsObject.VipsArgumentMap(this, AddConstruct, IntPtr.Zero, IntPtr.Zero);
 
             return args;
         }
@@ -249,7 +240,7 @@ namespace NetVips
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
                 {
-                    op.Set(name, (int) flag, matchImage, args[n]);
+                    op.Set(name, flag, matchImage, args[n]);
                     n++;
                 }
             }
@@ -266,12 +257,12 @@ namespace NetVips
                         throw new Exception($"{operationName} does not support argument {name}");
                     }
 
-                    op.Set(name, (int) flagsFromName[name], matchImage, value);
+                    op.Set(name, flagsFromName[name], matchImage, value);
                 }
             }
 
             // build operation
-            var vop = VipsOperation.VipsCacheOperationBuild(op.Pointer);
+            var vop = VipsOperation.VipsCacheOperationBuild(op);
             if (vop == IntPtr.Zero)
             {
                 throw new VipsException($"unable to call {operationName}");
@@ -320,7 +311,7 @@ namespace NetVips
                 }
             }
 
-            Internal.VipsObject.VipsObjectUnrefOutputs(op.Pointer);
+            Internal.VipsObject.VipsObjectUnrefOutputs(op);
 
             if (opts.Count > 0)
             {
@@ -342,7 +333,7 @@ namespace NetVips
         /// <param name="indent"></param>
         /// <param name="outParameters"></param>
         /// <returns></returns>
-        public static string GenerateFunction(string operationName, string indent = "        ",
+        private static string GenerateFunction(string operationName, string indent = "        ",
             string[] outParameters = null)
         {
             var op = NewFromName(operationName);
@@ -574,23 +565,17 @@ namespace NetVips
             string ToCref(string name) =>
                 name.Equals("Image") || name.Equals("GObject") ? $"new <see cref=\"{name}\"/>" : name;
 
-            if (outputType.Equals("void"))
+            if (outputType.EndsWith("[]"))
             {
-                result.Append(
-                    $"{indent}/// <returns>None");
+                result.AppendLine(
+                    $"{indent}/// <returns>An array of {ToCref(outputType.Remove(outputType.Length - 2))}s</returns>");
             }
-            else if (outputType.EndsWith("[]"))
+            else if (!outputType.Equals("void"))
             {
-                result.Append(
-                    $"{indent}/// <returns>An array of {ToCref(outputType.Remove(outputType.Length - 2))}s");
-            }
-            else
-            {
-                result.Append($"{indent}/// <returns>A {ToCref(outputType)}");
+                result.AppendLine($"{indent}/// <returns>A {ToCref(outputType)}</returns>");
             }
 
-            result.AppendLine("</returns>")
-                .Append($"{indent}public ")
+            result.Append($"{indent}public ")
                 .Append(memberX == null ? "static " : "")
                 .Append(outputType)
                 .Append(
@@ -777,12 +762,14 @@ namespace NetVips
             var nickname = Base.NicknameFind(gtype);
             allNickNames.Add(nickname);
 
-            Base.TypeMap(gtype, (gtype2, a2, b2) =>
+            IntPtr TypeMap(ulong type, IntPtr a, IntPtr b)
             {
-                AddNickname(gtype2, allNickNames);
+                AddNickname(type, allNickNames);
 
                 return IntPtr.Zero;
-            });
+            }
+
+            Base.TypeMap(gtype, TypeMap);
         }
 
         /// <summary>
@@ -801,12 +788,14 @@ namespace NetVips
             // generate list of all nicknames we can generate docstrings for
             var allNickNames = new List<string>();
 
-            Base.TypeMap(Base.TypeFromName("VipsOperation"), (gtype, a, b) =>
+            IntPtr TypeMap(ulong type, IntPtr a, IntPtr b)
             {
-                AddNickname(gtype, allNickNames);
+                AddNickname(type, allNickNames);
 
                 return IntPtr.Zero;
-            });
+            }
+
+            Base.TypeMap(Base.TypeFromName("VipsOperation"), TypeMap);
 
             // Sort
             allNickNames.Sort();

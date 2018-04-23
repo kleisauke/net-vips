@@ -10,7 +10,7 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal Interpolate(IntPtr pointer) : base(pointer)
+        private Interpolate(IntPtr pointer) : base(pointer)
         {
             // logger.Debug($"VipsInterpolate = {pointer}");
         }

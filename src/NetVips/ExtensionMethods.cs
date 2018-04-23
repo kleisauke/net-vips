@@ -146,6 +146,9 @@ namespace NetVips
         /// Creates a new pointer to an unmanaged block of memory 
         /// from an structure of the specified type.
         /// </summary>
+        /// <remarks>
+        /// The returned pointer should be freed by calling <see cref="GLib.GFree"/>.
+        /// </remarks>
         /// <typeparam name="T">The type of structure to be created.</typeparam>
         /// <param name="structure">A managed object that holds the data to be marshaled. 
         /// This object must be a structure or an instance of a formatted class.</param>
@@ -159,6 +162,17 @@ namespace NetVips
             Marshal.StructureToPtr(structure, ptr, false);
 
             return ptr;
+        }
+
+        /// <summary>
+        /// Call a libvips operation.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public static object Call(this Image image, string operationName)
+        {
+            return Operation.Call(operationName, null, image);
         }
 
         /// <summary>
@@ -183,6 +197,18 @@ namespace NetVips
         public static object Call(this Image image, string operationName, params object[] args)
         {
             return Operation.Call(operationName, null, args.PrependImage(image));
+        }
+
+        /// <summary>
+        /// Call a libvips operation.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="operationName"></param>
+        /// <param name="kwargs"></param>
+        /// <returns></returns>
+        public static object Call(this Image image, string operationName, VOption kwargs)
+        {
+            return Operation.Call(operationName, kwargs, image);
         }
 
         /// <summary>
