@@ -115,7 +115,6 @@ namespace NetVips
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        /// <returns></returns>
         public virtual void Set(string name, object value)
         {
             // logger.Debug($"Set: name = {name}, value = {value}");

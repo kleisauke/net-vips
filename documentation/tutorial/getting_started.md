@@ -6,8 +6,7 @@ notes introduce the Mono/.NET binding.
 
 https://jcupitt.github.io/libvips 
 
-Example
--------
+## Example
 
 This example loads a file, boosts the green channel, sharpens the image,
 and saves it back to disc again:
@@ -91,8 +90,7 @@ write any format supported by vips: the file type is set from the filename
 suffix. You can also write formatted images to memory, or dump
 image data to a C-style array in an byte array.
 
-Metadata and attributes
------------------------
+## Metadata and attributes
 
 NetVips has a [`Get`](xref:NetVips.Image.Get*) method to look up unknown names in libvips.
 To make it a bit easier, common properties that libvips keeps for images are accessible by C# properties, 
@@ -134,8 +132,7 @@ var newImage = image.Copy().Set("icc-profile-data", newProfile);
 Now `newImage` is a clone of `image` with a new ICC profile attached to
 it.
 
-Calling libvips operations
---------------------------
+## Calling libvips operations
 
 All libvips operations were generated automatically to a PascalCase method in NetVips.
 For example, the libvips operation `add`, which appears in C as
@@ -219,8 +216,7 @@ resultImage = image1.Bandjoin(new[] {image2, 255});
 
 and so on.
 
-Logging and warnings
---------------------
+## Logging and warnings
 
 NetVips can log warnings and debug messages from libvips. Some warnings are important, 
 for example truncated files, and you might want to see them.
@@ -241,14 +237,12 @@ Make sure to remove the log handler, if you do not need it anymore:
 Log.RemoveLogHandler("VIPS", _handlerId);
 ```
 
-Automatic documentation
------------------------
+## Automatic documentation
 
 These API docs are generated automatically by DocFX. It generates API reference documentation
 from triple-slash comments in our source code.
 
-Generated methods
------------------
+## Generated methods
 
 The `Image.Generated.cs` file where all libvips operations are located 
 is generated automatically by [`Operation.GenerateImageClass`](xref:NetVips.Operation.GenerateImageClass*).
@@ -258,21 +252,18 @@ Use the C API docs for more detail:
 
 https://jcupitt.github.io/libvips/API/current
 
-Exceptions
-----------
+## Exceptions
 
 The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException).
 You can catch it in the usual way.
 
-Enums
------
+## Enums
 
 The libvips enums, such as `VipsBandFormat`, appear in NetVips as strings constants
 like `"uchar"`. They are documented as a set of classes for convenience, see 
 [`Enums.Access`](xref:NetVips.Enums.Access), for example.
 
-Draw operations
----------------
+## Draw operations
 
 Paint operations like [`DrawCircle`](xref:NetVips.Image.DrawCircle*) and
 [`DrawLine`](xref:NetVips.Image.DrawLine*) modify their input image. This makes them
@@ -288,8 +279,7 @@ where possible, so you won't have 100 copies in memory.
 If you want to avoid the copies, you'll need to call drawing operations
 yourself.
 
-Overloads
----------
+## Overloads
 
 The wrapper defines the usual set of arithmetic, boolean and relational
 overloads on image. You can mix images, constants and lists of constants
@@ -299,8 +289,7 @@ freely. For example, you can write:
 var resultImage = ((image * new[] {1, 2, 3}).Abs() < 128) | 4;
 ```
 
-Expansions
-----------
+## Expansions
 
 Some vips operators take an enum to select an action, for example
 [`Math`](xref:NetVips.Image.Math*) can be used to calculate sine of every pixel
@@ -317,8 +306,7 @@ named after the enum value. So you can also write:
 var resultImage = image.Sin();
 ```
 
-Convenience functions
----------------------
+## Convenience functions
 
 The wrapper defines a few extra useful utility functions:
 [`Bandsplit`](xref:NetVips.Image.Bandsplit*), 

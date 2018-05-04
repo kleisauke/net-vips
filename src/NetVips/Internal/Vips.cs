@@ -105,12 +105,14 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_argument_map")]
-        internal static extern IntPtr VipsArgumentMap(NetVips.VipsObject @object, VipsArgumentMapFn fn, IntPtr a, IntPtr b);
+        internal static extern IntPtr VipsArgumentMap(NetVips.VipsObject @object, VipsArgumentMapFn fn, IntPtr a,
+            IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_get_argument")]
-        internal static extern int VipsObjectGetArgument(NetVips.VipsObject @object, [MarshalAs(UnmanagedType.LPStr)] string name,
+        internal static extern int VipsObjectGetArgument(NetVips.VipsObject @object,
+            [MarshalAs(UnmanagedType.LPStr)] string name,
             ref GParamSpec.Struct pspec, ref VipsArgumentClass.Struct argumentClass,
             ref VipsArgumentInstance.Struct argumentInstance);
 

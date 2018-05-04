@@ -27,7 +27,6 @@ namespace NetVips
         /// Enabling this option will make libvips run slightly more slowly.
         /// </remarks>
         /// <param name="leak"></param>
-        /// <returns></returns>
         public static void LeakSet(int leak)
         {
             Vips.VipsLeakSet(leak);
@@ -87,7 +86,6 @@ namespace NetVips
         /// <summary>
         /// For testing only.
         /// </summary>
-        /// <returns></returns>
         public static void VipsInterpretationGetType()
         {
             Vips.VipsInterpretationGetType();
@@ -96,7 +94,6 @@ namespace NetVips
         /// <summary>
         /// For testing only.
         /// </summary>
-        /// <returns></returns>
         public static void VipsOperationFlagsGetType()
         {
             Vips.VipsOperationFlagsGetType();
