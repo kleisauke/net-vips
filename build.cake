@@ -8,8 +8,10 @@ var configuration = Argument("configuration", "Release");
 var artifactsDirectory = Directory("./artifacts");
 var buildDir = Directory("./src/NetVips/bin") + Directory(configuration);
 var isOnAppVeyorAndNotPR = AppVeyor.IsRunningOnAppVeyor && !AppVeyor.Environment.PullRequest.IsPullRequest;
+var vipsHome = EnvironmentVariable("VIPS_HOME");
 
 const string downloadDir = "./download/";
+const string dllPackDir = "./pack/";
 
 // Tasks
 Task("Clean")
@@ -31,16 +33,13 @@ Task("Install-Libvips")
         var fileName = $"vips-{zipVersion}.zip";
         var vipsZip = $"https://github.com/jcupitt/libvips/releases/download/v{version}{preVersion}/{fileName}";
 
-        var outputPath = File(downloadDir + fileName);
-
+        var outputPath = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
         if (!FileExists(outputPath))
         {
             Information("libvips zip file not in download directory. Downloading now ...");
             EnsureDirectoryExists(downloadDir);
             DownloadFile(vipsZip, outputPath);
         }
-
-        var vipsHome = EnvironmentVariable("VIPS_HOME");
         
         if (DirectoryExists(vipsHome))
         {
@@ -87,6 +86,21 @@ Task("Pack")
     .WithCriteria((isOnAppVeyorAndNotPR || string.Equals(target, "pack", StringComparison.OrdinalIgnoreCase)) && IsRunningOnWindows())
     .Does(() =>
     {
+        EnsureDirectoryExists(dllPackDir);
+    
+        // Copy binaries to packaging directory
+        CopyFiles(vipsHome + "/bin/*.dll", dllPackDir);
+
+        // Clean unused DDL's
+        var packDir = new DirectoryPath(dllPackDir);
+        var deleteFiles = new FilePath[] {
+            packDir.CombineWithFilePath("libvipsCC-42.dll"),
+            packDir.CombineWithFilePath("libvips-cpp-42.dll"),
+            packDir.CombineWithFilePath("libgsf-win32-1-114.dll")
+        };
+
+        DeleteFiles(deleteFiles);
+
         // Need to build the OSX and Linux DLL first.
         DotNetCoreBuild("./build/NetVips.batch.csproj", new DotNetCoreBuildSettings
         {
@@ -97,7 +111,12 @@ Task("Pack")
         DotNetCorePack("./src/NetVips/NetVips.csproj", new DotNetCorePackSettings
         {
             Configuration = configuration,
-            OutputDirectory = artifactsDirectory
+            OutputDirectory = artifactsDirectory,
+            ArgumentCustomization = (args) => {
+                return args
+                    .Append("/p:TargetOS={0}", "Windows")
+                    .Append("/p:IncludeLibvips={0}", "true");
+            }
         });
     });
 

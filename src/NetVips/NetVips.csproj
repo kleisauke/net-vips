@@ -11,7 +11,7 @@
     <StartupObject />
     <Platforms>AnyCPU;x64</Platforms>
     <Optimize>true</Optimize>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeInPackage</TargetsForTfmSpecificContentInPackage>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeBuildInPackage;IncludeInPackage;IncludeBinariesInPackage</TargetsForTfmSpecificContentInPackage>
     <DefaultItemExcludes>$(DefaultItemExcludes);Interop\Libraries.*.cs</DefaultItemExcludes>
   </PropertyGroup>
 
@@ -59,7 +59,16 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Only include .NET Core packages on Linux and macOS -->
+  <!-- Include NuGet build target file -->
+  <Target Name="IncludeBuildInPackage">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="..\..\build\NetVips.targets">
+        <PackagePath>build\$(TargetFramework)\NetVips.targets</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
+  </Target>
+
+  <!-- Include .NET Core packages on Linux and macOS -->
   <Target Name="IncludeInPackage" Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <ItemGroup>
       <TfmSpecificPackageFile Include="bin\$(Configuration)\Linux\$(TargetFramework)\NetVips.dll">
@@ -67,6 +76,18 @@
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="bin\$(Configuration)\OSX\$(TargetFramework)\NetVips.dll">
         <PackagePath>runtimes\osx\lib\$(TargetFramework)\NetVips.dll</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
+  </Target>
+
+  <!-- Include libvips Windows 64-bit binaries -->
+  <Target Name="IncludeBinariesInPackage" Condition="'$(TargetFramework)|$(IncludeLibvips)' == 'netcoreapp2.0|true'">
+    <ItemGroup>
+      <TfmSpecificPackageFiles Include="..\..\pack\*.*"/>
+    </ItemGroup>
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="@(TfmSpecificPackageFiles)">
+        <PackagePath>runtimes\win-x64\native\%(TfmSpecificPackageFiles.Filename)%(TfmSpecificPackageFiles.Extension)</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target>

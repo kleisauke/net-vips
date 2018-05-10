@@ -9,7 +9,7 @@ init:
 # Environment
 environment:
   VIPS_VERSION: "8.6.3"
-  VIPS_ZIP_VERSION: "dev-w64-all-8.6.3-1"
+  VIPS_ZIP_VERSION: "dev-w64-web-8.6.3-1"
   VIPS_WARNING: 0
 
 # Build script
