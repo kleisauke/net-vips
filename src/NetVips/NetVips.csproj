@@ -3,8 +3,8 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net46</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard2.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
@@ -50,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" Condition="'$(TargetFramework)' == 'net46'" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
     <PackageReference Include="Fody" Version="3.0.3">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -59,8 +59,8 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Only include .NET Core packages on Linux and macOS -->
-  <Target Name="IncludeInPackage" Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+  <!-- Only include .NET Standard packages on Linux and macOS -->
+  <Target Name="IncludeInPackage" Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <ItemGroup>
       <TfmSpecificPackageFile Include="bin\$(Configuration)\Linux\$(TargetFramework)\NetVips.dll">
         <PackagePath>runtimes\linux\lib\$(TargetFramework)\NetVips.dll</PackagePath>
@@ -73,6 +73,7 @@
 
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" Version="2.0.6" />
+    <PackageReference Update="NETStandard.Library" Version="2.0.3" />
   </ItemGroup>
 
 </Project>

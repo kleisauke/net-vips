@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Weavers VerifyAssembly="true"
-         VerifyIgnoreCodes="0x80131869">
-         <!-- ignore 0x80131869 since it throws on netcore -->
+         VerifyIgnoreCodes="0x80131869,0x80131252">
+         <!-- ignore 0x80131869 and 0x80131252 since it throws on netstandard -->
   <ModuleInit/>
 </Weavers>

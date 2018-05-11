@@ -15,7 +15,7 @@
       ],
       "dest": "obj/temp/api",
       "properties": {
-        "TargetFramework": "netcoreapp2.0"
+        "TargetFramework": "netstandard2.0"
       }
     }
   ],
