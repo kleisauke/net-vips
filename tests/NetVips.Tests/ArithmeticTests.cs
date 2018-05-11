@@ -815,7 +815,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestATan()
         {
-            dynamic ACos(dynamic x)
+            dynamic ATan(dynamic x)
             {
                 if (x is Image image)
                 {
@@ -826,7 +826,7 @@ namespace NetVips.Tests
             }
 
             var im = (Image.Black(100, 100) + new[] {1, 2, 3}) / 3.0;
-            RunUnary(new[] {im}, ACos, Helper.NonComplexFormats);
+            RunUnary(new[] {im}, ATan, Helper.NonComplexFormats);
         }
 
         [Fact]

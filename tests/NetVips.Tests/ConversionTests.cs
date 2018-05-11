@@ -128,7 +128,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestBandEor()
         {
-            dynamic BandOr(dynamic x)
+            dynamic BandEor(dynamic x)
             {
                 if (x is Image image)
                 {
@@ -138,7 +138,7 @@ namespace NetVips.Tests
                 return ((IEnumerable<double>) x).Aggregate((a, b) => (int) a ^ (int) b);
             }
 
-            RunUnary(_allImages, BandOr, Helper.IntFormats);
+            RunUnary(_allImages, BandEor, Helper.IntFormats);
         }
 
         [Fact]
