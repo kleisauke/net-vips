@@ -4,14 +4,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.10.14" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.4.5" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0003" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.4.6" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.App" Version="2.0.6" />
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

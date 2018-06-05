@@ -31,7 +31,7 @@ Task("Install-Libvips")
         var zipVersion = EnvironmentVariable("VIPS_ZIP_VERSION");
 
         var fileName = $"vips-{zipVersion}.zip";
-        var vipsZip = $"https://github.com/jcupitt/libvips/releases/download/v{version}{preVersion}/{fileName}";
+        var vipsZip = $"https://github.com/kleisauke/build-win64-mxe/releases/download/v{version}{preVersion}/{fileName}";
 
         var outputPath = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
         if (!FileExists(outputPath))
@@ -90,16 +90,6 @@ Task("Pack")
     
         // Copy binaries to packaging directory
         CopyFiles(vipsHome + "/bin/*.dll", dllPackDir);
-
-        // Clean unused DDL's
-        var packDir = new DirectoryPath(dllPackDir);
-        var deleteFiles = new FilePath[] {
-            packDir.CombineWithFilePath("libvipsCC-42.dll"),
-            packDir.CombineWithFilePath("libvips-cpp-42.dll"),
-            packDir.CombineWithFilePath("libgsf-win32-1-114.dll")
-        };
-
-        DeleteFiles(deleteFiles);
 
         // Need to build the OSX and Linux DLL first.
         DotNetCoreBuild("./build/NetVips.batch.csproj", new DotNetCoreBuildSettings
