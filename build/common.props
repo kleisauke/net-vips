@@ -18,7 +18,7 @@
 
     <Major>1</Major>
     <Minor>0</Minor>
-    <Revision>2</Revision>
+    <Revision>3</Revision>
 
     <BuildNumber Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' ">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
     <BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>

@@ -86,6 +86,15 @@ Task("Pack")
     .WithCriteria((isOnAppVeyorAndNotPR || string.Equals(target, "pack", StringComparison.OrdinalIgnoreCase)) && IsRunningOnWindows())
     .Does(() =>
     {
+        if (DirectoryExists(dllPackDir))
+        {
+            Information("Removing old packaging directory");
+            DeleteDirectory(dllPackDir, new DeleteDirectorySettings {
+                Recursive = true,
+                Force = true
+            });
+        }
+
         EnsureDirectoryExists(dllPackDir);
     
         // Copy binaries to packaging directory

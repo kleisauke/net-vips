@@ -38,9 +38,7 @@ http://libvips.blogspot.co.uk/2012/06/how-libvips-opens-file.html
 
 You need the libvips shared library on your library search path, version 8.2 or
 later. On Linux and macOS, you can install via your package manager; on 
-Windows you can download a pre-compiled binary from the libvips website:
-
-https://jcupitt.github.io/libvips/
+Windows the pre-compiled binary is bundled with NuGet.
 
 Then just install this package, perhaps:
 
@@ -62,6 +60,27 @@ If NetVips was able to find the libvips shared library, you should see:
 If NetVips was not able to find libvips you might see:
 
     Unable to init libvips
+
+## Bundled libvips Windows binary
+
+From NetVips version 1.0.3 upwards the pre-compiled libvips Windows binary is
+bundled with NuGet. It's therefore no longer necessary to download the
+pre-compiled binary and to set the `PATH` environment variable.
+
+If you wish to not use the bundled libvips, you could set the
+`UseGlobalLibvips` property to `true`:
+```xml
+<PropertyGroup>
+  <UseGlobalLibvips>true</UseGlobalLibvips>
+</PropertyGroup>
+```
+
+```bash
+dotnet build /p:UseGlobalLibvips=true
+```
+
+This property prevents that the bundled libvips binary and its
+dependencies will be copied to your project's output directory.
 
 ## Example
 
