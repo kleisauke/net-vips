@@ -156,7 +156,7 @@ namespace NetVips
         public static IntPtr ToIntPtr<T>(this object structure) where T : struct
         {
             // Initialize unmanged memory to hold the struct.
-            var ptr = GLib.GMalloc((ulong) Marshal.SizeOf(typeof(T)));
+            var ptr = GLib.GMalloc(new UIntPtr((ulong) Marshal.SizeOf(typeof(T))));
 
             // Copy the struct to unmanaged memory.
             Marshal.StructureToPtr(structure, ptr, false);
@@ -350,7 +350,7 @@ namespace NetVips
                 return IntPtr.Zero;
             }
 
-            var ptr = GLib.GMalloc((ulong) bytes.Length + 1);
+            var ptr = GLib.GMalloc(new UIntPtr((ulong) bytes.Length + 1));
             Marshal.Copy(bytes, 0, ptr, bytes.Length);
             Marshal.WriteByte(ptr, bytes.Length, 0);
             return ptr;

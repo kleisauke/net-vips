@@ -111,7 +111,7 @@ namespace NetVips
         /// <param name="basename"></param>
         /// <param name="nickname"></param>
         /// <returns></returns>
-        public static ulong TypeFind(string basename, string nickname)
+        public static IntPtr TypeFind(string basename, string nickname)
         {
             return Internal.VipsObject.VipsTypeFind(basename, nickname);
         }
@@ -121,7 +121,7 @@ namespace NetVips
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static string TypeName(ulong type)
+        public static string TypeName(IntPtr type)
         {
             return Marshal.PtrToStringAnsi(GType.GTypeName(type));
         }
@@ -131,7 +131,7 @@ namespace NetVips
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static string NicknameFind(ulong type)
+        public static string NicknameFind(IntPtr type)
         {
             return Marshal.PtrToStringAnsi(Internal.VipsObject.VipsNicknameFind(type));
         }
@@ -142,7 +142,7 @@ namespace NetVips
         /// <param name="type"></param>
         /// <param name="fn"></param>
         /// <returns></returns>
-        internal static IntPtr TypeMap(ulong type, VipsTypeMap2Fn fn)
+        internal static IntPtr TypeMap(IntPtr type, VipsTypeMap2Fn fn)
         {
             return Internal.VipsObject.VipsTypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
         }
@@ -152,7 +152,7 @@ namespace NetVips
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ulong TypeFromName(string name)
+        public static IntPtr TypeFromName(string name)
         {
             return GType.GTypeFromName(name);
         }

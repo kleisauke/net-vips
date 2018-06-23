@@ -5,24 +5,8 @@ using NetVips.Interop;
 
 namespace NetVips.Internal
 {
-    [StructLayout(LayoutKind.Explicit, Size = 8)]
-    internal struct GTypeInstance
-    {
-        [FieldOffset(0)] internal IntPtr GClass;
-    }
-
     internal static class GObject
     {
-        [StructLayout(LayoutKind.Explicit, Size = 24)]
-        internal struct Struct
-        {
-            [FieldOffset(0)] internal GTypeInstance GTypeInstance;
-
-            [FieldOffset(8)] internal uint RefCount;
-
-            [FieldOffset(16)] internal IntPtr Qdata;
-        }
-
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_object_set_property")]
@@ -59,17 +43,17 @@ namespace NetVips.Internal
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_type_name")]
-        internal static extern IntPtr GTypeName(ulong type);
+        internal static extern IntPtr GTypeName(IntPtr type);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_type_from_name")]
-        internal static extern ulong GTypeFromName([MarshalAs(UnmanagedType.LPStr)] string name);
+        internal static extern IntPtr GTypeFromName([MarshalAs(UnmanagedType.LPStr)] string name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_type_fundamental")]
-        internal static extern ulong GTypeFundamental(ulong typeId);
+        internal static extern IntPtr GTypeFundamental(IntPtr typeId);
     }
 
     internal static class GValue
@@ -77,7 +61,7 @@ namespace NetVips.Internal
         [StructLayout(LayoutKind.Explicit, Size = 24)]
         internal struct Struct
         {
-            [FieldOffset(0)] internal ulong GType;
+            [FieldOffset(0)] internal IntPtr GType;
 
             [FieldOffset(8)] [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
             internal IntPtr[] data;
@@ -85,7 +69,7 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_init")]
-        internal static extern IntPtr GValueInit(ref Struct value, ulong gType);
+        internal static extern IntPtr GValueInit(ref Struct value, IntPtr gType);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
@@ -155,18 +139,28 @@ namespace NetVips.Internal
 
     internal static class GParamSpec
     {
-        [StructLayout(LayoutKind.Explicit, Size = 72)]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct GTypeInstance
+        {
+            internal IntPtr GClass;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
         internal struct Struct
         {
-            [FieldOffset(0)] internal GTypeInstance GTypeInstance;
+            internal GTypeInstance GTypeInstance;
 
-            [FieldOffset(8)] internal IntPtr Name;
+            internal IntPtr Name;
 
-            [FieldOffset(16)] internal Enums.GParamFlags Flags;
+            internal Enums.GParamFlags Flags;
+            internal IntPtr ValueType;
+            internal IntPtr OwnerType;
 
-            [FieldOffset(24)] internal ulong ValueType;
-
-            [FieldOffset(32)] internal ulong OwnerType;
+            public IntPtr Nick;
+            public IntPtr Blurb;
+            public IntPtr QData;
+            public uint RefCount;
+            public uint ParamId;
         }
 
         [SuppressUnmanagedCodeSecurity]

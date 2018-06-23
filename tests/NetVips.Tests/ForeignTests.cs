@@ -160,7 +160,7 @@ namespace NetVips.Tests
 
             // see if we have exif parsing: our test image has this field
             var x = Image.NewFromFile(Helper.JpegFile);
-            if (x.GetTypeOf("exif-ifd0-Orientation") != 0)
+            if (x.Contains("exif-ifd0-Orientation"))
             {
                 // we need a copy of the image to set the new metadata on
                 // otherwise we get caching problems
@@ -480,7 +480,7 @@ namespace NetVips.Tests
             // can do it, our webp supports metadata load/save
             buf = _colour.WebpsaveBuffer();
             x = Image.NewFromBuffer(buf);
-            if (x.GetTypeOf("icc-profile-data") != 0)
+            if (x.Contains("icc-profile-data"))
             {
                 // verify that the profile comes back unharmed
                 var p1 = _colour.Get("icc-profile-data");
@@ -494,7 +494,7 @@ namespace NetVips.Tests
                 // we can test that exif changes change the output of webpsave
                 // first make sure we have exif support
                 var z = Image.NewFromFile(Helper.JpegFile);
-                if (z.GetTypeOf("exif-ifd0-Orientation") != 0)
+                if (z.Contains("exif-ifd0-Orientation"))
                 {
                     x = _colour.Copy();
                     x.Set("orientation", 6);
@@ -595,7 +595,7 @@ namespace NetVips.Tests
         public void TestOpenslideLoad()
         {
             Skip.IfNot(Helper.Have("openslideload") && File.Exists(Helper.OpenslideFile),
-                "no fits support, skipping test");
+                "no openslide support, skipping test");
 
             void OpenslideValid(Image im)
             {

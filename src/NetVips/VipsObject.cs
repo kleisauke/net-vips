@@ -49,7 +49,7 @@ namespace NetVips
         /// </summary>
         /// <param name="name"></param>
         /// <returns>This function returns 0 if the property does not exist.</returns>
-        public virtual ulong GetTypeOf(string name)
+        public virtual IntPtr GetTypeOf(string name)
         {
             // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
             var pspec = GetPspec(name);
@@ -58,7 +58,7 @@ namespace NetVips
             {
                 // need to clear any error, this is horrible
                 Vips.VipsErrorClear();
-                return 0;
+                return IntPtr.Zero;
             }
 
             return pspec.Value.ValueType;

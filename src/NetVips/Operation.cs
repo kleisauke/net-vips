@@ -757,12 +757,12 @@ namespace NetVips
             return result.ToString();
         }
 
-        private static void AddNickname(ulong gtype, ICollection<string> allNickNames)
+        private static void AddNickname(IntPtr gtype, ICollection<string> allNickNames)
         {
             var nickname = Base.NicknameFind(gtype);
             allNickNames.Add(nickname);
 
-            IntPtr TypeMap(ulong type, IntPtr a, IntPtr b)
+            IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
             {
                 AddNickname(type, allNickNames);
 
@@ -788,7 +788,7 @@ namespace NetVips
             // generate list of all nicknames we can generate docstrings for
             var allNickNames = new List<string>();
 
-            IntPtr TypeMap(ulong type, IntPtr a, IntPtr b)
+            IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
             {
                 AddNickname(type, allNickNames);
 
@@ -886,7 +886,7 @@ namespace NetVips
         /// <param name="maxMem"></param>
         public static void VipsCacheSetMaxMem(ulong maxMem)
         {
-            VipsOperation.VipsCacheSetMaxMem(maxMem);
+            VipsOperation.VipsCacheSetMaxMem(new UIntPtr(maxMem));
         }
 
         /// <summary>

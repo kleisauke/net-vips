@@ -7,8 +7,8 @@ namespace NetVips.Tests
     public class IoFuncsTests : IClassFixture<TestsFixture>
     {
         /// <summary>
-        // test the vips7 filename splitter ... this is very fragile and annoying
-        // code with lots of cases
+        /// test the vips7 filename splitter ... this is very fragile and annoying
+        /// code with lots of cases
         /// </summary>
         [Fact]
         public void TestSplit7()

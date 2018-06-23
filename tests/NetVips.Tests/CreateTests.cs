@@ -453,7 +453,7 @@ namespace NetVips.Tests
         {
             Skip.IfNot(Helper.Have("text"), "no text in this vips, skipping test");
 
-            var im = Image.Text("Hello, world!");
+            var im = Image.Text("Hello, world!", dpi: 300);
             Assert.True(im.Width > 10);
             Assert.True(im.Height > 10);
             Assert.Equal(1, im.Bands);

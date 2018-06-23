@@ -247,7 +247,7 @@ namespace NetVips
                     );
             }
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory, (ulong) length));
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory, new UIntPtr((ulong) length)));
             GLib.GFree(memory);
             if (name == null)
             {
@@ -380,7 +380,7 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), (ulong) data.Length, width, height,
+            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong) data.Length), width, height,
                 bands, (Internal.Enums.VipsBandFormat) formatValue);
 
             if (vi == IntPtr.Zero)
@@ -619,8 +619,7 @@ namespace NetVips
         /// <returns>An array of bytes</returns>
         public byte[] WriteToMemory()
         {
-            ulong psize = 0;
-            var pointer = VipsImage.VipsImageWriteToMemory(this, ref psize);
+            var pointer = VipsImage.VipsImageWriteToMemory(this, out var psize);
 
             var managedArray = new byte[psize];
             Marshal.Copy(pointer, managedArray, 0, (int) psize);
@@ -656,25 +655,35 @@ namespace NetVips
         /// Get the GType of an item of metadata.
         /// </summary>
         /// <remarks>
-        /// Fetch the GType of a piece of metadata, or 0 if the named item does not
+        /// Fetch the GType of a piece of metadata, or IntPtr.Zero if the named item does not
         /// exist. See <see cref="GValue"/>.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to get the type of.</param>
-        /// <returns>The `GType`, or 0</returns>
-        public override ulong GetTypeOf(string name)
+        /// <returns>The `GType`, or IntPtr.Zero</returns>
+        public override IntPtr GetTypeOf(string name)
         {
             // on libvips before 8.5, property types must be fetched separately,
             // since built-in enums were reported as ints
             if (!Base.AtLeastLibvips(8, 5))
             {
                 var gtype = base.GetTypeOf(name);
-                if (gtype != 0)
+                if (gtype != IntPtr.Zero)
                 {
                     return gtype;
                 }
             }
 
             return VipsImage.VipsImageGetTypeof(this, name);
+        }
+
+        /// <summary>
+        /// Check if the underlying image contains an property of metadata.
+        /// </summary>
+        /// <param name="name">The name of the piece of metadata to check for.</param>
+        /// <returns><see langword="true" /> if the metadata exits; otherwise, <see langword="false" /></returns>
+        public bool Contains(string name)
+        {
+            return GetTypeOf(name) != IntPtr.Zero;
         }
 
         /// <summary>
@@ -691,12 +700,12 @@ namespace NetVips
         public override object Get(string name)
         {
             // scale and offset have default values
-            if (name == "scale" && GetTypeOf("scale") == 0)
+            if (name == "scale" && !Contains("scale"))
             {
                 return 1.0;
             }
 
-            if (name == "offset" && GetTypeOf("offset") == 0)
+            if (name == "offset" && !Contains("offset"))
             {
                 return 0.0;
             }
@@ -706,7 +715,7 @@ namespace NetVips
             if (!Base.AtLeastLibvips(8, 5))
             {
                 var gtype = base.GetTypeOf(name);
-                if (gtype != 0)
+                if (gtype != IntPtr.Zero)
                 {
                     return base.Get(name);
                 }
@@ -766,7 +775,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to create.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the `gtype`, if possible.</param>
-        public void SetType(ulong gtype, string name, object value)
+        public void SetType(IntPtr gtype, string name, object value)
         {
             var gv = new GValue();
             gv.SetType(gtype);
@@ -788,7 +797,7 @@ namespace NetVips
         public override void Set(string name, object value)
         {
             var gtype = GetTypeOf(name);
-            if (gtype == 0)
+            if (gtype == IntPtr.Zero)
             {
                 throw new Exception($"metadata item {name} does not exist - use SetType() to create and set");
             }

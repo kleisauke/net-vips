@@ -45,6 +45,12 @@ namespace NetVips.Samples
 
             foreach (var c in Text)
             {
+                if (c == ' ')
+                {
+                    xPosition += 50;
+                    continue;
+                }
+
                 var letter = Image.Text(c.ToString(), dpi: 600);
 
                 var image = letter.Gravity(Enums.Align.Centre, letter.Width + 50, letter.Height + 50);

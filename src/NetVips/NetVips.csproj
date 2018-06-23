@@ -9,26 +9,11 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
     <Optimize>true</Optimize>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeBuildInPackage;IncludeInPackage;IncludeBinariesInPackage</TargetsForTfmSpecificContentInPackage>
     <DefaultItemExcludes>$(DefaultItemExcludes);Interop\Libraries.*.cs</DefaultItemExcludes>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PlatformTarget>x64</PlatformTarget>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <!-- Give an initial value based on the operating system where it's currently running on. -->
@@ -38,9 +23,10 @@
     <TargetOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">Windows</TargetOS>
   </PropertyGroup>
 
+  <!-- Append target operating system to output path -->
   <PropertyGroup>
-    <OutputPath>bin\$(Configuration)\$(TargetOS)</OutputPath>
-    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)\$(TargetOS)\</IntermediateOutputPath>
+    <OutputPath>$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\$(TargetFramework)\$(TargetOS)</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Platform)\$(Configuration)\$(TargetFramework)\$(TargetOS)\</IntermediateOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,7 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Fody" Version="3.0.3">
+    <PackageReference Include="Fody" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ModuleInit.Fody" Version="1.8.0">
@@ -71,10 +57,10 @@
   <!-- Include .NET Standard packages on Linux and macOS -->
   <Target Name="IncludeInPackage" Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="bin\$(Configuration)\Linux\$(TargetFramework)\NetVips.dll">
+      <TfmSpecificPackageFile Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\$(TargetFramework)\Linux\NetVips.dll">
         <PackagePath>runtimes\linux\lib\$(TargetFramework)\NetVips.dll</PackagePath>
       </TfmSpecificPackageFile>
-      <TfmSpecificPackageFile Include="bin\$(Configuration)\OSX\$(TargetFramework)\NetVips.dll">
+      <TfmSpecificPackageFile Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\$(TargetFramework)\OSX\NetVips.dll">
         <PackagePath>runtimes\osx\lib\$(TargetFramework)\NetVips.dll</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>

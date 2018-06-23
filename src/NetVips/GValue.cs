@@ -34,77 +34,77 @@ namespace NetVips
         /// <summary>
         /// The GType for gboolean.
         /// </summary>
-        public static readonly ulong GBoolType = Base.TypeFromName("gboolean");
+        public static readonly IntPtr GBoolType = Base.TypeFromName("gboolean");
 
         /// <summary>
         /// The GType for gint.
         /// </summary>
-        public static readonly ulong GIntType = Base.TypeFromName("gint");
+        public static readonly IntPtr GIntType = Base.TypeFromName("gint");
 
         /// <summary>
         /// The GType for gdouble.
         /// </summary>
-        public static readonly ulong GDoubleType = Base.TypeFromName("gdouble");
+        public static readonly IntPtr GDoubleType = Base.TypeFromName("gdouble");
 
         /// <summary>
         /// The GType for gchararray.
         /// </summary>
-        public static readonly ulong GStrType = Base.TypeFromName("gchararray");
+        public static readonly IntPtr GStrType = Base.TypeFromName("gchararray");
 
         /// <summary>
         /// The GType for GEnum.
         /// </summary>
-        public static readonly ulong GEnumType = Base.TypeFromName("GEnum");
+        public static readonly IntPtr GEnumType = Base.TypeFromName("GEnum");
 
         /// <summary>
         /// The GType for GFlags.
         /// </summary>
-        public static readonly ulong GFlagsType = Base.TypeFromName("GFlags");
+        public static readonly IntPtr GFlagsType = Base.TypeFromName("GFlags");
 
         /// <summary>
         /// The GType for GObject.
         /// </summary>
-        public static readonly ulong GObjectType = Base.TypeFromName("GObject");
+        public static readonly IntPtr GObjectType = Base.TypeFromName("GObject");
 
         /// <summary>
         /// The GType for VipsImage.
         /// </summary>
-        public static readonly ulong ImageType = Base.TypeFromName("VipsImage");
+        public static readonly IntPtr ImageType = Base.TypeFromName("VipsImage");
 
         /// <summary>
         /// The GType for VipsArrayInt.
         /// </summary>
-        public static readonly ulong ArrayIntType = Base.TypeFromName("VipsArrayInt");
+        public static readonly IntPtr ArrayIntType = Base.TypeFromName("VipsArrayInt");
 
         /// <summary>
         /// The GType for VipsArrayDouble.
         /// </summary>
-        public static readonly ulong ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
+        public static readonly IntPtr ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
 
         /// <summary>
         /// The GType for VipsArrayImage.
         /// </summary>
-        public static readonly ulong ArrayImageType = Base.TypeFromName("VipsArrayImage");
+        public static readonly IntPtr ArrayImageType = Base.TypeFromName("VipsArrayImage");
 
         /// <summary>
         /// The GType for VipsRefString.
         /// </summary>
-        public static readonly ulong RefStrType = Base.TypeFromName("VipsRefString");
+        public static readonly IntPtr RefStrType = Base.TypeFromName("VipsRefString");
 
         /// <summary>
         /// The GType for VipsBlob.
         /// </summary>
-        public static readonly ulong BlobType = Base.TypeFromName("VipsBlob");
+        public static readonly IntPtr BlobType = Base.TypeFromName("VipsBlob");
 
         /// <summary>
         /// The GType for VipsBandFormat. See <see cref="Enums.BandFormat"/>.
         /// </summary>
-        public static readonly ulong BandFormatType;
+        public static readonly IntPtr BandFormatType;
 
         /// <summary>
         /// The GType for VipsBlendMode. See <see cref="Enums.BlendMode"/>.
         /// </summary>
-        public static readonly ulong BlendModeType;
+        public static readonly IntPtr BlendModeType;
 
         static GValue()
         {
@@ -118,7 +118,7 @@ namespace NetVips
             }
         }
 
-        private static readonly Dictionary<ulong, string> GTypeToCSharpDict = new Dictionary<ulong, string>
+        private static readonly Dictionary<IntPtr, string> GTypeToCSharpDict = new Dictionary<IntPtr, string>
         {
             {GBoolType, "bool"},
             {GIntType, "int"},
@@ -140,7 +140,7 @@ namespace NetVips
         /// </summary>
         /// <param name="gtype"></param>
         /// <returns></returns>
-        public static string GTypeToCSharp(ulong gtype)
+        public static string GTypeToCSharp(IntPtr gtype)
         {
             var fundamental = GType.GTypeFundamental(gtype);
 
@@ -163,7 +163,7 @@ namespace NetVips
         /// <param name="gtype"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static int ToEnum(ulong gtype, object value)
+        public static int ToEnum(IntPtr gtype, object value)
         {
             return value is string strValue
                 ? Vips.VipsEnumFromNick("NetVips", gtype, strValue)
@@ -176,7 +176,7 @@ namespace NetVips
         /// <param name="gtype"></param>
         /// <param name="enumValue"></param>
         /// <returns></returns>
-        public static string FromEnum(ulong gtype, int enumValue)
+        public static string FromEnum(IntPtr gtype, int enumValue)
         {
             var cstr = Marshal.PtrToStringAnsi(Vips.VipsEnumNick(gtype, enumValue));
             if (cstr == null)
@@ -207,7 +207,7 @@ namespace NetVips
         /// TypeFind.
         /// </remarks>
         /// <param name="gtype"></param>
-        public void SetType(ulong gtype)
+        public void SetType(IntPtr gtype)
         {
             Internal.GValue.GValueInit(ref Struct, gtype);
         }
@@ -371,7 +371,7 @@ namespace NetVips
 
                 if (Base.AtLeastLibvips(8, 6))
                 {
-                    VipsType.VipsValueSetBlobFree(ref Struct, memory, (ulong) length);
+                    VipsType.VipsValueSetBlobFree(ref Struct, memory, new UIntPtr((ulong) length));
                 }
                 else
                 {
@@ -382,7 +382,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, memory, (ulong) length);
+                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, memory, new UIntPtr((ulong) length));
                 }
             }
             else
@@ -435,8 +435,7 @@ namespace NetVips
             {
                 // don't bother getting the size -- assume these are always
                 // null-terminated C strings
-                ulong psize = 0;
-                result = VipsType.VipsValueGetRefString(ref Struct, ref psize).ToUtf8String();
+                result = VipsType.VipsValueGetRefString(ref Struct, out var psize).ToUtf8String();
             }
             else if (gtype == ImageType)
             {
@@ -454,8 +453,7 @@ namespace NetVips
             }
             else if (gtype == ArrayIntType)
             {
-                var psize = 0;
-                var intPtr = VipsType.VipsValueGetArrayInt(ref Struct, ref psize);
+                var intPtr = VipsType.VipsValueGetArrayInt(ref Struct, out var psize);
 
                 var intArr = new int[psize];
                 Marshal.Copy(intPtr, intArr, 0, psize);
@@ -463,8 +461,7 @@ namespace NetVips
             }
             else if (gtype == ArrayDoubleType)
             {
-                var psize = 0;
-                var intPtr = VipsType.VipsValueGetArrayDouble(ref Struct, ref psize);
+                var intPtr = VipsType.VipsValueGetArrayDouble(ref Struct, out var psize);
 
                 var doubleArr = new double[psize];
                 Marshal.Copy(intPtr, doubleArr, 0, psize);
@@ -472,8 +469,7 @@ namespace NetVips
             }
             else if (gtype == ArrayImageType)
             {
-                var psize = 0;
-                var ptrArr = VipsImage.VipsValueGetArrayImage(ref Struct, ref psize);
+                var ptrArr = VipsImage.VipsValueGetArrayImage(ref Struct, out var psize);
 
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
@@ -487,8 +483,7 @@ namespace NetVips
             }
             else if (gtype == BlobType)
             {
-                ulong psize = 0;
-                var array = VipsType.VipsValueGetBlob(ref Struct, ref psize);
+                var array = VipsType.VipsValueGetBlob(ref Struct, out var psize);
 
                 // Blob types are returned as an array of bytes.
                 var byteArr = new byte[psize];
@@ -507,7 +502,7 @@ namespace NetVips
         /// Get the GType of this GValue.
         /// </summary>
         /// <returns>The GType of this GValue.</returns>
-        public ulong GetTypeOf()
+        public IntPtr GetTypeOf()
         {
             return Struct.GType;
         }
