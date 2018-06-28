@@ -247,7 +247,8 @@ namespace NetVips
                     );
             }
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory, new UIntPtr((ulong) length)));
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory,
+                new UIntPtr((ulong) length)));
             GLib.GFree(memory);
             if (name == null)
             {
@@ -380,8 +381,8 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong) data.Length), width, height,
-                bands, (Internal.Enums.VipsBandFormat) formatValue);
+            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong) data.Length),
+                width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
 
             if (vi == IntPtr.Zero)
             {
@@ -577,9 +578,9 @@ namespace NetVips
         {
             var formatStrPtr = formatString.ToUtf8Ptr();
             var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(formatStrPtr));
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
             GLib.GFree(formatStrPtr);
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
             if (name == null)
             {
                 throw new VipsException("unable to write to buffer");
@@ -655,11 +656,12 @@ namespace NetVips
         /// Get the GType of an item of metadata.
         /// </summary>
         /// <remarks>
-        /// Fetch the GType of a piece of metadata, or IntPtr.Zero if the named item does not
-        /// exist. See <see cref="GValue"/>.
+        /// Fetch the GType of a piece of metadata, or <see cref="IntPtr.Zero" /> if the named
+        /// item does not exist. See <see cref="GValue"/>.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to get the type of.</param>
-        /// <returns>The `GType`, or IntPtr.Zero</returns>
+        /// <returns>A new instance of <see cref="IntPtr" /> initialized to the GType or
+        /// <see cref="IntPtr.Zero" /> if the property does not exist.</returns>
         public override IntPtr GetTypeOf(string name)
         {
             // on libvips before 8.5, property types must be fetched separately,
@@ -774,7 +776,7 @@ namespace NetVips
         /// <param name="gtype">The GType of the metadata item to create.</param>
         /// <param name="name">The name of the piece of metadata to create.</param>
         /// <param name="value">The value to set as a C# value. It is
-        /// converted to the `gtype`, if possible.</param>
+        /// converted to the GType, if possible.</param>
         public void SetType(IntPtr gtype, string name, object value)
         {
             var gv = new GValue();

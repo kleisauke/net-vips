@@ -47,8 +47,9 @@ namespace NetVips
         /// <summary>
         /// Get the GType of a GObject property.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns>This function returns 0 if the property does not exist.</returns>
+        /// <param name="name">The name of the GType to get the type of.</param>
+        /// <returns>A new instance of <see cref="IntPtr" /> initialized to the GType or
+        /// <see cref="IntPtr.Zero" /> if the property does not exist.</returns>
         public virtual IntPtr GetTypeOf(string name)
         {
             // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
