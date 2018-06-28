@@ -39,12 +39,12 @@ references:
   isSpec: "True"
   fullName: NetVips.Base.LeakSet
   nameWithType: Base.LeakSet
-- uid: NetVips.Base.NicknameFind(System.UInt64)
-  name: NicknameFind(UInt64)
-  href: api/NetVips.Base.html#NetVips_Base_NicknameFind_System_UInt64_
-  commentId: M:NetVips.Base.NicknameFind(System.UInt64)
-  fullName: NetVips.Base.NicknameFind(System.UInt64)
-  nameWithType: Base.NicknameFind(UInt64)
+- uid: NetVips.Base.NicknameFind(System.IntPtr)
+  name: NicknameFind(IntPtr)
+  href: api/NetVips.Base.html#NetVips_Base_NicknameFind_System_IntPtr_
+  commentId: M:NetVips.Base.NicknameFind(System.IntPtr)
+  fullName: NetVips.Base.NicknameFind(System.IntPtr)
+  nameWithType: Base.NicknameFind(IntPtr)
 - uid: NetVips.Base.NicknameFind*
   name: NicknameFind
   href: api/NetVips.Base.html#NetVips_Base_NicknameFind_
@@ -104,12 +104,12 @@ references:
   isSpec: "True"
   fullName: NetVips.Base.TypeFromName
   nameWithType: Base.TypeFromName
-- uid: NetVips.Base.TypeName(System.UInt64)
-  name: TypeName(UInt64)
-  href: api/NetVips.Base.html#NetVips_Base_TypeName_System_UInt64_
-  commentId: M:NetVips.Base.TypeName(System.UInt64)
-  fullName: NetVips.Base.TypeName(System.UInt64)
-  nameWithType: Base.TypeName(UInt64)
+- uid: NetVips.Base.TypeName(System.IntPtr)
+  name: TypeName(IntPtr)
+  href: api/NetVips.Base.html#NetVips_Base_TypeName_System_IntPtr_
+  commentId: M:NetVips.Base.TypeName(System.IntPtr)
+  fullName: NetVips.Base.TypeName(System.IntPtr)
+  nameWithType: Base.TypeName(IntPtr)
 - uid: NetVips.Base.TypeName*
   name: TypeName
   href: api/NetVips.Base.html#NetVips_Base_TypeName_
@@ -1056,12 +1056,12 @@ references:
   isSpec: "True"
   fullName: NetVips.GValue.Finalize
   nameWithType: GValue.Finalize
-- uid: NetVips.GValue.FromEnum(System.UInt64,System.Int32)
-  name: FromEnum(UInt64, Int32)
-  href: api/NetVips.GValue.html#NetVips_GValue_FromEnum_System_UInt64_System_Int32_
-  commentId: M:NetVips.GValue.FromEnum(System.UInt64,System.Int32)
-  fullName: NetVips.GValue.FromEnum(System.UInt64, System.Int32)
-  nameWithType: GValue.FromEnum(UInt64, Int32)
+- uid: NetVips.GValue.FromEnum(System.IntPtr,System.Int32)
+  name: FromEnum(IntPtr, Int32)
+  href: api/NetVips.GValue.html#NetVips_GValue_FromEnum_System_IntPtr_System_Int32_
+  commentId: M:NetVips.GValue.FromEnum(System.IntPtr,System.Int32)
+  fullName: NetVips.GValue.FromEnum(System.IntPtr, System.Int32)
+  nameWithType: GValue.FromEnum(IntPtr, Int32)
 - uid: NetVips.GValue.FromEnum*
   name: FromEnum
   href: api/NetVips.GValue.html#NetVips_GValue_FromEnum_
@@ -1137,12 +1137,12 @@ references:
   commentId: F:NetVips.GValue.GStrType
   fullName: NetVips.GValue.GStrType
   nameWithType: GValue.GStrType
-- uid: NetVips.GValue.GTypeToCSharp(System.UInt64)
-  name: GTypeToCSharp(UInt64)
-  href: api/NetVips.GValue.html#NetVips_GValue_GTypeToCSharp_System_UInt64_
-  commentId: M:NetVips.GValue.GTypeToCSharp(System.UInt64)
-  fullName: NetVips.GValue.GTypeToCSharp(System.UInt64)
-  nameWithType: GValue.GTypeToCSharp(UInt64)
+- uid: NetVips.GValue.GTypeToCSharp(System.IntPtr)
+  name: GTypeToCSharp(IntPtr)
+  href: api/NetVips.GValue.html#NetVips_GValue_GTypeToCSharp_System_IntPtr_
+  commentId: M:NetVips.GValue.GTypeToCSharp(System.IntPtr)
+  fullName: NetVips.GValue.GTypeToCSharp(System.IntPtr)
+  nameWithType: GValue.GTypeToCSharp(IntPtr)
 - uid: NetVips.GValue.GTypeToCSharp*
   name: GTypeToCSharp
   href: api/NetVips.GValue.html#NetVips_GValue_GTypeToCSharp_
@@ -1175,12 +1175,12 @@ references:
   isSpec: "True"
   fullName: NetVips.GValue.Set
   nameWithType: GValue.Set
-- uid: NetVips.GValue.SetType(System.UInt64)
-  name: SetType(UInt64)
-  href: api/NetVips.GValue.html#NetVips_GValue_SetType_System_UInt64_
-  commentId: M:NetVips.GValue.SetType(System.UInt64)
-  fullName: NetVips.GValue.SetType(System.UInt64)
-  nameWithType: GValue.SetType(UInt64)
+- uid: NetVips.GValue.SetType(System.IntPtr)
+  name: SetType(IntPtr)
+  href: api/NetVips.GValue.html#NetVips_GValue_SetType_System_IntPtr_
+  commentId: M:NetVips.GValue.SetType(System.IntPtr)
+  fullName: NetVips.GValue.SetType(System.IntPtr)
+  nameWithType: GValue.SetType(IntPtr)
 - uid: NetVips.GValue.SetType*
   name: SetType
   href: api/NetVips.GValue.html#NetVips_GValue_SetType_
@@ -1188,12 +1188,12 @@ references:
   isSpec: "True"
   fullName: NetVips.GValue.SetType
   nameWithType: GValue.SetType
-- uid: NetVips.GValue.ToEnum(System.UInt64,System.Object)
-  name: ToEnum(UInt64, Object)
-  href: api/NetVips.GValue.html#NetVips_GValue_ToEnum_System_UInt64_System_Object_
-  commentId: M:NetVips.GValue.ToEnum(System.UInt64,System.Object)
-  fullName: NetVips.GValue.ToEnum(System.UInt64, System.Object)
-  nameWithType: GValue.ToEnum(UInt64, Object)
+- uid: NetVips.GValue.ToEnum(System.IntPtr,System.Object)
+  name: ToEnum(IntPtr, Object)
+  href: api/NetVips.GValue.html#NetVips_GValue_ToEnum_System_IntPtr_System_Object_
+  commentId: M:NetVips.GValue.ToEnum(System.IntPtr,System.Object)
+  fullName: NetVips.GValue.ToEnum(System.IntPtr, System.Object)
+  nameWithType: GValue.ToEnum(IntPtr, Object)
 - uid: NetVips.GValue.ToEnum*
   name: ToEnum
   href: api/NetVips.GValue.html#NetVips_GValue_ToEnum_
@@ -1842,6 +1842,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Conj
   nameWithType: Image.Conj
+- uid: NetVips.Image.Contains(System.String)
+  name: Contains(String)
+  href: api/NetVips.Image.html#NetVips_Image_Contains_System_String_
+  commentId: M:NetVips.Image.Contains(System.String)
+  fullName: NetVips.Image.Contains(System.String)
+  nameWithType: Image.Contains(String)
+- uid: NetVips.Image.Contains*
+  name: Contains
+  href: api/NetVips.Image.html#NetVips_Image_Contains_
+  commentId: Overload:NetVips.Image.Contains
+  isSpec: "True"
+  fullName: NetVips.Image.Contains
+  nameWithType: Image.Contains
 - uid: NetVips.Image.Conv(NetVips.Image,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})
   name: Conv(Image, String, Nullable<Int32>, Nullable<Int32>)
   href: api/NetVips.Image.html#NetVips_Image_Conv_NetVips_Image_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__
@@ -5484,12 +5497,12 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Set
   nameWithType: Image.Set
-- uid: NetVips.Image.SetType(System.UInt64,System.String,System.Object)
-  name: SetType(UInt64, String, Object)
-  href: api/NetVips.Image.html#NetVips_Image_SetType_System_UInt64_System_String_System_Object_
-  commentId: M:NetVips.Image.SetType(System.UInt64,System.String,System.Object)
-  fullName: NetVips.Image.SetType(System.UInt64, System.String, System.Object)
-  nameWithType: Image.SetType(UInt64, String, Object)
+- uid: NetVips.Image.SetType(System.IntPtr,System.String,System.Object)
+  name: SetType(IntPtr, String, Object)
+  href: api/NetVips.Image.html#NetVips_Image_SetType_System_IntPtr_System_String_System_Object_
+  commentId: M:NetVips.Image.SetType(System.IntPtr,System.String,System.Object)
+  fullName: NetVips.Image.SetType(System.IntPtr, System.String, System.Object)
+  nameWithType: Image.SetType(IntPtr, String, Object)
 - uid: NetVips.Image.SetType*
   name: SetType
   href: api/NetVips.Image.html#NetVips_Image_SetType_

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class VipsObject
    ">
-    <meta name="generator" content="docfx 2.36.1.0">
+    <meta name="generator" content="docfx 2.36.2.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -164,7 +164,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_Get_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.Get(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L93">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L94">View Source</a>
   </span>
   <a id="NetVips_VipsObject_Get_" data-uid="NetVips.VipsObject.Get*"></a>
   <h4 id="NetVips_VipsObject_Get_System_String_" data-uid="NetVips.VipsObject.Get(System.String)">Get(String)</h4>
@@ -215,7 +215,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_GetDescription.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.GetDescription%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L148">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L149">View Source</a>
   </span>
   <a id="NetVips_VipsObject_GetDescription_" data-uid="NetVips.VipsObject.GetDescription*"></a>
   <h4 id="NetVips_VipsObject_GetDescription" data-uid="NetVips.VipsObject.GetDescription">GetDescription()</h4>
@@ -246,7 +246,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_GetTypeOf_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.GetTypeOf(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L52">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L53">View Source</a>
   </span>
   <a id="NetVips_VipsObject_GetTypeOf_" data-uid="NetVips.VipsObject.GetTypeOf*"></a>
   <h4 id="NetVips_VipsObject_GetTypeOf_System_String_" data-uid="NetVips.VipsObject.GetTypeOf(System.String)">GetTypeOf(String)</h4>
@@ -255,7 +255,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual ulong GetTypeOf(string name)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual IntPtr GetTypeOf(string name)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -270,7 +270,8 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">name</span></td>
-        <td></td>
+        <td><p>The name of the GType to get the type of.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -284,8 +285,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt64</span></td>
-        <td><p>This function returns 0 if the property does not exist.</p>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><p>A new instance of <span class="xref">System.IntPtr</span> initialized to the GType or
+<span class="xref">System.IntPtr.Zero</span> if the property does not exist.</p>
 </td>
       </tr>
     </tbody>
@@ -295,7 +297,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_Set_System_String_System_Object_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.Set(System.String%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L118">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L119">View Source</a>
   </span>
   <a id="NetVips_VipsObject_Set_" data-uid="NetVips.VipsObject.Set*"></a>
   <h4 id="NetVips_VipsObject_Set_System_String_System_Object_" data-uid="NetVips.VipsObject.Set(System.String,System.Object)">Set(String, Object)</h4>
@@ -333,7 +335,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_VipsObject_SetString_System_String_.md&amp;value=---%0Auid%3A%20NetVips.VipsObject.SetString(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L138">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/VipsObject.cs/#L139">View Source</a>
   </span>
   <a id="NetVips_VipsObject_SetString_" data-uid="NetVips.VipsObject.SetString*"></a>
   <h4 id="NetVips_VipsObject_SetString_System_String_" data-uid="NetVips.VipsObject.SetString(System.String)">SetString(String)</h4>
