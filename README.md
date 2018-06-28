@@ -47,9 +47,10 @@ Then just install this package, perhaps:
 To test your install, try this test program:
 
 ```csharp
-Console.WriteLine(ModuleInitializer.VipsInitialized
-? $"Inited libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}"
-: "Unable to init libvips");
+if (ModuleInitializer.VipsInitialized)
+{
+    Console.WriteLine($"Inited libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
+}
 Console.ReadLine();
 ```
 
@@ -57,9 +58,14 @@ If NetVips was able to find the libvips shared library, you should see:
 
     Inited libvips [VERSION_NUMBER]
 
-If NetVips was not able to find libvips you might see:
+However, if an `TypeInitializationException` is thrown, NetVips was unable to initialize libvips.
+This can happen for a variety of reasons, even though most of the times it's because NetVips 
+was not able to find libvips or the wrong `Target Platform` was specified:
 
-    Unable to init libvips
+| Inner exception | HRESULT | Solution |
+| :--- | :--- | :--- |
+| DllNotFoundException | 0x8007007E | Make sure to add the `bin` folder of the libvips Windows build to your `PATH` environment variable (if you wish to not use the bundled libvips). |
+| BadImageFormatException | 0x8007000B | Make sure when you target the `AnyCPU` platform the `Prefer 32-bit` option is unchecked. Or try to target `x64` instead (the bundled libvips Windows binary is build for 64-bit architecture). |
 
 ## Bundled libvips Windows binary
 
