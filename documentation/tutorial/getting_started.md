@@ -126,7 +126,8 @@ Set image metadata with [`Set`](xref:NetVips.Image.Set*). Use [`Copy`](xref:NetV
 a private copy of the image first, for example:
 
 ```csharp
-var newImage = image.Copy().Set("icc-profile-data", newProfile);
+var newImage = image.Copy();
+newImage.Set("icc-profile-data", newProfile);
 ```
 
 Now `newImage` is a clone of `image` with a new ICC profile attached to
