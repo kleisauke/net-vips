@@ -313,11 +313,12 @@ namespace NetVips
         /// <summary>
         /// Marshals a GLib UTF8 char* to a managed string.
         /// </summary>
-        /// <returns>The managed string string.</returns>
         /// <param name="ptr">Pointer to the GLib string.</param>
-        public static string ToUtf8String(this IntPtr ptr)
+        /// <param name="freePtr">If set to <see langword="true" />, free the GLib string.</param>
+        /// <returns>The managed string.</returns>
+        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false)
         {
-            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString());
+            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr));
         }
 
         /// <summary>
@@ -364,8 +365,9 @@ namespace NetVips
         /// The byte array does not include the null terminator.
         /// </remarks>
         /// <param name="ptr">Pointer to the unmanaged string.</param>
+        /// <param name="freePtr">If set to <see langword="true" /> free the unmanaged memory.</param>
         /// <returns>The string as a byte array.</returns>
-        public static byte[] ToByteString(this IntPtr ptr)
+        public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false)
         {
             if (ptr == IntPtr.Zero)
             {
@@ -379,6 +381,11 @@ namespace NetVips
             while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
             {
                 bytes.Add(b);
+            }
+
+            if (freePtr)
+            {
+                GLib.GFree(ptr);
             }
 
             return bytes.ToArray();

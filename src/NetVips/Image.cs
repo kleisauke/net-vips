@@ -168,10 +168,10 @@ namespace NetVips
         public static Image NewFromFile(string vipsFilename, bool? memory = null, string access = null,
             bool? fail = null, VOption kwargs = null)
         {
-            var fileNamePtr = vipsFilename.ToUtf8Ptr();
-            var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
-            var fileOptions = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(fileNamePtr));
-            GLib.GFree(fileNamePtr);
+            var filenamePtr = vipsFilename.ToUtf8Ptr();
+            var filename = VipsImage.VipsFilenameGetFilename(filenamePtr);
+            var fileOptions = VipsImage.VipsFilenameGetOptions(filenamePtr).ToUtf8String(true);
+            GLib.GFree(filenamePtr);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoad(filename));
             if (name == null)
@@ -202,7 +202,7 @@ namespace NetVips
 
             options.Add("string_options", fileOptions);
 
-            return Operation.Call(name, options, filename.ToUtf8String()) as Image;
+            return Operation.Call(name, options, filename.ToUtf8String(true)) as Image;
         }
 
         /// <summary>
@@ -515,10 +515,10 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename" />.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
-            var fileNamePtr = vipsFilename.ToUtf8Ptr();
-            var filename = VipsImage.VipsFilenameGetFilename(fileNamePtr);
-            var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(fileNamePtr));
-            GLib.GFree(fileNamePtr);
+            var filenamePtr = vipsFilename.ToUtf8Ptr();
+            var filename = VipsImage.VipsFilenameGetFilename(filenamePtr);
+            var fileOptions = VipsImage.VipsFilenameGetOptions(filenamePtr).ToUtf8String(true);
+            GLib.GFree(filenamePtr);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSave(filename));
             if (name == null)
@@ -528,7 +528,7 @@ namespace NetVips
 
             var stringOptions = new VOption
             {
-                {"string_options", options}
+                {"string_options", fileOptions}
             };
 
             if (kwargs != null)
@@ -540,7 +540,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            Operation.Call(name, kwargs, this, filename.ToUtf8String());
+            Operation.Call(name, kwargs, this, filename.ToUtf8String(true));
         }
 
         /// <summary>
@@ -577,7 +577,7 @@ namespace NetVips
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
             var formatStrPtr = formatString.ToUtf8Ptr();
-            var options = Marshal.PtrToStringAnsi(VipsImage.VipsFilenameGetOptions(formatStrPtr));
+            var bufferOptions = VipsImage.VipsFilenameGetOptions(formatStrPtr).ToUtf8String(true);
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
             GLib.GFree(formatStrPtr);
 
@@ -588,7 +588,7 @@ namespace NetVips
 
             var stringOptions = new VOption
             {
-                {"string_options", options}
+                {"string_options", bufferOptions}
             };
 
             if (kwargs != null)
