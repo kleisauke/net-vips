@@ -7,11 +7,11 @@ dist: trusty
 
 mono: none
 
-dotnet: 2.1.301
+dotnet: 2.1.302
 
 env:
   global:
-    - VIPS_VERSION=8.6.4
+    - VIPS_VERSION=8.6.5
     - VIPS_TAR_VERSION=$VIPS_VERSION
     # - VIPS_WARNING=0
     - PATH=$HOME/vips/bin:$PATH

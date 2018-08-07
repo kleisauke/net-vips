@@ -33,6 +33,57 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Returns an array with:
+        /// - the number of active allocations.
+        /// - the number of bytes currently allocated via `vips_malloc()` and friends.
+        /// - the number of open files.
+        /// </summary>
+        /// <returns>An array with memory stats. Handy for debugging / leak testing.</returns>
+        public static int[] MemoryStats()
+        {
+            return new[]
+            {
+                Vips.VipsTrackedGetAllocs(),
+                Vips.VipsTrackedGetMem(),
+                Vips.VipsTrackedGetFiles()
+            };
+        }
+
+        /// <summary>
+        /// Returns the largest number of bytes simultaneously allocated via vips_tracked_malloc().
+        /// Handy for estimating max memory requirements for a program.
+        /// </summary>
+        /// <returns>The largest number of bytes simultaneously allocated.</returns>
+        public static ulong MemoryHigh()
+        {
+            return Vips.VipsTrackedGetMemHighwater();
+        }
+
+        /// <summary>
+        /// Reports leaks (hopefully there are none) it also tracks and reports peak memory use.
+        /// </summary>
+        internal static void ReportLeak()
+        {
+            var memStats = MemoryStats();
+            var activeAllocs = memStats[0];
+            var currentAllocs = memStats[1];
+            var files = memStats[2];
+
+            VipsObject.PrintAll();
+
+            Console.WriteLine("memory: {0} allocations, {1} bytes", activeAllocs, currentAllocs);
+            Console.WriteLine("files: {0} open", files);
+
+            Console.WriteLine("memory: high-water mark: {0}", MemoryHigh().ToReadableBytes());
+
+            var errorBuffer = Marshal.PtrToStringAnsi(Vips.VipsErrorBuffer());
+            if (!string.IsNullOrEmpty(errorBuffer))
+            {
+                Console.WriteLine("error buffer: {0}", errorBuffer);
+            }
+        }
+
+        /// <summary>
         /// Get the major, minor or micro version number of the libvips library.
         /// </summary>
         /// <param name="flag">Pass 0 to get the major version number, 1 to get minor, 2 to get micro.</param>

@@ -119,13 +119,25 @@ Task("Pack")
         });
     });
 
-Task("Test")
+Task("LeakTest")
     .IsDependentOn("Build")
     .Does(() =>
     {
         DotNetCoreTest("./tests/NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
         {
-            Configuration = configuration
+            Configuration = configuration,
+            Filter = "Category=Leak",
+        });
+    });
+
+Task("Test")
+    .IsDependentOn("LeakTest")
+    .Does(() =>
+    {
+        DotNetCoreTest("./tests/NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
+        {
+            Configuration = configuration,
+            Filter = "Category!=Leak",
         });
     });
 

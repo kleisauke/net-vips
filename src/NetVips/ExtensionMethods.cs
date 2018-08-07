@@ -383,5 +383,25 @@ namespace NetVips
 
             return bytes.ToArray();
         }
+
+        /// <summary>
+        /// Convert bytes to human readable format.
+        /// </summary>
+        /// <param name="value">The number of bytes.</param>
+        /// <returns>The readable format of the bytes.</returns>
+        internal static string ToReadableBytes(this ulong value)
+        {
+            string[] sizeSuffixes = {"bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+
+            var i = 0;
+            decimal dValue = value;
+            while (Math.Round(dValue, 2) >= 1000)
+            {
+                dValue /= 1024;
+                i++;
+            }
+
+            return $"{dValue:n2} {sizeSuffixes[i]}";
+        }
     }
 }

@@ -41,6 +41,8 @@ namespace NetVips.Samples
                 return "No directory given";
             }
 
+            Base.LeakSet(1);
+
             foreach (var file in Directory.GetFiles(args[0]))
             {
                 Console.WriteLine($"memory processing {file}");

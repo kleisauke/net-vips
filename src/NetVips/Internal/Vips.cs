@@ -16,6 +16,23 @@ namespace NetVips.Internal
         internal static extern void VipsLeakSet(int leak);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_allocs")]
+        internal static extern int VipsTrackedGetAllocs();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_mem")]
+        internal static extern int VipsTrackedGetMem();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_files")]
+        internal static extern int VipsTrackedGetFiles();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_tracked_get_mem_highwater")]
+        internal static extern ulong VipsTrackedGetMemHighwater();
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_version")]
         internal static extern int VipsVersion(int flag);
 
