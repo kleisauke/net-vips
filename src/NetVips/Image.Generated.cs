@@ -711,17 +711,29 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = base.Composite2(overlay, mode, compositingSpace: string, premultiplied: bool);
+        /// Image @out = base.Composite2(overlay, mode, x: int, y: int, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="overlay">Overlay image</param>
         /// <param name="mode">VipsBlendMode to join with</param>
+        /// <param name="x">x position of overlay</param>
+        /// <param name="y">y position of overlay</param>
         /// <param name="compositingSpace">Composite images in this colour space</param>
         /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite2(Image overlay, string mode, string compositingSpace = null, bool? premultiplied = null)
+        public Image Composite2(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null)
         {
             var options = new VOption();
+
+            if (x.HasValue)
+            {
+                options.Add("x", x);
+            }
+
+            if (y.HasValue)
+            {
+                options.Add("y", y);
+            }
 
             if (compositingSpace != null)
             {
@@ -1562,7 +1574,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Dzsave(filename, basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, strip: bool, background: double[]);
+        /// in.Dzsave(filename, basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
@@ -1578,9 +1590,10 @@ namespace NetVips
         /// <param name="container">Pyramid container type</param>
         /// <param name="properties">Write a properties file to the output directory</param>
         /// <param name="compression">ZIP deflate compression level</param>
+        /// <param name="regionShrink">Method to shrink regions</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        public void Dzsave(string filename, string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, bool? strip = null, double[] background = null)
+        public void Dzsave(string filename, string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -1642,6 +1655,11 @@ namespace NetVips
             if (compression.HasValue)
             {
                 options.Add("compression", compression);
+            }
+
+            if (regionShrink != null)
+            {
+                options.Add("region_shrink", regionShrink);
             }
 
             if (strip.HasValue)
@@ -1662,7 +1680,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="basename">Base name to save to</param>
@@ -1677,10 +1695,11 @@ namespace NetVips
         /// <param name="container">Pyramid container type</param>
         /// <param name="properties">Write a properties file to the output directory</param>
         /// <param name="compression">ZIP deflate compression level</param>
+        /// <param name="regionShrink">Method to shrink regions</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] DzsaveBuffer(string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, bool? strip = null, double[] background = null)
+        public byte[] DzsaveBuffer(string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -1742,6 +1761,11 @@ namespace NetVips
             if (compression.HasValue)
             {
                 options.Add("compression", compression);
+            }
+
+            if (regionShrink != null)
+            {
+                options.Add("region_shrink", regionShrink);
             }
 
             if (strip.HasValue)
@@ -6072,7 +6096,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pdfload(filename, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
+        /// Image @out = NetVips.Image.Pdfload(filename, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
@@ -6083,8 +6107,9 @@ namespace NetVips
         /// <param name="fail">Fail on first error</param>
         /// <param name="dpi">Render at this DPI</param>
         /// <param name="scale">Scale output by this factor</param>
+        /// <param name="background">Background value</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Pdfload(string filename, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
+        public static Image Pdfload(string filename, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -6123,6 +6148,11 @@ namespace NetVips
                 options.Add("scale", scale);
             }
 
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
             return Operation.Call("pdfload", options, filename) as Image;
         }
 
@@ -6131,7 +6161,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
+        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from</param>
@@ -6143,8 +6173,9 @@ namespace NetVips
         /// <param name="fail">Fail on first error</param>
         /// <param name="dpi">Render at this DPI</param>
         /// <param name="scale">Scale output by this factor</param>
+        /// <param name="background">Background value</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Pdfload(string filename, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
+        public static Image Pdfload(string filename, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -6181,6 +6212,11 @@ namespace NetVips
             if (scale.HasValue)
             {
                 options.Add("scale", scale);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
             }
 
             options.Add("flags", true);
@@ -6198,7 +6234,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
@@ -6209,8 +6245,9 @@ namespace NetVips
         /// <param name="fail">Fail on first error</param>
         /// <param name="dpi">Render at this DPI</param>
         /// <param name="scale">Scale output by this factor</param>
+        /// <param name="background">Background value</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image PdfloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
+        public static Image PdfloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -6249,6 +6286,11 @@ namespace NetVips
                 options.Add("scale", scale);
             }
 
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
             return Operation.Call("pdfload_buffer", options, buffer) as Image;
         }
 
@@ -6257,7 +6299,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double);
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from</param>
@@ -6269,8 +6311,9 @@ namespace NetVips
         /// <param name="fail">Fail on first error</param>
         /// <param name="dpi">Render at this DPI</param>
         /// <param name="scale">Scale output by this factor</param>
+        /// <param name="background">Background value</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image PdfloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null)
+        public static Image PdfloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -6307,6 +6350,11 @@ namespace NetVips
             if (scale.HasValue)
             {
                 options.Add("scale", scale);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
             }
 
             options.Add("flags", true);
@@ -6540,7 +6588,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Pngsave(filename, compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, strip: bool, background: double[]);
+        /// in.Pngsave(filename, compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
@@ -6549,9 +6597,13 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="profile">ICC profile to embed</param>
         /// <param name="filter">libpng row filter flag(s)</param>
+        /// <param name="palette">Quantise to 8bpp palette</param>
+        /// <param name="colours">Max number of palette colours</param>
+        /// <param name="q">Quantisation quality</param>
+        /// <param name="dither">Amount of dithering</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        public void Pngsave(string filename, int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? strip = null, double[] background = null)
+        public void Pngsave(string filename, int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -6578,6 +6630,26 @@ namespace NetVips
             if (filter.HasValue)
             {
                 options.Add("filter", filter);
+            }
+
+            if (palette.HasValue)
+            {
+                options.Add("palette", palette);
+            }
+
+            if (colours.HasValue)
+            {
+                options.Add("colours", colours);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (dither.HasValue)
+            {
+                options.Add("dither", dither);
             }
 
             if (strip.HasValue)
@@ -6598,7 +6670,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="compression">Compression factor</param>
@@ -6606,10 +6678,14 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save</param>
         /// <param name="profile">ICC profile to embed</param>
         /// <param name="filter">libpng row filter flag(s)</param>
+        /// <param name="palette">Quantise to 8bpp palette</param>
+        /// <param name="colours">Max number of palette colours</param>
+        /// <param name="q">Quantisation quality</param>
+        /// <param name="dither">Amount of dithering</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? strip = null, double[] background = null)
+        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -6636,6 +6712,26 @@ namespace NetVips
             if (filter.HasValue)
             {
                 options.Add("filter", filter);
+            }
+
+            if (palette.HasValue)
+            {
+                options.Add("palette", palette);
+            }
+
+            if (colours.HasValue)
+            {
+                options.Add("colours", colours);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (dither.HasValue)
+            {
+                options.Add("dither", dither);
             }
 
             if (strip.HasValue)
@@ -7796,7 +7892,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image average
+        /// Find many image stats
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
@@ -8231,7 +8327,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: string, dpi: int, spacing: int);
+        /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: string, dpi: int, spacing: int, fontfile: string);
         /// </code>
         /// </example>
         /// <param name="text">Text to render</param>
@@ -8241,8 +8337,9 @@ namespace NetVips
         /// <param name="align">Align on the low, centre or high edge</param>
         /// <param name="dpi">DPI to render at</param>
         /// <param name="spacing">Line spacing</param>
+        /// <param name="fontfile">Load this font file</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Text(string text, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, int? spacing = null)
+        public static Image Text(string text, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, int? spacing = null, string fontfile = null)
         {
             var options = new VOption();
 
@@ -8274,6 +8371,11 @@ namespace NetVips
             if (spacing.HasValue)
             {
                 options.Add("spacing", spacing);
+            }
+
+            if (fontfile != null)
+            {
+                options.Add("fontfile", fontfile);
             }
 
             return Operation.Call("text", options, text) as Image;
@@ -8284,7 +8386,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: string, dpi: int, spacing: int);
+        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: string, dpi: int, spacing: int, fontfile: string);
         /// </code>
         /// </example>
         /// <param name="text">Text to render</param>
@@ -8295,8 +8397,9 @@ namespace NetVips
         /// <param name="align">Align on the low, centre or high edge</param>
         /// <param name="dpi">DPI to render at</param>
         /// <param name="spacing">Line spacing</param>
+        /// <param name="fontfile">Load this font file</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public static Image Text(string text, out int autofitDpi, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, int? spacing = null)
+        public static Image Text(string text, out int autofitDpi, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, int? spacing = null, string fontfile = null)
         {
             var options = new VOption();
 
@@ -8328,6 +8431,11 @@ namespace NetVips
             if (spacing.HasValue)
             {
                 options.Add("spacing", spacing);
+            }
+
+            if (fontfile != null)
+            {
+                options.Add("fontfile", fontfile);
             }
 
             options.Add("autofit_dpi", true);
@@ -8770,7 +8878,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Tiffsave(filename, compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, strip: bool, background: double[]);
+        /// in.Tiffsave(filename, compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to</param>
@@ -8790,9 +8898,10 @@ namespace NetVips
         /// <param name="yres">Vertical resolution in pixels/mm</param>
         /// <param name="bigtiff">Write a bigtiff image</param>
         /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
+        /// <param name="regionShrink">Method to shrink regions</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
-        public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, bool? strip = null, double[] background = null)
+        public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -8874,6 +8983,11 @@ namespace NetVips
             if (properties.HasValue)
             {
                 options.Add("properties", properties);
+            }
+
+            if (regionShrink != null)
+            {
+                options.Add("region_shrink", regionShrink);
             }
 
             if (strip.HasValue)
@@ -8894,7 +9008,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, strip: bool, background: double[]);
+        /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="compression">Compression for this file</param>
@@ -8913,10 +9027,11 @@ namespace NetVips
         /// <param name="yres">Vertical resolution in pixels/mm</param>
         /// <param name="bigtiff">Write a bigtiff image</param>
         /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
+        /// <param name="regionShrink">Method to shrink regions</param>
         /// <param name="strip">Strip all metadata from image</param>
         /// <param name="background">Background value</param>
         /// <returns>An array of bytes</returns>
-        public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, bool? strip = null, double[] background = null)
+        public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
 
@@ -8998,6 +9113,11 @@ namespace NetVips
             if (properties.HasValue)
             {
                 options.Add("properties", properties);
+            }
+
+            if (regionShrink != null)
+            {
+                options.Add("region_shrink", regionShrink);
             }
 
             if (strip.HasValue)
@@ -9139,6 +9259,28 @@ namespace NetVips
             }
 
             return Operation.Call("tonelut", options) as Image;
+        }
+
+        /// <summary>
+        /// Transpose3d an image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = in.Transpose3d(pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="pageHeight">Height of each input page</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Transpose3d(int? pageHeight = null)
+        {
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            return this.Call("transpose3d", options) as Image;
         }
 
         /// <summary>

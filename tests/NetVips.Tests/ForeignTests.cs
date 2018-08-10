@@ -168,9 +168,12 @@ namespace NetVips.Tests
                 // can set, save and load new orientation
                 x = Image.NewFromFile(Helper.JpegFile);
                 x = x.Copy();
+
                 x.Set("orientation", 2);
+
                 var filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x.WriteToFile(filename);
+
                 x = Image.NewFromFile(filename);
                 var y = x.Get("orientation");
                 Assert.Equal(2, y);
@@ -178,17 +181,20 @@ namespace NetVips.Tests
                 // can remove orientation, save, load again, orientation
                 // has reset
                 x.Remove("orientation");
+
                 filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x.WriteToFile(filename);
+
                 x = Image.NewFromFile(filename);
                 y = x.Get("orientation");
                 Assert.Equal(1, y);
 
                 // autorotate load works
-                filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x = Image.NewFromFile(Helper.JpegFile);
                 x = x.Copy();
                 x.Set("orientation", 6);
+
+                filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x.WriteToFile(filename);
                 var x1 = Image.NewFromFile(filename);
                 var x2 = Image.NewFromFile(filename, kwargs: new VOption
@@ -197,6 +203,61 @@ namespace NetVips.Tests
                 });
                 Assert.Equal(x1.Width, x2.Height);
                 Assert.Equal(x1.Height, x2.Width);
+
+                // can set, save and reload ASCII string fields
+                // added in 8.7
+                if (Base.AtLeastLibvips(8, 7))
+                {
+                    x = Image.NewFromFile(Helper.JpegFile);
+                    x = x.Copy();
+
+                    x.SetType(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world");
+
+                    filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+                    x.WriteToFile(filename);
+
+                    x = Image.NewFromFile(filename);
+                    y = x.Get("exif-ifd0-ImageDescription");
+
+                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
+                    // format area at the end
+                    Assert.StartsWith("hello world", (string) y);
+
+                    // can set, save and reload UTF16 string fields ... NetVips is 
+                    // utf8, but it will be coded as utf16 and back for the XP* fields
+                    x = Image.NewFromFile(Helper.JpegFile);
+                    x = x.Copy();
+
+                    x.SetType(GValue.GStrType, "exif-ifd0-XPComment", "йцук");
+
+                    filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+                    x.WriteToFile(filename);
+
+                    x = Image.NewFromFile(filename);
+                    y = x.Get("exif-ifd0-XPComment");
+
+                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
+                    // format area at the end
+                    Assert.StartsWith("йцук", (string) y);
+
+                    // can set/save/load UserComment, a tag which has the
+                    // encoding in the first 8 bytes ... though libexif only supports
+                    // ASCII for this
+                    x = Image.NewFromFile(Helper.JpegFile);
+                    x = x.Copy();
+
+                    x.SetType(GValue.GStrType, "exif-ifd2-UserComment", "hello world");
+
+                    filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+                    x.WriteToFile(filename);
+
+                    x = Image.NewFromFile(filename);
+                    y = x.Get("exif-ifd2-UserComment");
+
+                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
+                    // format area at the end
+                    Assert.StartsWith("hello world", (string) y);
+                }
             }
         }
 
@@ -390,6 +451,15 @@ namespace NetVips.Tests
                 Assert.Equal(a.Height, b.Height);
                 Assert.Equal(a.Avg(), b.Avg());
             }
+
+            // region-shrink added in 8.7
+            if (Base.AtLeastLibvips(8, 7))
+            {
+                x = Image.NewFromFile(Helper.TifFile);
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mean");
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mode");
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "median");
+            }
         }
 
         [SkippableFact]
@@ -456,6 +526,16 @@ namespace NetVips.Tests
                     {"format", "BMP"}
                 });
                 SaveLoad("%s.bmp", _colour);
+            }
+
+            // libvips has its own sniffer for ICO, test that
+            // added in 8.7
+            if (Base.AtLeastLibvips(8, 7))
+            {
+                var buf = File.ReadAllBytes(Helper.IcoFile);
+                var im = Image.NewFromBuffer(buf);
+                Assert.Equal(16, im.Width);
+                Assert.Equal(16, im.Height);
             }
         }
 
@@ -603,6 +683,29 @@ namespace NetVips.Tests
 
             FileLoader("fitsload", Helper.FitsFile, FitsValid);
             SaveLoad("%s.fits", _mono);
+        }
+
+
+        [SkippableFact]
+        public void TestsNiftiLoad()
+        {
+            Skip.IfNot(Helper.Have("niftiload") && File.Exists(Helper.NiftiFile), "no nifti support, skipping test");
+
+            void NiftiValid(Image im)
+            {
+                var a = im.Getpoint(30, 26);
+
+                Helper.AssertAlmostEqualObjects(new[]
+                {
+                    131
+                }, a);
+                Assert.Equal(91, im.Width);
+                Assert.Equal(9919, im.Height);
+                Assert.Equal(1, im.Bands);
+            }
+
+            FileLoader("niftiload", Helper.NiftiFile, NiftiValid);
+            SaveLoad("%s.nii.gz", _mono);
         }
 
         [SkippableFact]
@@ -926,6 +1029,14 @@ namespace NetVips.Tests
 
                 // we can't test the bytes are exactly equal -- the timestamps will
                 // be different
+
+                // added in 8.7
+                if (Base.AtLeastLibvips(8, 7))
+                {
+                    _ = _colour.DzsaveBuffer(regionShrink: "mean");
+                    _ = _colour.DzsaveBuffer(regionShrink: "mode");
+                    _ = _colour.DzsaveBuffer(regionShrink: "median");
+                }
             }
         }
     }
