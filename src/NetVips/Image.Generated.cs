@@ -1981,6 +1981,118 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load a FITS image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Fitsload(filename, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Fitsload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("fitsload", options, filename) as Image;
+        }
+
+        /// <summary>
+        /// Load a FITS image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Fitsload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Fitsload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("fitsload", options, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Save image to fits file
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.Fitssave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to save to</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
+        public void Fitssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        {
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("fitssave", options, filename);
+        }
+
+        /// <summary>
         /// Flatten alpha out of an image
         /// </summary>
         /// <example>
@@ -5975,6 +6087,196 @@ namespace NetVips
         public Image Multiply(Image right)
         {
             return this.Call("multiply", right) as Image;
+        }
+
+        /// <summary>
+        /// Load a NIFTI image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Niftiload(filename, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Niftiload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("niftiload", options, filename) as Image;
+        }
+
+        /// <summary>
+        /// Load a NIFTI image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Niftiload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Niftiload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("niftiload", options, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Save image to nifti file
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.Niftisave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to save to</param>
+        /// <param name="pageHeight">Set page height for multipage save</param>
+        /// <param name="strip">Strip all metadata from image</param>
+        /// <param name="background">Background value</param>
+        public void Niftisave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        {
+            var options = new VOption();
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add("strip", strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add("background", background);
+            }
+
+            this.Call("niftisave", options, filename);
+        }
+
+        /// <summary>
+        /// Load an OpenEXR image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Openexrload(filename, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Openexrload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            return Operation.Call("openexrload", options, filename) as Image;
+        }
+
+        /// <summary>
+        /// Load an OpenEXR image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Openexrload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from</param>
+        /// <param name="flags">Flags for this file</param>
+        /// <param name="memory">Force open via memory</param>
+        /// <param name="access">Required access pattern for this file</param>
+        /// <param name="fail">Fail on first error</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public static Image Openexrload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add("memory", memory);
+            }
+
+            if (access != null)
+            {
+                options.Add("access", access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add("fail", fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("openexrload", options, filename) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
         }
 
         /// <summary>
