@@ -697,7 +697,6 @@ namespace NetVips.Tests
                 var vec = hough.Getpoint(x, y);
                 var r = Array.IndexOf(vec, vec.Min(d => v)) + 35;
 
-
                 Assert.Equal(50, x);
                 Assert.Equal(50, y);
                 Assert.Equal(40, r);
@@ -1008,7 +1007,6 @@ namespace NetVips.Tests
                 var p1 = matrix.Getpoint(0, 0)[0];
                 var p2 = matrix.Getpoint(0, 1)[0];
 
-
                 Assert.Equal(0, p1);
                 Assert.Equal(10, p2);
             }
@@ -1030,7 +1028,6 @@ namespace NetVips.Tests
                 var top = trim[1];
                 var width = trim[2];
                 var height = trim[3];
-
 
                 Assert.Equal(10, left);
                 Assert.Equal(20, top);

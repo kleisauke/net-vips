@@ -2,20 +2,19 @@ sudo: false
 
 language: csharp
 
-# Ubuntu 14.04
-dist: trusty
-
 mono: none
 
-dotnet: 2.1.302
+dotnet: 2.1.401
 
 env:
   global:
-    - VIPS_VERSION=8.6.5
-    - VIPS_TAR_VERSION=$VIPS_VERSION
-    # - VIPS_WARNING=0
+    - VIPS_VERSION=8.7.0
+    - VIPS_PRE_VERSION=rc2
+    - VIPS_TAR_VERSION=$VIPS_VERSION-rc2
+    - VIPS_WARNING=0
     - PATH=$HOME/vips/bin:$PATH
     - LD_LIBRARY_PATH=$HOME/vips/lib:$LD_LIBRARY_PATH
+    - DYLD_LIBRARY_PATH=$HOME/vips/lib:$DYLD_LIBRARY_PATH
     - PKG_CONFIG_PATH=$HOME/vips/lib/pkgconfig:$PKG_CONFIG_PATH
 
 matrix:
@@ -25,9 +24,17 @@ matrix:
   include:
     # these are just to make travis's UI a bit prettier
     - os: linux
+      # Ubuntu 14.04
+      dist: trusty
+      env:
+        - JOBS=`nproc`
     - os: osx
-      # OS X 10.12
-      osx_image: xcode9.2
+      # OS X 10.13
+      osx_image: xcode9.4
+      env:
+        - JOBS="`sysctl -n hw.ncpu`"
+        - PATH="/usr/local/opt/ccache/bin:$PATH"
+        - HOMEBREW_NO_AUTO_UPDATE=1
 
 cache:
   ccache: true

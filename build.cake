@@ -26,12 +26,15 @@ Task("Install-Libvips")
     .Does(() =>
     {
         var version = EnvironmentVariable("VIPS_VERSION");
-        var preVersion = EnvironmentVariable("VIPS_PRE_VERSION") ?? "";
+        if (HasEnvironmentVariable("VIPS_PRE_VERSION"))
+        {
+            version += "-" + EnvironmentVariable("VIPS_PRE_VERSION");
+        }
 
         var zipVersion = EnvironmentVariable("VIPS_ZIP_VERSION");
 
         var fileName = $"vips-{zipVersion}.zip";
-        var vipsZip = $"https://github.com/kleisauke/build-win64-mxe/releases/download/v{version}{preVersion}/{fileName}";
+        var vipsZip = $"https://github.com/kleisauke/build-win64-mxe/releases/download/v{version}/{fileName}";
 
         var outputPath = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
         if (!FileExists(outputPath))
@@ -119,25 +122,13 @@ Task("Pack")
         });
     });
 
-Task("LeakTest")
+Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
     {
         DotNetCoreTest("./tests/NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
         {
-            Configuration = configuration,
-            Filter = "Category=Leak",
-        });
-    });
-
-Task("Test")
-    .IsDependentOn("LeakTest")
-    .Does(() =>
-    {
-        DotNetCoreTest("./tests/NetVips.Tests/NetVips.Tests.csproj", new DotNetCoreTestSettings
-        {
-            Configuration = configuration,
-            Filter = "Category!=Leak",
+            Configuration = configuration
         });
     });
 

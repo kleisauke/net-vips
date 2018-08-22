@@ -230,7 +230,6 @@ namespace NetVips.Tests
             Enums.Angle.D90
         };
 
-
         /// <summary>
         /// an expanding zip ... if either of the args is a scalar or a one-element list,
         /// duplicate it down the other side

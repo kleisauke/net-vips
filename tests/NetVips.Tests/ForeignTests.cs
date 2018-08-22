@@ -355,7 +355,6 @@ namespace NetVips.Tests
             Assert.Equal(2, y);
             x.Remove("orientation");
 
-
             filename = Helper.GetTemporaryFile(_tempDir, ".tif");
             x.WriteToFile(filename);
             x = Image.NewFromFile(filename);
@@ -405,7 +404,6 @@ namespace NetVips.Tests
                 });
                 Assert.Equal(439, x.Width);
                 Assert.Equal(pageHeight * 2, x.Height);
-
 
                 x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
                 {
@@ -650,7 +648,7 @@ namespace NetVips.Tests
                     0.124512,
                     0.159668,
                     0.040375,
-                    1.0
+                    255
                 }, a, 0.00001);
                 Assert.Equal(610, im.Width);
                 Assert.Equal(406, im.Height);
@@ -684,7 +682,6 @@ namespace NetVips.Tests
             FileLoader("fitsload", Helper.FitsFile, FitsValid);
             SaveLoad("%s.fits", _mono);
         }
-
 
         [SkippableFact]
         public void TestsNiftiLoad()
@@ -815,7 +812,6 @@ namespace NetVips.Tests
             void SvgValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
-
 
                 // some old rsvg versions are way, way off
                 Assert.True(Math.Abs(a[0] - 79) < 2);

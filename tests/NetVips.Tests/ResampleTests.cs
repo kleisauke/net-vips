@@ -36,7 +36,6 @@ namespace NetVips.Tests
             return cmplxResult.Copy(bands: 2, format: image.Format);
         }
 
-
         /// <summary>
         /// Transform image coordinates to polar
         /// </summary>

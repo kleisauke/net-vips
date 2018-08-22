@@ -5,7 +5,9 @@ set -e
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     sw_vers
 
-    brew update
+    # oclint cask conflicts with gcc formula, see:
+    # https://github.com/travis-ci/travis-ci/issues/8826
+    brew cask uninstall oclint
 
     # install gcc
     # if there are conflicts, try overwriting the files
@@ -13,7 +15,7 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     brew install gcc || brew link --overwrite gcc
 
     # install optional add-ons for libvips
-    brew install cfitsio libmatio
+    brew install cfitsio gsl libmatio
 
     # install libvips (full-fat version)
     brew install vips \

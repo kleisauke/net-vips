@@ -191,7 +191,6 @@ namespace NetVips.Tests
             RunUnary(_allImages, BandMean, Helper.NonComplexFormats);
         }
 
-
         [Fact]
         public void TestBandRank()
         {
