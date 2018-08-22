@@ -648,7 +648,8 @@ namespace NetVips.Tests
                     0.124512,
                     0.159668,
                     0.040375,
-                    255
+                    // OpenEXR alpha is scaled to 0 - 255 in libvips 8.7+
+                    Base.AtLeastLibvips(8, 7) ? 255 : 1.0
                 }, a, 0.00001);
                 Assert.Equal(610, im.Width);
                 Assert.Equal(406, im.Height);
