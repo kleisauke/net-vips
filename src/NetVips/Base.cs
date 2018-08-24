@@ -10,8 +10,10 @@ namespace NetVips
     public static class Base
     {
         /// <summary>
-        /// VipsInit() starts up the world of VIPS. You should call this on
-        /// program startup before using any other VIPS operations. 
+        /// VipsInit() starts up the world of VIPS. You should not call
+        /// this method in your own program. It is already called by
+        /// <see cref="ModuleInitializer.Initialize"/> once the assembly
+        /// is loaded.
         /// </summary>
         /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" /></returns>
         public static bool VipsInit()
