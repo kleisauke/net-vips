@@ -1,9 +1,20 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup Condition="'$(OS)' == 'Windows_NT' And '$(UseGlobalLibvips)' != 'true'">
-        <NativeDLL Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\*.dll" />
-        <Content Include="@(NativeDLL)">
-            <Link>%(FileName)%(Extension)</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+    <PropertyGroup Condition="'$(OS)'=='Windows_NT' And '$(UseGlobalLibvips)'!='true' And '$(LibvipsDLLPath)'==''">
+      <!-- Prefer x64 over x86 -->
+      <LibvipsDLLPath Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">$(MSBuildThisFileDirectory)\..\win-x64</LibvipsDLLPath>
+      <LibvipsDLLPath Condition="'$(Platform)'=='x86'">$(MSBuildThisFileDirectory)\..\win-x86</LibvipsDLLPath>
+      <LibvipsBuildArch Condition="'$(Platform)'=='AnyCPU' OR '$(Platform)'=='x64'">x64</LibvipsBuildArch>
+      <LibvipsBuildArch Condition="'$(Platform)'=='x86'">x86</LibvipsBuildArch>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(LibvipsDLLPath)'!=''">
+      <None Include="$(LibvipsDLLPath)\*.dll">
+        <Link>%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
+    <Target Name="NetVipsBuildImports" BeforeTargets="PrepareForBuild">
+      <Message Text="NetVips compiles with a bundled libvips $(LibvipsBuildArch)-binary" Condition="'$(LibvipsBuildArch)'!=''" Importance="High" />
+      <Message Text="NetVips compiles with a custom libvips binary (DLL path: $(LibvipsDLLPath))" Condition="'$(LibvipsBuildArch)'=='' And '$(LibvipsDLLPath)'!=''" Importance="High" />
+      <Message Text="NetVips compiles with a global libvips binary from the PATH environment variable" Condition="'$(LibvipsDLLPath)'=='' And '$(UseGlobalLibvips)'=='true'" Importance="High" />
+    </Target>
 </Project>

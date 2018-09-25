@@ -4,7 +4,7 @@ using System.Linq;
 namespace NetVips.Samples
 {
     /// <summary>
-    /// From: https://github.com/jcupitt/libvips/issues/898
+    /// From: https://github.com/libvips/libvips/issues/898
     /// </summary>
     public class CaptchaGenerator : ISample
     {

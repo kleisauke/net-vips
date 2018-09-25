@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/kleisauke/net-vips.svg?branch=master)](https://travis-ci.org/kleisauke/net-vips)
 [![Build status](https://ci.appveyor.com/api/projects/status/d2r9uanb5yij07pt/branch/master?svg=true)](https://ci.appveyor.com/project/kleisauke/net-vips/branch/master)
 
-This NuGet package provides a Mono/.NET binding for the [libvips image processing library](https://jcupitt.github.io/libvips).
+This NuGet package provides a Mono/.NET binding for the [libvips image processing library](https://libvips.github.io/libvips).
 
 This binding passes the vips test suite cleanly with no leaks on Windows, macOS and Linux.
 
@@ -81,12 +81,21 @@ If you wish to not use the bundled libvips, you could set the
 </PropertyGroup>
 ```
 
-```bash
-dotnet build /p:UseGlobalLibvips=true
+This property ensures that the bundled libvips binaries are not copied
+to your project's output directory. Instead, it will search for the
+required binaries in the directories that are specified in the `PATH` 
+environment variable.
+
+If you want to specify the path where the libvips binaries are 
+located, set the `LibvipsDLLPath` property:
+```xml
+<PropertyGroup>
+  <LibvipsDLLPath>C:\vips-dev-w64-web\bin</LibvipsDLLPath>
+</PropertyGroup>
 ```
 
-This property prevents that the bundled libvips binary and its
-dependencies will be copied to your project's output directory.
+This property overrides the bundled libvips binary path and will copy the
+binaries from the the specified path to your project's output directory.
 
 ## Example
 
@@ -98,7 +107,7 @@ var im = Image.NewFromFile("image.jpg");
 // put im at position (100, 100) in a 3000 x 3000 pixel image, 
 // make the other pixels in the image by mirroring im up / down / 
 // left / right, see
-// https://jcupitt.github.io/libvips/API/current/libvips-conversion.html#vips-embed
+// https://libvips.github.io/libvips/API/current/libvips-conversion.html#vips-embed
 im = im.Embed(100, 100, 3000, 3000, extend: Enums.Extend.Mirror);
 
 // multiply the green (middle) band by 2, leave the other two alone

@@ -4,7 +4,7 @@ using System.Linq;
 namespace NetVips.Samples
 {
     /// <summary>
-    /// From: https://github.com/jcupitt/nip2/tree/master/share/nip2/data/examples/1_point_mosaic
+    /// From: https://github.com/libvips/nip2/tree/master/share/nip2/data/examples/1_point_mosaic
     /// </summary>
     public class OnePointMosaic : ISample
     {

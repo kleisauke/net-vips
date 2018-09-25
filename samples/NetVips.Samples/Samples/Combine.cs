@@ -1,7 +1,7 @@
 ﻿namespace NetVips.Samples
 {
     /// <summary>
-    /// From: https://github.com/jcupitt/lua-vips/blob/master/example/combine.lua
+    /// From: https://github.com/libvips/lua-vips/blob/master/example/combine.lua
     /// </summary>
     public class Combine : ISample
     {

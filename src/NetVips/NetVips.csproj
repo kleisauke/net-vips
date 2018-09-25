@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Fody" Version="3.1.4">
+    <PackageReference Include="Fody" Version="3.2.4">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ModuleInit.Fody" Version="1.8.1">
@@ -66,14 +66,14 @@
     </ItemGroup>
   </Target>
 
-  <!-- Include libvips Windows 64-bit binaries -->
+  <!-- Include libvips Windows binaries -->
   <Target Name="IncludeBinariesInPackage" Condition="'$(TargetFramework)|$(IncludeLibvips)' == 'netstandard2.0|true'">
     <ItemGroup>
-      <TfmSpecificPackageFiles Include="..\..\pack\*.*" />
+      <TfmSpecificPackageFiles Include="..\..\pack\**\*.*" />
     </ItemGroup>
     <ItemGroup>
       <TfmSpecificPackageFile Include="@(TfmSpecificPackageFiles)">
-        <PackagePath>runtimes\win-x64\native\%(TfmSpecificPackageFiles.Filename)%(TfmSpecificPackageFiles.Extension)</PackagePath>
+        <PackagePath>build\%(TfmSpecificPackageFiles.RecursiveDir)%(TfmSpecificPackageFiles.Filename)%(TfmSpecificPackageFiles.Extension)</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target>

@@ -4,7 +4,7 @@ The goal of this project is to demonstrate the performance of the NetVips
 library compared to other image processing libraries on .NET.
 
 Be sure to check out the official benchmarks page: [VIPS - Speed and Memory
-Use](https://github.com/jcupitt/libvips/wiki/Speed-and-memory-use)
+Use](https://github.com/libvips/libvips/wiki/Speed-and-memory-use)
 for complete demonstration of performance and memory usage characteristics
 of VIPS library.
 
@@ -47,9 +47,9 @@ See "Do it yourself" section for how to run benchmark scenario.
 ## Scenario
 
 Test scenario was taken from [Speed and Memory
-use](https://github.com/jcupitt/libvips/wiki/Speed-and-memory-use)
+use](https://github.com/libvips/libvips/wiki/Speed-and-memory-use)
 page from libvips [Home
-page](https://jcupitt.github.io/libvips/).
+page](https://libvips.github.io/libvips/).
 
 ## Do it yourself
 

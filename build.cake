@@ -11,7 +11,7 @@ var isOnAppVeyorAndNotPR = AppVeyor.IsRunningOnAppVeyor && !AppVeyor.Environment
 var vipsHome = EnvironmentVariable("VIPS_HOME");
 
 const string downloadDir = "./download/";
-const string dllPackDir = "./pack/";
+const string packDir = "./pack/";
 
 // Tasks
 Task("Clean")
@@ -20,7 +20,7 @@ Task("Clean")
         CleanDirectory(buildDir);
     });
 
-Task("Install-Libvips")
+Task("Download-Binaries")
     .WithCriteria(IsRunningOnWindows())
     .IsDependentOn("Clean")
     .Does(() =>
@@ -33,41 +33,46 @@ Task("Install-Libvips")
 
         var zipVersion = EnvironmentVariable("VIPS_ZIP_VERSION");
 
-        var fileName = $"vips-{zipVersion}.zip";
-        var vipsZip = $"https://github.com/kleisauke/build-win64-mxe/releases/download/v{version}/{fileName}";
+        foreach (var architecture in new []{"win-x64","win-x86"})
+        {
+            var bitness = (architecture == "win-x86") ? "32" : "64";
+            var fileName = $"vips-dev-w{bitness}-web-{zipVersion}.zip";
+            var vipsZip = $"https://github.com/kleisauke/build-win64-mxe/releases/download/v{version}/{fileName}";
 
-        var outputPath = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
-        if (!FileExists(outputPath))
-        {
-            Information("libvips zip file not in download directory. Downloading now ...");
-            EnsureDirectoryExists(downloadDir);
-            DownloadFile(vipsZip, outputPath);
-        }
-        
-        if (DirectoryExists(vipsHome))
-        {
-            Information("Removing old libvips");
-            DeleteDirectory(vipsHome, new DeleteDirectorySettings {
+            var zipFile = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
+            if (!FileExists(zipFile))
+            {
+                Information($"libvips {architecture} zip file not in download directory. Downloading now ...");
+                EnsureDirectoryExists(downloadDir);
+                DownloadFile(vipsZip, zipFile);
+            }
+
+            var outputPath = vipsHome + "/" + architecture;
+            if (DirectoryExists(outputPath))
+            {
+                Information($"Removing old libvips {architecture}");
+                DeleteDirectory(outputPath, new DeleteDirectorySettings {
+                    Recursive = true,
+                    Force = true
+                });
+            }
+
+            Information("Uncompressing zip file ...");
+            Unzip(zipFile, outputPath);
+
+            // Need to remove toplevel dir from zip container
+            var containerDir = GetDirectories(outputPath + "/*").First(x => x.GetDirectoryName().StartsWith("vips-"));
+            CopyDirectory(containerDir, outputPath);
+            DeleteDirectory(containerDir, new DeleteDirectorySettings {
                 Recursive = true,
                 Force = true
             });
         }
-
-        Information("Uncompressing zip file ...");
-        Unzip(outputPath, vipsHome);
-
-        // Need to remove toplevel dir from zip container
-        var containerDir = GetDirectories(vipsHome + "/*").First(x => x.GetDirectoryName().StartsWith("vips-"));
-        CopyDirectory(containerDir, vipsHome);
-        DeleteDirectory(containerDir, new DeleteDirectorySettings {
-            Recursive = true,
-            Force = true
-        });
     });
 
 // Run dotnet restore to restore all package references.
 Task("Restore")  
-    .IsDependentOn("Install-Libvips")
+    .IsDependentOn("Download-Binaries")
     .Does(() =>
     {
         DotNetCoreRestore("./src/NetVips/NetVips.csproj");
@@ -89,19 +94,32 @@ Task("Pack")
     .WithCriteria((isOnAppVeyorAndNotPR || string.Equals(target, "pack", StringComparison.OrdinalIgnoreCase)) && IsRunningOnWindows())
     .Does(() =>
     {
-        if (DirectoryExists(dllPackDir))
+        if (DirectoryExists(packDir))
         {
             Information("Removing old packaging directory");
-            DeleteDirectory(dllPackDir, new DeleteDirectorySettings {
+            DeleteDirectory(packDir, new DeleteDirectorySettings {
                 Recursive = true,
                 Force = true
             });
         }
 
-        EnsureDirectoryExists(dllPackDir);
-    
-        // Copy binaries to packaging directory
-        CopyFiles(vipsHome + "/bin/*.dll", dllPackDir);
+        EnsureDirectoryExists(packDir);
+        
+        foreach (var architecture in new []{"win-x64","win-x86"})
+        {
+            var dllPackDir = new DirectoryPath(packDir + "/" + architecture);
+            EnsureDirectoryExists(dllPackDir);
+            
+            // Copy binaries to packaging directory
+            CopyFiles(vipsHome + "/" + architecture + "/bin/*.dll", dllPackDir);
+
+            // Clean unused DDL's
+            var deleteFiles = new FilePath[] {
+                dllPackDir.CombineWithFilePath("libvips-cpp-42.dll"),
+                dllPackDir.CombineWithFilePath("libstdc++-6.dll")
+            };
+            DeleteFiles(deleteFiles);
+        }
 
         // Need to build the OSX and Linux DLL first.
         DotNetCoreBuild("./build/NetVips.batch.csproj", new DotNetCoreBuildSettings

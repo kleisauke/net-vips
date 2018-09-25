@@ -6,7 +6,7 @@ using System.Text;
 namespace NetVips.Samples
 {
     /// <summary>
-    /// From: https://github.com/andrieslouw/imagesweserv/blob/3.x/src/Manipulators/Shape.php
+    /// From: https://github.com/weserv/images/blob/3.x/src/Manipulators/Shape.php
     /// </summary>
     public class ShapeCropping : ISample
     {

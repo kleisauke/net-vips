@@ -4,7 +4,7 @@ using System.IO;
 namespace NetVips.Samples
 {
     /// <summary>
-    /// From: https://raw.githubusercontent.com/jcupitt/node-vips/master/example/thumb.js
+    /// From: https://github.com/libvips/node-vips/blob/master/example/thumb.js
     /// </summary>
     public class LeakTest : ISample
     {

@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2018-09-25
+### Added
+- Bundle pre-compiled libvips binary and its dependencies for 32-bit Windows.
+
+### Fixed
+- Fix five small memleaks ([libvips/lua-vips#24](https://github.com/libvips/lua-vips/issues/24)).
+
+### Changed
+- Update bundled libvips binary to 8.7.0.
+
 ## [1.0.4] - 2018-06-28
 ### Added
 - Add `contains` helper (to check if the image contains an property of metadata).
@@ -41,6 +51,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[1.0.5]: https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/kleisauke/net-vips/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/kleisauke/net-vips/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/kleisauke/net-vips/compare/v1.0.1...v1.0.2

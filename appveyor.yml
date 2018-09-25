@@ -1,7 +1,7 @@
 image: Visual Studio 2017
 
 # Version format
-version: 1.0.4.{build}
+version: 1.0.5.{build}
 
 init:
   - git config --global core.autocrlf true
@@ -9,14 +9,13 @@ init:
 # Environment
 environment:
   VIPS_VERSION: "8.7.0"
-  VIPS_PRE_VERSION: "rc2"
-  VIPS_ZIP_VERSION: "dev-w64-web-8.7.0"
+  VIPS_ZIP_VERSION: "8.7.0"
   VIPS_WARNING: 0
 
 # Build script
 build_script:
   - ps: $env:VIPS_HOME = "C:\vips-dev-$env:VIPS_VERSION"
-  - ps: $env:PATH = "$env:VIPS_HOME\bin;$env:PATH"
+  - ps: $env:PATH = "$env:VIPS_HOME\win-x64\bin;$env:PATH"
   - ps: .\build.ps1
 
 # Do not build on tags (GitHub only)

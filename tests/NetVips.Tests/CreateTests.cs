@@ -92,9 +92,11 @@ namespace NetVips.Tests
             Assert.Equal(0.0, im.Min());
         }
 
-        [Fact]
+        [SkippableFact]
         public void TestFractsurf()
         {
+            Skip.IfNot(Helper.Have("fwfft"), "no FFTW support in this vips, skipping test");
+
             var im = Image.Fractsurf(100, 90, 2.5);
             Assert.Equal(100, im.Width);
             Assert.Equal(90, im.Height);
