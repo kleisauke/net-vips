@@ -39,6 +39,32 @@ references:
   isSpec: "True"
   fullName: NetVips.Base.LeakSet
   nameWithType: Base.LeakSet
+- uid: NetVips.Base.MemoryHigh
+  name: MemoryHigh()
+  href: api/NetVips.Base.html#NetVips_Base_MemoryHigh
+  commentId: M:NetVips.Base.MemoryHigh
+  fullName: NetVips.Base.MemoryHigh()
+  nameWithType: Base.MemoryHigh()
+- uid: NetVips.Base.MemoryHigh*
+  name: MemoryHigh
+  href: api/NetVips.Base.html#NetVips_Base_MemoryHigh_
+  commentId: Overload:NetVips.Base.MemoryHigh
+  isSpec: "True"
+  fullName: NetVips.Base.MemoryHigh
+  nameWithType: Base.MemoryHigh
+- uid: NetVips.Base.MemoryStats
+  name: MemoryStats()
+  href: api/NetVips.Base.html#NetVips_Base_MemoryStats
+  commentId: M:NetVips.Base.MemoryStats
+  fullName: NetVips.Base.MemoryStats()
+  nameWithType: Base.MemoryStats()
+- uid: NetVips.Base.MemoryStats*
+  name: MemoryStats
+  href: api/NetVips.Base.html#NetVips_Base_MemoryStats_
+  commentId: Overload:NetVips.Base.MemoryStats
+  isSpec: "True"
+  fullName: NetVips.Base.MemoryStats
+  nameWithType: Base.MemoryStats
 - uid: NetVips.Base.NicknameFind(System.IntPtr)
   name: NicknameFind(IntPtr)
   href: api/NetVips.Base.html#NetVips_Base_NicknameFind_System_IntPtr_
@@ -1813,15 +1839,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Composite
   nameWithType: Image.Composite
-- uid: NetVips.Image.Composite2(NetVips.Image,System.String,System.String,System.Nullable{System.Boolean})
-  name: Composite2(Image, String, String, Nullable<Boolean>)
-  href: api/NetVips.Image.html#NetVips_Image_Composite2_NetVips_Image_System_String_System_String_System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.Composite2(NetVips.Image,System.String,System.String,System.Nullable{System.Boolean})
-  name.vb: Composite2(Image, String, String, Nullable(Of Boolean))
-  fullName: NetVips.Image.Composite2(NetVips.Image, System.String, System.String, System.Nullable<System.Boolean>)
-  fullName.vb: NetVips.Image.Composite2(NetVips.Image, System.String, System.String, System.Nullable(Of System.Boolean))
-  nameWithType: Image.Composite2(Image, String, String, Nullable<Boolean>)
-  nameWithType.vb: Image.Composite2(Image, String, String, Nullable(Of Boolean))
+- uid: NetVips.Image.Composite2(NetVips.Image,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean})
+  name: Composite2(Image, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Composite2_NetVips_Image_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Composite2(NetVips.Image,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean})
+  name.vb: Composite2(Image, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Composite2(NetVips.Image, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Composite2(NetVips.Image, System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Composite2(Image, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Composite2(Image, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Boolean))
 - uid: NetVips.Image.Composite2*
   name: Composite2
   href: api/NetVips.Image.html#NetVips_Image_Composite2_
@@ -2287,15 +2313,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.DrawSmudge
   nameWithType: Image.DrawSmudge
-- uid: NetVips.Image.Dzsave(System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name: Dzsave(String, String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Boolean>, Double[])
-  href: api/NetVips.Image.html#NetVips_Image_Dzsave_System_String_System_String_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_String_System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___
-  commentId: M:NetVips.Image.Dzsave(System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name.vb: Dzsave(String, String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Boolean), Double())
-  fullName: NetVips.Image.Dzsave(System.String, System.String, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.String, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[])
-  fullName.vb: NetVips.Image.Dzsave(System.String, System.String, System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.String, System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double())
-  nameWithType: Image.Dzsave(String, String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Boolean>, Double[])
-  nameWithType.vb: Image.Dzsave(String, String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.Dzsave(System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Double[])
+  name: Dzsave(String, String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Dzsave_System_String_System_String_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_String_System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.Dzsave(System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Double[])
+  name.vb: Dzsave(String, String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.Dzsave(System.String, System.String, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.String, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.Dzsave(System.String, System.String, System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.String, System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.Dzsave(String, String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.Dzsave(String, String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Boolean), Double())
 - uid: NetVips.Image.Dzsave*
   name: Dzsave
   href: api/NetVips.Image.html#NetVips_Image_Dzsave_
@@ -2303,15 +2329,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Dzsave
   nameWithType: Image.Dzsave
-- uid: NetVips.Image.DzsaveBuffer(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name: DzsaveBuffer(String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Boolean>, Double[])
-  href: api/NetVips.Image.html#NetVips_Image_DzsaveBuffer_System_String_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_String_System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___
-  commentId: M:NetVips.Image.DzsaveBuffer(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name.vb: DzsaveBuffer(String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Boolean), Double())
-  fullName: NetVips.Image.DzsaveBuffer(System.String, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.String, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[])
-  fullName.vb: NetVips.Image.DzsaveBuffer(System.String, System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.String, System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double())
-  nameWithType: Image.DzsaveBuffer(String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Boolean>, Double[])
-  nameWithType.vb: Image.DzsaveBuffer(String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.DzsaveBuffer(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Double[])
+  name: DzsaveBuffer(String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_DzsaveBuffer_System_String_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_String_System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.DzsaveBuffer(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Double[])
+  name.vb: DzsaveBuffer(String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.DzsaveBuffer(System.String, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.String, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.DzsaveBuffer(System.String, System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.String, System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.DzsaveBuffer(String, String, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, String, String, String, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.DzsaveBuffer(String, String, Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), String, String, String, Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Boolean), Double())
 - uid: NetVips.Image.DzsaveBuffer*
   name: DzsaveBuffer
   href: api/NetVips.Image.html#NetVips_Image_DzsaveBuffer_
@@ -2515,6 +2541,47 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.FindTrim
   nameWithType: Image.FindTrim
+- uid: NetVips.Image.Fitsload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name: Fitsload(String, out Int32, Nullable<Boolean>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Fitsload_System_String_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Fitsload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name.vb: Fitsload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Fitsload(System.String, out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Fitsload(System.String, ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Fitsload(String, out Int32, Nullable<Boolean>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Fitsload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Boolean))
+- uid: NetVips.Image.Fitsload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name: Fitsload(String, Nullable<Boolean>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Fitsload_System_String_System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Fitsload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name.vb: Fitsload(String, Nullable(Of Boolean), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Fitsload(System.String, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Fitsload(System.String, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Fitsload(String, Nullable<Boolean>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Fitsload(String, Nullable(Of Boolean), String, Nullable(Of Boolean))
+- uid: NetVips.Image.Fitsload*
+  name: Fitsload
+  href: api/NetVips.Image.html#NetVips_Image_Fitsload_
+  commentId: Overload:NetVips.Image.Fitsload
+  isSpec: "True"
+  fullName: NetVips.Image.Fitsload
+  nameWithType: Image.Fitsload
+- uid: NetVips.Image.Fitssave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
+  name: Fitssave(String, Nullable<Int32>, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Fitssave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.Fitssave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
+  name.vb: Fitssave(String, Nullable(Of Int32), Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.Fitssave(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.Fitssave(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.Fitssave(String, Nullable<Int32>, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.Fitssave(String, Nullable(Of Int32), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.Fitssave*
+  name: Fitssave
+  href: api/NetVips.Image.html#NetVips_Image_Fitssave_
+  commentId: Overload:NetVips.Image.Fitssave
+  isSpec: "True"
+  fullName: NetVips.Image.Fitssave
+  nameWithType: Image.Fitssave
 - uid: NetVips.Image.Flatten(System.Double[],System.Nullable{System.Double})
   name: Flatten(Double[], Nullable<Double>)
   href: api/NetVips.Image.html#NetVips_Image_Flatten_System_Double___System_Nullable_System_Double__
@@ -4482,6 +4549,47 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewTempFile
   nameWithType: Image.NewTempFile
+- uid: NetVips.Image.Niftiload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name: Niftiload(String, out Int32, Nullable<Boolean>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Niftiload_System_String_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Niftiload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name.vb: Niftiload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Niftiload(System.String, out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Niftiload(System.String, ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Niftiload(String, out Int32, Nullable<Boolean>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Niftiload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Boolean))
+- uid: NetVips.Image.Niftiload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name: Niftiload(String, Nullable<Boolean>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Niftiload_System_String_System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Niftiload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name.vb: Niftiload(String, Nullable(Of Boolean), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Niftiload(System.String, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Niftiload(System.String, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Niftiload(String, Nullable<Boolean>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Niftiload(String, Nullable(Of Boolean), String, Nullable(Of Boolean))
+- uid: NetVips.Image.Niftiload*
+  name: Niftiload
+  href: api/NetVips.Image.html#NetVips_Image_Niftiload_
+  commentId: Overload:NetVips.Image.Niftiload
+  isSpec: "True"
+  fullName: NetVips.Image.Niftiload
+  nameWithType: Image.Niftiload
+- uid: NetVips.Image.Niftisave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
+  name: Niftisave(String, Nullable<Int32>, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Niftisave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.Niftisave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
+  name.vb: Niftisave(String, Nullable(Of Int32), Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.Niftisave(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.Niftisave(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.Niftisave(String, Nullable<Int32>, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.Niftisave(String, Nullable(Of Int32), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.Niftisave*
+  name: Niftisave
+  href: api/NetVips.Image.html#NetVips_Image_Niftisave_
+  commentId: Overload:NetVips.Image.Niftisave
+  isSpec: "True"
+  fullName: NetVips.Image.Niftisave
+  nameWithType: Image.Niftisave
 - uid: NetVips.Image.op_Addition(NetVips.Image,System.Object)
   name: Addition(Image, Object)
   href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Object_
@@ -4690,6 +4798,31 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Subtraction
   nameWithType: Image.Subtraction
+- uid: NetVips.Image.Openexrload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name: Openexrload(String, out Int32, Nullable<Boolean>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Openexrload_System_String_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Openexrload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name.vb: Openexrload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Openexrload(System.String, out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Openexrload(System.String, ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Openexrload(String, out Int32, Nullable<Boolean>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Openexrload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Boolean))
+- uid: NetVips.Image.Openexrload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name: Openexrload(String, Nullable<Boolean>, String, Nullable<Boolean>)
+  href: api/NetVips.Image.html#NetVips_Image_Openexrload_System_String_System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Openexrload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean})
+  name.vb: Openexrload(String, Nullable(Of Boolean), String, Nullable(Of Boolean))
+  fullName: NetVips.Image.Openexrload(System.String, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>)
+  fullName.vb: NetVips.Image.Openexrload(System.String, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean))
+  nameWithType: Image.Openexrload(String, Nullable<Boolean>, String, Nullable<Boolean>)
+  nameWithType.vb: Image.Openexrload(String, Nullable(Of Boolean), String, Nullable(Of Boolean))
+- uid: NetVips.Image.Openexrload*
+  name: Openexrload
+  href: api/NetVips.Image.html#NetVips_Image_Openexrload_
+  commentId: Overload:NetVips.Image.Openexrload
+  isSpec: "True"
+  fullName: NetVips.Image.Openexrload
+  nameWithType: Image.Openexrload
 - uid: NetVips.Image.Openslideload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String)
   name: Openslideload(String, out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, String)
   href: api/NetVips.Image.html#NetVips_Image_Openslideload_System_String_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_
@@ -4715,24 +4848,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Openslideload
   nameWithType: Image.Openslideload
-- uid: NetVips.Image.Pdfload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name: Pdfload(String, out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  href: api/NetVips.Image.html#NetVips_Image_Pdfload_System_String_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__
-  commentId: M:NetVips.Image.Pdfload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name.vb: Pdfload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
-  fullName: NetVips.Image.Pdfload(System.String, out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>)
-  fullName.vb: NetVips.Image.Pdfload(System.String, ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double))
-  nameWithType: Image.Pdfload(String, out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  nameWithType.vb: Image.Pdfload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
-- uid: NetVips.Image.Pdfload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name: Pdfload(String, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  href: api/NetVips.Image.html#NetVips_Image_Pdfload_System_String_System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__
-  commentId: M:NetVips.Image.Pdfload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name.vb: Pdfload(String, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
-  fullName: NetVips.Image.Pdfload(System.String, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>)
-  fullName.vb: NetVips.Image.Pdfload(System.String, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double))
-  nameWithType: Image.Pdfload(String, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  nameWithType.vb: Image.Pdfload(String, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
+- uid: NetVips.Image.Pdfload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name: Pdfload(String, out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Pdfload_System_String_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___
+  commentId: M:NetVips.Image.Pdfload(System.String,System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name.vb: Pdfload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
+  fullName: NetVips.Image.Pdfload(System.String, out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Double[])
+  fullName.vb: NetVips.Image.Pdfload(System.String, ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Double())
+  nameWithType: Image.Pdfload(String, out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  nameWithType.vb: Image.Pdfload(String, ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
+- uid: NetVips.Image.Pdfload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name: Pdfload(String, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Pdfload_System_String_System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___
+  commentId: M:NetVips.Image.Pdfload(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name.vb: Pdfload(String, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
+  fullName: NetVips.Image.Pdfload(System.String, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Double[])
+  fullName.vb: NetVips.Image.Pdfload(System.String, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Double())
+  nameWithType: Image.Pdfload(String, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  nameWithType.vb: Image.Pdfload(String, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
 - uid: NetVips.Image.Pdfload*
   name: Pdfload
   href: api/NetVips.Image.html#NetVips_Image_Pdfload_
@@ -4740,24 +4873,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Pdfload
   nameWithType: Image.Pdfload
-- uid: NetVips.Image.PdfloadBuffer(System.Byte[],System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name: PdfloadBuffer(Byte[], out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  href: api/NetVips.Image.html#NetVips_Image_PdfloadBuffer_System_Byte___System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__
-  commentId: M:NetVips.Image.PdfloadBuffer(System.Byte[],System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name.vb: PdfloadBuffer(Byte(), ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
-  fullName: NetVips.Image.PdfloadBuffer(System.Byte[], out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>)
-  fullName.vb: NetVips.Image.PdfloadBuffer(System.Byte(), ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double))
-  nameWithType: Image.PdfloadBuffer(Byte[], out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  nameWithType.vb: Image.PdfloadBuffer(Byte(), ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
-- uid: NetVips.Image.PdfloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name: PdfloadBuffer(Byte[], Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  href: api/NetVips.Image.html#NetVips_Image_PdfloadBuffer_System_Byte___System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__
-  commentId: M:NetVips.Image.PdfloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double})
-  name.vb: PdfloadBuffer(Byte(), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
-  fullName: NetVips.Image.PdfloadBuffer(System.Byte[], System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>)
-  fullName.vb: NetVips.Image.PdfloadBuffer(System.Byte(), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double))
-  nameWithType: Image.PdfloadBuffer(Byte[], Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>)
-  nameWithType.vb: Image.PdfloadBuffer(Byte(), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double))
+- uid: NetVips.Image.PdfloadBuffer(System.Byte[],System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name: PdfloadBuffer(Byte[], out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_PdfloadBuffer_System_Byte___System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___
+  commentId: M:NetVips.Image.PdfloadBuffer(System.Byte[],System.Int32@,System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name.vb: PdfloadBuffer(Byte(), ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
+  fullName: NetVips.Image.PdfloadBuffer(System.Byte[], out System.Int32, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Double[])
+  fullName.vb: NetVips.Image.PdfloadBuffer(System.Byte(), ByRef System.Int32, System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Double())
+  nameWithType: Image.PdfloadBuffer(Byte[], out Int32, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  nameWithType.vb: Image.PdfloadBuffer(Byte(), ByRef Int32, Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
+- uid: NetVips.Image.PdfloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name: PdfloadBuffer(Byte[], Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_PdfloadBuffer_System_Byte___System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___
+  commentId: M:NetVips.Image.PdfloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Double},System.Double[])
+  name.vb: PdfloadBuffer(Byte(), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
+  fullName: NetVips.Image.PdfloadBuffer(System.Byte[], System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Double[])
+  fullName.vb: NetVips.Image.PdfloadBuffer(System.Byte(), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Double())
+  nameWithType: Image.PdfloadBuffer(Byte[], Nullable<Boolean>, String, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Double>, Nullable<Double>, Double[])
+  nameWithType.vb: Image.PdfloadBuffer(Byte(), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Double), Nullable(Of Double), Double())
 - uid: NetVips.Image.PdfloadBuffer*
   name: PdfloadBuffer
   href: api/NetVips.Image.html#NetVips_Image_PdfloadBuffer_
@@ -4857,15 +4990,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.PngloadBuffer
   nameWithType: Image.PngloadBuffer
-- uid: NetVips.Image.Pngsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name: Pngsave(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Double[])
-  href: api/NetVips.Image.html#NetVips_Image_Pngsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___
-  commentId: M:NetVips.Image.Pngsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name.vb: Pngsave(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Double())
-  fullName: NetVips.Image.Pngsave(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[])
-  fullName.vb: NetVips.Image.Pngsave(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double())
-  nameWithType: Image.Pngsave(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Double[])
-  nameWithType.vb: Image.Pngsave(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.Pngsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Double[])
+  name: Pngsave(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Double>, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Pngsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.Pngsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Double[])
+  name.vb: Pngsave(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Double), Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.Pngsave(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Double>, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.Pngsave(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Double), System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.Pngsave(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Double>, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.Pngsave(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Double), Nullable(Of Boolean), Double())
 - uid: NetVips.Image.Pngsave*
   name: Pngsave
   href: api/NetVips.Image.html#NetVips_Image_Pngsave_
@@ -4873,15 +5006,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Pngsave
   nameWithType: Image.Pngsave
-- uid: NetVips.Image.PngsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name: PngsaveBuffer(Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Double[])
-  href: api/NetVips.Image.html#NetVips_Image_PngsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___
-  commentId: M:NetVips.Image.PngsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[])
-  name.vb: PngsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Double())
-  fullName: NetVips.Image.PngsaveBuffer(System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[])
-  fullName.vb: NetVips.Image.PngsaveBuffer(System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double())
-  nameWithType: Image.PngsaveBuffer(Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Double[])
-  nameWithType.vb: Image.PngsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.PngsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Double[])
+  name: PngsaveBuffer(Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Double>, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_PngsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.PngsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Double[])
+  name.vb: PngsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Double), Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.PngsaveBuffer(System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Double>, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.PngsaveBuffer(System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Double), System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.PngsaveBuffer(Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Double>, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.PngsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Double), Nullable(Of Boolean), Double())
 - uid: NetVips.Image.PngsaveBuffer*
   name: PngsaveBuffer
   href: api/NetVips.Image.html#NetVips_Image_PngsaveBuffer_
@@ -5872,24 +6005,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Tan
   nameWithType: Image.Tan
-- uid: NetVips.Image.Text(System.String,System.Int32@,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name: Text(String, out Int32, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>)
-  href: api/NetVips.Image.html#NetVips_Image_Text_System_String_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.Text(System.String,System.Int32@,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name.vb: Text(String, ByRef Int32, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32))
-  fullName: NetVips.Image.Text(System.String, out System.Int32, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Image.Text(System.String, ByRef System.Int32, System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32))
-  nameWithType: Image.Text(String, out Int32, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>)
-  nameWithType.vb: Image.Text(String, ByRef Int32, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32))
-- uid: NetVips.Image.Text(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name: Text(String, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>)
-  href: api/NetVips.Image.html#NetVips_Image_Text_System_String_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.Text(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name.vb: Text(String, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32))
-  fullName: NetVips.Image.Text(System.String, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Image.Text(System.String, System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32))
-  nameWithType: Image.Text(String, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>)
-  nameWithType.vb: Image.Text(String, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32))
+- uid: NetVips.Image.Text(System.String,System.Int32@,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name: Text(String, out Int32, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, String)
+  href: api/NetVips.Image.html#NetVips_Image_Text_System_String_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.Text(System.String,System.Int32@,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name.vb: Text(String, ByRef Int32, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), String)
+  fullName: NetVips.Image.Text(System.String, out System.Int32, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String)
+  fullName.vb: NetVips.Image.Text(System.String, ByRef System.Int32, System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String)
+  nameWithType: Image.Text(String, out Int32, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, String)
+  nameWithType.vb: Image.Text(String, ByRef Int32, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), String)
+- uid: NetVips.Image.Text(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name: Text(String, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, String)
+  href: api/NetVips.Image.html#NetVips_Image_Text_System_String_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.Text(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name.vb: Text(String, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), String)
+  fullName: NetVips.Image.Text(System.String, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.String)
+  fullName.vb: NetVips.Image.Text(System.String, System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.String)
+  nameWithType: Image.Text(String, String, Nullable<Int32>, Nullable<Int32>, String, Nullable<Int32>, Nullable<Int32>, String)
+  nameWithType.vb: Image.Text(String, String, Nullable(Of Int32), Nullable(Of Int32), String, Nullable(Of Int32), Nullable(Of Int32), String)
 - uid: NetVips.Image.Text*
   name: Text
   href: api/NetVips.Image.html#NetVips_Image_Text_
@@ -5995,15 +6128,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.TiffloadBuffer
   nameWithType: Image.TiffloadBuffer
-- uid: NetVips.Image.Tiffsave(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Double[])
-  name: Tiffsave(String, String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Double[])
-  href: api/NetVips.Image.html#NetVips_Image_Tiffsave_System_String_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Double___
-  commentId: M:NetVips.Image.Tiffsave(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Double[])
-  name.vb: Tiffsave(String, String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Double())
-  fullName: NetVips.Image.Tiffsave(System.String, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Double[])
-  fullName.vb: NetVips.Image.Tiffsave(System.String, System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Double())
-  nameWithType: Image.Tiffsave(String, String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Double[])
-  nameWithType.vb: Image.Tiffsave(String, String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.Tiffsave(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[])
+  name: Tiffsave(String, String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_Tiffsave_System_String_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.Tiffsave(System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[])
+  name.vb: Tiffsave(String, String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.Tiffsave(System.String, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.Tiffsave(System.String, System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.Tiffsave(String, String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.Tiffsave(String, String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Boolean), Double())
 - uid: NetVips.Image.Tiffsave*
   name: Tiffsave
   href: api/NetVips.Image.html#NetVips_Image_Tiffsave_
@@ -6011,15 +6144,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Tiffsave
   nameWithType: Image.Tiffsave
-- uid: NetVips.Image.TiffsaveBuffer(System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Double[])
-  name: TiffsaveBuffer(String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Double[])
-  href: api/NetVips.Image.html#NetVips_Image_TiffsaveBuffer_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Double___
-  commentId: M:NetVips.Image.TiffsaveBuffer(System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Double[])
-  name.vb: TiffsaveBuffer(String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Double())
-  fullName: NetVips.Image.TiffsaveBuffer(System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Double[])
-  fullName.vb: NetVips.Image.TiffsaveBuffer(System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Double())
-  nameWithType: Image.TiffsaveBuffer(String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Double[])
-  nameWithType.vb: Image.TiffsaveBuffer(String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Double())
+- uid: NetVips.Image.TiffsaveBuffer(System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[])
+  name: TiffsaveBuffer(String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Boolean>, Double[])
+  href: api/NetVips.Image.html#NetVips_Image_TiffsaveBuffer_System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__System_Double___
+  commentId: M:NetVips.Image.TiffsaveBuffer(System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[])
+  name.vb: TiffsaveBuffer(String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Boolean), Double())
+  fullName: NetVips.Image.TiffsaveBuffer(System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Int32>, System.String, System.Nullable<System.Boolean>, System.Nullable<System.Int32>, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Double>, System.Nullable<System.Double>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>, System.Double[])
+  fullName.vb: NetVips.Image.TiffsaveBuffer(System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Int32), System.String, System.Nullable(Of System.Boolean), System.Nullable(Of System.Int32), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Double), System.Nullable(Of System.Double), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean), System.Double())
+  nameWithType: Image.TiffsaveBuffer(String, Nullable<Int32>, String, Nullable<Int32>, String, Nullable<Boolean>, Nullable<Int32>, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Double>, Nullable<Double>, Nullable<Boolean>, Nullable<Boolean>, String, Nullable<Boolean>, Double[])
+  nameWithType.vb: Image.TiffsaveBuffer(String, Nullable(Of Int32), String, Nullable(Of Int32), String, Nullable(Of Boolean), Nullable(Of Int32), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Double), Nullable(Of Double), Nullable(Of Boolean), Nullable(Of Boolean), String, Nullable(Of Boolean), Double())
 - uid: NetVips.Image.TiffsaveBuffer*
   name: TiffsaveBuffer
   href: api/NetVips.Image.html#NetVips_Image_TiffsaveBuffer_
@@ -6072,6 +6205,22 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.ToString
   nameWithType: Image.ToString
+- uid: NetVips.Image.Transpose3d(System.Nullable{System.Int32})
+  name: Transpose3d(Nullable<Int32>)
+  href: api/NetVips.Image.html#NetVips_Image_Transpose3d_System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.Transpose3d(System.Nullable{System.Int32})
+  name.vb: Transpose3d(Nullable(Of Int32))
+  fullName: NetVips.Image.Transpose3d(System.Nullable<System.Int32>)
+  fullName.vb: NetVips.Image.Transpose3d(System.Nullable(Of System.Int32))
+  nameWithType: Image.Transpose3d(Nullable<Int32>)
+  nameWithType.vb: Image.Transpose3d(Nullable(Of Int32))
+- uid: NetVips.Image.Transpose3d*
+  name: Transpose3d
+  href: api/NetVips.Image.html#NetVips_Image_Transpose3d_
+  commentId: Overload:NetVips.Image.Transpose3d
+  isSpec: "True"
+  fullName: NetVips.Image.Transpose3d
+  nameWithType: Image.Transpose3d
 - uid: NetVips.Image.Unpremultiply(System.Nullable{System.Double})
   name: Unpremultiply(Nullable<Double>)
   href: api/NetVips.Image.html#NetVips_Image_Unpremultiply_System_Nullable_System_Double__

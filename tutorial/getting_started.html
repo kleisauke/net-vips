@@ -8,7 +8,7 @@
     <title>Getting Started with NetVips </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Getting Started with NetVips ">
-    <meta name="generator" content="docfx 2.36.2.0">
+    <meta name="generator" content="docfx 2.39.2.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -155,7 +155,8 @@ example:</p>
 changed.</p>
 <p>Set image metadata with <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Set_"><code>Set</code></a>. Use <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a> to make
 a private copy of the image first, for example:</p>
-<pre><code class="lang-csharp">var newImage = image.Copy().Set(&quot;icc-profile-data&quot;, newProfile);
+<pre><code class="lang-csharp">var newImage = image.Copy();
+newImage.Set(&quot;icc-profile-data&quot;, newProfile);
 </code></pre>
 <p>Now <code>newImage</code> is a clone of <code>image</code> with a new ICC profile attached to
 it.</p>
