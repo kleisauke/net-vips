@@ -37,7 +37,7 @@ Task("Download-Binaries")
         {
             var bitness = (architecture == "win-x86") ? "32" : "64";
             var fileName = $"vips-dev-w{bitness}-web-{zipVersion}.zip";
-            var vipsZip = $"https://github.com/kleisauke/build-win64-mxe/releases/download/v{version}/{fileName}";
+            var vipsZip = $"https://github.com/libvips/build-win64-mxe/releases/download/v{version}/{fileName}";
 
             var zipFile = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
             if (!FileExists(zipFile))
