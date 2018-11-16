@@ -65,6 +65,12 @@ addons:
         # missing on trusty, unfortunately
         # - libwebpmux2
       - libglib2.0-dev
+  homebrew:
+    packages:
+      - cfitsio
+      - gsl
+      - libmatio
+      - vips
 
 before_install: ./build/travis.sh
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace NetVips.Tests
@@ -463,7 +464,10 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestMagickLoad()
         {
-            Skip.IfNot(Helper.Have("magickload") && File.Exists(Helper.BmpFile), "no magick support, skipping test");
+            Skip.IfNot(Helper.Have("magickload") &&
+                       File.Exists(Helper.BmpFile) &&
+                       // Homebrew's vips version is build with GraphicsMagick which fails with this test case.
+                       !RuntimeInformation.IsOSPlatform(OSPlatform.OSX), "no magick support, skipping test");
 
             void BmpValid(Image im)
             {
