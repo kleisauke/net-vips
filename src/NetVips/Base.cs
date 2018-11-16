@@ -10,11 +10,32 @@ namespace NetVips
     public static class Base
     {
         /// <summary>
-        /// VipsInit() starts up the world of VIPS. You should not call
-        /// this method in your own program. It is already called by
-        /// <see cref="ModuleInitializer.Initialize"/> once the assembly
-        /// is loaded.
+        /// VipsInit() starts up the world of VIPS.
         /// </summary>
+        /// <remarks>
+        /// This function will be automatically called by <see cref="ModuleInitializer.Initialize"/>
+        /// once the assembly is loaded. You should only call his method in your own program if the
+        /// <see cref="ModuleInitializer"/> fails to initialize libvips, for example:
+        /// <code language="lang-csharp">
+        /// if (!ModuleInitializer.VipsInitialized)
+        /// {
+        ///     // Get the directory for the executing assembly in which the current code resides.
+        ///     var currentDirectory =
+        ///         Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        ///
+        ///     // <LibvipsOutputBase>vips</LibvipsOutputBase>
+        ///     var vipsPath = Path.Combine(currentDirectory, "vips");
+        ///
+        ///     // Prepend the vips path to PATH environment variable, to ensure the right libs are being used.
+        ///     var path = Environment.GetEnvironmentVariable("PATH");
+        ///     path = vipsPath + ";" + path;
+        ///     Environment.SetEnvironmentVariable("PATH", path);
+        ///
+        ///     // Try to reinitialize libvips
+        ///     Base.VipsInit();
+        /// }
+        /// </code>
+        /// </remarks>
         /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" /></returns>
         public static bool VipsInit()
         {

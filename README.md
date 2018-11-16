@@ -51,6 +51,10 @@ if (ModuleInitializer.VipsInitialized)
 {
     Console.WriteLine($"Inited libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
 }
+else
+{
+    Console.WriteLine(ModuleInitializer.Exception.Message);
+}
 Console.ReadLine();
 ```
 
@@ -58,14 +62,14 @@ If NetVips was able to find the libvips shared library, you should see:
 
     Inited libvips [VERSION_NUMBER]
 
-However, if an `TypeInitializationException` is thrown, NetVips was unable to initialize libvips.
+However, if you see something else, NetVips was unable to initialize libvips.
 This can happen for a variety of reasons, even though most of the times it's because NetVips 
-was not able to find libvips or the wrong `Target Platform` was specified:
+was not able to find libvips or due to x86/x64 architecture problems:
 
 | Inner exception | HRESULT | Solution |
 | :--- | :--- | :--- |
-| DllNotFoundException | 0x8007007E | Make sure to add the `bin` folder of the libvips Windows build to your `PATH` environment variable (if you wish to not use the bundled libvips). |
-| BadImageFormatException | 0x8007000B | Make sure when you target the `AnyCPU` platform the `Prefer 32-bit` option is unchecked. Or try to target `x64` instead (the bundled libvips Windows binary is build for 64-bit architecture). |
+| DllNotFoundException | 0x8007007E | Make sure to add the `bin` folder of the libvips Windows build to your `PATH` environment variable (if you wish to not use the bundled libvips binaries). |
+| BadImageFormatException | 0x8007000B | Make sure when you target the `AnyCPU` platform the `Prefer 32-bit` option is unchecked. Or try to target `x64` instead. |
 
 ## Bundled libvips Windows binary
 
@@ -86,16 +90,38 @@ to your project's output directory. Instead, it will search for the
 required binaries in the directories that are specified in the `PATH` 
 environment variable.
 
-If you want to specify the path where the libvips binaries are 
-located, set the `LibvipsDLLPath` property:
+The libvips web-distribution bundled with NetVips contains 36 DLLs.
+If you want to not bloat your project's output directory, you could 
+set the `LibvipsOutputBase` property:
 ```xml
 <PropertyGroup>
-  <LibvipsDLLPath>C:\vips-dev-w64-web\bin</LibvipsDLLPath>
+  <LibvipsOutputBase>vips</LibvipsOutputBase>
 </PropertyGroup>
 ```
 
-This property overrides the bundled libvips binary path and will copy the
-binaries from the the specified path to your project's output directory.
+This property ensures that bundled libvips binaries are copied to
+to the specified subdirectory within your project's output directory.
+Note that it's still required to add this directory to the `PATH` 
+environment variable. This can be done at runtime, for example:
+```csharp
+if (!ModuleInitializer.VipsInitialized)
+{
+    // Get the directory for the executing assembly in which the current code resides.
+    var currentDirectory =
+        Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+    // <LibvipsOutputBase>vips</LibvipsOutputBase>
+    var vipsPath = Path.Combine(currentDirectory, "vips");
+
+    // Prepend the vips path to PATH environment variable, to ensure the right libs are being used.
+    var path = Environment.GetEnvironmentVariable("PATH");
+    path = vipsPath + ";" + path;
+    Environment.SetEnvironmentVariable("PATH", path);
+
+    // Try to reinitialize libvips
+    Base.VipsInit();
+}
+```
 
 ## Example
 

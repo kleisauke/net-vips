@@ -7,7 +7,7 @@
     <Authors>Kleis Auke Wolthuizen</Authors>
     <PackageTags>libvips;bindings;image-processing</PackageTags>
     <PackageProjectUrl>https://github.com/kleisauke/net-vips</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/kleisauke/net-vips/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/kleisauke/net-vips</RepositoryUrl>
 
@@ -18,7 +18,7 @@
 
     <Major>1</Major>
     <Minor>0</Minor>
-    <Revision>5</Revision>
+    <Revision>6</Revision>
 
     <BuildNumber Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' ">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
     <BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
