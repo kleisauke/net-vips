@@ -5,9 +5,10 @@
       <LibvipsBuildArch Condition="'$(Platform)'=='x86'">x86</LibvipsBuildArch>
     </PropertyGroup>
     <ItemGroup Condition="'$(LibvipsBuildArch)'!=''">
-      <None Include="$(MSBuildThisFileDirectory)\..\win-$(LibvipsBuildArch)\*.dll" 
-            CopyToOutputDirectory="PreserveNewest"
-            LinkBase="$(LibvipsOutputBase)" />
+      <None Include="$(MSBuildThisFileDirectory)\..\win-$(LibvipsBuildArch)\*.dll">
+        <Link Condition="'$(LibvipsOutputBase)'!=''">$(LibvipsOutputBase)\%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
     <Target Name="NetVipsBuildImports" BeforeTargets="PrepareForBuild">
       <Message Text="NetVips uses a bundled libvips $(LibvipsBuildArch)-binary" Condition="'$(LibvipsBuildArch)'!=''" Importance="High" />
