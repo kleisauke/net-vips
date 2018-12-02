@@ -3,8 +3,6 @@ using BenchmarkDotNet.Attributes;
 using ImageMagick;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Processing.Convolution;
-using SixLabors.ImageSharp.Processing.Transforms;
 using SixLabors.Primitives;
 
 namespace NetVips.Benchmarks
