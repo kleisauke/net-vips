@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:noNamespaceSchemaLocation="FodyWeavers.xsd"
          VerifyAssembly="true" 
-         VerifyIgnoreCodes="0x80131869,0x80131252">
+         VerifyIgnoreCodes="0x80131869,0x80131252"
+         GenerateXsd="false">
   <!-- ignore 0x80131869 and 0x80131252 since it throws on netstandard -->
   <ModuleInit />
 </Weavers>

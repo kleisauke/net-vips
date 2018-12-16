@@ -90,7 +90,7 @@ to your project's output directory. Instead, it will search for the
 required binaries in the directories that are specified in the `PATH` 
 environment variable.
 
-The libvips web-distribution bundled with NetVips contains 36 DLLs.
+The libvips web-distribution bundled with NetVips contains 37 DLLs.
 If you want to not bloat your project's output directory, you could 
 set the `LibvipsOutputBase` property:
 ```xml
@@ -102,26 +102,8 @@ set the `LibvipsOutputBase` property:
 This property ensures that bundled libvips binaries are copied to
 to the specified subdirectory within your project's output directory.
 Note that it's still required to add this directory to the `PATH` 
-environment variable. This can be done at runtime, for example:
-```csharp
-if (!ModuleInitializer.VipsInitialized)
-{
-    // Get the directory for the executing assembly in which the current code resides.
-    var currentDirectory =
-        Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-    // <LibvipsOutputBase>vips</LibvipsOutputBase>
-    var vipsPath = Path.Combine(currentDirectory, "vips");
-
-    // Prepend the vips path to PATH environment variable, to ensure the right libs are being used.
-    var path = Environment.GetEnvironmentVariable("PATH");
-    path = vipsPath + ";" + path;
-    Environment.SetEnvironmentVariable("PATH", path);
-
-    // Try to reinitialize libvips
-    Base.VipsInit();
-}
-```
+environment variable. See [here](https://github.com/kleisauke/net-vips/issues/20#issuecomment-439394316)
+for an example how this can be done at runtime.
 
 ## Example
 

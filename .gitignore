@@ -307,6 +307,3 @@ $RECYCLE.BIN/
 
 # BenchmarkDotNet
 **/BenchmarkDotNet.Artifacts/
-
-# Fody
-FodyWeavers.xsd

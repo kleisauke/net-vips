@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.3" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.9.0.2" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.9.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
   </ItemGroup>
 
