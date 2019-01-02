@@ -78,8 +78,8 @@ namespace NetVips.Samples
             }
 
             // remove any unused edges
-            var trim = textLayer.FindTrim(background: new double[] {0});
-            textLayer = textLayer.Crop((int) trim[0], (int) trim[1], (int) trim[2], (int) trim[3]);
+            var trim = textLayer.FindTrim(background: new double[] { 0 });
+            textLayer = textLayer.Crop((int)trim[0], (int)trim[1], (int)trim[2], (int)trim[3]);
 
             // make an alpha for the text layer: just a mono version of the image, but scaled
             // up so the letters themselves are not transparent

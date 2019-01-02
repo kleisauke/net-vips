@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <OutputType>Exe</OutputType>
     <Optimize>true</Optimize>
     <Platforms>AnyCPU;x64;x86</Platforms>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.3" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.9.1" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.10.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
   </ItemGroup>
 

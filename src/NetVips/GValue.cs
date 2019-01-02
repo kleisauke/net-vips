@@ -272,7 +272,7 @@ namespace NetVips
             {
                 if (!(value is IEnumerable))
                 {
-                    value = new[] {value};
+                    value = new[] { value };
                 }
 
                 switch (value)
@@ -298,7 +298,7 @@ namespace NetVips
             {
                 if (!(value is IEnumerable))
                 {
-                    value = new[] {value};
+                    value = new[] { value };
                 }
 
                 switch (value)
@@ -371,7 +371,7 @@ namespace NetVips
 
                 if (Base.AtLeastLibvips(8, 6))
                 {
-                    VipsType.VipsValueSetBlobFree(ref Struct, memory, new UIntPtr((ulong) length));
+                    VipsType.VipsValueSetBlobFree(ref Struct, memory, new UIntPtr((ulong)length));
                 }
                 else
                 {
@@ -382,7 +382,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, memory, new UIntPtr((ulong) length));
+                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, memory, new UIntPtr((ulong)length));
                 }
             }
             else
@@ -487,7 +487,7 @@ namespace NetVips
 
                 // Blob types are returned as an array of bytes.
                 var byteArr = new byte[psize];
-                Marshal.Copy(array, byteArr, 0, (int) psize);
+                Marshal.Copy(array, byteArr, 0, (int)psize);
                 result = byteArr;
             }
             else

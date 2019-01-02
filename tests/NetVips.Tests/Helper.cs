@@ -253,7 +253,7 @@ namespace NetVips.Tests
             if (x is IEnumerable enumerable1 && y is IEnumerable enumerable2)
             {
                 return enumerable1.Cast<object>()
-                    .Zip(enumerable2.Cast<object>(), (xObj, yObj) => new[] {xObj, yObj})
+                    .Zip(enumerable2.Cast<object>(), (xObj, yObj) => new[] { xObj, yObj })
                     .ToArray();
             }
 
@@ -335,7 +335,7 @@ namespace NetVips.Tests
             var im2 = func(im) as Image;
             var v2 = im2?.Getpoint(x, y);
 
-            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] {v1}, v2);
+            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace NetVips.Tests
             var after = func(left, right) as Image;
             var v2 = after?.Getpoint(x, y);
 
-            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] {v1}, v2);
+            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
         }
 
         /// <summary>

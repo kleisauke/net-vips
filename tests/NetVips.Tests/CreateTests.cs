@@ -32,7 +32,7 @@ namespace NetVips.Tests
             {
                 var pixel = im.Getpoint(i, i);
                 Assert.Equal(3, pixel.Length);
-                Assert.Equal(new double[] {0, 0, 0}, pixel);
+                Assert.Equal(new double[] { 0, 0, 0 }, pixel);
             }
         }
 
@@ -66,9 +66,9 @@ namespace NetVips.Tests
             Assert.Equal(1, lut.Height);
             Assert.Equal(2, lut.Bands);
             p = lut.Getpoint(0, 0);
-            Assert.Equal(new[] {0.0, 100.0}, p);
+            Assert.Equal(new[] { 0.0, 100.0 }, p);
             p = lut.Getpoint(64, 0);
-            Assert.Equal(new[] {5.0, 95.0}, p);
+            Assert.Equal(new[] { 5.0, 95.0 }, p);
         }
 
         [Fact]
@@ -234,14 +234,14 @@ namespace NetVips.Tests
             Assert.Equal(Enums.BandFormat.Double, im.Format);
 
             var p = im.Getpoint(0, 0);
-            Assert.Equal(new double[] {0, 0, 0}, p);
+            Assert.Equal(new double[] { 0, 0, 0 }, p);
             p = im.Getpoint(255, 0);
-            Assert.Equal(new double[] {1, 1, 1}, p);
-            p = im.Getpoint((int) 0.2 * 255, 0);
+            Assert.Equal(new double[] { 1, 1, 1 }, p);
+            p = im.Getpoint((int)0.2 * 255, 0);
             Assert.Equal(0, p[0], 1);
-            p = im.Getpoint((int) 0.3 * 255, 0);
+            p = im.Getpoint((int)0.3 * 255, 0);
             Assert.Equal(0, p[1], 1);
-            p = im.Getpoint((int) 0.1 * 255, 0);
+            p = im.Getpoint((int)0.1 * 255, 0);
             Assert.Equal(0, p[2], 1);
         }
 
@@ -484,7 +484,7 @@ namespace NetVips.Tests
             Assert.Equal(128, im.Width);
             Assert.Equal(128, im.Height);
             var p = im.Getpoint(45, 35);
-            Assert.Equal(new double[] {45, 35}, p);
+            Assert.Equal(new double[] { 45, 35 }, p);
         }
 
         [Fact]

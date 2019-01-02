@@ -683,7 +683,7 @@ namespace NetVips
                                  GValue.GTypeToCSharp(op.GetTypeOf(requiredInput[0])).Equals("Image[]");
                 if (needToWrap)
                 {
-                    result.Append("new object[] {");
+                    result.Append("new object[] { ");
                 }
 
                 result.Append(string.Join(", ",
@@ -691,7 +691,7 @@ namespace NetVips
 
                 if (needToWrap)
                 {
-                    result.Append("}");
+                    result.Append(" }");
                 }
             }
 
@@ -745,7 +745,7 @@ namespace NetVips
             if (optionalOutput.Length > 0 && outParameters == null)
             {
                 result.AppendLine()
-                    .Append(GenerateFunction(operationName, indent, new[] {optionalOutput[0]}));
+                    .Append(GenerateFunction(operationName, indent, new[] { optionalOutput[0] }));
             }
             else if (outParameters != null && outParameters.Length != optionalOutput.Length)
             {

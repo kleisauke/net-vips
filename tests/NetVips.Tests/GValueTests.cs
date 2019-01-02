@@ -83,9 +83,9 @@ namespace NetVips.Tests
         {
             var gv = new GValue();
             gv.SetType(GValue.ArrayIntType);
-            gv.Set(new[] {1, 2, 3});
+            gv.Set(new[] { 1, 2, 3 });
             var value = gv.Get();
-            Assert.Equal(new[] {1, 2, 3}, value as IEnumerable);
+            Assert.Equal(new[] { 1, 2, 3 }, value as IEnumerable);
         }
 
         [Fact]
@@ -93,9 +93,9 @@ namespace NetVips.Tests
         {
             var gv = new GValue();
             gv.SetType(GValue.ArrayDoubleType);
-            gv.Set(new[] {1.1, 2.1, 3.1});
+            gv.Set(new[] { 1.1, 2.1, 3.1 });
             var value = gv.Get();
-            Assert.Equal(new[] {1.1, 2.1, 3.1}, value as IEnumerable);
+            Assert.Equal(new[] { 1.1, 2.1, 3.1 }, value as IEnumerable);
         }
 
         [Fact]

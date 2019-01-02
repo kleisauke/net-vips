@@ -143,7 +143,7 @@ namespace NetVips.Tests
             void JpegValid(Image im)
             {
                 var a = im.Getpoint(10, 10);
-                Assert.Equal(new double[] {6, 5, 3}, a);
+                Assert.Equal(new double[] { 6, 5, 3 }, a);
                 var profile = im.Get("icc-profile-data") as byte[];
 
                 Assert.Equal(1352, profile.Length);
@@ -222,7 +222,7 @@ namespace NetVips.Tests
 
                     // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
                     // format area at the end
-                    Assert.StartsWith("hello world", (string) y);
+                    Assert.StartsWith("hello world", (string)y);
 
                     // can set, save and reload UTF16 string fields ... NetVips is 
                     // utf8, but it will be coded as utf16 and back for the XP* fields
@@ -239,7 +239,7 @@ namespace NetVips.Tests
 
                     // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
                     // format area at the end
-                    Assert.StartsWith("йцук", (string) y);
+                    Assert.StartsWith("йцук", (string)y);
 
                     // can set/save/load UserComment, a tag which has the
                     // encoding in the first 8 bytes ... though libexif only supports
@@ -257,7 +257,7 @@ namespace NetVips.Tests
 
                     // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
                     // format area at the end
-                    Assert.StartsWith("hello world", (string) y);
+                    Assert.StartsWith("hello world", (string)y);
                 }
             }
         }
@@ -271,7 +271,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new[] {38671.0, 33914.0, 26762.0}, a);
+                Assert.Equal(new[] { 38671.0, 33914.0, 26762.0 }, a);
                 Assert.Equal(290, im.Width);
                 Assert.Equal(442, im.Height);
                 Assert.Equal(3, im.Bands);
@@ -307,7 +307,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new[] {38671.0, 33914.0, 26762.0}, a);
+                Assert.Equal(new[] { 38671.0, 33914.0, 26762.0 }, a);
                 Assert.Equal(290, im.Width);
                 Assert.Equal(442, im.Height);
                 Assert.Equal(3, im.Bands);
@@ -473,7 +473,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(100, 100);
 
-                Helper.AssertAlmostEqualObjects(new double[] {227, 216, 201}, a);
+                Helper.AssertAlmostEqualObjects(new double[] { 227, 216, 201 }, a);
                 Assert.Equal(1419, im.Width);
                 Assert.Equal(1001, im.Height);
             }
@@ -550,7 +550,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new double[] {71, 166, 236}, a);
+                Assert.Equal(new double[] { 71, 166, 236 }, a);
                 Assert.Equal(550, im.Width);
                 Assert.Equal(368, im.Height);
                 Assert.Equal(3, im.Bands);
@@ -599,6 +599,24 @@ namespace NetVips.Tests
                     Assert.Equal(6, y.Get("orientation"));
                 }
             }
+
+            // try converting an animated gif to webp ... can't do back to gif
+            // again without IM support
+            // added in 8.8
+            if (Helper.Have("gifload") && Base.AtLeastLibvips(8, 8))
+            {
+                var x1 = Image.NewFromFile(Helper.GifAnimFile);
+                var w1 = x1.WebpsaveBuffer(q: 10);
+                var x2 = Image.NewFromBuffer(w1, "", kwargs: new VOption
+                {
+                    {"n", -1}
+                });
+                Assert.Equal(x2.Width, x1.Width);
+                Assert.Equal(x2.Height, x1.Height);
+                Assert.Equal(x2.Get("gif-delay"), x1.Get("gif-delay"));
+                Assert.Equal(x2.Get("page-height"), x1.Get("page-height"));
+                Assert.Equal(x2.Get("gif-loop"), x1.Get("gif-loop"));
+            }
         }
 
         [SkippableFact]
@@ -629,7 +647,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new[] {38671.0, 33914.0, 26762.0}, a);
+                Assert.Equal(new[] { 38671.0, 33914.0, 26762.0 }, a);
                 Assert.Equal(290, im.Width);
                 Assert.Equal(442, im.Height);
                 Assert.Equal(3, im.Bands);
@@ -720,7 +738,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new double[] {244, 250, 243, 255}, a);
+                Assert.Equal(new double[] { 244, 250, 243, 255 }, a);
                 Assert.Equal(2220, im.Width);
                 Assert.Equal(2967, im.Height);
                 Assert.Equal(4, im.Bands);
@@ -738,7 +756,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new double[] {35, 31, 32, 255}, a);
+                Assert.Equal(new double[] { 35, 31, 32, 255 }, a);
                 Assert.Equal(1133, im.Width);
                 Assert.Equal(680, im.Height);
                 Assert.Equal(4, im.Bands);
@@ -773,7 +791,7 @@ namespace NetVips.Tests
             {
                 var a = im.Getpoint(10, 10);
 
-                Assert.Equal(new double[] {33}, a);
+                Assert.Equal(new double[] { 33 }, a);
                 Assert.Equal(159, im.Width);
                 Assert.Equal(203, im.Height);
                 Assert.Equal(1, im.Bands);

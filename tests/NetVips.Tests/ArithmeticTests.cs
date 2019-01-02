@@ -15,7 +15,7 @@ namespace NetVips.Tests
         public ArithmeticTests()
         {
             _image = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
-            _colour = _image * new[] {1, 2, 3} + new[] {2, 3, 4};
+            _colour = _image * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
             _mono = _colour[1];
             _allImages = new[]
             {
@@ -56,13 +56,13 @@ namespace NetVips.Tests
             {
                 foreach (var y in formats)
                 {
-                    Helper.RunConst(func, x.Cast(y), (double) 2);
+                    Helper.RunConst(func, x.Cast(y), (double)2);
                 }
             }
 
             foreach (var y in formats)
             {
-                Helper.RunConst(func, _colour.Cast(y), new[] {1, 2, 3});
+                Helper.RunConst(func, _colour.Cast(y), new[] { 1, 2, 3 });
             }
         }
 
@@ -228,12 +228,12 @@ namespace NetVips.Tests
                 // C# doesn't allow bools on doubles
                 if (x is double dblX)
                 {
-                    x = (int) dblX;
+                    x = (int)dblX;
                 }
 
                 if (y is double dblY)
                 {
-                    y = (int) dblY;
+                    y = (int)dblY;
                 }
 
                 if (y is Image rightImage && !(x is Image))
@@ -256,12 +256,12 @@ namespace NetVips.Tests
                 // C# doesn't allow bools on doubles
                 if (x is double dblX)
                 {
-                    x = (int) dblX;
+                    x = (int)dblX;
                 }
 
                 if (y is double dblY)
                 {
-                    y = (int) dblY;
+                    y = (int)dblY;
                 }
 
                 if (y is Image rightImage && !(x is Image))
@@ -284,12 +284,12 @@ namespace NetVips.Tests
                 // C# doesn't allow bools on doubles
                 if (x is double dblX)
                 {
-                    x = (int) dblX;
+                    x = (int)dblX;
                 }
 
                 if (y is double dblY)
                 {
-                    y = (int) dblY;
+                    y = (int)dblY;
                 }
 
                 if (y is Image rightImage && !(x is Image))
@@ -464,7 +464,7 @@ namespace NetVips.Tests
                 // C# doesn't allow bools on doubles
                 if (x is double dblX)
                 {
-                    x = (int) dblX;
+                    x = (int)dblX;
                 }
 
                 return x << 2;
@@ -482,7 +482,7 @@ namespace NetVips.Tests
                 // C# doesn't allow bools on doubles
                 if (x is double dblX)
                 {
-                    x = (int) dblX;
+                    x = (int)dblX;
                 }
 
                 return x >> 2;
@@ -533,7 +533,7 @@ namespace NetVips.Tests
             {
                 if (x is double dblX)
                 {
-                    x = (int) dblX;
+                    x = (int)dblX;
                 }
 
                 return (x ^ -1) & 0xff;
@@ -541,7 +541,7 @@ namespace NetVips.Tests
 
             // image ^ -1 is trimmed to image max so it's hard to test for all formats
             // just test uchar
-            RunUnary(_allImages, Invert, new[] {Enums.BandFormat.Uchar});
+            RunUnary(_allImages, Invert, new[] { Enums.BandFormat.Uchar });
         }
 
         #endregion
@@ -616,23 +616,23 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind();
-                Assert.Equal(new double[] {5000}, hist.Getpoint(0, 0));
-                Assert.Equal(new double[] {5000}, hist.Getpoint(10, 0));
-                Assert.Equal(new double[] {0}, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] { 5000 }, hist.Getpoint(0, 0));
+                Assert.Equal(new double[] { 5000 }, hist.Getpoint(10, 0));
+                Assert.Equal(new double[] { 0 }, hist.Getpoint(5, 0));
             }
 
-            test = test * new[] {1, 2, 3};
+            test = test * new[] { 1, 2, 3 };
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind(band: 0);
-                Assert.Equal(new double[] {5000}, hist.Getpoint(0, 0));
-                Assert.Equal(new double[] {5000}, hist.Getpoint(10, 0));
-                Assert.Equal(new double[] {0}, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] { 5000 }, hist.Getpoint(0, 0));
+                Assert.Equal(new double[] { 5000 }, hist.Getpoint(10, 0));
+                Assert.Equal(new double[] { 0 }, hist.Getpoint(5, 0));
 
                 hist = test.Cast(fmt).HistFind(band: 1);
-                Assert.Equal(new double[] {5000}, hist.Getpoint(0, 0));
-                Assert.Equal(new double[] {5000}, hist.Getpoint(20, 0));
-                Assert.Equal(new double[] {0}, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] { 5000 }, hist.Getpoint(0, 0));
+                Assert.Equal(new double[] { 5000 }, hist.Getpoint(20, 0));
+                Assert.Equal(new double[] { 0 }, hist.Getpoint(5, 0));
             }
         }
 
@@ -647,13 +647,13 @@ namespace NetVips.Tests
 
             foreach (var x in Helper.NonComplexFormats)
             {
-                foreach (var y in new[] {Enums.BandFormat.Uchar, Enums.BandFormat.Ushort})
+                foreach (var y in new[] { Enums.BandFormat.Uchar, Enums.BandFormat.Ushort })
                 {
                     var a = test.Cast(x);
                     var b = index.Cast(y);
                     var hist = a.HistFindIndexed(b);
-                    Assert.Equal(new double[] {0}, hist.Getpoint(0, 0));
-                    Assert.Equal(new double[] {50000}, hist.Getpoint(1, 0));
+                    Assert.Equal(new double[] { 0 }, hist.Getpoint(0, 0));
+                    Assert.Equal(new double[] { 50000 }, hist.Getpoint(1, 0));
                 }
             }
         }
@@ -661,7 +661,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestHistFindNdim()
         {
-            var im = Image.Black(100, 100) + new[] {1, 2, 3};
+            var im = Image.Black(100, 100) + new[] { 1, 2, 3 };
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
@@ -682,7 +682,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestHoughCircle()
         {
-            var test = Image.Black(100, 100).DrawCircle(new double[] {100}, 50, 50, 40);
+            var test = Image.Black(100, 100).DrawCircle(new double[] { 100 }, 50, 50, 40);
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -691,8 +691,8 @@ namespace NetVips.Tests
 
                 var maxPos = hough.MaxPos();
                 var v = maxPos[0];
-                var x = (int) maxPos[1];
-                var y = (int) maxPos[2];
+                var x = (int)maxPos[1];
+                var y = (int)maxPos[2];
 
                 var vec = hough.Getpoint(x, y);
                 var r = Array.IndexOf(vec, vec.Min(d => v)) + 35;
@@ -710,7 +710,7 @@ namespace NetVips.Tests
             // test earlier versions
             Skip.IfNot(Base.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
 
-            var test = Image.Black(100, 100).DrawLine(new double[] {100}, 10, 90, 90, 10);
+            var test = Image.Black(100, 100).DrawLine(new double[] { 100 }, 10, 90, 90, 10);
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -790,8 +790,8 @@ namespace NetVips.Tests
                 return Math.Asin(x) * (180.0 / Math.PI);
             }
 
-            var im = (Image.Black(100, 100) + new[] {1, 2, 3}) / 3.0;
-            RunUnary(new[] {im}, ASin, Helper.NonComplexFormats);
+            var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
+            RunUnary(new[] { im }, ASin, Helper.NonComplexFormats);
         }
 
         [Fact]
@@ -807,8 +807,8 @@ namespace NetVips.Tests
                 return Math.Acos(x) * (180.0 / Math.PI);
             }
 
-            var im = (Image.Black(100, 100) + new[] {1, 2, 3}) / 3.0;
-            RunUnary(new[] {im}, ACos, Helper.NonComplexFormats);
+            var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
+            RunUnary(new[] { im }, ACos, Helper.NonComplexFormats);
         }
 
         [Fact]
@@ -824,8 +824,8 @@ namespace NetVips.Tests
                 return Math.Atan(x) * (180.0 / Math.PI);
             }
 
-            var im = (Image.Black(100, 100) + new[] {1, 2, 3}) / 3.0;
-            RunUnary(new[] {im}, ATan, Helper.NonComplexFormats);
+            var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
+            RunUnary(new[] { im }, ATan, Helper.NonComplexFormats);
         }
 
         [Fact]
@@ -953,7 +953,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestMax()
         {
-            var test = Image.Black(100, 100).DrawRect(new double[] {100}, 40, 50, 1, 1);
+            var test = Image.Black(100, 100).DrawRect(new double[] { 100 }, 40, 50, 1, 1);
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -975,7 +975,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestMin()
         {
-            var test = (Image.Black(100, 100) + 100).DrawRect(new double[] {0}, 40, 50, 1, 1);
+            var test = (Image.Black(100, 100) + 100).DrawRect(new double[] { 0 }, 40, 50, 1, 1);
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -1035,8 +1035,8 @@ namespace NetVips.Tests
                 Assert.Equal(60, height);
             }
 
-            var testRgb = test.Bandjoin(new[] {test, test});
-            var trim2 = testRgb.FindTrim(background: new double[] {255, 255, 255});
+            var testRgb = test.Bandjoin(new[] { test, test });
+            var trim2 = testRgb.FindTrim(background: new double[] { 255, 255, 255 });
             var left2 = trim2[0];
             var top2 = trim2[1];
             var width2 = trim2[2];
@@ -1051,7 +1051,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestProfile()
         {
-            var test = Image.Black(100, 100).DrawRect(new double[] {100}, 40, 50, 1, 1);
+            var test = Image.Black(100, 100).DrawRect(new double[] { 100 }, 40, 50, 1, 1);
 
             foreach (var fmt in Helper.NonComplexFormats)
             {
@@ -1091,10 +1091,10 @@ namespace NetVips.Tests
                 var columns = profile[0] as Image;
                 var rows = profile[1] as Image;
 
-                Assert.Equal(new double[] {0}, columns.Getpoint(10, 0));
-                Assert.Equal(new double[] {50 * 10}, columns.Getpoint(70, 0));
+                Assert.Equal(new double[] { 0 }, columns.Getpoint(10, 0));
+                Assert.Equal(new double[] { 50 * 10 }, columns.Getpoint(70, 0));
 
-                Assert.Equal(new double[] {50 * 10}, rows.Getpoint(0, 10));
+                Assert.Equal(new double[] { 50 * 10 }, rows.Getpoint(0, 10));
             }
         }
 
@@ -1109,19 +1109,19 @@ namespace NetVips.Tests
                 var a = test.Cast(fmt);
                 var matrix = a.Stats();
 
-                Assert.Equal(new[] {a.Min()}, matrix.Getpoint(0, 0));
-                Assert.Equal(new[] {a.Max()}, matrix.Getpoint(1, 0));
-                Assert.Equal(new double[] {50 * 50 * 10}, matrix.Getpoint(2, 0));
-                Assert.Equal(new double[] {50 * 50 * 100}, matrix.Getpoint(3, 0));
-                Assert.Equal(new[] {a.Avg()}, matrix.Getpoint(4, 0));
-                Assert.Equal(new[] {a.Deviate()}, matrix.Getpoint(5, 0));
+                Assert.Equal(new[] { a.Min() }, matrix.Getpoint(0, 0));
+                Assert.Equal(new[] { a.Max() }, matrix.Getpoint(1, 0));
+                Assert.Equal(new double[] { 50 * 50 * 10 }, matrix.Getpoint(2, 0));
+                Assert.Equal(new double[] { 50 * 50 * 100 }, matrix.Getpoint(3, 0));
+                Assert.Equal(new[] { a.Avg() }, matrix.Getpoint(4, 0));
+                Assert.Equal(new[] { a.Deviate() }, matrix.Getpoint(5, 0));
 
-                Assert.Equal(new[] {a.Min()}, matrix.Getpoint(0, 1));
-                Assert.Equal(new[] {a.Max()}, matrix.Getpoint(1, 1));
-                Assert.Equal(new double[] {50 * 50 * 10}, matrix.Getpoint(2, 1));
-                Assert.Equal(new double[] {50 * 50 * 100}, matrix.Getpoint(3, 1));
-                Assert.Equal(new[] {a.Avg()}, matrix.Getpoint(4, 1));
-                Assert.Equal(new[] {a.Deviate()}, matrix.Getpoint(5, 1));
+                Assert.Equal(new[] { a.Min() }, matrix.Getpoint(0, 1));
+                Assert.Equal(new[] { a.Max() }, matrix.Getpoint(1, 1));
+                Assert.Equal(new double[] { 50 * 50 * 10 }, matrix.Getpoint(2, 1));
+                Assert.Equal(new double[] { 50 * 50 * 100 }, matrix.Getpoint(3, 1));
+                Assert.Equal(new[] { a.Avg() }, matrix.Getpoint(4, 1));
+                Assert.Equal(new[] { a.Deviate() }, matrix.Getpoint(5, 1));
             }
         }
 

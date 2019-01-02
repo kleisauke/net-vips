@@ -4,7 +4,7 @@ language: csharp
 
 mono: none
 
-dotnet: 2.1.500
+dotnet: 2.2.101
 
 env:
   global:
@@ -23,13 +23,13 @@ matrix:
   include:
     # these are just to make travis's UI a bit prettier
     - os: linux
-      # Ubuntu 14.04
-      dist: trusty
+      # Ubuntu 16.04
+      dist: xenial
       env:
         - JOBS=`nproc`
     - os: osx
       # OS X 10.13
-      osx_image: xcode9.4
+      osx_image: xcode10.1
       env:
         - JOBS="`sysctl -n hw.ncpu`"
         - PATH="/usr/local/opt/ccache/bin:$PATH"
@@ -62,7 +62,8 @@ addons:
       - libpoppler-glib-dev
       - librsvg2-dev
       - libwebp-dev
-        # missing on trusty, unfortunately
+      - libtiff5-dev
+        # missing on xenial, unfortunately
         # - libwebpmux2
       - libglib2.0-dev
   homebrew:

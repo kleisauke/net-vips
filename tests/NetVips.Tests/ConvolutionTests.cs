@@ -21,7 +21,7 @@ namespace NetVips.Tests
         public ConvolutionTests()
         {
             var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
-            _colour = im * new[] {1, 2, 3} + new[] {2, 3, 4};
+            _colour = im * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
             _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
             _mono = _colour[0];
             _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
@@ -54,14 +54,14 @@ namespace NetVips.Tests
                 {0, 0, 0},
                 {-1, -2, -1}
             });
-            _allMasks = new[] {_sharp, _blur, _line, _sobel};
+            _allMasks = new[] { _sharp, _blur, _line, _sobel };
         }
 
         #region helpers
 
         internal object Conv(Image image, Image mask, int xPosition, int yPosition)
         {
-            var s = new object[] {0.0};
+            var s = new object[] { 0.0 };
             for (var x = 0; x < mask.Width; x++)
             {
                 for (var y = 0; y < mask.Height; y++)
@@ -69,7 +69,7 @@ namespace NetVips.Tests
                     var m = mask.Getpoint(x, y);
                     var i = image.Getpoint(x + xPosition, y + yPosition);
                     var p = Helper.RunFn2((dynamic a, dynamic b) => a * b, m, i);
-                    s = (object[]) Helper.RunFn2((dynamic a, dynamic b) => a + b, s, p);
+                    s = (object[])Helper.RunFn2((dynamic a, dynamic b) => a + b, s, p);
                 }
             }
 
@@ -100,7 +100,7 @@ namespace NetVips.Tests
             {
                 foreach (var msk in _allMasks)
                 {
-                    foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
+                    foreach (var prec in new[] { Enums.Precision.Integer, Enums.Precision.Float })
                     {
                         var convolved = im.Conv(msk, precision: prec);
 
@@ -149,7 +149,7 @@ namespace NetVips.Tests
             {
                 foreach (var msk in _allMasks)
                 {
-                    foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
+                    foreach (var prec in new[] { Enums.Precision.Integer, Enums.Precision.Float })
                     {
                         for (var times = 1; times < 4; times++)
                         {
@@ -170,7 +170,7 @@ namespace NetVips.Tests
             {
                 foreach (var msk in _allMasks)
                 {
-                    foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
+                    foreach (var prec in new[] { Enums.Precision.Integer, Enums.Precision.Float })
                     {
                         for (var times = 1; times < 4; times++)
                         {
@@ -191,7 +191,7 @@ namespace NetVips.Tests
         {
             foreach (var im in _allImages)
             {
-                foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
+                foreach (var prec in new[] { Enums.Precision.Integer, Enums.Precision.Float })
                 {
                     var gmask = Image.Gaussmat(2, 0.1, precision: prec);
                     var gmaskSep = Image.Gaussmat(2, 0.1, separable: true, precision: prec);
@@ -258,7 +258,7 @@ namespace NetVips.Tests
         {
             foreach (var im in _allImages)
             {
-                foreach (var prec in new[] {Enums.Precision.Integer, Enums.Precision.Float})
+                foreach (var prec in new[] { Enums.Precision.Integer, Enums.Precision.Float })
                 {
                     for (var i = 5; i < 10; i++)
                     {
@@ -284,7 +284,7 @@ namespace NetVips.Tests
             {
                 foreach (var fmt in Helper.NonComplexFormats)
                 {
-                    foreach (var sigma in new[] {0.5, 1, 1.5, 2})
+                    foreach (var sigma in new[] { 0.5, 1, 1.5, 2 })
                     {
                         var im2 = im.Cast(fmt);
                         var sharp = im2.Sharpen(sigma: sigma);

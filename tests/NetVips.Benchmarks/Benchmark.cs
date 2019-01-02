@@ -63,7 +63,7 @@ namespace NetVips.Benchmarks
             {
                 image.Mutate(x => x
                     .Crop(new Rectangle(100, 100, image.Width - 200, image.Height - 200))
-                    .Resize(new Size((int) Math.Round(image.Width * .9F), (int) Math.Round(image.Height * .9F)))
+                    .Resize(new Size((int)Math.Round(image.Width * .9F), (int)Math.Round(image.Height * .9F)))
                     .GaussianSharpen(.75f));
 
                 image.Save(output);

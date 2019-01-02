@@ -63,7 +63,8 @@ namespace NetVips.Internal
         {
             [FieldOffset(0)] internal IntPtr GType;
 
-            [FieldOffset(8)] [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            [FieldOffset(8)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
             internal IntPtr[] data;
         }
 

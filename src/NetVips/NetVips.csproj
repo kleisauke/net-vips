@@ -38,11 +38,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Fody" Version="3.3.3">
+    <PackageReference Include="Fody" Version="3.3.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ModuleInit.Fody" Version="1.8.3">
+    <PackageReference Include="ModuleInit.Fody" Version="1.9.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>

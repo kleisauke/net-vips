@@ -33,7 +33,7 @@ Task("Download-Binaries")
 
         var zipVersion = EnvironmentVariable("VIPS_ZIP_VERSION");
 
-        foreach (var architecture in new []{"win-x64","win-x86"})
+        foreach (var architecture in new[] { "win-x64", "win-x86" })
         {
             var bitness = (architecture == "win-x86") ? "32" : "64";
             var fileName = $"vips-dev-w{bitness}-web-{zipVersion}.zip";
@@ -47,11 +47,12 @@ Task("Download-Binaries")
                 DownloadFile(vipsZip, zipFile);
             }
 
-            var outputPath = vipsHome + "/" + architecture;
+            var outputPath = new DirectoryPath(vipsHome).Combine(architecture);
             if (DirectoryExists(outputPath))
             {
                 Information($"Removing old libvips {architecture}");
-                DeleteDirectory(outputPath, new DeleteDirectorySettings {
+                DeleteDirectory(outputPath, new DeleteDirectorySettings
+                {
                     Recursive = true,
                     Force = true
                 });
@@ -63,7 +64,8 @@ Task("Download-Binaries")
             // Need to remove toplevel dir from zip container
             var containerDir = GetDirectories(outputPath + "/*").First(x => x.GetDirectoryName().StartsWith("vips-"));
             CopyDirectory(containerDir, outputPath);
-            DeleteDirectory(containerDir, new DeleteDirectorySettings {
+            DeleteDirectory(containerDir, new DeleteDirectorySettings
+            {
                 Recursive = true,
                 Force = true
             });
@@ -71,7 +73,7 @@ Task("Download-Binaries")
     });
 
 // Run dotnet restore to restore all package references.
-Task("Restore")  
+Task("Restore")
     .IsDependentOn("Download-Binaries")
     .Does(() =>
     {
@@ -97,24 +99,26 @@ Task("Pack")
         if (DirectoryExists(packDir))
         {
             Information("Removing old packaging directory");
-            DeleteDirectory(packDir, new DeleteDirectorySettings {
+            DeleteDirectory(packDir, new DeleteDirectorySettings
+            {
                 Recursive = true,
                 Force = true
             });
         }
 
         EnsureDirectoryExists(packDir);
-        
-        foreach (var architecture in new []{"win-x64","win-x86"})
+
+        foreach (var architecture in new[] { "win-x64", "win-x86" })
         {
-            var dllPackDir = new DirectoryPath(packDir + "/" + architecture);
+            var dllPackDir = new DirectoryPath(packDir).Combine(architecture);
             EnsureDirectoryExists(dllPackDir);
-            
+
             // Copy binaries to packaging directory
             CopyFiles(vipsHome + "/" + architecture + "/bin/*.dll", dllPackDir);
 
             // Clean unused DDL's
-            var deleteFiles = new FilePath[] {
+            var deleteFiles = new FilePath[]
+            {
                 dllPackDir.CombineWithFilePath("libvips-cpp-42.dll"),
                 dllPackDir.CombineWithFilePath("libstdc++-6.dll")
             };
@@ -132,7 +136,8 @@ Task("Pack")
         {
             Configuration = configuration,
             OutputDirectory = artifactsDirectory,
-            ArgumentCustomization = (args) => {
+            ArgumentCustomization = (args) =>
+            {
                 return args
                     .Append("/p:TargetOS={0}", "Windows")
                     .Append("/p:IncludeLibvips={0}", "true");

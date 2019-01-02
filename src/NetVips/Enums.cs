@@ -80,7 +80,7 @@ namespace NetVips
             /// <summary>
             /// a mask including all log levels
             /// </summary>
-            LevelMask = unchecked((int) 0xFFFFFFFC)
+            LevelMask = unchecked((int)0xFFFFFFFC)
         }
 
         /// <summary>

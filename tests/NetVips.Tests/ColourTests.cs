@@ -11,12 +11,12 @@ namespace NetVips.Tests
         {
             // mid-grey in Lab ... put 42 in the extra band, it should be copied
             // unmodified
-            var test = Image.Black(100, 100) + new[] {50, 0, 0, 42};
+            var test = Image.Black(100, 100) + new[] { 50, 0, 0, 42 };
             test = test.Copy(interpretation: Enums.Interpretation.Lab);
 
             // a long series should come in a circle
             var im = test;
-            foreach (var col in Helper.ColourColourspaces.Concat(new[] {Enums.Interpretation.Lab}))
+            foreach (var col in Helper.ColourColourspaces.Concat(new[] { Enums.Interpretation.Lab }))
             {
                 im = im.Colourspace(col);
                 Assert.Equal(col, im.Interpretation);
@@ -72,7 +72,7 @@ namespace NetVips.Tests
             {
                 var testGrey = test.Colourspace(monoFmt);
                 im = testGrey;
-                foreach (var col in Helper.ColourColourspaces.Concat(new[] {monoFmt}))
+                foreach (var col in Helper.ColourColourspaces.Concat(new[] { monoFmt }))
                 {
                     im = im.Colourspace(col);
                     Assert.Equal(col, im.Interpretation);
@@ -98,9 +98,9 @@ namespace NetVips.Tests
         public void TestDE00()
         {
             // put 42 in the extra band, it should be copied unmodified
-            var reference = Image.Black(100, 100) + new[] {50, 10, 20, 42};
+            var reference = Image.Black(100, 100) + new[] { 50, 10, 20, 42 };
             reference = reference.Copy(interpretation: Enums.Interpretation.Lab);
-            var sample = Image.Black(100, 100) + new[] {40, -20, 10};
+            var sample = Image.Black(100, 100) + new[] { 40, -20, 10 };
             sample = sample.Copy(interpretation: Enums.Interpretation.Lab);
 
             var difference = reference.DE00(sample);
@@ -113,9 +113,9 @@ namespace NetVips.Tests
         public void TestDE76()
         {
             // put 42 in the extra band, it should be copied unmodified
-            var reference = Image.Black(100, 100) + new[] {50, 10, 20, 42};
+            var reference = Image.Black(100, 100) + new[] { 50, 10, 20, 42 };
             reference = reference.Copy(interpretation: Enums.Interpretation.Lab);
-            var sample = Image.Black(100, 100) + new[] {40, -20, 10};
+            var sample = Image.Black(100, 100) + new[] { 40, -20, 10 };
             sample = sample.Copy(interpretation: Enums.Interpretation.Lab);
 
             var difference = reference.DE76(sample);
@@ -133,9 +133,9 @@ namespace NetVips.Tests
         public void TestDECMC()
         {
             // put 42 in the extra band, it should be copied unmodified
-            var reference = Image.Black(100, 100) + new[] {50, 10, 20, 42};
+            var reference = Image.Black(100, 100) + new[] { 50, 10, 20, 42 };
             reference = reference.Copy(interpretation: Enums.Interpretation.Lab);
-            var sample = Image.Black(100, 100) + new[] {55, 11, 23};
+            var sample = Image.Black(100, 100) + new[] { 55, 11, 23 };
             sample = sample.Copy(interpretation: Enums.Interpretation.Lab);
 
             var difference = reference.DECMC(sample);

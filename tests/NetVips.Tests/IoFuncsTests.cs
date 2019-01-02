@@ -17,7 +17,7 @@ namespace NetVips.Tests
             {
                 var filename7 = Base.PathFilename7(path);
                 var mode7 = Base.PathMode7(path);
-                return new[] {filename7, mode7};
+                return new[] { filename7, mode7 };
             }
 
             var cases = new Dictionary<string, string[]>
@@ -88,7 +88,7 @@ namespace NetVips.Tests
             Assert.Equal(1, im2.Bands);
             Assert.Equal(12, im2.Avg());
 
-            im2 = im.NewFromImage(new[] {1, 2, 3});
+            im2 = im.NewFromImage(new[] { 1, 2, 3 });
             Assert.Equal(3, im2.Bands);
             Assert.Equal(2, im2.Avg());
         }
@@ -96,7 +96,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestNewFromMemory()
         {
-            var s = Enumerable.Repeat((byte) 0, 200).ToArray();
+            var s = Enumerable.Repeat((byte)0, 200).ToArray();
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             Assert.Equal(20, im.Width);
             Assert.Equal(10, im.Height);
@@ -125,7 +125,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestWriteToMemory()
         {
-            var s = Enumerable.Repeat((byte) 0, 200).ToArray();
+            var s = Enumerable.Repeat((byte)0, 200).ToArray();
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             var t = im.WriteToMemory();
             Assert.Equal(s, t);

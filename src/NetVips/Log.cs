@@ -34,7 +34,7 @@ namespace NetVips
                 return;
             var logDomain = logDomainNative.ToUtf8String();
             var message = messageNative.ToUtf8String();
-            var gch = (GCHandle) userData;
+            var gch = (GCHandle)userData;
             if (gch.Target is LogFunc func)
                 func(logDomain, flags, message);
         }
@@ -102,7 +102,7 @@ namespace NetVips
                 _nativeHandler = NativeCallback;
 
             var gch = GCHandle.Alloc(logFunc);
-            var result = GLib.GLogSetHandler(logDomain, flags, _nativeHandler, (IntPtr) gch);
+            var result = GLib.GLogSetHandler(logDomain, flags, _nativeHandler, (IntPtr)gch);
             _handlers.AddOrUpdate(result, gch, (k, v) => gch);
             return result;
         }
@@ -218,7 +218,7 @@ namespace NetVips
             if (_nativeHandler == null)
                 _nativeHandler = NativeCallback;
 
-            var prev = GLib.GLogSetDefaultHandler(_nativeHandler, (IntPtr) GCHandle.Alloc(logFunc));
+            var prev = GLib.GLogSetDefaultHandler(_nativeHandler, (IntPtr)GCHandle.Alloc(logFunc));
             if (prev == null)
                 return null;
             var invoker = new Invoker(prev);

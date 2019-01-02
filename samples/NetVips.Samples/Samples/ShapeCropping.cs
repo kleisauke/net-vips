@@ -137,8 +137,8 @@ namespace NetVips.Samples
                     initialAngle = Math.PI;
                     break;
                 case Shape.Circle:
-                    xMin = (int) (midX - outerRadius);
-                    yMin = (int) (midY - outerRadius);
+                    xMin = (int)(midX - outerRadius);
+                    yMin = (int)(midY - outerRadius);
                     maskWidth = min;
                     maskHeight = min;
 
@@ -185,8 +185,8 @@ namespace NetVips.Samples
                 var xPt = 16 * Math.Pow(Math.Sin(t), 3);
                 var yPt = 13 * Math.Cos(t) - 5 * Math.Cos(2 * t) - 2 * Math.Cos(3 * t) - Math.Cos(4 * t);
 
-                var x = (int) Math.Round(midX + xPt * midX);
-                var y = (int) Math.Round(midY - yPt * midY);
+                var x = (int)Math.Round(midX + xPt * midX);
+                var y = (int)Math.Round(midY - yPt * midY);
                 xArr.Add(x);
                 yArr.Add(y);
                 path.Append($"{x} {y} L");
@@ -244,8 +244,8 @@ namespace NetVips.Samples
                     path.Append(" L");
                 }
 
-                var x = (int) Math.Round(midX + radius * Math.Cos(angle));
-                var y = (int) Math.Round(midY + radius * Math.Sin(angle));
+                var x = (int)Math.Round(midX + radius * Math.Cos(angle));
+                var y = (int)Math.Round(midY + radius * Math.Sin(angle));
                 xArr.Add(x);
                 yArr.Add(y);
                 path.Append($"{x} {y} L");
@@ -317,15 +317,15 @@ namespace NetVips.Samples
         /// <returns></returns>
         public int[] ResolveShapeTrim(int width, int height, int maskWidth, int maskHeight)
         {
-            var xScale = (double) width / maskWidth;
-            var yScale = (double) height / maskHeight;
+            var xScale = (double)width / maskWidth;
+            var yScale = (double)height / maskHeight;
             var scale = Math.Min(xScale, yScale);
             var trimWidth = maskWidth * scale;
             var trimHeight = maskHeight * scale;
-            var left = (int) Math.Round((width - trimWidth) / 2);
-            var top = (int) Math.Round((height - trimHeight) / 2);
+            var left = (int)Math.Round((width - trimWidth) / 2);
+            var top = (int)Math.Round((height - trimHeight) / 2);
 
-            return new[] {left, top, (int) Math.Round(trimWidth), (int) Math.Round(trimHeight)};
+            return new[] { left, top, (int)Math.Round(trimWidth), (int)Math.Round(trimHeight) };
         }
 
         #region helpers

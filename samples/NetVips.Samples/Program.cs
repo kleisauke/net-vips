@@ -36,7 +36,7 @@ namespace NetVips
                 string[] sampleArgs = { };
                 if (args.Length > 0)
                 {
-                    var sampleId = Samples.Select((value, index) => new {Index = index + 1, value.Name})
+                    var sampleId = Samples.Select((value, index) => new { Index = index + 1, value.Name })
                         .FirstOrDefault(s => s.Name.Equals(args[0]))?.Index;
                     input = sampleId != null ? $"{sampleId}" : "0";
                     sampleArgs = args.Skip(1).ToArray();
@@ -72,7 +72,7 @@ namespace NetVips
             Console.WriteLine("Menu:");
 
             string currCategory = null;
-            var menu = Samples.Select((value, index) => new {Index = index + 1, value.Name, value.Category})
+            var menu = Samples.Select((value, index) => new { Index = index + 1, value.Name, value.Category })
                 .Aggregate(new StringBuilder(), (builder, pair) =>
                 {
                     if (currCategory != pair.Category)
@@ -97,7 +97,7 @@ namespace NetVips
         public static bool TryGetSample(int id, out ISample sample)
         {
             sample = Samples
-                .Select((value, index) => new {Index = index + 1, Sample = value})
+                .Select((value, index) => new { Index = index + 1, Sample = value })
                 .FirstOrDefault(pair => pair.Index == id)?.Sample;
 
             return sample != null;

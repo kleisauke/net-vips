@@ -4,7 +4,7 @@ Getting Started with NetVips
 See the main libvips site for an introduction to the underlying library. These
 notes introduce the Mono/.NET binding.
 
-https://jcupitt.github.io/libvips 
+https://libvips.github.io/libvips 
 
 ## Example
 
@@ -74,7 +74,7 @@ image = image.Conv(mask, precision: Enums.Precision.Integer);
 [`NewFromArray`](xref:NetVips.Image.NewFromArray*) creates an image from an array constant. The
 scale is the amount to divide the image by after integer convolution.
 
-See the libvips API docs for [`vips_conv()`](http://jcupitt.github.io/libvips/API/current/libvips-convolution.html#vips-conv) 
+See the libvips API docs for [`vips_conv()`](http://libvips.github.io/libvips/API/current/libvips-convolution.html#vips-conv) 
 (the operation invoked by [`Conv`](xref:NetVips.Image.Conv*)) for details on the convolution operator. By
 default, it computes with a float mask, but `integer` is fine for this case,
 and is much faster.
@@ -137,7 +137,7 @@ it.
 
 All libvips operations were generated automatically to a PascalCase method in NetVips.
 For example, the libvips operation `add`, which appears in C as
-[`vips_add()`](http://jcupitt.github.io/libvips/API/current/libvips-arithmetic.html#vips-add), 
+[`vips_add()`](http://libvips.github.io/libvips/API/current/libvips-arithmetic.html#vips-add), 
 appears in C# as [`Add`](xref:NetVips.Image.Add*) method.
 
 By taking advantage of nullable types (which allows you to omit any parameters in any position),
@@ -251,7 +251,7 @@ It examines libvips and writes the XML documentation and the corresponding code 
 
 Use the C API docs for more detail:
 
-https://jcupitt.github.io/libvips/API/current
+https://libvips.github.io/libvips/API/current
 
 ## Exceptions
 

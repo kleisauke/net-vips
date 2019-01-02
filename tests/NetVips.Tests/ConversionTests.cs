@@ -15,7 +15,7 @@ namespace NetVips.Tests
         public ConversionTests()
         {
             var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
-            _colour = im * new[] {1, 2, 3} + new[] {2, 3, 4};
+            _colour = im * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
             _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
             _mono = _colour[1];
             _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
@@ -103,7 +103,7 @@ namespace NetVips.Tests
                     return image.BandAnd();
                 }
 
-                return ((IEnumerable<double>) x).Aggregate((a, b) => (int) a & (int) b);
+                return ((IEnumerable<double>)x).Aggregate((a, b) => (int)a & (int)b);
             }
 
             RunUnary(_allImages, BandAnd, Helper.IntFormats);
@@ -119,7 +119,7 @@ namespace NetVips.Tests
                     return image.BandOr();
                 }
 
-                return ((IEnumerable<double>) x).Aggregate((a, b) => (int) a | (int) b);
+                return ((IEnumerable<double>)x).Aggregate((a, b) => (int)a | (int)b);
             }
 
             RunUnary(_allImages, BandOr, Helper.IntFormats);
@@ -135,7 +135,7 @@ namespace NetVips.Tests
                     return image.BandEor();
                 }
 
-                return ((IEnumerable<double>) x).Aggregate((a, b) => (int) a ^ (int) b);
+                return ((IEnumerable<double>)x).Aggregate((a, b) => (int)a ^ (int)b);
             }
 
             RunUnary(_allImages, BandEor, Helper.IntFormats);
@@ -151,7 +151,7 @@ namespace NetVips.Tests
                     return left.Bandjoin(right);
                 }
 
-                return ((IEnumerable<double>) x).Concat((IEnumerable<double>) y);
+                return ((IEnumerable<double>)x).Concat((IEnumerable<double>)y);
             }
 
             RunBinary(_allImages, BandJoin);
@@ -185,7 +185,7 @@ namespace NetVips.Tests
                     return image.Bandmean();
                 }
 
-                return new[] {Math.Floor(((IEnumerable<double>) x).Sum() / x.Length)};
+                return new[] { Math.Floor(((IEnumerable<double>)x).Sum() / x.Length) };
             }
 
             RunUnary(_allImages, BandMean, Helper.NonComplexFormats);
@@ -196,7 +196,7 @@ namespace NetVips.Tests
         {
             double[] Median(IEnumerable<double> x, IEnumerable<double> y)
             {
-                var joined = x.Zip(y, (d, d1) => new[] {d, d1}).OrderBy(o => o[0]);
+                var joined = x.Zip(y, (d, d1) => new[] { d, d1 }).OrderBy(o => o[0]);
 
                 return joined.Select(z => z[z.Length / 2]).ToArray();
             }
@@ -214,7 +214,7 @@ namespace NetVips.Tests
             RunBinary(_allImages, BandRank, Helper.NonComplexFormats);
 
             // we can mix images and constants, and set the index arg
-            var a = _mono.Bandrank(new[] {2}, index: 0);
+            var a = _mono.Bandrank(new[] { 2 }, index: 0);
             var b = (_mono < 2).Ifthenelse(_mono, 2);
             Assert.Equal(0, (a - b).Abs().Min());
         }
@@ -294,35 +294,35 @@ namespace NetVips.Tests
 
                 var im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40);
                 var pixel = im.Getpoint(10, 10);
-                Assert.Equal(new double[] {0, 0, 0}, pixel);
+                Assert.Equal(new double[] { 0, 0, 0 }, pixel);
                 pixel = im.Getpoint(30, 30);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
-                Assert.Equal(new double[] {0, 0, 0}, pixel);
+                Assert.Equal(new double[] { 0, 0, 0 }, pixel);
 
                 im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, extend: Enums.Extend.Copy);
                 pixel = im.Getpoint(10, 10);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
 
                 im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, extend: Enums.Extend.Background,
-                    background: new double[] {7, 8, 9});
+                    background: new double[] { 7, 8, 9 });
                 pixel = im.Getpoint(10, 10);
-                Assert.Equal(new double[] {7, 8, 9}, pixel);
+                Assert.Equal(new double[] { 7, 8, 9 }, pixel);
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
-                Assert.Equal(new double[] {7, 8, 9}, pixel);
+                Assert.Equal(new double[] { 7, 8, 9 }, pixel);
 
                 im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, extend: Enums.Extend.White);
 
                 pixel = im.Getpoint(10, 10);
 
                 // uses 255 in all bytes of ints, 255.0 for float
-                var pixelLongs = pixel.Select(x => (double) (Convert.ToInt64(x) & 255));
-                Assert.Equal(new double[] {255, 255, 255}, pixelLongs);
+                var pixelLongs = pixel.Select(x => (double)(Convert.ToInt64(x) & 255));
+                Assert.Equal(new double[] { 255, 255, 255 }, pixelLongs);
                 pixel = im.Getpoint(im.Width - 10, im.Height - 10);
-                pixelLongs = pixel.Select(x => (double) (Convert.ToInt64(x) & 255));
-                Assert.Equal(new double[] {255, 255, 255}, pixelLongs);
+                pixelLongs = pixel.Select(x => (double)(Convert.ToInt64(x) & 255));
+                Assert.Equal(new double[] { 255, 255, 255 }, pixelLongs);
             }
         }
 
@@ -351,7 +351,7 @@ namespace NetVips.Tests
                 var x = position[1] is int xInt ? xInt : 0;
                 var y = position[2] is int yInt ? yInt : 0;
                 var im2 = im.Gravity(direction, 3, 3);
-                Assert.Equal(new double[] {255}, im2.Getpoint(x, y));
+                Assert.Equal(new double[] { 255 }, im2.Getpoint(x, y));
                 Assert.Equal(255.0 / 9.0, im2.Avg());
             }
         }
@@ -364,17 +364,17 @@ namespace NetVips.Tests
                 var test = _colour.Cast(fmt);
 
                 var pixel = test.Getpoint(30, 30);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
 
                 var sub = test.ExtractArea(25, 25, 10, 10);
 
                 pixel = sub.Getpoint(5, 5);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
 
                 sub = test.ExtractBand(1, n: 2);
 
                 pixel = sub.Getpoint(30, 30);
-                Assert.Equal(new double[] {3, 4}, pixel);
+                Assert.Equal(new double[] { 3, 4 }, pixel);
             }
         }
 
@@ -419,10 +419,10 @@ namespace NetVips.Tests
             {
                 var test = _colour.Cast(fmt);
                 var pixel = test.Getpoint(30, 30);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
                 var sub = test.Crop(25, 25, 10, 10);
                 pixel = sub.Getpoint(5, 5);
-                Assert.Equal(new double[] {2, 3, 4}, pixel);
+                Assert.Equal(new double[] { 2, 3, 4 }, pixel);
             }
         }
 
@@ -450,7 +450,7 @@ namespace NetVips.Tests
                 Assert.Equal(3, im.Bands);
 
                 var pixel = im.Getpoint(30, 30);
-                Assert.Equal(new double[] {20, 0, 41}, pixel);
+                Assert.Equal(new double[] { 20, 0, 41 }, pixel);
             }
         }
 
@@ -462,7 +462,7 @@ namespace NetVips.Tests
             const double nalpha = mx - alpha;
 
             foreach (var fmt in Helper.UnsignedFormats
-                .Concat(new[] {Enums.BandFormat.Short, Enums.BandFormat.Int})
+                .Concat(new[] { Enums.BandFormat.Short, Enums.BandFormat.Int })
                 .Concat(Helper.FloatFormats))
             {
                 var test = _colour.Bandjoin(alpha).Cast(fmt);
@@ -476,7 +476,7 @@ namespace NetVips.Tests
 
                 Assert.Equal(3, im.Bands);
                 pixel = im.Getpoint(30, 30);
-                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] {d, d1}))
+                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] { d, d1 }))
                 {
                     var x = zip[0];
                     var y = zip[1];
@@ -486,7 +486,7 @@ namespace NetVips.Tests
                     Assert.True(Math.Abs(x - y) < 2);
                 }
 
-                im = test.Flatten(background: new double[] {100, 100, 100});
+                im = test.Flatten(background: new double[] { 100, 100, 100 });
 
                 pixel = test.Getpoint(30, 30);
                 predict = pixel.Take(pixel.Length - 1)
@@ -495,7 +495,7 @@ namespace NetVips.Tests
 
                 Assert.Equal(3, im.Bands);
                 pixel = im.Getpoint(30, 30);
-                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] {d, d1}))
+                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] { d, d1 }))
                 {
                     var x = zip[0];
                     var y = zip[1];
@@ -512,7 +512,7 @@ namespace NetVips.Tests
             const double alpha = mx / 2.0;
 
             foreach (var fmt in Helper.UnsignedFormats
-                .Concat(new[] {Enums.BandFormat.Short, Enums.BandFormat.Int})
+                .Concat(new[] { Enums.BandFormat.Short, Enums.BandFormat.Int })
                 .Concat(Helper.FloatFormats))
             {
                 var test = _colour.Bandjoin(alpha).Cast(fmt);
@@ -520,14 +520,14 @@ namespace NetVips.Tests
 
                 var predict = pixel.Take(pixel.Length - 1)
                     .Select(x => Convert.ToInt32(x) * alpha / mx)
-                    .Concat(new[] {alpha})
+                    .Concat(new[] { alpha })
                     .ToArray();
 
                 var im = test.Premultiply();
 
                 Assert.Equal(test.Bands, im.Bands);
                 pixel = im.Getpoint(30, 30);
-                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] {d, d1}))
+                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] { d, d1 }))
                 {
                     var x = zip[0];
                     var y = zip[1];
@@ -549,7 +549,7 @@ namespace NetVips.Tests
             var baseImage = _colour + 100;
             var comp = baseImage.Composite(overlay, Enums.BlendMode.Over);
 
-            Helper.AssertAlmostEqualObjects(new[] {51.8, 52.8, 53.8, 255}, comp.Getpoint(0, 0), 0.1);
+            Helper.AssertAlmostEqualObjects(new[] { 51.8, 52.8, 53.8, 255 }, comp.Getpoint(0, 0), 0.1);
         }
 
         [Fact]
@@ -559,7 +559,7 @@ namespace NetVips.Tests
             const double alpha = mx / 2.0;
 
             foreach (var fmt in Helper.UnsignedFormats
-                .Concat(new[] {Enums.BandFormat.Short, Enums.BandFormat.Int})
+                .Concat(new[] { Enums.BandFormat.Short, Enums.BandFormat.Int })
                 .Concat(Helper.FloatFormats))
             {
                 var test = _colour.Bandjoin(alpha).Cast(fmt);
@@ -567,14 +567,14 @@ namespace NetVips.Tests
 
                 var predict = pixel.Take(pixel.Length - 1)
                     .Select(x => Convert.ToInt32(x) / (alpha / mx))
-                    .Concat(new[] {alpha})
+                    .Concat(new[] { alpha })
                     .ToArray();
 
                 var im = test.Unpremultiply();
 
                 Assert.Equal(test.Bands, im.Bands);
                 pixel = im.Getpoint(30, 30);
-                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] {d, d1}))
+                foreach (var zip in pixel.Zip(predict, (d, d1) => new[] { d, d1 }))
                 {
                     var x = zip[0];
                     var y = zip[1];
@@ -618,7 +618,7 @@ namespace NetVips.Tests
                 var before = test.Getpoint(30, 30);
                 var after = result.Getpoint(30, 30);
                 var predict = before.Select(x => Math.Pow(x, exponent) / norm);
-                foreach (var zip in after.Zip(predict, (d, d1) => new[] {d, d1}))
+                foreach (var zip in after.Zip(predict, (d, d1) => new[] { d, d1 }))
                 {
                     var a = zip[0];
                     var b = zip[1];
@@ -640,7 +640,7 @@ namespace NetVips.Tests
                 var before = test.Getpoint(30, 30);
                 var after = result.Getpoint(30, 30);
                 var predict = before.Select(x => Math.Pow(x, exponent2) / norm);
-                foreach (var zip in after.Zip(predict, (d, d1) => new[] {d, d1}))
+                foreach (var zip in after.Zip(predict, (d, d1) => new[] { d, d1 }))
                 {
                     var a = zip[0];
                     var b = zip[1];
@@ -719,7 +719,7 @@ namespace NetVips.Tests
                     var tp = Enumerable.Repeat(t.Getpoint(10, 10)[0], 3).ToArray();
                     var ep = Enumerable.Repeat(e.Getpoint(10, 10)[0], 3).ToArray();
                     var predict = cp
-                        .Zip(tp, (e1, e2) => new {e1, e2})
+                        .Zip(tp, (e1, e2) => new { e1, e2 })
                         .Zip(ep, (z1, e3) => Tuple.Create(z1.e1, z1.e2, e3))
                         .Select(tuple => Convert.ToInt32(tuple.Item1) != 0 ? tuple.Item2 : tuple.Item3)
                         .ToArray();
@@ -730,7 +730,7 @@ namespace NetVips.Tests
                     tp = Enumerable.Repeat(t.Getpoint(50, 50)[0], 3).ToArray();
                     ep = Enumerable.Repeat(e.Getpoint(50, 50)[0], 3).ToArray();
                     predict = cp
-                        .Zip(tp, (e1, e2) => new {e1, e2})
+                        .Zip(tp, (e1, e2) => new { e1, e2 })
                         .Zip(ep, (z1, e3) => Tuple.Create(z1.e1, z1.e2, e3))
                         .Select(tuple => Convert.ToInt32(tuple.Item1) != 0 ? tuple.Item2 : tuple.Item3)
                         .ToArray();
@@ -753,12 +753,12 @@ namespace NetVips.Tests
                     Assert.Equal(_colour.Bands, r.Bands);
 
                     var result = r.Getpoint(10, 10);
-                    Assert.Equal(new double[] {3, 3, 13}, result);
+                    Assert.Equal(new double[] { 3, 3, 13 }, result);
                 }
             }
 
             test = _mono > 3;
-            var r2 = test.Ifthenelse(new[] {1, 2, 3}, _colour);
+            var r2 = test.Ifthenelse(new[] { 1, 2, 3 }, _colour);
             Assert.Equal(_colour.Width, r2.Width);
             Assert.Equal(_colour.Height, r2.Height);
             Assert.Equal(_colour.Bands, r2.Bands);
@@ -766,12 +766,12 @@ namespace NetVips.Tests
             Assert.Equal(_colour.Format, r2.Format);
             Assert.Equal(_colour.Interpretation, r2.Interpretation);
             var result2 = r2.Getpoint(10, 10);
-            Assert.Equal(new double[] {2, 3, 4}, result2);
+            Assert.Equal(new double[] { 2, 3, 4 }, result2);
             result2 = r2.Getpoint(50, 50);
-            Assert.Equal(new double[] {1, 2, 3}, result2);
+            Assert.Equal(new double[] { 1, 2, 3 }, result2);
 
             test = _mono;
-            r2 = test.Ifthenelse(new[] {1, 2, 3}, _colour, blend: true);
+            r2 = test.Ifthenelse(new[] { 1, 2, 3 }, _colour, blend: true);
             Assert.Equal(_colour.Width, r2.Width);
             Assert.Equal(_colour.Height, r2.Height);
             Assert.Equal(_colour.Bands, r2.Bands);
@@ -779,9 +779,9 @@ namespace NetVips.Tests
             Assert.Equal(_colour.Format, r2.Format);
             Assert.Equal(_colour.Interpretation, r2.Interpretation);
             result2 = r2.Getpoint(10, 10);
-            Helper.AssertAlmostEqualObjects(new double[] {2, 3, 4}, result2, 0.1);
+            Helper.AssertAlmostEqualObjects(new double[] { 2, 3, 4 }, result2, 0.1);
             result2 = r2.Getpoint(50, 50);
-            Helper.AssertAlmostEqualObjects(new[] {3.0, 4.9, 6.9}, result2, 0.1);
+            Helper.AssertAlmostEqualObjects(new[] { 3.0, 4.9, 6.9 }, result2, 0.1);
         }
 
         [Fact]
@@ -815,14 +815,14 @@ namespace NetVips.Tests
                 {
                     var main = _mono.Cast(x);
                     var sub = _colour.Cast(y);
-                    var r = main.Insert(sub, 10, 10, expand: true, background: new double[] {100});
+                    var r = main.Insert(sub, 10, 10, expand: true, background: new double[] { 100 });
 
                     Assert.Equal(main.Width + 10, r.Width);
                     Assert.Equal(main.Height + 10, r.Height);
                     Assert.Equal(sub.Bands, r.Bands);
 
                     var a = r.Getpoint(r.Width - 5, 5);
-                    Assert.Equal(new double[] {100, 100, 100}, a);
+                    Assert.Equal(new double[] { 100, 100, 100 }, a);
                 }
             }
         }
@@ -880,12 +880,12 @@ namespace NetVips.Tests
                 var im = test.Msb();
 
                 var before = test.Getpoint(10, 10);
-                var predict = before.Select(x => (double) (Convert.ToInt32(x) >> (size - 1) * 8)).ToArray();
+                var predict = before.Select(x => (double)(Convert.ToInt32(x) >> (size - 1) * 8)).ToArray();
                 var result = im.Getpoint(10, 10);
                 Assert.Equal(predict, result);
 
                 before = test.Getpoint(50, 50);
-                predict = before.Select(x => (double) (Convert.ToInt32(x) >> (size - 1) * 8)).ToArray();
+                predict = before.Select(x => (double)(Convert.ToInt32(x) >> (size - 1) * 8)).ToArray();
                 result = im.Getpoint(50, 50);
                 Assert.Equal(predict, result);
             }
@@ -898,12 +898,12 @@ namespace NetVips.Tests
                 var im = test.Msb();
 
                 var before = test.Getpoint(10, 10);
-                var predict = before.Select(x => (double) (128 + (Convert.ToInt32(x) >> (size - 1) * 8))).ToArray();
+                var predict = before.Select(x => (double)(128 + (Convert.ToInt32(x) >> (size - 1) * 8))).ToArray();
                 var result = im.Getpoint(10, 10);
                 Assert.Equal(predict, result);
 
                 before = test.Getpoint(50, 50);
-                predict = before.Select(x => (double) (128 + (Convert.ToInt32(x) >> (size - 1) * 8))).ToArray();
+                predict = before.Select(x => (double)(128 + (Convert.ToInt32(x) >> (size - 1) * 8))).ToArray();
                 result = im.Getpoint(50, 50);
                 Assert.Equal(predict, result);
             }
@@ -943,7 +943,7 @@ namespace NetVips.Tests
                 }
 
                 var sum = array.Cast<double>()
-                    .Zip((IEnumerable<double>) x, (d, o) => new[] {d, o})
+                    .Zip((IEnumerable<double>)x, (d, o) => new[] { d, o })
                     .Select(zip => zip[0] * zip[1])
                     .Sum();
 
@@ -953,7 +953,7 @@ namespace NetVips.Tests
                 };
             }
 
-            RunUnary(new[] {_colour}, Recomb, Helper.NonComplexFormats);
+            RunUnary(new[] { _colour }, Recomb, Helper.NonComplexFormats);
         }
 
         [Fact]
@@ -991,7 +991,7 @@ namespace NetVips.Tests
                 var after = im2.Getpoint(25, 50);
                 Assert.Equal(before, after);
 
-                foreach (var zip in Helper.Rot45Angles.Zip(Helper.Rot45AngleBonds, (s, s1) => new[] {s, s1}))
+                foreach (var zip in Helper.Rot45Angles.Zip(Helper.Rot45AngleBonds, (s, s1) => new[] { s, s1 }))
                 {
                     var a = zip[0];
                     var b = zip[1];
@@ -1017,7 +1017,7 @@ namespace NetVips.Tests
                 var after = im2.Getpoint(0, 50);
                 Assert.Equal(before, after);
 
-                foreach (var zip in Helper.RotAngles.Zip(Helper.RotAngleBonds, (s, s1) => new[] {s, s1}))
+                foreach (var zip in Helper.RotAngles.Zip(Helper.RotAngleBonds, (s, s1) => new[] { s, s1 }))
                 {
                     var a = zip[0];
                     var b = zip[1];

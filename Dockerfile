@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk
+FROM microsoft/dotnet:2.2-sdk
 LABEL maintainer "info@kleisauke.nl"
 WORKDIR /app
 

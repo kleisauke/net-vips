@@ -110,13 +110,13 @@ namespace NetVips.Tests
             var im = Image.NewFromFile(Helper.JpegFile);
 
             // vsqbs is non-interpolatory, don't test this way
-            foreach (var name in new[] {"nearest", "bicubic", "bilinear", "nohalo", "lbb"})
+            foreach (var name in new[] { "nearest", "bicubic", "bilinear", "nohalo", "lbb" })
             {
                 var x = im;
                 var interpolate = Interpolate.NewFromName(name);
                 for (var i = 0; i < 4; i++)
                 {
-                    x = x.Affine(new double[] {0, 1, 1, 0}, interpolate: interpolate);
+                    x = x.Affine(new double[] { 0, 1, 1, 0 }, interpolate: interpolate);
                 }
 
                 Assert.Equal(0, (x - im).Abs().Max());
@@ -132,7 +132,7 @@ namespace NetVips.Tests
             // clipping
             im = im.Cast(Enums.BandFormat.Char);
 
-            foreach (var fac in new[] {1, 1.1, 1.5, 1.999})
+            foreach (var fac in new[] { 1, 1.1, 1.5, 1.999 })
             {
                 foreach (var fmt in Helper.AllFormats)
                 {
@@ -155,7 +155,7 @@ namespace NetVips.Tests
             }
 
             // try constant images ... should not change the constant
-            foreach (var @const in new[] {0, 1, 2, 254, 255})
+            foreach (var @const in new[] { 0, 1, 2, 254, 255 })
             {
                 im = (Image.Black(10, 10) + @const).Cast("uchar");
                 foreach (var kernel in new[]
@@ -250,7 +250,7 @@ namespace NetVips.Tests
         {
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Similarity(angle: 90);
-            var im3 = im.Affine(new double[] {0, -1, 1, 0});
+            var im3 = im.Affine(new double[] { 0, -1, 1, 0 });
 
             // rounding in calculating the affine transform from the angle stops
             // this being exactly true
@@ -262,7 +262,7 @@ namespace NetVips.Tests
         {
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Similarity(scale: 2);
-            var im3 = im.Affine(new double[] {2, 0, 0, 2});
+            var im3 = im.Affine(new double[] { 2, 0, 0, 2 });
             Assert.Equal(0, (im2 - im3).Abs().Max());
         }
 
@@ -274,7 +274,7 @@ namespace NetVips.Tests
 
             var im = Image.NewFromFile(Helper.JpegFile);
             var im2 = im.Rotate(90);
-            var im3 = im.Affine(new double[] {0, -1, 1, 0});
+            var im3 = im.Affine(new double[] { 0, -1, 1, 0 });
             // rounding in calculating the affine transform from the angle stops
             // this being exactly true
             Assert.True((im2 - im3).Abs().Max() < 50);
@@ -293,6 +293,16 @@ namespace NetVips.Tests
             var a = r.Crop(50, 0, im.Width - 50, im.Height).Gaussblur(2);
             var b = im.Crop(50, 0, im.Width - 50, im.Height).Gaussblur(2);
             Assert.True((a - b).Abs().Max() < 20);
+
+            // this was a bug at one point, strangely, if executed with debug
+            // enabled
+            // fixed in 8.7.3
+            if (Base.AtLeastLibvips(8, 7, 3))
+            {
+                var mp = Image.Xyz(im.Width, im.Height);
+                var interp = Interpolate.NewFromName("bicubic");
+                Assert.Equal(im.Avg(), im.Mapim(mp, interp).Avg());
+            }
         }
     }
 }

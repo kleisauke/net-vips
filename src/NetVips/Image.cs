@@ -248,7 +248,7 @@ namespace NetVips
             }
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory,
-                new UIntPtr((ulong) length)));
+                new UIntPtr((ulong)length)));
             GLib.GFree(memory);
             if (name == null)
             {
@@ -381,8 +381,8 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong) data.Length),
-                width, height, bands, (Internal.Enums.VipsBandFormat) formatValue);
+            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong)data.Length),
+                width, height, bands, (Internal.Enums.VipsBandFormat)formatValue);
 
             if (vi == IntPtr.Zero)
             {
@@ -623,7 +623,7 @@ namespace NetVips
             var pointer = VipsImage.VipsImageWriteToMemory(this, out var psize);
 
             var managedArray = new byte[psize];
-            Marshal.Copy(pointer, managedArray, 0, (int) psize);
+            Marshal.Copy(pointer, managedArray, 0, (int)psize);
 
             GLib.GFree(pointer);
 
@@ -926,7 +926,7 @@ namespace NetVips
         {
             if (!(other is IEnumerable))
             {
-                other = new[] {other};
+                other = new[] { other };
             }
 
             // if [other] is all numbers, we can use BandjoinConst
@@ -939,7 +939,7 @@ namespace NetVips
                 case object[] objects when objects.All(x => x.IsNumeric()):
                     return BandjoinConst(Array.ConvertAll(objects, Convert.ToDouble));
                 case IEnumerable objects:
-                    return Operation.Call("bandjoin", null, new object[] {objects.PrependImage(this)}) as Image;
+                    return Operation.Call("bandjoin", null, new object[] { objects.PrependImage(this) }) as Image;
                 default:
                     throw new ArgumentException(
                         $"unsupported value type {other.GetType()} for Bandjoin"
@@ -962,7 +962,7 @@ namespace NetVips
         {
             if (!(other is IEnumerable))
             {
-                other = new[] {other};
+                other = new[] { other };
             }
 
             var options = new VOption();
@@ -973,7 +973,7 @@ namespace NetVips
             }
 
             return Operation.Call("bandrank", options,
-                new object[] {((IEnumerable) other).PrependImage(this)}) as Image;
+                new object[] { ((IEnumerable)other).PrependImage(this) }) as Image;
         }
 
         /// <summary>
@@ -993,7 +993,7 @@ namespace NetVips
         {
             if (!(other is IEnumerable))
             {
-                other = new[] {other};
+                other = new[] { other };
             }
 
             if (!(other is object[] images))
@@ -1003,7 +1003,7 @@ namespace NetVips
 
             if (!(mode is IEnumerable))
             {
-                mode = new[] {mode};
+                mode = new[] { mode };
             }
 
             // modes are VipsBlendMode enums, but we have to pass as array of int --
@@ -1019,7 +1019,7 @@ namespace NetVips
                     break;
                 default:
                     // Use Enums.BlendMode.Over if a non-existent value is given.
-                    blendModes = new[] {GValue.ToEnum(GValue.BlendModeType, Enums.BlendMode.Over)};
+                    blendModes = new[] { GValue.ToEnum(GValue.BlendModeType, Enums.BlendMode.Over) };
                     break;
             }
 
@@ -1063,7 +1063,7 @@ namespace NetVips
         public double[] MaxPos()
         {
             var v = Max(out var x, out var y);
-            return new[] {v, x, y};
+            return new[] { v, x, y };
         }
 
         /// <summary>
@@ -1073,7 +1073,7 @@ namespace NetVips
         public double[] MinPos()
         {
             var v = Min(out var x, out var y);
-            return new[] {v, x, y};
+            return new[] { v, x, y };
         }
 
         /// <summary>
@@ -1666,7 +1666,7 @@ namespace NetVips
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((Image) obj);
+            return Equals((Image)obj);
         }
 
         /// <summary>

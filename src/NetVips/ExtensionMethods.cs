@@ -139,7 +139,7 @@ namespace NetVips
         /// <returns>A newly allocated managed object of the specified type.</returns>
         public static T Dereference<T>(this IntPtr ptr)
         {
-            return (T) Marshal.PtrToStructure(ptr, typeof(T));
+            return (T)Marshal.PtrToStructure(ptr, typeof(T));
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace NetVips
         public static IntPtr ToIntPtr<T>(this object structure) where T : struct
         {
             // Initialize unmanged memory to hold the struct.
-            var ptr = GLib.GMalloc(new UIntPtr((ulong) Marshal.SizeOf(typeof(T))));
+            var ptr = GLib.GMalloc(new UIntPtr((ulong)Marshal.SizeOf(typeof(T))));
 
             // Copy the struct to unmanaged memory.
             Marshal.StructureToPtr(structure, ptr, false);
@@ -284,7 +284,7 @@ namespace NetVips
         /// <returns></returns>
         public static string ToPascalCase(this string str)
         {
-            return str.Split(new[] {"_"}, StringSplitOptions.RemoveEmptyEntries)
+            return str.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
                 .Aggregate(string.Empty, (s1, s2) => s1 + s2);
         }
@@ -299,7 +299,7 @@ namespace NetVips
         {
             if (args == null)
             {
-                return new object[] {image};
+                return new object[] { image };
             }
 
             var enumerable = args as object[] ?? args.Cast<object>().ToArray();
@@ -351,7 +351,7 @@ namespace NetVips
                 return IntPtr.Zero;
             }
 
-            var ptr = GLib.GMalloc(new UIntPtr((ulong) bytes.Length + 1));
+            var ptr = GLib.GMalloc(new UIntPtr((ulong)bytes.Length + 1));
             Marshal.Copy(bytes, 0, ptr, bytes.Length);
             Marshal.WriteByte(ptr, bytes.Length, 0);
             return ptr;
@@ -398,7 +398,7 @@ namespace NetVips
         /// <returns>The readable format of the bytes.</returns>
         internal static string ToReadableBytes(this ulong value)
         {
-            string[] sizeSuffixes = {"bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+            string[] sizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
             var i = 0;
             decimal dValue = value;
