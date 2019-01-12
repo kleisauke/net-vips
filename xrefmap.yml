@@ -13,12 +13,15 @@ references:
   commentId: T:NetVips.Base
   fullName: NetVips.Base
   nameWithType: Base
-- uid: NetVips.Base.AtLeastLibvips(System.Int32,System.Int32)
-  name: AtLeastLibvips(Int32, Int32)
-  href: api/NetVips.Base.html#NetVips_Base_AtLeastLibvips_System_Int32_System_Int32_
-  commentId: M:NetVips.Base.AtLeastLibvips(System.Int32,System.Int32)
-  fullName: NetVips.Base.AtLeastLibvips(System.Int32, System.Int32)
-  nameWithType: Base.AtLeastLibvips(Int32, Int32)
+- uid: NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Nullable{System.Int32})
+  name: AtLeastLibvips(Int32, Int32, Nullable<Int32>)
+  href: api/NetVips.Base.html#NetVips_Base_AtLeastLibvips_System_Int32_System_Int32_System_Nullable_System_Int32__
+  commentId: M:NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Nullable{System.Int32})
+  name.vb: AtLeastLibvips(Int32, Int32, Nullable(Of Int32))
+  fullName: NetVips.Base.AtLeastLibvips(System.Int32, System.Int32, System.Nullable<System.Int32>)
+  fullName.vb: NetVips.Base.AtLeastLibvips(System.Int32, System.Int32, System.Nullable(Of System.Int32))
+  nameWithType: Base.AtLeastLibvips(Int32, Int32, Nullable<Int32>)
+  nameWithType.vb: Base.AtLeastLibvips(Int32, Int32, Nullable(Of Int32))
 - uid: NetVips.Base.AtLeastLibvips*
   name: AtLeastLibvips
   href: api/NetVips.Base.html#NetVips_Base_AtLeastLibvips_
@@ -6785,6 +6788,12 @@ references:
   commentId: T:NetVips.ModuleInitializer
   fullName: NetVips.ModuleInitializer
   nameWithType: ModuleInitializer
+- uid: NetVips.ModuleInitializer.Exception
+  name: Exception
+  href: api/NetVips.ModuleInitializer.html#NetVips_ModuleInitializer_Exception
+  commentId: F:NetVips.ModuleInitializer.Exception
+  fullName: NetVips.ModuleInitializer.Exception
+  nameWithType: ModuleInitializer.Exception
 - uid: NetVips.ModuleInitializer.Initialize
   name: Initialize()
   href: api/NetVips.ModuleInitializer.html#NetVips_ModuleInitializer_Initialize

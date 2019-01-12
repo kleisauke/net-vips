@@ -8,7 +8,7 @@
     <title>Getting Started with NetVips </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Getting Started with NetVips ">
-    <meta name="generator" content="docfx 2.39.2.0">
+    <meta name="generator" content="docfx 2.40.7.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -71,7 +71,7 @@
 
 <p>See the main libvips site for an introduction to the underlying library. These
 notes introduce the Mono/.NET binding.</p>
-<p><a href="https://jcupitt.github.io/libvips">https://jcupitt.github.io/libvips</a></p>
+<p><a href="https://libvips.github.io/libvips">https://libvips.github.io/libvips</a></p>
 <h2 id="example">Example</h2>
 <p>This example loads a file, boosts the green channel, sharpens the image,
 and saves it back to disc again:</p>
@@ -121,7 +121,7 @@ image = image.Conv(mask, precision: Enums.Precision.Integer);
 </code></pre>
 <p><a class="xref" href="../api/NetVips.Image.html#NetVips_Image_NewFromArray_"><code>NewFromArray</code></a> creates an image from an array constant. The
 scale is the amount to divide the image by after integer convolution.</p>
-<p>See the libvips API docs for <a href="http://jcupitt.github.io/libvips/API/current/libvips-convolution.html#vips-conv"><code>vips_conv()</code></a>
+<p>See the libvips API docs for <a href="http://libvips.github.io/libvips/API/current/libvips-convolution.html#vips-conv"><code>vips_conv()</code></a>
 (the operation invoked by <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Conv_"><code>Conv</code></a>) for details on the convolution operator. By
 default, it computes with a float mask, but <code>integer</code> is fine for this case,
 and is much faster.</p>
@@ -163,7 +163,7 @@ it.</p>
 <h2 id="calling-libvips-operations">Calling libvips operations</h2>
 <p>All libvips operations were generated automatically to a PascalCase method in NetVips.
 For example, the libvips operation <code>add</code>, which appears in C as
-<a href="http://jcupitt.github.io/libvips/API/current/libvips-arithmetic.html#vips-add"><code>vips_add()</code></a>,
+<a href="http://libvips.github.io/libvips/API/current/libvips-arithmetic.html#vips-add"><code>vips_add()</code></a>,
 appears in C# as <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Add_"><code>Add</code></a> method.</p>
 <p>By taking advantage of nullable types (which allows you to omit any parameters in any position),
 we are able to call libvips operations that have optional arguments.</p>
@@ -233,7 +233,7 @@ from triple-slash comments in our source code.</p>
 is generated automatically by <a class="xref" href="../api/NetVips.Operation.html#NetVips_Operation_GenerateImageClass_"><code>Operation.GenerateImageClass</code></a>.
 It examines libvips and writes the XML documentation and the corresponding code of each operation.</p>
 <p>Use the C API docs for more detail:</p>
-<p><a href="https://jcupitt.github.io/libvips/API/current">https://jcupitt.github.io/libvips/API/current</a></p>
+<p><a href="https://libvips.github.io/libvips/API/current">https://libvips.github.io/libvips/API/current</a></p>
 <h2 id="exceptions">Exceptions</h2>
 <p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>.
 You can catch it in the usual way.</p>

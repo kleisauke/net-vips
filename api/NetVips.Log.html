@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Log
    ">
-    <meta name="generator" content="docfx 2.39.2.0">
+    <meta name="generator" content="docfx 2.40.7.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -208,7 +208,7 @@ allows to install an alternate default log handler.</p>
   </table>
   <h5 id="NetVips_Log_PrintLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Sample usage:</p>
-<pre><code class="lang-csharp">// Print the messages for the NULL domain
+<pre><code class="lang-lang-csharp">// Print the messages for the NULL domain
 var logFunc = new LogFunc(Log.PrintLogFunction);
 Log.SetLogHandler(null, Enums.LogLevelFlags.All, logFunc);</code></pre>
 </div>
@@ -260,7 +260,7 @@ Log.SetLogHandler(null, Enums.LogLevelFlags.All, logFunc);</code></pre>
   </table>
   <h5 id="NetVips_Log_PrintTraceLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Sample usage:</p>
-<pre><code class="lang-csharp">// Print messages and stack trace for vips critical messages
+<pre><code class="lang-lang-csharp">// Print messages and stack trace for vips critical messages
 var logFunc = new LogFunc(Log.PrintTraceLogFunction);
 Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, logFunc);</code></pre>
 </div>
