@@ -1,15 +1,15 @@
 image: Visual Studio 2017
 
 # Version format
-version: 1.0.6.{build}
+version: 1.0.7.{build}
 
 init:
   - git config --global core.autocrlf true
 
 # Environment
 environment:
-  VIPS_VERSION: "8.7.3"
-  VIPS_ZIP_VERSION: "8.7.3"
+  VIPS_VERSION: "8.7.4"
+  VIPS_ZIP_VERSION: "8.7.4"
   VIPS_WARNING: 0
 
 # Build script

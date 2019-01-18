@@ -91,9 +91,31 @@ namespace NetVips
         /// Get the major, minor or micro version number of the libvips library.
         /// </summary>
         /// <param name="flag">Pass 0 to get the major version number, 1 to get minor, 2 to get micro.</param>
+        /// <param name="fromModule"><see langword="true" /> to get this value from the pre-initialized
+        /// <see cref="ModuleInitializer.Version"/> variable.</param>
         /// <returns>The version number</returns>
-        public static int Version(int flag)
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="flag" /> is not in range.</exception>
+        public static int Version(int flag, bool fromModule = true)
         {
+            if (fromModule && ModuleInitializer.Version.HasValue)
+            {
+                var version = ModuleInitializer.Version.Value;
+                switch (flag)
+                {
+                    case 0:
+                        return (version >> 16) & 0xFF;
+                    case 1:
+                        return (version >> 8) & 0xFF;
+                    case 2:
+                        return version & 0xFF;
+                }
+            }
+
+            if (flag < 0 || flag > 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(flag), "Flag must be in the range of 0 to 2");
+            }
+
             var value = Vips.VipsVersion(flag);
             if (value < 0)
             {
@@ -110,13 +132,13 @@ namespace NetVips
         /// <param name="y">minor</param>
         /// <param name="z">micro</param>
         /// <returns><see langword="true" /> if at least libvips x.y[.z]; otherwise, <see langword="false" /></returns>
-        public static bool AtLeastLibvips(int x, int y, int? z = null)
+        public static bool AtLeastLibvips(int x, int y, int z = 0)
         {
             var major = Version(0);
             var minor = Version(1);
             var micro = Version(2);
 
-            return major > x || major == x && minor >= y && (!z.HasValue || micro >= z.Value);
+            return major > x || major == x && minor >= y && micro >= z;
         }
 
         #region unit test functions

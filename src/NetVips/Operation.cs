@@ -105,16 +105,18 @@ namespace NetVips
                 IntPtr b)
             {
                 var flags = argumentClass.Dereference<VipsArgumentClass.Struct>().Flags;
-                if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) != 0)
+                if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) == 0)
                 {
-                    var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Struct>().Name);
-
-                    // libvips uses '-' to separate parts of arg names, but we
-                    // need '_' for C#
-                    name = name.Replace("-", "_");
-
-                    args.Add(new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(name, flags));
+                    return IntPtr.Zero;
                 }
+
+                var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Struct>().Name);
+
+                // libvips uses '-' to separate parts of arg names, but we
+                // need '_' for C#
+                name = name.Replace("-", "_");
+
+                args.Add(new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(name, flags));
 
                 return IntPtr.Zero;
             }
@@ -617,12 +619,15 @@ namespace NetVips
                 foreach (var optionalName in optionalInput)
                 {
                     var safeIdentifier = SafeIdentifier(optionalName).ToPascalCase().FirstLetterToLower();
+                    var optionsName = safeIdentifier == optionalName
+                        ? "nameof(" + optionalName + ")"
+                        : "\"" + optionalName + "\"";
 
                     result.Append($"{indent}    if (")
                         .Append(CheckNullable(GValue.GTypeToCSharp(op.GetTypeOf(optionalName)), safeIdentifier))
                         .AppendLine(")")
                         .AppendLine($"{indent}    {{")
-                        .AppendLine($"{indent}        options.Add(\"{optionalName}\", {safeIdentifier});")
+                        .AppendLine($"{indent}        options.Add({optionsName}, {safeIdentifier});")
                         .AppendLine($"{indent}    }}")
                         .AppendLine();
                 }

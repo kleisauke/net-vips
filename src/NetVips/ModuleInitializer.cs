@@ -13,9 +13,14 @@ namespace NetVips
         public static bool VipsInitialized;
 
         /// <summary>
-        /// This variable will store the exception when initialization of libvips fails.
+        /// Contains the exception when initialization of libvips fails.
         /// </summary>
         public static Exception Exception;
+
+        /// <summary>
+        /// Could contain the version number of libvips in an 3-bytes integer.
+        /// </summary>
+        public static int? Version;
 
         /// <summary>
         /// Initializes the module.
@@ -25,7 +30,13 @@ namespace NetVips
             try
             {
                 VipsInitialized = Base.VipsInit();
-                if (!VipsInitialized)
+                if (VipsInitialized)
+                {
+                    Version = Base.Version(0, false);
+                    Version = (Version << 8) + Base.Version(1, false);
+                    Version = (Version << 8) + Base.Version(2, false);
+                }
+                else
                 {
                     Exception = new VipsException("unable to initialize libvips");
                 }

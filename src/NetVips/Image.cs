@@ -187,17 +187,17 @@ namespace NetVips
 
             if (memory.HasValue)
             {
-                options.Add("memory", memory);
+                options.Add(nameof(memory), memory);
             }
 
             if (access != null)
             {
-                options.Add("access", access);
+                options.Add(nameof(access), access);
             }
 
             if (fail.HasValue)
             {
-                options.Add("fail", fail);
+                options.Add(nameof(fail), fail);
             }
 
             options.Add("string_options", fileOptions);
@@ -263,12 +263,12 @@ namespace NetVips
 
             if (access != null)
             {
-                options.Add("access", access);
+                options.Add(nameof(access), access);
             }
 
             if (fail.HasValue)
             {
-                options.Add("fail", fail);
+                options.Add(nameof(fail), fail);
             }
 
             options.Add("string_options", strOptions);
@@ -338,8 +338,8 @@ namespace NetVips
             }
 
             var image = new Image(vi);
-            image.SetType(GValue.GDoubleType, "scale", scale);
-            image.SetType(GValue.GDoubleType, "offset", offset);
+            image.SetType(GValue.GDoubleType, nameof(scale), scale);
+            image.SetType(GValue.GDoubleType, nameof(offset), offset);
             return image;
         }
 
@@ -853,12 +853,12 @@ namespace NetVips
 
             if (exp.HasValue)
             {
-                options.Add("exp", exp);
+                options.Add(nameof(exp), exp);
             }
 
             if (log.HasValue)
             {
-                options.Add("log", log);
+                options.Add(nameof(log), log);
             }
 
             return this.Call("scale", options) as Image;
@@ -906,7 +906,7 @@ namespace NetVips
 
             if (blend.HasValue)
             {
-                options.Add("blend", blend);
+                options.Add(nameof(blend), blend);
             }
 
             return this.Call("ifthenelse", options, in1, in2) as Image;
@@ -969,7 +969,7 @@ namespace NetVips
 
             if (index.HasValue)
             {
-                options.Add("index", index);
+                options.Add(nameof(index), index);
             }
 
             return Operation.Call("bandrank", options,
@@ -1032,7 +1032,7 @@ namespace NetVips
 
             if (premultiplied.HasValue)
             {
-                options.Add("premultiplied", premultiplied);
+                options.Add(nameof(premultiplied), premultiplied);
             }
 
             return Operation.Call("composite", options, images.PrependImage(this), blendModes) as Image;
