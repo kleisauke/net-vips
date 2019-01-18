@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "zufbQ5J+BUHYn4x6BuxBEg=="
+          "hash": "clY03g5+QFcPsNrYOn4/NA=="
         }
       },
       "is_incremental": false,
@@ -55,7 +55,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Base.html",
-          "hash": "+HCp/T62sKOD+Dgh/1djCQ=="
+          "hash": "3dgw9Lpp0ByDfD+PuGtJgw=="
         }
       },
       "is_incremental": false,
@@ -343,7 +343,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.ModuleInitializer.html",
-          "hash": "VpXW2npADPL2VkagmX9nLg=="
+          "hash": "p4lLoL7bZpbL2GIPzdIQkQ=="
         }
       },
       "is_incremental": false,
@@ -355,7 +355,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Operation.html",
-          "hash": "m4LhmUnCQKzCLD/dTAyJZg=="
+          "hash": "occUqwIuYgVQ6H4RfSRazA=="
         }
       },
       "is_incremental": false,

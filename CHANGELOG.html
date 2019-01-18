@@ -64,6 +64,12 @@
 
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2 id="107---2019-01-18"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7">1.0.7</a> - 2019-01-18</h2>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Update bundled libvips x86/x64 binary to 8.7.4.</li>
+<li>Speed-up <code>Base.Version</code> by caching the libvips version as soon as the assembly is loaded.</li>
+</ul>
 <h2 id="106---2019-01-10"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6">1.0.6</a> - 2019-01-10</h2>
 <h3 id="added">Added</h3>
 <ul>
@@ -73,7 +79,7 @@
 <ul>
 <li>The redundant <code>LibvipsDLLPath</code> property.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Update bundled libvips x86/x64 binary to 8.7.3.</li>
 <li>No exceptions will be thrown by the <code>ModuleInitializer</code> (used to initialize libvips once the assembly is loaded) (<a href="https://github.com/kleisauke/net-vips/issues/15">#15</a>, <a href="https://github.com/kleisauke/net-vips/issues/20">#20</a>).</li>
@@ -87,7 +93,7 @@
 <ul>
 <li>Fix five small memleaks (<a href="https://github.com/libvips/lua-vips/issues/24">libvips/lua-vips#24</a>).</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Update bundled libvips binary to 8.7.0.</li>
 </ul>
@@ -97,7 +103,7 @@
 <li>Add <code>contains</code> helper (to check if the image contains an property of metadata).</li>
 <li>Support 32-bit architecture (<a href="https://github.com/kleisauke/net-vips/issues/7">#7</a>).</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Update bundled libvips binary to 8.6.4.</li>
 </ul>
@@ -110,7 +116,7 @@
 <ul>
 <li>Bundle pre-compiled libvips binary and its dependencies for 64-bit Windows (<a href="https://github.com/kleisauke/net-vips/issues/3">#3</a>).</li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>Target .NET Standard 2.0 instead of .NET Core 2.0 (<a href="https://github.com/kleisauke/net-vips/issues/4">#4</a>).</li>
 <li>Lower the minimum required .NET Framework version to 4.5 (<a href="https://github.com/kleisauke/net-vips/issues/4">#4</a>).</li>

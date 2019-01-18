@@ -13,15 +13,12 @@ references:
   commentId: T:NetVips.Base
   fullName: NetVips.Base
   nameWithType: Base
-- uid: NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Nullable{System.Int32})
-  name: AtLeastLibvips(Int32, Int32, Nullable<Int32>)
-  href: api/NetVips.Base.html#NetVips_Base_AtLeastLibvips_System_Int32_System_Int32_System_Nullable_System_Int32__
-  commentId: M:NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Nullable{System.Int32})
-  name.vb: AtLeastLibvips(Int32, Int32, Nullable(Of Int32))
-  fullName: NetVips.Base.AtLeastLibvips(System.Int32, System.Int32, System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Base.AtLeastLibvips(System.Int32, System.Int32, System.Nullable(Of System.Int32))
-  nameWithType: Base.AtLeastLibvips(Int32, Int32, Nullable<Int32>)
-  nameWithType.vb: Base.AtLeastLibvips(Int32, Int32, Nullable(Of Int32))
+- uid: NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Int32)
+  name: AtLeastLibvips(Int32, Int32, Int32)
+  href: api/NetVips.Base.html#NetVips_Base_AtLeastLibvips_System_Int32_System_Int32_System_Int32_
+  commentId: M:NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Int32)
+  fullName: NetVips.Base.AtLeastLibvips(System.Int32, System.Int32, System.Int32)
+  nameWithType: Base.AtLeastLibvips(Int32, Int32, Int32)
 - uid: NetVips.Base.AtLeastLibvips*
   name: AtLeastLibvips
   href: api/NetVips.Base.html#NetVips_Base_AtLeastLibvips_
@@ -146,12 +143,12 @@ references:
   isSpec: "True"
   fullName: NetVips.Base.TypeName
   nameWithType: Base.TypeName
-- uid: NetVips.Base.Version(System.Int32)
-  name: Version(Int32)
-  href: api/NetVips.Base.html#NetVips_Base_Version_System_Int32_
-  commentId: M:NetVips.Base.Version(System.Int32)
-  fullName: NetVips.Base.Version(System.Int32)
-  nameWithType: Base.Version(Int32)
+- uid: NetVips.Base.Version(System.Int32,System.Boolean)
+  name: Version(Int32, Boolean)
+  href: api/NetVips.Base.html#NetVips_Base_Version_System_Int32_System_Boolean_
+  commentId: M:NetVips.Base.Version(System.Int32,System.Boolean)
+  fullName: NetVips.Base.Version(System.Int32, System.Boolean)
+  nameWithType: Base.Version(Int32, Boolean)
 - uid: NetVips.Base.Version*
   name: Version
   href: api/NetVips.Base.html#NetVips_Base_Version_
@@ -6807,6 +6804,12 @@ references:
   isSpec: "True"
   fullName: NetVips.ModuleInitializer.Initialize
   nameWithType: ModuleInitializer.Initialize
+- uid: NetVips.ModuleInitializer.Version
+  name: Version
+  href: api/NetVips.ModuleInitializer.html#NetVips_ModuleInitializer_Version
+  commentId: F:NetVips.ModuleInitializer.Version
+  fullName: NetVips.ModuleInitializer.Version
+  nameWithType: ModuleInitializer.Version
 - uid: NetVips.ModuleInitializer.VipsInitialized
   name: VipsInitialized
   href: api/NetVips.ModuleInitializer.html#NetVips_ModuleInitializer_VipsInitialized
