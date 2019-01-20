@@ -34,7 +34,8 @@ namespace NetVips
         /// Decreases the reference count of object.
         /// When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
         /// </summary>
-        /// <returns>true if the handle is released successfully; otherwise, in the event of a catastrophic failure, false.</returns>
+        /// <returns><see langword="true" /> if the handle is released successfully; otherwise,
+        /// in the event of a catastrophic failure, <see langword="false" />.</returns>
         protected override bool ReleaseHandle()
         {
             // logger.Debug($"Unref: GObject = {handle}");
@@ -59,7 +60,7 @@ namespace NetVips
         /// <summary>
         /// Gets a value that indicates whether the handle is invalid.
         /// </summary>
-        /// <returns>true if the handle is not valid; otherwise, false.</returns>
+        /// <returns><see langword="true" /> if the handle is not valid; otherwise, <see langword="false" />.</returns>
         public override bool IsInvalid => handle == IntPtr.Zero;
 
         // Do not provide a finalizer - SafeHandle's critical finalizer will

@@ -1,9 +1,15 @@
 ﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class CreateTests : IClassFixture<TestsFixture>
     {
+        public CreateTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         [Fact]
         public void TestBlack()
         {

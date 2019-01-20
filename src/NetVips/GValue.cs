@@ -106,6 +106,11 @@ namespace NetVips
         /// </summary>
         public static readonly IntPtr BlendModeType;
 
+        /// <summary>
+        /// Hint of how much native memory is actually occupied by the object.
+        /// </summary>
+        private long? _memoryPressure;
+
         static GValue()
         {
             Vips.VipsBandFormatGetType();
@@ -247,15 +252,13 @@ namespace NetVips
             }
             else if (gtype == GStrType)
             {
-                var pointer = Convert.ToString(value).ToUtf8Ptr();
-                Internal.GValue.GValueSetString(ref Struct, pointer);
-                GLib.GFree(pointer);
+                ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
+                Internal.GValue.GValueSetString(ref Struct, MemoryMarshal.GetReference(span));
             }
             else if (gtype == RefStrType)
             {
-                var pointer = Convert.ToString(value).ToUtf8Ptr();
-                VipsType.VipsValueSetRefString(ref Struct, pointer);
-                GLib.GFree(pointer);
+                ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
+                VipsType.VipsValueSetRefString(ref Struct, MemoryMarshal.GetReference(span));
             }
             else if (fundamental == GObjectType)
             {
@@ -344,24 +347,17 @@ namespace NetVips
             }
             else if (gtype == BlobType)
             {
-                int length;
-                IntPtr memory;
+                byte[] memory;
                 switch (value)
                 {
                     case string strValue:
-                        length = Encoding.UTF8.GetByteCount(strValue);
-
-                        // We need to set the blob to a copy of the string that vips
-                        // can own
-                        memory = strValue.ToUtf8Ptr();
-                        break;
-                    case byte[] byteArrValue:
-                        length = byteArrValue.Length;
-                        memory = byteArrValue.ToPtr();
+                        memory = Encoding.UTF8.GetBytes(strValue);
                         break;
                     case char[] charArrValue:
-                        length = Encoding.UTF8.GetByteCount(charArrValue);
-                        memory = Encoding.UTF8.GetBytes(charArrValue).ToPtr();
+                        memory = Encoding.UTF8.GetBytes(charArrValue);
+                        break;
+                    case byte[] byteArrValue:
+                        memory = byteArrValue;
                         break;
                     default:
                         throw new Exception(
@@ -369,9 +365,19 @@ namespace NetVips
                         );
                 }
 
+                // We need to set the blob to a copy of the string that vips
+                // can own
+                var ptr = GLib.GMalloc(new UIntPtr((ulong)memory.Length));
+                Marshal.Copy(memory, 0, ptr, memory.Length);
+
+                // Make sure that the GC knows the true cost of the object during collection.
+                // If the object is actually bigger than the managed size reflects, it may be a candidate for quick(er) collection.
+                GC.AddMemoryPressure(memory.Length);
+                _memoryPressure = memory.Length;
+
                 if (Base.AtLeastLibvips(8, 6))
                 {
-                    VipsType.VipsValueSetBlobFree(ref Struct, memory, new UIntPtr((ulong)length));
+                    VipsType.VipsValueSetBlobFree(ref Struct, ptr, new UIntPtr((ulong)memory.Length));
                 }
                 else
                 {
@@ -382,7 +388,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, memory, new UIntPtr((ulong)length));
+                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, ptr, new UIntPtr((ulong)memory.Length));
                 }
             }
             else
@@ -433,9 +439,7 @@ namespace NetVips
             }
             else if (gtype == RefStrType)
             {
-                // don't bother getting the size -- assume these are always
-                // null-terminated C strings
-                result = VipsType.VipsValueGetRefString(ref Struct, out var psize).ToUtf8String();
+                result = VipsType.VipsValueGetRefString(ref Struct, out var psize).ToUtf8String(size: (int)psize);
             }
             else if (gtype == ImageType)
             {
@@ -531,6 +535,11 @@ namespace NetVips
             {
                 // and tag it to be unset on GC as well	
                 Internal.GValue.GValueUnset(ref Struct);
+
+                if (_memoryPressure.HasValue)
+                {
+                    GC.RemoveMemoryPressure(_memoryPressure.Value);
+                }
 
                 // Note disposing has been done.		
                 _disposed = true;

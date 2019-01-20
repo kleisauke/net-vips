@@ -139,10 +139,8 @@ namespace NetVips
         /// <param name="operationName"></param>
         /// <param name="arg"></param>
         /// <returns></returns>
-        public static object Call(string operationName, object arg)
-        {
-            return Call(operationName, null, arg);
-        }
+        public static object Call(string operationName, object arg) =>
+            Call(operationName, null, arg);
 
         /// <summary>
         /// Call a libvips operation.
@@ -157,10 +155,8 @@ namespace NetVips
         /// <param name="operationName"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(string operationName, params object[] args)
-        {
-            return Call(operationName, null, args);
-        }
+        public static object Call(string operationName, params object[] args) =>
+            Call(operationName, null, args);
 
         /// <summary>
         /// Call a libvips operation.

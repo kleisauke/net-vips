@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
@@ -12,8 +13,10 @@ namespace NetVips.Tests
         private Image _mono;
         private Image[] _allImages;
 
-        public ArithmeticTests()
+        public ArithmeticTests(TestsFixture testsFixture, ITestOutputHelper output)
         {
+            testsFixture.SetUpLogging(output);
+
             _image = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
             _colour = _image * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
             _mono = _colour[1];

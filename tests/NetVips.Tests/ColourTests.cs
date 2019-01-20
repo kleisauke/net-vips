@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class ColourTests : IClassFixture<TestsFixture>
     {
+        public ColourTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         [Fact]
         public void TestColourspace()
         {

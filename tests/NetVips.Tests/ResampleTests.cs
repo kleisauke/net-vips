@@ -1,11 +1,17 @@
 ﻿using System;
 using System.IO;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class ResampleTests : IClassFixture<TestsFixture>
     {
+        public ResampleTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         #region helpers
 
         /// <summary>

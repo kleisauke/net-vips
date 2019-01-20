@@ -1,9 +1,15 @@
 ﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class MorphologyTests : IClassFixture<TestsFixture>
     {
+        public MorphologyTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         [Fact]
         public void TestCountlines()
         {

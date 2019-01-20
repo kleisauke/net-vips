@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
@@ -18,8 +19,10 @@ namespace NetVips.Tests
         private Image _sobel;
         private Image[] _allMasks;
 
-        public ConvolutionTests()
+        public ConvolutionTests(TestsFixture testsFixture, ITestOutputHelper output)
         {
+            testsFixture.SetUpLogging(output);
+
             var im = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
             _colour = im * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
             _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);

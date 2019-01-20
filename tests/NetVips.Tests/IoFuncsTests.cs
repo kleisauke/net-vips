@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class IoFuncsTests : IClassFixture<TestsFixture>
     {
+        public IoFuncsTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         /// <summary>
         /// test the vips7 filename splitter ... this is very fragile and annoying
         /// code with lots of cases

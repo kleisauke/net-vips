@@ -1,9 +1,15 @@
 ﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class DrawTests : IClassFixture<TestsFixture>
     {
+        public DrawTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         [Fact]
         public void TestDrawCircle()
         {

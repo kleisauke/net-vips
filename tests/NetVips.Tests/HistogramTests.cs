@@ -1,10 +1,16 @@
 ﻿using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class HistogramTests : IClassFixture<TestsFixture>
     {
+        public HistogramTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         [Fact]
         public void TestHistCum()
         {

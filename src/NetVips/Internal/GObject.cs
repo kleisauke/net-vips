@@ -110,7 +110,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_set_string")]
-        internal static extern void GValueSetString(ref Struct value, IntPtr vString);
+        internal static extern void GValueSetString(ref Struct value, in byte vString);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,

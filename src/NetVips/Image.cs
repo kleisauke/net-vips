@@ -153,25 +153,25 @@ namespace NetVips
         /// </remarks>
         /// <param name="vipsFilename">The disc file to load the image from, with
         /// optional appended arguments.</param>
-        /// <param name="memory">If set True, load the image via memory rather than
-        /// via a temporary disc file. See <see cref="NewTempFile"/> for
-        /// notes on where temporary files are created. Small images are
-        /// loaded via memory by default, use `VIPS_DISC_THRESHOLD` to
-        /// set the definition of small.</param>
+        /// <param name="memory">If set to <see langword="true" />, load the image
+        /// via memory rather than via a temporary disc file. See <see cref="NewTempFile"/>
+        /// for notes on where temporary files are created. Small images are loaded via memory
+        /// by default, use `VIPS_DISC_THRESHOLD` to set the definition of small.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set True, the loader will fail with an error on
-        /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damanged image.</param>
+        /// <param name="fail">If set to <see langword="true" />, the loader will fail
+        /// with an error on the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename" />.</exception>
         public static Image NewFromFile(string vipsFilename, bool? memory = null, string access = null,
             bool? fail = null, VOption kwargs = null)
         {
-            var filenamePtr = vipsFilename.ToUtf8Ptr();
-            var filename = VipsImage.VipsFilenameGetFilename(filenamePtr);
-            var fileOptions = VipsImage.VipsFilenameGetOptions(filenamePtr).ToUtf8String(true);
-            GLib.GFree(filenamePtr);
+            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
+            ref var filenameRef = ref MemoryMarshal.GetReference(span);
+
+            var filename = VipsImage.VipsFilenameGetFilename(filenameRef);
+            var fileOptions = VipsImage.VipsFilenameGetOptions(filenameRef).ToUtf8String(true);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoad(filename));
             if (name == null)
@@ -218,28 +218,25 @@ namespace NetVips
         /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damanged image.</param>
+        /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
         public static Image NewFromBuffer(object data, string strOptions = "", string access = null, bool? fail = null,
             VOption kwargs = null)
         {
-            int length;
-            IntPtr memory;
+            ReadOnlySpan<byte> span;
+
             switch (data)
             {
                 case string strValue:
-                    length = Encoding.UTF8.GetByteCount(strValue);
-                    memory = strValue.ToUtf8Ptr();
-                    break;
-                case byte[] byteArrValue:
-                    length = byteArrValue.Length;
-                    memory = byteArrValue.ToPtr();
+                    span = Encoding.UTF8.GetBytes(strValue);
                     break;
                 case char[] charArrValue:
-                    length = Encoding.UTF8.GetByteCount(charArrValue);
-                    memory = Encoding.UTF8.GetBytes(charArrValue).ToPtr();
+                    span = Encoding.UTF8.GetBytes(charArrValue);
+                    break;
+                case byte[] byteArrValue:
+                    span = byteArrValue;
                     break;
                 default:
                     throw new Exception(
@@ -247,9 +244,10 @@ namespace NetVips
                     );
             }
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoadBuffer(memory,
-                new UIntPtr((ulong)length)));
-            GLib.GFree(memory);
+            var name = Marshal.PtrToStringAnsi(
+                VipsForeign.VipsForeignFindLoadBuffer(MemoryMarshal.GetReference(span),
+                    new UIntPtr((ulong)span.Length)));
+
             if (name == null)
             {
                 throw new VipsException("unable to load from buffer");
@@ -515,10 +513,11 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename" />.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
-            var filenamePtr = vipsFilename.ToUtf8Ptr();
-            var filename = VipsImage.VipsFilenameGetFilename(filenamePtr);
-            var fileOptions = VipsImage.VipsFilenameGetOptions(filenamePtr).ToUtf8String(true);
-            GLib.GFree(filenamePtr);
+            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
+            ref var filenameRef = ref MemoryMarshal.GetReference(span);
+
+            var filename = VipsImage.VipsFilenameGetFilename(filenameRef);
+            var fileOptions = VipsImage.VipsFilenameGetOptions(filenameRef).ToUtf8String(true);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSave(filename));
             if (name == null)
@@ -576,10 +575,11 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to buffer.</exception>
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
-            var formatStrPtr = formatString.ToUtf8Ptr();
-            var bufferOptions = VipsImage.VipsFilenameGetOptions(formatStrPtr).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatStrPtr));
-            GLib.GFree(formatStrPtr);
+            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(formatString);
+            ref var formatRef = ref MemoryMarshal.GetReference(span);
+
+            var bufferOptions = VipsImage.VipsFilenameGetOptions(formatRef).ToUtf8String(true);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatRef));
 
             if (name == null)
             {

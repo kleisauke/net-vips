@@ -155,13 +155,13 @@ namespace NetVips
         /// <returns>A pointer to an pre-allocated block of memory of the specified type.</returns>
         public static IntPtr ToIntPtr<T>(this object structure) where T : struct
         {
-            // Initialize unmanged memory to hold the struct.
-            var ptr = GLib.GMalloc(new UIntPtr((ulong)Marshal.SizeOf(typeof(T))));
+            // Initialize unmanaged memory to hold the struct.
+            var unmanagedPointer = GLib.GMalloc(new UIntPtr((ulong)Marshal.SizeOf(typeof(T))));
 
             // Copy the struct to unmanaged memory.
-            Marshal.StructureToPtr(structure, ptr, false);
+            Marshal.StructureToPtr(structure, unmanagedPointer, false);
 
-            return ptr;
+            return unmanagedPointer;
         }
 
         /// <summary>
@@ -315,46 +315,11 @@ namespace NetVips
         /// </summary>
         /// <param name="ptr">Pointer to the GLib string.</param>
         /// <param name="freePtr">If set to <see langword="true" />, free the GLib string.</param>
+        /// <param name="size">Size of the GLib string, use 0 to read until the null character.</param>
         /// <returns>The managed string.</returns>
-        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false)
+        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int size = 0)
         {
-            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr));
-        }
-
-        /// <summary>
-        /// Marshals a managed string to a GLib UTF8 char*.
-        /// </summary>
-        /// <remarks>
-        /// The returned pointer should be freed by calling <see cref="GLib.GFree"/>.
-        /// </remarks>
-        /// <param name="str">The managed string.</param>
-        /// <returns>The to pointer to the GLib string.</returns>
-        public static IntPtr ToUtf8Ptr(this string str)
-        {
-            return str == null ? IntPtr.Zero : Encoding.UTF8.GetBytes(str).ToPtr();
-        }
-
-        /// <summary>
-        /// Marshals a managed byte array to a C string.
-        /// </summary>
-        /// <remarks>
-        /// The returned pointer should be freed by calling <see cref="GLib.GFree"/>.
-        /// The byte array should not include the null terminator. It will be
-        /// added automatically.
-        /// </remarks>
-        /// <param name="bytes">The managed byte array.</param>
-        /// <returns>A pointer to the unmanaged string.</returns>
-        public static IntPtr ToPtr(this byte[] bytes)
-        {
-            if (bytes == null)
-            {
-                return IntPtr.Zero;
-            }
-
-            var ptr = GLib.GMalloc(new UIntPtr((ulong)bytes.Length + 1));
-            Marshal.Copy(bytes, 0, ptr, bytes.Length);
-            Marshal.WriteByte(ptr, bytes.Length, 0);
-            return ptr;
+            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr, size));
         }
 
         /// <summary>
@@ -366,21 +331,33 @@ namespace NetVips
         /// </remarks>
         /// <param name="ptr">Pointer to the unmanaged string.</param>
         /// <param name="freePtr">If set to <see langword="true" /> free the unmanaged memory.</param>
+        /// <param name="size">Size of the C string, use 0 to read until the null character.</param>
         /// <returns>The string as a byte array.</returns>
-        public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false)
+        public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int size = 0)
         {
             if (ptr == IntPtr.Zero)
             {
                 return null;
             }
 
-            var bytes = new List<byte>();
-            var offset = 0;
-
-            byte b;
-            while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
+            byte[] managedArray;
+            if (size > 0)
             {
-                bytes.Add(b);
+                managedArray = new byte[size];
+                Marshal.Copy(ptr, managedArray, 0, size);
+            }
+            else
+            {
+                var bytes = new List<byte>();
+                var offset = 0;
+
+                byte b;
+                while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
+                {
+                    bytes.Add(b);
+                }
+
+                managedArray = bytes.ToArray();
             }
 
             if (freePtr)
@@ -388,7 +365,7 @@ namespace NetVips
                 GLib.GFree(ptr);
             }
 
-            return bytes.ToArray();
+            return managedArray;
         }
 
         /// <summary>

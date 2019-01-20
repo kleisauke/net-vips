@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
@@ -15,8 +16,10 @@ namespace NetVips.Tests
         private Image _cmyk;
         private Image _oneBit;
 
-        public ForeignTests()
+        public ForeignTests(TestsFixture testsFixture, ITestOutputHelper output)
         {
+            testsFixture.SetUpLogging(output);
+
             _tempDir = Helper.GetTemporaryDirectory();
 
             _colour = Image.Jpegload(Helper.JpegFile);

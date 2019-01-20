@@ -1,20 +1,27 @@
 ﻿using System;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class TestsFixture : IDisposable
     {
-        private readonly uint _handlerId;
+        private uint? _handlerId;
 
-        public TestsFixture()
+        public void SetUpLogging(ITestOutputHelper output)
         {
-            var logFunc = new LogFunc(Log.PrintTraceLogFunction);
-            _handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Critical, logFunc);
+            _handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Error, (domain, level, message) =>
+            {
+                output.WriteLine("Domain: '{0}' Level: {1}", domain, level);
+                output.WriteLine("Message: {0}", message);
+            });
         }
 
         public void Dispose()
         {
-            Log.RemoveLogHandler("VIPS", _handlerId);
+            if (_handlerId.HasValue)
+            {
+                Log.RemoveLogHandler("VIPS", _handlerId.Value);
+            }
         }
     }
 }

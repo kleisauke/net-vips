@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using System.IO;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NetVips.Tests
 {
     public class GValueTests : IClassFixture<TestsFixture>
     {
+        public GValueTests(TestsFixture testsFixture, ITestOutputHelper output)
+        {
+            testsFixture.SetUpLogging(output);
+        }
+
         [Fact]
         public void TestBool()
         {
@@ -73,6 +79,16 @@ namespace NetVips.Tests
         {
             var gv = new GValue();
             gv.SetType(GValue.GStrType);
+            gv.Set("banana");
+            var value = gv.Get();
+            Assert.Equal("banana", value);
+        }
+
+        [Fact]
+        public void TestRefString()
+        {
+            var gv = new GValue();
+            gv.SetType(GValue.RefStrType);
             gv.Set("banana");
             var value = gv.Get();
             Assert.Equal("banana", value);
