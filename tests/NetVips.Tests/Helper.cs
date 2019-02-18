@@ -35,6 +35,7 @@ namespace NetVips.Tests
         public static readonly string BmpFile = Path.Combine(Images, "MARBLES.BMP");
         public static readonly string NiftiFile = Path.Combine(Images, "avg152T1_LR_nifti.nii.gz");
         public static readonly string IcoFile = Path.Combine(Images, "favicon.ico");
+        public static readonly string HeicFile = Path.Combine(Images, "Example1.heic");
 
         public static readonly string[] UnsignedFormats =
         {
@@ -97,9 +98,15 @@ namespace NetVips.Tests
             Enums.Interpretation.Rgb16
         };
 
+        public static readonly string[] CmykColourspaces =
+        {
+            Enums.Interpretation.Cmyk
+        };
+
         public static string[] AllColourspaces = ColourColourspaces.Concat(MonoColourspaces)
             .Concat(CodedColourspaces)
             .Concat(SixteenbitColourspaces)
+            .Concat(CmykColourspaces)
             .ToArray();
 
         public static readonly Dictionary<string, double> MaxValue = new Dictionary<string, double>
