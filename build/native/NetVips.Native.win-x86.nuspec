@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata>
+
+    <!-- package -->
+    <id>NetVips.Native.win-x86</id>
+    <title>NetVips - Native binaries for Windows x86</title>
+    <version>$version$</version>
+    <description>This package complements the NetVips package and contains native binaries of libvips for Windows (x86)</description>
+    <summary>Native binaries of libvips for Windows (x86)</summary>
+    <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
+    <repository type="git" url="https://github.com/kleisauke/net-vips" />
+    <tags>libvips binaries image-processing</tags>
+
+    <!-- legal -->
+    <license type="expression">MIT</license>
+    <authors>Kleis Auke Wolthuizen</authors>
+    <owners>Kleis Auke Wolthuizen</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Kleis Auke Wolthuizen</copyright>
+
+  </metadata>
+  <files>
+
+    <!-- The build bits -->
+    <file src="targets\NetVips.Native.win-x86.targets" target="build/net45" />
+
+    <!-- Include libvips Windows x86 binaries -->
+    <file src="pack\win-x86\*" target="runtimes/win-x86/native" />
+
+    <!-- This is a dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
+    <file src="_._" target="ref/netstandard" />
+
+  </files>
+</package>

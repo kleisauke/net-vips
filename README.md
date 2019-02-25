@@ -1,10 +1,10 @@
-# Mono/.NET bindings for libvips
+# NetVips
 
 [![NuGet](https://img.shields.io/nuget/v/NetVips.svg)](https://www.nuget.org/packages/NetVips)
 [![Build Status](https://travis-ci.org/kleisauke/net-vips.svg?branch=master)](https://travis-ci.org/kleisauke/net-vips)
 [![Build status](https://ci.appveyor.com/api/projects/status/d2r9uanb5yij07pt/branch/master?svg=true)](https://ci.appveyor.com/project/kleisauke/net-vips/branch/master)
 
-This NuGet package provides a Mono/.NET binding for the [libvips image processing library](https://libvips.github.io/libvips).
+This NuGet package provides a .NET binding for the [libvips image processing library](https://libvips.github.io/libvips).
 
 This binding passes the vips test suite cleanly with no leaks on Windows, macOS and Linux.
 
@@ -26,7 +26,7 @@ keep entire images in memory, it's light. For example, the `NetVips` benchmark:
 [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks)
 
 Loads a large tiff image, shrinks by 10%, sharpens, and saves again. On this
-test `NetVips` is around 8 times faster than Magick.NET and 4 times faster
+test `NetVips` is around 14 times faster than Magick.NET and 5 times faster
 than ImageSharp.
 
 The [libvips documentation](https://libvips.github.io/libvips/API/current)
@@ -34,11 +34,30 @@ has a [chapter explaining how libvips opens
 files](https://libvips.github.io/libvips/API/current/How-it-opens-files.md.html)
 which gives some more background.
 
+## Supported platforms
+
+- .NET Framework (4.5 and higher)
+- .NET Core (.NETStandard 2.0 and higher on Windows, Linux and macOS)
+- Mono
+
 ## Install
 
 You need the libvips shared library on your library search path, version 8.2 or
-later. On Linux and macOS, you can install via your package manager; on 
-Windows the pre-compiled binary is bundled with NuGet.
+later. There are separate NuGet packages that will contain the pre-compiled 
+libvips binaries for a few distros (see
+[this repo](https://github.com/kleisauke/libvips-packaging) for details):
+
+|                    |NuGet Package¹|
+|--------------------|:------------:|
+|**Windows 64-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x64.svg)](https://www.nuget.org/packages/NetVips.Native.win-x64)|
+|**Windows 32-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x86.svg)](https://www.nuget.org/packages/NetVips.Native.win-x86)|
+|**Linux x64 glibc²**|[![NetVips.Native.linux-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-x64)|
+|**Linux x64 musl³** |[![NetVips.Native.linux-musl-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-musl-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-musl-x64)|
+|**macOS x64**       |[![NetVips.Native.osx-x64](https://img.shields.io/nuget/v/NetVips.Native.osx-x64.svg)](https://www.nuget.org/packages/NetVips.Native.osx-x64)|
+
+¹ The version number of these NuGet packages is in sync with libvips' version number.  
+² Uses glibc as the standard C library (Ubuntu, Debian, etc).  
+³ Uses musl as the standard C library (Alpine, Gentoo Linux, etc).
 
 Then just install this package, perhaps:
 
@@ -68,42 +87,8 @@ was not able to find libvips or due to x86/x64 architecture problems:
 
 | Inner exception | HRESULT | Solution |
 | :--- | :--- | :--- |
-| DllNotFoundException | 0x8007007E | Make sure to add the `bin` folder of the libvips Windows build to your `PATH` environment variable (if you wish to not use the bundled libvips binaries). |
+| DllNotFoundException | 0x8007007E | Make sure to add the `bin` folder of the libvips Windows build to your `PATH` environment variable (if you wish to not use the separate NuGet packages). |
 | BadImageFormatException | 0x8007000B | Make sure when you target the `AnyCPU` platform the `Prefer 32-bit` option is unchecked. Or try to target `x64` instead. |
-
-## Bundled libvips Windows binary
-
-From NetVips version 1.0.3 upwards the pre-compiled libvips Windows binary is
-bundled with NuGet. It's therefore no longer necessary to download the
-pre-compiled binary and to set the `PATH` environment variable.
-
-If you wish to not use the bundled libvips, you could set the
-`UseGlobalLibvips` property to `true`:
-```xml
-<PropertyGroup>
-  <UseGlobalLibvips>true</UseGlobalLibvips>
-</PropertyGroup>
-```
-
-This property ensures that the bundled libvips binaries are not copied
-to your project's output directory. Instead, it will search for the
-required binaries in the directories that are specified in the `PATH` 
-environment variable.
-
-The libvips web-distribution bundled with NetVips contains 37 DLLs.
-If you want to not bloat your project's output directory, you could 
-set the `LibvipsOutputBase` property:
-```xml
-<PropertyGroup>
-  <LibvipsOutputBase>vips</LibvipsOutputBase>
-</PropertyGroup>
-```
-
-This property ensures that bundled libvips binaries are copied to
-to the specified subdirectory within your project's output directory.
-Note that it's still required to add this directory to the `PATH` 
-environment variable. See [here](https://github.com/kleisauke/net-vips/issues/20#issuecomment-439394316)
-for an example how this can be done at runtime.
 
 ## Example
 

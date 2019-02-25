@@ -1,4 +1,10 @@
+// Install tools
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
+#tool "nuget:?package=nuget.commandline&version=4.9.3"
+
+// Install addins
+#addin "nuget:?package=SharpZipLib&version=1.1.0"
+#addin "nuget:?package=Cake.Compression&version=0.2.2"
 
 // Arguments
 var target = Argument("target", "Default");
@@ -8,10 +14,15 @@ var configuration = Argument("configuration", "Release");
 var artifactsDirectory = Directory("./artifacts");
 var buildDir = Directory("./src/NetVips/bin") + Directory(configuration);
 var isOnAppVeyorAndNotPR = AppVeyor.IsRunningOnAppVeyor && !AppVeyor.Environment.PullRequest.IsPullRequest;
-var vipsHome = EnvironmentVariable("VIPS_HOME");
+var architectures = new[] { "win-x64", "win-x86", "linux-x64", "linux-musl-x64", "osx-x64" };
+var vipsVersion = EnvironmentVariable("VIPS_VERSION");
+if (HasEnvironmentVariable("VIPS_PRE_VERSION"))
+{
+    vipsVersion += "-" + EnvironmentVariable("VIPS_PRE_VERSION");
+}
 
 const string downloadDir = "./download/";
-const string packDir = "./pack/";
+const string packDir = "./build/native/pack/";
 
 // Tasks
 Task("Clean")
@@ -25,46 +36,42 @@ Task("Download-Binaries")
     .IsDependentOn("Clean")
     .Does(() =>
     {
-        var version = EnvironmentVariable("VIPS_VERSION");
-        if (HasEnvironmentVariable("VIPS_PRE_VERSION"))
+        if (DirectoryExists(packDir))
         {
-            version += "-" + EnvironmentVariable("VIPS_PRE_VERSION");
+            Information("Removing old packaging directory");
+            DeleteDirectory(packDir, new DeleteDirectorySettings
+            {
+                Recursive = true,
+                Force = true
+            });
         }
 
-        var zipVersion = EnvironmentVariable("VIPS_ZIP_VERSION");
+        EnsureDirectoryExists(packDir);
 
-        foreach (var architecture in new[] { "win-x64", "win-x86" })
+        foreach (var architecture in architectures)
         {
-            var bitness = (architecture == "win-x86") ? "32" : "64";
-            var fileName = $"vips-dev-w{bitness}-web-{zipVersion}.zip";
-            var vipsZip = $"https://github.com/libvips/build-win64-mxe/releases/download/v{version}/{fileName}";
+            var fileName = $"libvips-{vipsVersion}-{architecture}.tar.gz";
+            var tarball = $"https://github.com/kleisauke/libvips-packaging/releases/download/v{vipsVersion}/{fileName}";
 
-            var zipFile = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
-            if (!FileExists(zipFile))
+            var filePath = new DirectoryPath(downloadDir).CombineWithFilePath(fileName);
+            if (!FileExists(filePath))
             {
-                Information($"libvips {architecture} zip file not in download directory. Downloading now ...");
+                Information($"{fileName} not in download directory. Downloading now ...");
                 EnsureDirectoryExists(downloadDir);
-                DownloadFile(vipsZip, zipFile);
+                DownloadFile(tarball, filePath);
             }
 
-            var outputPath = new DirectoryPath(vipsHome).Combine(architecture);
-            if (DirectoryExists(outputPath))
-            {
-                Information($"Removing old libvips {architecture}");
-                DeleteDirectory(outputPath, new DeleteDirectorySettings
-                {
-                    Recursive = true,
-                    Force = true
-                });
-            }
+            var tempDir = new DirectoryPath(packDir).Combine("temp");
 
-            Information("Uncompressing zip file ...");
-            Unzip(zipFile, outputPath);
+            Information($"Uncompressing {fileName} ...");
+            GZipUncompress(filePath, tempDir);
 
-            // Need to remove toplevel dir from zip container
-            var containerDir = GetDirectories(outputPath + "/*").First(x => x.GetDirectoryName().StartsWith("vips-"));
-            CopyDirectory(containerDir, outputPath);
-            DeleteDirectory(containerDir, new DeleteDirectorySettings
+            var dllPackDir = new DirectoryPath(packDir).Combine(architecture);
+            EnsureDirectoryExists(dllPackDir);
+
+            CopyFiles(tempDir + "/lib/*.{dll,so.*,dylib}", dllPackDir);   
+
+            DeleteDirectory(tempDir, new DeleteDirectorySettings
             {
                 Recursive = true,
                 Force = true
@@ -96,35 +103,6 @@ Task("Pack")
     .WithCriteria((isOnAppVeyorAndNotPR || string.Equals(target, "pack", StringComparison.OrdinalIgnoreCase)) && IsRunningOnWindows())
     .Does(() =>
     {
-        if (DirectoryExists(packDir))
-        {
-            Information("Removing old packaging directory");
-            DeleteDirectory(packDir, new DeleteDirectorySettings
-            {
-                Recursive = true,
-                Force = true
-            });
-        }
-
-        EnsureDirectoryExists(packDir);
-
-        foreach (var architecture in new[] { "win-x64", "win-x86" })
-        {
-            var dllPackDir = new DirectoryPath(packDir).Combine(architecture);
-            EnsureDirectoryExists(dllPackDir);
-
-            // Copy binaries to packaging directory
-            CopyFiles(vipsHome + "/" + architecture + "/bin/*.dll", dllPackDir);
-
-            // Clean unused DDL's
-            var deleteFiles = new FilePath[]
-            {
-                dllPackDir.CombineWithFilePath("libvips-cpp-42.dll"),
-                dllPackDir.CombineWithFilePath("libstdc++-6.dll")
-            };
-            DeleteFiles(deleteFiles);
-        }
-
         // Need to build the OSX and Linux DLL first.
         DotNetCoreBuild("./build/NetVips.batch.csproj", new DotNetCoreBuildSettings
         {
@@ -143,6 +121,15 @@ Task("Pack")
                     .Append("/p:IncludeLibvips={0}", "true");
             }
         });
+
+        foreach (var architecture in architectures)
+        {
+            NuGetPack("./build/native/NetVips.Native." + architecture + ".nuspec", new NuGetPackSettings
+            {
+                Version = vipsVersion,
+                OutputDirectory = artifactsDirectory
+            });
+        }
     });
 
 Task("Test")

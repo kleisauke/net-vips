@@ -12,7 +12,6 @@
     <StartupObject />
     <Platforms>AnyCPU;x64;x86</Platforms>
     <Optimize>true</Optimize>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeBuildInPackage;IncludeInPackage;IncludeBinariesInPackage</TargetsForTfmSpecificContentInPackage>
     <DefaultItemExcludes>$(DefaultItemExcludes);Interop\Libraries.*.cs</DefaultItemExcludes>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -38,47 +37,26 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Fody" Version="3.3.5">
+    <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="Fody" Version="4.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="ModuleInit.Fody" Version="1.9.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
 
-  <!-- Include NuGet build target file -->
-  <Target Name="IncludeBuildInPackage">
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="..\..\build\NetVips.targets">
-        <PackagePath>build\$(TargetFramework)\NetVips.targets</PackagePath>
-      </TfmSpecificPackageFile>
-    </ItemGroup>
-  </Target>
-
   <!-- Include .NET Standard packages on Linux and macOS -->
-  <Target Name="IncludeInPackage" Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\$(TargetFramework)\Linux\NetVips.dll">
-        <PackagePath>runtimes\linux\lib\$(TargetFramework)\NetVips.dll</PackagePath>
-      </TfmSpecificPackageFile>
-      <TfmSpecificPackageFile Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\$(TargetFramework)\OSX\NetVips.dll">
-        <PackagePath>runtimes\osx\lib\$(TargetFramework)\NetVips.dll</PackagePath>
-      </TfmSpecificPackageFile>
-    </ItemGroup>
-  </Target>
-
-  <!-- Include libvips Windows binaries -->
-  <Target Name="IncludeBinariesInPackage" Condition="'$(TargetFramework)|$(IncludeLibvips)' == 'netstandard2.0|true'">
-    <ItemGroup>
-      <TfmSpecificPackageFiles Include="..\..\pack\**\*.*" />
-    </ItemGroup>
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="@(TfmSpecificPackageFiles)">
-        <PackagePath>build\%(TfmSpecificPackageFiles.RecursiveDir)%(TfmSpecificPackageFiles.Filename)%(TfmSpecificPackageFiles.Extension)</PackagePath>
-      </TfmSpecificPackageFile>
-    </ItemGroup>
-  </Target>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\Linux\NetVips.dll">
+      <Pack>true</Pack>
+      <PackagePath>runtimes\linux\lib\netstandard2.0</PackagePath>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\OSX\NetVips.dll">
+      <Pack>true</Pack>
+      <PackagePath>runtimes\osx\lib\netstandard2.0</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

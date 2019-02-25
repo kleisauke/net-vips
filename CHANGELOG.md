@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - ???
+### Added
+- Pre-compiled libvips binaries for a few distros ([#21](https://github.com/kleisauke/net-vips/issues/21)):
+  - [NetVips.Native.linux-x64](https://www.nuget.org/packages/NetVips.Native.linux-x64) - Linux x64 glibc (Ubuntu, Debian, etc).
+  - [NetVips.Native.linux-musl-x64](https://www.nuget.org/packages/NetVips.Native.linux-musl-x64) - Linux x64 musl (Alpine, Gentoo Linux, etc).
+  - [NetVips.Native.osx-x64](https://www.nuget.org/packages/NetVips.Native.osx-x64) - macOS x64.
+
+### Changed
+- Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).
+- The bundled libvips Windows binaries were split into different NuGet packages:
+  - [NetVips.Native.win-x64](https://www.nuget.org/packages/NetVips.Native.win-x64) - Windows 64-bit.
+  - [NetVips.Native.win-x86](https://www.nuget.org/packages/NetVips.Native.win-x86) - Windows 32-bit.
+- Update the [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks).
+- A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
+
+### Removed
+- The `UseGlobalLibvips` property since the bundled libvips binaries are split into different NuGet packages.
+
 ## [1.0.7] - 2019-01-18
 ### Changed
 - Update bundled libvips x86/x64 binary to 8.7.4.
@@ -12,12 +30,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - The `LibvipsOutputBase` property to specify the subdirectory (within your project's output directory) where the libvips binaries are copied to ([#20](https://github.com/kleisauke/net-vips/issues/20)).
 
-### Removed
-- The redundant `LibvipsDLLPath` property.
-
 ### Changed
 - Update bundled libvips x86/x64 binary to 8.7.3.
 - No exceptions will be thrown by the `ModuleInitializer` (used to initialize libvips once the assembly is loaded) ([#15](https://github.com/kleisauke/net-vips/issues/15), [#20](https://github.com/kleisauke/net-vips/issues/20)).
+
+### Removed
+- The redundant `LibvipsDLLPath` property.
 
 ## [1.0.5] - 2018-09-25
 ### Added
@@ -67,6 +85,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5

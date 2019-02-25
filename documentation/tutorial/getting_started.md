@@ -2,7 +2,7 @@ Getting Started with NetVips
 ============================
 
 See the main libvips site for an introduction to the underlying library. These
-notes introduce the Mono/.NET binding.
+notes introduce the .NET binding.
 
 https://libvips.github.io/libvips 
 

@@ -12,5 +12,4 @@ docker build . -t netvips
 # mounted at /app
 docker run --rm -t \
 	-v $PWD:/app \
-	netvips \
-	bash ./build.sh
+	netvips

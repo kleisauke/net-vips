@@ -10,28 +10,27 @@ of VIPS library.
 
 ## Benchmarks
 
-Run on 23/04/18 with libvips 8.6.3, ImageMagick 7.0.7.29 Q8 Beta and ImageSharp 1.0.0-beta0003.
+Run on 21/02/19 with libvips 8.7.4, Magick.NET 7.11.0.0 and ImageSharp 1.0.0-beta0006.
 
 ``` ini
 
-BenchmarkDotNet=v0.10.14, OS=Windows 10.0.16299.371 (1709/FallCreatorsUpdate/Redstone3)
+BenchmarkDotNet=v0.11.4, OS=Windows 10.0.17763.316 (1809/October2018Update/Redstone5)
 Intel Core i5-8600K CPU 3.60GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
-Frequency=3515626 Hz, Resolution=284.4444 ns, Timer=TSC
-.NET Core SDK=2.1.104
-  [Host]     : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
-  Job-GMSODR : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
+.NET Core SDK=2.2.103
+  [Host]     : .NET Core 2.2.1 (CoreCLR 4.6.27207.03, CoreFX 4.6.27207.03), 64bit RyuJIT
+  Job-BVUXGY : .NET Core 2.2.1 (CoreCLR 4.6.27207.03, CoreFX 4.6.27207.03), 64bit RyuJIT
 
-Toolchain=.NET Core 2.0.6
+Toolchain=.NET Core 2.2.0  
 
 ```
-|     Method | input | output |      Mean |     Error |    StdDev | Scaled | ScaledSD |
-|----------- |------ |------- |----------:|----------:|----------:|-------:|---------:|
-|    **NetVips** | **t.jpg** | **t2.jpg** |  **52.02 ms** | **0.4218 ms** | **0.3945 ms** |   **1.00** |     **0.00** |
-| Magick.NET | t.jpg | t2.jpg | 366.68 ms | 2.9389 ms | 2.7490 ms |   7.05 |     0.07 |
-| ImageSharp¹ | t.jpg | t2.jpg | 215.86 ms | 0.5902 ms | 0.5521 ms |   4.15 |     0.03 |
-|            |       |        |           |           |           |        |          |
-|    **NetVips** | **t.tif** | **t2.tif** |  **38.24 ms** | **0.7550 ms** | **1.3613 ms** |   **1.00** |     **0.00** |
-| Magick.NET | t.tif | t2.tif | 350.72 ms | 1.0981 ms | 0.9169 ms |   9.18 |     0.32 |
+|     Method | input | output |      Mean |     Error |    StdDev | Ratio | RatioSD |
+|----------- |------ |------- |----------:|----------:|----------:|------:|--------:|
+|    **NetVips** | **t.jpg** | **t2.jpg** |  **32.76 ms** | **0.1900 ms** | **0.1777 ms** |  **1.00** |    **0.00** |
+| Magick.NET | t.jpg | t2.jpg | 375.10 ms | 2.5946 ms | 2.4270 ms | 11.45 |    0.11 |
+| ImageSharp¹ | t.jpg | t2.jpg | 175.63 ms | 1.6125 ms | 1.4295 ms |  5.36 |    0.05 |
+|            |       |        |           |           |           |       |         |
+|    **NetVips** | **t.tif** | **t2.tif** |  **21.75 ms** | **0.4179 ms** | **0.3909 ms** |  **1.00** |    **0.00** |
+| Magick.NET | t.tif | t2.tif | 356.96 ms | 1.4376 ms | 1.2744 ms | 16.41 |    0.29 |
 
 ¹ ImageSharp does not have TIFF support, so I only tested with JPEG files.
 

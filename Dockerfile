@@ -29,3 +29,5 @@ RUN \
 
 # Clean up
 RUN rm -rf /tmp/*
+
+ENTRYPOINT ["./build.sh"]

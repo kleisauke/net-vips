@@ -1,10 +1,8 @@
-sudo: false
-
 language: csharp
 
 mono: none
 
-dotnet: 2.2.103
+dotnet: 2.2.104
 
 env:
   global:
@@ -39,7 +37,6 @@ cache:
   ccache: true
   directories:
     - $HOME/Library/Caches/Homebrew
-    - tools
     - $HOME/vips
 
 addons:
@@ -48,6 +45,9 @@ addons:
     sources:
       # use imagemagick 6.9.7-4 instead than 6.8.9-9
       - sourceline: 'ppa:opencpu/imagemagick'
+      # add support for HEIF files
+      - sourceline: 'ppa:strukturag/libheif'
+      - sourceline: 'ppa:strukturag/libde265'
     packages:
       - libexpat1-dev
       - gettext
@@ -67,6 +67,7 @@ addons:
       - librsvg2-dev
       - libwebp-dev
       - libtiff5-dev
+      - libheif-dev
         # missing on xenial, unfortunately
         # - libwebpmux2
       - libglib2.0-dev

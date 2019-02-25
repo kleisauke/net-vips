@@ -11,7 +11,7 @@ documentType: index
       <a class="changelog-link" href="../CHANGELOG.md">Changelog</a><span>|</span><a class="github-link" href="https://github.com/kleisauke/net-vips">View on Github</a>
     </div>
     <div class="minitext">
-    Mono/.NET binding for the <a href="https://libvips.github.io/libvips">libvips image processing library</a>.
+    .NET binding for the <a href="https://libvips.github.io/libvips">libvips image processing library</a>.
     </div>
     <div class="buttons-unit">
       <a href="tutorial/getting_started.md"><i class="glyphicon glyphicon-send"></i>Getting Started</a>
@@ -28,7 +28,7 @@ documentType: index
         <section>
           <h2>Runs quickly and uses little memory</h2>
           <p class="lead">NetVips is fast and needs little memory. The <a href="https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks">NetVips.Benchmarks</a> project tests NetVips against Magick.NET and ImageSharp.
-          NetVips is around 8 times faster than Magick.NET and 4 times faster than ImageSharp.</p>
+          NetVips is around 14 times faster than Magick.NET and 5 times faster than ImageSharp.</p>
         </section>
       </div>
     </div>
