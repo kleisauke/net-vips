@@ -29,10 +29,10 @@ Loads a large tiff image, shrinks by 10%, sharpens, and saves again. On this
 test `NetVips` is around 8 times faster than Magick.NET and 4 times faster
 than ImageSharp.
 
-There's a handy blog post explaining how libvips opens files, which gives
-some more background.
-
-http://libvips.blogspot.co.uk/2012/06/how-libvips-opens-file.html
+The [libvips documentation](https://libvips.github.io/libvips/API/current)
+has a [chapter explaining how libvips opens
+files](https://libvips.github.io/libvips/API/current/How-it-opens-files.md.html)
+which gives some more background.
 
 ## Install
 

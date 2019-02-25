@@ -225,7 +225,7 @@ for example truncated files, and you might want to see them.
 Add these lines somewhere near the start of your program:
 
 ```csharp
-_handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Critical, (domain, level, message) =>
+_handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Warning, (domain, level, message) =>
 {
     Console.WriteLine("Domain: '{0}' Level: {1}", domain, level);
     Console.WriteLine("Message: {0}", message);

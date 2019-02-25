@@ -134,7 +134,7 @@ namespace NetVips.Tests
             var s = Enumerable.Repeat((byte)0, 200).ToArray();
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             var t = im.WriteToMemory();
-            Assert.Equal(s, t);
+            Assert.True(s.SequenceEqual(t));
         }
 
         [Fact]
