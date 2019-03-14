@@ -129,6 +129,21 @@ namespace NetVips.Tests
             Assert.Equal("width", fields[0]);
         }
 
+        [SkippableFact]
+        public void TestGetSuffixes()
+        {
+            Skip.IfNot(Base.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
+
+            var suffixes = Base.GetSuffixes();
+
+            // vips supports these file types by default
+            // (without being dependent on external dependencies):
+            // - Native file format (`*.v`, `*.vips`).
+            // - PPM images (`*.ppm`, `*.pgm`, `*.pbm`, `*.pfm`).
+            // - Analyze images (`*.hdr`).
+            Assert.True(suffixes.Length >= 7);
+        }
+
         [Fact]
         public void TestWriteToMemory()
         {

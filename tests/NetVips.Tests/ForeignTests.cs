@@ -623,7 +623,10 @@ namespace NetVips.Tests
             // added in 8.8
             if (Helper.Have("gifload") && Base.AtLeastLibvips(8, 8))
             {
-                var x1 = Image.NewFromFile(Helper.GifAnimFile);
+                var x1 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
+                {
+                    {"n", -1}
+                });
                 var w1 = x1.WebpsaveBuffer(q: 10);
                 var x2 = Image.NewFromBuffer(w1, kwargs: new VOption
                 {
@@ -1097,7 +1100,7 @@ namespace NetVips.Tests
 
             FileLoader("heifload", Helper.HeicFile, HeifValid);
             BufferLoader("heifload_buffer", Helper.HeicFile, HeifValid);
-            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 70);
+            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 80);
             SaveLoad("%s.heic", _colour);
 
             // test lossless mode
@@ -1116,9 +1119,12 @@ namespace NetVips.Tests
             // try saving an image with an ICC profile and reading it back 
             buf = _colour.HeifsaveBuffer();
             x = Image.NewFromBuffer(buf);
-            var p1 = _colour.Get("icc-profile-data");
-            var p2 = x.Get("icc-profile-data");
-            Assert.Equal(p1, p2);
+            if (x.Contains("icc-profile-data"))
+            {
+                var p1 = _colour.Get("icc-profile-data");
+                var p2 = x.Get("icc-profile-data");
+                Assert.Equal(p1, p2);
+            }
 
             // add tests for exif, xmp, ipct
             // the exif test will need us to be able to walk the header,
@@ -1130,11 +1136,11 @@ namespace NetVips.Tests
             if (z.Contains("exif-ifd0-Orientation"))
             {
                 x = _colour.Copy();
-                x.Set("orientation", 6);
+                x.Set("exif-ifd0-Make", "banana");
 
                 buf = x.HeifsaveBuffer();
                 var y = Image.NewFromBuffer(buf);
-                Assert.Equal(6, y.Get("orientation"));
+                Assert.StartsWith("banana", (string)y.Get("exif-ifd0-Make"));
             }
         }
     }

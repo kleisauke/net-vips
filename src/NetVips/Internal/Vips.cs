@@ -440,5 +440,10 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save_buffer")]
         internal static extern IntPtr FindSaveBuffer(in byte suffix);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_foreign_get_suffixes")]
+        internal static extern IntPtr GetSuffixes();
     }
 }
