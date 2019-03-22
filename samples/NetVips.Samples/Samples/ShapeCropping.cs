@@ -52,7 +52,11 @@ namespace NetVips.Samples
 
             var mask = Image.NewFromBuffer(svg.ToString(), access: Enums.Access.Sequential);
 
-            image = CutOut(mask, image);
+            // Ensure image to composite is premultiplied sRGB
+            mask = mask.Premultiply();
+
+            // Cutout via dest-in
+            image = image.Composite(mask, Enums.BlendMode.DestIn, premultiplied: true);
 
             // Crop the image to the mask dimensions
             if (Crop && !CurrentShape.Equals(Shape.Ellipse))
@@ -257,54 +261,6 @@ namespace NetVips.Samples
             maskHeight = yArr.Max() - yMin;
 
             return $"<path d='{path} Z'/>";
-        }
-
-        /// <summary>
-        /// Cutout src over dst
-        /// </summary>
-        /// <param name="mask"></param>
-        /// <param name="dst"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public Image CutOut(Image mask, Image dst)
-        {
-            var maskHasAlpha = mask.HasAlpha();
-            var dstHasAlpha = dst.HasAlpha();
-
-            // we use the mask alpha if it has alpha
-            if (maskHasAlpha)
-            {
-                mask = mask.ExtractBand(mask.Bands - 1, n: 1);
-            }
-
-            // split dst into an optional alpha
-            var dstAlpha = dst.ExtractBand(dst.Bands - 1, n: 1);
-
-            // we use the dst non-alpha
-            if (dstHasAlpha)
-            {
-                dst = dst.ExtractBand(0, n: dst.Bands - 1);
-            }
-
-            // the range of the mask and the image need to match .. one could be
-            // 16-bit, one 8-bit
-            var dstMax = MaximumImageAlpha(dst.Interpretation);
-            var maskMax = MaximumImageAlpha(mask.Interpretation);
-
-            if (dstHasAlpha)
-            {
-                // combine the new mask and the existing alpha ... there are
-                // many ways of doing this, mult is the simplest
-                mask = (mask / maskMax) * (dstAlpha / dstMax) * dstMax;
-            }
-            else if (dstMax != maskMax)
-            {
-                // adjust the range of the mask to match the image
-                mask = (mask / maskMax) * dstMax;
-            }
-
-            // append the mask to the image data ... the mask might be float now,
-            // we must cast the format down to match the image data
-            return dst.Bandjoin(mask.Cast(dst.Format));
         }
 
         /// <summary>

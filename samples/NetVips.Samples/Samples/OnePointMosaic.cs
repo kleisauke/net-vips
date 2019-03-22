@@ -49,7 +49,7 @@ namespace NetVips.Samples
                 var horizontalPart = image.Mosaic(secondaryImage, Enums.Direction.Horizontal, firstItem.Value[0],
                     firstItem.Value[1], secondItem.Value[0], secondItem.Value[1]);
 
-                if (mosaicedImage is null)
+                if (mosaicedImage == null)
                 {
                     mosaicedImage = horizontalPart;
                 }

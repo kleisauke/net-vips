@@ -11,24 +11,6 @@ namespace NetVips
     internal static class ExtensionMethods
     {
         /// <summary>
-        /// All numeric types. Used by <see cref="IsNumeric(Type)"/>.
-        /// </summary>
-        private static readonly HashSet<Type> NumericTypes = new HashSet<Type>
-        {
-            typeof(int),
-            typeof(double),
-            typeof(decimal),
-            typeof(long),
-            typeof(short),
-            typeof(sbyte),
-            typeof(byte),
-            typeof(ulong),
-            typeof(ushort),
-            typeof(uint),
-            typeof(float)
-        };
-
-        /// <summary>
         /// Removes the element with the specified key from the <see cref="VOption" />
         /// and retrieves the value to <paramref name="target" />.
         /// </summary>
@@ -56,77 +38,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Check whether the object is a pixel.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns><see langword="true" /> if the object is a pixel; otherwise, <see langword="false" /></returns>
-        public static bool IsPixel(this object value)
-        {
-            var valueType = value.GetType();
-            return valueType.IsNumeric() ||
-                   value is Array array && array.Length > 0 && !(valueType == typeof(Image));
-        }
-
-        /// <summary>
         /// Test for rectangular array of something
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="array">Input array</param>
         /// <returns><see langword="true" /> if the object is a rectangular array; otherwise, <see langword="false" /></returns>
-        public static bool Is2D(this object value)
+        public static bool Is2D(this Array array)
         {
-            return value is Array array &&
-                   array.Length > 0 &&
+            return array.Length > 0 &&
                    (array.Rank == 2 || array.GetValue(0) is Array jaggedArray &&
                     jaggedArray.Length == array.Length);
-        }
-
-        /// <summary>
-        /// apply a function to a thing, or map over a list
-        /// we often need to do something like (1.0 / other) and need to work for lists
-        /// as well as scalars
-        /// </summary>
-        /// <param name="values"></param>
-        /// <param name="func"></param>
-        public static T[] Smap<T>(this IEnumerable<object> values, Func<object, T> func)
-        {
-            return values.Select(func).ToArray();
-        }
-
-        /// <summary>
-        /// apply a function to a thing, or map over a list
-        /// we often need to do something like (1.0 / other) and need to work for lists
-        /// as well as scalars
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="func"></param>
-        public static object Smap<T>(this T x, Func<T, T> func)
-        {
-            if (x is IEnumerable enumerable)
-            {
-                return enumerable.Cast<T>().Select(func).ToArray();
-            }
-
-            return func(x);
-        }
-
-        /// <summary>
-        /// Extension method, call for any object, eg "if (x.IsNumeric())..."
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns><see langword="true" /> if the object is numeric; otherwise, <see langword="false" /></returns>
-        public static bool IsNumeric(this object x)
-        {
-            return x != null && x.GetType().IsNumeric();
-        }
-
-        /// <summary>
-        /// Checks if the given <paramref name="myType" /> is numeric.
-        /// </summary>
-        /// <param name="myType"></param>
-        /// <returns><see langword="true" /> if the type is numeric; otherwise, <see langword="false" /></returns>
-        public static bool IsNumeric(this Type myType)
-        {
-            return NumericTypes.Contains(Nullable.GetUnderlyingType(myType) ?? myType);
         }
 
         /// <summary>
@@ -170,22 +90,8 @@ namespace NetVips
         /// <param name="image"></param>
         /// <param name="operationName"></param>
         /// <returns></returns>
-        public static object Call(this Image image, string operationName)
-        {
-            return Operation.Call(operationName, null, image);
-        }
-
-        /// <summary>
-        /// Call a libvips operation.
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="operationName"></param>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        public static object Call(this Image image, string operationName, object arg)
-        {
-            return Operation.Call(operationName, null, image, arg);
-        }
+        public static object Call(this Image image, string operationName) =>
+            Operation.Call(operationName, null, image);
 
         /// <summary>
         /// Call a libvips operation.
@@ -194,10 +100,8 @@ namespace NetVips
         /// <param name="operationName"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(this Image image, string operationName, params object[] args)
-        {
-            return Operation.Call(operationName, null, args.PrependImage(image));
-        }
+        public static object Call(this Image image, string operationName, params object[] args) =>
+            Operation.Call(operationName, kwargs: null, matchImage: image, args: args);
 
         /// <summary>
         /// Call a libvips operation.
@@ -206,23 +110,8 @@ namespace NetVips
         /// <param name="operationName"></param>
         /// <param name="kwargs"></param>
         /// <returns></returns>
-        public static object Call(this Image image, string operationName, VOption kwargs)
-        {
-            return Operation.Call(operationName, kwargs, image);
-        }
-
-        /// <summary>
-        /// Call a libvips operation.
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="operationName"></param>
-        /// <param name="kwargs"></param>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        public static object Call(this Image image, string operationName, VOption kwargs, object arg)
-        {
-            return Operation.Call(operationName, kwargs, image, arg);
-        }
+        public static object Call(this Image image, string operationName, VOption kwargs) =>
+            Operation.Call(operationName, kwargs: kwargs, matchImage: image);
 
         /// <summary>
         /// Call a libvips operation.
@@ -232,10 +121,8 @@ namespace NetVips
         /// <param name="kwargs"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(this Image image, string operationName, VOption kwargs, params object[] args)
-        {
-            return Operation.Call(operationName, kwargs, args.PrependImage(image));
-        }
+        public static object Call(this Image image, string operationName, VOption kwargs, params object[] args) =>
+            Operation.Call(operationName, kwargs: kwargs, matchImage: image, args: args);
 
         /// <summary>
         /// Make first letter of a string upper case
@@ -295,18 +182,16 @@ namespace NetVips
         /// <param name="args"></param>
         /// <param name="image"></param>
         /// <returns>A new object array.</returns>
-        public static object[] PrependImage(this IEnumerable args, Image image)
+        public static object[] PrependImage(this Image[] args, Image image)
         {
             if (args == null)
             {
                 return new object[] { image };
             }
 
-            var enumerable = args as object[] ?? args.Cast<object>().ToArray();
-
-            var newValues = new object[enumerable.Length + 1];
+            var newValues = new object[args.Length + 1];
             newValues[0] = image;
-            Array.Copy(enumerable, 0, newValues, 1, enumerable.Length);
+            Array.Copy(args, 0, newValues, 1, args.Length);
             return newValues;
         }
 

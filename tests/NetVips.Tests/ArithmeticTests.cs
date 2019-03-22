@@ -162,7 +162,7 @@ namespace NetVips.Tests
                 if (y is Image rightImage && !(x is Image))
                 {
                     // There's no  __rdiv__ & __pow__ equivalent in C# :(
-                    return (Image.CallEnum(rightImage, -1, "math2", "pow") as Image) * x;
+                    return (Operation.Call("math2_const", null, rightImage, "pow", -1) as Image) * x;
                 }
 
                 return x / y;
@@ -181,7 +181,7 @@ namespace NetVips.Tests
                 if (y is Image rightImage && !(x is Image))
                 {
                     // There's no  __rfloordiv__ & __pow__ equivalent in C# :(
-                    return ((Image.CallEnum(rightImage, -1, "math2", "pow") as Image) * x as Image)?.Floor();
+                    return ((Operation.Call("math2_const", null, rightImage, "pow", -1) as Image) * x).Floor();
                 }
 
                 if (x is Image leftImage)
@@ -206,13 +206,20 @@ namespace NetVips.Tests
                 if (y is Image rightImage && !(x is Image))
                 {
                     // There's no  __rpow__ equivalent in C# :(
-                    return Image.CallEnum(rightImage, x, "math2", "wop") as Image;
+                    return Operation.Call("math2_const", null, rightImage, "wop", x) as Image;
                 }
 
                 if (x is Image leftImage)
                 {
                     // There's no  __pow__ equivalent in C# :(
-                    return Image.CallEnum(leftImage, y, "math2", "pow") as Image;
+                    if (y is Image)
+                    {
+                        return Operation.Call("math2", null, x, y, "pow") as Image;
+                    }
+                    else
+                    {
+                        return Operation.Call("math2_const", null, leftImage, "pow", y) as Image;
+                    }
                 }
 
                 return Math.Pow(x, y);
@@ -402,12 +409,12 @@ namespace NetVips.Tests
             {
                 if (y is Image rightImage && !(x is Image))
                 {
-                    return rightImage == x;
+                    return rightImage.Equal(x);
                 }
 
                 if (y is Image || x is Image)
                 {
-                    return x == y;
+                    return x.Equal(y);
                 }
 
                 return x == y ? 255 : 0;
@@ -424,12 +431,12 @@ namespace NetVips.Tests
             {
                 if (y is Image rightImage && !(x is Image))
                 {
-                    return rightImage != x;
+                    return rightImage.NotEqual(x);
                 }
 
                 if (y is Image || x is Image)
                 {
-                    return x != y;
+                    return x.NotEqual(y);
                 }
 
                 return x != y ? 255 : 0;

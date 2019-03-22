@@ -1275,7 +1275,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (!(test is null))
+            if (test != null)
             {
                 options.Add(nameof(test), test);
             }
@@ -1307,7 +1307,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (!(test is null))
+            if (test != null)
             {
                 options.Add(nameof(test), test);
             }
@@ -1347,7 +1347,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (!(test is null))
+            if (test != null)
             {
                 options.Add(nameof(test), test);
             }
@@ -1390,7 +1390,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (!(test is null))
+            if (test != null)
             {
                 options.Add(nameof(test), test);
             }
@@ -1436,7 +1436,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (!(test is null))
+            if (test != null)
             {
                 options.Add(nameof(test), test);
             }

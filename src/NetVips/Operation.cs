@@ -19,27 +19,6 @@ namespace NetVips
             // logger.Debug($"VipsOperation = {pointer}");
         }
 
-        /// <summary>
-        /// Recursive search for <typeparamref name="T"/> into an array and the underlying
-        /// subarrays. This is used to find the matchImage for an operation
-        /// </summary>
-        /// <param name="thing"></param>
-        /// <returns></returns>
-        private static T FindInside<T>(IEnumerable<object> thing) where T : class
-        {
-            return thing.Select(FindInside<T>).FirstOrDefault(result => result != null);
-        }
-
-        private static T FindInside<T>(object thing) where T : class
-        {
-            if (!(thing is object[] enumerable))
-            {
-                return thing.GetType() == typeof(T) ? thing as T : null;
-            }
-
-            return FindInside<T>(enumerable);
-        }
-
         private static Operation NewFromName(string operationName)
         {
             var vop = VipsOperation.VipsOperationNew(operationName);
@@ -49,6 +28,25 @@ namespace NetVips
             }
 
             return new Operation(vop);
+        }
+
+        /// <summary>
+        /// Set a GObject property. The value is converted to the property type, if possible.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/></param>
+        private void Set(string name, Internal.Enums.VipsArgumentFlags flags, object value)
+        {
+            // MODIFY args need to be copied before they are set
+            if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0 && value is Image image)
+            {
+                // logger.Debug($"copying MODIFY arg {name}");
+                // make sure we have a unique copy
+                value = image.Copy().CopyMemory();
+            }
+
+            base.Set(name, value);
         }
 
         /// <summary>
@@ -67,28 +65,35 @@ namespace NetVips
             //
             // if the object wants an image array, Imageize any constants in the
             // array
-            if (!(matchImage is null))
+            if (matchImage != null)
             {
                 var gtype = GetTypeOf(name);
                 if (gtype == GValue.ImageType)
                 {
                     value = Image.Imageize(matchImage, value);
                 }
-                else if (gtype == GValue.ArrayImageType && value is object[] values)
+                else if (gtype == GValue.ArrayImageType)
                 {
-                    value = values.Smap(x => Image.Imageize(matchImage, x));
+                    switch (value)
+                    {
+                        case double[] doubles:
+                            value = doubles.Select(x => Image.Imageize(matchImage, x)).ToArray();
+                            break;
+                        case int[] ints:
+                            value = ints.Select(x => Image.Imageize(matchImage, x)).ToArray();
+                            break;
+                        case object[] objects:
+                            value = objects.Select(x => Image.Imageize(matchImage, x)).ToArray();
+                            break;
+                        default:
+                            throw new Exception(
+                                $"unsupported value type {value.GetType()}"
+                            );
+                    }
                 }
             }
 
-            // MODIFY args need to be copied before they are set
-            if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0 && value is Image image)
-            {
-                // logger.Debug($"copying MODIFY arg {name}");
-                // make sure we have a unique copy
-                value = image.Copy().CopyMemory();
-            }
-
-            base.Set(name, value);
+            Set(name, flags, value);
         }
 
         private Internal.Enums.VipsOperationFlags GetFlags()
@@ -132,23 +137,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// <code language="lang-csharp">
-        /// var blackImage = Operation.call("black", 10, 10);
-        /// </code>
-        /// See the Introduction for notes on how this works.
-        /// </remarks>
-        /// <param name="operationName"></param>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        public static object Call(string operationName, object arg) =>
-            Call(operationName, null, arg);
-
-        /// <summary>
-        /// Call a libvips operation.
-        /// </summary>
-        /// <remarks>
-        /// Use this method to call any libvips operation. For example:
-        /// <code language="lang-csharp">
-        /// var blackImage = Operation.call("black", 10, 10);
+        /// var blackImage = Operation.Call("black", 10, 10);
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -156,7 +145,7 @@ namespace NetVips
         /// <param name="args"></param>
         /// <returns></returns>
         public static object Call(string operationName, params object[] args) =>
-            Call(operationName, null, args);
+            Call(operationName, kwargs: null, matchImage: null, args: args);
 
         /// <summary>
         /// Call a libvips operation.
@@ -164,7 +153,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// <code language="lang-csharp">
-        /// var blackImage = Operation.call("black", 10, 10);
+        /// var blackImage = Operation.Call("black", 10, 10);
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -172,9 +161,28 @@ namespace NetVips
         /// <param name="kwargs"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(string operationName, VOption kwargs, params object[] args)
+        public static object Call(string operationName, VOption kwargs = null, params object[] args) =>
+            Call(operationName, kwargs: kwargs, matchImage: null, args: args);
+
+        /// <summary>
+        /// Call a libvips operation.
+        /// </summary>
+        /// <remarks>
+        /// Use this method to call any libvips operation. For example:
+        /// <code language="lang-csharp">
+        /// var blackImage = Operation.Call("black", 10, 10);
+        /// </code>
+        /// See the Introduction for notes on how this works.
+        /// </remarks>
+        /// <param name="operationName"></param>
+        /// <param name="kwargs"></param>
+        /// <param name="matchImage"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static object Call(string operationName, VOption kwargs = null, Image matchImage = null, params object[] args)
         {
             // logger.Debug($"VipsOperation.call: operationName = {operationName}");
+            // logger.Debug($"VipsOperation.call: matchImage = {matchImage}");
             // logger.Debug($"VipsOperation.call: args = {args}, kwargs = {kwargs}");
 
             // pull out the special string_options kwarg
@@ -190,36 +198,6 @@ namespace NetVips
             // make a thing to quickly get flags from an arg name
             var flagsFromName = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
 
-            var nRequired = 0;
-            foreach (var entry in arguments)
-            {
-                var name = entry.Key;
-                var flag = entry.Value;
-
-                flagsFromName[name] = flag;
-
-                // count required input args
-                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
-                {
-                    nRequired++;
-                }
-            }
-
-            if (nRequired != args.Length)
-            {
-                throw new ArgumentException(
-                    $"unable to call {operationName}: {args.Length} arguments given, but {nRequired} required");
-            }
-
-            // the first image argument is the thing we expand constants to
-            // match ... look inside tables for images, since we may be passing
-            // an array of image as a single param
-            var matchImage = FindInside<Image>(args);
-
-            // logger.Debug($"VipsOperation.call: matchImage = {matchImage}");
-
             // set any string options before any args so they can't be
             // overridden
             if (stringOptions != null && !op.SetString(stringOptions as string))
@@ -229,18 +207,39 @@ namespace NetVips
 
             // set required and optional args
             var n = 0;
+            bool memberX = matchImage == null;
             foreach (var entry in arguments)
             {
                 var name = entry.Key;
                 var flag = entry.Value;
 
+                flagsFromName[name] = flag;
+
                 if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
                 {
-                    op.Set(name, flag, matchImage, args[n]);
-                    n++;
+                    // the first required input image arg will be self
+                    if (!memberX && op.GetTypeOf(name) == GValue.ImageType)
+                    {
+                        op.Set(name, flag, matchImage);
+                        memberX = true;
+                    }
+                    else
+                    {
+                        if (n <= args.Length)
+                        {
+                            op.Set(name, flag, matchImage, args[n]);
+                        }
+                        n++;
+                    }
                 }
+            }
+
+            if (n != args.Length)
+            {
+                throw new ArgumentException(
+                    $"unable to call {operationName}: {args.Length} arguments given, but {n} required");
             }
 
             if (kwargs != null)
@@ -449,13 +448,12 @@ namespace NetVips
                         return $"{name} != null && {name}.Length > 0";
                     case "GObject":
                     case "string":
+                    case "Image":
                         return $"{name} != null";
                     case "int":
                     case "double":
                     case "bool":
                         return $"{name}.HasValue";
-                    case "Image":
-                        return $"!({name} is null)";
                     default:
                         throw new Exception("Unsupported type: " + type);
                 }

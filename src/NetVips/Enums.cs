@@ -124,7 +124,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// The various Porter-Duff and PDF blend modes. See <see cref="Image.Composite"/>.
+        /// The various Porter-Duff and PDF blend modes. See <see cref="Image.Composite2"/>.
         /// </summary>
         /// <remarks>
         /// The Cairo docs have a nice explanation of all the blend modes:

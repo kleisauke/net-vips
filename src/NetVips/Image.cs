@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -27,27 +26,6 @@ namespace NetVips
         }
 
         #region helpers
-
-        /// <summary>
-        /// Handy for the overloadable operators. A vips operator like
-        /// 'more', but if the arg is not an image (ie. it's a constant), call
-        /// 'more_const' instead.
-        /// </summary>
-        /// <param name="image">The left-hand argument.</param>
-        /// <param name="other">The right-hand argument.</param>
-        /// <param name="operationName">The base part of the operation name.</param>
-        /// <param name="operation">The operation to call.</param>
-        public static object CallEnum(object image, object other, string operationName, string operation)
-        {
-            if (other.IsPixel())
-            {
-                return Operation.Call(operationName + "_const", image, operation, other);
-            }
-            else
-            {
-                return Operation.Call(operationName, image, other, operation);
-            }
-        }
 
         /// <summary>
         /// Run a complex function on a non-complex image.
@@ -110,13 +88,27 @@ namespace NetVips
             {
                 return image;
             }
-            else if (value.Is2D())
+            else if (value is Array array && array.Is2D())
             {
-                return NewFromArray(value);
+                return NewFromArray(array);
             }
             else
             {
-                return matchImage.NewFromImage(value);
+                switch (value)
+                {
+                    case double[] doubles:
+                        return matchImage.NewFromImage(doubles);
+                    case double doubleValue:
+                        return matchImage.NewFromImage(doubleValue);
+                    case int[] ints:
+                        return matchImage.NewFromImage(ints);
+                    case int intValue:
+                        return matchImage.NewFromImage(intValue);
+                    default:
+                        throw new ArgumentException(
+                            $"unsupported value type {value.GetType()} for Imageize"
+                        );
+                }
             }
         }
 
@@ -222,31 +214,12 @@ namespace NetVips
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
-        public static Image NewFromBuffer(object data, string strOptions = "", string access = null, bool? fail = null,
+        public static Image NewFromBuffer(byte[] data, string strOptions = "", string access = null, bool? fail = null,
             VOption kwargs = null)
         {
-            ReadOnlySpan<byte> span;
-
-            switch (data)
-            {
-                case string strValue:
-                    span = Encoding.UTF8.GetBytes(strValue);
-                    break;
-                case char[] charArrValue:
-                    span = Encoding.UTF8.GetBytes(charArrValue);
-                    break;
-                case byte[] byteArrValue:
-                    span = byteArrValue;
-                    break;
-                default:
-                    throw new Exception(
-                        $"unsupported value type {data.GetType()} for NewFromBuffer"
-                    );
-            }
-
             var name = Marshal.PtrToStringAnsi(
-                VipsForeign.VipsForeignFindLoadBuffer(MemoryMarshal.GetReference(span),
-                    new UIntPtr((ulong)span.Length)));
+                VipsForeign.VipsForeignFindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()),
+                    new UIntPtr((ulong)data.Length)));
 
             if (name == null)
             {
@@ -275,6 +248,46 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load a formatted image from memory.
+        /// </summary>
+        /// <remarks>
+        /// This behaves exactly as <see cref="NewFromFile"/>, but the image is
+        /// loaded from the memory object rather than from a file. The memory
+        /// object can be a string or buffer.
+        /// </remarks>
+        /// <param name="data">The memory object to load the image from.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="fail">If set True, the loader will fail with an error on
+        /// the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="kwargs">Optional options that depend on the load operation.</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
+        public static Image NewFromBuffer(string data, string strOptions = "", string access = null, bool? fail = null,
+            VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
+
+        /// <summary>
+        /// Load a formatted image from memory.
+        /// </summary>
+        /// <remarks>
+        /// This behaves exactly as <see cref="NewFromFile"/>, but the image is
+        /// loaded from the memory object rather than from a file. The memory
+        /// object can be a string or buffer.
+        /// </remarks>
+        /// <param name="data">The memory object to load the image from.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="fail">If set True, the loader will fail with an error on
+        /// the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="kwargs">Optional options that depend on the load operation.</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
+        public static Image NewFromBuffer(char[] data, string strOptions = "", string access = null, bool? fail = null,
+            VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
+
+        /// <summary>
         /// Create an image from a 1D or 2D array.
         /// </summary>
         /// <remarks>
@@ -290,22 +303,12 @@ namespace NetVips
         /// after convolution.  Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/></returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="array" />.</exception>
-        public static Image NewFromArray(object array, double scale = 1.0, double offset = 0.0)
+        public static Image NewFromArray(Array array, double scale = 1.0, double offset = 0.0)
         {
-            if (!array.Is2D())
-            {
-                array = array as Array;
-            }
+            var is2D = array.Rank == 2;
 
-            if (!(array is Array arr))
-            {
-                throw new ArgumentException("can't create image from unknown object");
-            }
-
-            var is2D = arr.Rank == 2;
-
-            var height = is2D ? arr.GetLength(0) : arr.Length;
-            var width = is2D ? arr.GetLength(1) : (arr.GetValue(0) is Array arrWidth ? arrWidth.Length : 1);
+            var height = is2D ? array.GetLength(0) : array.Length;
+            var width = is2D ? array.GetLength(1) : (array.GetValue(0) is Array arrWidth ? arrWidth.Length : 1);
             var n = width * height;
 
             var a = new double[n];
@@ -316,11 +319,11 @@ namespace NetVips
                     object value;
                     if (is2D)
                     {
-                        value = arr.GetValue(y, x);
+                        value = array.GetValue(y, x);
                     }
                     else
                     {
-                        var yValue = arr.GetValue(y);
+                        var yValue = array.GetValue(y);
                         value = yValue is Array yArray ? (yArray.Length <= x ? 0 : yArray.GetValue(x)) : yValue;
                     }
 
@@ -445,7 +448,7 @@ namespace NetVips
         /// single number to make a one-band image; use an array constant
         /// to make a many-band image.</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image NewFromImage(object value)
+        public Image NewFromImage(Image value)
         {
             var pixel = (Black(1, 1) + value).Cast(Format);
             var image = pixel.Embed(0, 0, Width, Height, extend: "copy");
@@ -453,6 +456,40 @@ namespace NetVips
                 yoffset: Yoffset);
             return image;
         }
+
+        /// <summary>
+        /// Make a new image from an existing one.
+        /// </summary>
+        /// <remarks>
+        /// A new image is created which has the same size, format, interpretation
+        /// and resolution as `this`, but with every pixel set to `value`.
+        /// </remarks>
+        /// <param name="doubles">The value for the pixels. Use a
+        /// single number to make a one-band image; use an array constant
+        /// to make a many-band image.</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image NewFromImage(params double[] doubles)
+        {
+            var pixel = (Black(1, 1) + doubles).Cast(Format);
+            var image = pixel.Embed(0, 0, Width, Height, extend: "copy");
+            image = image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
+                yoffset: Yoffset);
+            return image;
+        }
+
+        /// <summary>
+        /// Make a new image from an existing one.
+        /// </summary>
+        /// <remarks>
+        /// A new image is created which has the same size, format, interpretation
+        /// and resolution as `this`, but with every pixel set to `value`.
+        /// </remarks>
+        /// <param name="ints">The value for the pixels. Use a
+        /// single number to make a one-band image; use an array constant
+        /// to make a many-band image.</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image NewFromImage(params int[] ints) =>
+            NewFromImage(Array.ConvertAll(ints, Convert.ToDouble));
 
         /// <summary>
         /// Copy an image to memory.
@@ -539,7 +576,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            Operation.Call(name, kwargs, this, filename.ToUtf8String(true));
+            this.Call(name, kwargs, filename.ToUtf8String(true));
         }
 
         /// <summary>
@@ -600,7 +637,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            return Operation.Call(name, kwargs, this) as byte[];
+            return this.Call(name, kwargs) as byte[];
         }
 
         /// <summary>
@@ -913,58 +950,57 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Append a set of images or constants bandwise.
+        /// Append a set of constants bandwise.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(other);
+        /// Image @out = image.Bandjoin(doubles);
         /// </code>
         /// </example>
-        /// <param name="other">Array of input images</param>
+        /// <param name="doubles">Array of constants</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Bandjoin(object other)
-        {
-            if (!(other is IEnumerable))
-            {
-                other = new[] { other };
-            }
-
-            // if [other] is all numbers, we can use BandjoinConst
-            switch (other)
-            {
-                case double[] doubles:
-                    return BandjoinConst(doubles);
-                case int[] ints:
-                    return BandjoinConst(Array.ConvertAll(ints, Convert.ToDouble));
-                case object[] objects when objects.All(x => x.IsNumeric()):
-                    return BandjoinConst(Array.ConvertAll(objects, Convert.ToDouble));
-                case IEnumerable objects:
-                    return Operation.Call("bandjoin", null, new object[] { objects.PrependImage(this) }) as Image;
-                default:
-                    throw new ArgumentException(
-                        $"unsupported value type {other.GetType()} for Bandjoin"
-                    );
-            }
-        }
+        public Image Bandjoin(params double[] doubles) =>
+            BandjoinConst(doubles);
 
         /// <summary>
-        /// Band-wise rank of a set of images
+        /// Append a set of constants bandwise.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandjoin(ints);
+        /// </code>
+        /// </example>
+        /// <param name="ints">Array of constants</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Bandjoin(params int[] ints) =>
+             BandjoinConst(Array.ConvertAll(ints, Convert.ToDouble));
+
+        /// <summary>
+        /// Append a set of images bandwise.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandjoin(images);
+        /// </code>
+        /// </example>
+        /// <param name="images">Array of images</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Bandjoin(params Image[] images) =>
+            this.Call("bandjoin", new object[] { images.PrependImage(this) }) as Image;
+
+        /// <summary>
+        /// Band-wise rank a set of constants
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
-        /// <param name="other">Array of input images</param>
+        /// <param name="doubles">Array of constants</param>
         /// <param name="index">Select this band element from sorted list</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Bandrank(object other, int? index = null)
+        public Image Bandrank(double[] doubles, int? index = null)
         {
-            if (!(other is IEnumerable))
-            {
-                other = new[] { other };
-            }
-
             var options = new VOption();
 
             if (index.HasValue)
@@ -972,58 +1008,88 @@ namespace NetVips
                 options.Add(nameof(index), index);
             }
 
-            return Operation.Call("bandrank", options,
-                new object[] { ((IEnumerable)other).PrependImage(this) }) as Image;
+            return this.Call("bandrank", options, new object[] { doubles }) as Image;
         }
+
+        /// <summary>
+        /// Band-wise rank a set of constants
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandrank(other, index: int);
+        /// </code>
+        /// </example>
+        /// <param name="ints">Array of constants</param>
+        /// <param name="index">Select this band element from sorted list</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Bandrank(int[] ints, int? index = null) =>
+            Bandrank(Array.ConvertAll(ints, Convert.ToDouble), index);
+
+        /// <summary>
+        /// Band-wise rank a set of images
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandrank(other, index: int);
+        /// </code>
+        /// </example>
+        /// <param name="images">Array of input images</param>
+        /// <param name="index">Select this band element from sorted list</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Bandrank(Image[] images, int? index = null)
+        {
+            var options = new VOption();
+
+            if (index.HasValue)
+            {
+                options.Add(nameof(index), index);
+            }
+
+            return this.Call("bandrank", options, new object[] { images.PrependImage(this) }) as Image;
+        }
+
+        /// <summary>
+        /// Band-wise rank a image
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandrank(other, index: int);
+        /// </code>
+        /// </example>
+        /// <param name="other">Input image</param>
+        /// <param name="index">Select this band element from sorted list</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Bandrank(Image other, int? index = null) =>
+            Bandrank(new[] { other }, index);
 
         /// <summary>
         /// Blend an array of images with an array of blend modes
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Composite(other, mode, compositingSpace: string, premultiplied: bool);
+        /// Image @out = image.Composite(other, modes, x: int, y: int, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
-        /// <param name="other">Array of input images</param>
-        /// <param name="mode">Array of VipsBlendMode to join with</param>
+        /// <param name="images">Array of input images</param>
+        /// <param name="modes">Array of VipsBlendMode to join with</param>
+        /// <param name="x">x position of overlay</param>
+        /// <param name="y">y position of overlay</param>
         /// <param name="compositingSpace">Composite images in this colour space</param>
         /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite(object other, object mode, string compositingSpace = null, bool? premultiplied = null)
+        public Image Composite(Image[] images, int[] modes, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null)
         {
-            if (!(other is IEnumerable))
-            {
-                other = new[] { other };
-            }
-
-            if (!(other is object[] images))
-            {
-                return null;
-            }
-
-            if (!(mode is IEnumerable))
-            {
-                mode = new[] { mode };
-            }
-
-            // modes are VipsBlendMode enums, but we have to pass as array of int --
-            // we need to map str->int by hand
-            int[] blendModes;
-            switch (mode)
-            {
-                case string[] strModes:
-                    blendModes = strModes.Select(x => GValue.ToEnum(GValue.BlendModeType, x)).ToArray();
-                    break;
-                case int[] intModes:
-                    blendModes = intModes;
-                    break;
-                default:
-                    // Use Enums.BlendMode.Over if a non-existent value is given.
-                    blendModes = new[] { GValue.ToEnum(GValue.BlendModeType, Enums.BlendMode.Over) };
-                    break;
-            }
-
             var options = new VOption();
+
+            if (x.HasValue)
+            {
+                options.Add(nameof(x), x);
+            }
+
+            if (y.HasValue)
+            {
+                options.Add(nameof(y), y);
+            }
 
             if (compositingSpace != null)
             {
@@ -1035,8 +1101,44 @@ namespace NetVips
                 options.Add(nameof(premultiplied), premultiplied);
             }
 
-            return Operation.Call("composite", options, images.PrependImage(this), blendModes) as Image;
+            return this.Call("composite", options, images.PrependImage(this), modes) as Image;
         }
+
+        /// <summary>
+        /// Blend an array of images with an array of blend modes
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Composite(other, modes, x: int, y: int, compositingSpace: string, premultiplied: bool);
+        /// </code>
+        /// </example>
+        /// <param name="images">Array of input images</param>
+        /// <param name="modes">Array of VipsBlendMode to join with</param>
+        /// <param name="x">x position of overlay</param>
+        /// <param name="y">y position of overlay</param>
+        /// <param name="compositingSpace">Composite images in this colour space</param>
+        /// <param name="premultiplied">Images have premultiplied alpha</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Composite(Image[] images, string[] modes, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null) =>
+            Composite(images, modes.Select(m => GValue.ToEnum(GValue.BlendModeType, m)).ToArray(), x, y, compositingSpace, premultiplied);
+
+        /// <summary>
+        /// A synonym for <see cref="Composite2"/>.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = base.Composite(overlay, mode, x: int, y: int, compositingSpace: string, premultiplied: bool);
+        /// </code>
+        /// </example>
+        /// <param name="overlay">Overlay image</param>
+        /// <param name="mode">VipsBlendMode to join with</param>
+        /// <param name="x">x position of overlay</param>
+        /// <param name="y">y position of overlay</param>
+        /// <param name="compositingSpace">Composite images in this colour space</param>
+        /// <param name="premultiplied">Images have premultiplied alpha</param>
+        /// <returns>A new <see cref="Image"/></returns>
+        public Image Composite(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null) =>
+            Composite2(overlay, mode, x, y, compositingSpace, premultiplied);
 
         /// <summary>
         /// A synonym for <see cref="ExtractArea"/>.
@@ -1051,10 +1153,8 @@ namespace NetVips
         /// <param name="width">Width of extract area</param>
         /// <param name="height">Height of extract area</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Crop(int left, int top, int width, int height)
-        {
-            return this.Call("extract_area", left, top, width, height) as Image;
-        }
+        public Image Crop(int left, int top, int width, int height) =>
+            ExtractArea(left, top, width, height);
 
         /// <summary>
         /// Return the coordinates of the image maximum.
@@ -1080,262 +1180,175 @@ namespace NetVips
         /// Return the real part of a complex image.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Real()
-        {
-            return Complexget("real");
-        }
+        public Image Real() => Complexget("real");
 
         /// <summary>
         /// Return the imaginary part of a complex image.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Imag()
-        {
-            return Complexget("imag");
-        }
+        public Image Imag() => Complexget("imag");
 
         /// <summary>
         ///  Return an image converted to polar coordinates.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Polar()
-        {
-            return RunCmplx(x => x.Complex("polar"), this);
-        }
+        public Image Polar() => RunCmplx(x => x.Complex("polar"), this);
 
         /// <summary>
         /// Return an image converted to rectangular coordinates.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Rect()
-        {
-            return RunCmplx(x => x.Complex("rect"), this);
-        }
+        public Image Rect() => RunCmplx(x => x.Complex("rect"), this);
 
         /// <summary>
         /// Return the complex conjugate of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Conj()
-        {
-            return Complex("conj");
-        }
+        public Image Conj() => Complex("conj");
 
         /// <summary>
         /// Return the sine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Sin()
-        {
-            return Math("sin");
-        }
+        public Image Sin() => Math("sin");
 
         /// <summary>
         /// Return the cosine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Cos()
-        {
-            return Math("cos");
-        }
+        public Image Cos() => Math("cos");
 
         /// <summary>
         /// Return the tangent of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Tan()
-        {
-            return Math("tan");
-        }
+        public Image Tan() => Math("tan");
 
         /// <summary>
         /// Return the inverse sine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Asin()
-        {
-            return Math("asin");
-        }
+        public Image Asin() => Math("asin");
 
         /// <summary>
         /// Return the inverse cosine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Acos()
-        {
-            return Math("acos");
-        }
+        public Image Acos() => Math("acos");
 
         /// <summary>
         /// Return the inverse tangent of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Atan()
-        {
-            return Math("atan");
-        }
+        public Image Atan() => Math("atan");
 
         /// <summary>
         /// Return the natural log of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Log()
-        {
-            return Math("log");
-        }
+        public Image Log() => Math("log");
 
         /// <summary>
         /// Return the log base 10 of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Log10()
-        {
-            return Math("log10");
-        }
+        public Image Log10() => Math("log10");
 
         /// <summary>
         /// Return e ** pixel.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Exp()
-        {
-            return Math("exp");
-        }
+        public Image Exp() => Math("exp");
 
         /// <summary>
         /// Return 10 ** pixel.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Exp10()
-        {
-            return Math("exp10");
-        }
+        public Image Exp10() => Math("exp10");
 
         /// <summary>
         /// Erode with a structuring element.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Erode(Image mask)
-        {
-            return Morph(mask, "erode");
-        }
+        public Image Erode(Image mask) => Morph(mask, "erode");
 
         /// <summary>
         /// Dilate with a structuring element.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Dilate(Image mask)
-        {
-            return Morph(mask, "dilate");
-        }
+        public Image Dilate(Image mask) => Morph(mask, "dilate");
 
         /// <summary>
         /// size x size median filter.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Median(int size)
-        {
-            return Rank(size, size, size * size / 2);
-        }
+        public Image Median(int size) => Rank(size, size, size * size / 2);
 
         /// <summary>
         /// Flip horizontally.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image FlipHor()
-        {
-            return Flip(Enums.Direction.Horizontal);
-        }
+        public Image FlipHor() => Flip(Enums.Direction.Horizontal);
 
         /// <summary>
         /// Flip vertically.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image FlipVer()
-        {
-            return Flip(Enums.Direction.Vertical);
-        }
+        public Image FlipVer() => Flip(Enums.Direction.Vertical);
 
         /// <summary>
         /// Rotate 90 degrees clockwise.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Rot90()
-        {
-            return Rot(Enums.Angle.D90);
-        }
+        public Image Rot90() => Rot(Enums.Angle.D90);
 
         /// <summary>
         /// Rotate 180 degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Rot180()
-        {
-            return Rot(Enums.Angle.D180);
-        }
+        public Image Rot180() => Rot(Enums.Angle.D180);
 
         /// <summary>
         /// Rotate 270 degrees clockwise.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Rot270()
-        {
-            return Rot(Enums.Angle.D270);
-        }
+        public Image Rot270() => Rot(Enums.Angle.D270);
 
         /// <summary>
         /// Return the largest integral value not greater than the argument.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Floor()
-        {
-            return this.Call("round", "floor") as Image;
-        }
+        public Image Floor() => this.Call("round", "floor") as Image;
 
         /// <summary>
         /// Return the largest integral value not greater than the argument.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Ceil()
-        {
-            return this.Call("round", "ceil") as Image;
-        }
+        public Image Ceil() => this.Call("round", "ceil") as Image;
 
         /// <summary>
         /// Return the nearest integral value.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Rint()
-        {
-            return this.Call("round", "rint") as Image;
-        }
+        public Image Rint() => this.Call("round", "rint") as Image;
 
         /// <summary>
         /// AND image bands together.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image BandAnd()
-        {
-            return this.Call("bandbool", "and") as Image;
-        }
+        public Image BandAnd() => this.Call("bandbool", "and") as Image;
 
         /// <summary>
         /// OR image bands together.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image BandOr()
-        {
-            return this.Call("bandbool", "or") as Image;
-        }
+        public Image BandOr() => this.Call("bandbool", "or") as Image;
 
         /// <summary>
         /// EOR image bands together.
         /// </summary>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image BandEor()
-        {
-            return this.Call("bandbool", "eor") as Image;
-        }
+        public Image BandEor() => this.Call("bandbool", "eor") as Image;
 
         /// <summary>
         /// Does this image have an alpha channel?
@@ -1352,213 +1365,6 @@ namespace NetVips
                    (Bands == 4 && Interpretation != Enums.Interpretation.Cmyk) ||
                    Bands > 4;
         }
-
-        #endregion
-
-        #region overloadable operators
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator +(Image left, object right)
-        {
-            if (right is Image image)
-            {
-                return left.Call("add", image) as Image;
-            }
-            else
-            {
-                return left.Call("linear", 1, right) as Image;
-            }
-        }
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator -(Image left, object right)
-        {
-            if (right is Image image)
-            {
-                return left.Call("subtract", image) as Image;
-            }
-            else
-            {
-                return left.Call("linear", 1, right.Smap<dynamic>(x => x * -1)) as Image;
-            }
-        }
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator *(Image left, object right)
-        {
-            if (right is Image image)
-            {
-                return left.Call("multiply", image) as Image;
-            }
-            else
-            {
-                return left.Call("linear", right, 0) as Image;
-            }
-        }
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator /(Image left, object right)
-        {
-            if (right is Image image)
-            {
-                return left.Call("divide", image) as Image;
-            }
-            else
-            {
-                return left.Call("linear", right.Smap<dynamic>(x => 1.0 / x), 0) as Image;
-            }
-        }
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator %(Image left, object right)
-        {
-            if (right is Image image)
-            {
-                return left.Call("remainder", image) as Image;
-            }
-            else
-            {
-                return left.Call("remainder_const", right) as Image;
-            }
-        }
-
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator &(Image left, object right) => CallEnum(left, right, "boolean", "and") as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator |(Image left, object right) => CallEnum(left, right, "boolean", "or") as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator ^(Image left, object right) => CallEnum(left, right, "boolean", "eor") as Image;
-
-        /// <summary>
-        /// This operation shifts its first operand left by the number of bits specified by its second operand.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator <<(Image left, int right) => CallEnum(left, right, "boolean", "lshift") as Image;
-
-        /// <summary>
-        /// This operation shifts its first operand right by the number of bits specified by its second operand.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator >>(Image left, int right) => CallEnum(left, right, "boolean", "rshift") as Image;
-
-
-        /// <summary>
-        /// This operation compares two images on equality.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static object operator ==(Image left, object right)
-        {
-            // == version allows comparison to null
-            if (right == null)
-            {
-                return false;
-            }
-
-            return CallEnum(left, right, "relational", "equal") as Image;
-        }
-
-        /// <summary>
-        /// This operation compares two images on inequality.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static object operator !=(Image left, object right)
-        {
-            // == version allows comparison to null
-            if (right == null)
-            {
-                return true;
-            }
-
-            return CallEnum(left, right, "relational", "noteq") as Image;
-        }
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator <(Image left, object right) =>
-            CallEnum(left, right, "relational", "less") as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator >(Image left, object right) =>
-            CallEnum(left, right, "relational", "more") as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator <=(Image left, object right) =>
-            CallEnum(left, right, "relational", "lesseq") as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns>A new <see cref="Image"/></returns>
-        public static Image operator >=(Image left, object right) =>
-            CallEnum(left, right, "relational", "moreeq") as Image;
 
         #endregion
 
@@ -1663,7 +1469,7 @@ namespace NetVips
         /// <returns><see langword="true" /> if the specified object  is equal to the current image; otherwise, <see langword="false" />.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is null) return false;
+            if (obj == null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((Image)obj);
