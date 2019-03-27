@@ -21,7 +21,7 @@ namespace NetVips
 
         private static Operation NewFromName(string operationName)
         {
-            var vop = VipsOperation.VipsOperationNew(operationName);
+            var vop = VipsOperation.New(operationName);
             if (vop == IntPtr.Zero)
             {
                 throw new VipsException($"no such operation {operationName}");
@@ -98,7 +98,7 @@ namespace NetVips
 
         private Internal.Enums.VipsOperationFlags GetFlags()
         {
-            return VipsOperation.VipsOperationGetFlags(this);
+            return VipsOperation.GetFlags(this);
         }
 
         // this is slow ... call as little as possible
@@ -106,27 +106,58 @@ namespace NetVips
         {
             var args = new List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>>();
 
-            IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance, IntPtr a,
-                IntPtr b)
+            // vips_object_get_args was added in 8.7
+            if (Base.AtLeastLibvips(8, 7))
             {
-                var flags = argumentClass.Dereference<VipsArgumentClass.Struct>().Flags;
-                if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) == 0)
+                var result = Internal.VipsObject.GetArgs(this, out var names, out var flags, out var nArgs);
+
+                if (result != 0)
                 {
+                    throw new VipsException("unable to get arguments from operation");
+                }
+
+                for (var i = 0; i < nArgs; i++)
+                {
+                    var flag = (Internal.Enums.VipsArgumentFlags)
+                        Marshal.PtrToStructure(flags + (i * sizeof(int)), typeof(int));
+                    if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) == 0)
+                    {
+                        continue;
+                    }
+
+                    var name = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(names, i * IntPtr.Size));
+
+                    // libvips uses '-' to separate parts of arg names, but we
+                    // need '_' for C#
+                    name = name.Replace("-", "_");
+
+                    args.Add(new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(name, flag));
+                }
+            }
+            else
+            {
+                IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance, IntPtr a,
+                    IntPtr b)
+                {
+                    var flags = argumentClass.Dereference<VipsArgumentClass.Struct>().Flags;
+                    if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) == 0)
+                    {
+                        return IntPtr.Zero;
+                    }
+
+                    var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Struct>().Name);
+
+                    // libvips uses '-' to separate parts of arg names, but we
+                    // need '_' for C#
+                    name = name.Replace("-", "_");
+
+                    args.Add(new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(name, flags));
+
                     return IntPtr.Zero;
                 }
 
-                var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Struct>().Name);
-
-                // libvips uses '-' to separate parts of arg names, but we
-                // need '_' for C#
-                name = name.Replace("-", "_");
-
-                args.Add(new KeyValuePair<string, Internal.Enums.VipsArgumentFlags>(name, flags));
-
-                return IntPtr.Zero;
+                Vips.ArgumentMap(this, AddConstruct, IntPtr.Zero, IntPtr.Zero);
             }
-
-            Internal.VipsObject.VipsArgumentMap(this, AddConstruct, IntPtr.Zero, IntPtr.Zero);
 
             return args;
         }
@@ -145,7 +176,7 @@ namespace NetVips
         /// <param name="args"></param>
         /// <returns></returns>
         public static object Call(string operationName, params object[] args) =>
-            Call(operationName, kwargs: null, matchImage: null, args: args);
+            Call(operationName, null, null, args);
 
         /// <summary>
         /// Call a libvips operation.
@@ -162,7 +193,7 @@ namespace NetVips
         /// <param name="args"></param>
         /// <returns></returns>
         public static object Call(string operationName, VOption kwargs = null, params object[] args) =>
-            Call(operationName, kwargs: kwargs, matchImage: null, args: args);
+            Call(operationName, kwargs, null, args);
 
         /// <summary>
         /// Call a libvips operation.
@@ -179,7 +210,8 @@ namespace NetVips
         /// <param name="matchImage"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static object Call(string operationName, VOption kwargs = null, Image matchImage = null, params object[] args)
+        public static object Call(string operationName, VOption kwargs = null, Image matchImage = null,
+            params object[] args)
         {
             // logger.Debug($"VipsOperation.call: operationName = {operationName}");
             // logger.Debug($"VipsOperation.call: matchImage = {matchImage}");
@@ -207,7 +239,7 @@ namespace NetVips
 
             // set required and optional args
             var n = 0;
-            bool memberX = matchImage == null;
+            var memberX = matchImage == null;
             foreach (var entry in arguments)
             {
                 var name = entry.Key;
@@ -259,7 +291,7 @@ namespace NetVips
             }
 
             // build operation
-            var vop = VipsOperation.VipsCacheOperationBuild(op);
+            var vop = VipsCache.OperationBuild(op);
             if (vop == IntPtr.Zero)
             {
                 throw new VipsException($"unable to call {operationName}");
@@ -308,7 +340,7 @@ namespace NetVips
                 }
             }
 
-            Internal.VipsObject.VipsObjectUnrefOutputs(op);
+            Internal.VipsObject.UnrefOutputs(op);
 
             if (opts.Count > 0)
             {
@@ -876,7 +908,7 @@ namespace NetVips
         /// <param name="max"></param>
         public static void VipsCacheSetMax(int max)
         {
-            VipsOperation.VipsCacheSetMax(max);
+            VipsCache.SetMax(max);
         }
 
         /// <summary>
@@ -885,7 +917,7 @@ namespace NetVips
         /// <param name="maxMem"></param>
         public static void VipsCacheSetMaxMem(ulong maxMem)
         {
-            VipsOperation.VipsCacheSetMaxMem(new UIntPtr(maxMem));
+            VipsCache.SetMaxMem(maxMem);
         }
 
         /// <summary>
@@ -894,7 +926,7 @@ namespace NetVips
         /// <param name="maxFiles"></param>
         public static void VipsCacheSetMaxFiles(int maxFiles)
         {
-            VipsOperation.VipsCacheSetMaxFiles(maxFiles);
+            VipsCache.SetMaxFiles(maxFiles);
         }
 
         /// <summary>
@@ -903,7 +935,7 @@ namespace NetVips
         /// <param name="trace"></param>
         public static void VipsCacheSetTrace(int trace)
         {
-            VipsOperation.VipsCacheSetTrace(trace);
+            VipsCache.SetTrace(trace);
         }
     }
 }

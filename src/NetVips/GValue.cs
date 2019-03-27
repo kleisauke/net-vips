@@ -8,7 +8,7 @@ using NetVips.Internal;
 namespace NetVips
 {
     /// <summary>
-    /// Wrap GValue in a C# class.
+    /// Wrap <see cref="Internal.GValue"/> in a C# class.
     /// </summary>
     /// <remarks>
     /// This class wraps <see cref="Internal.GValue"/> in a convenient interface. You can use
@@ -29,80 +29,85 @@ namespace NetVips
         // Track whether Dispose has been called.		
         private bool _disposed;
 
+        /// <summary>
+        /// Shift value used in converting numbers to type IDs.
+        /// </summary>
+        private const int FundamentalShift = 2;
+
         // look up some common gtypes at init for speed
 
         /// <summary>
-        /// The GType for gboolean.
+        /// The fundamental type corresponding to gboolean.
         /// </summary>
-        public static readonly IntPtr GBoolType = Base.TypeFromName("gboolean");
+        public static readonly IntPtr GBoolType = new IntPtr(5 << FundamentalShift);
 
         /// <summary>
-        /// The GType for gint.
+        /// The fundamental type corresponding to gint.
         /// </summary>
-        public static readonly IntPtr GIntType = Base.TypeFromName("gint");
+        public static readonly IntPtr GIntType = new IntPtr(6 << FundamentalShift);
 
         /// <summary>
-        /// The GType for gdouble.
+        /// The fundamental type from which all enumeration types are derived.
         /// </summary>
-        public static readonly IntPtr GDoubleType = Base.TypeFromName("gdouble");
+        public static readonly IntPtr GEnumType = new IntPtr(12 << FundamentalShift);
 
         /// <summary>
-        /// The GType for gchararray.
+        /// The fundamental type from which all flags types are derived.
         /// </summary>
-        public static readonly IntPtr GStrType = Base.TypeFromName("gchararray");
+        public static readonly IntPtr GFlagsType = new IntPtr(13 << FundamentalShift);
 
         /// <summary>
-        /// The GType for GEnum.
+        /// The fundamental type corresponding to gdouble.
         /// </summary>
-        public static readonly IntPtr GEnumType = Base.TypeFromName("GEnum");
+        public static readonly IntPtr GDoubleType = new IntPtr(15 << FundamentalShift);
 
         /// <summary>
-        /// The GType for GFlags.
+        /// The fundamental type corresponding to null-terminated C strings.
         /// </summary>
-        public static readonly IntPtr GFlagsType = Base.TypeFromName("GFlags");
+        public static readonly IntPtr GStrType = new IntPtr(16 << FundamentalShift);
 
         /// <summary>
-        /// The GType for GObject.
+        /// The fundamental type for GObject.
         /// </summary>
-        public static readonly IntPtr GObjectType = Base.TypeFromName("GObject");
+        public static readonly IntPtr GObjectType = new IntPtr(20 << FundamentalShift);
 
         /// <summary>
-        /// The GType for VipsImage.
+        /// The fundamental type for VipsImage.
         /// </summary>
         public static readonly IntPtr ImageType = Base.TypeFromName("VipsImage");
 
         /// <summary>
-        /// The GType for VipsArrayInt.
+        /// The fundamental type for VipsArrayInt.
         /// </summary>
         public static readonly IntPtr ArrayIntType = Base.TypeFromName("VipsArrayInt");
 
         /// <summary>
-        /// The GType for VipsArrayDouble.
+        /// The fundamental type for VipsArrayDouble.
         /// </summary>
         public static readonly IntPtr ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
 
         /// <summary>
-        /// The GType for VipsArrayImage.
+        /// The fundamental type for VipsArrayImage.
         /// </summary>
         public static readonly IntPtr ArrayImageType = Base.TypeFromName("VipsArrayImage");
 
         /// <summary>
-        /// The GType for VipsRefString.
+        /// The fundamental type for VipsRefString.
         /// </summary>
         public static readonly IntPtr RefStrType = Base.TypeFromName("VipsRefString");
 
         /// <summary>
-        /// The GType for VipsBlob.
+        /// The fundamental type for VipsBlob.
         /// </summary>
         public static readonly IntPtr BlobType = Base.TypeFromName("VipsBlob");
 
         /// <summary>
-        /// The GType for VipsBandFormat. See <see cref="Enums.BandFormat"/>.
+        /// The fundamental type for VipsBandFormat. See <see cref="Enums.BandFormat"/>.
         /// </summary>
         public static readonly IntPtr BandFormatType;
 
         /// <summary>
-        /// The GType for VipsBlendMode. See <see cref="Enums.BlendMode"/>.
+        /// The fundamental type for VipsBlendMode. See <see cref="Enums.BlendMode"/>.
         /// </summary>
         public static readonly IntPtr BlendModeType;
 
@@ -113,12 +118,12 @@ namespace NetVips
 
         static GValue()
         {
-            Vips.VipsBandFormatGetType();
+            Vips.BandFormatGetType();
             BandFormatType = Base.TypeFromName("VipsBandFormat");
 
             if (Base.AtLeastLibvips(8, 6))
             {
-                Vips.VipsBlendModeGetType();
+                Vips.BlendModeGetType();
                 BlendModeType = Base.TypeFromName("VipsBlendMode");
             }
         }
@@ -147,7 +152,7 @@ namespace NetVips
         /// <returns></returns>
         public static string GTypeToCSharp(IntPtr gtype)
         {
-            var fundamental = GType.GTypeFundamental(gtype);
+            var fundamental = GType.Fundamental(gtype);
 
             if (GTypeToCSharpDict.ContainsKey(gtype))
             {
@@ -171,7 +176,7 @@ namespace NetVips
         public static int ToEnum(IntPtr gtype, object value)
         {
             return value is string strValue
-                ? Vips.VipsEnumFromNick("NetVips", gtype, strValue)
+                ? Vips.EnumFromNick("NetVips", gtype, strValue)
                 : Convert.ToInt32(value);
         }
 
@@ -183,7 +188,7 @@ namespace NetVips
         /// <returns></returns>
         public static string FromEnum(IntPtr gtype, int enumValue)
         {
-            var cstr = Marshal.PtrToStringAnsi(Vips.VipsEnumNick(gtype, enumValue));
+            var cstr = Marshal.PtrToStringAnsi(Vips.EnumNick(gtype, enumValue));
             if (cstr == null)
             {
                 throw new VipsException("value not in enum");
@@ -193,11 +198,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Wrap GValue in a C# class.
+        /// Constructs a new GValue.
         /// </summary>
         public GValue()
         {
             Struct = new Internal.GValue.Struct();
+            // logger.Debug($"GValue = {Struct}");
+        }
+
+        /// <summary>
+        /// Wrap a <see cref="Internal.GValue.Struct"/> in a C# class.
+        /// </summary>
+        internal GValue(Internal.GValue.Struct value)
+        {
+            Struct = value;
             // logger.Debug($"GValue = {Struct}");
         }
 
@@ -214,7 +228,7 @@ namespace NetVips
         /// <param name="gtype"></param>
         public void SetType(IntPtr gtype)
         {
-            Internal.GValue.GValueInit(ref Struct, gtype);
+            Internal.GValue.Init(ref Struct, gtype);
         }
 
         /// <summary>
@@ -229,36 +243,36 @@ namespace NetVips
         {
             // logger.Debug($"Set: value = {value}");
             var gtype = GetTypeOf();
-            var fundamental = GType.GTypeFundamental(gtype);
+            var fundamental = GType.Fundamental(gtype);
             if (gtype == GBoolType)
             {
-                Internal.GValue.GValueSetBoolean(ref Struct, Convert.ToBoolean(value) ? 1 : 0);
+                Internal.GValue.SetBoolean(ref Struct, Convert.ToBoolean(value) ? 1 : 0);
             }
             else if (gtype == GIntType)
             {
-                Internal.GValue.GValueSetInt(ref Struct, Convert.ToInt32(value));
+                Internal.GValue.SetInt(ref Struct, Convert.ToInt32(value));
             }
             else if (gtype == GDoubleType)
             {
-                Internal.GValue.GValueSetDouble(ref Struct, Convert.ToDouble(value));
+                Internal.GValue.SetDouble(ref Struct, Convert.ToDouble(value));
             }
             else if (fundamental == GEnumType)
             {
-                Internal.GValue.GValueSetEnum(ref Struct, ToEnum(gtype, value));
+                Internal.GValue.SetEnum(ref Struct, ToEnum(gtype, value));
             }
             else if (fundamental == GFlagsType)
             {
-                Internal.GValue.GValueSetFlags(ref Struct, Convert.ToUInt32(value));
+                Internal.GValue.SetFlags(ref Struct, Convert.ToUInt32(value));
             }
             else if (gtype == GStrType)
             {
                 ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
-                Internal.GValue.GValueSetString(ref Struct, MemoryMarshal.GetReference(span));
+                Internal.GValue.SetString(ref Struct, MemoryMarshal.GetReference(span));
             }
             else if (gtype == RefStrType)
             {
                 ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
-                VipsType.VipsValueSetRefString(ref Struct, MemoryMarshal.GetReference(span));
+                VipsValue.SetRefString(ref Struct, MemoryMarshal.GetReference(span));
             }
             else if (fundamental == GObjectType)
             {
@@ -269,7 +283,7 @@ namespace NetVips
                     );
                 }
 
-                Internal.GObject.GValueSetObject(ref Struct, gObject);
+                Internal.GValue.SetObject(ref Struct, gObject);
             }
             else if (gtype == ArrayIntType)
             {
@@ -278,24 +292,25 @@ namespace NetVips
                     value = new[] { value };
                 }
 
+                int[] integers;
                 switch (value)
                 {
                     case int[] ints:
-                        VipsType.VipsValueSetArrayInt(ref Struct, ints, ints.Length);
+                        integers = ints;
                         break;
                     case double[] doubles:
-                        VipsType.VipsValueSetArrayInt(ref Struct, Array.ConvertAll(doubles, Convert.ToInt32),
-                            doubles.Length);
+                        integers = Array.ConvertAll(doubles, Convert.ToInt32);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayInt(ref Struct, Array.ConvertAll(objects, Convert.ToInt32),
-                            objects.Length);
+                        integers = Array.ConvertAll(objects, Convert.ToInt32);
                         break;
                     default:
                         throw new Exception(
                             $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
                         );
                 }
+
+                VipsValue.SetArrayInt(ref Struct, integers, integers.Length);
             }
             else if (gtype == ArrayDoubleType)
             {
@@ -304,24 +319,25 @@ namespace NetVips
                     value = new[] { value };
                 }
 
+                double[] doubles;
                 switch (value)
                 {
-                    case double[] doubles:
-                        VipsType.VipsValueSetArrayDouble(ref Struct, doubles, doubles.Length);
+                    case double[] dbls:
+                        doubles = dbls;
                         break;
                     case int[] ints:
-                        VipsType.VipsValueSetArrayDouble(ref Struct, Array.ConvertAll(ints, Convert.ToDouble),
-                            ints.Length);
+                        doubles = Array.ConvertAll(ints, Convert.ToDouble);
                         break;
                     case object[] objects:
-                        VipsType.VipsValueSetArrayDouble(ref Struct, Array.ConvertAll(objects, Convert.ToDouble),
-                            objects.Length);
+                        doubles = Array.ConvertAll(objects, Convert.ToDouble);
                         break;
                     default:
                         throw new Exception(
                             $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
                         );
                 }
+
+                VipsValue.SetArrayDouble(ref Struct, doubles, doubles.Length);
             }
             else if (gtype == ArrayImageType)
             {
@@ -333,9 +349,9 @@ namespace NetVips
                 }
 
                 var size = images.Length;
-                VipsImage.VipsValueSetArrayImage(ref Struct, size);
+                VipsValue.SetArrayImage(ref Struct, size);
 
-                var ptrArr = VipsImage.VipsValueGetArrayImage(ref Struct, IntPtr.Zero);
+                var ptrArr = VipsValue.GetArrayImage(in Struct, out _);
 
                 for (var i = 0; i < size; i++)
                 {
@@ -367,7 +383,7 @@ namespace NetVips
 
                 // We need to set the blob to a copy of the string that vips
                 // can own
-                var ptr = GLib.GMalloc(new UIntPtr((ulong)memory.Length));
+                var ptr = GLib.GMalloc((ulong)memory.Length);
                 Marshal.Copy(memory, 0, ptr, memory.Length);
 
                 // Make sure that the GC knows the true cost of the object during collection.
@@ -377,7 +393,7 @@ namespace NetVips
 
                 if (Base.AtLeastLibvips(8, 6))
                 {
-                    VipsType.VipsValueSetBlobFree(ref Struct, ptr, new UIntPtr((ulong)memory.Length));
+                    VipsValue.SetBlobFree(ref Struct, ptr, (ulong)memory.Length);
                 }
                 else
                 {
@@ -388,7 +404,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsType.VipsValueSetBlob(ref Struct, FreeFn, ptr, new UIntPtr((ulong)memory.Length));
+                    VipsValue.SetBlob(ref Struct, FreeFn, ptr, (ulong)memory.Length);
                 }
             }
             else
@@ -410,42 +426,42 @@ namespace NetVips
         {
             // logger.Debug($"Get: this = {this}");
             var gtype = GetTypeOf();
-            var fundamental = GType.GTypeFundamental(gtype);
+            var fundamental = GType.Fundamental(gtype);
 
             object result;
             if (gtype == GBoolType)
             {
-                result = Internal.GValue.GValueGetBoolean(ref Struct) != 0;
+                result = Internal.GValue.GetBoolean(in Struct) != 0;
             }
             else if (gtype == GIntType)
             {
-                result = Internal.GValue.GValueGetInt(ref Struct);
+                result = Internal.GValue.GetInt(in Struct);
             }
             else if (gtype == GDoubleType)
             {
-                result = Internal.GValue.GValueGetDouble(ref Struct);
+                result = Internal.GValue.GetDouble(in Struct);
             }
             else if (fundamental == GEnumType)
             {
-                result = FromEnum(gtype, Internal.GValue.GValueGetEnum(ref Struct));
+                result = FromEnum(gtype, Internal.GValue.GetEnum(in Struct));
             }
             else if (fundamental == GFlagsType)
             {
-                result = Internal.GValue.GValueGetFlags(ref Struct);
+                result = Internal.GValue.GetFlags(in Struct);
             }
             else if (gtype == GStrType)
             {
-                result = Internal.GValue.GValueGetString(ref Struct).ToUtf8String();
+                result = Internal.GValue.GetString(in Struct).ToUtf8String();
             }
             else if (gtype == RefStrType)
             {
-                result = VipsType.VipsValueGetRefString(ref Struct, out var psize).ToUtf8String(size: (int)psize);
+                result = VipsValue.GetRefString(in Struct, out var psize).ToUtf8String(size: (int)psize);
             }
             else if (gtype == ImageType)
             {
                 // GValueGetObject() will not add a ref ... that is
                 // held by the gvalue
-                var vi = Internal.GObject.GValueGetObject(ref Struct);
+                var vi = Internal.GValue.GetObject(in Struct);
 
                 // we want a ref that will last with the life of the vimage:
                 // this ref is matched by the unref that's attached to finalize
@@ -457,7 +473,7 @@ namespace NetVips
             }
             else if (gtype == ArrayIntType)
             {
-                var intPtr = VipsType.VipsValueGetArrayInt(ref Struct, out var psize);
+                var intPtr = VipsValue.GetArrayInt(in Struct, out var psize);
 
                 var intArr = new int[psize];
                 Marshal.Copy(intPtr, intArr, 0, psize);
@@ -465,7 +481,7 @@ namespace NetVips
             }
             else if (gtype == ArrayDoubleType)
             {
-                var intPtr = VipsType.VipsValueGetArrayDouble(ref Struct, out var psize);
+                var intPtr = VipsValue.GetArrayDouble(in Struct, out var psize);
 
                 var doubleArr = new double[psize];
                 Marshal.Copy(intPtr, doubleArr, 0, psize);
@@ -473,7 +489,7 @@ namespace NetVips
             }
             else if (gtype == ArrayImageType)
             {
-                var ptrArr = VipsImage.VipsValueGetArrayImage(ref Struct, out var psize);
+                var ptrArr = VipsValue.GetArrayImage(in Struct, out var psize);
 
                 var images = new Image[psize];
                 for (var i = 0; i < psize; i++)
@@ -487,7 +503,7 @@ namespace NetVips
             }
             else if (gtype == BlobType)
             {
-                var array = VipsType.VipsValueGetBlob(ref Struct, out var psize);
+                var array = VipsValue.GetBlob(in Struct, out var psize);
 
                 // Blob types are returned as an array of bytes.
                 var byteArr = new byte[psize];
@@ -534,7 +550,7 @@ namespace NetVips
             if (!_disposed)
             {
                 // and tag it to be unset on GC as well	
-                Internal.GValue.GValueUnset(ref Struct);
+                Internal.GValue.Unset(ref Struct);
 
                 if (_memoryPressure.HasValue)
                 {

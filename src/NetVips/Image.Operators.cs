@@ -1,9 +1,8 @@
 using System.Linq;
-using NetVips.Internal;
 
 namespace NetVips
 {
-    public sealed partial class Image : VipsObject
+    public sealed partial class Image
     {
         #region overloadable operators
 

@@ -21,6 +21,12 @@ namespace NetVips.Internal
             G_PARAM_DEPRECATED = -2147483648
         }
 
+        internal enum GConnectFlags
+        {
+            G_CONNECT_AFTER = 1,
+            G_CONNECT_SWAPPED = 2
+        }
+
         [Flags]
         internal enum VipsArgumentFlags
         {
@@ -51,62 +57,6 @@ namespace NetVips.Internal
             VIPS_FORMAT_LAST = 10
         }
 
-        internal enum VipsCoding
-        {
-            VIPS_CODING_ERROR = -1,
-            VIPS_CODING_NONE = 0,
-            VIPS_CODING_LABQ = 2,
-            VIPS_CODING_RAD = 6,
-            VIPS_CODING_LAST = 7
-        }
-
-        internal enum VipsInterpretation
-        {
-            VIPS_INTERPRETATION_ERROR = -1,
-            VIPS_INTERPRETATION_MULTIBAND = 0,
-            VIPS_INTERPRETATION_B_W = 1,
-            VIPS_INTERPRETATION_HISTOGRAM = 10,
-            VIPS_INTERPRETATION_XYZ = 12,
-            VIPS_INTERPRETATION_LAB = 13,
-            VIPS_INTERPRETATION_CMYK = 15,
-            VIPS_INTERPRETATION_LABQ = 16,
-            VIPS_INTERPRETATION_RGB = 17,
-            VIPS_INTERPRETATION_CMC = 18,
-            VIPS_INTERPRETATION_LCH = 19,
-            VIPS_INTERPRETATION_LABS = 21,
-            VIPS_INTERPRETATION_sRGB = 22,
-            VIPS_INTERPRETATION_YXY = 23,
-            VIPS_INTERPRETATION_FOURIER = 24,
-            VIPS_INTERPRETATION_RGB16 = 25,
-            VIPS_INTERPRETATION_GREY16 = 26,
-            VIPS_INTERPRETATION_MATRIX = 27,
-            VIPS_INTERPRETATION_scRGB = 28,
-            VIPS_INTERPRETATION_HSV = 29,
-            VIPS_INTERPRETATION_LAST = 30
-        }
-
-        internal enum VipsImageType
-        {
-            VIPS_IMAGE_ERROR = -1,
-            VIPS_IMAGE_NONE = 0,
-            VIPS_IMAGE_SETBUF = 1,
-            VIPS_IMAGE_SETBUF_FOREIGN = 2,
-            VIPS_IMAGE_OPENIN = 3,
-            VIPS_IMAGE_MMAPIN = 4,
-            VIPS_IMAGE_MMAPINRW = 5,
-            VIPS_IMAGE_OPENOUT = 6,
-            VIPS_IMAGE_PARTIAL = 7
-        }
-
-        internal enum VipsDemandStyle
-        {
-            VIPS_DEMAND_STYLE_ERROR = -1,
-            VIPS_DEMAND_STYLE_SMALLTILE = 0,
-            VIPS_DEMAND_STYLE_FATSTRIP = 1,
-            VIPS_DEMAND_STYLE_THINSTRIP = 2,
-            VIPS_DEMAND_STYLE_ANY = 3
-        }
-
         [Flags]
         internal enum VipsOperationFlags
         {
@@ -115,6 +65,34 @@ namespace NetVips.Internal
             VIPS_OPERATION_SEQUENTIAL_UNBUFFERED = 2,
             VIPS_OPERATION_NOCACHE = 4,
             VIPS_OPERATION_DEPRECATED = 8
+        }
+
+        internal static class VipsEvaluation
+        {
+            /// <summary>Evaluation is starting.</summary>
+            /// <remarks>
+            /// The preeval signal is emitted once before computation of <see cref="Image"/>
+            /// starts. It's a good place to set up evaluation feedback.
+            /// </remarks>
+            public const string PreEval = "preeval";
+
+            /// <summary>Evaluation progress.</summary>
+            /// <remarks>
+            /// The eval signal is emitted once per work unit (typically a 128 x
+            /// 128 area of pixels) during image computation.
+            /// 
+            /// You can use this signal to update user-interfaces with progress
+            /// feedback. Beware of updating too frequently: you will usually
+            /// need some throttling mechanism.
+            /// </remarks>
+            public const string Eval = "eval";
+
+            /// <summary>Evaluation is ending.</summary>
+            /// <remarks>
+            /// The posteval signal is emitted once at the end of the computation 
+            /// of <see cref="Image"/>. It's a good place to shut down evaluation feedback.
+            /// </remarks>
+            public const string PostEval = "posteval";
         }
     }
 }

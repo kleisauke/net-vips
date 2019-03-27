@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -63,28 +62,6 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Creates a new pointer to an unmanaged block of memory 
-        /// from an structure of the specified type.
-        /// </summary>
-        /// <remarks>
-        /// The returned pointer should be freed by calling <see cref="GLib.GFree"/>.
-        /// </remarks>
-        /// <typeparam name="T">The type of structure to be created.</typeparam>
-        /// <param name="structure">A managed object that holds the data to be marshaled. 
-        /// This object must be a structure or an instance of a formatted class.</param>
-        /// <returns>A pointer to an pre-allocated block of memory of the specified type.</returns>
-        public static IntPtr ToIntPtr<T>(this object structure) where T : struct
-        {
-            // Initialize unmanaged memory to hold the struct.
-            var unmanagedPointer = GLib.GMalloc(new UIntPtr((ulong)Marshal.SizeOf(typeof(T))));
-
-            // Copy the struct to unmanaged memory.
-            Marshal.StructureToPtr(structure, unmanagedPointer, false);
-
-            return unmanagedPointer;
-        }
-
-        /// <summary>
         /// Call a libvips operation.
         /// </summary>
         /// <param name="image"></param>
@@ -101,7 +78,7 @@ namespace NetVips
         /// <param name="args"></param>
         /// <returns></returns>
         public static object Call(this Image image, string operationName, params object[] args) =>
-            Operation.Call(operationName, kwargs: null, matchImage: image, args: args);
+            Operation.Call(operationName, null, image, args);
 
         /// <summary>
         /// Call a libvips operation.
@@ -111,7 +88,7 @@ namespace NetVips
         /// <param name="kwargs"></param>
         /// <returns></returns>
         public static object Call(this Image image, string operationName, VOption kwargs) =>
-            Operation.Call(operationName, kwargs: kwargs, matchImage: image);
+            Operation.Call(operationName, kwargs, image);
 
         /// <summary>
         /// Call a libvips operation.
@@ -122,7 +99,7 @@ namespace NetVips
         /// <param name="args"></param>
         /// <returns></returns>
         public static object Call(this Image image, string operationName, VOption kwargs, params object[] args) =>
-            Operation.Call(operationName, kwargs: kwargs, matchImage: image, args: args);
+            Operation.Call(operationName, kwargs, image, args);
 
         /// <summary>
         /// Make first letter of a string upper case
@@ -271,6 +248,28 @@ namespace NetVips
             }
 
             return $"{dValue:n2} {sizeSuffixes[i]}";
+        }
+
+        /// <summary>
+        /// Connects a callback function (<see cref="GCallback"/>)
+        /// to a signal for a particular <see cref="GObject"/>.
+        /// </summary>
+        /// <param name="instance">The instance to connect to.</param>
+        /// <param name="detailedSignal">A string of the form "signal-name::detail".</param>
+        /// <param name="callback">The <see cref="GCallback"/> to connect.</param>
+        /// <param name="data">Data to pass to handler calls.</param>
+        /// <returns>The handler id.</returns>
+        /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
+        internal static uint Connect(this GObject instance, string detailedSignal, GCallback callback, IntPtr data = default)
+        {
+            var ret = GSignal.ConnectData(instance, detailedSignal, callback, data, null, default);
+
+            if (ret == 0)
+            {
+                throw new Exception("Failed to connect signal.");
+            }
+
+            return ret;
         }
     }
 }

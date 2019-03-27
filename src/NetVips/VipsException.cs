@@ -22,7 +22,7 @@ namespace NetVips
         /// <param name="message">The message that describes the error.</param>
         public VipsException(string message) : base($"{message}{Environment.NewLine}{VipsErrorBuffer()}")
         {
-            Vips.VipsErrorClear();
+            Vips.ErrorClear();
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace NetVips
         public VipsException(string message, Exception inner) : base(
             $"{message}{Environment.NewLine}{VipsErrorBuffer()}", inner)
         {
-            Vips.VipsErrorClear();
+            Vips.ErrorClear();
         }
 
         private static string VipsErrorBuffer()
         {
-            return Marshal.PtrToStringAnsi(Vips.VipsErrorBuffer());
+            return Marshal.PtrToStringAnsi(Vips.ErrorBuffer());
         }
     }
 }

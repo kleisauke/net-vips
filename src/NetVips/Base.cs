@@ -20,7 +20,7 @@ namespace NetVips
         /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" /></returns>
         public static bool VipsInit()
         {
-            return Vips.VipsInit("NetVips") == 0;
+            return Vips.Init("NetVips") == 0;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace NetVips
         /// <param name="leak"></param>
         public static void LeakSet(int leak)
         {
-            Vips.VipsLeakSet(leak);
+            Vips.LeakSet(leak);
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace NetVips
         {
             return new[]
             {
-                Vips.VipsTrackedGetAllocs(),
-                Vips.VipsTrackedGetMem(),
-                Vips.VipsTrackedGetFiles()
+                Vips.TrackedGetAllocs(),
+                Vips.TrackedGetMem(),
+                Vips.TrackedGetFiles()
             };
         }
 
@@ -60,7 +60,7 @@ namespace NetVips
         /// <returns>The largest number of bytes simultaneously allocated.</returns>
         public static ulong MemoryHigh()
         {
-            return Vips.VipsTrackedGetMemHighwater();
+            return Vips.TrackedGetMemHighwater();
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace NetVips
 
             Console.WriteLine("memory: high-water mark: {0}", MemoryHigh().ToReadableBytes());
 
-            var errorBuffer = Marshal.PtrToStringAnsi(Vips.VipsErrorBuffer());
+            var errorBuffer = Marshal.PtrToStringAnsi(Vips.ErrorBuffer());
             if (!string.IsNullOrEmpty(errorBuffer))
             {
                 Console.WriteLine("error buffer: {0}", errorBuffer);
@@ -116,7 +116,7 @@ namespace NetVips
                 throw new ArgumentOutOfRangeException(nameof(flag), "Flag must be in the range of 0 to 2");
             }
 
-            var value = Vips.VipsVersion(flag);
+            var value = Vips.Version(flag);
             if (value < 0)
             {
                 throw new VipsException("Unable to get library version");
@@ -150,7 +150,7 @@ namespace NetVips
         /// <returns>The filename part of a vips7 path</returns>
         public static string PathFilename7(string path)
         {
-            return Vips.VipsPathFilename7(path);
+            return Vips.PathFilename7(path);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace NetVips
         /// <returns>The mode part of a vips7 path</returns>
         public static string PathMode7(string path)
         {
-            return Vips.VipsPathMode7(path);
+            return Vips.PathMode7(path);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace NetVips
         /// </summary>
         public static void VipsInterpretationGetType()
         {
-            Vips.VipsInterpretationGetType();
+            Vips.InterpretationGetType();
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace NetVips
         /// </summary>
         public static void VipsOperationFlagsGetType()
         {
-            Vips.VipsOperationFlagsGetType();
+            VipsOperation.FlagsGetType();
         }
 
         #endregion
@@ -193,7 +193,7 @@ namespace NetVips
         /// <returns></returns>
         public static IntPtr TypeFind(string basename, string nickname)
         {
-            return Internal.VipsObject.VipsTypeFind(basename, nickname);
+            return Vips.TypeFind(basename, nickname);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace NetVips
         /// <returns></returns>
         public static string TypeName(IntPtr type)
         {
-            return Marshal.PtrToStringAnsi(GType.GTypeName(type));
+            return Marshal.PtrToStringAnsi(GType.Name(type));
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace NetVips
         /// <returns></returns>
         public static string NicknameFind(IntPtr type)
         {
-            return Marshal.PtrToStringAnsi(Internal.VipsObject.VipsNicknameFind(type));
+            return Marshal.PtrToStringAnsi(Vips.NicknameFind(type));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace NetVips
         /// <returns></returns>
         internal static IntPtr TypeMap(IntPtr type, VipsTypeMap2Fn fn)
         {
-            return Internal.VipsObject.VipsTypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
+            return Vips.TypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace NetVips
         /// <returns></returns>
         public static IntPtr TypeFromName(string name)
         {
-            return GType.GTypeFromName(name);
+            return GType.FromName(name);
         }
     }
 }

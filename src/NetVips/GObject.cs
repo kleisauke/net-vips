@@ -41,7 +41,7 @@ namespace NetVips
             // logger.Debug($"Unref: GObject = {handle}");
             if (!IsInvalid)
             {
-                Internal.GObject.GObjectUnref(handle);
+                Internal.GObject.Unref(handle);
             }
             // NObjects--;
 
@@ -54,7 +54,7 @@ namespace NetVips
         internal void ObjectRef()
         {
             // logger.Debug($"Ref: GObject = {handle}");
-            Internal.GObject.GObjectRef(handle);
+            Internal.GObject.Ref(handle);
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace NetVips
         public static Interpolate NewFromName(string name)
         {
             // logger.Debug($"Interpolate.NewFromName: name = {name}");
-            var vi = VipsInterpolate.VipsInterpolateNew(name);
+            var vi = VipsInterpolate.New(name);
             if (vi == IntPtr.Zero)
             {
                 throw new VipsException($"no such interpolator {name}");

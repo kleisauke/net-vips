@@ -1,4 +1,6 @@
-﻿namespace NetVips.Samples
+﻿using System;
+
+namespace NetVips.Samples
 {
     public class ImagePyramid : ISample
     {
@@ -14,9 +16,16 @@
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
             im = im.Replicate(TileSize, TileSize);
 
+            var progress = new Progress<int>(value =>
+            {
+                Console.Write($"\r{value}% complete");
+            });
+            im.SetProgress(progress);
+
             // Save image pyramid
             im.Dzsave("images/image-pyramid");
 
+            Console.WriteLine();
             return "See images/image-pyramid.dzi";
         }
     }

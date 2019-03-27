@@ -162,10 +162,10 @@ namespace NetVips
             ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
             ref var filenameRef = ref MemoryMarshal.GetReference(span);
 
-            var filename = VipsImage.VipsFilenameGetFilename(filenameRef);
-            var fileOptions = VipsImage.VipsFilenameGetOptions(filenameRef).ToUtf8String(true);
+            var filename = Vips.GetFilename(filenameRef);
+            var fileOptions = Vips.GetOptions(filenameRef).ToUtf8String(true);
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindLoad(filename));
+            var name = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
             if (name == null)
             {
                 throw new VipsException($"unable to load from file {vipsFilename}");
@@ -207,7 +207,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
-        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="access">Hint the expected access pattern for the image. See <see cref="Enums.Access"/>.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
@@ -218,8 +218,7 @@ namespace NetVips
             VOption kwargs = null)
         {
             var name = Marshal.PtrToStringAnsi(
-                VipsForeign.VipsForeignFindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()),
-                    new UIntPtr((ulong)data.Length)));
+                VipsForeign.FindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()), (ulong)data.Length));
 
             if (name == null)
             {
@@ -331,7 +330,7 @@ namespace NetVips
                 }
             }
 
-            var vi = VipsImage.VipsImageNewMatrixFromArray(width, height, a, n);
+            var vi = VipsImage.NewMatrixFromArray(width, height, a, n);
 
             if (vi == IntPtr.Zero)
             {
@@ -382,7 +381,7 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var vi = VipsImage.VipsImageNewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong)data.Length),
+            var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong)data.Length),
                 width, height, bands, (Internal.Enums.VipsBandFormat)formatValue);
 
             if (vi == IntPtr.Zero)
@@ -428,7 +427,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to make temp file from <paramref name="format" />.</exception>
         public static Image NewTempFile(string format)
         {
-            var vi = VipsImage.VipsImageNewTempFile(format);
+            var vi = VipsImage.NewTempFile(format);
             if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to make temp file");
@@ -503,7 +502,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to copy to memory.</exception>
         public Image CopyMemory()
         {
-            var vi = VipsImage.VipsImageCopyMemory(this);
+            var vi = VipsImage.CopyMemory(this);
             if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to copy to memory");
@@ -553,10 +552,10 @@ namespace NetVips
             ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
             ref var filenameRef = ref MemoryMarshal.GetReference(span);
 
-            var filename = VipsImage.VipsFilenameGetFilename(filenameRef);
-            var fileOptions = VipsImage.VipsFilenameGetOptions(filenameRef).ToUtf8String(true);
+            var filename = Vips.GetFilename(filenameRef);
+            var fileOptions = Vips.GetOptions(filenameRef).ToUtf8String(true);
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSave(filename));
+            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSave(filename));
             if (name == null)
             {
                 throw new VipsException($"unable to write to file {vipsFilename}");
@@ -615,8 +614,8 @@ namespace NetVips
             ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(formatString);
             ref var formatRef = ref MemoryMarshal.GetReference(span);
 
-            var bufferOptions = VipsImage.VipsFilenameGetOptions(formatRef).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.VipsForeignFindSaveBuffer(formatRef));
+            var bufferOptions = Vips.GetOptions(formatRef).ToUtf8String(true);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveBuffer(formatRef));
 
             if (name == null)
             {
@@ -657,7 +656,7 @@ namespace NetVips
         /// <returns>An array of bytes</returns>
         public byte[] WriteToMemory()
         {
-            var pointer = VipsImage.VipsImageWriteToMemory(this, out var psize);
+            var pointer = VipsImage.WriteToMemory(this, out var psize);
 
             var managedArray = new byte[psize];
             Marshal.Copy(pointer, managedArray, 0, (int)psize);
@@ -678,7 +677,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to image.</exception>
         public void Write(Image other)
         {
-            var result = VipsImage.VipsImageWrite(this, other);
+            var result = VipsImage.Write(this, other);
             if (result != 0)
             {
                 throw new VipsException("unable to write to image");
@@ -712,7 +711,7 @@ namespace NetVips
                 }
             }
 
-            return VipsImage.VipsImageGetTypeof(this, name);
+            return VipsImage.GetTypeof(this, name);
         }
 
         /// <summary>
@@ -760,14 +759,13 @@ namespace NetVips
                 }
             }
 
-            var gv = new GValue();
-            var result = VipsImage.VipsImageGet(this, name, ref gv.Struct);
+            var result = VipsImage.Get(this, name, out var gv);
             if (result != 0)
             {
                 throw new VipsException($"unable to get {name}");
             }
 
-            return gv.Get();
+            return new GValue(gv).Get();
         }
 
         /// <summary>
@@ -784,7 +782,7 @@ namespace NetVips
                 return null;
             }
 
-            var ptrArr = VipsImage.VipsImageGetFields(this);
+            var ptrArr = VipsImage.GetFields(this);
 
             var names = new List<string>();
 
@@ -819,7 +817,7 @@ namespace NetVips
             var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
-            VipsImage.VipsImageSet(this, name, ref gv.Struct);
+            VipsImage.Set(this, name, in gv.Struct);
         }
 
         /// <summary>
@@ -853,7 +851,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to remove.</param>
         public bool Remove(string name)
         {
-            return VipsImage.VipsImageRemove(this, name) != 0;
+            return VipsImage.Remove(this, name) != 0;
         }
 
         /// <summary>
@@ -973,7 +971,7 @@ namespace NetVips
         /// <param name="ints">Array of constants</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Bandjoin(params int[] ints) =>
-             BandjoinConst(Array.ConvertAll(ints, Convert.ToDouble));
+            BandjoinConst(Array.ConvertAll(ints, Convert.ToDouble));
 
         /// <summary>
         /// Append a set of images bandwise.
@@ -1077,7 +1075,8 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space</param>
         /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite(Image[] images, int[] modes, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null)
+        public Image Composite(Image[] images, int[] modes, int? x = null, int? y = null,
+            string compositingSpace = null, bool? premultiplied = null)
         {
             var options = new VOption();
 
@@ -1119,8 +1118,10 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space</param>
         /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite(Image[] images, string[] modes, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null) =>
-            Composite(images, modes.Select(m => GValue.ToEnum(GValue.BlendModeType, m)).ToArray(), x, y, compositingSpace, premultiplied);
+        public Image Composite(Image[] images, string[] modes, int? x = null, int? y = null,
+            string compositingSpace = null, bool? premultiplied = null) =>
+            Composite(images, modes.Select(m => GValue.ToEnum(GValue.BlendModeType, m)).ToArray(), x, y,
+                compositingSpace, premultiplied);
 
         /// <summary>
         /// A synonym for <see cref="Composite2"/>.
@@ -1137,7 +1138,8 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space</param>
         /// <param name="premultiplied">Images have premultiplied alpha</param>
         /// <returns>A new <see cref="Image"/></returns>
-        public Image Composite(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null) =>
+        public Image Composite(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null,
+            bool? premultiplied = null) =>
             Composite2(overlay, mode, x, y, compositingSpace, premultiplied);
 
         /// <summary>
@@ -1364,6 +1366,44 @@ namespace NetVips
             return Bands == 2 ||
                    (Bands == 4 && Interpretation != Enums.Interpretation.Cmyk) ||
                    Bands > 4;
+        }
+
+        /// <summary>
+        /// Attach progress feedback, if required.
+        /// </summary>
+        /// <remarks>
+        /// You can use this function to update user-interfaces with 
+        /// progress feedback, for example:
+        /// <code language="lang-csharp">
+        /// var image = Image.NewFromFile("huge.jpg", access: Enums.Access.Sequential);
+        /// 
+        /// var progress = new Progress&lt;int&gt;(value =>
+        /// {
+        ///     Console.Write($"\r{value}% complete");
+        /// });
+        /// image.SetProgress(progress);
+        /// 
+        /// image.Dzsave("image-pyramid");
+        /// </code>
+        /// </remarks>
+        /// <param name="progress">A provider for progress updates.</param>
+        public void SetProgress(IProgress<int> progress)
+        {
+            VipsImage.SetProgress(this, progress == null ? 0 : 1);
+
+            var lastPercent = 0;
+
+            void Eval(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr)
+            {
+                var progressStruct = progressPtr.Dereference<VipsProgress.Struct>();
+                if (progressStruct.Percent != lastPercent)
+                {
+                    progress?.Report(progressStruct.Percent);
+                    lastPercent = progressStruct.Percent;
+                }
+            }
+
+            this.Connect(Internal.Enums.VipsEvaluation.Eval, Eval);
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_malloc")]
-        internal static extern IntPtr GMalloc(UIntPtr nBytes);
+        internal static extern IntPtr GMalloc(ulong nBytes);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_log_set_handler")]
