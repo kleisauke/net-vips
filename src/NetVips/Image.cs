@@ -20,6 +20,11 @@ namespace NetVips
         /// </summary>
         private GCHandle _data;
 
+        /// <summary>
+        /// Ref for <see cref="SetProgress" />
+        /// </summary>
+        private GCHandle _progress;
+
         internal Image(IntPtr pointer) : base(pointer)
         {
             // logger.Debug($"VipsImage = {pointer}");
@@ -1393,7 +1398,7 @@ namespace NetVips
 
             var lastPercent = 0;
 
-            void Eval(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr)
+            GCallback evalCallback = (imagePtr, progressPtr, userDataPtr) =>
             {
                 var progressStruct = progressPtr.Dereference<VipsProgress.Struct>();
                 if (progressStruct.Percent != lastPercent)
@@ -1401,9 +1406,12 @@ namespace NetVips
                     progress?.Report(progressStruct.Percent);
                     lastPercent = progressStruct.Percent;
                 }
-            }
+            };
 
-            this.Connect(Internal.Enums.VipsEvaluation.Eval, Eval);
+            // prevent it from being re-located or disposed of by the garbage collector
+            _progress = GCHandle.Alloc(evalCallback);
+
+            this.Connect(Internal.Enums.VipsEvaluation.Eval, evalCallback);
         }
 
         #endregion
@@ -1529,9 +1537,14 @@ namespace NetVips
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
+            // release references to delegates / data objects
             if (_data.IsAllocated)
             {
                 _data.Free();
+            }
+            if (_progress.IsAllocated)
+            {
+                _progress.Free();
             }
 
             // Call our base Dispose method
