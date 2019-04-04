@@ -1,32 +1,37 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using NetVips.Internal;
-
 namespace NetVips
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using NetVips.Internal;
+
     /// <summary>
     /// Wrap <see cref="Internal.GValue"/> in a C# class.
     /// </summary>
     /// <remarks>
     /// This class wraps <see cref="Internal.GValue"/> in a convenient interface. You can use
     /// instances of this class to get and set <see cref="GObject"/> properties.
-    /// 
+    ///
     /// On construction, <see cref="Internal.GValue"/> is all zero (empty). You can pass it to
     /// a get function to have it filled by <see cref="GObject"/>, or use init to
     /// set a type, set to set a value, then use it to set an object property.
-    /// 
+    ///
     /// GValue lifetime is managed automatically.
     /// </remarks>
     public class GValue : IDisposable
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// The specified struct to wrap around.
+        /// </summary>
         internal Internal.GValue.Struct Struct;
 
-        // Track whether Dispose has been called.		
+        /// <summary>
+        /// Track whether Dispose has been called.
+        /// </summary>
         private bool _disposed;
 
         /// <summary>
@@ -45,6 +50,11 @@ namespace NetVips
         /// The fundamental type corresponding to gint.
         /// </summary>
         public static readonly IntPtr GIntType = new IntPtr(6 << FundamentalShift);
+
+        /// <summary>
+        /// The fundamental type corresponding to guint64.
+        /// </summary>
+        public static readonly IntPtr GUint64Type = new IntPtr(11 << FundamentalShift);
 
         /// <summary>
         /// The fundamental type from which all enumeration types are derived.
@@ -132,24 +142,25 @@ namespace NetVips
         {
             {GBoolType, "bool"},
             {GIntType, "int"},
-            {GDoubleType, "double"},
-            {GStrType, "string"},
-            {RefStrType, "string"},
+            {GUint64Type, "ulong"},
             {GEnumType, "string"},
             {GFlagsType, "int"},
+            {GDoubleType, "double"},
+            {GStrType, "string"},
             {GObjectType, "GObject"},
             {ImageType, "Image"},
             {ArrayIntType, "int[]"},
             {ArrayDoubleType, "double[]"},
             {ArrayImageType, "Image[]"},
+            {RefStrType, "string"},
             {BlobType, "byte[]"}
         };
 
         /// <summary>
-        /// Map a gtype to the name of the C# type we use to represent it.
+        /// Map a GType to the name of the C# type we use to represent it.
         /// </summary>
-        /// <param name="gtype"></param>
-        /// <returns></returns>
+        /// <param name="gtype">The GType to map.</param>
+        /// <returns>The C# type we use to represent it.</returns>
         public static string GTypeToCSharp(IntPtr gtype)
         {
             var fundamental = GType.Fundamental(gtype);
@@ -168,11 +179,11 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Turn a string into an enum value ready to be passed into libvips.       
+        /// Turn a string or integer into an enum value ready to be passed into libvips.
         /// </summary>
-        /// <param name="gtype"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="gtype">The GType.</param>
+        /// <param name="value">The string or integer to convert.</param>
+        /// <returns>An enum value ready to be passed into libvips.</returns>
         public static int ToEnum(IntPtr gtype, object value)
         {
             return value is string strValue
@@ -183,9 +194,9 @@ namespace NetVips
         /// <summary>
         /// Turn an int back into an enum string.
         /// </summary>
-        /// <param name="gtype"></param>
-        /// <param name="enumValue"></param>
-        /// <returns></returns>
+        /// <param name="gtype">The GType.</param>
+        /// <param name="enumValue">The integer to convert.</param>
+        /// <returns>An enum value as string.</returns>
         public static string FromEnum(IntPtr gtype, int enumValue)
         {
             var cstr = Marshal.PtrToStringAnsi(Vips.EnumNick(gtype, enumValue));
@@ -198,7 +209,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Constructs a new GValue.
+        /// Initializes a new instance of the <see cref="GValue"/> class.
         /// </summary>
         public GValue()
         {
@@ -207,8 +218,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Wrap a <see cref="Internal.GValue.Struct"/> in a C# class.
+        /// Initializes a new instance of the <see cref="GValue"/> class
+        /// with the specified struct to wrap around.
         /// </summary>
+        /// <param name="value">The specified struct to wrap around.</param>
         internal GValue(Internal.GValue.Struct value)
         {
             Struct = value;
@@ -221,11 +234,11 @@ namespace NetVips
         /// <remarks>
         /// GValues have a set type, fixed at creation time. Use SetType to set
         /// the type of a GValue before assigning to it.
-        /// 
+        ///
         /// GTypes are 32 or 64-bit integers (depending on the platform). See
         /// TypeFind.
         /// </remarks>
-        /// <param name="gtype"></param>
+        /// <param name="gtype">Type the GValue should hold values of.</param>
         public void SetType(IntPtr gtype)
         {
             Internal.GValue.Init(ref Struct, gtype);
@@ -238,7 +251,7 @@ namespace NetVips
         /// The value is converted to the type of the GValue, if possible, and
         /// assigned.
         /// </remarks>
-        /// <param name="value"></param>
+        /// <param name="value">Value to be set.</param>
         public void Set(object value)
         {
             // logger.Debug($"Set: value = {value}");
@@ -251,6 +264,10 @@ namespace NetVips
             else if (gtype == GIntType)
             {
                 Internal.GValue.SetInt(ref Struct, Convert.ToInt32(value));
+            }
+            else if (gtype == GUint64Type)
+            {
+                Internal.GValue.SetUint64(ref Struct, Convert.ToUInt64(value));
             }
             else if (gtype == GDoubleType)
             {
@@ -279,8 +296,7 @@ namespace NetVips
                 if (!(value is GObject gObject))
                 {
                     throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                    );
+                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
                 }
 
                 Internal.GValue.SetObject(ref Struct, gObject);
@@ -306,8 +322,7 @@ namespace NetVips
                         break;
                     default:
                         throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                        );
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
                 }
 
                 VipsValue.SetArrayInt(ref Struct, integers, integers.Length);
@@ -333,8 +348,7 @@ namespace NetVips
                         break;
                     default:
                         throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                        );
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
                 }
 
                 VipsValue.SetArrayDouble(ref Struct, doubles, doubles.Length);
@@ -344,8 +358,7 @@ namespace NetVips
                 if (!(value is Image[] images))
                 {
                     throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                    );
+                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
                 }
 
                 var size = images.Length;
@@ -377,8 +390,7 @@ namespace NetVips
                         break;
                     default:
                         throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}"
-                        );
+                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
                 }
 
                 // We need to set the blob to a copy of the string that vips
@@ -410,8 +422,7 @@ namespace NetVips
             else
             {
                 throw new Exception(
-                    $"unsupported gtype for set {Base.TypeName(gtype)}, fundamental {Base.TypeName(fundamental)}, value type {value.GetType()}"
-                );
+                    $"unsupported gtype for set {Base.TypeName(gtype)}, fundamental {Base.TypeName(fundamental)}, value type {value.GetType()}");
             }
         }
 
@@ -421,7 +432,7 @@ namespace NetVips
         /// <remarks>
         /// The contents of the GValue are read out as a C# type.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>The contents of this GValue.</returns>
         public object Get()
         {
             // logger.Debug($"Get: this = {this}");
@@ -436,6 +447,10 @@ namespace NetVips
             else if (gtype == GIntType)
             {
                 result = Internal.GValue.GetInt(in Struct);
+            }
+            else if (gtype == GUint64Type)
+            {
+                result = Internal.GValue.GetUint64(in Struct);
             }
             else if (gtype == GDoubleType)
             {
@@ -528,9 +543,12 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Allows an object to try to free resources and perform other cleanup 
-        /// operations before it is reclaimed by garbage collection.
+        /// Finalizes an instance of the <see cref="GValue"/> class.
         /// </summary>
+        /// <remarks>
+        /// Allows an object to try to free resources and perform other cleanup
+        /// operations before it is reclaimed by garbage collection.
+        /// </remarks>
         ~GValue()
         {
             // Do not re-create Dispose clean-up code here.
@@ -538,7 +556,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
+        /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
         /// <see langword="false" /> to release only unmanaged resources.</param>
@@ -549,7 +567,7 @@ namespace NetVips
             // Check to see if Dispose has already been called.
             if (!_disposed)
             {
-                // and tag it to be unset on GC as well	
+                // and tag it to be unset on GC as well
                 Internal.GValue.Unset(ref Struct);
 
                 if (_memoryPressure.HasValue)
@@ -557,7 +575,7 @@ namespace NetVips
                     GC.RemoveMemoryPressure(_memoryPressure.Value);
                 }
 
-                // Note disposing has been done.		
+                // Note disposing has been done.
                 _disposed = true;
             }
 
@@ -565,7 +583,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, 
+        /// Performs application-defined tasks associated with freeing, releasing,
         /// or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

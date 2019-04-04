@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Xunit;
-
 namespace NetVips.Tests
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using Xunit;
+
     public static class Helper
     {
         public static readonly string Images =
@@ -420,7 +420,7 @@ namespace NetVips.Tests
             return tempDirectory;
         }
 
-        public static string GetTemporaryFile(string path, string extension)
+        public static string GetTemporaryFile(string path, string extension = "")
         {
             var fileName = Guid.NewGuid() + extension;
             return Path.Combine(path, fileName);

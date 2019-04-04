@@ -15,52 +15,52 @@ namespace NetVips
         #region auto-generated functions
 
         /// <summary>
-        /// Absolute value of an image
+        /// Absolute value of an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Abs();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Abs()
         {
             return this.Call("abs") as Image;
         }
 
         /// <summary>
-        /// Add two images
+        /// Add two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Add(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Add(Image right)
         {
             return this.Call("add", right) as Image;
         }
 
         /// <summary>
-        /// Affine transform of an image
+        /// Affine transform of an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], extend: string);
         /// </code>
         /// </example>
-        /// <param name="matrix">Transformation matrix</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
-        /// <param name="oarea">Area of output to generate</param>
-        /// <param name="odx">Horizontal output displacement</param>
-        /// <param name="ody">Vertical output displacement</param>
-        /// <param name="idx">Horizontal input displacement</param>
-        /// <param name="idy">Vertical input displacement</param>
-        /// <param name="background">Background value</param>
-        /// <param name="extend">How to generate the extra pixels</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="matrix">Transformation matrix.</param>
+        /// <param name="interpolate">Interpolate pixels with this.</param>
+        /// <param name="oarea">Area of output to generate.</param>
+        /// <param name="odx">Horizontal output displacement.</param>
+        /// <param name="ody">Vertical output displacement.</param>
+        /// <param name="idx">Horizontal input displacement.</param>
+        /// <param name="idy">Vertical input displacement.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="extend">How to generate the extra pixels.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Affine(double[] matrix, GObject interpolate = null, int[] oarea = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null, double[] background = null, string extend = null)
         {
             var options = new VOption();
@@ -109,18 +109,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load an Analyze6 image
+        /// Load an Analyze6 image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Analyzeload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -144,19 +144,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load an Analyze6 image
+        /// Load an Analyze6 image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Analyzeload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -187,22 +187,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Join an array of images
+        /// Join an array of images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: string, valign: string, hspacing: int, vspacing: int);
         /// </code>
         /// </example>
-        /// <param name="in">Array of input images</param>
-        /// <param name="across">Number of images across grid</param>
-        /// <param name="shim">Pixels between images</param>
-        /// <param name="background">Colour for new pixels</param>
-        /// <param name="halign">Align on the left, centre or right</param>
-        /// <param name="valign">Align on the top, centre or bottom</param>
-        /// <param name="hspacing">Horizontal spacing between images</param>
-        /// <param name="vspacing">Vertical spacing between images</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="in">Array of input images.</param>
+        /// <param name="across">Number of images across grid.</param>
+        /// <param name="shim">Pixels between images.</param>
+        /// <param name="background">Colour for new pixels.</param>
+        /// <param name="halign">Align on the left, centre or right.</param>
+        /// <param name="valign">Align on the top, centre or bottom.</param>
+        /// <param name="hspacing">Horizontal spacing between images.</param>
+        /// <param name="vspacing">Vertical spacing between images.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Arrayjoin(Image[] @in, int? across = null, int? shim = null, double[] background = null, string halign = null, string valign = null, int? hspacing = null, int? vspacing = null)
         {
             var options = new VOption();
@@ -246,29 +246,29 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Autorotate image by exif tag
+        /// Autorotate image by exif tag.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Autorot();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Autorot()
         {
             return this.Call("autorot") as Image;
         }
 
         /// <summary>
-        /// Autorotate image by exif tag
+        /// Autorotate image by exif tag.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Autorot(out var angle);
         /// </code>
         /// </example>
-        /// <param name="angle">Angle image was rotated by</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="angle">Angle image was rotated by.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Autorot(out string angle)
         {
             var optionalOutput = new VOption
@@ -285,44 +285,44 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image average
+        /// Find image average.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Avg();
         /// </code>
         /// </example>
-        /// <returns>A double</returns>
+        /// <returns>A double.</returns>
         public double Avg()
         {
-            return this.Call("avg") is double result ? result : 0;
+            return this.Call("avg") is double result ? result : 0d;
         }
 
         /// <summary>
-        /// Boolean operation across image bands
+        /// Boolean operation across image bands.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Bandbool(boolean);
         /// </code>
         /// </example>
-        /// <param name="boolean">boolean to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="boolean">boolean to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandbool(string boolean)
         {
             return this.Call("bandbool", boolean) as Image;
         }
 
         /// <summary>
-        /// Fold up x axis into bands
+        /// Fold up x axis into bands.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Bandfold(factor: int);
         /// </code>
         /// </example>
-        /// <param name="factor">Fold by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="factor">Fold by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandfold(int? factor = null)
         {
             var options = new VOption();
@@ -336,44 +336,44 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Append a constant band to an image
+        /// Append a constant band to an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.BandjoinConst(c);
         /// </code>
         /// </example>
-        /// <param name="c">Array of constants to add</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="c">Array of constants to add.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image BandjoinConst(double[] c)
         {
             return this.Call("bandjoin_const", c) as Image;
         }
 
         /// <summary>
-        /// Band-wise average
+        /// Band-wise average.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Bandmean();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandmean()
         {
             return this.Call("bandmean") as Image;
         }
 
         /// <summary>
-        /// Unfold image bands into x axis
+        /// Unfold image bands into x axis.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Bandunfold(factor: int);
         /// </code>
         /// </example>
-        /// <param name="factor">Unfold by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="factor">Unfold by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandunfold(int? factor = null)
         {
             var options = new VOption();
@@ -387,17 +387,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a black image
+        /// Make a black image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Black(width, height, bands: int);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="bands">Number of bands in image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="bands">Number of bands in image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Black(int width, int height, int? bands = null)
         {
             var options = new VOption();
@@ -411,77 +411,77 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Boolean operation on two images
+        /// Boolean operation on two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Boolean(right, boolean);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <param name="boolean">boolean to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <param name="boolean">boolean to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Boolean(Image right, string boolean)
         {
             return this.Call("boolean", right, boolean) as Image;
         }
 
         /// <summary>
-        /// Boolean operations against a constant
+        /// Boolean operations against a constant.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.BooleanConst(boolean, c);
         /// </code>
         /// </example>
-        /// <param name="boolean">boolean to perform</param>
-        /// <param name="c">Array of constants</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="boolean">boolean to perform.</param>
+        /// <param name="c">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image BooleanConst(string boolean, double[] c)
         {
             return this.Call("boolean_const", boolean, c) as Image;
         }
 
         /// <summary>
-        /// Build a look-up table
+        /// Build a look-up table.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Buildlut();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Buildlut()
         {
             return this.Call("buildlut") as Image;
         }
 
         /// <summary>
-        /// Byteswap an image
+        /// Byteswap an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Byteswap();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Byteswap()
         {
             return this.Call("byteswap") as Image;
         }
 
         /// <summary>
-        /// Cache an image
+        /// Cache an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Cache(maxTiles: int, tileHeight: int, tileWidth: int);
         /// </code>
         /// </example>
-        /// <param name="maxTiles">Maximum number of tiles to cache</param>
-        /// <param name="tileHeight">Tile height in pixels</param>
-        /// <param name="tileWidth">Tile width in pixels</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="maxTiles">Maximum number of tiles to cache.</param>
+        /// <param name="tileHeight">Tile height in pixels.</param>
+        /// <param name="tileWidth">Tile width in pixels.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Cache(int? maxTiles = null, int? tileHeight = null, int? tileWidth = null)
         {
             var options = new VOption();
@@ -505,16 +505,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Canny edge detector
+        /// Canny edge detector.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Canny(sigma: double, precision: string);
         /// </code>
         /// </example>
-        /// <param name="sigma">Sigma of Gaussian</param>
-        /// <param name="precision">Convolve with this precision</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sigma">Sigma of Gaussian.</param>
+        /// <param name="precision">Convolve with this precision.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Canny(double? sigma = null, string precision = null)
         {
             var options = new VOption();
@@ -533,16 +533,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Cast an image
+        /// Cast an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Cast(format, shift: bool);
         /// </code>
         /// </example>
-        /// <param name="format">Format to cast to</param>
-        /// <param name="shift">Shift integer values up and down</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="format">Format to cast to.</param>
+        /// <param name="shift">Shift integer values up and down.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Cast(string format, bool? shift = null)
         {
             var options = new VOption();
@@ -556,30 +556,30 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform LCh to CMC
+        /// Transform LCh to CMC.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.CMC2LCh();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image CMC2LCh()
         {
             return this.Call("CMC2LCh") as Image;
         }
 
         /// <summary>
-        /// Convert to a new colorspace
+        /// Convert to a new colorspace.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Colourspace(space, sourceSpace: string);
         /// </code>
         /// </example>
-        /// <param name="space">Destination color space</param>
-        /// <param name="sourceSpace">Source color space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="space">Destination color space.</param>
+        /// <param name="sourceSpace">Source color space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Colourspace(string space, string sourceSpace = null)
         {
             var options = new VOption();
@@ -593,21 +593,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Convolve with rotating mask
+        /// Convolve with rotating mask.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Compass(mask, times: int, angle: string, combine: string, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <param name="times">Rotate and convolve this many times</param>
-        /// <param name="angle">Rotate mask by this much between convolutions</param>
-        /// <param name="combine">Combine convolution results like this</param>
-        /// <param name="precision">Convolve with this precision</param>
-        /// <param name="layers">Use this many layers in approximation</param>
-        /// <param name="cluster">Cluster lines closer than this in approximation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <param name="times">Rotate and convolve this many times.</param>
+        /// <param name="angle">Rotate mask by this much between convolutions.</param>
+        /// <param name="combine">Combine convolution results like this.</param>
+        /// <param name="precision">Convolve with this precision.</param>
+        /// <param name="layers">Use this many layers in approximation.</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Compass(Image mask, int? times = null, string angle = null, string combine = null, string precision = null, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
@@ -646,81 +646,81 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Perform a complex operation on an image
+        /// Perform a complex operation on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Complex(cmplx);
         /// </code>
         /// </example>
-        /// <param name="cmplx">complex to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="cmplx">complex to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Complex(string cmplx)
         {
             return this.Call("complex", cmplx) as Image;
         }
 
         /// <summary>
-        /// Complex binary operations on two images
+        /// Complex binary operations on two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Complex2(right, cmplx);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <param name="cmplx">binary complex operation to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <param name="cmplx">binary complex operation to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Complex2(Image right, string cmplx)
         {
             return this.Call("complex2", right, cmplx) as Image;
         }
 
         /// <summary>
-        /// Form a complex image from two real images
+        /// Form a complex image from two real images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Complexform(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Complexform(Image right)
         {
             return this.Call("complexform", right) as Image;
         }
 
         /// <summary>
-        /// Get a component from a complex image
+        /// Get a component from a complex image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Complexget(get);
         /// </code>
         /// </example>
-        /// <param name="get">complex to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="get">complex to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Complexget(string get)
         {
             return this.Call("complexget", get) as Image;
         }
 
         /// <summary>
-        /// Blend a pair of images with a blend mode
+        /// Blend a pair of images with a blend mode.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = base.Composite2(overlay, mode, x: int, y: int, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
-        /// <param name="overlay">Overlay image</param>
-        /// <param name="mode">VipsBlendMode to join with</param>
-        /// <param name="x">x position of overlay</param>
-        /// <param name="y">y position of overlay</param>
-        /// <param name="compositingSpace">Composite images in this colour space</param>
-        /// <param name="premultiplied">Images have premultiplied alpha</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="overlay">Overlay image.</param>
+        /// <param name="mode">VipsBlendMode to join with.</param>
+        /// <param name="x">x position of overlay.</param>
+        /// <param name="y">y position of overlay.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Composite2(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null)
         {
             var options = new VOption();
@@ -749,18 +749,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Convolution operation
+        /// Convolution operation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Conv(mask, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <param name="precision">Convolve with this precision</param>
-        /// <param name="layers">Use this many layers in approximation</param>
-        /// <param name="cluster">Cluster lines closer than this in approximation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <param name="precision">Convolve with this precision.</param>
+        /// <param name="layers">Use this many layers in approximation.</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Conv(Image mask, string precision = null, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
@@ -784,17 +784,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Approximate integer convolution
+        /// Approximate integer convolution.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Conva(mask, layers: int, cluster: int);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <param name="layers">Use this many layers in approximation</param>
-        /// <param name="cluster">Cluster lines closer than this in approximation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <param name="layers">Use this many layers in approximation.</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Conva(Image mask, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
@@ -813,16 +813,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Approximate separable integer convolution
+        /// Approximate separable integer convolution.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Convasep(mask, layers: int);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <param name="layers">Use this many layers in approximation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <param name="layers">Use this many layers in approximation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Convasep(Image mask, int? layers = null)
         {
             var options = new VOption();
@@ -836,48 +836,48 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Float convolution operation
+        /// Float convolution operation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Convf(mask);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Convf(Image mask)
         {
             return this.Call("convf", mask) as Image;
         }
 
         /// <summary>
-        /// Int convolution operation
+        /// Int convolution operation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Convi(mask);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Convi(Image mask)
         {
             return this.Call("convi", mask) as Image;
         }
 
         /// <summary>
-        /// Seperable convolution operation
+        /// Seperable convolution operation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Convsep(mask, precision: string, layers: int, cluster: int);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <param name="precision">Convolve with this precision</param>
-        /// <param name="layers">Use this many layers in approximation</param>
-        /// <param name="cluster">Cluster lines closer than this in approximation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <param name="precision">Convolve with this precision.</param>
+        /// <param name="layers">Use this many layers in approximation.</param>
+        /// <param name="cluster">Cluster lines closer than this in approximation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Convsep(Image mask, string precision = null, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
@@ -901,24 +901,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Copy an image
+        /// Copy an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Copy(width: int, height: int, bands: int, format: string, coding: string, interpretation: string, xres: double, yres: double, xoffset: int, yoffset: int);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="bands">Number of bands in image</param>
-        /// <param name="format">Pixel format in image</param>
-        /// <param name="coding">Pixel coding</param>
-        /// <param name="interpretation">Pixel interpretation</param>
-        /// <param name="xres">Horizontal resolution in pixels/mm</param>
-        /// <param name="yres">Vertical resolution in pixels/mm</param>
-        /// <param name="xoffset">Horizontal offset of origin</param>
-        /// <param name="yoffset">Vertical offset of origin</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="bands">Number of bands in image.</param>
+        /// <param name="format">Pixel format in image.</param>
+        /// <param name="coding">Pixel coding.</param>
+        /// <param name="interpretation">Pixel interpretation.</param>
+        /// <param name="xres">Horizontal resolution in pixels/mm.</param>
+        /// <param name="yres">Vertical resolution in pixels/mm.</param>
+        /// <param name="xoffset">Horizontal offset of origin.</param>
+        /// <param name="yoffset">Vertical offset of origin.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Copy(int? width = null, int? height = null, int? bands = null, string format = null, string coding = null, string interpretation = null, double? xres = null, double? yres = null, int? xoffset = null, int? yoffset = null)
         {
             var options = new VOption();
@@ -977,37 +977,37 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Count lines in an image
+        /// Count lines in an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double nolines = in.Countlines(direction);
         /// </code>
         /// </example>
-        /// <param name="direction">Countlines left-right or up-down</param>
-        /// <returns>A double</returns>
+        /// <param name="direction">Countlines left-right or up-down.</param>
+        /// <returns>A double.</returns>
         public double Countlines(string direction)
         {
-            return this.Call("countlines", direction) is double result ? result : 0;
+            return this.Call("countlines", direction) is double result ? result : 0d;
         }
 
         /// <summary>
-        /// Load csv from file
+        /// Load csv from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Csvload(filename, memory: bool, access: string, skip: int, lines: int, fail: bool, whitespace: string, separator: string);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="skip">Skip this many lines at the start of the file</param>
-        /// <param name="lines">Read this many lines from the file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="whitespace">Set of whitespace characters</param>
-        /// <param name="separator">Set of separator characters</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="skip">Skip this many lines at the start of the file.</param>
+        /// <param name="lines">Read this many lines from the file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="whitespace">Set of whitespace characters.</param>
+        /// <param name="separator">Set of separator characters.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Csvload(string filename, bool? memory = null, string access = null, int? skip = null, int? lines = null, bool? fail = null, string whitespace = null, string separator = null)
         {
             var options = new VOption();
@@ -1051,23 +1051,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load csv from file
+        /// Load csv from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Csvload(filename, out var flags, memory: bool, access: string, skip: int, lines: int, fail: bool, whitespace: string, separator: string);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="skip">Skip this many lines at the start of the file</param>
-        /// <param name="lines">Read this many lines from the file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="whitespace">Set of whitespace characters</param>
-        /// <param name="separator">Set of separator characters</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="skip">Skip this many lines at the start of the file.</param>
+        /// <param name="lines">Read this many lines from the file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="whitespace">Set of whitespace characters.</param>
+        /// <param name="separator">Set of separator characters.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Csvload(string filename, out int flags, bool? memory = null, string access = null, int? skip = null, int? lines = null, bool? fail = null, string whitespace = null, string separator = null)
         {
             var options = new VOption();
@@ -1118,18 +1118,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to csv file
+        /// Save image to csv file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Csvsave(filename, pageHeight: int, separator: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="separator">Separator characters</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="separator">Separator characters.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Csvsave(string filename, int? pageHeight = null, string separator = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -1158,93 +1158,93 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Calculate dE00
+        /// Calculate dE00.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.DE00(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand input image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand input image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DE00(Image right)
         {
             return this.Call("dE00", right) as Image;
         }
 
         /// <summary>
-        /// Calculate dE76
+        /// Calculate dE76.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.DE76(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand input image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand input image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DE76(Image right)
         {
             return this.Call("dE76", right) as Image;
         }
 
         /// <summary>
-        /// Calculate dECMC
+        /// Calculate dECMC.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.DECMC(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand input image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand input image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DECMC(Image right)
         {
             return this.Call("dECMC", right) as Image;
         }
 
         /// <summary>
-        /// Find image standard deviation
+        /// Find image standard deviation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Deviate();
         /// </code>
         /// </example>
-        /// <returns>A double</returns>
+        /// <returns>A double.</returns>
         public double Deviate()
         {
-            return this.Call("deviate") is double result ? result : 0;
+            return this.Call("deviate") is double result ? result : 0d;
         }
 
         /// <summary>
-        /// Divide two images
+        /// Divide two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Divide(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Divide(Image right)
         {
             return this.Call("divide", right) as Image;
         }
 
         /// <summary>
-        /// Draw a circle on an image
+        /// Draw a circle on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawCircle(ink, cx, cy, radius, fill: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="cx">Centre of draw_circle</param>
-        /// <param name="cy">Centre of draw_circle</param>
-        /// <param name="radius">Radius in pixels</param>
-        /// <param name="fill">Draw a solid object</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="cx">Centre of draw_circle.</param>
+        /// <param name="cy">Centre of draw_circle.</param>
+        /// <param name="radius">Radius in pixels.</param>
+        /// <param name="fill">Draw a solid object.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawCircle(double[] ink, int cx, int cy, int radius, bool? fill = null)
         {
             var options = new VOption();
@@ -1258,19 +1258,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flood-fill an area
+        /// Flood-fill an area.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, test: Image, equal: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="x">DrawFlood start point</param>
-        /// <param name="y">DrawFlood start point</param>
-        /// <param name="test">Test pixels in this image</param>
-        /// <param name="equal">DrawFlood while equal to edge</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="x">DrawFlood start point.</param>
+        /// <param name="y">DrawFlood start point.</param>
+        /// <param name="test">Test pixels in this image.</param>
+        /// <param name="equal">DrawFlood while equal to edge.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawFlood(double[] ink, int x, int y, Image test = null, bool? equal = null)
         {
             var options = new VOption();
@@ -1289,20 +1289,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flood-fill an area
+        /// Flood-fill an area.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, test: Image, equal: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="x">DrawFlood start point</param>
-        /// <param name="y">DrawFlood start point</param>
-        /// <param name="left">Left edge of modified area</param>
-        /// <param name="test">Test pixels in this image</param>
-        /// <param name="equal">DrawFlood while equal to edge</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="x">DrawFlood start point.</param>
+        /// <param name="y">DrawFlood start point.</param>
+        /// <param name="left">Left edge of modified area.</param>
+        /// <param name="test">Test pixels in this image.</param>
+        /// <param name="equal">DrawFlood while equal to edge.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawFlood(double[] ink, int x, int y, out int left, Image test = null, bool? equal = null)
         {
             var options = new VOption();
@@ -1328,21 +1328,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flood-fill an area
+        /// Flood-fill an area.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, test: Image, equal: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="x">DrawFlood start point</param>
-        /// <param name="y">DrawFlood start point</param>
-        /// <param name="left">Left edge of modified area</param>
-        /// <param name="top">top edge of modified area</param>
-        /// <param name="test">Test pixels in this image</param>
-        /// <param name="equal">DrawFlood while equal to edge</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="x">DrawFlood start point.</param>
+        /// <param name="y">DrawFlood start point.</param>
+        /// <param name="left">Left edge of modified area.</param>
+        /// <param name="top">top edge of modified area.</param>
+        /// <param name="test">Test pixels in this image.</param>
+        /// <param name="equal">DrawFlood while equal to edge.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, Image test = null, bool? equal = null)
         {
             var options = new VOption();
@@ -1370,22 +1370,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flood-fill an area
+        /// Flood-fill an area.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, test: Image, equal: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="x">DrawFlood start point</param>
-        /// <param name="y">DrawFlood start point</param>
-        /// <param name="left">Left edge of modified area</param>
-        /// <param name="top">top edge of modified area</param>
-        /// <param name="width">width of modified area</param>
-        /// <param name="test">Test pixels in this image</param>
-        /// <param name="equal">DrawFlood while equal to edge</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="x">DrawFlood start point.</param>
+        /// <param name="y">DrawFlood start point.</param>
+        /// <param name="left">Left edge of modified area.</param>
+        /// <param name="top">top edge of modified area.</param>
+        /// <param name="width">width of modified area.</param>
+        /// <param name="test">Test pixels in this image.</param>
+        /// <param name="equal">DrawFlood while equal to edge.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width, Image test = null, bool? equal = null)
         {
             var options = new VOption();
@@ -1415,23 +1415,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flood-fill an area
+        /// Flood-fill an area.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, test: Image, equal: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="x">DrawFlood start point</param>
-        /// <param name="y">DrawFlood start point</param>
-        /// <param name="left">Left edge of modified area</param>
-        /// <param name="top">top edge of modified area</param>
-        /// <param name="width">width of modified area</param>
-        /// <param name="height">height of modified area</param>
-        /// <param name="test">Test pixels in this image</param>
-        /// <param name="equal">DrawFlood while equal to edge</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="x">DrawFlood start point.</param>
+        /// <param name="y">DrawFlood start point.</param>
+        /// <param name="left">Left edge of modified area.</param>
+        /// <param name="top">top edge of modified area.</param>
+        /// <param name="width">width of modified area.</param>
+        /// <param name="height">height of modified area.</param>
+        /// <param name="test">Test pixels in this image.</param>
+        /// <param name="equal">DrawFlood while equal to edge.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawFlood(double[] ink, int x, int y, out int left, out int top, out int width, out int height, Image test = null, bool? equal = null)
         {
             var options = new VOption();
@@ -1463,18 +1463,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Paint an image into another image
+        /// Paint an image into another image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawImage(sub, x, y, mode: string);
         /// </code>
         /// </example>
-        /// <param name="sub">Sub-image to insert into main image</param>
-        /// <param name="x">Draw image here</param>
-        /// <param name="y">Draw image here</param>
-        /// <param name="mode">Combining mode</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sub">Sub-image to insert into main image.</param>
+        /// <param name="x">Draw image here.</param>
+        /// <param name="y">Draw image here.</param>
+        /// <param name="mode">Combining mode.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawImage(Image sub, int x, int y, string mode = null)
         {
             var options = new VOption();
@@ -1488,57 +1488,57 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Draw a line on an image
+        /// Draw a line on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawLine(ink, x1, y1, x2, y2);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="x1">Start of draw_line</param>
-        /// <param name="y1">Start of draw_line</param>
-        /// <param name="x2">End of draw_line</param>
-        /// <param name="y2">End of draw_line</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="x1">Start of draw_line.</param>
+        /// <param name="y1">Start of draw_line.</param>
+        /// <param name="x2">End of draw_line.</param>
+        /// <param name="y2">End of draw_line.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawLine(double[] ink, int x1, int y1, int x2, int y2)
         {
             return this.Call("draw_line", ink, x1, y1, x2, y2) as Image;
         }
 
         /// <summary>
-        /// Draw a mask on an image
+        /// Draw a mask on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawMask(ink, mask, x, y);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="mask">Mask of pixels to draw</param>
-        /// <param name="x">Draw mask here</param>
-        /// <param name="y">Draw mask here</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="mask">Mask of pixels to draw.</param>
+        /// <param name="x">Draw mask here.</param>
+        /// <param name="y">Draw mask here.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawMask(double[] ink, Image mask, int x, int y)
         {
             return this.Call("draw_mask", ink, mask, x, y) as Image;
         }
 
         /// <summary>
-        /// Paint a rectangle on an image
+        /// Paint a rectangle on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawRect(ink, left, top, width, height, fill: bool);
         /// </code>
         /// </example>
-        /// <param name="ink">Color for pixels</param>
-        /// <param name="left">Rect to fill</param>
-        /// <param name="top">Rect to fill</param>
-        /// <param name="width">Rect to fill</param>
-        /// <param name="height">Rect to fill</param>
-        /// <param name="fill">Draw a solid object</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ink">Color for pixels.</param>
+        /// <param name="left">Rect to fill.</param>
+        /// <param name="top">Rect to fill.</param>
+        /// <param name="width">Rect to fill.</param>
+        /// <param name="height">Rect to fill.</param>
+        /// <param name="fill">Draw a solid object.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawRect(double[] ink, int left, int top, int width, int height, bool? fill = null)
         {
             var options = new VOption();
@@ -1552,47 +1552,47 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Blur a rectangle on an image
+        /// Blur a rectangle on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image image = image.DrawSmudge(left, top, width, height);
         /// </code>
         /// </example>
-        /// <param name="left">Rect to fill</param>
-        /// <param name="top">Rect to fill</param>
-        /// <param name="width">Rect to fill</param>
-        /// <param name="height">Rect to fill</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="left">Rect to fill.</param>
+        /// <param name="top">Rect to fill.</param>
+        /// <param name="width">Rect to fill.</param>
+        /// <param name="height">Rect to fill.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image DrawSmudge(int left, int top, int width, int height)
         {
             return this.Call("draw_smudge", left, top, width, height) as Image;
         }
 
         /// <summary>
-        /// Save image to deepzoom file
+        /// Save image to deepzoom file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Dzsave(filename, basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="basename">Base name to save to</param>
-        /// <param name="layout">Directory layout</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="suffix">Filename suffix for tiles</param>
-        /// <param name="overlap">Tile overlap in pixels</param>
-        /// <param name="tileSize">Tile size in pixels</param>
-        /// <param name="centre">Center image in tile</param>
-        /// <param name="depth">Pyramid depth</param>
-        /// <param name="angle">Rotate image during save</param>
-        /// <param name="container">Pyramid container type</param>
-        /// <param name="properties">Write a properties file to the output directory</param>
-        /// <param name="compression">ZIP deflate compression level</param>
-        /// <param name="regionShrink">Method to shrink regions</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="basename">Base name to save to.</param>
+        /// <param name="layout">Directory layout.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="suffix">Filename suffix for tiles.</param>
+        /// <param name="overlap">Tile overlap in pixels.</param>
+        /// <param name="tileSize">Tile size in pixels.</param>
+        /// <param name="centre">Center image in tile.</param>
+        /// <param name="depth">Pyramid depth.</param>
+        /// <param name="angle">Rotate image during save.</param>
+        /// <param name="container">Pyramid container type.</param>
+        /// <param name="properties">Write a properties file to the output directory.</param>
+        /// <param name="compression">ZIP deflate compression level.</param>
+        /// <param name="regionShrink">Method to shrink regions.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Dzsave(string filename, string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -1676,29 +1676,29 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to dz buffer
+        /// Save image to dz buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="basename">Base name to save to</param>
-        /// <param name="layout">Directory layout</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="suffix">Filename suffix for tiles</param>
-        /// <param name="overlap">Tile overlap in pixels</param>
-        /// <param name="tileSize">Tile size in pixels</param>
-        /// <param name="centre">Center image in tile</param>
-        /// <param name="depth">Pyramid depth</param>
-        /// <param name="angle">Rotate image during save</param>
-        /// <param name="container">Pyramid container type</param>
-        /// <param name="properties">Write a properties file to the output directory</param>
-        /// <param name="compression">ZIP deflate compression level</param>
-        /// <param name="regionShrink">Method to shrink regions</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="basename">Base name to save to.</param>
+        /// <param name="layout">Directory layout.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="suffix">Filename suffix for tiles.</param>
+        /// <param name="overlap">Tile overlap in pixels.</param>
+        /// <param name="tileSize">Tile size in pixels.</param>
+        /// <param name="centre">Center image in tile.</param>
+        /// <param name="depth">Pyramid depth.</param>
+        /// <param name="angle">Rotate image during save.</param>
+        /// <param name="container">Pyramid container type.</param>
+        /// <param name="properties">Write a properties file to the output directory.</param>
+        /// <param name="compression">ZIP deflate compression level.</param>
+        /// <param name="regionShrink">Method to shrink regions.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] DzsaveBuffer(string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -1782,20 +1782,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Embed an image in a larger image
+        /// Embed an image in a larger image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Embed(x, y, width, height, extend: string, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="x">Left edge of input in output</param>
-        /// <param name="y">Top edge of input in output</param>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="extend">How to generate the extra pixels</param>
-        /// <param name="background">Color for background pixels</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="x">Left edge of input in output.</param>
+        /// <param name="y">Top edge of input in output.</param>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="extend">How to generate the extra pixels.</param>
+        /// <param name="background">Color for background pixels.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Embed(int x, int y, int width, int height, string extend = null, double[] background = null)
         {
             var options = new VOption();
@@ -1814,34 +1814,34 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Extract an area from an image
+        /// Extract an area from an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = input.ExtractArea(left, top, width, height);
         /// </code>
         /// </example>
-        /// <param name="left">Left edge of extract area</param>
-        /// <param name="top">Top edge of extract area</param>
-        /// <param name="width">Width of extract area</param>
-        /// <param name="height">Height of extract area</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="left">Left edge of extract area.</param>
+        /// <param name="top">Top edge of extract area.</param>
+        /// <param name="width">Width of extract area.</param>
+        /// <param name="height">Height of extract area.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ExtractArea(int left, int top, int width, int height)
         {
             return this.Call("extract_area", left, top, width, height) as Image;
         }
 
         /// <summary>
-        /// Extract band from an image
+        /// Extract band from an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.ExtractBand(band, n: int);
         /// </code>
         /// </example>
-        /// <param name="band">Band to extract</param>
-        /// <param name="n">Number of bands to extract</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="band">Band to extract.</param>
+        /// <param name="n">Number of bands to extract.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ExtractBand(int band, int? n = null)
         {
             var options = new VOption();
@@ -1855,18 +1855,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make an image showing the eye's spatial response
+        /// Make an image showing the eye's spatial response.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Eye(width, height, uchar: bool, factor: double);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="factor">Maximum spatial frequency</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="factor">Maximum spatial frequency.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Eye(int width, int height, bool? uchar = null, double? factor = null)
         {
             var options = new VOption();
@@ -1885,58 +1885,58 @@ namespace NetVips
         }
 
         /// <summary>
-        /// False-color an image
+        /// False-color an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Falsecolour();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Falsecolour()
         {
             return this.Call("falsecolour") as Image;
         }
 
         /// <summary>
-        /// Fast correlation
+        /// Fast correlation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Fastcor(@ref);
         /// </code>
         /// </example>
-        /// <param name="ref">Input reference image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ref">Input reference image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Fastcor(Image @ref)
         {
             return this.Call("fastcor", @ref) as Image;
         }
 
         /// <summary>
-        /// Fill image zeros with nearest non-zero pixel
+        /// Fill image zeros with nearest non-zero pixel.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.FillNearest();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image FillNearest()
         {
             return this.Call("fill_nearest") as Image;
         }
 
         /// <summary>
-        /// Fill image zeros with nearest non-zero pixel
+        /// Fill image zeros with nearest non-zero pixel.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.FillNearest(out var distance);
         /// </code>
         /// </example>
-        /// <param name="distance">Distance to nearest non-zero pixel</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="distance">Distance to nearest non-zero pixel.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image FillNearest(out Image distance)
         {
             var optionalOutput = new VOption
@@ -1953,16 +1953,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Search an image for non-edge areas
+        /// Search an image for non-edge areas.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// var output = in.FindTrim(threshold: double, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="threshold">Object threshold</param>
-        /// <param name="background">Color for background pixels</param>
-        /// <returns>An array of objects</returns>
+        /// <param name="threshold">Object threshold.</param>
+        /// <param name="background">Color for background pixels.</param>
+        /// <returns>An array of objects.</returns>
         public object[] FindTrim(double? threshold = null, double[] background = null)
         {
             var options = new VOption();
@@ -1981,18 +1981,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load a FITS image
+        /// Load a FITS image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Fitsload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Fitsload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -2016,19 +2016,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load a FITS image
+        /// Load a FITS image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Fitsload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Fitsload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -2059,17 +2059,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to fits file
+        /// Save image to fits file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Fitssave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Fitssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -2093,16 +2093,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flatten alpha out of an image
+        /// Flatten alpha out of an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Flatten(background: double[], maxAlpha: double);
         /// </code>
         /// </example>
-        /// <param name="background">Background value</param>
-        /// <param name="maxAlpha">Maximum value of alpha channel</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="background">Background value.</param>
+        /// <param name="maxAlpha">Maximum value of alpha channel.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Flatten(double[] background = null, double? maxAlpha = null)
         {
             var options = new VOption();
@@ -2121,90 +2121,90 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Flip an image
+        /// Flip an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Flip(direction);
         /// </code>
         /// </example>
-        /// <param name="direction">Direction to flip image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="direction">Direction to flip image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Flip(string direction)
         {
             return this.Call("flip", direction) as Image;
         }
 
         /// <summary>
-        /// Transform float RGB to Radiance coding
+        /// Transform float RGB to Radiance coding.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Float2rad();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Float2rad()
         {
             return this.Call("float2rad") as Image;
         }
 
         /// <summary>
-        /// Make a fractal surface
+        /// Make a fractal surface.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Fractsurf(width, height, fractalDimension);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="fractalDimension">Fractal dimension</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="fractalDimension">Fractal dimension.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Fractsurf(int width, int height, double fractalDimension)
         {
             return Operation.Call("fractsurf", width, height, fractalDimension) as Image;
         }
 
         /// <summary>
-        /// Frequency-domain filtering
+        /// Frequency-domain filtering.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Freqmult(mask);
         /// </code>
         /// </example>
-        /// <param name="mask">Input mask image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input mask image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Freqmult(Image mask)
         {
             return this.Call("freqmult", mask) as Image;
         }
 
         /// <summary>
-        /// Forward FFT
+        /// Forward FFT.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Fwfft();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Fwfft()
         {
             return this.Call("fwfft") as Image;
         }
 
         /// <summary>
-        /// Gamma an image
+        /// Gamma an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Gamma(exponent: double);
         /// </code>
         /// </example>
-        /// <param name="exponent">Gamma factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="exponent">Gamma factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Gamma(double? exponent = null)
         {
             var options = new VOption();
@@ -2218,17 +2218,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Gaussian blur
+        /// Gaussian blur.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Gaussblur(sigma, minAmpl: double, precision: string);
         /// </code>
         /// </example>
-        /// <param name="sigma">Sigma of Gaussian</param>
-        /// <param name="minAmpl">Minimum amplitude of Gaussian</param>
-        /// <param name="precision">Convolve with this precision</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sigma">Sigma of Gaussian.</param>
+        /// <param name="minAmpl">Minimum amplitude of Gaussian.</param>
+        /// <param name="precision">Convolve with this precision.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Gaussblur(double sigma, double? minAmpl = null, string precision = null)
         {
             var options = new VOption();
@@ -2247,18 +2247,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a gaussian image
+        /// Make a gaussian image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: string);
         /// </code>
         /// </example>
-        /// <param name="sigma">Sigma of Gaussian</param>
-        /// <param name="minAmpl">Minimum amplitude of Gaussian</param>
-        /// <param name="separable">Generate separable Gaussian</param>
-        /// <param name="precision">Generate with this precision</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sigma">Sigma of Gaussian.</param>
+        /// <param name="minAmpl">Minimum amplitude of Gaussian.</param>
+        /// <param name="separable">Generate separable Gaussian.</param>
+        /// <param name="precision">Generate with this precision.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Gaussmat(double sigma, double minAmpl, bool? separable = null, string precision = null)
         {
             var options = new VOption();
@@ -2277,18 +2277,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a gaussnoise image
+        /// Make a gaussnoise image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gaussnoise(width, height, sigma: double, mean: double);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="sigma">Standard deviation of pixels in generated image</param>
-        /// <param name="mean">Mean of pixels in generated image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="sigma">Standard deviation of pixels in generated image.</param>
+        /// <param name="mean">Mean of pixels in generated image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Gaussnoise(int width, int height, double? sigma = null, double? mean = null)
         {
             var options = new VOption();
@@ -2307,36 +2307,36 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Read a point from an image
+        /// Read a point from an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double[] outArray = in.Getpoint(x, y);
         /// </code>
         /// </example>
-        /// <param name="x">Point to read</param>
-        /// <param name="y">Point to read</param>
-        /// <returns>An array of doubles</returns>
+        /// <param name="x">Point to read.</param>
+        /// <param name="y">Point to read.</param>
+        /// <returns>An array of doubles.</returns>
         public double[] Getpoint(int x, int y)
         {
             return this.Call("getpoint", x, y) as double[];
         }
 
         /// <summary>
-        /// Load GIF with giflib
+        /// Load GIF with giflib.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gifload(filename, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Gifload(string filename, int? n = null, bool? memory = null, string access = null, int? page = null, bool? fail = null)
         {
             var options = new VOption();
@@ -2370,21 +2370,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load GIF with giflib
+        /// Load GIF with giflib.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Gifload(filename, out var flags, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Gifload(string filename, out int flags, int? n = null, bool? memory = null, string access = null, int? page = null, bool? fail = null)
         {
             var options = new VOption();
@@ -2425,20 +2425,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load GIF with giflib
+        /// Load GIF with giflib.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.GifloadBuffer(buffer, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image GifloadBuffer(byte[] buffer, int? n = null, bool? memory = null, string access = null, int? page = null, bool? fail = null)
         {
             var options = new VOption();
@@ -2472,21 +2472,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load GIF with giflib
+        /// Load GIF with giflib.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, n: int, memory: bool, access: string, page: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image GifloadBuffer(byte[] buffer, out int flags, int? n = null, bool? memory = null, string access = null, int? page = null, bool? fail = null)
         {
             var options = new VOption();
@@ -2527,16 +2527,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Global balance an image mosaic
+        /// Global balance an image mosaic.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Globalbalance(gamma: double, intOutput: bool);
         /// </code>
         /// </example>
-        /// <param name="gamma">Image gamma</param>
-        /// <param name="intOutput">Integer output</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="gamma">Image gamma.</param>
+        /// <param name="intOutput">Integer output.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Globalbalance(double? gamma = null, bool? intOutput = null)
         {
             var options = new VOption();
@@ -2555,19 +2555,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Place an image within a larger image with a certain gravity
+        /// Place an image within a larger image with a certain gravity.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Gravity(direction, width, height, extend: string, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="direction">direction to place image within width/height</param>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="extend">How to generate the extra pixels</param>
-        /// <param name="background">Color for background pixels</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="direction">direction to place image within width/height.</param>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="extend">How to generate the extra pixels.</param>
+        /// <param name="background">Color for background pixels.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Gravity(string direction, int width, int height, string extend = null, double[] background = null)
         {
             var options = new VOption();
@@ -2586,17 +2586,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a grey ramp image
+        /// Make a grey ramp image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Grey(width, height, uchar: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Grey(int width, int height, bool? uchar = null)
         {
             var options = new VOption();
@@ -2610,60 +2610,60 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Grid an image
+        /// Grid an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Grid(tileHeight, across, down);
         /// </code>
         /// </example>
-        /// <param name="tileHeight">chop into tiles this high</param>
-        /// <param name="across">number of tiles across</param>
-        /// <param name="down">number of tiles down</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="tileHeight">chop into tiles this high.</param>
+        /// <param name="across">number of tiles across.</param>
+        /// <param name="down">number of tiles down.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Grid(int tileHeight, int across, int down)
         {
             return this.Call("grid", tileHeight, across, down) as Image;
         }
 
         /// <summary>
-        /// Form cumulative histogram
+        /// Form cumulative histogram.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistCum();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistCum()
         {
             return this.Call("hist_cum") as Image;
         }
 
         /// <summary>
-        /// Estimate image entropy
+        /// Estimate image entropy.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.HistEntropy();
         /// </code>
         /// </example>
-        /// <returns>A double</returns>
+        /// <returns>A double.</returns>
         public double HistEntropy()
         {
-            return this.Call("hist_entropy") is double result ? result : 0;
+            return this.Call("hist_entropy") is double result ? result : 0d;
         }
 
         /// <summary>
-        /// Histogram equalisation
+        /// Histogram equalisation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistEqual(band: int);
         /// </code>
         /// </example>
-        /// <param name="band">Equalise with this band</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="band">Equalise with this band.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistEqual(int? band = null)
         {
             var options = new VOption();
@@ -2677,15 +2677,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image histogram
+        /// Find image histogram.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistFind(band: int);
         /// </code>
         /// </example>
-        /// <param name="band">Find histogram of band</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="band">Find histogram of band.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistFind(int? band = null)
         {
             var options = new VOption();
@@ -2699,16 +2699,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find indexed image histogram
+        /// Find indexed image histogram.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistFindIndexed(index, combine: string);
         /// </code>
         /// </example>
-        /// <param name="index">Index image</param>
-        /// <param name="combine">Combine bins like this</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="index">Index image.</param>
+        /// <param name="combine">Combine bins like this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistFindIndexed(Image index, string combine = null)
         {
             var options = new VOption();
@@ -2722,15 +2722,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find n-dimensional image histogram
+        /// Find n-dimensional image histogram.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistFindNdim(bins: int);
         /// </code>
         /// </example>
-        /// <param name="bins">Number of bins in each dimension</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="bins">Number of bins in each dimension.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistFindNdim(int? bins = null)
         {
             var options = new VOption();
@@ -2744,31 +2744,31 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Test for monotonicity
+        /// Test for monotonicity.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// bool monotonic = in.HistIsmonotonic();
         /// </code>
         /// </example>
-        /// <returns>A bool</returns>
+        /// <returns>A bool.</returns>
         public bool HistIsmonotonic()
         {
             return this.Call("hist_ismonotonic") is bool result && result;
         }
 
         /// <summary>
-        /// Local histogram equalisation
+        /// Local histogram equalisation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistLocal(width, height, maxSlope: int);
         /// </code>
         /// </example>
-        /// <param name="width">Window width in pixels</param>
-        /// <param name="height">Window height in pixels</param>
-        /// <param name="maxSlope">Maximum slope (CLAHE)</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Window width in pixels.</param>
+        /// <param name="height">Window height in pixels.</param>
+        /// <param name="maxSlope">Maximum slope (CLAHE).</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistLocal(int width, int height, int? maxSlope = null)
         {
             var options = new VOption();
@@ -2782,60 +2782,60 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Match two histograms
+        /// Match two histograms.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistMatch(@ref);
         /// </code>
         /// </example>
-        /// <param name="ref">Reference histogram</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ref">Reference histogram.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistMatch(Image @ref)
         {
             return this.Call("hist_match", @ref) as Image;
         }
 
         /// <summary>
-        /// Normalise histogram
+        /// Normalise histogram.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistNorm();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistNorm()
         {
             return this.Call("hist_norm") as Image;
         }
 
         /// <summary>
-        /// Plot histogram
+        /// Plot histogram.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HistPlot();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HistPlot()
         {
             return this.Call("hist_plot") as Image;
         }
 
         /// <summary>
-        /// Find hough circle transform
+        /// Find hough circle transform.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HoughCircle(scale: int, minRadius: int, maxRadius: int);
         /// </code>
         /// </example>
-        /// <param name="scale">Scale down dimensions by this factor</param>
-        /// <param name="minRadius">Smallest radius to search for</param>
-        /// <param name="maxRadius">Largest radius to search for</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="scale">Scale down dimensions by this factor.</param>
+        /// <param name="minRadius">Smallest radius to search for.</param>
+        /// <param name="maxRadius">Largest radius to search for.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HoughCircle(int? scale = null, int? minRadius = null, int? maxRadius = null)
         {
             var options = new VOption();
@@ -2859,16 +2859,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find hough line transform
+        /// Find hough line transform.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HoughLine(width: int, height: int);
         /// </code>
         /// </example>
-        /// <param name="width">horizontal size of parameter space</param>
-        /// <param name="height">Vertical size of parameter space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">horizontal size of parameter space.</param>
+        /// <param name="height">Vertical size of parameter space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HoughLine(int? width = null, int? height = null)
         {
             var options = new VOption();
@@ -2887,32 +2887,32 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform HSV to sRGB
+        /// Transform HSV to sRGB.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.HSV2sRGB();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image HSV2sRGB()
         {
             return this.Call("HSV2sRGB") as Image;
         }
 
         /// <summary>
-        /// Output to device with ICC profile
+        /// Output to device with ICC profile.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.IccExport(pcs: string, intent: string, outputProfile: string, depth: int);
         /// </code>
         /// </example>
-        /// <param name="pcs">Set Profile Connection Space</param>
-        /// <param name="intent">Rendering intent</param>
-        /// <param name="outputProfile">Filename to load output profile from</param>
-        /// <param name="depth">Output device space depth in bits</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="pcs">Set Profile Connection Space.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <param name="outputProfile">Filename to load output profile from.</param>
+        /// <param name="depth">Output device space depth in bits.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image IccExport(string pcs = null, string intent = null, string outputProfile = null, int? depth = null)
         {
             var options = new VOption();
@@ -2941,18 +2941,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Import from device with ICC profile
+        /// Import from device with ICC profile.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.IccImport(pcs: string, intent: string, embedded: bool, inputProfile: string);
         /// </code>
         /// </example>
-        /// <param name="pcs">Set Profile Connection Space</param>
-        /// <param name="intent">Rendering intent</param>
-        /// <param name="embedded">Use embedded input profile, if available</param>
-        /// <param name="inputProfile">Filename to load input profile from</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="pcs">Set Profile Connection Space.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <param name="embedded">Use embedded input profile, if available.</param>
+        /// <param name="inputProfile">Filename to load input profile from.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image IccImport(string pcs = null, string intent = null, bool? embedded = null, string inputProfile = null)
         {
             var options = new VOption();
@@ -2981,20 +2981,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform between devices with ICC profiles
+        /// Transform between devices with ICC profiles.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.IccTransform(outputProfile, pcs: string, intent: string, embedded: bool, inputProfile: string, depth: int);
         /// </code>
         /// </example>
-        /// <param name="outputProfile">Filename to load output profile from</param>
-        /// <param name="pcs">Set Profile Connection Space</param>
-        /// <param name="intent">Rendering intent</param>
-        /// <param name="embedded">Use embedded input profile, if available</param>
-        /// <param name="inputProfile">Filename to load input profile from</param>
-        /// <param name="depth">Output device space depth in bits</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="outputProfile">Filename to load output profile from.</param>
+        /// <param name="pcs">Set Profile Connection Space.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <param name="embedded">Use embedded input profile, if available.</param>
+        /// <param name="inputProfile">Filename to load input profile from.</param>
+        /// <param name="depth">Output device space depth in bits.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image IccTransform(string outputProfile, string pcs = null, string intent = null, bool? embedded = null, string inputProfile = null, int? depth = null)
         {
             var options = new VOption();
@@ -3028,17 +3028,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a 1D image where pixel values are indexes
+        /// Make a 1D image where pixel values are indexes.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Identity(bands: int, @ushort: bool, size: int);
         /// </code>
         /// </example>
-        /// <param name="bands">Number of bands in LUT</param>
-        /// <param name="ushort">Create a 16-bit LUT</param>
-        /// <param name="size">Size of 16-bit LUT</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="bands">Number of bands in LUT.</param>
+        /// <param name="ushort">Create a 16-bit LUT.</param>
+        /// <param name="size">Size of 16-bit LUT.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Identity(int? bands = null, bool? @ushort = null, int? size = null)
         {
             var options = new VOption();
@@ -3062,19 +3062,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Insert image @sub into @main at @x, @y
+        /// Insert image @sub into @main at @x, @y.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = main.Insert(sub, x, y, expand: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="sub">Sub-image to insert into main image</param>
-        /// <param name="x">Left edge of sub in main</param>
-        /// <param name="y">Top edge of sub in main</param>
-        /// <param name="expand">Expand output to hold all of both inputs</param>
-        /// <param name="background">Color for new pixels</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sub">Sub-image to insert into main image.</param>
+        /// <param name="x">Left edge of sub in main.</param>
+        /// <param name="y">Top edge of sub in main.</param>
+        /// <param name="expand">Expand output to hold all of both inputs.</param>
+        /// <param name="background">Color for new pixels.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Insert(Image sub, int x, int y, bool? expand = null, double[] background = null)
         {
             var options = new VOption();
@@ -3093,29 +3093,29 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Invert an image
+        /// Invert an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Invert();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Invert()
         {
             return this.Call("invert") as Image;
         }
 
         /// <summary>
-        /// Build an inverted look-up table
+        /// Build an inverted look-up table.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Invertlut(size: int);
         /// </code>
         /// </example>
-        /// <param name="size">LUT size to generate</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="size">LUT size to generate.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Invertlut(int? size = null)
         {
             var options = new VOption();
@@ -3129,15 +3129,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Inverse FFT
+        /// Inverse FFT.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Invfft(real: bool);
         /// </code>
         /// </example>
-        /// <param name="real">Output only the real part of the transform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="real">Output only the real part of the transform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Invfft(bool? real = null)
         {
             var options = new VOption();
@@ -3151,20 +3151,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Join a pair of images
+        /// Join a pair of images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: string);
         /// </code>
         /// </example>
-        /// <param name="in2">Second input image</param>
-        /// <param name="direction">Join left-right or up-down</param>
-        /// <param name="expand">Expand output to hold all of both inputs</param>
-        /// <param name="shim">Pixels between images</param>
-        /// <param name="background">Colour for new pixels</param>
-        /// <param name="align">Align on the low, centre or high coordinate edge</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="in2">Second input image.</param>
+        /// <param name="direction">Join left-right or up-down.</param>
+        /// <param name="expand">Expand output to hold all of both inputs.</param>
+        /// <param name="shim">Pixels between images.</param>
+        /// <param name="background">Colour for new pixels.</param>
+        /// <param name="align">Align on the low, centre or high coordinate edge.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Join(Image in2, string direction, bool? expand = null, int? shim = null, double[] background = null, string align = null)
         {
             var options = new VOption();
@@ -3193,20 +3193,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load jpeg from file
+        /// Load jpeg from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Jpegload(filename, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using exif orientation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Jpegload(string filename, bool? memory = null, string access = null, int? shrink = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -3240,21 +3240,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load jpeg from file
+        /// Load jpeg from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Jpegload(filename, out var flags, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using exif orientation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Jpegload(string filename, out int flags, bool? memory = null, string access = null, int? shrink = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -3295,20 +3295,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load jpeg from buffer
+        /// Load jpeg from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.JpegloadBuffer(buffer, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using exif orientation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image JpegloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? shrink = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -3342,21 +3342,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load jpeg from buffer
+        /// Load jpeg from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, memory: bool, access: string, shrink: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using exif orientation</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image JpegloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, int? shrink = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -3397,26 +3397,26 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to jpeg file
+        /// Save image to jpeg file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Jpegsave(filename, pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="optimizeCoding">Compute optimal Huffman coding tables</param>
-        /// <param name="interlace">Generate an interlaced (progressive) jpeg</param>
-        /// <param name="noSubsample">Disable chroma subsample</param>
-        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block</param>
-        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values</param>
-        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans</param>
-        /// <param name="quantTable">Use predefined quantization table with given index</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg.</param>
+        /// <param name="noSubsample">Disable chroma subsample.</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
+        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="quantTable">Use predefined quantization table with given index.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Jpegsave(string filename, int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -3485,26 +3485,26 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to jpeg buffer
+        /// Save image to jpeg buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.JpegsaveBuffer(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="optimizeCoding">Compute optimal Huffman coding tables</param>
-        /// <param name="interlace">Generate an interlaced (progressive) jpeg</param>
-        /// <param name="noSubsample">Disable chroma subsample</param>
-        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block</param>
-        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values</param>
-        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans</param>
-        /// <param name="quantTable">Use predefined quantization table with given index</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg.</param>
+        /// <param name="noSubsample">Disable chroma subsample.</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
+        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="quantTable">Use predefined quantization table with given index.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] JpegsaveBuffer(int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -3573,25 +3573,25 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to jpeg mime
+        /// Save image to jpeg mime.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.JpegsaveMime(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="optimizeCoding">Compute optimal Huffman coding tables</param>
-        /// <param name="interlace">Generate an interlaced (progressive) jpeg</param>
-        /// <param name="noSubsample">Disable chroma subsample</param>
-        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block</param>
-        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values</param>
-        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans</param>
-        /// <param name="quantTable">Use predefined quantization table with given index</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg.</param>
+        /// <param name="noSubsample">Disable chroma subsample.</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
+        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="quantTable">Use predefined quantization table with given index.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void JpegsaveMime(int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -3660,57 +3660,57 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform float Lab to LabQ coding
+        /// Transform float Lab to LabQ coding.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Lab2LabQ();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Lab2LabQ()
         {
             return this.Call("Lab2LabQ") as Image;
         }
 
         /// <summary>
-        /// Transform float Lab to signed short
+        /// Transform float Lab to signed short.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Lab2LabS();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Lab2LabS()
         {
             return this.Call("Lab2LabS") as Image;
         }
 
         /// <summary>
-        /// Transform Lab to LCh
+        /// Transform Lab to LCh.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Lab2LCh();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Lab2LCh()
         {
             return this.Call("Lab2LCh") as Image;
         }
 
         /// <summary>
-        /// Transform CIELAB to XYZ
+        /// Transform CIELAB to XYZ.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Lab2XYZ(temp: double[]);
         /// </code>
         /// </example>
-        /// <param name="temp">Color temperature</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="temp">Color temperature.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Lab2XYZ(double[] temp = null)
         {
             var options = new VOption();
@@ -3724,29 +3724,29 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Label regions in an image
+        /// Label regions in an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image mask = in.Labelregions();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Labelregions()
         {
             return this.Call("labelregions") as Image;
         }
 
         /// <summary>
-        /// Label regions in an image
+        /// Label regions in an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image mask = in.Labelregions(out var segments);
         /// </code>
         /// </example>
-        /// <param name="segments">Number of discrete contigious regions</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="segments">Number of discrete contigious regions.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Labelregions(out int segments)
         {
             var optionalOutput = new VOption
@@ -3763,115 +3763,115 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Unpack a LabQ image to float Lab
+        /// Unpack a LabQ image to float Lab.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LabQ2Lab();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LabQ2Lab()
         {
             return this.Call("LabQ2Lab") as Image;
         }
 
         /// <summary>
-        /// Unpack a LabQ image to short Lab
+        /// Unpack a LabQ image to short Lab.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LabQ2LabS();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LabQ2LabS()
         {
             return this.Call("LabQ2LabS") as Image;
         }
 
         /// <summary>
-        /// Convert a LabQ image to sRGB
+        /// Convert a LabQ image to sRGB.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LabQ2sRGB();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LabQ2sRGB()
         {
             return this.Call("LabQ2sRGB") as Image;
         }
 
         /// <summary>
-        /// Transform signed short Lab to float
+        /// Transform signed short Lab to float.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LabS2Lab();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LabS2Lab()
         {
             return this.Call("LabS2Lab") as Image;
         }
 
         /// <summary>
-        /// Transform short Lab to LabQ coding
+        /// Transform short Lab to LabQ coding.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LabS2LabQ();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LabS2LabQ()
         {
             return this.Call("LabS2LabQ") as Image;
         }
 
         /// <summary>
-        /// Transform LCh to CMC
+        /// Transform LCh to CMC.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LCh2CMC();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LCh2CMC()
         {
             return this.Call("LCh2CMC") as Image;
         }
 
         /// <summary>
-        /// Transform LCh to Lab
+        /// Transform LCh to Lab.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.LCh2Lab();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image LCh2Lab()
         {
             return this.Call("LCh2Lab") as Image;
         }
 
         /// <summary>
-        /// Calculate (a * in + b)
+        /// Calculate (a * in + b).
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Linear(a, b, uchar: bool);
         /// </code>
         /// </example>
-        /// <param name="a">Multiply by this</param>
-        /// <param name="b">Add this</param>
-        /// <param name="uchar">Output should be uchar</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="a">Multiply by this.</param>
+        /// <param name="b">Add this.</param>
+        /// <param name="uchar">Output should be uchar.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Linear(double[] a, double[] b, bool? uchar = null)
         {
             var options = new VOption();
@@ -3885,18 +3885,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Cache an image as a set of lines
+        /// Cache an image as a set of lines.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Linecache(tileHeight: int, access: string, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
-        /// <param name="tileHeight">Tile height in pixels</param>
-        /// <param name="access">Expected access pattern</param>
-        /// <param name="threaded">Allow threaded access</param>
-        /// <param name="persistent">Keep cache between evaluations</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="tileHeight">Tile height in pixels.</param>
+        /// <param name="access">Expected access pattern.</param>
+        /// <param name="threaded">Allow threaded access.</param>
+        /// <param name="persistent">Keep cache between evaluations.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Linecache(int? tileHeight = null, string access = null, bool? threaded = null, bool? persistent = null)
         {
             var options = new VOption();
@@ -3925,18 +3925,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a laplacian of gaussian image
+        /// Make a laplacian of gaussian image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: string);
         /// </code>
         /// </example>
-        /// <param name="sigma">Radius of Logmatian</param>
-        /// <param name="minAmpl">Minimum amplitude of Logmatian</param>
-        /// <param name="separable">Generate separable Logmatian</param>
-        /// <param name="precision">Generate with this precision</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sigma">Radius of Logmatian.</param>
+        /// <param name="minAmpl">Minimum amplitude of Logmatian.</param>
+        /// <param name="separable">Generate separable Logmatian.</param>
+        /// <param name="precision">Generate with this precision.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Logmat(double sigma, double minAmpl, bool? separable = null, string precision = null)
         {
             var options = new VOption();
@@ -3955,21 +3955,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load file with ImageMagick
+        /// Load file with ImageMagick.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Magickload(string filename, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4008,22 +4008,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load file with ImageMagick
+        /// Load file with ImageMagick.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Magickload(string filename, out int flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4069,21 +4069,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load buffer with ImageMagick
+        /// Load buffer with ImageMagick.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MagickloadBuffer(byte[] buffer, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4122,22 +4122,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load buffer with ImageMagick
+        /// Load buffer with ImageMagick.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="density">Canvas resolution for rendering vector formats like SVG</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="density">Canvas resolution for rendering vector formats like SVG.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MagickloadBuffer(byte[] buffer, out int flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4183,19 +4183,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save file with ImageMagick
+        /// Save file with ImageMagick.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Magicksave(filename, format: string, quality: int, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="format">Format to save in</param>
-        /// <param name="quality">Quality to use</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="format">Format to save in.</param>
+        /// <param name="quality">Quality to use.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Magicksave(string filename, string format = null, int? quality = null, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -4229,19 +4229,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to magick buffer
+        /// Save image to magick buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.MagicksaveBuffer(format: string, quality: int, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="format">Format to save in</param>
-        /// <param name="quality">Quality to use</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="format">Format to save in.</param>
+        /// <param name="quality">Quality to use.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] MagicksaveBuffer(string format = null, int? quality = null, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -4275,16 +4275,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Resample with an mapim image
+        /// Resample with an mapim image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Mapim(index, interpolate: GObject);
         /// </code>
         /// </example>
-        /// <param name="index">Index pixels with this</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="index">Index pixels with this.</param>
+        /// <param name="interpolate">Interpolate pixels with this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mapim(Image index, GObject interpolate = null)
         {
             var options = new VOption();
@@ -4298,16 +4298,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Map an image though a lut
+        /// Map an image though a lut.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Maplut(lut, band: int);
         /// </code>
         /// </example>
-        /// <param name="lut">Look-up table image</param>
-        /// <param name="band">apply one-band lut to this band of in</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="lut">Look-up table image.</param>
+        /// <param name="band">apply one-band lut to this band of in.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Maplut(Image lut, int? band = null)
         {
             var options = new VOption();
@@ -4321,23 +4321,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a butterworth filter
+        /// Make a butterworth filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="order">Filter order</param>
-        /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="order">Filter order.</param>
+        /// <param name="frequencyCutoff">Frequency cutoff.</param>
+        /// <param name="amplitudeCutoff">Amplitude cutoff.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskButterworth(int width, int height, double order, double frequencyCutoff, double amplitudeCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4366,25 +4366,25 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a butterworth_band filter
+        /// Make a butterworth_band filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="order">Filter order</param>
-        /// <param name="frequencyCutoffX">Frequency cutoff x</param>
-        /// <param name="frequencyCutoffY">Frequency cutoff y</param>
-        /// <param name="radius">radius of circle</param>
-        /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="order">Filter order.</param>
+        /// <param name="frequencyCutoffX">Frequency cutoff x.</param>
+        /// <param name="frequencyCutoffY">Frequency cutoff y.</param>
+        /// <param name="radius">radius of circle.</param>
+        /// <param name="amplitudeCutoff">Amplitude cutoff.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskButterworthBand(int width, int height, double order, double frequencyCutoffX, double frequencyCutoffY, double radius, double amplitudeCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4413,24 +4413,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a butterworth ring filter
+        /// Make a butterworth ring filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="order">Filter order</param>
-        /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="ringwidth">Ringwidth</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="order">Filter order.</param>
+        /// <param name="frequencyCutoff">Frequency cutoff.</param>
+        /// <param name="amplitudeCutoff">Amplitude cutoff.</param>
+        /// <param name="ringwidth">Ringwidth.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskButterworthRing(int width, int height, double order, double frequencyCutoff, double amplitudeCutoff, double ringwidth, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4459,21 +4459,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make fractal filter
+        /// Make fractal filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="fractalDimension">Fractal dimension</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="fractalDimension">Fractal dimension.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskFractal(int width, int height, double fractalDimension, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4502,22 +4502,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a gaussian filter
+        /// Make a gaussian filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="frequencyCutoff">Frequency cutoff.</param>
+        /// <param name="amplitudeCutoff">Amplitude cutoff.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskGaussian(int width, int height, double frequencyCutoff, double amplitudeCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4546,24 +4546,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a gaussian filter
+        /// Make a gaussian filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="frequencyCutoffX">Frequency cutoff x</param>
-        /// <param name="frequencyCutoffY">Frequency cutoff y</param>
-        /// <param name="radius">radius of circle</param>
-        /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="frequencyCutoffX">Frequency cutoff x.</param>
+        /// <param name="frequencyCutoffY">Frequency cutoff y.</param>
+        /// <param name="radius">radius of circle.</param>
+        /// <param name="amplitudeCutoff">Amplitude cutoff.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskGaussianBand(int width, int height, double frequencyCutoffX, double frequencyCutoffY, double radius, double amplitudeCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4592,23 +4592,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a gaussian ring filter
+        /// Make a gaussian ring filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="amplitudeCutoff">Amplitude cutoff</param>
-        /// <param name="ringwidth">Ringwidth</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="frequencyCutoff">Frequency cutoff.</param>
+        /// <param name="amplitudeCutoff">Amplitude cutoff.</param>
+        /// <param name="ringwidth">Ringwidth.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskGaussianRing(int width, int height, double frequencyCutoff, double amplitudeCutoff, double ringwidth, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4637,21 +4637,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make an ideal filter
+        /// Make an ideal filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="frequencyCutoff">Frequency cutoff.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskIdeal(int width, int height, double frequencyCutoff, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4680,23 +4680,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make an ideal band filter
+        /// Make an ideal band filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="frequencyCutoffX">Frequency cutoff x</param>
-        /// <param name="frequencyCutoffY">Frequency cutoff y</param>
-        /// <param name="radius">radius of circle</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="frequencyCutoffX">Frequency cutoff x.</param>
+        /// <param name="frequencyCutoffY">Frequency cutoff y.</param>
+        /// <param name="radius">radius of circle.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskIdealBand(int width, int height, double frequencyCutoffX, double frequencyCutoffY, double radius, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4725,22 +4725,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make an ideal ring filter
+        /// Make an ideal ring filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="frequencyCutoff">Frequency cutoff</param>
-        /// <param name="ringwidth">Ringwidth</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="nodc">Remove DC component</param>
-        /// <param name="reject">Invert the sense of the filter</param>
-        /// <param name="optical">Rotate quadrants to optical space</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="frequencyCutoff">Frequency cutoff.</param>
+        /// <param name="ringwidth">Ringwidth.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="nodc">Remove DC component.</param>
+        /// <param name="reject">Invert the sense of the filter.</param>
+        /// <param name="optical">Rotate quadrants to optical space.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image MaskIdealRing(int width, int height, double frequencyCutoff, double ringwidth, bool? uchar = null, bool? nodc = null, bool? reject = null, bool? optical = null)
         {
             var options = new VOption();
@@ -4769,27 +4769,27 @@ namespace NetVips
         }
 
         /// <summary>
-        /// First-order match of two images
+        /// First-order match of two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="xr1">Position of first reference tie-point</param>
-        /// <param name="yr1">Position of first reference tie-point</param>
-        /// <param name="xs1">Position of first secondary tie-point</param>
-        /// <param name="ys1">Position of first secondary tie-point</param>
-        /// <param name="xr2">Position of second reference tie-point</param>
-        /// <param name="yr2">Position of second reference tie-point</param>
-        /// <param name="xs2">Position of second secondary tie-point</param>
-        /// <param name="ys2">Position of second secondary tie-point</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="search">Search to improve tie-points</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="xr1">Position of first reference tie-point.</param>
+        /// <param name="yr1">Position of first reference tie-point.</param>
+        /// <param name="xs1">Position of first secondary tie-point.</param>
+        /// <param name="ys1">Position of first secondary tie-point.</param>
+        /// <param name="xr2">Position of second reference tie-point.</param>
+        /// <param name="yr2">Position of second reference tie-point.</param>
+        /// <param name="xs2">Position of second secondary tie-point.</param>
+        /// <param name="ys2">Position of second secondary tie-point.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="search">Search to improve tie-points.</param>
+        /// <param name="interpolate">Interpolate pixels with this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Match(Image sec, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, int? hwindow = null, int? harea = null, bool? search = null, GObject interpolate = null)
         {
             var options = new VOption();
@@ -4818,65 +4818,65 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Apply a math operation to an image
+        /// Apply a math operation to an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Math(math);
         /// </code>
         /// </example>
-        /// <param name="math">math to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="math">math to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Math(string math)
         {
             return this.Call("math", math) as Image;
         }
 
         /// <summary>
-        /// Binary math operations
+        /// Binary math operations.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Math2(right, math2);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <param name="math2">math to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <param name="math2">math to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Math2(Image right, string math2)
         {
             return this.Call("math2", right, math2) as Image;
         }
 
         /// <summary>
-        /// Binary math operations with a constant
+        /// Binary math operations with a constant.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Math2Const(math2, c);
         /// </code>
         /// </example>
-        /// <param name="math2">math to perform</param>
-        /// <param name="c">Array of constants</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="math2">math to perform.</param>
+        /// <param name="c">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Math2Const(string math2, double[] c)
         {
             return this.Call("math2_const", math2, c) as Image;
         }
 
         /// <summary>
-        /// Load mat from file
+        /// Load mat from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Matload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4900,19 +4900,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load mat from file
+        /// Load mat from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Matload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4943,18 +4943,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load matrix from file
+        /// Load matrix from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Matrixload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -4978,19 +4978,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load matrix from file
+        /// Load matrix from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Matrixload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -5021,16 +5021,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Print matrix
+        /// Print matrix.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Matrixprint(pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Matrixprint(int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -5054,17 +5054,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to matrix file
+        /// Save image to matrix file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Matrixsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Matrixsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -5088,15 +5088,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image maximum
+        /// Find image maximum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Max(size: int);
         /// </code>
         /// </example>
-        /// <param name="size">Number of maximum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="size">Number of maximum values to find.</param>
+        /// <returns>A double.</returns>
         public double Max(int? size = null)
         {
             var options = new VOption();
@@ -5106,20 +5106,20 @@ namespace NetVips
                 options.Add(nameof(size), size);
             }
 
-            return this.Call("max", options) is double result ? result : 0;
+            return this.Call("max", options) is double result ? result : 0d;
         }
 
         /// <summary>
-        /// Find image maximum
+        /// Find image maximum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of maximum</param>
-        /// <param name="size">Number of maximum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of maximum.</param>
+        /// <param name="size">Number of maximum values to find.</param>
+        /// <returns>A double.</returns>
         public double Max(out int x, int? size = null)
         {
             var options = new VOption();
@@ -5132,7 +5132,7 @@ namespace NetVips
             options.Add("x", true);
 
             var results = this.Call("max", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
 
@@ -5140,17 +5140,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image maximum
+        /// Find image maximum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of maximum</param>
-        /// <param name="y">Vertical position of maximum</param>
-        /// <param name="size">Number of maximum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of maximum.</param>
+        /// <param name="y">Vertical position of maximum.</param>
+        /// <param name="size">Number of maximum values to find.</param>
+        /// <returns>A double.</returns>
         public double Max(out int x, out int y, int? size = null)
         {
             var options = new VOption();
@@ -5164,7 +5164,7 @@ namespace NetVips
             options.Add("y", true);
 
             var results = this.Call("max", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5173,18 +5173,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image maximum
+        /// Find image maximum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, out var outArray, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of maximum</param>
-        /// <param name="y">Vertical position of maximum</param>
-        /// <param name="outArray">Array of output values</param>
-        /// <param name="size">Number of maximum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of maximum.</param>
+        /// <param name="y">Vertical position of maximum.</param>
+        /// <param name="outArray">Array of output values.</param>
+        /// <param name="size">Number of maximum values to find.</param>
+        /// <returns>A double.</returns>
         public double Max(out int x, out int y, out double[] outArray, int? size = null)
         {
             var options = new VOption();
@@ -5199,7 +5199,7 @@ namespace NetVips
             options.Add("out_array", true);
 
             var results = this.Call("max", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5209,19 +5209,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image maximum
+        /// Find image maximum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of maximum</param>
-        /// <param name="y">Vertical position of maximum</param>
-        /// <param name="outArray">Array of output values</param>
-        /// <param name="xArray">Array of horizontal positions</param>
-        /// <param name="size">Number of maximum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of maximum.</param>
+        /// <param name="y">Vertical position of maximum.</param>
+        /// <param name="outArray">Array of output values.</param>
+        /// <param name="xArray">Array of horizontal positions.</param>
+        /// <param name="size">Number of maximum values to find.</param>
+        /// <returns>A double.</returns>
         public double Max(out int x, out int y, out double[] outArray, out int[] xArray, int? size = null)
         {
             var options = new VOption();
@@ -5237,7 +5237,7 @@ namespace NetVips
             options.Add("x_array", true);
 
             var results = this.Call("max", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5248,20 +5248,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image maximum
+        /// Find image maximum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Max(out var x, out var y, out var outArray, out var xArray, out var yArray, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of maximum</param>
-        /// <param name="y">Vertical position of maximum</param>
-        /// <param name="outArray">Array of output values</param>
-        /// <param name="xArray">Array of horizontal positions</param>
-        /// <param name="yArray">Array of vertical positions</param>
-        /// <param name="size">Number of maximum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of maximum.</param>
+        /// <param name="y">Vertical position of maximum.</param>
+        /// <param name="outArray">Array of output values.</param>
+        /// <param name="xArray">Array of horizontal positions.</param>
+        /// <param name="yArray">Array of vertical positions.</param>
+        /// <param name="size">Number of maximum values to find.</param>
+        /// <returns>A double.</returns>
         public double Max(out int x, out int y, out double[] outArray, out int[] xArray, out int[] yArray, int? size = null)
         {
             var options = new VOption();
@@ -5278,7 +5278,7 @@ namespace NetVips
             options.Add("y_array", true);
 
             var results = this.Call("max", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5290,20 +5290,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Measure a set of patches on a color chart
+        /// Measure a set of patches on a color chart.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Measure(h, v, left: int, top: int, width: int, height: int);
         /// </code>
         /// </example>
-        /// <param name="h">Number of patches across chart</param>
-        /// <param name="v">Number of patches down chart</param>
-        /// <param name="left">Left edge of extract area</param>
-        /// <param name="top">Top edge of extract area</param>
-        /// <param name="width">Width of extract area</param>
-        /// <param name="height">Height of extract area</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="h">Number of patches across chart.</param>
+        /// <param name="v">Number of patches down chart.</param>
+        /// <param name="left">Left edge of extract area.</param>
+        /// <param name="top">Top edge of extract area.</param>
+        /// <param name="width">Width of extract area.</param>
+        /// <param name="height">Height of extract area.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Measure(int h, int v, int? left = null, int? top = null, int? width = null, int? height = null)
         {
             var options = new VOption();
@@ -5332,19 +5332,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Merge two images
+        /// Merge two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Merge(sec, direction, dx, dy, mblend: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial merge</param>
-        /// <param name="dx">Horizontal displacement from sec to ref</param>
-        /// <param name="dy">Vertical displacement from sec to ref</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial merge.</param>
+        /// <param name="dx">Horizontal displacement from sec to ref.</param>
+        /// <param name="dy">Vertical displacement from sec to ref.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Merge(Image sec, string direction, int dx, int dy, int? mblend = null)
         {
             var options = new VOption();
@@ -5358,15 +5358,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image minimum
+        /// Find image minimum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Min(size: int);
         /// </code>
         /// </example>
-        /// <param name="size">Number of minimum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="size">Number of minimum values to find.</param>
+        /// <returns>A double.</returns>
         public double Min(int? size = null)
         {
             var options = new VOption();
@@ -5376,20 +5376,20 @@ namespace NetVips
                 options.Add(nameof(size), size);
             }
 
-            return this.Call("min", options) is double result ? result : 0;
+            return this.Call("min", options) is double result ? result : 0d;
         }
 
         /// <summary>
-        /// Find image minimum
+        /// Find image minimum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of minimum</param>
-        /// <param name="size">Number of minimum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of minimum.</param>
+        /// <param name="size">Number of minimum values to find.</param>
+        /// <returns>A double.</returns>
         public double Min(out int x, int? size = null)
         {
             var options = new VOption();
@@ -5402,7 +5402,7 @@ namespace NetVips
             options.Add("x", true);
 
             var results = this.Call("min", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
 
@@ -5410,17 +5410,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image minimum
+        /// Find image minimum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of minimum</param>
-        /// <param name="y">Vertical position of minimum</param>
-        /// <param name="size">Number of minimum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of minimum.</param>
+        /// <param name="y">Vertical position of minimum.</param>
+        /// <param name="size">Number of minimum values to find.</param>
+        /// <returns>A double.</returns>
         public double Min(out int x, out int y, int? size = null)
         {
             var options = new VOption();
@@ -5434,7 +5434,7 @@ namespace NetVips
             options.Add("y", true);
 
             var results = this.Call("min", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5443,18 +5443,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image minimum
+        /// Find image minimum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, out var outArray, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of minimum</param>
-        /// <param name="y">Vertical position of minimum</param>
-        /// <param name="outArray">Array of output values</param>
-        /// <param name="size">Number of minimum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of minimum.</param>
+        /// <param name="y">Vertical position of minimum.</param>
+        /// <param name="outArray">Array of output values.</param>
+        /// <param name="size">Number of minimum values to find.</param>
+        /// <returns>A double.</returns>
         public double Min(out int x, out int y, out double[] outArray, int? size = null)
         {
             var options = new VOption();
@@ -5469,7 +5469,7 @@ namespace NetVips
             options.Add("out_array", true);
 
             var results = this.Call("min", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5479,19 +5479,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image minimum
+        /// Find image minimum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of minimum</param>
-        /// <param name="y">Vertical position of minimum</param>
-        /// <param name="outArray">Array of output values</param>
-        /// <param name="xArray">Array of horizontal positions</param>
-        /// <param name="size">Number of minimum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of minimum.</param>
+        /// <param name="y">Vertical position of minimum.</param>
+        /// <param name="outArray">Array of output values.</param>
+        /// <param name="xArray">Array of horizontal positions.</param>
+        /// <param name="size">Number of minimum values to find.</param>
+        /// <returns>A double.</returns>
         public double Min(out int x, out int y, out double[] outArray, out int[] xArray, int? size = null)
         {
             var options = new VOption();
@@ -5507,7 +5507,7 @@ namespace NetVips
             options.Add("x_array", true);
 
             var results = this.Call("min", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5518,20 +5518,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image minimum
+        /// Find image minimum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// double @out = in.Min(out var x, out var y, out var outArray, out var xArray, out var yArray, size: int);
         /// </code>
         /// </example>
-        /// <param name="x">Horizontal position of minimum</param>
-        /// <param name="y">Vertical position of minimum</param>
-        /// <param name="outArray">Array of output values</param>
-        /// <param name="xArray">Array of horizontal positions</param>
-        /// <param name="yArray">Array of vertical positions</param>
-        /// <param name="size">Number of minimum values to find</param>
-        /// <returns>A double</returns>
+        /// <param name="x">Horizontal position of minimum.</param>
+        /// <param name="y">Vertical position of minimum.</param>
+        /// <param name="outArray">Array of output values.</param>
+        /// <param name="xArray">Array of horizontal positions.</param>
+        /// <param name="yArray">Array of vertical positions.</param>
+        /// <param name="size">Number of minimum values to find.</param>
+        /// <returns>A double.</returns>
         public double Min(out int x, out int y, out double[] outArray, out int[] xArray, out int[] yArray, int? size = null)
         {
             var options = new VOption();
@@ -5548,7 +5548,7 @@ namespace NetVips
             options.Add("y_array", true);
 
             var results = this.Call("min", options) as object[];
-            var finalResult = results?[0] is double result ? result : 0;
+            var finalResult = results?[0] is double result ? result : 0d;
             var opts = results?[1] as VOption;
             x = opts?["x"] is int out1 ? out1 : 0;
             y = opts?["y"] is int out2 ? out2 : 0;
@@ -5560,40 +5560,40 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Morphology operation
+        /// Morphology operation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Morph(mask, morph);
         /// </code>
         /// </example>
-        /// <param name="mask">Input matrix image</param>
-        /// <param name="morph">Morphological operation to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">Input matrix image.</param>
+        /// <param name="morph">Morphological operation to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Morph(Image mask, string morph)
         {
             return this.Call("morph", mask, morph) as Image;
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5622,25 +5622,25 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="dx0">Detected integer offset</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="dx0">Detected integer offset.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5676,26 +5676,26 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="dx0">Detected integer offset</param>
-        /// <param name="dy0">Detected integer offset</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="dx0">Detected integer offset.</param>
+        /// <param name="dy0">Detected integer offset.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5733,27 +5733,27 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="dx0">Detected integer offset</param>
-        /// <param name="dy0">Detected integer offset</param>
-        /// <param name="scale1">Detected scale</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="dx0">Detected integer offset.</param>
+        /// <param name="dy0">Detected integer offset.</param>
+        /// <param name="scale1">Detected scale.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5787,34 +5787,34 @@ namespace NetVips
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
             dy0 = opts?["dy0"] is int out2 ? out2 : 0;
-            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0d;
 
             return finalResult;
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="dx0">Detected integer offset</param>
-        /// <param name="dy0">Detected integer offset</param>
-        /// <param name="scale1">Detected scale</param>
-        /// <param name="angle1">Detected rotation</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="dx0">Detected integer offset.</param>
+        /// <param name="dy0">Detected integer offset.</param>
+        /// <param name="scale1">Detected scale.</param>
+        /// <param name="angle1">Detected rotation.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5849,36 +5849,36 @@ namespace NetVips
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
             dy0 = opts?["dy0"] is int out2 ? out2 : 0;
-            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
-            angle1 = opts?["angle1"] is double out4 ? out4 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0d;
+            angle1 = opts?["angle1"] is double out4 ? out4 : 0d;
 
             return finalResult;
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="dx0">Detected integer offset</param>
-        /// <param name="dy0">Detected integer offset</param>
-        /// <param name="scale1">Detected scale</param>
-        /// <param name="angle1">Detected rotation</param>
-        /// <param name="dy1">Detected first-order displacement</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="dx0">Detected integer offset.</param>
+        /// <param name="dy0">Detected integer offset.</param>
+        /// <param name="scale1">Detected scale.</param>
+        /// <param name="angle1">Detected rotation.</param>
+        /// <param name="dy1">Detected first-order displacement.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, out double dy1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5914,38 +5914,38 @@ namespace NetVips
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
             dy0 = opts?["dy0"] is int out2 ? out2 : 0;
-            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
-            angle1 = opts?["angle1"] is double out4 ? out4 : 0;
-            dy1 = opts?["dy1"] is double out5 ? out5 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0d;
+            angle1 = opts?["angle1"] is double out4 ? out4 : 0d;
+            dy1 = opts?["dy1"] is double out5 ? out5 : 0d;
 
             return finalResult;
         }
 
         /// <summary>
-        /// Mosaic two images
+        /// Mosaic two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xref">Position of reference tie-point</param>
-        /// <param name="yref">Position of reference tie-point</param>
-        /// <param name="xsec">Position of secondary tie-point</param>
-        /// <param name="ysec">Position of secondary tie-point</param>
-        /// <param name="dx0">Detected integer offset</param>
-        /// <param name="dy0">Detected integer offset</param>
-        /// <param name="scale1">Detected scale</param>
-        /// <param name="angle1">Detected rotation</param>
-        /// <param name="dy1">Detected first-order displacement</param>
-        /// <param name="dx1">Detected first-order displacement</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xref">Position of reference tie-point.</param>
+        /// <param name="yref">Position of reference tie-point.</param>
+        /// <param name="xsec">Position of secondary tie-point.</param>
+        /// <param name="ysec">Position of secondary tie-point.</param>
+        /// <param name="dx0">Detected integer offset.</param>
+        /// <param name="dy0">Detected integer offset.</param>
+        /// <param name="scale1">Detected scale.</param>
+        /// <param name="angle1">Detected rotation.</param>
+        /// <param name="dy1">Detected first-order displacement.</param>
+        /// <param name="dx1">Detected first-order displacement.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, out double dy1, out double dx1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -5982,39 +5982,39 @@ namespace NetVips
             var opts = results?[1] as VOption;
             dx0 = opts?["dx0"] is int out1 ? out1 : 0;
             dy0 = opts?["dy0"] is int out2 ? out2 : 0;
-            scale1 = opts?["scale1"] is double out3 ? out3 : 0;
-            angle1 = opts?["angle1"] is double out4 ? out4 : 0;
-            dy1 = opts?["dy1"] is double out5 ? out5 : 0;
-            dx1 = opts?["dx1"] is double out6 ? out6 : 0;
+            scale1 = opts?["scale1"] is double out3 ? out3 : 0d;
+            angle1 = opts?["angle1"] is double out4 ? out4 : 0d;
+            dy1 = opts?["dy1"] is double out5 ? out5 : 0d;
+            dx1 = opts?["dx1"] is double out6 ? out6 : 0d;
 
             return finalResult;
         }
 
         /// <summary>
-        /// First-order mosaic of two images
+        /// First-order mosaic of two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject, mblend: int, bandno: int);
         /// </code>
         /// </example>
-        /// <param name="sec">Secondary image</param>
-        /// <param name="direction">Horizontal or vertcial mosaic</param>
-        /// <param name="xr1">Position of first reference tie-point</param>
-        /// <param name="yr1">Position of first reference tie-point</param>
-        /// <param name="xs1">Position of first secondary tie-point</param>
-        /// <param name="ys1">Position of first secondary tie-point</param>
-        /// <param name="xr2">Position of second reference tie-point</param>
-        /// <param name="yr2">Position of second reference tie-point</param>
-        /// <param name="xs2">Position of second secondary tie-point</param>
-        /// <param name="ys2">Position of second secondary tie-point</param>
-        /// <param name="hwindow">Half window size</param>
-        /// <param name="harea">Half area size</param>
-        /// <param name="search">Search to improve tie-points</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
-        /// <param name="mblend">Maximum blend size</param>
-        /// <param name="bandno">Band to search for features on</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sec">Secondary image.</param>
+        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="xr1">Position of first reference tie-point.</param>
+        /// <param name="yr1">Position of first reference tie-point.</param>
+        /// <param name="xs1">Position of first secondary tie-point.</param>
+        /// <param name="ys1">Position of first secondary tie-point.</param>
+        /// <param name="xr2">Position of second reference tie-point.</param>
+        /// <param name="yr2">Position of second reference tie-point.</param>
+        /// <param name="xs2">Position of second secondary tie-point.</param>
+        /// <param name="ys2">Position of second secondary tie-point.</param>
+        /// <param name="hwindow">Half window size.</param>
+        /// <param name="harea">Half area size.</param>
+        /// <param name="search">Search to improve tie-points.</param>
+        /// <param name="interpolate">Interpolate pixels with this.</param>
+        /// <param name="mblend">Maximum blend size.</param>
+        /// <param name="bandno">Band to search for features on.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Mosaic1(Image sec, string direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, int? hwindow = null, int? harea = null, bool? search = null, GObject interpolate = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
@@ -6053,15 +6053,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Pick most-significant byte from an image
+        /// Pick most-significant byte from an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Msb(band: int);
         /// </code>
         /// </example>
-        /// <param name="band">Band to msb</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="band">Band to msb.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Msb(int? band = null)
         {
             var options = new VOption();
@@ -6075,33 +6075,33 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Multiply two images
+        /// Multiply two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Multiply(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Multiply(Image right)
         {
             return this.Call("multiply", right) as Image;
         }
 
         /// <summary>
-        /// Load a NIFTI image
+        /// Load a NIFTI image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Niftiload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Niftiload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6125,19 +6125,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load a NIFTI image
+        /// Load a NIFTI image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Niftiload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Niftiload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6168,17 +6168,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to nifti file
+        /// Save image to nifti file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Niftisave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Niftisave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -6202,18 +6202,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load an OpenEXR image
+        /// Load an OpenEXR image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Openexrload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Openexrload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6237,19 +6237,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load an OpenEXR image
+        /// Load an OpenEXR image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Openexrload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Openexrload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6280,21 +6280,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load file with OpenSlide
+        /// Load file with OpenSlide.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Openslideload(filename, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="level">Load this level from the file</param>
-        /// <param name="autocrop">Crop to image bounds</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="associated">Load this associated image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="level">Load this level from the file.</param>
+        /// <param name="autocrop">Crop to image bounds.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="associated">Load this associated image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Openslideload(string filename, bool? memory = null, string access = null, int? level = null, bool? autocrop = null, bool? fail = null, string associated = null)
         {
             var options = new VOption();
@@ -6333,22 +6333,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load file with OpenSlide
+        /// Load file with OpenSlide.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Openslideload(filename, out var flags, memory: bool, access: string, level: int, autocrop: bool, fail: bool, associated: string);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="level">Load this level from the file</param>
-        /// <param name="autocrop">Crop to image bounds</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="associated">Load this associated image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="level">Load this level from the file.</param>
+        /// <param name="autocrop">Crop to image bounds.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="associated">Load this associated image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Openslideload(string filename, out int flags, bool? memory = null, string access = null, int? level = null, bool? autocrop = null, bool? fail = null, string associated = null)
         {
             var options = new VOption();
@@ -6394,23 +6394,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load PDF with libpoppler
+        /// Load PDF with libpoppler.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pdfload(filename, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <param name="background">Background value</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Pdfload(string filename, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
@@ -6459,24 +6459,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load PDF with libpoppler
+        /// Load PDF with libpoppler.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pdfload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <param name="background">Background value</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Pdfload(string filename, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
@@ -6532,23 +6532,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load PDF with libpoppler
+        /// Load PDF with libpoppler.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PdfloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <param name="background">Background value</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image PdfloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
@@ -6597,24 +6597,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load PDF with libpoppler
+        /// Load PDF with libpoppler.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, dpi: double, scale: double, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the file</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <param name="background">Background value</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image PdfloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, double? dpi = null, double? scale = null, double[] background = null)
         {
             var options = new VOption();
@@ -6670,33 +6670,33 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find threshold for percent of pixels
+        /// Find threshold for percent of pixels.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// int threshold = in.Percent(percent);
         /// </code>
         /// </example>
-        /// <param name="percent">Percent of pixels</param>
-        /// <returns>A int</returns>
+        /// <param name="percent">Percent of pixels.</param>
+        /// <returns>A int.</returns>
         public int Percent(double percent)
         {
             return this.Call("percent", percent) is int result ? result : 0;
         }
 
         /// <summary>
-        /// Make a perlin noise image
+        /// Make a perlin noise image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Perlin(width, height, cellSize: int, uchar: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="cellSize">Size of Perlin cells</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="cellSize">Size of Perlin cells.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Perlin(int width, int height, int? cellSize = null, bool? uchar = null)
         {
             var options = new VOption();
@@ -6715,33 +6715,33 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Calculate phase correlation
+        /// Calculate phase correlation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Phasecor(in2);
         /// </code>
         /// </example>
-        /// <param name="in2">Second input image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="in2">Second input image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Phasecor(Image in2)
         {
             return this.Call("phasecor", in2) as Image;
         }
 
         /// <summary>
-        /// Load png from file
+        /// Load png from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pngload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Pngload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6765,19 +6765,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load png from file
+        /// Load png from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Pngload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6808,18 +6808,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load png from buffer
+        /// Load png from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image PngloadBuffer(byte[] buffer, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6843,19 +6843,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load png from buffer
+        /// Load png from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image PngloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -6886,25 +6886,25 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to png file
+        /// Save image to png file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Pngsave(filename, compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="compression">Compression factor</param>
-        /// <param name="interlace">Interlace image</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="filter">libpng row filter flag(s)</param>
-        /// <param name="palette">Quantise to 8bpp palette</param>
-        /// <param name="colours">Max number of palette colours</param>
-        /// <param name="q">Quantisation quality</param>
-        /// <param name="dither">Amount of dithering</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="compression">Compression factor.</param>
+        /// <param name="interlace">Interlace image.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="filter">libpng row filter flag(s).</param>
+        /// <param name="palette">Quantise to 8bpp palette.</param>
+        /// <param name="colours">Max number of palette colours.</param>
+        /// <param name="q">Quantisation quality.</param>
+        /// <param name="dither">Amount of dithering.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Pngsave(string filename, int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -6968,25 +6968,25 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to png buffer
+        /// Save image to png buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="compression">Compression factor</param>
-        /// <param name="interlace">Interlace image</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="filter">libpng row filter flag(s)</param>
-        /// <param name="palette">Quantise to 8bpp palette</param>
-        /// <param name="colours">Max number of palette colours</param>
-        /// <param name="q">Quantisation quality</param>
-        /// <param name="dither">Amount of dithering</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="compression">Compression factor.</param>
+        /// <param name="interlace">Interlace image.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="filter">libpng row filter flag(s).</param>
+        /// <param name="palette">Quantise to 8bpp palette.</param>
+        /// <param name="colours">Max number of palette colours.</param>
+        /// <param name="q">Quantisation quality.</param>
+        /// <param name="dither">Amount of dithering.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7050,18 +7050,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load ppm from file
+        /// Load ppm from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Ppmload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -7085,19 +7085,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load ppm from file
+        /// Load ppm from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Ppmload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -7128,19 +7128,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to ppm file
+        /// Save image to ppm file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Ppmsave(filename, pageHeight: int, ascii: bool, squash: bool, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="ascii">save as ascii</param>
-        /// <param name="squash">save as one bit</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="ascii">save as ascii.</param>
+        /// <param name="squash">save as one bit.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Ppmsave(string filename, int? pageHeight = null, bool? ascii = null, bool? squash = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7174,15 +7174,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Premultiply image alpha
+        /// Premultiply image alpha.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Premultiply(maxAlpha: double);
         /// </code>
         /// </example>
-        /// <param name="maxAlpha">Maximum value of alpha channel</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="maxAlpha">Maximum value of alpha channel.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Premultiply(double? maxAlpha = null)
         {
             var options = new VOption();
@@ -7196,44 +7196,44 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Find image profiles
+        /// Find image profiles.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// var output = in.Profile();
         /// </code>
         /// </example>
-        /// <returns>An array of objects</returns>
+        /// <returns>An array of objects.</returns>
         public object[] Profile()
         {
             return this.Call("profile") as object[];
         }
 
         /// <summary>
-        /// Find image projections
+        /// Find image projections.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// var output = in.Project();
         /// </code>
         /// </example>
-        /// <returns>An array of objects</returns>
+        /// <returns>An array of objects.</returns>
         public object[] Project()
         {
             return this.Call("project") as object[];
         }
 
         /// <summary>
-        /// Resample an image with a quadratic transform
+        /// Resample an image with a quadratic transform.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Quadratic(coeff, interpolate: GObject);
         /// </code>
         /// </example>
-        /// <param name="coeff">Coefficient matrix</param>
-        /// <param name="interpolate">Interpolate values with this</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="coeff">Coefficient matrix.</param>
+        /// <param name="interpolate">Interpolate values with this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Quadratic(Image coeff, GObject interpolate = null)
         {
             var options = new VOption();
@@ -7247,32 +7247,32 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Unpack Radiance coding to float RGB
+        /// Unpack Radiance coding to float RGB.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Rad2float();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rad2float()
         {
             return this.Call("rad2float") as Image;
         }
 
         /// <summary>
-        /// Load a Radiance image from a file
+        /// Load a Radiance image from a file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Radload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Radload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -7296,19 +7296,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load a Radiance image from a file
+        /// Load a Radiance image from a file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Radload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -7339,17 +7339,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to Radiance file
+        /// Save image to Radiance file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Radsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Radsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7373,17 +7373,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to Radiance buffer
+        /// Save image to Radiance buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.RadsaveBuffer(pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] RadsaveBuffer(int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7407,34 +7407,130 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Rank filter
+        /// Rank filter.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Rank(width, height, index);
         /// </code>
         /// </example>
-        /// <param name="width">Window width in pixels</param>
-        /// <param name="height">Window height in pixels</param>
-        /// <param name="index">Select pixel at index</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Window width in pixels.</param>
+        /// <param name="height">Window height in pixels.</param>
+        /// <param name="index">Select pixel at index.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rank(int width, int height, int index)
         {
             return this.Call("rank", width, height, index) as Image;
         }
 
         /// <summary>
-        /// Save image to raw file
+        /// Load raw data from a file.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, memory: bool, access: string, fail: bool, offset: ulong);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="bands">Number of bands in image.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="offset">Offset in bytes from start of file.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image Rawload(string filename, int width, int height, int bands, bool? memory = null, string access = null, bool? fail = null, ulong? offset = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            if (offset.HasValue)
+            {
+                options.Add(nameof(offset), offset);
+            }
+
+            return Operation.Call("rawload", options, filename, width, height, bands) as Image;
+        }
+
+        /// <summary>
+        /// Load raw data from a file.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, memory: bool, access: string, fail: bool, offset: ulong);
+        /// </code>
+        /// </example>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="bands">Number of bands in image.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="offset">Offset in bytes from start of file.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image Rawload(string filename, int width, int height, int bands, out int flags, bool? memory = null, string access = null, bool? fail = null, ulong? offset = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            if (offset.HasValue)
+            {
+                options.Add(nameof(offset), offset);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("rawload", options, filename, width, height, bands) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Save image to raw file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Rawsave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Rawsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7458,17 +7554,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Write raw image to file descriptor
+        /// Write raw image to file descriptor.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.RawsaveFd(fd, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="fd">File descriptor to write to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="fd">File descriptor to write to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void RawsaveFd(int fd, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -7492,33 +7588,33 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Linear recombination with matrix
+        /// Linear recombination with matrix.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Recomb(m);
         /// </code>
         /// </example>
-        /// <param name="m">matrix of coefficients</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="m">matrix of coefficients.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Recomb(Image m)
         {
             return this.Call("recomb", m) as Image;
         }
 
         /// <summary>
-        /// Reduce an image
+        /// Reduce an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Reduce(hshrink, vshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
-        /// <param name="hshrink">Horizontal shrink factor</param>
-        /// <param name="vshrink">Vertical shrink factor</param>
-        /// <param name="kernel">Resampling kernel</param>
-        /// <param name="centre">Use centre sampling convention</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="hshrink">Horizontal shrink factor.</param>
+        /// <param name="vshrink">Vertical shrink factor.</param>
+        /// <param name="kernel">Resampling kernel.</param>
+        /// <param name="centre">Use centre sampling convention.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Reduce(double hshrink, double vshrink, string kernel = null, bool? centre = null)
         {
             var options = new VOption();
@@ -7537,17 +7633,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Shrink an image horizontally
+        /// Shrink an image horizontally.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Reduceh(hshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
-        /// <param name="hshrink">Horizontal shrink factor</param>
-        /// <param name="kernel">Resampling kernel</param>
-        /// <param name="centre">Use centre sampling convention</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="hshrink">Horizontal shrink factor.</param>
+        /// <param name="kernel">Resampling kernel.</param>
+        /// <param name="centre">Use centre sampling convention.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Reduceh(double hshrink, string kernel = null, bool? centre = null)
         {
             var options = new VOption();
@@ -7566,17 +7662,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Shrink an image vertically
+        /// Shrink an image vertically.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Reducev(vshrink, kernel: string, centre: bool);
         /// </code>
         /// </example>
-        /// <param name="vshrink">Vertical shrink factor</param>
-        /// <param name="kernel">Resampling kernel</param>
-        /// <param name="centre">Use centre sampling convention</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="vshrink">Vertical shrink factor.</param>
+        /// <param name="kernel">Resampling kernel.</param>
+        /// <param name="centre">Use centre sampling convention.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Reducev(double vshrink, string kernel = null, bool? centre = null)
         {
             var options = new VOption();
@@ -7595,95 +7691,95 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Relational operation on two images
+        /// Relational operation on two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Relational(right, relational);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <param name="relational">relational to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <param name="relational">relational to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Relational(Image right, string relational)
         {
             return this.Call("relational", right, relational) as Image;
         }
 
         /// <summary>
-        /// Relational operations against a constant
+        /// Relational operations against a constant.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.RelationalConst(relational, c);
         /// </code>
         /// </example>
-        /// <param name="relational">relational to perform</param>
-        /// <param name="c">Array of constants</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="relational">relational to perform.</param>
+        /// <param name="c">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image RelationalConst(string relational, double[] c)
         {
             return this.Call("relational_const", relational, c) as Image;
         }
 
         /// <summary>
-        /// Remainder after integer division of two images
+        /// Remainder after integer division of two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Remainder(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Remainder(Image right)
         {
             return this.Call("remainder", right) as Image;
         }
 
         /// <summary>
-        /// Remainder after integer division of an image and a constant
+        /// Remainder after integer division of an image and a constant.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.RemainderConst(c);
         /// </code>
         /// </example>
-        /// <param name="c">Array of constants</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="c">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image RemainderConst(double[] c)
         {
             return this.Call("remainder_const", c) as Image;
         }
 
         /// <summary>
-        /// Replicate an image
+        /// Replicate an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Replicate(across, down);
         /// </code>
         /// </example>
-        /// <param name="across">Repeat this many times horizontally</param>
-        /// <param name="down">Repeat this many times vertically</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="across">Repeat this many times horizontally.</param>
+        /// <param name="down">Repeat this many times vertically.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Replicate(int across, int down)
         {
             return this.Call("replicate", across, down) as Image;
         }
 
         /// <summary>
-        /// Resize an image
+        /// Resize an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Resize(scale, kernel: string, vscale: double);
         /// </code>
         /// </example>
-        /// <param name="scale">Scale image by this factor</param>
-        /// <param name="kernel">Resampling kernel</param>
-        /// <param name="vscale">Vertical scale image by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="scale">Scale image by this factor.</param>
+        /// <param name="kernel">Resampling kernel.</param>
+        /// <param name="vscale">Vertical scale image by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Resize(double scale, string kernel = null, double? vscale = null)
         {
             var options = new VOption();
@@ -7702,30 +7798,30 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Rotate an image
+        /// Rotate an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Rot(angle);
         /// </code>
         /// </example>
-        /// <param name="angle">Angle to rotate image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="angle">Angle to rotate image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rot(string angle)
         {
             return this.Call("rot", angle) as Image;
         }
 
         /// <summary>
-        /// Rotate an image
+        /// Rotate an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Rot45(angle: string);
         /// </code>
         /// </example>
-        /// <param name="angle">Angle to rotate image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="angle">Angle to rotate image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rot45(string angle = null)
         {
             var options = new VOption();
@@ -7739,21 +7835,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Rotate an image by a number of degrees
+        /// Rotate an image by a number of degrees.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Rotate(angle, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
-        /// <param name="angle">Rotate anticlockwise by this many degrees</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
-        /// <param name="background">Background value</param>
-        /// <param name="odx">Horizontal output displacement</param>
-        /// <param name="ody">Vertical output displacement</param>
-        /// <param name="idx">Horizontal input displacement</param>
-        /// <param name="idy">Vertical input displacement</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="angle">Rotate anticlockwise by this many degrees.</param>
+        /// <param name="interpolate">Interpolate pixels with this.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="odx">Horizontal output displacement.</param>
+        /// <param name="ody">Vertical output displacement.</param>
+        /// <param name="idx">Horizontal input displacement.</param>
+        /// <param name="idy">Vertical input displacement.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rotate(double angle, GObject interpolate = null, double[] background = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null)
         {
             var options = new VOption();
@@ -7792,30 +7888,30 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Perform a round function on an image
+        /// Perform a round function on an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Round(round);
         /// </code>
         /// </example>
-        /// <param name="round">rounding operation to perform</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="round">rounding operation to perform.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Round(string round)
         {
             return this.Call("round", round) as Image;
         }
 
         /// <summary>
-        /// Convert scRGB to BW
+        /// Convert scRGB to BW.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.ScRGB2BW(depth: int);
         /// </code>
         /// </example>
-        /// <param name="depth">Output device space depth in bits</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="depth">Output device space depth in bits.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ScRGB2BW(int? depth = null)
         {
             var options = new VOption();
@@ -7829,15 +7925,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Convert an scRGB image to sRGB
+        /// Convert an scRGB image to sRGB.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.ScRGB2sRGB(depth: int);
         /// </code>
         /// </example>
-        /// <param name="depth">Output device space depth in bits</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="depth">Output device space depth in bits.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ScRGB2sRGB(int? depth = null)
         {
             var options = new VOption();
@@ -7851,29 +7947,29 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform scRGB to XYZ
+        /// Transform scRGB to XYZ.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.ScRGB2XYZ();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ScRGB2XYZ()
         {
             return this.Call("scRGB2XYZ") as Image;
         }
 
         /// <summary>
-        /// Check sequential access
+        /// Check sequential access.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Sequential(tileHeight: int);
         /// </code>
         /// </example>
-        /// <param name="tileHeight">Tile height in pixels</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="tileHeight">Tile height in pixels.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Sequential(int? tileHeight = null)
         {
             var options = new VOption();
@@ -7887,20 +7983,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Unsharp masking for print
+        /// Unsharp masking for print.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Sharpen(sigma: double, x1: double, y2: double, y3: double, m1: double, m2: double);
         /// </code>
         /// </example>
-        /// <param name="sigma">Sigma of Gaussian</param>
-        /// <param name="x1">Flat/jaggy threshold</param>
-        /// <param name="y2">Maximum brightening</param>
-        /// <param name="y3">Maximum darkening</param>
-        /// <param name="m1">Slope for flat areas</param>
-        /// <param name="m2">Slope for jaggy areas</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="sigma">Sigma of Gaussian.</param>
+        /// <param name="x1">Flat/jaggy threshold.</param>
+        /// <param name="y2">Maximum brightening.</param>
+        /// <param name="y3">Maximum darkening.</param>
+        /// <param name="m1">Slope for flat areas.</param>
+        /// <param name="m2">Slope for jaggy areas.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Sharpen(double? sigma = null, double? x1 = null, double? y2 = null, double? y3 = null, double? m1 = null, double? m2 = null)
         {
             var options = new VOption();
@@ -7939,82 +8035,82 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Shrink an image
+        /// Shrink an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Shrink(hshrink, vshrink);
         /// </code>
         /// </example>
-        /// <param name="hshrink">Horizontal shrink factor</param>
-        /// <param name="vshrink">Vertical shrink factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="hshrink">Horizontal shrink factor.</param>
+        /// <param name="vshrink">Vertical shrink factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Shrink(double hshrink, double vshrink)
         {
             return this.Call("shrink", hshrink, vshrink) as Image;
         }
 
         /// <summary>
-        /// Shrink an image horizontally
+        /// Shrink an image horizontally.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Shrinkh(hshrink);
         /// </code>
         /// </example>
-        /// <param name="hshrink">Horizontal shrink factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="hshrink">Horizontal shrink factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Shrinkh(int hshrink)
         {
             return this.Call("shrinkh", hshrink) as Image;
         }
 
         /// <summary>
-        /// Shrink an image vertically
+        /// Shrink an image vertically.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Shrinkv(vshrink);
         /// </code>
         /// </example>
-        /// <param name="vshrink">Vertical shrink factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="vshrink">Vertical shrink factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Shrinkv(int vshrink)
         {
             return this.Call("shrinkv", vshrink) as Image;
         }
 
         /// <summary>
-        /// Unit vector of pixel
+        /// Unit vector of pixel.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Sign();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Sign()
         {
             return this.Call("sign") as Image;
         }
 
         /// <summary>
-        /// Similarity transform of an image
+        /// Similarity transform of an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Similarity(scale: double, angle: double, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
-        /// <param name="scale">Scale by this factor</param>
-        /// <param name="angle">Rotate anticlockwise by this many degrees</param>
-        /// <param name="interpolate">Interpolate pixels with this</param>
-        /// <param name="background">Background value</param>
-        /// <param name="odx">Horizontal output displacement</param>
-        /// <param name="ody">Vertical output displacement</param>
-        /// <param name="idx">Horizontal input displacement</param>
-        /// <param name="idy">Vertical input displacement</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="scale">Scale by this factor.</param>
+        /// <param name="angle">Rotate anticlockwise by this many degrees.</param>
+        /// <param name="interpolate">Interpolate pixels with this.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="odx">Horizontal output displacement.</param>
+        /// <param name="ody">Vertical output displacement.</param>
+        /// <param name="idx">Horizontal input displacement.</param>
+        /// <param name="idy">Vertical input displacement.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Similarity(double? scale = null, double? angle = null, GObject interpolate = null, double[] background = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null)
         {
             var options = new VOption();
@@ -8063,19 +8159,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a 2D sine wave
+        /// Make a 2D sine wave.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Sines(width, height, uchar: bool, hfreq: double, vfreq: double);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <param name="hfreq">Horizontal spatial frequency</param>
-        /// <param name="vfreq">Vertical spatial frequency</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <param name="hfreq">Horizontal spatial frequency.</param>
+        /// <param name="vfreq">Vertical spatial frequency.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Sines(int width, int height, bool? uchar = null, double? hfreq = null, double? vfreq = null)
         {
             var options = new VOption();
@@ -8099,17 +8195,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Extract an area from an image
+        /// Extract an area from an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = input.Smartcrop(width, height, interesting: string);
         /// </code>
         /// </example>
-        /// <param name="width">Width of extract area</param>
-        /// <param name="height">Height of extract area</param>
-        /// <param name="interesting">How to measure interestingness</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Width of extract area.</param>
+        /// <param name="height">Height of extract area.</param>
+        /// <param name="interesting">How to measure interestingness.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Smartcrop(int width, int height, string interesting = null)
         {
             var options = new VOption();
@@ -8123,105 +8219,105 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Sobel edge detector
+        /// Sobel edge detector.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Sobel();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Sobel()
         {
             return this.Call("sobel") as Image;
         }
 
         /// <summary>
-        /// Spatial correlation
+        /// Spatial correlation.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Spcor(@ref);
         /// </code>
         /// </example>
-        /// <param name="ref">Input reference image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ref">Input reference image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Spcor(Image @ref)
         {
             return this.Call("spcor", @ref) as Image;
         }
 
         /// <summary>
-        /// Make displayable power spectrum
+        /// Make displayable power spectrum.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Spectrum();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Spectrum()
         {
             return this.Call("spectrum") as Image;
         }
 
         /// <summary>
-        /// Transform sRGB to HSV
+        /// Transform sRGB to HSV.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.SRGB2HSV();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image SRGB2HSV()
         {
             return this.Call("sRGB2HSV") as Image;
         }
 
         /// <summary>
-        /// Convert an sRGB image to scRGB
+        /// Convert an sRGB image to scRGB.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.SRGB2scRGB();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image SRGB2scRGB()
         {
             return this.Call("sRGB2scRGB") as Image;
         }
 
         /// <summary>
-        /// Find many image stats
+        /// Find many image stats.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Stats();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Stats()
         {
             return this.Call("stats") as Image;
         }
 
         /// <summary>
-        /// Statistical difference
+        /// Statistical difference.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Stdif(width, height, s0: double, b: double, m0: double, a: double);
         /// </code>
         /// </example>
-        /// <param name="width">Window width in pixels</param>
-        /// <param name="height">Window height in pixels</param>
-        /// <param name="s0">New deviation</param>
-        /// <param name="b">Weight of new deviation</param>
-        /// <param name="m0">New mean</param>
-        /// <param name="a">Weight of new mean</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Window width in pixels.</param>
+        /// <param name="height">Window height in pixels.</param>
+        /// <param name="s0">New deviation.</param>
+        /// <param name="b">Weight of new deviation.</param>
+        /// <param name="m0">New mean.</param>
+        /// <param name="a">Weight of new mean.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Stdif(int width, int height, double? s0 = null, double? b = null, double? m0 = null, double? a = null)
         {
             var options = new VOption();
@@ -8250,17 +8346,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Subsample an image
+        /// Subsample an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = input.Subsample(xfac, yfac, point: bool);
         /// </code>
         /// </example>
-        /// <param name="xfac">Horizontal subsample factor</param>
-        /// <param name="yfac">Vertical subsample factor</param>
-        /// <param name="point">Point sample</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="xfac">Horizontal subsample factor.</param>
+        /// <param name="yfac">Vertical subsample factor.</param>
+        /// <param name="point">Point sample.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Subsample(int xfac, int yfac, bool? point = null)
         {
             var options = new VOption();
@@ -8274,50 +8370,50 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Subtract two images
+        /// Subtract two images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = left.Subtract(right);
         /// </code>
         /// </example>
-        /// <param name="right">Right-hand image argument</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="right">Right-hand image argument.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Subtract(Image right)
         {
             return this.Call("subtract", right) as Image;
         }
 
         /// <summary>
-        /// Sum an array of images
+        /// Sum an array of images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Sum(@in);
         /// </code>
         /// </example>
-        /// <param name="in">Array of input images</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="in">Array of input images.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Sum(Image[] @in)
         {
             return Operation.Call("sum", new object[] { @in }) as Image;
         }
 
         /// <summary>
-        /// Load SVG with rsvg
+        /// Load SVG with rsvg.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Svgload(filename, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Svgload(string filename, bool? memory = null, string access = null, double? dpi = null, bool? fail = null, double? scale = null)
         {
             var options = new VOption();
@@ -8351,21 +8447,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load SVG with rsvg
+        /// Load SVG with rsvg.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Svgload(filename, out var flags, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Svgload(string filename, out int flags, bool? memory = null, string access = null, double? dpi = null, bool? fail = null, double? scale = null)
         {
             var options = new VOption();
@@ -8406,20 +8502,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load SVG with rsvg
+        /// Load SVG with rsvg.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.SvgloadBuffer(buffer, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image SvgloadBuffer(byte[] buffer, bool? memory = null, string access = null, double? dpi = null, bool? fail = null, double? scale = null)
         {
             var options = new VOption();
@@ -8453,21 +8549,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load SVG with rsvg
+        /// Load SVG with rsvg.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, memory: bool, access: string, dpi: double, fail: bool, scale: double);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="dpi">Render at this DPI</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="scale">Scale output by this factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image SvgloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, double? dpi = null, bool? fail = null, double? scale = null)
         {
             var options = new VOption();
@@ -8508,17 +8604,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Run an external command
+        /// Run an external command.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// NetVips.Image.System(cmdFormat, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
-        /// <param name="cmdFormat">Command to run</param>
-        /// <param name="in">Array of input images</param>
-        /// <param name="outFormat">Format for output filename</param>
-        /// <param name="inFormat">Format for input filename</param>
+        /// <param name="cmdFormat">Command to run.</param>
+        /// <param name="in">Array of input images.</param>
+        /// <param name="outFormat">Format for output filename.</param>
+        /// <param name="inFormat">Format for input filename.</param>
         public static void System(string cmdFormat, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
             var options = new VOption();
@@ -8542,18 +8638,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Run an external command
+        /// Run an external command.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// NetVips.Image.System(cmdFormat, out var @out, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
-        /// <param name="cmdFormat">Command to run</param>
-        /// <param name="out">Output image</param>
-        /// <param name="in">Array of input images</param>
-        /// <param name="outFormat">Format for output filename</param>
-        /// <param name="inFormat">Format for input filename</param>
+        /// <param name="cmdFormat">Command to run.</param>
+        /// <param name="out">Output image.</param>
+        /// <param name="in">Array of input images.</param>
+        /// <param name="outFormat">Format for output filename.</param>
+        /// <param name="inFormat">Format for input filename.</param>
         public static void System(string cmdFormat, out Image @out, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
             var options = new VOption();
@@ -8582,19 +8678,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Run an external command
+        /// Run an external command.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// NetVips.Image.System(cmdFormat, out var @out, out var log, @in: Image[], outFormat: string, inFormat: string);
         /// </code>
         /// </example>
-        /// <param name="cmdFormat">Command to run</param>
-        /// <param name="out">Output image</param>
-        /// <param name="log">Command log</param>
-        /// <param name="in">Array of input images</param>
-        /// <param name="outFormat">Format for output filename</param>
-        /// <param name="inFormat">Format for input filename</param>
+        /// <param name="cmdFormat">Command to run.</param>
+        /// <param name="out">Output image.</param>
+        /// <param name="log">Command log.</param>
+        /// <param name="in">Array of input images.</param>
+        /// <param name="outFormat">Format for output filename.</param>
+        /// <param name="inFormat">Format for input filename.</param>
         public static void System(string cmdFormat, out Image @out, out string log, Image[] @in = null, string outFormat = null, string inFormat = null)
         {
             var options = new VOption();
@@ -8625,22 +8721,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a text image
+        /// Make a text image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: string, dpi: int, spacing: int, fontfile: string);
         /// </code>
         /// </example>
-        /// <param name="text">Text to render</param>
-        /// <param name="font">Font to render with</param>
-        /// <param name="width">Maximum image width in pixels</param>
-        /// <param name="height">Maximum image height in pixels</param>
-        /// <param name="align">Align on the low, centre or high edge</param>
-        /// <param name="dpi">DPI to render at</param>
-        /// <param name="spacing">Line spacing</param>
-        /// <param name="fontfile">Load this font file</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="text">Text to render.</param>
+        /// <param name="font">Font to render with.</param>
+        /// <param name="width">Maximum image width in pixels.</param>
+        /// <param name="height">Maximum image height in pixels.</param>
+        /// <param name="align">Align on the low, centre or high edge.</param>
+        /// <param name="dpi">DPI to render at.</param>
+        /// <param name="spacing">Line spacing.</param>
+        /// <param name="fontfile">Load this font file.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Text(string text, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, int? spacing = null, string fontfile = null)
         {
             var options = new VOption();
@@ -8684,23 +8780,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a text image
+        /// Make a text image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: string, dpi: int, spacing: int, fontfile: string);
         /// </code>
         /// </example>
-        /// <param name="text">Text to render</param>
-        /// <param name="autofitDpi">DPI selected by autofit</param>
-        /// <param name="font">Font to render with</param>
-        /// <param name="width">Maximum image width in pixels</param>
-        /// <param name="height">Maximum image height in pixels</param>
-        /// <param name="align">Align on the low, centre or high edge</param>
-        /// <param name="dpi">DPI to render at</param>
-        /// <param name="spacing">Line spacing</param>
-        /// <param name="fontfile">Load this font file</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="text">Text to render.</param>
+        /// <param name="autofitDpi">DPI selected by autofit.</param>
+        /// <param name="font">Font to render with.</param>
+        /// <param name="width">Maximum image width in pixels.</param>
+        /// <param name="height">Maximum image height in pixels.</param>
+        /// <param name="align">Align on the low, centre or high edge.</param>
+        /// <param name="dpi">DPI to render at.</param>
+        /// <param name="spacing">Line spacing.</param>
+        /// <param name="fontfile">Load this font file.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Text(string text, out int autofitDpi, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, int? spacing = null, string fontfile = null)
         {
             var options = new VOption();
@@ -8751,24 +8847,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Generate thumbnail from file
+        /// Generate thumbnail from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to read from</param>
-        /// <param name="width">Size to this width</param>
-        /// <param name="height">Size to this height</param>
-        /// <param name="size">Only upsize, only downsize, or both</param>
-        /// <param name="autoRotate">Use orientation tags to rotate image upright</param>
-        /// <param name="crop">Reduce to fill target rectangle, then crop</param>
-        /// <param name="linear">Reduce in linear light</param>
-        /// <param name="importProfile">Fallback import profile</param>
-        /// <param name="exportProfile">Fallback export profile</param>
-        /// <param name="intent">Rendering intent</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to read from.</param>
+        /// <param name="width">Size to this width.</param>
+        /// <param name="height">Size to this height.</param>
+        /// <param name="size">Only upsize, only downsize, or both.</param>
+        /// <param name="autoRotate">Use orientation tags to rotate image upright.</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop.</param>
+        /// <param name="linear">Reduce in linear light.</param>
+        /// <param name="importProfile">Fallback import profile.</param>
+        /// <param name="exportProfile">Fallback export profile.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Thumbnail(string filename, int width, int? height = null, string size = null, bool? autoRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
         {
             var options = new VOption();
@@ -8817,24 +8913,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Generate thumbnail from buffer
+        /// Generate thumbnail from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="width">Size to this width</param>
-        /// <param name="height">Size to this height</param>
-        /// <param name="size">Only upsize, only downsize, or both</param>
-        /// <param name="autoRotate">Use orientation tags to rotate image upright</param>
-        /// <param name="crop">Reduce to fill target rectangle, then crop</param>
-        /// <param name="linear">Reduce in linear light</param>
-        /// <param name="importProfile">Fallback import profile</param>
-        /// <param name="exportProfile">Fallback export profile</param>
-        /// <param name="intent">Rendering intent</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="width">Size to this width.</param>
+        /// <param name="height">Size to this height.</param>
+        /// <param name="size">Only upsize, only downsize, or both.</param>
+        /// <param name="autoRotate">Use orientation tags to rotate image upright.</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop.</param>
+        /// <param name="linear">Reduce in linear light.</param>
+        /// <param name="importProfile">Fallback import profile.</param>
+        /// <param name="exportProfile">Fallback export profile.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image ThumbnailBuffer(byte[] buffer, int width, int? height = null, string size = null, bool? autoRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
         {
             var options = new VOption();
@@ -8883,23 +8979,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Generate thumbnail from image
+        /// Generate thumbnail from image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.ThumbnailImage(width, height: int, size: string, autoRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
         /// </code>
         /// </example>
-        /// <param name="width">Size to this width</param>
-        /// <param name="height">Size to this height</param>
-        /// <param name="size">Only upsize, only downsize, or both</param>
-        /// <param name="autoRotate">Use orientation tags to rotate image upright</param>
-        /// <param name="crop">Reduce to fill target rectangle, then crop</param>
-        /// <param name="linear">Reduce in linear light</param>
-        /// <param name="importProfile">Fallback import profile</param>
-        /// <param name="exportProfile">Fallback export profile</param>
-        /// <param name="intent">Rendering intent</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Size to this width.</param>
+        /// <param name="height">Size to this height.</param>
+        /// <param name="size">Only upsize, only downsize, or both.</param>
+        /// <param name="autoRotate">Use orientation tags to rotate image upright.</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop.</param>
+        /// <param name="linear">Reduce in linear light.</param>
+        /// <param name="importProfile">Fallback import profile.</param>
+        /// <param name="exportProfile">Fallback export profile.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ThumbnailImage(int width, int? height = null, string size = null, bool? autoRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
         {
             var options = new VOption();
@@ -8948,21 +9044,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load tiff from file
+        /// Load tiff from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Tiffload(filename, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the image</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using orientation tag</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Tiffload(string filename, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -9001,22 +9097,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load tiff from file
+        /// Load tiff from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Tiffload(filename, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the image</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using orientation tag</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Tiffload(string filename, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -9062,21 +9158,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load tiff from buffer
+        /// Load tiff from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.TiffloadBuffer(buffer, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the image</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using orientation tag</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image TiffloadBuffer(byte[] buffer, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -9115,22 +9211,22 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load tiff from buffer
+        /// Load tiff from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, memory: bool, access: string, page: int, n: int, fail: bool, autorotate: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="page">Load this page from the image</param>
-        /// <param name="n">Load this many pages</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <param name="autorotate">Rotate image using orientation tag</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image TiffloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, int? page = null, int? n = null, bool? fail = null, bool? autorotate = null)
         {
             var options = new VOption();
@@ -9176,33 +9272,33 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to tiff file
+        /// Save image to tiff file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Tiffsave(filename, compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="compression">Compression for this file</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="predictor">Compression prediction</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="tile">Write a tiled tiff</param>
-        /// <param name="tileWidth">Tile width in pixels</param>
-        /// <param name="tileHeight">Tile height in pixels</param>
-        /// <param name="pyramid">Write a pyramidal tiff</param>
-        /// <param name="miniswhite">Use 0 for white in 1-bit images</param>
-        /// <param name="squash">Squash images down to 1 bit</param>
-        /// <param name="resunit">Resolution unit</param>
-        /// <param name="xres">Horizontal resolution in pixels/mm</param>
-        /// <param name="yres">Vertical resolution in pixels/mm</param>
-        /// <param name="bigtiff">Write a bigtiff image</param>
-        /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
-        /// <param name="regionShrink">Method to shrink regions</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="compression">Compression for this file.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="predictor">Compression prediction.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="tile">Write a tiled tiff.</param>
+        /// <param name="tileWidth">Tile width in pixels.</param>
+        /// <param name="tileHeight">Tile height in pixels.</param>
+        /// <param name="pyramid">Write a pyramidal tiff.</param>
+        /// <param name="miniswhite">Use 0 for white in 1-bit images.</param>
+        /// <param name="squash">Squash images down to 1 bit.</param>
+        /// <param name="resunit">Resolution unit.</param>
+        /// <param name="xres">Horizontal resolution in pixels/mm.</param>
+        /// <param name="yres">Vertical resolution in pixels/mm.</param>
+        /// <param name="bigtiff">Write a bigtiff image.</param>
+        /// <param name="properties">Write a properties document to IMAGEDESCRIPTION.</param>
+        /// <param name="regionShrink">Method to shrink regions.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -9306,33 +9402,33 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to tiff buffer
+        /// Save image to tiff buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="compression">Compression for this file</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="predictor">Compression prediction</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="profile">ICC profile to embed</param>
-        /// <param name="tile">Write a tiled tiff</param>
-        /// <param name="tileWidth">Tile width in pixels</param>
-        /// <param name="tileHeight">Tile height in pixels</param>
-        /// <param name="pyramid">Write a pyramidal tiff</param>
-        /// <param name="miniswhite">Use 0 for white in 1-bit images</param>
-        /// <param name="squash">Squash images down to 1 bit</param>
-        /// <param name="resunit">Resolution unit</param>
-        /// <param name="xres">Horizontal resolution in pixels/mm</param>
-        /// <param name="yres">Vertical resolution in pixels/mm</param>
-        /// <param name="bigtiff">Write a bigtiff image</param>
-        /// <param name="properties">Write a properties document to IMAGEDESCRIPTION</param>
-        /// <param name="regionShrink">Method to shrink regions</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="compression">Compression for this file.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="predictor">Compression prediction.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="tile">Write a tiled tiff.</param>
+        /// <param name="tileWidth">Tile width in pixels.</param>
+        /// <param name="tileHeight">Tile height in pixels.</param>
+        /// <param name="pyramid">Write a pyramidal tiff.</param>
+        /// <param name="miniswhite">Use 0 for white in 1-bit images.</param>
+        /// <param name="squash">Squash images down to 1 bit.</param>
+        /// <param name="resunit">Resolution unit.</param>
+        /// <param name="xres">Horizontal resolution in pixels/mm.</param>
+        /// <param name="yres">Vertical resolution in pixels/mm.</param>
+        /// <param name="bigtiff">Write a bigtiff image.</param>
+        /// <param name="properties">Write a properties document to IMAGEDESCRIPTION.</param>
+        /// <param name="regionShrink">Method to shrink regions.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -9436,20 +9532,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Cache an image as a set of tiles
+        /// Cache an image as a set of tiles.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: string, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
-        /// <param name="tileWidth">Tile width in pixels</param>
-        /// <param name="tileHeight">Tile height in pixels</param>
-        /// <param name="maxTiles">Maximum number of tiles to cache</param>
-        /// <param name="access">Expected access pattern</param>
-        /// <param name="threaded">Allow threaded access</param>
-        /// <param name="persistent">Keep cache between evaluations</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="tileWidth">Tile width in pixels.</param>
+        /// <param name="tileHeight">Tile height in pixels.</param>
+        /// <param name="maxTiles">Maximum number of tiles to cache.</param>
+        /// <param name="access">Expected access pattern.</param>
+        /// <param name="threaded">Allow threaded access.</param>
+        /// <param name="persistent">Keep cache between evaluations.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Tilecache(int? tileWidth = null, int? tileHeight = null, int? maxTiles = null, string access = null, bool? threaded = null, bool? persistent = null)
         {
             var options = new VOption();
@@ -9488,24 +9584,24 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Build a look-up table
+        /// Build a look-up table.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Tonelut(inMax: int, outMax: int, lb: double, lw: double, ps: double, pm: double, ph: double, s: double, m: double, h: double);
         /// </code>
         /// </example>
-        /// <param name="inMax">Size of LUT to build</param>
-        /// <param name="outMax">Maximum value in output LUT</param>
-        /// <param name="lb">Lowest value in output</param>
-        /// <param name="lw">Highest value in output</param>
-        /// <param name="ps">Position of shadow</param>
-        /// <param name="pm">Position of mid-tones</param>
-        /// <param name="ph">Position of highlights</param>
-        /// <param name="s">Adjust shadows by this much</param>
-        /// <param name="m">Adjust mid-tones by this much</param>
-        /// <param name="h">Adjust highlights by this much</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="inMax">Size of LUT to build.</param>
+        /// <param name="outMax">Maximum value in output LUT.</param>
+        /// <param name="lb">Lowest value in output.</param>
+        /// <param name="lw">Highest value in output.</param>
+        /// <param name="ps">Position of shadow.</param>
+        /// <param name="pm">Position of mid-tones.</param>
+        /// <param name="ph">Position of highlights.</param>
+        /// <param name="s">Adjust shadows by this much.</param>
+        /// <param name="m">Adjust mid-tones by this much.</param>
+        /// <param name="h">Adjust highlights by this much.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Tonelut(int? inMax = null, int? outMax = null, double? lb = null, double? lw = null, double? ps = null, double? pm = null, double? ph = null, double? s = null, double? m = null, double? h = null)
         {
             var options = new VOption();
@@ -9564,15 +9660,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transpose3d an image
+        /// Transpose3d an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Transpose3d(pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Height of each input page</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="pageHeight">Height of each input page.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Transpose3d(int? pageHeight = null)
         {
             var options = new VOption();
@@ -9586,15 +9682,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Unpremultiply image alpha
+        /// Unpremultiply image alpha.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Unpremultiply(maxAlpha: double);
         /// </code>
         /// </example>
-        /// <param name="maxAlpha">Maximum value of alpha channel</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="maxAlpha">Maximum value of alpha channel.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Unpremultiply(double? maxAlpha = null)
         {
             var options = new VOption();
@@ -9608,18 +9704,18 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load vips from file
+        /// Load vips from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Vipsload(string filename, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -9643,19 +9739,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load vips from file
+        /// Load vips from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Vipsload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
@@ -9686,17 +9782,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to vips file
+        /// Save image to vips file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Vipssave(filename, pageHeight: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Vipssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -9720,19 +9816,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load webp from file
+        /// Load webp from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Webpload(filename, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Webpload(string filename, bool? memory = null, string access = null, int? shrink = null, bool? fail = null)
         {
             var options = new VOption();
@@ -9761,20 +9857,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load webp from file
+        /// Load webp from file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Webpload(filename, out var flags, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="filename">Filename to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Webpload(string filename, out int flags, bool? memory = null, string access = null, int? shrink = null, bool? fail = null)
         {
             var options = new VOption();
@@ -9810,19 +9906,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load webp from buffer
+        /// Load webp from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.WebploadBuffer(buffer, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image WebploadBuffer(byte[] buffer, bool? memory = null, string access = null, int? shrink = null, bool? fail = null)
         {
             var options = new VOption();
@@ -9851,20 +9947,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Load webp from buffer
+        /// Load webp from buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, memory: bool, access: string, shrink: int, fail: bool);
         /// </code>
         /// </example>
-        /// <param name="buffer">Buffer to load from</param>
-        /// <param name="flags">Flags for this file</param>
-        /// <param name="memory">Force open via memory</param>
-        /// <param name="access">Required access pattern for this file</param>
-        /// <param name="shrink">Shrink factor on load</param>
-        /// <param name="fail">Fail on first error</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image WebploadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, int? shrink = null, bool? fail = null)
         {
             var options = new VOption();
@@ -9900,23 +9996,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to webp file
+        /// Save image to webp file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// in.Webpsave(filename, pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="filename">Filename to save to</param>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="lossless">enable lossless compression</param>
-        /// <param name="preset">Preset for lossy compression</param>
-        /// <param name="smartSubsample">Enable high quality chroma subsampling</param>
-        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q)</param>
-        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
+        /// <param name="filename">Filename to save to.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="lossless">enable lossless compression.</param>
+        /// <param name="preset">Preset for lossy compression.</param>
+        /// <param name="smartSubsample">Enable high quality chroma subsampling.</param>
+        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q).</param>
+        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
         public void Webpsave(string filename, int? pageHeight = null, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -9970,23 +10066,23 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Save image to webp buffer
+        /// Save image to webp buffer.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// byte[] buffer = in.WebpsaveBuffer(pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, strip: bool, background: double[]);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save</param>
-        /// <param name="q">Q factor</param>
-        /// <param name="lossless">enable lossless compression</param>
-        /// <param name="preset">Preset for lossy compression</param>
-        /// <param name="smartSubsample">Enable high quality chroma subsampling</param>
-        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q)</param>
-        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression</param>
-        /// <param name="strip">Strip all metadata from image</param>
-        /// <param name="background">Background value</param>
-        /// <returns>An array of bytes</returns>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="lossless">enable lossless compression.</param>
+        /// <param name="preset">Preset for lossy compression.</param>
+        /// <param name="smartSubsample">Enable high quality chroma subsampling.</param>
+        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q).</param>
+        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <returns>An array of bytes.</returns>
         public byte[] WebpsaveBuffer(int? pageHeight = null, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? strip = null, double[] background = null)
         {
             var options = new VOption();
@@ -10040,17 +10136,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a worley noise image
+        /// Make a worley noise image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Worley(width, height, cellSize: int);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="cellSize">Size of Worley cells</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="cellSize">Size of Worley cells.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Worley(int width, int height, int? cellSize = null)
         {
             var options = new VOption();
@@ -10064,16 +10160,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Wrap image origin
+        /// Wrap image origin.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Wrap(x: int, y: int);
         /// </code>
         /// </example>
-        /// <param name="x">Left edge of input in output</param>
-        /// <param name="y">Top edge of input in output</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="x">Left edge of input in output.</param>
+        /// <param name="y">Top edge of input in output.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Wrap(int? x = null, int? y = null)
         {
             var options = new VOption();
@@ -10092,19 +10188,19 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make an image where pixel values are coordinates
+        /// Make an image where pixel values are coordinates.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Xyz(width, height, csize: int, dsize: int, esize: int);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="csize">Size of third dimension</param>
-        /// <param name="dsize">Size of fourth dimension</param>
-        /// <param name="esize">Size of fifth dimension</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="csize">Size of third dimension.</param>
+        /// <param name="dsize">Size of fourth dimension.</param>
+        /// <param name="esize">Size of fifth dimension.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Xyz(int width, int height, int? csize = null, int? dsize = null, int? esize = null)
         {
             var options = new VOption();
@@ -10128,15 +10224,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform XYZ to Lab
+        /// Transform XYZ to Lab.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.XYZ2Lab(temp: double[]);
         /// </code>
         /// </example>
-        /// <param name="temp">Colour temperature</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="temp">Colour temperature.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image XYZ2Lab(double[] temp = null)
         {
             var options = new VOption();
@@ -10150,59 +10246,59 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Transform XYZ to scRGB
+        /// Transform XYZ to scRGB.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.XYZ2scRGB();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image XYZ2scRGB()
         {
             return this.Call("XYZ2scRGB") as Image;
         }
 
         /// <summary>
-        /// Transform XYZ to Yxy
+        /// Transform XYZ to Yxy.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.XYZ2Yxy();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image XYZ2Yxy()
         {
             return this.Call("XYZ2Yxy") as Image;
         }
 
         /// <summary>
-        /// Transform Yxy to XYZ
+        /// Transform Yxy to XYZ.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = in.Yxy2XYZ();
         /// </code>
         /// </example>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Yxy2XYZ()
         {
             return this.Call("Yxy2XYZ") as Image;
         }
 
         /// <summary>
-        /// Make a zone plate
+        /// Make a zone plate.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = NetVips.Image.Zone(width, height, uchar: bool);
         /// </code>
         /// </example>
-        /// <param name="width">Image width in pixels</param>
-        /// <param name="height">Image height in pixels</param>
-        /// <param name="uchar">Output an unsigned char image</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="uchar">Output an unsigned char image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Zone(int width, int height, bool? uchar = null)
         {
             var options = new VOption();
@@ -10216,16 +10312,16 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Zoom an image
+        /// Zoom an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = input.Zoom(xfac, yfac);
         /// </code>
         /// </example>
-        /// <param name="xfac">Horizontal zoom factor</param>
-        /// <param name="yfac">Vertical zoom factor</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="xfac">Horizontal zoom factor.</param>
+        /// <param name="yfac">Vertical zoom factor.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Zoom(int xfac, int yfac)
         {
             return this.Call("zoom", xfac, yfac) as Image;

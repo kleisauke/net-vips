@@ -1,7 +1,7 @@
-﻿using System.IO;
-
 namespace NetVips.Samples
 {
+    using System.IO;
+
     public class GenerateImageClass : ISample
     {
         public string Name => "Generate image class";

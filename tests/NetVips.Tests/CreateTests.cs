@@ -1,8 +1,8 @@
-﻿using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class CreateTests : IClassFixture<TestsFixture>
     {
         public CreateTests(TestsFixture testsFixture, ITestOutputHelper output)

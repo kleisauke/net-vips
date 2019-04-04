@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using NetVips.Internal;
-using SMath = System.Math;
-
 namespace NetVips
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Threading;
+    using NetVips.Internal;
+    using SMath = System.Math;
+
     /// <summary>
     /// Wrap a <see cref="VipsImage"/> object.
     /// </summary>
@@ -16,16 +17,18 @@ namespace NetVips
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Secret ref for <see cref="NewFromMemory" />
+        /// Secret ref for <see cref="NewFromMemory" />.
         /// </summary>
-        private GCHandle _data;
+        private GCHandle _dataHandle;
 
         /// <summary>
-        /// Ref for <see cref="SetProgress" />
+        /// Ref for <see cref="SetProgress" />.
         /// </summary>
-        private GCHandle _progress;
+        private GCHandle _progressHandle;
 
-        internal Image(IntPtr pointer) : base(pointer)
+        /// <inheritdoc cref="VipsObject"/>
+        internal Image(IntPtr pointer)
+            : base(pointer)
         {
             // logger.Debug($"VipsImage = {pointer}");
         }
@@ -39,9 +42,9 @@ namespace NetVips
         /// The image needs to be complex, or have an even number of bands. The input
         /// can be int, the output is always float or double.
         /// </remarks>
-        /// <param name="func"></param>
-        /// <param name="image"></param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="func">A complex function.</param>
+        /// <param name="image">A non-complex image.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="T:System.Exception">If image doesn't have an even number of bands.</exception>
         private static Image RunCmplx(Func<Image, Image> func, Image image)
         {
@@ -82,38 +85,30 @@ namespace NetVips
         /// Turn a constant (eg. 1, "12", new[] {1, 2, 3}, new[] {new[] {1}}) into an image using
         /// <paramref name="matchImage" /> as a guide.
         /// </summary>
-        /// <param name="matchImage"></param>
-        /// <param name="value"></param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="matchImage">Image guide.</param>
+        /// <param name="value">A constant.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public static Image Imageize(Image matchImage, object value)
         {
             // logger.Debug($"Imageize: value = {value}");
             // careful! this can be None if value is a 2D array
-            if (value is Image image)
+            switch (value)
             {
-                return image;
-            }
-            else if (value is Array array && array.Is2D())
-            {
-                return NewFromArray(array);
-            }
-            else
-            {
-                switch (value)
-                {
-                    case double[] doubles:
-                        return matchImage.NewFromImage(doubles);
-                    case double doubleValue:
-                        return matchImage.NewFromImage(doubleValue);
-                    case int[] ints:
-                        return matchImage.NewFromImage(ints);
-                    case int intValue:
-                        return matchImage.NewFromImage(intValue);
-                    default:
-                        throw new ArgumentException(
-                            $"unsupported value type {value.GetType()} for Imageize"
-                        );
-                }
+                case Image image:
+                    return image;
+                case Array array when array.Is2D():
+                    return NewFromArray(array);
+                case double[] doubles:
+                    return matchImage.NewFromImage(doubles);
+                case double doubleValue:
+                    return matchImage.NewFromImage(doubleValue);
+                case int[] ints:
+                    return matchImage.NewFromImage(ints);
+                case int intValue:
+                    return matchImage.NewFromImage(intValue);
+                default:
+                    throw new ArgumentException(
+                        $"unsupported value type {value.GetType()} for Imageize");
             }
         }
 
@@ -144,7 +139,7 @@ namespace NetVips
         /// </code>
         /// at the command-line to see a summary of the available options for the
         /// JPEG loader.
-        /// 
+        ///
         /// Loading is fast: only enough of the image is loaded to be able to fill
         /// out the header. Pixels will only be decompressed when they are needed.
         /// </remarks>
@@ -159,10 +154,14 @@ namespace NetVips
         /// with an error on the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename" />.</exception>
-        public static Image NewFromFile(string vipsFilename, bool? memory = null, string access = null,
-            bool? fail = null, VOption kwargs = null)
+        public static Image NewFromFile(
+            string vipsFilename,
+            bool? memory = null,
+            string access = null,
+            bool? fail = null,
+            VOption kwargs = null)
         {
             ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
             ref var filenameRef = ref MemoryMarshal.GetReference(span);
@@ -217,9 +216,13 @@ namespace NetVips
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
-        public static Image NewFromBuffer(byte[] data, string strOptions = "", string access = null, bool? fail = null,
+        public static Image NewFromBuffer(
+            byte[] data,
+            string strOptions = "",
+            string access = null,
+            bool? fail = null,
             VOption kwargs = null)
         {
             var name = Marshal.PtrToStringAnsi(
@@ -266,9 +269,13 @@ namespace NetVips
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
-        public static Image NewFromBuffer(string data, string strOptions = "", string access = null, bool? fail = null,
+        public static Image NewFromBuffer(
+            string data,
+            string strOptions = "",
+            string access = null,
+            bool? fail = null,
             VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
 
         /// <summary>
@@ -286,9 +293,13 @@ namespace NetVips
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
-        public static Image NewFromBuffer(char[] data, string strOptions = "", string access = null, bool? fail = null,
+        public static Image NewFromBuffer(
+            char[] data,
+            string strOptions = "",
+            string access = null,
+            bool? fail = null,
             VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
 
         /// <summary>
@@ -297,15 +308,15 @@ namespace NetVips
         /// <remarks>
         /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
         /// created from the array. These image are useful with the libvips
-        /// convolution operator <see cref="Conv"/> 
+        /// convolution operator <see cref="Conv"/>.
         /// </remarks>
-        /// <param name="array">Create the image from these values. 
+        /// <param name="array">Create the image from these values.
         /// 1D arrays become a single row of pixels.</param>
         /// <param name="scale">Default to 1.0. What to divide each pixel by after
         /// convolution.  Useful for integer convolution masks.</param>
         /// <param name="offset">Default to 0.0. What to subtract from each pixel
         /// after convolution.  Useful for integer convolution masks.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="array" />.</exception>
         public static Image NewFromArray(Array array, double scale = 1.0, double offset = 0.0)
         {
@@ -331,7 +342,7 @@ namespace NetVips
                         value = yValue is Array yArray ? (yArray.Length <= x ? 0 : yArray.GetValue(x)) : yValue;
                     }
 
-                    a[x + y * width] = Convert.ToDouble(value);
+                    a[x + (y * width)] = Convert.ToDouble(value);
                 }
             }
 
@@ -355,26 +366,26 @@ namespace NetVips
         /// Wraps an Image around an area of memory containing a C-style array. For
         /// example, if the `data` memory array contains four bytes with the
         /// values 1, 2, 3, 4, you can make a one-band, 2x2 uchar image from
-        /// it like this: 
+        /// it like this:
         /// <code language="lang-csharp">
         /// var image = Image.NewFromMemory(data, 2, 2, 1, "uchar");
         /// </code>
         /// A reference is kept to the data object, so it will not be
         /// garbage-collected until the returned image is garbage-collected.
-        /// 
+        ///
         /// This method is useful for efficiently transferring images from GDI+
         /// into libvips.
-        /// 
+        ///
         /// See <see cref="WriteToMemory"/> for the opposite operation.
-        /// 
+        ///
         /// Use <see cref="Copy"/> to set other image attributes.
         /// </remarks>
         /// <param name="data">A memoryview or buffer object.</param>
         /// <param name="width">Image width in pixels.</param>
         /// <param name="height">Image height in pixels.</param>
-        /// <param name="bands">Number of bands</param>
+        /// <param name="bands">Number of bands.</param>
         /// <param name="format">Band format.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="data" />.</exception>
         public static Image NewFromMemory(
             Array data,
@@ -399,13 +410,7 @@ namespace NetVips
                 throw new VipsException("unable to make image from memory");
             }
 
-            var image = new Image(vi)
-            {
-                // keep a secret ref to the underlying object
-                _data = handle
-            };
-
-            return image;
+            return new Image(vi) { _dataHandle = handle };
         }
 
         /// <summary>
@@ -421,14 +426,14 @@ namespace NetVips
         /// the environment variable `TMPDIR`. If this is not set, then on
         /// Unix systems, vips will default to `/tmp`. On Windows, vips uses
         /// `GetTempPath()` to find the temporary directory.
-        /// 
+        ///
         /// vips uses `g_mkstemp()` to make the temporary filename. They
         /// generally look something like `vips-12-EJKJFGH.v`.
         /// </remarks>
         /// <param name="format">The format for the temp file, for example
         /// `%s.v` for a vips format file. The `%s` is
         /// substituted by the file path.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make temp file from <paramref name="format" />.</exception>
         public static Image NewTempFile(string format)
         {
@@ -451,7 +456,7 @@ namespace NetVips
         /// <param name="value">The value for the pixels. Use a
         /// single number to make a one-band image; use an array constant
         /// to make a many-band image.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image NewFromImage(Image value)
         {
             var pixel = (Black(1, 1) + value).Cast(Format);
@@ -471,7 +476,7 @@ namespace NetVips
         /// <param name="doubles">The value for the pixels. Use a
         /// single number to make a one-band image; use an array constant
         /// to make a many-band image.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image NewFromImage(params double[] doubles)
         {
             var pixel = (Black(1, 1) + doubles).Cast(Format);
@@ -491,7 +496,7 @@ namespace NetVips
         /// <param name="ints">The value for the pixels. Use a
         /// single number to make a one-band image; use an array constant
         /// to make a many-band image.</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image NewFromImage(params int[] ints) =>
             NewFromImage(Array.ConvertAll(ints, Convert.ToDouble));
 
@@ -503,7 +508,7 @@ namespace NetVips
         /// memory area, and a new image is returned which wraps that large memory
         /// area.
         /// </remarks>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to copy to memory.</exception>
         public Image CopyMemory()
         {
@@ -527,12 +532,12 @@ namespace NetVips
         /// This method can save images in any format supported by vips. The format
         /// is selected from the filename suffix. The filename can include embedded
         /// save options, see <see cref="NewFromFile"/>.
-        /// 
+        ///
         /// For example:
         /// <code language="lang-csharp">
         /// image.WriteToFile("fred.jpg[Q=95]");
         /// </code>
-        /// You can also supply options as keyword arguments, for example: 
+        /// You can also supply options as keyword arguments, for example:
         /// <code language="lang-csharp">
         /// image.WriteToFile("fred.jpg", new VOption
         /// {
@@ -540,7 +545,7 @@ namespace NetVips
         /// });
         /// </code>
         /// The full set of options available depend upon the save operation that
-        /// will be executed. Try something like: 
+        /// will be executed. Try something like:
         /// <code language="lang-shell">
         /// $ vips jpegsave
         /// </code>
@@ -550,7 +555,6 @@ namespace NetVips
         /// <param name="vipsFilename">The disc file to save the image to, with
         /// optional appended arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
-        /// <returns>None</returns>
         /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename" />.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
@@ -590,12 +594,12 @@ namespace NetVips
         /// This method can save images in any format supported by vips. The format
         /// is selected from the suffix in the format string. This can include
         /// embedded save options, see <see cref="NewFromFile"/>.
-        /// 
-        /// For example: 
+        ///
+        /// For example:
         /// <code language="lang-csharp">
         /// var data = image.WriteToBuffer(".jpg[Q=95]");
         /// </code>
-        /// You can also supply options as keyword arguments, for example: 
+        /// You can also supply options as keyword arguments, for example:
         /// <code language="lang-csharp">
         /// var data = image.WriteToBuffer(".jpg", new VOption
         /// {
@@ -603,7 +607,7 @@ namespace NetVips
         /// });
         /// </code>
         /// The full set of options available depend upon the load operation that
-        /// will be executed. Try something like: 
+        /// will be executed. Try something like:
         /// <code language="lang-shell">
         /// $ vips jpegsave_buffer
         /// </code>
@@ -612,7 +616,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="formatString">The suffix, plus any string-form arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
-        /// <returns>An array of bytes</returns>
+        /// <returns>An array of bytes.</returns>
         /// <exception cref="VipsException">If unable to write to buffer.</exception>
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
@@ -650,15 +654,15 @@ namespace NetVips
         /// <remarks>
         /// A large area of memory is allocated, the image is rendered to that
         /// memory array, and the array is returned as a buffer.
-        /// 
+        ///
         /// For example, if you have a 2x2 uchar image containing the bytes 1, 2,
-        /// 3, 4, read left-to-right, top-to-bottom, then: 
+        /// 3, 4, read left-to-right, top-to-bottom, then:
         /// <code language="lang-csharp">
         /// var buf = image.WriteToMemory();
         /// </code>
         /// will return a four byte buffer containing the values 1, 2, 3, 4.
         /// </remarks>
-        /// <returns>An array of bytes</returns>
+        /// <returns>An array of bytes.</returns>
         public byte[] WriteToMemory()
         {
             var pointer = VipsImage.WriteToMemory(this, out var psize);
@@ -723,7 +727,7 @@ namespace NetVips
         /// Check if the underlying image contains an property of metadata.
         /// </summary>
         /// <param name="name">The name of the piece of metadata to check for.</param>
-        /// <returns><see langword="true" /> if the metadata exits; otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if the metadata exits; otherwise, <see langword="false" />.</returns>
         public bool Contains(string name)
         {
             return GetTypeOf(name) != IntPtr.Zero;
@@ -732,13 +736,15 @@ namespace NetVips
         /// <summary>
         /// Get an item of metadata.
         /// </summary>
+        /// <remarks>
         /// Fetches an item of metadata as a C# value. For example:
         /// <code language="lang-csharp">
         /// var orientation = image.Get("orientation");
         /// </code>
         /// would fetch the image orientation.
+        /// </remarks>
         /// <param name="name">The name of the piece of metadata to get.</param>
-        /// <returns>The metadata item as a C# value</returns>
+        /// <returns>The metadata item as a C# value.</returns>
         /// <exception cref="VipsException">If unable to get <paramref name="name" />.</exception>
         public override object Get(string name)
         {
@@ -777,7 +783,7 @@ namespace NetVips
         /// Get a list of all the metadata fields on an image.
         /// </summary>
         /// <remarks>
-        /// At least libvips 8.5 is needed
+        /// At least libvips 8.5 is needed.
         /// </remarks>
         /// <returns>An array of strings or <see langword="null" />.</returns>
         public string[] GetFields()
@@ -854,6 +860,7 @@ namespace NetVips
         /// The named metadata item is removed.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to remove.</param>
+        /// <returns><see langword="true" /> if the metadata is successfully removed; otherwise, <see langword="false" />.</returns>
         public bool Remove(string name)
         {
             return VipsImage.Remove(this, name) != 0;
@@ -884,9 +891,9 @@ namespace NetVips
         /// Image @out = in.Scale(exp: double, log: bool);
         /// </code>
         /// </example>
-        /// <param name="exp">Exponent for log scale</param>
-        /// <param name="log">Log scale</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="exp">Exponent for log scale.</param>
+        /// <param name="log">Log scale.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image ScaleImage(double? exp = null, bool? log = null)
         {
             var options = new VOption();
@@ -905,17 +912,17 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Ifthenelse an image
+        /// Ifthenelse an image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = cond.Ifthenelse(in1, in2, blend: bool);
         /// </code>
         /// </example>
-        /// <param name="in1">Source for TRUE pixels</param>
-        /// <param name="in2">Source for FALSE pixels</param>
-        /// <param name="blend">Blend smoothly between then and else parts</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="in1">Source for TRUE pixels.</param>
+        /// <param name="in2">Source for FALSE pixels.</param>
+        /// <param name="blend">Blend smoothly between then and else parts.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Ifthenelse(object in1, object in2, bool? blend = null)
         {
             Image matchImage;
@@ -960,8 +967,8 @@ namespace NetVips
         /// Image @out = image.Bandjoin(doubles);
         /// </code>
         /// </example>
-        /// <param name="doubles">Array of constants</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="doubles">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandjoin(params double[] doubles) =>
             BandjoinConst(doubles);
 
@@ -973,8 +980,8 @@ namespace NetVips
         /// Image @out = image.Bandjoin(ints);
         /// </code>
         /// </example>
-        /// <param name="ints">Array of constants</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ints">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandjoin(params int[] ints) =>
             BandjoinConst(Array.ConvertAll(ints, Convert.ToDouble));
 
@@ -986,21 +993,21 @@ namespace NetVips
         /// Image @out = image.Bandjoin(images);
         /// </code>
         /// </example>
-        /// <param name="images">Array of images</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="images">Array of images.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandjoin(params Image[] images) =>
             this.Call("bandjoin", new object[] { images.PrependImage(this) }) as Image;
 
         /// <summary>
-        /// Band-wise rank a set of constants
+        /// Band-wise rank a set of constants.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
-        /// <param name="doubles">Array of constants</param>
-        /// <param name="index">Select this band element from sorted list</param>
+        /// <param name="doubles">Array of constants.</param>
+        /// <param name="index">Select this band element from sorted list.</param>
         /// <returns>A new <see cref="Image"/></returns>
         public Image Bandrank(double[] doubles, int? index = null)
         {
@@ -1015,30 +1022,30 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Band-wise rank a set of constants
+        /// Band-wise rank a set of constants.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
-        /// <param name="ints">Array of constants</param>
-        /// <param name="index">Select this band element from sorted list</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="ints">Array of constants.</param>
+        /// <param name="index">Select this band element from sorted list.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandrank(int[] ints, int? index = null) =>
             Bandrank(Array.ConvertAll(ints, Convert.ToDouble), index);
 
         /// <summary>
-        /// Band-wise rank a set of images
+        /// Band-wise rank a set of images.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
-        /// <param name="images">Array of input images</param>
-        /// <param name="index">Select this band element from sorted list</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="index">Select this band element from sorted list.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandrank(Image[] images, int? index = null)
         {
             var options = new VOption();
@@ -1052,34 +1059,34 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Band-wise rank a image
+        /// Band-wise rank a image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
-        /// <param name="other">Input image</param>
-        /// <param name="index">Select this band element from sorted list</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="other">Input image.</param>
+        /// <param name="index">Select this band element from sorted list.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandrank(Image other, int? index = null) =>
             Bandrank(new[] { other }, index);
 
         /// <summary>
-        /// Blend an array of images with an array of blend modes
+        /// Blend an array of images with an array of blend modes.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Composite(other, modes, x: int, y: int, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
-        /// <param name="images">Array of input images</param>
-        /// <param name="modes">Array of VipsBlendMode to join with</param>
-        /// <param name="x">x position of overlay</param>
-        /// <param name="y">y position of overlay</param>
-        /// <param name="compositingSpace">Composite images in this colour space</param>
-        /// <param name="premultiplied">Images have premultiplied alpha</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="modes">Array of VipsBlendMode to join with.</param>
+        /// <param name="x">x position of overlay.</param>
+        /// <param name="y">y position of overlay.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Composite(Image[] images, int[] modes, int? x = null, int? y = null,
             string compositingSpace = null, bool? premultiplied = null)
         {
@@ -1109,20 +1116,20 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Blend an array of images with an array of blend modes
+        /// Blend an array of images with an array of blend modes.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
         /// Image @out = image.Composite(other, modes, x: int, y: int, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
-        /// <param name="images">Array of input images</param>
-        /// <param name="modes">Array of VipsBlendMode to join with</param>
-        /// <param name="x">x position of overlay</param>
-        /// <param name="y">y position of overlay</param>
-        /// <param name="compositingSpace">Composite images in this colour space</param>
-        /// <param name="premultiplied">Images have premultiplied alpha</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="modes">Array of VipsBlendMode to join with.</param>
+        /// <param name="x">x position of overlay.</param>
+        /// <param name="y">y position of overlay.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Composite(Image[] images, string[] modes, int? x = null, int? y = null,
             string compositingSpace = null, bool? premultiplied = null) =>
             Composite(images, modes.Select(m => GValue.ToEnum(GValue.BlendModeType, m)).ToArray(), x, y,
@@ -1136,13 +1143,13 @@ namespace NetVips
         /// Image @out = base.Composite(overlay, mode, x: int, y: int, compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
-        /// <param name="overlay">Overlay image</param>
-        /// <param name="mode">VipsBlendMode to join with</param>
-        /// <param name="x">x position of overlay</param>
-        /// <param name="y">y position of overlay</param>
-        /// <param name="compositingSpace">Composite images in this colour space</param>
-        /// <param name="premultiplied">Images have premultiplied alpha</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="overlay">Overlay image.</param>
+        /// <param name="mode">VipsBlendMode to join with.</param>
+        /// <param name="x">x position of overlay.</param>
+        /// <param name="y">y position of overlay.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Composite(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null,
             bool? premultiplied = null) =>
             Composite2(overlay, mode, x, y, compositingSpace, premultiplied);
@@ -1155,18 +1162,18 @@ namespace NetVips
         /// Image @out = input.Crop(left, top, width, height);
         /// </code>
         /// </example>
-        /// <param name="left">Left edge of extract area</param>
-        /// <param name="top">Top edge of extract area</param>
-        /// <param name="width">Width of extract area</param>
-        /// <param name="height">Height of extract area</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="left">Left edge of extract area.</param>
+        /// <param name="top">Top edge of extract area.</param>
+        /// <param name="width">Width of extract area.</param>
+        /// <param name="height">Height of extract area.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Crop(int left, int top, int width, int height) =>
             ExtractArea(left, top, width, height);
 
         /// <summary>
         /// Return the coordinates of the image maximum.
         /// </summary>
-        /// <returns>An array of doubles</returns>
+        /// <returns>An array of doubles.</returns>
         public double[] MaxPos()
         {
             var v = Max(out var x, out var y);
@@ -1176,7 +1183,7 @@ namespace NetVips
         /// <summary>
         /// Return the coordinates of the image minimum.
         /// </summary>
-        /// <returns>An array of doubles</returns>
+        /// <returns>An array of doubles.</returns>
         public double[] MinPos()
         {
             var v = Min(out var x, out var y);
@@ -1186,175 +1193,178 @@ namespace NetVips
         /// <summary>
         /// Return the real part of a complex image.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Real() => Complexget("real");
 
         /// <summary>
         /// Return the imaginary part of a complex image.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Imag() => Complexget("imag");
 
         /// <summary>
         ///  Return an image converted to polar coordinates.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Polar() => RunCmplx(x => x.Complex("polar"), this);
 
         /// <summary>
         /// Return an image converted to rectangular coordinates.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rect() => RunCmplx(x => x.Complex("rect"), this);
 
         /// <summary>
         /// Return the complex conjugate of an image.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Conj() => Complex("conj");
 
         /// <summary>
         /// Return the sine of an image in degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Sin() => Math("sin");
 
         /// <summary>
         /// Return the cosine of an image in degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Cos() => Math("cos");
 
         /// <summary>
         /// Return the tangent of an image in degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Tan() => Math("tan");
 
         /// <summary>
         /// Return the inverse sine of an image in degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Asin() => Math("asin");
 
         /// <summary>
         /// Return the inverse cosine of an image in degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Acos() => Math("acos");
 
         /// <summary>
         /// Return the inverse tangent of an image in degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Atan() => Math("atan");
 
         /// <summary>
         /// Return the natural log of an image.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Log() => Math("log");
 
         /// <summary>
         /// Return the log base 10 of an image.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Log10() => Math("log10");
 
         /// <summary>
         /// Return e ** pixel.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Exp() => Math("exp");
 
         /// <summary>
         /// Return 10 ** pixel.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Exp10() => Math("exp10");
 
         /// <summary>
         /// Erode with a structuring element.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">The structuring element.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Erode(Image mask) => Morph(mask, "erode");
 
         /// <summary>
         /// Dilate with a structuring element.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="mask">The structuring element.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Dilate(Image mask) => Morph(mask, "dilate");
 
         /// <summary>
         /// size x size median filter.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="size">The median filter.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Median(int size) => Rank(size, size, size * size / 2);
 
         /// <summary>
         /// Flip horizontally.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image FlipHor() => Flip(Enums.Direction.Horizontal);
 
         /// <summary>
         /// Flip vertically.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image FlipVer() => Flip(Enums.Direction.Vertical);
 
         /// <summary>
         /// Rotate 90 degrees clockwise.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rot90() => Rot(Enums.Angle.D90);
 
         /// <summary>
         /// Rotate 180 degrees.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rot180() => Rot(Enums.Angle.D180);
 
         /// <summary>
         /// Rotate 270 degrees clockwise.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rot270() => Rot(Enums.Angle.D270);
 
         /// <summary>
         /// Return the largest integral value not greater than the argument.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Floor() => this.Call("round", "floor") as Image;
 
         /// <summary>
         /// Return the largest integral value not greater than the argument.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Ceil() => this.Call("round", "ceil") as Image;
 
         /// <summary>
         /// Return the nearest integral value.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Rint() => this.Call("round", "rint") as Image;
 
         /// <summary>
         /// AND image bands together.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image BandAnd() => this.Call("bandbool", "and") as Image;
 
         /// <summary>
         /// OR image bands together.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image BandOr() => this.Call("bandbool", "or") as Image;
 
         /// <summary>
         /// EOR image bands together.
         /// </summary>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image BandEor() => this.Call("bandbool", "eor") as Image;
 
         /// <summary>
@@ -1364,8 +1374,8 @@ namespace NetVips
         /// Uses colour space interpretation with number of channels to guess
         /// this.
         /// </remarks>
-        /// <returns><see langword="true" /> if this image has an alpha channel; 
-        /// otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if this image has an alpha channel;
+        /// otherwise, <see langword="false" />.</returns>
         public bool HasAlpha()
         {
             return Bands == 2 ||
@@ -1377,17 +1387,17 @@ namespace NetVips
         /// Attach progress feedback, if required.
         /// </summary>
         /// <remarks>
-        /// You can use this function to update user-interfaces with 
+        /// You can use this function to update user-interfaces with
         /// progress feedback, for example:
         /// <code language="lang-csharp">
         /// var image = Image.NewFromFile("huge.jpg", access: Enums.Access.Sequential);
-        /// 
-        /// var progress = new Progress&lt;int&gt;(value =>
+        ///
+        /// var progress = new Progress&lt;int&gt;(percent =>
         /// {
-        ///     Console.Write($"\r{value}% complete");
+        ///     Console.Write($"\r{percent}% complete");
         /// });
         /// image.SetProgress(progress);
-        /// 
+        ///
         /// image.Dzsave("image-pyramid");
         /// </code>
         /// </remarks>
@@ -1400,6 +1410,11 @@ namespace NetVips
 
             GCallback evalCallback = (imagePtr, progressPtr, userDataPtr) =>
             {
+                if (progressPtr == IntPtr.Zero)
+                {
+                    return;
+                }
+
                 var progressStruct = progressPtr.Dereference<VipsProgress.Struct>();
                 if (progressStruct.Percent != lastPercent)
                 {
@@ -1409,7 +1424,7 @@ namespace NetVips
             };
 
             // prevent it from being re-located or disposed of by the garbage collector
-            _progress = GCHandle.Alloc(evalCallback);
+            _progressHandle = GCHandle.Alloc(evalCallback);
 
             this.Connect(Internal.Enums.VipsEvaluation.Eval, evalCallback);
         }
@@ -1422,14 +1437,14 @@ namespace NetVips
         /// Does band exist in image.
         /// </summary>
         /// <param name="i">The index to fetch.</param>
-        /// <returns>true if the index exists</returns>
+        /// <returns>true if the index exists.</returns>
         public bool BandExists(int i)
         {
             return i >= 0 && i <= Bands - 1;
         }
 
         /// <summary>
-        /// Overload `[]`
+        /// Overload `[]`.
         /// </summary>
         /// <remarks>
         /// Use `[]` to pull out band elements from an image. For example:
@@ -1438,8 +1453,8 @@ namespace NetVips
         /// </code>
         /// Will make a new one-band image from band 1 (the middle band).
         /// </remarks>
-        /// <param name="i"></param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="i">The band element to pull out.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image this[int i]
         {
             get => BandExists(i) ? this.Call("extract_band", i) as Image : null;
@@ -1488,7 +1503,7 @@ namespace NetVips
         /// <summary>
         /// Split an n-band image into n separate images.
         /// </summary>
-        /// <returns>An array of <see cref="Image"/></returns>
+        /// <returns>An array of <see cref="Image"/>.</returns>
         public Image[] Bandsplit()
         {
             var images = new Image[Bands];
@@ -1504,7 +1519,7 @@ namespace NetVips
         /// Compares the hashcode of two images.
         /// </summary>
         /// <param name="other">The <see cref="Image"/> to compare.</param>
-        /// <returns><see langword="true" /> if equal; otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if equal; otherwise, <see langword="false" />.</returns>
         public bool Equals(Image other)
         {
             return Equals(GetHashCode(), other.GetHashCode());
@@ -1517,16 +1532,28 @@ namespace NetVips
         /// <returns><see langword="true" /> if the specified object  is equal to the current image; otherwise, <see langword="false" />.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
             return Equals((Image)obj);
         }
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
-        /// <returns>A hash code for the current immage.</returns>
+        /// <returns>A hash code for the current image.</returns>
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
@@ -1538,13 +1565,14 @@ namespace NetVips
         protected override void Dispose(bool disposing)
         {
             // release references to delegates / data objects
-            if (_data.IsAllocated)
+            if (_dataHandle.IsAllocated)
             {
-                _data.Free();
+                _dataHandle.Free();
             }
-            if (_progress.IsAllocated)
+
+            if (_progressHandle.IsAllocated)
             {
-                _progress.Free();
+                _progressHandle.Free();
             }
 
             // Call our base Dispose method

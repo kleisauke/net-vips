@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace NetVips.Samples
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
     /// From: https://github.com/weserv/images/blob/3.x/src/Manipulators/Shape.php
     /// </summary>

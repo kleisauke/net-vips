@@ -1,11 +1,11 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using NetVips.Interop;
-
 namespace NetVips.Internal
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Text;
+    using NetVips.Interop;
+
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate IntPtr VipsArgumentMapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
         IntPtr argumentInstance, IntPtr a, IntPtr b);

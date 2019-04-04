@@ -1,9 +1,9 @@
-using System;
-using System.Runtime.InteropServices;
-using NetVips.Internal;
-
 namespace NetVips
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using NetVips.Internal;
+
     /// <summary>
     /// Manage a <see cref="Internal.VipsObject"/>.
     /// </summary>
@@ -11,7 +11,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        internal VipsObject(IntPtr pointer) : base(pointer)
+        /// <inheritdoc cref="GObject"/>
+        internal VipsObject(IntPtr pointer)
+            : base(pointer)
         {
             // logger.Debug($"VipsObject = {pointer}");
         }
@@ -26,10 +28,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// slow! eeeeew
+        /// slow! eeeeew.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">Arg to fetch.</param>
+        /// <returns>The pspec for this arg.</returns>
         private GParamSpec.Struct? GetPspec(string name)
         {
             // logger.Debug($"GetPspec: this = {this}, name = {name}");
@@ -64,8 +66,8 @@ namespace NetVips
         /// <summary>
         /// Get the blurb for a GObject property.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">Arg to fetch.</param>
+        /// <returns>The blurb.</returns>
         internal string GetBlurb(string name)
         {
             var pspec = GetPspec(name);
@@ -85,8 +87,8 @@ namespace NetVips
         /// <remarks>
         /// The value of the property is converted to a C# value.
         /// </remarks>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">Arg to fetch.</param>
+        /// <returns>The GObject property.</returns>
         public virtual object Get(string name)
         {
             // logger.Debug($"Get: name = {name}");
@@ -110,8 +112,8 @@ namespace NetVips
         /// <summary>
         /// Set a GObject property. The value is converted to the property type, if possible.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name">The name of the property to set.</param>
+        /// <param name="value">The value.</param>
         public virtual void Set(string name, object value)
         {
             // logger.Debug($"Set: name = {name}, value = {value}");
@@ -130,8 +132,8 @@ namespace NetVips
         /// "fred=12, tile"
         /// "[fred=12]"
         /// </remarks>
-        /// <param name="stringOptions"></param>
-        /// <returns></returns>
+        /// <param name="stringOptions">Arguments as a string.</param>
+        /// <returns><see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
         public bool SetString(string stringOptions)
         {
             var result = Internal.VipsObject.SetFromString(this, stringOptions);
@@ -141,7 +143,7 @@ namespace NetVips
         /// <summary>
         /// Get the description of a GObject.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The description of a GObject.</returns>
         public string GetDescription()
         {
             return Marshal.PtrToStringAnsi(Internal.VipsObject.GetDescription(this));

@@ -7,7 +7,6 @@
 *.userosscache
 *.sln.docstates
 download/
-tools/
 build/native/pack/
 
 # User-specific files (MonoDevelop/Xamarin Studio)

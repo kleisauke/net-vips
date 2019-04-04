@@ -1,7 +1,7 @@
-﻿using System;
-
 namespace NetVips.Samples
 {
+    using System;
+
     public class ImagePyramid : ISample
     {
         public string Name => "Image Pyramid";
@@ -16,9 +16,9 @@ namespace NetVips.Samples
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
             im = im.Replicate(TileSize, TileSize);
 
-            var progress = new Progress<int>(value =>
+            var progress = new Progress<int>(percent =>
             {
-                Console.Write($"\r{value}% complete");
+                Console.Write($"\r{percent}% complete");
             });
             im.SetProgress(progress);
 

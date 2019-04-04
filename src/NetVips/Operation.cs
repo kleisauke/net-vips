@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using NetVips.Internal;
-
 namespace NetVips
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using NetVips.Internal;
+
     /// <summary>
     /// Wrap a <see cref="VipsOperation"/> object.
     /// </summary>
@@ -14,7 +14,9 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private Operation(IntPtr pointer) : base(pointer)
+        /// <inheritdoc cref="VipsObject"/>
+        private Operation(IntPtr pointer)
+            : base(pointer)
         {
             // logger.Debug($"VipsOperation = {pointer}");
         }
@@ -33,9 +35,9 @@ namespace NetVips
         /// <summary>
         /// Set a GObject property. The value is converted to the property type, if possible.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/></param>
+        /// <param name="name">The name of the property to set.</param>
+        /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/>.</param>
+        /// <param name="value">The value.</param>
         private void Set(string name, Internal.Enums.VipsArgumentFlags flags, object value)
         {
             // MODIFY args need to be copied before they are set
@@ -46,16 +48,16 @@ namespace NetVips
                 value = image.Copy().CopyMemory();
             }
 
-            base.Set(name, value);
+            Set(name, value);
         }
 
         /// <summary>
         /// Set a GObject property. The value is converted to the property type, if possible.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="matchImage"></param>
-        /// <param name="value"></param>
-        /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/></param>
+        /// <param name="name">The name of the property to set.</param>
+        /// <param name="flags">See <see cref="Internal.Enums.VipsArgumentFlags"/>.</param>
+        /// <param name="matchImage">A <see cref="Image"/> used as guide.</param>
+        /// <param name="value">The value.</param>
         private void Set(string name, Internal.Enums.VipsArgumentFlags flags, Image matchImage, object value)
         {
             // logger.Debug($"Operation.Set: name = {name}, flags = {flags}, " +
@@ -87,8 +89,7 @@ namespace NetVips
                             break;
                         default:
                             throw new Exception(
-                                $"unsupported value type {value.GetType()}"
-                            );
+                                $"unsupported value type {value.GetType()}");
                     }
                 }
             }
@@ -172,9 +173,9 @@ namespace NetVips
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
-        /// <param name="operationName"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="args">An arbitrary number and variety of arguments.</param>
+        /// <returns>A new object.</returns>
         public static object Call(string operationName, params object[] args) =>
             Call(operationName, null, null, args);
 
@@ -188,10 +189,10 @@ namespace NetVips
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
-        /// <param name="operationName"></param>
-        /// <param name="kwargs"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="kwargs">Optional arguments.</param>
+        /// <param name="args">An arbitrary number and variety of arguments.</param>
+        /// <returns>A new object.</returns>
         public static object Call(string operationName, VOption kwargs = null, params object[] args) =>
             Call(operationName, kwargs, null, args);
 
@@ -205,11 +206,11 @@ namespace NetVips
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
-        /// <param name="operationName"></param>
-        /// <param name="kwargs"></param>
-        /// <param name="matchImage"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="kwargs">Optional arguments.</param>
+        /// <param name="matchImage">A <see cref="Image"/> used as guide.</param>
+        /// <param name="args">An arbitrary number and variety of arguments.</param>
+        /// <returns>A new object.</returns>
         public static object Call(string operationName, VOption kwargs = null, Image matchImage = null,
             params object[] args)
         {
@@ -353,15 +354,15 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make a C#-style docstring + function.
+        /// Make a C#-style docstring + function declaration.
         /// </summary>
         /// <remarks>
         /// This is used to generate the functions in <see cref="Image"/>.
         /// </remarks>
-        /// <param name="operationName"></param>
-        /// <param name="indent"></param>
-        /// <param name="outParameters"></param>
-        /// <returns></returns>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="indent">Indentation level.</param>
+        /// <param name="outParameters">The out parameters of this function.</param>
+        /// <returns>A C#-style docstring + function declaration.</returns>
         private static string GenerateFunction(string operationName, string indent = "        ",
             string[] outParameters = null)
         {
@@ -434,11 +435,14 @@ namespace NetVips
                     case "Image[]":
                     case "object[]":
                         return $" as {type};";
-                    case "int":
-                    case "double":
-                        return $" is {type} {name} ? {name} : 0;";
                     case "bool":
                         return $" is {type} {name} && {name};";
+                    case "int":
+                        return $" is {type} {name} ? {name} : 0;";
+                    case "ulong":
+                        return $" is {type} {name} ? {name} : 0ul;";
+                    case "double":
+                        return $" is {type} {name} ? {name} : 0d;";
                     case "string":
                         return $" is {type} {name} ? {name} : null;";
                     default:
@@ -459,9 +463,10 @@ namespace NetVips
                     case "Image":
                     case "string":
                         return $"{type} {name} = null";
-                    case "int":
-                    case "double":
                     case "bool":
+                    case "int":
+                    case "ulong":
+                    case "double":
                         return $"{type}? {name} = null";
                     default:
                         throw new Exception("Unsupported type: " + type);
@@ -479,12 +484,13 @@ namespace NetVips
                     case "byte[]":
                         return $"{name} != null && {name}.Length > 0";
                     case "GObject":
-                    case "string":
                     case "Image":
+                    case "string":
                         return $"{name} != null";
-                    case "int":
-                    case "double":
                     case "bool":
+                    case "int":
+                    case "ulong":
+                    case "double":
                         return $"{name}.HasValue";
                     default:
                         throw new Exception("Unsupported type: " + type);
@@ -496,7 +502,7 @@ namespace NetVips
             var newOperationName = operationName.ToPascalCase();
 
             var description = op.GetDescription();
-            result.AppendLine($"{indent}/// {description.FirstLetterToUpper()}")
+            result.AppendLine($"{indent}/// {description.FirstLetterToUpper()}.")
                 .AppendLine($"{indent}/// </summary>")
                 .AppendLine($"{indent}/// <example>")
                 .AppendLine($"{indent}/// <code language=\"lang-csharp\">")
@@ -540,7 +546,7 @@ namespace NetVips
                     var optionalName = optionalInput[i];
                     result.Append(
                             $"{SafeIdentifier(optionalName).ToPascalCase().FirstLetterToLower()}: {GValue.GTypeToCSharp(op.GetTypeOf(optionalName))}")
-                        .Append(i != optionalInput.Length - 1 ? ", " : "");
+                        .Append(i != optionalInput.Length - 1 ? ", " : string.Empty);
                 }
             }
 
@@ -552,7 +558,7 @@ namespace NetVips
             foreach (var requiredName in requiredInput)
             {
                 result.AppendLine(
-                    $"{indent}/// <param name=\"{requiredName.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(requiredName)}</param>");
+                    $"{indent}/// <param name=\"{requiredName.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(requiredName)}.</param>");
             }
 
             if (outParameters != null)
@@ -560,14 +566,14 @@ namespace NetVips
                 foreach (var outParameter in outParameters)
                 {
                     result.AppendLine(
-                        $"{indent}/// <param name=\"{outParameter.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(outParameter)}</param>");
+                        $"{indent}/// <param name=\"{outParameter.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(outParameter)}.</param>");
                 }
             }
 
             foreach (var optionalName in optionalInput)
             {
                 result.AppendLine(
-                    $"{indent}/// <param name=\"{optionalName.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(optionalName)}</param>");
+                    $"{indent}/// <param name=\"{optionalName.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(optionalName)}.</param>");
             }
 
             string outputType;
@@ -596,15 +602,15 @@ namespace NetVips
             if (outputType.EndsWith("[]"))
             {
                 result.AppendLine(
-                    $"{indent}/// <returns>An array of {ToCref(outputType.Remove(outputType.Length - 2))}s</returns>");
+                    $"{indent}/// <returns>An array of {ToCref(outputType.Remove(outputType.Length - 2))}s.</returns>");
             }
             else if (!outputType.Equals("void"))
             {
-                result.AppendLine($"{indent}/// <returns>A {ToCref(outputType)}</returns>");
+                result.AppendLine($"{indent}/// <returns>A {ToCref(outputType)}.</returns>");
             }
 
             result.Append($"{indent}public ")
-                .Append(memberX == null ? "static " : "")
+                .Append(memberX == null ? "static " : string.Empty)
                 .Append(outputType)
                 .Append(
                     $" {newOperationName}({string.Join(", ", requiredInput.Select(name => $"{GValue.GTypeToCSharp(op.GetTypeOf(name))} {SafeIdentifier(name).ToPascalCase().FirstLetterToLower()}").ToArray())}");
@@ -676,7 +682,7 @@ namespace NetVips
                     {
                         var outParameterName = outParameters[i];
                         result.Append($"{indent}        {{\"{outParameterName}\", true}}")
-                            .AppendLine(i != outParameters.Length - 1 ? "," : "");
+                            .AppendLine(i != outParameters.Length - 1 ? "," : string.Empty);
                     }
 
                     result.AppendLine($"{indent}    }};");
@@ -813,7 +819,8 @@ namespace NetVips
         /// File.WriteAllText("Image.Generated.cs", Operation.GenerateImageClass());
         /// </code>
         /// </remarks>
-        /// <returns></returns>
+        /// <param name="indent">Indentation level.</param>
+        /// <returns>The `Image.Generated.cs` as string.</returns>
         public static string GenerateImageClass(string indent = "        ")
         {
             // generate list of all nicknames we can generate docstrings for
@@ -905,7 +912,7 @@ namespace NetVips
         /// <summary>
         /// Set the maximum number of operations libvips will cache.
         /// </summary>
-        /// <param name="max"></param>
+        /// <param name="max">Maximum number of operations.</param>
         public static void VipsCacheSetMax(int max)
         {
             VipsCache.SetMax(max);
@@ -914,7 +921,7 @@ namespace NetVips
         /// <summary>
         /// Limit the operation cache by memory use.
         /// </summary>
-        /// <param name="maxMem"></param>
+        /// <param name="maxMem">Maximum memory use.</param>
         public static void VipsCacheSetMaxMem(ulong maxMem)
         {
             VipsCache.SetMaxMem(maxMem);
@@ -923,7 +930,7 @@ namespace NetVips
         /// <summary>
         /// Limit the operation cache by number of open files.
         /// </summary>
-        /// <param name="maxFiles"></param>
+        /// <param name="maxFiles">Maximum open files.</param>
         public static void VipsCacheSetMaxFiles(int maxFiles)
         {
             VipsCache.SetMaxFiles(maxFiles);
@@ -932,10 +939,10 @@ namespace NetVips
         /// <summary>
         /// Turn on libvips cache tracing.
         /// </summary>
-        /// <param name="trace"></param>
-        public static void VipsCacheSetTrace(int trace)
+        /// <param name="trace">Bool indicating if tracing should be turned on.</param>
+        public static void VipsCacheSetTrace(bool trace)
         {
-            VipsCache.SetTrace(trace);
+            VipsCache.SetTrace(trace ? 1 : 0);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.IO;
-
 namespace NetVips.Benchmarks
 {
+    using System.IO;
+
     public class TestImage
     {
         // much larger than this and im falls over with cache resources exhausted

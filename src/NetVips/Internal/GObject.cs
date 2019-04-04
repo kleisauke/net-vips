@@ -1,10 +1,10 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using NetVips.Interop;
-
 namespace NetVips.Internal
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using NetVips.Interop;
+
     internal static class GObject
     {
         [SuppressUnmanagedCodeSecurity]
@@ -78,6 +78,14 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_get_int")]
         internal static extern int GetInt(in Struct value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_set_uint64")]
+        internal static extern void SetUint64(ref Struct value, ulong vUint64);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_get_uint64")]
+        internal static extern ulong GetUint64(in Struct value);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_set_double")]

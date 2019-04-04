@@ -1,4 +1,4 @@
-﻿namespace NetVips
+namespace NetVips
 {
     public interface ISample
     {

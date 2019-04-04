@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System;
+    using System.Linq;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class ColourTests : IClassFixture<TestsFixture>
     {
         public ColourTests(TestsFixture testsFixture, ITestOutputHelper output)

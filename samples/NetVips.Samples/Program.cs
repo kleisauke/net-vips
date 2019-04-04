@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 namespace NetVips
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+
     class Program
     {
-        public static List<ISample> Samples = Assembly.GetExecutingAssembly().GetTypes()
+        private static List<ISample> _samples = Assembly.GetExecutingAssembly().GetTypes()
             .Where(x => x.GetInterfaces().Contains(typeof(ISample)) && x.GetConstructor(Type.EmptyTypes) != null)
             .Select(x => Activator.CreateInstance(x) as ISample)
             .OrderBy(s => s?.Category)
@@ -26,7 +26,7 @@ namespace NetVips
             Console.WriteLine($"libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
 
             Console.WriteLine(
-                $"Type a number (1-{Samples.Count}) to execute a sample of your choice. Press <Enter> or type 'Q' to quit.");
+                $"Type a number (1-{_samples.Count}) to execute a sample of your choice. Press <Enter> or type 'Q' to quit.");
 
             DisplayMenu();
 
@@ -36,7 +36,7 @@ namespace NetVips
                 string[] sampleArgs = { };
                 if (args.Length > 0)
                 {
-                    var sampleId = Samples.Select((value, index) => new { Index = index + 1, value.Name })
+                    var sampleId = _samples.Select((value, index) => new { Index = index + 1, value.Name })
                         .FirstOrDefault(s => s.Name.Equals(args[0]))?.Index;
                     input = sampleId != null ? $"{sampleId}" : "0";
                     sampleArgs = args.Skip(1).ToArray();
@@ -72,7 +72,7 @@ namespace NetVips
             Console.WriteLine("Menu:");
 
             string currCategory = null;
-            var menu = Samples.Select((value, index) => new { Index = index + 1, value.Name, value.Category })
+            var menu = _samples.Select((value, index) => new { Index = index + 1, value.Name, value.Category })
                 .Aggregate(new StringBuilder(), (builder, pair) =>
                 {
                     if (currCategory != pair.Category)
@@ -96,7 +96,7 @@ namespace NetVips
 
         public static bool TryGetSample(int id, out ISample sample)
         {
-            sample = Samples
+            sample = _samples
                 .Select((value, index) => new { Index = index + 1, Sample = value })
                 .FirstOrDefault(pair => pair.Index == id)?.Sample;
 

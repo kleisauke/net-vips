@@ -1,7 +1,7 @@
-﻿using BenchmarkDotNet.Running;
-
 namespace NetVips.Benchmarks
 {
+    using BenchmarkDotNet.Running;
+
     public class Runner
     {
         public static void Main(string[] args)

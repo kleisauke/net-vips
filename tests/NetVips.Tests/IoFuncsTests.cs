@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class IoFuncsTests : IClassFixture<TestsFixture>
     {
         public IoFuncsTests(TestsFixture testsFixture, ITestOutputHelper output)
@@ -135,6 +136,26 @@ namespace NetVips.Tests
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             var t = im.WriteToMemory();
             Assert.True(s.SequenceEqual(t));
+        }
+
+        [Fact]
+        public void TestSetProgress()
+        {
+            var im = Image.NewFromFile(Helper.JpegFile, access: Enums.Access.Sequential);
+
+            var lastPercent = 0;
+
+            var progress = new Progress<int>(percent =>
+            {
+                // Tests whether the actual percentage is higher 
+                // than the last percentage received.
+                Assert.True(percent > lastPercent);
+                lastPercent = percent;
+            });
+            im.SetProgress(progress);
+
+            var buf = im.DzsaveBuffer("image-pyramid");
+            Assert.True(buf.Length > 0);
         }
 
         [Fact]

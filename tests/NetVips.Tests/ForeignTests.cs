@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System;
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     {
         private string _tempDir;
@@ -441,11 +441,11 @@ namespace NetVips.Tests
                 var buf2 = File.ReadAllBytes(filename);
                 Assert.Equal(buf.Length, buf2.Length);
 
-                var a = Image.NewFromBuffer(buf, "", kwargs: new VOption
+                var a = Image.NewFromBuffer(buf, kwargs: new VOption
                 {
                     {"page", 2}
                 });
-                var b = Image.NewFromBuffer(buf2, "", kwargs: new VOption
+                var b = Image.NewFromBuffer(buf2, kwargs: new VOption
                 {
                     {"page", 2}
                 });
@@ -610,7 +610,7 @@ namespace NetVips.Tests
             {
                 var x1 = Image.NewFromFile(Helper.GifAnimFile);
                 var w1 = x1.WebpsaveBuffer(q: 10);
-                var x2 = Image.NewFromBuffer(w1, "", kwargs: new VOption
+                var x2 = Image.NewFromBuffer(w1, kwargs: new VOption
                 {
                     {"n", -1}
                 });
@@ -917,7 +917,7 @@ namespace NetVips.Tests
 
             // default deepzoom layout ... we must use png here, since we want to
             // test the overlap for equality
-            var filename = Helper.GetTemporaryFile(_tempDir, "");
+            var filename = Helper.GetTemporaryFile(_tempDir);
             _colour.Dzsave(filename, suffix: ".png");
 
             // test horizontal overlap ... expect 256 step, overlap 1
@@ -950,7 +950,7 @@ namespace NetVips.Tests
             Assert.False(Directory.Exists(filename + "_files/11"));
 
             // default google layout
-            filename = Helper.GetTemporaryFile(_tempDir, "");
+            filename = Helper.GetTemporaryFile(_tempDir);
             _colour.Dzsave(filename, layout: "google");
 
             // test bottom-right tile ... default is 256x256 tiles, overlap 0
@@ -967,7 +967,7 @@ namespace NetVips.Tests
 
             // overlap 1, 510x510 pixels, 256 pixel tiles, should be exactly 2x2
             // tiles, though in fact the bottom and right edges will be white
-            filename = Helper.GetTemporaryFile(_tempDir, "");
+            filename = Helper.GetTemporaryFile(_tempDir);
 
             _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, layout: "google", overlap: 1, depth: "one");
 
@@ -981,7 +981,7 @@ namespace NetVips.Tests
             // 8.6 revised the rules on overlaps, so don't test earlier than that
             if (Base.AtLeastLibvips(8, 6))
             {
-                filename = Helper.GetTemporaryFile(_tempDir, "");
+                filename = Helper.GetTemporaryFile(_tempDir);
                 _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: "google", overlap: 1, depth: "one");
 
                 x = Image.NewFromFile(filename + "/0/2/2.jpg");
@@ -991,7 +991,7 @@ namespace NetVips.Tests
             }
 
             // default zoomify layout
-            filename = Helper.GetTemporaryFile(_tempDir, "");
+            filename = Helper.GetTemporaryFile(_tempDir);
             _colour.Dzsave(filename, layout: "zoomify");
 
             // 256x256 tiles, no overlap
@@ -1016,21 +1016,21 @@ namespace NetVips.Tests
             Assert.True(new FileInfo(filename2).Length < new FileInfo(filename).Length);
 
             // test suffix
-            filename = Helper.GetTemporaryFile(_tempDir, "");
+            filename = Helper.GetTemporaryFile(_tempDir);
             _colour.Dzsave(filename, suffix: ".png");
 
             x = Image.NewFromFile(filename + "_files/10/0_0.png");
             Assert.Equal(255, x.Width);
 
             // test overlap
-            filename = Helper.GetTemporaryFile(_tempDir, "");
+            filename = Helper.GetTemporaryFile(_tempDir);
             _colour.Dzsave(filename, overlap: 200);
 
             x = Image.NewFromFile(filename + "_files/10/1_1.jpeg");
             Assert.Equal(654, x.Width);
 
             // test tile-size
-            filename = Helper.GetTemporaryFile(_tempDir, "");
+            filename = Helper.GetTemporaryFile(_tempDir);
             _colour.Dzsave(filename, tileSize: 512);
 
             y = Image.NewFromFile(filename + "_files/10/0_0.jpeg");

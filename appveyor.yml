@@ -14,9 +14,7 @@ environment:
 
 # Build script
 build_script:
-  # Run unit tests with the downloaded libvips win-x64 DLL
-  - ps: $env:PATH = "$env:APPVEYOR_BUILD_FOLDER\build\native\pack\win-x64;$env:PATH"
-  - ps: .\build.ps1
+  - ps: .\build.ps1 --package
 
 # Do not build on tags (GitHub only)
 skip_tags: true

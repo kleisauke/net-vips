@@ -1,12 +1,13 @@
-﻿using System;
-using BenchmarkDotNet.Attributes;
-using ImageMagick;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using SixLabors.Primitives;
-
 namespace NetVips.Benchmarks
 {
+    using System;
+    using BenchmarkDotNet.Attributes;
+    using Image = NetVips.Image;
+    using ImageMagick;
+    using SixLabors.ImageSharp;
+    using SixLabors.ImageSharp.Processing;
+    using SixLabors.Primitives;
+
     [Config(typeof(Config))]
     public class Benchmark
     {

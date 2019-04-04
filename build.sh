@@ -1,49 +1,24 @@
 #!/bin/sh
 
-# Define variables.
+set -e
+
+###########################################################################
+# CONFIGURATION
+###########################################################################
+
 SCRIPT_DIR=$(pwd)
-TOOLS_DIR=$SCRIPT_DIR/tools
-CAKE_VERSION=0.32.1
-CAKE_EXE=$TOOLS_DIR/dotnet-cake
-CAKE_PATH=$TOOLS_DIR/.store/cake.tool/$CAKE_VERSION
+BUILD_PROJECT_FILE="$SCRIPT_DIR/build/NetVips.Build.csproj"
 
-# Make sure the tools folder exist.
-if [ ! -d "$TOOLS_DIR" ]; then
-  mkdir "$TOOLS_DIR"
+###########################################################################
+# EXECUTION
+###########################################################################
+
+if ! [ -x "$(command -v dotnet)" ]; then
+    echo 'Error: dotnet is not installed.' >&2
+    exit 1
 fi
 
-###########################################################################
-# INSTALL CAKE
-###########################################################################
+echo "Microsoft (R) .NET Core SDK version $(dotnet --version)"
 
-CAKE_INSTALLED_VERSION=$(dotnet-cake --version 2>&1)
-
-if [ "$CAKE_VERSION" != "$CAKE_INSTALLED_VERSION" ]; then
-    if [ ! -f "$CAKE_EXE" ] || [ ! -d "$CAKE_PATH" ]; then
-        if [ -f "$CAKE_EXE" ]; then
-            dotnet tool uninstall --tool-path $TOOLS_DIR Cake.Tool
-        fi
-
-        echo "Installing Cake $CAKE_VERSION..."
-        dotnet tool install --tool-path $TOOLS_DIR --version $CAKE_VERSION Cake.Tool
-        if [ $? -ne 0 ]; then
-            echo "An error occured while installing Cake."
-            exit 1
-        fi
-    fi
-
-    # Make sure that Cake has been installed.
-    if [ ! -f "$CAKE_EXE" ]; then
-        echo "Could not find Cake.exe at '$CAKE_EXE'."
-        exit 1
-    fi
-else
-    CAKE_EXE="dotnet-cake"
-fi
-
-###########################################################################
-# RUN BUILD SCRIPT
-###########################################################################
-
-# Start Cake
-(exec "$CAKE_EXE" build.cake --bootstrap) && (exec "$CAKE_EXE" build.cake "$@")
+dotnet build "$BUILD_PROJECT_FILE" /nodeReuse:false
+dotnet run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"

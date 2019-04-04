@@ -1,29 +1,7 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{CDD2533C-1CD9-4930-94BD-273FFDBAF5EA}"
-	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
-		appveyor.yml = appveyor.yml
-		build.cake = build.cake
-		CHANGELOG.md = CHANGELOG.md
-		LICENSE = LICENSE
-		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{6D649DD5-5078-47D4-A2A2-225B03C34F43}"
-	ProjectSection(SolutionItems) = preProject
-		src\README.md = src\README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C353101-8C00-4CEC-902B-12ADB42DAB97}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{49E2C622-D14D-41E7-9766-6648D299C089}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{8C6A7218-07BA-4B8B-9239-773484DDDDFB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips", "src\NetVips\NetVips.csproj", "{5BCB7929-52B1-459B-89E5-7C2059850C60}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Tests", "tests\NetVips.Tests\NetVips.Tests.csproj", "{10AA7AD8-F5B2-4D17-B516-400983105A94}"
@@ -32,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Samples", "samples\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Benchmarks", "tests\NetVips.Benchmarks\NetVips.Benchmarks.csproj", "{A614F10E-DDE3-45C1-8734-1B388BF46FA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "documentation\Generator.csproj", "{305AB2BA-D951-4CEF-85D1-22660B0F065C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Docs", "documentation\NetVips.Docs.csproj", "{305AB2BA-D951-4CEF-85D1-22660B0F065C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Build", "build\NetVips.Build.csproj", "{35598B6F-008D-4E0B-85CC-8C17FFA8387E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,13 +87,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5BCB7929-52B1-459B-89E5-7C2059850C60} = {6D649DD5-5078-47D4-A2A2-225B03C34F43}
-		{10AA7AD8-F5B2-4D17-B516-400983105A94} = {2C353101-8C00-4CEC-902B-12ADB42DAB97}
-		{FC6364C5-2531-4C29-BBF3-8B2A5E432986} = {49E2C622-D14D-41E7-9766-6648D299C089}
-		{A614F10E-DDE3-45C1-8734-1B388BF46FA8} = {2C353101-8C00-4CEC-902B-12ADB42DAB97}
-		{305AB2BA-D951-4CEF-85D1-22660B0F065C} = {8C6A7218-07BA-4B8B-9239-773484DDDDFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91C3F11B-613B-4498-8869-F7BA9A6D0E99}

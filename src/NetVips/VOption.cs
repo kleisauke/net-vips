@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
 namespace NetVips
 {
+    using System.Collections;
+    using System.Collections.Generic;
+
     /// <summary>
     /// This class wraps a <see cref="Dictionary{String, Object}" />.
     /// This is used to call functions with optional arguments. See <see cref="Operation.Call(string, VOption, object[])" />.
@@ -17,6 +17,7 @@ namespace NetVips
         /// <returns>A <see cref="T:System.Collections.Generic.Dictionary`2.Enumerator" /> structure for the <see cref="_internalDictionary" />.</returns>
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _internalDictionary.GetEnumerator();
 
+        /// <inheritdoc cref="GetEnumerator"/>
         IEnumerator IEnumerable.GetEnumerator() => _internalDictionary.GetEnumerator();
 
         /// <summary>
@@ -41,7 +42,6 @@ namespace NetVips
         /// </summary>
         /// <param name="key">The key of the element to add.</param>
         /// <param name="value">The value of the element to add. The value can be null for reference types.</param>
-        /// <returns></returns>
         public void Add(string key, object value) => _internalDictionary.Add(key, value);
 
         /// <summary>

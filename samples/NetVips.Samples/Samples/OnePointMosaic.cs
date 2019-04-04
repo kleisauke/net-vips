@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
 namespace NetVips.Samples
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// From: https://github.com/libvips/nip2/tree/master/share/nip2/data/examples/1_point_mosaic
     /// </summary>

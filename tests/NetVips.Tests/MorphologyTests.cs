@@ -1,8 +1,8 @@
-﻿using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class MorphologyTests : IClassFixture<TestsFixture>
     {
         public MorphologyTests(TestsFixture testsFixture, ITestOutputHelper output)

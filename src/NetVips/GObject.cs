@@ -1,8 +1,8 @@
-using System;
-using System.Runtime.InteropServices;
-
 namespace NetVips
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     /// <summary>
     /// Manage <see cref="Internal.GObject"/> lifetime.
     /// </summary>
@@ -14,14 +14,16 @@ namespace NetVips
         // public static int NObjects;
 
         /// <summary>
-        /// Wrap around a pointer.
+        /// Initializes a new instance of the <see cref="GObject"/> class
+        /// with the specified pointer to wrap around.
         /// </summary>
         /// <remarks>
         /// Wraps a GObject instance around an underlying GValue. When the
         /// instance is garbage-collected, the underlying object is unreferenced.
         /// </remarks>
-        /// <param name="pointer"></param>
-        internal GObject(IntPtr pointer) : base(IntPtr.Zero, true)
+        /// <param name="pointer">The pointer to wrap around.</param>
+        internal GObject(IntPtr pointer)
+            : base(IntPtr.Zero, true)
         {
             // record the pointer we were given to manage
             SetHandle(pointer);
@@ -58,7 +60,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Gets a value that indicates whether the handle is invalid.
+        /// Gets a value indicating whether the handle is invalid.
         /// </summary>
         /// <returns><see langword="true" /> if the handle is not valid; otherwise, <see langword="false" />.</returns>
         public override bool IsInvalid => handle == IntPtr.Zero;

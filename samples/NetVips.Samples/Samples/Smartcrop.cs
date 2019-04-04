@@ -1,4 +1,4 @@
-﻿namespace NetVips.Samples
+namespace NetVips.Samples
 {
     public class Smartcrop : ISample
     {

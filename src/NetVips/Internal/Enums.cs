@@ -1,7 +1,7 @@
-﻿using System;
-
 namespace NetVips.Internal
 {
+    using System;
+
     internal static class Enums
     {
         [Flags]
@@ -80,7 +80,7 @@ namespace NetVips.Internal
             /// <remarks>
             /// The eval signal is emitted once per work unit (typically a 128 x
             /// 128 area of pixels) during image computation.
-            /// 
+            ///
             /// You can use this signal to update user-interfaces with progress
             /// feedback. Beware of updating too frequently: you will usually
             /// need some throttling mechanism.
@@ -89,7 +89,7 @@ namespace NetVips.Internal
 
             /// <summary>Evaluation is ending.</summary>
             /// <remarks>
-            /// The posteval signal is emitted once at the end of the computation 
+            /// The posteval signal is emitted once at the end of the computation
             /// of <see cref="Image"/>. It's a good place to shut down evaluation feedback.
             /// </remarks>
             public const string PostEval = "posteval";

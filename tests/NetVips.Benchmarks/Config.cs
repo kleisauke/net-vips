@@ -1,10 +1,10 @@
-﻿using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Toolchains.CsProj;
-using BenchmarkDotNet.Toolchains.DotNetCli;
-
 namespace NetVips.Benchmarks
 {
+    using BenchmarkDotNet.Configs;
+    using BenchmarkDotNet.Jobs;
+    using BenchmarkDotNet.Toolchains.CsProj;
+    using BenchmarkDotNet.Toolchains.DotNetCli;
+
     public class Config : ManualConfig
     {
         public Config()

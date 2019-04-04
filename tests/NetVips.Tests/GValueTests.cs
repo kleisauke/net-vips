@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.IO;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System.Collections;
+    using System.IO;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class GValueTests : IClassFixture<TestsFixture>
     {
         public GValueTests(TestsFixture testsFixture, ITestOutputHelper output)
@@ -34,6 +34,16 @@ namespace NetVips.Tests
             gv.Set(12);
             var value = gv.Get();
             Assert.Equal(12, value);
+        }
+
+        [Fact]
+        public void TestUint64()
+        {
+            var gv = new GValue();
+            gv.SetType(GValue.GUint64Type);
+            gv.Set(ulong.MaxValue);
+            var value = gv.Get();
+            Assert.Equal(ulong.MaxValue, value);
         }
 
         [Fact]

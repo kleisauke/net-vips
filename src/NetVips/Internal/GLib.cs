@@ -1,10 +1,10 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using NetVips.Interop;
-
 namespace NetVips.Internal
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using NetVips.Interop;
+
     internal static class GLib
     {
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]

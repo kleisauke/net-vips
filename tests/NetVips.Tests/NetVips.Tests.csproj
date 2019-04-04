@@ -24,6 +24,14 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TestWithNuGetBinaries)' == 'true'">
+    <PackageReference Include="NetVips.Native.linux-musl-x64" Version="8.7.4-beta1" />
+    <PackageReference Include="NetVips.Native.linux-x64" Version="8.7.4-beta1" />
+    <PackageReference Include="NetVips.Native.osx-x64" Version="8.7.4-beta1" />
+    <PackageReference Include="NetVips.Native.win-x64" Version="8.7.4-beta1" />
+    <PackageReference Include="NetVips.Native.win-x86" Version="8.7.4-beta1" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetVips\NetVips.csproj" />
   </ItemGroup>

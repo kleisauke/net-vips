@@ -1,22 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using NetVips.Internal;
-
 namespace NetVips
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using NetVips.Internal;
+
+    /// <summary>
+    /// Useful extension methods that we use in our codebase.
+    /// </summary>
     internal static class ExtensionMethods
     {
         /// <summary>
         /// Removes the element with the specified key from the <see cref="VOption" />
         /// and retrieves the value to <paramref name="target" />.
         /// </summary>
-        /// <param name="self"></param>
+        /// <param name="self">The <see cref="VOption" /> to remove from.</param>
         /// <param name="key">>The key of the element to remove.</param>
         /// <param name="target">The target to retrieve the value to.</param>
-        /// <returns><see langword="true" /> if the element is successfully removed; otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if the element is successfully removed; otherwise, <see langword="false" />.</returns>
         public static bool Remove(this VOption self, string key, out object target)
         {
             self.TryGetValue(key, out target);
@@ -24,10 +27,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Merges 2 <see cref="VOption" />s
+        /// Merges 2 <see cref="VOption" />s.
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="merge"></param>
+        /// <param name="self">The <see cref="VOption" /> to merge into.</param>
+        /// <param name="merge">The <see cref="VOption" /> to merge from.</param>
         public static void Merge(this VOption self, VOption merge)
         {
             foreach (var item in merge)
@@ -37,10 +40,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Test for rectangular array of something
+        /// Test for rectangular array of something.
         /// </summary>
-        /// <param name="array">Input array</param>
-        /// <returns><see langword="true" /> if the object is a rectangular array; otherwise, <see langword="false" /></returns>
+        /// <param name="array">Input array.</param>
+        /// <returns><see langword="true" /> if the object is a rectangular array; otherwise, <see langword="false" />.</returns>
         public static bool Is2D(this Array array)
         {
             return array.Length > 0 &&
@@ -49,7 +52,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Dereferences data from an unmanaged block of memory 
+        /// Dereferences data from an unmanaged block of memory
         /// to a newly allocated managed object of the specified type.
         /// </summary>
         /// <typeparam name="T">The type of object to be created. This object
@@ -64,48 +67,48 @@ namespace NetVips
         /// <summary>
         /// Call a libvips operation.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="operationName"></param>
-        /// <returns></returns>
+        /// <param name="image">A <see cref="Image"/> used as guide.</param>
+        /// <param name="operationName">Operation name.</param>
+        /// <returns>A new object.</returns>
         public static object Call(this Image image, string operationName) =>
             Operation.Call(operationName, null, image);
 
         /// <summary>
         /// Call a libvips operation.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="operationName"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="image">A <see cref="Image"/> used as guide.</param>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="args">An arbitrary number and variety of arguments.</param>
+        /// <returns>A new object.</returns>
         public static object Call(this Image image, string operationName, params object[] args) =>
             Operation.Call(operationName, null, image, args);
 
         /// <summary>
         /// Call a libvips operation.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="operationName"></param>
-        /// <param name="kwargs"></param>
-        /// <returns></returns>
+        /// <param name="image">A <see cref="Image"/> used as guide.</param>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="kwargs">Optional arguments.</param>
+        /// <returns>A new object.</returns>
         public static object Call(this Image image, string operationName, VOption kwargs) =>
             Operation.Call(operationName, kwargs, image);
 
         /// <summary>
         /// Call a libvips operation.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="operationName"></param>
-        /// <param name="kwargs"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="image">A <see cref="Image"/> used as guide.</param>
+        /// <param name="operationName">Operation name.</param>
+        /// <param name="kwargs">Optional arguments.</param>
+        /// <param name="args">An arbitrary number and variety of arguments.</param>
+        /// <returns>A new object.</returns>
         public static object Call(this Image image, string operationName, VOption kwargs, params object[] args) =>
             Operation.Call(operationName, kwargs, image, args);
 
         /// <summary>
-        /// Make first letter of a string upper case
+        /// Make first letter of a string upper case.
         /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
+        /// <param name="str">The input string.</param>
+        /// <returns>A new string with the first letter upper case.</returns>
         public static string FirstLetterToUpper(this string str)
         {
             if (str == null)
@@ -122,10 +125,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Make first letter of a string lower case
+        /// Make first letter of a string lower case.
         /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
+        /// <param name="str">The input string.</param>
+        /// <returns>A new string with the first letter lower case.</returns>
         public static string FirstLetterToLower(this string str)
         {
             if (str == null)
@@ -144,8 +147,8 @@ namespace NetVips
         /// <summary>
         /// Convert snake case (my_string) to camel case (MyString).
         /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
+        /// <param name="str">The input string.</param>
+        /// <returns>A new camel cased string.</returns>
         public static string ToPascalCase(this string str)
         {
             return str.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
@@ -156,8 +159,8 @@ namespace NetVips
         /// <summary>
         /// Prepends <paramref name="image" /> to <paramref name="args" />.
         /// </summary>
-        /// <param name="args"></param>
-        /// <param name="image"></param>
+        /// <param name="args">The <see cref="Image"/> array.</param>
+        /// <param name="image">The <see cref="Image"/> to prepend to <paramref name="args"/>.</param>
         /// <returns>A new object array.</returns>
         public static object[] PrependImage(this Image[] args, Image image)
         {
@@ -260,7 +263,8 @@ namespace NetVips
         /// <param name="data">Data to pass to handler calls.</param>
         /// <returns>The handler id.</returns>
         /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
-        internal static uint Connect(this GObject instance, string detailedSignal, GCallback callback, IntPtr data = default)
+        internal static uint Connect(this GObject instance, string detailedSignal, GCallback callback,
+            IntPtr data = default)
         {
             var ret = GSignal.ConnectData(instance, detailedSignal, callback, data, null, default);
 

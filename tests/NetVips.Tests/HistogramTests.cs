@@ -1,9 +1,9 @@
-﻿using System;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class HistogramTests : IClassFixture<TestsFixture>
     {
         public HistogramTests(TestsFixture testsFixture, ITestOutputHelper output)

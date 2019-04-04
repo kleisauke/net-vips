@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class ArithmeticTests : IClassFixture<TestsFixture>
     {
         private Image _image;

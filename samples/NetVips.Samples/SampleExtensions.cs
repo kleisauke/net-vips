@@ -1,7 +1,7 @@
-﻿using System;
-
 namespace NetVips
 {
+    using System;
+
     public static class SampleExtensions
     {
         public static double NextDouble(this Random random, double minValue, double maxValue)

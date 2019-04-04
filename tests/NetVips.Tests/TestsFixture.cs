@@ -1,11 +1,11 @@
-﻿using System;
-using Xunit.Abstractions;
-
 namespace NetVips.Tests
 {
+    using System;
+    using Xunit.Abstractions;
+
     public class TestsFixture : IDisposable
     {
-        private uint? _handlerId;
+        private uint _handlerId = 0;
 
         public void SetUpLogging(ITestOutputHelper output)
         {
@@ -18,9 +18,10 @@ namespace NetVips.Tests
 
         public void Dispose()
         {
-            if (_handlerId.HasValue)
+            if (_handlerId > 0)
             {
-                Log.RemoveLogHandler("VIPS", _handlerId.Value);
+                Log.RemoveLogHandler("VIPS", _handlerId);
+                _handlerId = 0;
             }
         }
     }

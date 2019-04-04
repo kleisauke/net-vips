@@ -1,9 +1,9 @@
-using System;
-using System.Runtime.InteropServices;
-using NetVips.Internal;
-
 namespace NetVips
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using NetVips.Internal;
+
     /// <summary>
     /// Basic utility stuff.
     /// </summary>
@@ -17,7 +17,7 @@ namespace NetVips
         /// once the assembly is loaded. You should only call this method in your own program if the
         /// <see cref="ModuleInitializer"/> fails to initialize libvips.
         /// </remarks>
-        /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" />.</returns>
         public static bool VipsInit()
         {
             return Vips.Init("NetVips") == 0;
@@ -30,10 +30,10 @@ namespace NetVips
         /// With this enabled, libvips will check for object and area leaks on exit.
         /// Enabling this option will make libvips run slightly more slowly.
         /// </remarks>
-        /// <param name="leak"></param>
-        public static void LeakSet(int leak)
+        /// <param name="leak">Bool indicating if leak checking should be turned on.</param>
+        public static void LeakSet(bool leak)
         {
-            Vips.LeakSet(leak);
+            Vips.LeakSet(leak ? 1 : 0);
         }
 
         /// <summary>
@@ -64,36 +64,12 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Reports leaks (hopefully there are none) it also tracks and reports peak memory use.
-        /// </summary>
-        internal static void ReportLeak()
-        {
-            var memStats = MemoryStats();
-            var activeAllocs = memStats[0];
-            var currentAllocs = memStats[1];
-            var files = memStats[2];
-
-            VipsObject.PrintAll();
-
-            Console.WriteLine("memory: {0} allocations, {1} bytes", activeAllocs, currentAllocs);
-            Console.WriteLine("files: {0} open", files);
-
-            Console.WriteLine("memory: high-water mark: {0}", MemoryHigh().ToReadableBytes());
-
-            var errorBuffer = Marshal.PtrToStringAnsi(Vips.ErrorBuffer());
-            if (!string.IsNullOrEmpty(errorBuffer))
-            {
-                Console.WriteLine("error buffer: {0}", errorBuffer);
-            }
-        }
-
-        /// <summary>
         /// Get the major, minor or micro version number of the libvips library.
         /// </summary>
         /// <param name="flag">Pass 0 to get the major version number, 1 to get minor, 2 to get micro.</param>
         /// <param name="fromModule"><see langword="true" /> to get this value from the pre-initialized
         /// <see cref="ModuleInitializer.Version"/> variable.</param>
-        /// <returns>The version number</returns>
+        /// <returns>The version number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">If <paramref name="flag" /> is not in range.</exception>
         public static int Version(int flag, bool fromModule = true)
         {
@@ -128,10 +104,10 @@ namespace NetVips
         /// <summary>
         /// Is this at least libvips x.y[.z]?
         /// </summary>
-        /// <param name="x">major</param>
-        /// <param name="y">minor</param>
-        /// <param name="z">micro</param>
-        /// <returns><see langword="true" /> if at least libvips x.y[.z]; otherwise, <see langword="false" /></returns>
+        /// <param name="x">Major component.</param>
+        /// <param name="y">Minor component.</param>
+        /// <param name="z">Micro component.</param>
+        /// <returns><see langword="true" /> if at least libvips x.y[.z]; otherwise, <see langword="false" />.</returns>
         public static bool AtLeastLibvips(int x, int y, int z = 0)
         {
             var major = Version(0);
@@ -141,13 +117,37 @@ namespace NetVips
             return major > x || major == x && minor >= y && micro >= z;
         }
 
+        /// <summary>
+        /// Reports leaks (hopefully there are none) it also tracks and reports peak memory use.
+        /// </summary>
+        internal static void ReportLeak()
+        {
+            var memStats = MemoryStats();
+            var activeAllocs = memStats[0];
+            var currentAllocs = memStats[1];
+            var files = memStats[2];
+
+            VipsObject.PrintAll();
+
+            Console.WriteLine("memory: {0} allocations, {1} bytes", activeAllocs, currentAllocs);
+            Console.WriteLine("files: {0} open", files);
+
+            Console.WriteLine("memory: high-water mark: {0}", MemoryHigh().ToReadableBytes());
+
+            var errorBuffer = Marshal.PtrToStringAnsi(Vips.ErrorBuffer());
+            if (!string.IsNullOrEmpty(errorBuffer))
+            {
+                Console.WriteLine("error buffer: {0}", errorBuffer);
+            }
+        }
+
         #region unit test functions
 
         /// <summary>
         /// For testing only.
         /// </summary>
-        /// <param name="path">path to split</param>
-        /// <returns>The filename part of a vips7 path</returns>
+        /// <param name="path">Path to split.</param>
+        /// <returns>The filename part of a vips7 path.</returns>
         public static string PathFilename7(string path)
         {
             return Vips.PathFilename7(path);
@@ -156,8 +156,8 @@ namespace NetVips
         /// <summary>
         /// For testing only.
         /// </summary>
-        /// <param name="path">path to split</param>
-        /// <returns>The mode part of a vips7 path</returns>
+        /// <param name="path">Path to split.</param>
+        /// <returns>The mode part of a vips7 path.</returns>
         public static string PathMode7(string path)
         {
             return Vips.PathMode7(path);
@@ -188,9 +188,9 @@ namespace NetVips
         /// Looks up the GType for a nickname. Types below basename in the type
         /// hierarchy are searched.
         /// </remarks>
-        /// <param name="basename"></param>
-        /// <param name="nickname"></param>
-        /// <returns></returns>
+        /// <param name="basename">Name of base class.</param>
+        /// <param name="nickname">Search for a class with this nickname.</param>
+        /// <returns>The GType of the class, or <see cref="IntPtr.Zero"/> if the class is not found.</returns>
         public static IntPtr TypeFind(string basename, string nickname)
         {
             return Vips.TypeFind(basename, nickname);
@@ -199,8 +199,8 @@ namespace NetVips
         /// <summary>
         /// Return the name for a GType.
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="type">Type to return name for.</param>
+        /// <returns>Type name.</returns>
         public static string TypeName(IntPtr type)
         {
             return Marshal.PtrToStringAnsi(GType.Name(type));
@@ -209,19 +209,21 @@ namespace NetVips
         /// <summary>
         /// Return the nickname for a GType.
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="type">Type to return nickname for.</param>
+        /// <returns>Nickname.</returns>
         public static string NicknameFind(IntPtr type)
         {
             return Marshal.PtrToStringAnsi(Vips.NicknameFind(type));
         }
 
         /// <summary>
-        /// Map fn over all child types of gtype.
+        /// Map over a type's children. Stop when <paramref name="fn" /> returns
+        /// non-<see cref="IntPtr.Zero"/> and return that value.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="fn"></param>
-        /// <returns></returns>
+        /// <param name="type">Base type.</param>
+        /// <param name="fn">Call this function for every type.</param>
+        /// <returns><see cref="IntPtr.Zero"/> if <paramref name="fn" /> returns <see cref="IntPtr.Zero"/> for all arguments,
+        /// otherwise the first non-<see cref="IntPtr.Zero"/> value from <paramref name="fn" />.</returns>
         internal static IntPtr TypeMap(IntPtr type, VipsTypeMap2Fn fn)
         {
             return Vips.TypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
@@ -230,8 +232,8 @@ namespace NetVips
         /// <summary>
         /// Return the GType for a name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">Type name to lookup.</param>
+        /// <returns>Corresponding type ID or <see cref="IntPtr.Zero"/>.</returns>
         public static IntPtr TypeFromName(string name)
         {
             return GType.FromName(name);

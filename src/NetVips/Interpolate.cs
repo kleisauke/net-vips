@@ -1,8 +1,8 @@
-﻿using System;
-using NetVips.Internal;
-
 namespace NetVips
 {
+    using System;
+    using NetVips.Internal;
+
     /// <summary>
     /// Make interpolators for operators like <see cref="Image.Affine"/>.
     /// </summary>
@@ -10,7 +10,8 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private Interpolate(IntPtr pointer) : base(pointer)
+        private Interpolate(IntPtr pointer)
+            : base(pointer)
         {
             // logger.Debug($"VipsInterpolate = {pointer}");
         }
@@ -30,8 +31,8 @@ namespace NetVips
         /// </code>
         /// See for example <see cref="Image.Affine"/>.
         /// </remarks>
-        /// <param name="name">libvips class nickname</param>
-        /// <returns>A new <see cref="Interpolate"/></returns>
+        /// <param name="name">libvips class nickname.</param>
+        /// <returns>A new <see cref="Interpolate"/>.</returns>
         public static Interpolate NewFromName(string name)
         {
             // logger.Debug($"Interpolate.NewFromName: name = {name}");

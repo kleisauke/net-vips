@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
 namespace NetVips.Samples
 {
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// From: https://github.com/libvips/libvips/issues/898
     /// </summary>
@@ -14,15 +14,15 @@ namespace NetVips.Samples
         public const string Text = "Hello World";
 
         /// <summary>
-        /// a warp image is a 2D grid containing the new coordinates of each pixel with
+        /// A warp image is a 2D grid containing the new coordinates of each pixel with
         /// the new x in band 0 and the new y in band 1
-        /// 
+        ///
         /// you can also use a complex image
-        /// 
+        ///
         /// start from a low-res XY image and distort it
         /// </summary>
-        /// <param name="image"><see cref="Image"/> to wobble</param>
-        /// <returns>A new <see cref="Image"/></returns>
+        /// <param name="image"><see cref="Image"/> to wobble.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
         public Image Wobble(Image image)
         {
             var xy = Image.Xyz(image.Width / 20, image.Height / 20);
