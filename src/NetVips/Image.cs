@@ -860,7 +860,8 @@ namespace NetVips
         /// The named metadata item is removed.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to remove.</param>
-        /// <returns><see langword="true" /> if the metadata is successfully removed; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true" /> if the metadata is successfully removed; 
+        /// otherwise, <see langword="false" />.</returns>
         public bool Remove(string name)
         {
             return VipsImage.Remove(this, name) != 0;
@@ -1378,9 +1379,54 @@ namespace NetVips
         /// otherwise, <see langword="false" />.</returns>
         public bool HasAlpha()
         {
+            // use `vips_image_hasalpha` on libvips >= 8.5.
+            if (Base.AtLeastLibvips(8, 5))
+            {
+                return VipsImage.HasAlpha(this) == 1;
+            }
+
             return Bands == 2 ||
                    (Bands == 4 && Interpretation != Enums.Interpretation.Cmyk) ||
                    Bands > 4;
+        }
+
+        /// <summary>
+        /// If image has been killed (see <see cref="SetKill"/>), set an error message,
+        /// clear the `kill` flag and return <see langword="true"/>.
+        /// Otherwise return <see langword="false"/>.
+        /// </summary>
+        /// <remarks>
+        /// Handy for loops which need to run sets of threads which can fail.
+        /// At least libvips 8.8 is needed. If this version requirement is not met,
+        /// it will always return <see langword="false" />.
+        /// </remarks>
+        /// <returns><see langword="true" /> if image has been killed; 
+        /// otherwise, <see langword="false" />.</returns>
+        public bool IsKilled()
+        {
+            if (!Base.AtLeastLibvips(8, 8))
+            {
+                return false;
+            }
+
+            return VipsImage.IsKilled(this) == 1;
+        }
+
+        /// <summary>
+        /// Set the `kill` flag on an image. Handy for stopping sets of threads.
+        /// </summary>
+        /// <remarks>
+        /// At least libvips 8.8 is needed.
+        /// </remarks>
+        /// <param name="kill">The kill state.</param>
+        public void SetKill(bool kill)
+        {
+            if (!Base.AtLeastLibvips(8, 8))
+            {
+                return;
+            }
+
+           VipsImage.SetKill(this, kill ? 1 : 0);
         }
 
         /// <summary>
@@ -1400,16 +1446,35 @@ namespace NetVips
         ///
         /// image.Dzsave("image-pyramid");
         /// </code>
+        ///
+        /// If a cancellation has been requested for this token (see <paramref name="token"/>)
+        /// it will block the evaluation of this image on libvips >= 8.8 (see <see cref="SetKill"/>).
+        /// If this version requirement is not met, it will only stop updating the progress.
         /// </remarks>
         /// <param name="progress">A provider for progress updates.</param>
-        public void SetProgress(IProgress<int> progress)
+        /// <param name="token">Cancellation token to block evaluation on this image.</param>
+        public void SetProgress(IProgress<int> progress, CancellationToken token = default)
         {
             VipsImage.SetProgress(this, progress == null ? 0 : 1);
 
             var lastPercent = 0;
+            var isKilled = false;
 
             GCallback evalCallback = (imagePtr, progressPtr, userDataPtr) =>
             {
+                // Block evaluation on this image if a cancellation
+                // has been requested for this token.
+                if (token.IsCancellationRequested)
+                {
+                    if (!isKilled)
+                    {
+                        SetKill(true);
+                        isKilled = true;
+                    }
+
+                    return;
+                }
+
                 if (progressPtr == IntPtr.Zero)
                 {
                     return;
@@ -1529,7 +1594,8 @@ namespace NetVips
         /// Determines whether the specified object is equal to the current image.
         /// </summary>
         /// <param name="obj">The object to compare with the current image.</param>
-        /// <returns><see langword="true" /> if the specified object  is equal to the current image; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true" /> if the specified object is equal
+        /// to the current image; otherwise, <see langword="false" />.</returns>
         public override bool Equals(object obj)
         {
             if (obj == null)
