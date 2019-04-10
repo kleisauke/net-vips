@@ -159,6 +159,7 @@ partial class Build : NukeBuild
         .DependsOn(DownloadBinaries)
         .Executes(() =>
         {
+            // Build the architecture specific packages.
             foreach (var architecture in Parameters.NuGetArchitectures)
             {
                 NuGetPack(c => c
@@ -166,6 +167,12 @@ partial class Build : NukeBuild
                     .SetVersion(Parameters.VipsVersion)
                     .SetOutputDirectory(Parameters.ArtifactsDir));
             }
+
+            // Build the all-in-one package, which depends on the previous packages.
+            NuGetPack(c => c
+                .SetTargetPath(RootDirectory / "build/native/NetVips.Native.nuspec")
+                .SetVersion(Parameters.VipsVersion)
+                .SetOutputDirectory(Parameters.ArtifactsDir));
         });
 
     Target All => _ => _
