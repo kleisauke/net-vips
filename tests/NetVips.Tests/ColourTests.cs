@@ -94,6 +94,23 @@ namespace NetVips.Tests
                 Assert.True(
                     Math.Abs(pixelAfter[0] - pixelBefore[0]) < (monoFmt == Enums.Interpretation.Grey16 ? 30 : 1));
             }
+
+            if (Base.AtLeastLibvips(8, 8))
+            {
+                // we should be able to go from cmyk to any 3-band space and back again,
+                // approximately
+                var cmyk = test.Colourspace(Enums.Interpretation.Cmyk);
+                foreach (var end in Helper.ColourColourspaces)
+                {
+                    im = cmyk.Colourspace(end);
+                    var im2 = im.Colourspace(Enums.Interpretation.Cmyk);
+
+                    before = cmyk.Getpoint(10, 10);
+                    after = im2.Getpoint(10, 10);
+
+                    Helper.AssertAlmostEqualObjects(before, after, 10);
+                }
+            }
         }
 
         /// <summary>
@@ -150,9 +167,11 @@ namespace NetVips.Tests
             Assert.Equal(42.0, diffPixel[1], 3);
         }
 
-        [Fact]
+        [SkippableFact]
         public void TestIcc()
         {
+            Skip.IfNot(Helper.Have("icc_import"), "no lcms support in this vips, skipping test");
+
             var test = Image.NewFromFile(Helper.JpegFile);
 
             var im = test.IccImport().IccExport();
@@ -190,6 +209,21 @@ namespace NetVips.Tests
             Assert.Equal(Enums.Interpretation.Xyz, im.Interpretation);
             im = test.IccImport();
             Assert.Equal(Enums.Interpretation.Lab, im.Interpretation);
+        }
+
+        [SkippableFact]
+        public void TestCmyk()
+        {
+            Skip.IfNot(Base.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
+
+            // even without lcms, we should have a working approximation
+            var test = Image.NewFromFile(Helper.JpegFile);
+            var im = test.Colourspace("cmyk").Colourspace("srgb");
+
+            var before = test.Getpoint(582, 210);
+            var after = im.Getpoint(582, 210);
+
+            Helper.AssertAlmostEqualObjects(before, after, 10);
         }
     }
 }

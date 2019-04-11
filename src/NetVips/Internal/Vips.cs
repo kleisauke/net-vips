@@ -304,6 +304,16 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_image_iskilled")]
+        internal static extern int IsKilled(Image image);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_image_set_kill")]
+        internal static extern void SetKill(Image image, int kill);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_new_from_memory")]
         internal static extern IntPtr NewFromMemory(IntPtr data, UIntPtr size, int width, int height,
             int bands, Enums.VipsBandFormat format);
@@ -327,6 +337,11 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_write_to_memory")]
         internal static extern IntPtr WriteToMemory(Image @in, out ulong size);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_image_hasalpha")]
+        internal static extern int HasAlpha(Image image);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -440,5 +455,10 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save_buffer")]
         internal static extern IntPtr FindSaveBuffer(in byte suffix);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_foreign_get_suffixes")]
+        internal static extern IntPtr GetSuffixes();
     }
 }

@@ -1,6 +1,7 @@
 namespace NetVips
 {
     using System;
+    using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using NetVips.Internal;
 
@@ -115,6 +116,39 @@ namespace NetVips
             var micro = Version(2);
 
             return major > x || major == x && minor >= y && micro >= z;
+        }
+
+        /// <summary>
+        /// Get a list of all the filename suffixes supported by libvips.
+        /// </summary>
+        /// <remarks>
+        /// At least libvips 8.8 is needed.
+        /// </remarks>
+        /// <returns>An array of strings or <see langword="null" />.</returns>
+        public static string[] GetSuffixes()
+        {
+            if (!AtLeastLibvips(8, 8))
+            {
+                return null;
+            }
+
+            var ptrArr = VipsForeign.GetSuffixes();
+
+            var names = new List<string>();
+
+            var count = 0;
+            IntPtr strPtr;
+            while ((strPtr = Marshal.ReadIntPtr(ptrArr, count * IntPtr.Size)) != IntPtr.Zero)
+            {
+                var name = Marshal.PtrToStringAnsi(strPtr);
+                names.Add(name);
+                GLib.GFree(strPtr);
+                ++count;
+            }
+
+            GLib.GFree(ptrArr);
+
+            return names.ToArray();
         }
 
         /// <summary>

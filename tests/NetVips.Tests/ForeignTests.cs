@@ -468,9 +468,7 @@ namespace NetVips.Tests
         public void TestMagickLoad()
         {
             Skip.IfNot(Helper.Have("magickload") &&
-                       File.Exists(Helper.BmpFile) &&
-                       // Homebrew's vips version is build with GraphicsMagick which fails with this test case.
-                       !RuntimeInformation.IsOSPlatform(OSPlatform.OSX), "no magick support, skipping test");
+                       File.Exists(Helper.BmpFile), "no magick support, skipping test");
 
             void BmpValid(Image im)
             {
@@ -492,10 +490,10 @@ namespace NetVips.Tests
             x = Image.Magickload(Helper.SvgFile, density: "100");
             var width = x.Width;
             var height = x.Height;
-            x = Image.Magickload(Helper.SvgFile, density: "200");
 
             // This seems to fail on travis, no idea why, some problem in their IM
             // perhaps
+            //x = Image.Magickload(Helper.SvgFile, density: "200");
             //Assert.Equal(width * 2, x.Width);
             //Assert.Equal(height * 2, x.Height);
 
@@ -522,17 +520,6 @@ namespace NetVips.Tests
             // some IMs are 3 bands, some are 1, can't really test
             // Assert.Equal(1, x.Bands);
 
-            // added in 8.7
-            if (Helper.Have("magicksave"))
-            {
-                SaveLoadFile(".bmp", "", _colour, 0);
-                SaveLoadBuffer("magicksave_buffer", "magickload_buffer", _colour, 0, new VOption
-                {
-                    {"format", "BMP"}
-                });
-                SaveLoad("%s.bmp", _colour);
-            }
-
             // libvips has its own sniffer for ICO, test that
             // added in 8.7
             if (Base.AtLeastLibvips(8, 7))
@@ -542,6 +529,34 @@ namespace NetVips.Tests
                 Assert.Equal(16, im.Width);
                 Assert.Equal(16, im.Height);
             }
+        }
+
+        [SkippableFact]
+        public void TestMagickSave()
+        {
+            Skip.IfNot(Helper.Have("magicksave"), "no magick support, skipping test");
+
+            // save to a file and load again ... we can't use SaveLoadFile since
+            // we want to make sure we use magickload/save 
+            // don't use BMP - GraphicsMagick always adds an alpha
+            // don't use TIF - IM7 will save as 16-bit
+            var filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+
+            _colour.Magicksave(filename);
+            var x = Image.Magickload(filename);
+
+            Assert.Equal(_colour.Width, x.Width);
+            Assert.Equal(_colour.Height, x.Height);
+            Assert.Equal(_colour.Bands, x.Bands);
+            Assert.Equal(_colour.Height, x.Height);
+
+            var maxDiff = (_colour - x).Abs().Max();
+            Assert.True(maxDiff <= 40);
+
+            SaveLoadBuffer("magicksave_buffer", "magickload_buffer", _colour, 40, new VOption
+            {
+                {"format", "JPG"}
+            });
         }
 
         [SkippableFact]
@@ -608,7 +623,10 @@ namespace NetVips.Tests
             // added in 8.8
             if (Helper.Have("gifload") && Base.AtLeastLibvips(8, 8))
             {
-                var x1 = Image.NewFromFile(Helper.GifAnimFile);
+                var x1 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
+                {
+                    {"n", -1}
+                });
                 var w1 = x1.WebpsaveBuffer(q: 10);
                 var x2 = Image.NewFromBuffer(w1, kwargs: new VOption
                 {
@@ -1059,6 +1077,70 @@ namespace NetVips.Tests
                     _ = _colour.DzsaveBuffer(regionShrink: "mode");
                     _ = _colour.DzsaveBuffer(regionShrink: "median");
                 }
+            }
+        }
+
+        [SkippableFact]
+        public void TestHeifload()
+        {
+            Skip.IfNot(Helper.Have("heifload"), "no HEIF support, skipping test");
+
+            void HeifValid(Image im)
+            {
+                var a = im.Getpoint(10, 10);
+
+                Helper.AssertAlmostEqualObjects(new[]
+                {
+                    75.0, 86.0, 81.0
+                }, a);
+                Assert.Equal(4032, im.Width);
+                Assert.Equal(3024, im.Height);
+                Assert.Equal(3, im.Bands);
+            }
+
+            FileLoader("heifload", Helper.HeicFile, HeifValid);
+            BufferLoader("heifload_buffer", Helper.HeicFile, HeifValid);
+            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 80);
+            SaveLoad("%s.heic", _colour);
+
+            // test lossless mode
+            var x = Image.NewFromFile(Helper.HeicFile);
+            var buf = x.HeifsaveBuffer(lossless: true);
+            var im2 = Image.NewFromBuffer(buf);
+
+            //  not in fact quite lossless
+            Assert.True(Math.Abs(x.Avg() - im2.Avg()) < 3);
+
+            // higher Q should mean a bigger buffer
+            var b1 = x.HeifsaveBuffer(q: 10);
+            var b2 = x.HeifsaveBuffer(q: 90);
+            Assert.True(b2.Length > b1.Length);
+
+            // try saving an image with an ICC profile and reading it back 
+            buf = _colour.HeifsaveBuffer();
+            x = Image.NewFromBuffer(buf);
+            if (x.Contains("icc-profile-data"))
+            {
+                var p1 = _colour.Get("icc-profile-data");
+                var p2 = x.Get("icc-profile-data");
+                Assert.Equal(p1, p2);
+            }
+
+            // add tests for exif, xmp, ipct
+            // the exif test will need us to be able to walk the header,
+            // we can't just check exif-data
+
+            // test that exif changes change the output of heifsave
+            // first make sure we have exif support
+            var z = Image.NewFromFile(Helper.JpegFile);
+            if (z.Contains("exif-ifd0-Orientation"))
+            {
+                x = _colour.Copy();
+                x.Set("exif-ifd0-Make", "banana");
+
+                buf = x.HeifsaveBuffer();
+                var y = Image.NewFromBuffer(buf);
+                Assert.StartsWith("banana", (string)y.Get("exif-ifd0-Make"));
             }
         }
     }
