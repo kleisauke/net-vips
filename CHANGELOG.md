@@ -1,25 +1,25 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to NetVips will be documented in this file. See [here](CHANGELOG.native.md) for the changes to the [pre-compiled binaries of libvips](https://www.nuget.org/packages/NetVips.Native/).
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - ???
+## [1.1.0] - Unreleased
 ### Added
-- Pre-compiled libvips binaries for a few distros ([#21](https://github.com/kleisauke/net-vips/issues/21)):
-  - [NetVips.Native.linux-x64](https://www.nuget.org/packages/NetVips.Native.linux-x64) - Linux x64 glibc (Ubuntu, Debian, etc).
-  - [NetVips.Native.linux-musl-x64](https://www.nuget.org/packages/NetVips.Native.linux-musl-x64) - Linux x64 musl (Alpine, Gentoo Linux, etc).
-  - [NetVips.Native.osx-x64](https://www.nuget.org/packages/NetVips.Native.osx-x64) - macOS x64.
+- A new [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package containing the pre-compiled libvips binaries for Linux, macOS and Windows ([#21](https://github.com/kleisauke/net-vips/issues/21)).
+  - Changes to the [NetVips.Native.*](https://www.nuget.org/packages?q=id%3ANetVips.Native) packages will be documented [here](CHANGELOG.native.md).
+- Add `Base.GetSuffixes()` to get a list of all the filename suffixes supported by libvips ([libvips/ruby-vips#186](https://github.com/libvips/ruby-vips/issues/186)).
+- Add support for progress feedback (`image.SetProgress()`) and signal handling (`image.SignalConnect()`) ([#31](https://github.com/kleisauke/net-vips/issues/31)).
+- Add `image.SetKill()` and `image.IsKilled()` ([#31](https://github.com/kleisauke/net-vips/issues/31), [libvips/libvips@91d0e7e](https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305)).
 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).
-- The bundled libvips Windows binaries were split into different NuGet packages:
-  - [NetVips.Native.win-x64](https://www.nuget.org/packages/NetVips.Native.win-x64) - Windows 64-bit.
-  - [NetVips.Native.win-x86](https://www.nuget.org/packages/NetVips.Native.win-x86) - Windows 32-bit.
+- The bundled libvips Windows binaries were moved to the [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package. 
 - Update the [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks).
-- A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
+- The overloadable operators `==` and `!=` have been changed to `Equal` and `NotEqual` to avoid conflicts with `null` checks.
+- Some methods are overloaded instead of defining the parameters as `object` type.
 
 ### Removed
-- The `UseGlobalLibvips` property since the bundled libvips binaries are split into different NuGet packages.
+- The `UseGlobalLibvips` property since the bundled libvips binaries were moved to the [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package.
 
 ## [1.0.7] - 2019-01-18
 ### Changed
@@ -85,7 +85,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0
+[1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...1.1.0
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5

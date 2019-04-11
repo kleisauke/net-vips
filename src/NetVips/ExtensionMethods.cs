@@ -252,28 +252,5 @@ namespace NetVips
 
             return $"{dValue:n2} {sizeSuffixes[i]}";
         }
-
-        /// <summary>
-        /// Connects a callback function (<see cref="GCallback"/>)
-        /// to a signal for a particular <see cref="GObject"/>.
-        /// </summary>
-        /// <param name="instance">The instance to connect to.</param>
-        /// <param name="detailedSignal">A string of the form "signal-name::detail".</param>
-        /// <param name="callback">The <see cref="GCallback"/> to connect.</param>
-        /// <param name="data">Data to pass to handler calls.</param>
-        /// <returns>The handler id.</returns>
-        /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
-        internal static uint Connect(this GObject instance, string detailedSignal, GCallback callback,
-            IntPtr data = default)
-        {
-            var ret = GSignal.ConnectData(instance, detailedSignal, callback, data, null, default);
-
-            if (ret == 0)
-            {
-                throw new Exception("Failed to connect signal.");
-            }
-
-            return ret;
-        }
     }
 }

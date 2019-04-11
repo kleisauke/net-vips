@@ -21,11 +21,6 @@ namespace NetVips
         /// </summary>
         private GCHandle _dataHandle;
 
-        /// <summary>
-        /// Ref for <see cref="SetProgress" />.
-        /// </summary>
-        private GCHandle _progressHandle;
-
         /// <inheritdoc cref="VipsObject"/>
         internal Image(IntPtr pointer)
             : base(pointer)
@@ -1426,7 +1421,7 @@ namespace NetVips
                 return;
             }
 
-           VipsImage.SetKill(this, kill ? 1 : 0);
+            VipsImage.SetKill(this, kill ? 1 : 0);
         }
 
         /// <summary>
@@ -1456,11 +1451,15 @@ namespace NetVips
         public void SetProgress(IProgress<int> progress, CancellationToken token = default)
         {
             VipsImage.SetProgress(this, progress == null ? 0 : 1);
+            if (progress == null)
+            {
+                return;
+            }
 
             var lastPercent = 0;
             var isKilled = false;
 
-            GCallback evalCallback = (imagePtr, progressPtr, userDataPtr) =>
+            EvalCallback evalCallback = (imagePtr, progressPtr, userDataPtr) =>
             {
                 // Block evaluation on this image if a cancellation
                 // has been requested for this token.
@@ -1483,15 +1482,12 @@ namespace NetVips
                 var progressStruct = progressPtr.Dereference<VipsProgress.Struct>();
                 if (progressStruct.Percent != lastPercent)
                 {
-                    progress?.Report(progressStruct.Percent);
+                    progress.Report(progressStruct.Percent);
                     lastPercent = progressStruct.Percent;
                 }
             };
 
-            // prevent it from being re-located or disposed of by the garbage collector
-            _progressHandle = GCHandle.Alloc(evalCallback);
-
-            this.Connect(Internal.Enums.VipsEvaluation.Eval, evalCallback);
+            SignalConnect(Internal.Enums.VipsEvaluation.Eval, evalCallback);
         }
 
         #endregion
@@ -1630,15 +1626,10 @@ namespace NetVips
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
-            // release references to delegates / data objects
+            // release reference to our secret ref
             if (_dataHandle.IsAllocated)
             {
                 _dataHandle.Free();
-            }
-
-            if (_progressHandle.IsAllocated)
-            {
-                _progressHandle.Free();
             }
 
             // Call our base Dispose method

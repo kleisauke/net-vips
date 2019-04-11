@@ -295,6 +295,9 @@ namespace NetVips.Internal
         internal static extern void SetArrayImage(ref GValue.Struct value, int n);
     }
 
+    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void EvalCallback(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr);
+
     internal static class VipsImage
     {
         [SuppressUnmanagedCodeSecurity]

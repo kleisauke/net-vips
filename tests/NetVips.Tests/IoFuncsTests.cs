@@ -162,15 +162,13 @@ namespace NetVips.Tests
 
             var progress = new Progress<int>(percent =>
             {
-                // Tests whether the actual percentage is higher 
-                // than the last percentage received.
-                Assert.True(percent > lastPercent);
                 lastPercent = percent;
             });
             im.SetProgress(progress);
 
             var buf = im.DzsaveBuffer("image-pyramid");
             Assert.True(buf.Length > 0);
+            Assert.True(lastPercent <= 100);
         }
 
         [Fact]

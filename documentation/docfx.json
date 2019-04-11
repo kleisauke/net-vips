@@ -31,6 +31,10 @@
         "src": ".."
       },
       {
+        "files": "CHANGELOG.native.md",
+        "src": ".."
+      },
+      {
         "files": [
           "tutorial/**/*.{md,yml}",
           "*.{md,yml}"

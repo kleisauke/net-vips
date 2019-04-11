@@ -163,16 +163,13 @@ namespace NetVips.Internal
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void GClosureNotify(IntPtr data, IntPtr closure);
 
-    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GCallback(IntPtr gobjectPtr, IntPtr pspecPtr, IntPtr userDataPtr);
-
     internal static class GSignal
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_signal_connect_data")]
         internal static extern uint ConnectData(NetVips.GObject instance,
-            [MarshalAs(UnmanagedType.LPStr)] string detailedSignal, GCallback cHandler, IntPtr data,
+            [MarshalAs(UnmanagedType.LPStr)] string detailedSignal, IntPtr cHandler, IntPtr data,
             GClosureNotify destroyData, Enums.GConnectFlags connectFlags);
     }
 }
