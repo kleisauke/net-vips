@@ -4,10 +4,10 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.8.0] - Unreleased
+## [8.8.0-rc1] - 2019-05-04
 ### Note
-If you would like to see a complete list of all the new features, changes and bug fixes, please visit the the release notes of libvips:
-https://github.com/libvips/libvips/releases
+If you would like to see what's new, please visit the the release notes of libvips:
+https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 
 ## [8.7.4] - 2019-04-10
 ### Added
@@ -16,7 +16,7 @@ https://github.com/libvips/libvips/releases
 ### Changed
 - The OS X binaries are now distributed with [`jpeg-turbo`](https://github.com/libjpeg-turbo/libjpeg-turbo) instead than [`jpeg`](https://www.ijg.org/) ([lovell/package-libvips-darwin#3](https://github.com/lovell/package-libvips-darwin/pull/3)).
 
-## [8.7.4 beta 1] - 2019-02-25
+## [8.7.4-beta1] - 2019-02-25
 ### Added
 - Pre-compiled libvips binaries for a few distros ([#21](https://github.com/kleisauke/net-vips/issues/21)):
   - [NetVips.Native.linux-x64](https://www.nuget.org/packages/NetVips.Native.linux-x64) - Linux x64 glibc (Ubuntu, Debian, etc).
@@ -28,6 +28,6 @@ https://github.com/libvips/libvips/releases
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
-[8.8.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.7.4...HEAD
+[8.8.0-rc1]: https://github.com/kleisauke/libvips-packaging/compare/v8.7.4...v8.8.0-rc1
 [8.7.4]: https://github.com/kleisauke/libvips-packaging/compare/v8.7.4-beta1...v8.7.4
-[8.7.4 beta 1]: https://github.com/kleisauke/libvips-packaging/releases/tag/v8.7.4-beta1
+[8.7.4-beta1]: https://github.com/kleisauke/libvips-packaging/releases/tag/v8.7.4-beta1

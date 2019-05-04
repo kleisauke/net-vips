@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using Nuke.Common;
+using Nuke.Common.BuildServers;
 using static Nuke.Common.IO.PathConstruction;
 
 public partial class Build
@@ -65,8 +66,19 @@ public partial class Build
             var major = xdoc.Descendants().First(x => x.Name.LocalName == "Major").Value;
             var minor = xdoc.Descendants().First(x => x.Name.LocalName == "Minor").Value;
             var revision = xdoc.Descendants().First(x => x.Name.LocalName == "Revision").Value;
+            var prerelease = xdoc.Descendants().FirstOrDefault(x => x.Name.LocalName == "PrereleaseLabel" &&
+                                                                    !x.HasAttributes)?.Value ?? string.Empty;
 
-            return major + "." + minor + "." + revision;
+            if (Host != HostType.Console)
+            {
+                var buildNumber = AppVeyor.Instance?.BuildNumber ??
+                                  Travis.Instance?.BuildNumber ??
+                                  0;
+
+                prerelease = "." + buildNumber + "-develop";
+            }
+
+            return major + "." + minor + "." + revision + prerelease;
         }
     }
 }

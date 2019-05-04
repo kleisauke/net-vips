@@ -22,10 +22,9 @@ partial class Build : NukeBuild
     protected override void OnBuildInitialized()
     {
         Parameters = new BuildParameters(this);
-        Information("Building version {0} of NetVips ({1}) using version {2} of Nuke.",
+        Information("Building version {0} of NetVips ({1}).",
             Parameters.Version,
-            Parameters.Configuration,
-            typeof(NukeBuild).Assembly.GetName().Version.ToString());
+            Parameters.Configuration);
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             Information("OS: Windows");

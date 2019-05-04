@@ -1,4 +1,4 @@
-image: Visual Studio 2017
+image: Visual Studio 2019 Preview
 
 # Version format
 version: 1.1.0.{build}
@@ -8,7 +8,8 @@ init:
 
 # Environment
 environment:
-  VIPS_VERSION: "8.7.4"
+  VIPS_VERSION: "8.8.0"
+  VIPS_PRE_VERSION: "rc1"
   VIPS_WARNING: 0
 
 # Build script

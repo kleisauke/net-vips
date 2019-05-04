@@ -6654,10 +6654,11 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openslideload(filename, level: int, autocrop: bool, associated: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Openslideload(filename, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
+        /// <param name="attachAssociated">Attach all asssociated images.</param>
         /// <param name="level">Load this level from the file.</param>
         /// <param name="autocrop">Crop to image bounds.</param>
         /// <param name="associated">Load this associated image.</param>
@@ -6665,9 +6666,14 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openslideload(string filename, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openslideload(string filename, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
+
+            if (attachAssociated.HasValue)
+            {
+                options.Add("attach_associated", attachAssociated);
+            }
 
             if (level.HasValue)
             {
@@ -6707,11 +6713,12 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, level: int, autocrop: bool, associated: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
         /// <param name="flags">Flags for this file.</param>
+        /// <param name="attachAssociated">Attach all asssociated images.</param>
         /// <param name="level">Load this level from the file.</param>
         /// <param name="autocrop">Crop to image bounds.</param>
         /// <param name="associated">Load this associated image.</param>
@@ -6719,9 +6726,14 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openslideload(string filename, out int flags, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openslideload(string filename, out int flags, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
+
+            if (attachAssociated.HasValue)
+            {
+                options.Add("attach_associated", attachAssociated);
+            }
 
             if (level.HasValue)
             {
@@ -10223,18 +10235,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Webpload(filename, page: int, n: int, shrink: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Webpload(filename, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
         /// <param name="page">Load this page from the file.</param>
         /// <param name="n">Load this many pages.</param>
-        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="scale">Scale factor on load.</param>
         /// <param name="memory">Force open via memory.</param>
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Webpload(string filename, int? page = null, int? n = null, int? shrink = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Webpload(string filename, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10248,9 +10260,9 @@ namespace NetVips
                 options.Add(nameof(n), n);
             }
 
-            if (shrink.HasValue)
+            if (scale.HasValue)
             {
-                options.Add(nameof(shrink), shrink);
+                options.Add(nameof(scale), scale);
             }
 
             if (memory.HasValue)
@@ -10276,19 +10288,19 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Webpload(filename, out var flags, page: int, n: int, shrink: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Webpload(filename, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
         /// <param name="flags">Flags for this file.</param>
         /// <param name="page">Load this page from the file.</param>
         /// <param name="n">Load this many pages.</param>
-        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="scale">Scale factor on load.</param>
         /// <param name="memory">Force open via memory.</param>
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Webpload(string filename, out int flags, int? page = null, int? n = null, int? shrink = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Webpload(string filename, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10302,9 +10314,9 @@ namespace NetVips
                 options.Add(nameof(n), n);
             }
 
-            if (shrink.HasValue)
+            if (scale.HasValue)
             {
-                options.Add(nameof(shrink), shrink);
+                options.Add(nameof(scale), scale);
             }
 
             if (memory.HasValue)
@@ -10337,18 +10349,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, shrink: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
         /// <param name="page">Load this page from the file.</param>
         /// <param name="n">Load this many pages.</param>
-        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="scale">Scale factor on load.</param>
         /// <param name="memory">Force open via memory.</param>
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadBuffer(byte[] buffer, int? page = null, int? n = null, int? shrink = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadBuffer(byte[] buffer, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10362,9 +10374,9 @@ namespace NetVips
                 options.Add(nameof(n), n);
             }
 
-            if (shrink.HasValue)
+            if (scale.HasValue)
             {
-                options.Add(nameof(shrink), shrink);
+                options.Add(nameof(scale), scale);
             }
 
             if (memory.HasValue)
@@ -10390,19 +10402,19 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, shrink: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
         /// <param name="flags">Flags for this file.</param>
         /// <param name="page">Load this page from the file.</param>
         /// <param name="n">Load this many pages.</param>
-        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="scale">Scale factor on load.</param>
         /// <param name="memory">Force open via memory.</param>
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadBuffer(byte[] buffer, out int flags, int? page = null, int? n = null, int? shrink = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadBuffer(byte[] buffer, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10416,9 +10428,9 @@ namespace NetVips
                 options.Add(nameof(n), n);
             }
 
-            if (shrink.HasValue)
+            if (scale.HasValue)
             {
-                options.Add(nameof(shrink), shrink);
+                options.Add(nameof(scale), scale);
             }
 
             if (memory.HasValue)

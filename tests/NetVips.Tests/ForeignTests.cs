@@ -2,7 +2,6 @@ namespace NetVips.Tests
 {
     using System;
     using System.IO;
-    using System.Runtime.InteropServices;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -285,6 +284,8 @@ namespace NetVips.Tests
             SaveLoadBuffer("pngsave_buffer", "pngload_buffer", _colour);
             SaveLoad("%s.png", _mono);
             SaveLoad("%s.png", _colour);
+            SaveLoadFile(".png", "[interlace]", _colour, 0);
+            SaveLoadFile(".png", "[interlace]", _mono, 0);
         }
 
         [SkippableFact]
@@ -778,7 +779,10 @@ namespace NetVips.Tests
                 var a = im.Getpoint(10, 10);
 
                 Assert.Equal(new double[] { 35, 31, 32, 255 }, a);
-                Assert.Equal(1133, im.Width);
+
+                // New sizing rules in libvips 8.8+, see:
+                // https://github.com/libvips/libvips/commit/29d29533d45848ecc12a3c50c39c26c835458a61
+                Assert.Equal(Base.AtLeastLibvips(8, 8) ? 1134 : 1133, im.Width);
                 Assert.Equal(680, im.Height);
                 Assert.Equal(4, im.Bands);
             }
