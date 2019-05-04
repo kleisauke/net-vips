@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace NetVips
    ">
-    <meta name="generator" content="docfx 2.40.7.0">
+    <meta name="generator" content="docfx 2.42.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -100,7 +100,7 @@ Enums values are represented in NetVips as strings. These classes contain the va
       <section><p>The format of image bands.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.BlendMode.html">Enums.BlendMode</a></h4>
-      <section><p>The various Porter-Duff and PDF blend modes. See <a class="xref" href="NetVips.Image.html#NetVips_Image_Composite_System_Object_System_Object_System_String_System_Nullable_System_Boolean__">Composite(Object, Object, String, Nullable&lt;Boolean&gt;)</a>.</p>
+      <section><p>The various Porter-Duff and PDF blend modes. See <a class="xref" href="NetVips.Image.html#NetVips_Image_Composite2_NetVips_Image_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_Nullable_System_Boolean__">Composite2(Image, String, Nullable&lt;Int32&gt;, Nullable&lt;Int32&gt;, String, Nullable&lt;Boolean&gt;)</a>.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.Coding.html">Enums.Coding</a></h4>
       <section><p>How pixels are coded.</p>
@@ -125,7 +125,7 @@ Enums values are represented in NetVips as strings. These classes contain the va
 <a class="xref" href="NetVips.Image.html#NetVips_Image_Reduce_System_Double_System_Double_System_String_System_Nullable_System_Boolean__">Reduce(Double, Double, String, Nullable&lt;Boolean&gt;)</a> or <a class="xref" href="NetVips.Image.html#NetVips_Image_Resize_System_Double_System_String_System_Nullable_System_Double__">Resize(Double, String, Nullable&lt;Double&gt;)</a> to select the resizing kernel to use.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.PCS.html">Enums.PCS</a></h4>
-      <section><p>Set Perofile Connection Space.</p>
+      <section><p>Set Profile Connection Space.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.Precision.html">Enums.Precision</a></h4>
       <section><p>Computation precision.</p>
@@ -134,7 +134,7 @@ Enums values are represented in NetVips as strings. These classes contain the va
       <section><p>Manage <span class="xref">NetVips.Internal.GObject</span> lifetime.</p>
 </section>
       <h4><a class="xref" href="NetVips.GValue.html">GValue</a></h4>
-      <section><p>Wrap GValue in a C# class.</p>
+      <section><p>Wrap <span class="xref">NetVips.Internal.GValue</span> in a C# class.</p>
 </section>
       <h4><a class="xref" href="NetVips.Image.html">Image</a></h4>
       <section><p>Wrap a <span class="xref">NetVips.Internal.VipsImage</span> object.</p>
@@ -143,7 +143,7 @@ Enums values are represented in NetVips as strings. These classes contain the va
       <section><p>Make interpolators for operators like <a class="xref" href="NetVips.Image.html#NetVips_Image_Affine_System_Double___NetVips_GObject_System_Int32___System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___System_String_">Affine(Double[], GObject, Int32[], Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Double[], String)</a>.</p>
 </section>
       <h4><a class="xref" href="NetVips.Log.html">Log</a></h4>
-      <section><p>Wrapper for message logging functions</p>
+      <section><p>Wrapper for message logging functions.</p>
 </section>
       <h4><a class="xref" href="NetVips.ModuleInitializer.html">ModuleInitializer</a></h4>
       <section><p>Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.</p>
@@ -170,9 +170,6 @@ This is used to call functions with optional arguments. See <a class="xref" href
   </h3>
       <h4><a class="xref" href="NetVips.LogFunc.html">LogFunc</a></h4>
       <section><p>Specifies the prototype of log handler functions.</p>
-</section>
-      <h4><a class="xref" href="NetVips.PrintFunc.html">PrintFunc</a></h4>
-      <section><p>Specifies the type of the print handler functions.</p>
 </section>
 </article>
           </div>

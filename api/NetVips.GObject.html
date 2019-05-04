@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GObject
    ">
-    <meta name="generator" content="docfx 2.40.7.0">
+    <meta name="generator" content="docfx 2.42.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -155,11 +155,11 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_IsInvalid.md&amp;value=---%0Auid%3A%20NetVips.GObject.IsInvalid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L63">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L111">View Source</a>
   </span>
   <a id="NetVips_GObject_IsInvalid_" data-uid="NetVips.GObject.IsInvalid*"></a>
   <h4 id="NetVips_GObject_IsInvalid" data-uid="NetVips.GObject.IsInvalid">IsInvalid</h4>
-  <div class="markdown level1 summary"><p>Gets a value that indicates whether the handle is invalid.</p>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the handle is invalid.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -177,7 +177,7 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p>true if the handle is not valid; otherwise, false.</p>
+        <td><p><span class="xref">true</span> if the handle is not valid; otherwise, <span class="xref">false</span>.</p>
 </td>
       </tr>
     </tbody>
@@ -191,7 +191,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_ReleaseHandle.md&amp;value=---%0Auid%3A%20NetVips.GObject.ReleaseHandle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L38">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L78">View Source</a>
   </span>
   <a id="NetVips_GObject_ReleaseHandle_" data-uid="NetVips.GObject.ReleaseHandle*"></a>
   <h4 id="NetVips_GObject_ReleaseHandle" data-uid="NetVips.GObject.ReleaseHandle">ReleaseHandle()</h4>
@@ -214,13 +214,95 @@ When its reference count drops to 0, the object is finalized (i.e. its memory is
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p>true if the handle is released successfully; otherwise, in the event of a catastrophic failure, false.</p>
+        <td><p><span class="xref">true</span> if the handle is released successfully; otherwise,
+in the event of a catastrophic failure, <span class="xref">false</span>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">System.Runtime.InteropServices.SafeHandle.ReleaseHandle()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_.md&amp;value=---%0Auid%3A%20NetVips.GObject.SignalConnect(System.String%2CSystem.Delegate%2CSystem.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L54">View Source</a>
+  </span>
+  <a id="NetVips_GObject_SignalConnect_" data-uid="NetVips.GObject.SignalConnect*"></a>
+  <h4 id="NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_" data-uid="NetVips.GObject.SignalConnect(System.String,System.Delegate,System.IntPtr)">SignalConnect(String, Delegate, IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Connects a callback function (<code data-dev-comment-type="paramref" class="paramref">callback</code>) to a signal on this object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint SignalConnect(string detailedSignal, Delegate callback, IntPtr data = default(IntPtr))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">detailedSignal</span></td>
+        <td><p>A string of the form &quot;signal-name::detail&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Delegate</span></td>
+        <td><span class="parametername">callback</span></td>
+        <td><p>The callback to connect.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">data</span></td>
+        <td><p>Data to pass to handler calls.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><p>The handler id.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The callback will be triggered every time this signal is issued on this instance.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Exception</span></td>
+        <td><p>If it failed to connect the signal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">System.IDisposable</span>
@@ -235,7 +317,7 @@ When its reference count drops to 0, the object is finalized (i.e. its memory is
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_GObject.md&amp;value=---%0Auid%3A%20NetVips.GObject%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/GObject.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

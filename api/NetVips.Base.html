@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Base
    ">
-    <meta name="generator" content="docfx 2.40.7.0">
+    <meta name="generator" content="docfx 2.42.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -118,7 +118,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_AtLeastLibvips_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20NetVips.Base.AtLeastLibvips(System.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L135">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L112">View Source</a>
   </span>
   <a id="NetVips_Base_AtLeastLibvips_" data-uid="NetVips.Base.AtLeastLibvips*"></a>
   <h4 id="NetVips_Base_AtLeastLibvips_System_Int32_System_Int32_System_Int32_" data-uid="NetVips.Base.AtLeastLibvips(System.Int32,System.Int32,System.Int32)">AtLeastLibvips(Int32, Int32, Int32)</h4>
@@ -142,19 +142,19 @@
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">x</span></td>
-        <td><p>major</p>
+        <td><p>Major component.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">y</span></td>
-        <td><p>minor</p>
+        <td><p>Minor component.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">z</span></td>
-        <td><p>micro</p>
+        <td><p>Micro component.</p>
 </td>
       </tr>
     </tbody>
@@ -170,26 +170,61 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p><span class="xref">true</span> if at least libvips x.y[.z]; otherwise, <span class="xref">false</span></p>
+        <td><p><span class="xref">true</span> if at least libvips x.y[.z]; otherwise, <span class="xref">false</span>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_LeakSet_System_Int32_.md&amp;value=---%0Auid%3A%20NetVips.Base.LeakSet(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_GetSuffixes.md&amp;value=---%0Auid%3A%20NetVips.Base.GetSuffixes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L34">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L128">View Source</a>
+  </span>
+  <a id="NetVips_Base_GetSuffixes_" data-uid="NetVips.Base.GetSuffixes*"></a>
+  <h4 id="NetVips_Base_GetSuffixes" data-uid="NetVips.Base.GetSuffixes">GetSuffixes()</h4>
+  <div class="markdown level1 summary"><p>Get a list of all the filename suffixes supported by libvips.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string[] GetSuffixes()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><p>An array of strings or <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Base_GetSuffixes_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>At least libvips 8.8 is needed.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_LeakSet_System_Boolean_.md&amp;value=---%0Auid%3A%20NetVips.Base.LeakSet(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L35">View Source</a>
   </span>
   <a id="NetVips_Base_LeakSet_" data-uid="NetVips.Base.LeakSet*"></a>
-  <h4 id="NetVips_Base_LeakSet_System_Int32_" data-uid="NetVips.Base.LeakSet(System.Int32)">LeakSet(Int32)</h4>
+  <h4 id="NetVips_Base_LeakSet_System_Boolean_" data-uid="NetVips.Base.LeakSet(System.Boolean)">LeakSet(Boolean)</h4>
   <div class="markdown level1 summary"><p>Enable or disable libvips leak checking.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void LeakSet(int leak)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void LeakSet(bool leak)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -202,13 +237,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">leak</span></td>
-        <td></td>
+        <td><p>Bool indicating if leak checking should be turned on.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Base_LeakSet_System_Int32__remarks">Remarks</h5>
+  <h5 id="NetVips_Base_LeakSet_System_Boolean__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>With this enabled, libvips will check for object and area leaks on exit.
 Enabling this option will make libvips run slightly more slowly.</p>
 </div>
@@ -217,7 +253,7 @@ Enabling this option will make libvips run slightly more slowly.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_MemoryHigh.md&amp;value=---%0Auid%3A%20NetVips.Base.MemoryHigh%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L61">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L62">View Source</a>
   </span>
   <a id="NetVips_Base_MemoryHigh_" data-uid="NetVips.Base.MemoryHigh*"></a>
   <h4 id="NetVips_Base_MemoryHigh" data-uid="NetVips.Base.MemoryHigh">MemoryHigh()</h4>
@@ -250,7 +286,7 @@ Handy for estimating max memory requirements for a program.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_MemoryStats.md&amp;value=---%0Auid%3A%20NetVips.Base.MemoryStats%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L46">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L47">View Source</a>
   </span>
   <a id="NetVips_Base_MemoryStats_" data-uid="NetVips.Base.MemoryStats*"></a>
   <h4 id="NetVips_Base_MemoryStats" data-uid="NetVips.Base.MemoryStats">MemoryStats()</h4>
@@ -287,7 +323,7 @@ Handy for estimating max memory requirements for a program.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_NicknameFind_System_IntPtr_.md&amp;value=---%0Auid%3A%20NetVips.Base.NicknameFind(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L214">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L248">View Source</a>
   </span>
   <a id="NetVips_Base_NicknameFind_" data-uid="NetVips.Base.NicknameFind*"></a>
   <h4 id="NetVips_Base_NicknameFind_System_IntPtr_" data-uid="NetVips.Base.NicknameFind(System.IntPtr)">NicknameFind(IntPtr)</h4>
@@ -311,7 +347,8 @@ Handy for estimating max memory requirements for a program.</p>
       <tr>
         <td><span class="xref">System.IntPtr</span></td>
         <td><span class="parametername">type</span></td>
-        <td></td>
+        <td><p>Type to return nickname for.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -326,7 +363,8 @@ Handy for estimating max memory requirements for a program.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>Nickname.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -335,7 +373,7 @@ Handy for estimating max memory requirements for a program.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_PathFilename7_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Base.PathFilename7(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L151">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L185">View Source</a>
   </span>
   <a id="NetVips_Base_PathFilename7_" data-uid="NetVips.Base.PathFilename7*"></a>
   <h4 id="NetVips_Base_PathFilename7_System_String_" data-uid="NetVips.Base.PathFilename7(System.String)">PathFilename7(String)</h4>
@@ -359,7 +397,7 @@ Handy for estimating max memory requirements for a program.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">path</span></td>
-        <td><p>path to split</p>
+        <td><p>Path to split.</p>
 </td>
       </tr>
     </tbody>
@@ -375,7 +413,7 @@ Handy for estimating max memory requirements for a program.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>The filename part of a vips7 path</p>
+        <td><p>The filename part of a vips7 path.</p>
 </td>
       </tr>
     </tbody>
@@ -385,7 +423,7 @@ Handy for estimating max memory requirements for a program.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_PathMode7_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Base.PathMode7(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L161">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L195">View Source</a>
   </span>
   <a id="NetVips_Base_PathMode7_" data-uid="NetVips.Base.PathMode7*"></a>
   <h4 id="NetVips_Base_PathMode7_System_String_" data-uid="NetVips.Base.PathMode7(System.String)">PathMode7(String)</h4>
@@ -409,7 +447,7 @@ Handy for estimating max memory requirements for a program.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">path</span></td>
-        <td><p>path to split</p>
+        <td><p>Path to split.</p>
 </td>
       </tr>
     </tbody>
@@ -425,7 +463,7 @@ Handy for estimating max memory requirements for a program.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>The mode part of a vips7 path</p>
+        <td><p>The mode part of a vips7 path.</p>
 </td>
       </tr>
     </tbody>
@@ -435,7 +473,7 @@ Handy for estimating max memory requirements for a program.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_TypeFind_System_String_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Base.TypeFind(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L194">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L228">View Source</a>
   </span>
   <a id="NetVips_Base_TypeFind_" data-uid="NetVips.Base.TypeFind*"></a>
   <h4 id="NetVips_Base_TypeFind_System_String_System_String_" data-uid="NetVips.Base.TypeFind(System.String,System.String)">TypeFind(String, String)</h4>
@@ -459,12 +497,14 @@ Handy for estimating max memory requirements for a program.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">basename</span></td>
-        <td></td>
+        <td><p>Name of base class.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">nickname</span></td>
-        <td></td>
+        <td><p>Search for a class with this nickname.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -479,7 +519,8 @@ Handy for estimating max memory requirements for a program.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.IntPtr</span></td>
-        <td></td>
+        <td><p>The GType of the class, or <span class="xref">System.IntPtr.Zero</span> if the class is not found.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -492,7 +533,7 @@ hierarchy are searched.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_TypeFromName_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Base.TypeFromName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L235">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L271">View Source</a>
   </span>
   <a id="NetVips_Base_TypeFromName_" data-uid="NetVips.Base.TypeFromName*"></a>
   <h4 id="NetVips_Base_TypeFromName_System_String_" data-uid="NetVips.Base.TypeFromName(System.String)">TypeFromName(String)</h4>
@@ -516,7 +557,8 @@ hierarchy are searched.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">name</span></td>
-        <td></td>
+        <td><p>Type name to lookup.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -531,7 +573,8 @@ hierarchy are searched.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.IntPtr</span></td>
-        <td></td>
+        <td><p>Corresponding type ID or <span class="xref">System.IntPtr.Zero</span>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -540,7 +583,7 @@ hierarchy are searched.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_TypeName_System_IntPtr_.md&amp;value=---%0Auid%3A%20NetVips.Base.TypeName(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L204">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L238">View Source</a>
   </span>
   <a id="NetVips_Base_TypeName_" data-uid="NetVips.Base.TypeName*"></a>
   <h4 id="NetVips_Base_TypeName_System_IntPtr_" data-uid="NetVips.Base.TypeName(System.IntPtr)">TypeName(IntPtr)</h4>
@@ -564,7 +607,8 @@ hierarchy are searched.</p>
       <tr>
         <td><span class="xref">System.IntPtr</span></td>
         <td><span class="parametername">type</span></td>
-        <td></td>
+        <td><p>Type to return name for.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -579,7 +623,8 @@ hierarchy are searched.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>Type name.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -588,7 +633,7 @@ hierarchy are searched.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_Version_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20NetVips.Base.Version(System.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L98">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L75">View Source</a>
   </span>
   <a id="NetVips_Base_Version_" data-uid="NetVips.Base.Version*"></a>
   <h4 id="NetVips_Base_Version_System_Int32_System_Boolean_" data-uid="NetVips.Base.Version(System.Int32,System.Boolean)">Version(Int32, Boolean)</h4>
@@ -635,7 +680,7 @@ hierarchy are searched.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td><p>The version number</p>
+        <td><p>The version number.</p>
 </td>
       </tr>
     </tbody>
@@ -661,7 +706,7 @@ hierarchy are searched.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_VipsInit.md&amp;value=---%0Auid%3A%20NetVips.Base.VipsInit%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L21">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L22">View Source</a>
   </span>
   <a id="NetVips_Base_VipsInit_" data-uid="NetVips.Base.VipsInit*"></a>
   <h4 id="NetVips_Base_VipsInit" data-uid="NetVips.Base.VipsInit">VipsInit()</h4>
@@ -683,7 +728,7 @@ hierarchy are searched.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p><span class="xref">true</span> if successful started; otherwise, <span class="xref">false</span></p>
+        <td><p><span class="xref">true</span> if successful started; otherwise, <span class="xref">false</span>.</p>
 </td>
       </tr>
     </tbody>
@@ -698,7 +743,7 @@ once the assembly is loaded. You should only call this method in your own progra
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_VipsInterpretationGetType.md&amp;value=---%0Auid%3A%20NetVips.Base.VipsInterpretationGetType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L169">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L203">View Source</a>
   </span>
   <a id="NetVips_Base_VipsInterpretationGetType_" data-uid="NetVips.Base.VipsInterpretationGetType*"></a>
   <h4 id="NetVips_Base_VipsInterpretationGetType" data-uid="NetVips.Base.VipsInterpretationGetType">VipsInterpretationGetType()</h4>
@@ -714,7 +759,7 @@ once the assembly is loaded. You should only call this method in your own progra
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base_VipsOperationFlagsGetType.md&amp;value=---%0Auid%3A%20NetVips.Base.VipsOperationFlagsGetType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L177">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L211">View Source</a>
   </span>
   <a id="NetVips_Base_VipsOperationFlagsGetType_" data-uid="NetVips.Base.VipsOperationFlagsGetType*"></a>
   <h4 id="NetVips_Base_VipsOperationFlagsGetType" data-uid="NetVips.Base.VipsOperationFlagsGetType">VipsOperationFlagsGetType()</h4>
@@ -735,7 +780,7 @@ once the assembly is loaded. You should only call this method in your own progra
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Base.md&amp;value=---%0Auid%3A%20NetVips.Base%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L10" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Base.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

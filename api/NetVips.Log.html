@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Log
    ">
-    <meta name="generator" content="docfx 2.40.7.0">
+    <meta name="generator" content="docfx 2.42.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,7 +73,7 @@
   
   <h1 id="NetVips_Log" data-uid="NetVips.Log" class="text-break">Class Log
   </h1>
-  <div class="markdown level0 summary"><p>Wrapper for message logging functions</p>
+  <div class="markdown level0 summary"><p>Wrapper for message logging functions.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -115,57 +115,10 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_DefaultHandler_System_String_NetVips_Enums_LogLevelFlags_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Log.DefaultHandler(System.String%2CNetVips.Enums.LogLevelFlags%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L160">View Source</a>
-  </span>
-  <a id="NetVips_Log_DefaultHandler_" data-uid="NetVips.Log.DefaultHandler*"></a>
-  <h4 id="NetVips_Log_DefaultHandler_System_String_NetVips_Enums_LogLevelFlags_System_String_" data-uid="NetVips.Log.DefaultHandler(System.String,NetVips.Enums.LogLevelFlags,System.String)">DefaultHandler(String, Enums.LogLevelFlags, String)</h4>
-  <div class="markdown level1 summary"><p>The default log handler set up by GLib; <a class="xref" href="NetVips.Log.html#NetVips_Log_SetDefaultHandler_NetVips_LogFunc_">SetDefaultHandler(LogFunc)</a>
-allows to install an alternate default log handler.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void DefaultHandler(string logDomain, Enums.LogLevelFlags logLevel, string message)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">logDomain</span></td>
-        <td><p>the log domain, or <span class="xref">null</span> for the default &quot;&quot; application domain</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
-        <td><span class="parametername">logLevel</span></td>
-        <td><p>the level of the message</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">message</span></td>
-        <td><p>the message</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_PrintLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Log.PrintLogFunction(System.String%2CNetVips.Enums.LogLevelFlags%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L242">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L109">View Source</a>
   </span>
   <a id="NetVips_Log_PrintLogFunction_" data-uid="NetVips.Log.PrintLogFunction*"></a>
   <h4 id="NetVips_Log_PrintLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String_" data-uid="NetVips.Log.PrintLogFunction(System.String,NetVips.Enums.LogLevelFlags,System.String)">PrintLogFunction(String, Enums.LogLevelFlags, String)</h4>
@@ -189,19 +142,19 @@ allows to install an alternate default log handler.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">domain</span></td>
-        <td><p>the log domain of the message</p>
+        <td><p>The log domain of the message.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
         <td><span class="parametername">level</span></td>
-        <td><p>the log level of the message (including the fatal and recursion flags)</p>
+        <td><p>The log level of the message (including the fatal and recursion flags).</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">message</span></td>
-        <td><p>the message to process</p>
+        <td><p>The message to process.</p>
 </td>
       </tr>
     </tbody>
@@ -217,7 +170,7 @@ Log.SetLogHandler(null, Enums.LogLevelFlags.All, logFunc);</code></pre>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_PrintTraceLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Log.PrintTraceLogFunction(System.String%2CNetVips.Enums.LogLevelFlags%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L262">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L129">View Source</a>
   </span>
   <a id="NetVips_Log_PrintTraceLogFunction_" data-uid="NetVips.Log.PrintTraceLogFunction*"></a>
   <h4 id="NetVips_Log_PrintTraceLogFunction_System_String_NetVips_Enums_LogLevelFlags_System_String_" data-uid="NetVips.Log.PrintTraceLogFunction(System.String,NetVips.Enums.LogLevelFlags,System.String)">PrintTraceLogFunction(String, Enums.LogLevelFlags, String)</h4>
@@ -241,19 +194,19 @@ Log.SetLogHandler(null, Enums.LogLevelFlags.All, logFunc);</code></pre>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">domain</span></td>
-        <td><p>the log domain of the message</p>
+        <td><p>The log domain of the message.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
         <td><span class="parametername">level</span></td>
-        <td><p>the log level of the message (including the fatal and recursion flags)</p>
+        <td><p>The log level of the message (including the fatal and recursion flags).</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">message</span></td>
-        <td><p>the message to process</p>
+        <td><p>The message to process.</p>
 </td>
       </tr>
     </tbody>
@@ -269,7 +222,7 @@ Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, logFunc);</cod
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_RemoveLogHandler_System_String_System_UInt32_.md&amp;value=---%0Auid%3A%20NetVips.Log.RemoveLogHandler(System.String%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L115">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L61">View Source</a>
   </span>
   <a id="NetVips_Log_RemoveLogHandler_" data-uid="NetVips.Log.RemoveLogHandler*"></a>
   <h4 id="NetVips_Log_RemoveLogHandler_System_String_System_UInt32_" data-uid="NetVips.Log.RemoveLogHandler(System.String,System.UInt32)">RemoveLogHandler(String, UInt32)</h4>
@@ -293,13 +246,13 @@ Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, logFunc);</cod
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">logDomain</span></td>
-        <td><p>the log domain</p>
+        <td><p>The log domain.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.UInt32</span></td>
         <td><span class="parametername">handlerId</span></td>
-        <td><p>the id of the handler, which was returned in <a class="xref" href="NetVips.Log.html#NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_">SetLogHandler(String, Enums.LogLevelFlags, LogFunc)</a></p>
+        <td><p>The id of the handler, which was returned in <a class="xref" href="NetVips.Log.html#NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_">SetLogHandler(String, Enums.LogLevelFlags, LogFunc)</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -309,7 +262,7 @@ Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, logFunc);</cod
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetAlwaysFatal_NetVips_Enums_LogLevelFlags_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetAlwaysFatal(NetVips.Enums.LogLevelFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L173">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L79">View Source</a>
   </span>
   <a id="NetVips_Log_SetAlwaysFatal_" data-uid="NetVips.Log.SetAlwaysFatal*"></a>
   <h4 id="NetVips_Log_SetAlwaysFatal_NetVips_Enums_LogLevelFlags_" data-uid="NetVips.Log.SetAlwaysFatal(NetVips.Enums.LogLevelFlags)">SetAlwaysFatal(Enums.LogLevelFlags)</h4>
@@ -334,7 +287,7 @@ When a message with any of these levels is logged the program terminates.</p>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
         <td><span class="parametername">fatalMask</span></td>
-        <td><p>the mask containing bits set for each level of error which is to be fatal</p>
+        <td><p>The mask containing bits set for each level of error which is to be fatal.</p>
 </td>
       </tr>
     </tbody>
@@ -350,7 +303,7 @@ When a message with any of these levels is logged the program terminates.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
-        <td><p>the old fatal mask</p>
+        <td><p>The old fatal mask.</p>
 </td>
       </tr>
     </tbody>
@@ -360,7 +313,7 @@ When a message with any of these levels is logged the program terminates.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetAlwaysFatal_System_String_NetVips_Enums_LogLevelFlags_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetAlwaysFatal(System.String%2CNetVips.Enums.LogLevelFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L184">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L90">View Source</a>
   </span>
   <a id="NetVips_Log_SetAlwaysFatal_" data-uid="NetVips.Log.SetAlwaysFatal*"></a>
   <h4 id="NetVips_Log_SetAlwaysFatal_System_String_NetVips_Enums_LogLevelFlags_" data-uid="NetVips.Log.SetAlwaysFatal(System.String,NetVips.Enums.LogLevelFlags)">SetAlwaysFatal(String, Enums.LogLevelFlags)</h4>
@@ -384,13 +337,13 @@ When a message with any of these levels is logged the program terminates.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">logDomain</span></td>
-        <td><p>the log domain</p>
+        <td><p>The log domain.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
         <td><span class="parametername">fatalMask</span></td>
-        <td><p>the new fatal mask</p>
+        <td><p>The new fatal mask.</p>
 </td>
       </tr>
     </tbody>
@@ -406,58 +359,7 @@ When a message with any of these levels is logged the program terminates.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
-        <td><p>the old fatal mask for the log domain</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetDefaultHandler_NetVips_LogFunc_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetDefaultHandler(NetVips.LogFunc)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L216">View Source</a>
-  </span>
-  <a id="NetVips_Log_SetDefaultHandler_" data-uid="NetVips.Log.SetDefaultHandler*"></a>
-  <h4 id="NetVips_Log_SetDefaultHandler_NetVips_LogFunc_" data-uid="NetVips.Log.SetDefaultHandler(NetVips.LogFunc)">SetDefaultHandler(LogFunc)</h4>
-  <div class="markdown level1 summary"><p>Installs a default log handler which is used if no log handler
-has been set for the particular log domain and log level combination.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static LogFunc SetDefaultHandler(LogFunc logFunc)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.LogFunc.html">LogFunc</a></td>
-        <td><span class="parametername">logFunc</span></td>
-        <td><p>the log handler function</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.LogFunc.html">LogFunc</a></td>
-        <td><p>the previous default log handler</p>
+        <td><p>The old fatal mask for the log domain.</p>
 </td>
       </tr>
     </tbody>
@@ -467,7 +369,7 @@ has been set for the particular log domain and log level combination.</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetLogHandler(System.String%2CNetVips.Enums.LogLevelFlags%2CNetVips.LogFunc)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L99">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L45">View Source</a>
   </span>
   <a id="NetVips_Log_SetLogHandler_" data-uid="NetVips.Log.SetLogHandler*"></a>
   <h4 id="NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_" data-uid="NetVips.Log.SetLogHandler(System.String,NetVips.Enums.LogLevelFlags,NetVips.LogFunc)">SetLogHandler(String, Enums.LogLevelFlags, LogFunc)</h4>
@@ -491,19 +393,19 @@ has been set for the particular log domain and log level combination.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">logDomain</span></td>
-        <td><p>the log domain, or <span class="xref">null</span> for the default &quot;&quot; application domain</p>
+        <td><p>The log domain, or <span class="xref">null</span> for the default &quot;&quot; application domain.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
         <td><span class="parametername">flags</span></td>
-        <td><p>the log levels to apply the log handler for</p>
+        <td><p>The log levels to apply the log handler for.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="NetVips.LogFunc.html">LogFunc</a></td>
         <td><span class="parametername">logFunc</span></td>
-        <td><p>the log handler function</p>
+        <td><p>The log handler function.</p>
 </td>
       </tr>
     </tbody>
@@ -519,159 +421,7 @@ has been set for the particular log domain and log level combination.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.UInt32</span></td>
-        <td><p>the id of the handler</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetPrintErrorHandler_NetVips_PrintFunc_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetPrintErrorHandler(NetVips.PrintFunc)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L145">View Source</a>
-  </span>
-  <a id="NetVips_Log_SetPrintErrorHandler_" data-uid="NetVips.Log.SetPrintErrorHandler*"></a>
-  <h4 id="NetVips_Log_SetPrintErrorHandler_NetVips_PrintFunc_" data-uid="NetVips.Log.SetPrintErrorHandler(NetVips.PrintFunc)">SetPrintErrorHandler(PrintFunc)</h4>
-  <div class="markdown level1 summary"><p>Sets the handler for printing error messages.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static PrintFunc SetPrintErrorHandler(PrintFunc handler)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.PrintFunc.html">PrintFunc</a></td>
-        <td><span class="parametername">handler</span></td>
-        <td><p>the new error message handler</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.PrintFunc.html">PrintFunc</a></td>
-        <td><p>the old error message handler</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetPrintHandler_NetVips_PrintFunc_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetPrintHandler(NetVips.PrintFunc)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L132">View Source</a>
-  </span>
-  <a id="NetVips_Log_SetPrintHandler_" data-uid="NetVips.Log.SetPrintHandler*"></a>
-  <h4 id="NetVips_Log_SetPrintHandler_NetVips_PrintFunc_" data-uid="NetVips.Log.SetPrintHandler(NetVips.PrintFunc)">SetPrintHandler(PrintFunc)</h4>
-  <div class="markdown level1 summary"><p>Sets the print handler.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static PrintFunc SetPrintHandler(PrintFunc handler)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.PrintFunc.html">PrintFunc</a></td>
-        <td><span class="parametername">handler</span></td>
-        <td><p>the new print handler</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.PrintFunc.html">PrintFunc</a></td>
-        <td><p>the old print handler</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_WriteLog_System_String_NetVips_Enums_LogLevelFlags_System_String_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Log.WriteLog(System.String%2CNetVips.Enums.LogLevelFlags%2CSystem.String%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L85">View Source</a>
-  </span>
-  <a id="NetVips_Log_WriteLog_" data-uid="NetVips.Log.WriteLog*"></a>
-  <h4 id="NetVips_Log_WriteLog_System_String_NetVips_Enums_LogLevelFlags_System_String_System_Object___" data-uid="NetVips.Log.WriteLog(System.String,NetVips.Enums.LogLevelFlags,System.String,System.Object[])">WriteLog(String, Enums.LogLevelFlags, String, Object[])</h4>
-  <div class="markdown level1 summary"><p>Logs an error or debugging message.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void WriteLog(string logDomain, Enums.LogLevelFlags flags, string format, params object[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">logDomain</span></td>
-        <td><p>the log domain, or <span class="xref">null</span> for the default &quot;&quot; application domain</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
-        <td><span class="parametername">flags</span></td>
-        <td><p>the log level</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">format</span></td>
-        <td><p>the message format</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Object</span>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td><p>the parameters to insert into the format string</p>
+        <td><p>The id of the handler.</p>
 </td>
       </tr>
     </tbody>
@@ -686,7 +436,7 @@ has been set for the particular log domain and log level combination.</p>
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log.md&amp;value=---%0Auid%3A%20NetVips.Log%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L26" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

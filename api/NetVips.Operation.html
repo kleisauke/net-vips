@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Operation
    ">
-    <meta name="generator" content="docfx 2.40.7.0">
+    <meta name="generator" content="docfx 2.42.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -107,6 +107,9 @@
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetDescription">VipsObject.GetDescription()</a>
     </div>
     <div>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_">GObject.SignalConnect(String, Delegate, IntPtr)</a>
+    </div>
+    <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
     </div>
     <div>
@@ -174,10 +177,83 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CNetVips.VOption%2CNetVips.Image%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L214">View Source</a>
+  </span>
+  <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
+  <h4 id="NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object___" data-uid="NetVips.Operation.Call(System.String,NetVips.VOption,NetVips.Image,System.Object[])">Call(String, VOption, Image, Object[])</h4>
+  <div class="markdown level1 summary"><p>Call a libvips operation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static object Call(string operationName, VOption kwargs = null, Image matchImage = null, params object[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">operationName</span></td>
+        <td><p>Operation name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.VOption.html">VOption</a></td>
+        <td><span class="parametername">kwargs</span></td>
+        <td><p>Optional arguments.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><span class="parametername">matchImage</span></td>
+        <td><p>A <a class="xref" href="NetVips.Image.html">Image</a> used as guide.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>An arbitrary number and variety of arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>A new object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
+<pre><code class="lang-lang-csharp">var blackImage = Operation.Call(&quot;black&quot;, 10, 10);</code></pre>
+<p>See the Introduction for notes on how this works.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_NetVips_VOption_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CNetVips.VOption%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L179">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L196">View Source</a>
   </span>
   <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
   <h4 id="NetVips_Operation_Call_System_String_NetVips_VOption_System_Object___" data-uid="NetVips.Operation.Call(System.String,NetVips.VOption,System.Object[])">Call(String, VOption, Object[])</h4>
@@ -186,7 +262,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object Call(string operationName, VOption kwargs, params object[] args)</code></pre>
+    <pre><code class="lang-csharp hljs">public static object Call(string operationName, VOption kwargs = null, params object[] args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -201,17 +277,20 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">operationName</span></td>
-        <td></td>
+        <td><p>Operation name.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="NetVips.VOption.html">VOption</a></td>
         <td><span class="parametername">kwargs</span></td>
-        <td></td>
+        <td><p>Optional arguments.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Object</span>[]</td>
         <td><span class="parametername">args</span></td>
-        <td></td>
+        <td><p>An arbitrary number and variety of arguments.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -226,71 +305,14 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Object</span></td>
-        <td></td>
+        <td><p>A new object.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 id="NetVips_Operation_Call_System_String_NetVips_VOption_System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
-<pre><code class="lang-lang-csharp">var blackImage = Operation.call(&quot;black&quot;, 10, 10);</code></pre>
-<p>See the Introduction for notes on how this works.</p>
-</div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_System_Object_.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L142">View Source</a>
-  </span>
-  <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
-  <h4 id="NetVips_Operation_Call_System_String_System_Object_" data-uid="NetVips.Operation.Call(System.String,System.Object)">Call(String, Object)</h4>
-  <div class="markdown level1 summary"><p>Call a libvips operation.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object Call(string operationName, object arg)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">operationName</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Object</span></td>
-        <td><span class="parametername">arg</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Object</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="NetVips_Operation_Call_System_String_System_Object__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
-<pre><code class="lang-lang-csharp">var blackImage = Operation.call(&quot;black&quot;, 10, 10);</code></pre>
+<pre><code class="lang-lang-csharp">var blackImage = Operation.Call(&quot;black&quot;, 10, 10);</code></pre>
 <p>See the Introduction for notes on how this works.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -298,7 +320,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L160">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L179">View Source</a>
   </span>
   <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
   <h4 id="NetVips_Operation_Call_System_String_System_Object___" data-uid="NetVips.Operation.Call(System.String,System.Object[])">Call(String, Object[])</h4>
@@ -322,12 +344,14 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">operationName</span></td>
-        <td></td>
+        <td><p>Operation name.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Object</span>[]</td>
         <td><span class="parametername">args</span></td>
-        <td></td>
+        <td><p>An arbitrary number and variety of arguments.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -342,13 +366,14 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Object</span></td>
-        <td></td>
+        <td><p>A new object.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 id="NetVips_Operation_Call_System_String_System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
-<pre><code class="lang-lang-csharp">var blackImage = Operation.call(&quot;black&quot;, 10, 10);</code></pre>
+<pre><code class="lang-lang-csharp">var blackImage = Operation.Call(&quot;black&quot;, 10, 10);</code></pre>
 <p>See the Introduction for notes on how this works.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -356,7 +381,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_GenerateImageClass_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Operation.GenerateImageClass(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L791">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L824">View Source</a>
   </span>
   <a id="NetVips_Operation_GenerateImageClass_" data-uid="NetVips.Operation.GenerateImageClass*"></a>
   <h4 id="NetVips_Operation_GenerateImageClass_System_String_" data-uid="NetVips.Operation.GenerateImageClass(System.String)">GenerateImageClass(String)</h4>
@@ -380,7 +405,8 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">indent</span></td>
-        <td></td>
+        <td><p>Indentation level.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -395,7 +421,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>The <code>Image.Generated.cs</code> as string.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -409,7 +436,7 @@ Use it with something like:</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_VipsCacheSetMax_System_Int32_.md&amp;value=---%0Auid%3A%20NetVips.Operation.VipsCacheSetMax(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L883">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L916">View Source</a>
   </span>
   <a id="NetVips_Operation_VipsCacheSetMax_" data-uid="NetVips.Operation.VipsCacheSetMax*"></a>
   <h4 id="NetVips_Operation_VipsCacheSetMax_System_Int32_" data-uid="NetVips.Operation.VipsCacheSetMax(System.Int32)">VipsCacheSetMax(Int32)</h4>
@@ -433,7 +460,8 @@ Use it with something like:</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">max</span></td>
-        <td></td>
+        <td><p>Maximum number of operations.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -442,7 +470,7 @@ Use it with something like:</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_VipsCacheSetMaxFiles_System_Int32_.md&amp;value=---%0Auid%3A%20NetVips.Operation.VipsCacheSetMaxFiles(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L901">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L934">View Source</a>
   </span>
   <a id="NetVips_Operation_VipsCacheSetMaxFiles_" data-uid="NetVips.Operation.VipsCacheSetMaxFiles*"></a>
   <h4 id="NetVips_Operation_VipsCacheSetMaxFiles_System_Int32_" data-uid="NetVips.Operation.VipsCacheSetMaxFiles(System.Int32)">VipsCacheSetMaxFiles(Int32)</h4>
@@ -466,7 +494,8 @@ Use it with something like:</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">maxFiles</span></td>
-        <td></td>
+        <td><p>Maximum open files.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -475,7 +504,7 @@ Use it with something like:</p>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_VipsCacheSetMaxMem_System_UInt64_.md&amp;value=---%0Auid%3A%20NetVips.Operation.VipsCacheSetMaxMem(System.UInt64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L892">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L925">View Source</a>
   </span>
   <a id="NetVips_Operation_VipsCacheSetMaxMem_" data-uid="NetVips.Operation.VipsCacheSetMaxMem*"></a>
   <h4 id="NetVips_Operation_VipsCacheSetMaxMem_System_UInt64_" data-uid="NetVips.Operation.VipsCacheSetMaxMem(System.UInt64)">VipsCacheSetMaxMem(UInt64)</h4>
@@ -499,25 +528,26 @@ Use it with something like:</p>
       <tr>
         <td><span class="xref">System.UInt64</span></td>
         <td><span class="parametername">maxMem</span></td>
-        <td></td>
+        <td><p>Maximum memory use.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_VipsCacheSetTrace_System_Int32_.md&amp;value=---%0Auid%3A%20NetVips.Operation.VipsCacheSetTrace(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_VipsCacheSetTrace_System_Boolean_.md&amp;value=---%0Auid%3A%20NetVips.Operation.VipsCacheSetTrace(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L910">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L943">View Source</a>
   </span>
   <a id="NetVips_Operation_VipsCacheSetTrace_" data-uid="NetVips.Operation.VipsCacheSetTrace*"></a>
-  <h4 id="NetVips_Operation_VipsCacheSetTrace_System_Int32_" data-uid="NetVips.Operation.VipsCacheSetTrace(System.Int32)">VipsCacheSetTrace(Int32)</h4>
+  <h4 id="NetVips_Operation_VipsCacheSetTrace_System_Boolean_" data-uid="NetVips.Operation.VipsCacheSetTrace(System.Boolean)">VipsCacheSetTrace(Boolean)</h4>
   <div class="markdown level1 summary"><p>Turn on libvips cache tracing.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void VipsCacheSetTrace(int trace)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void VipsCacheSetTrace(bool trace)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -530,9 +560,10 @@ Use it with something like:</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">trace</span></td>
-        <td></td>
+        <td><p>Bool indicating if tracing should be turned on.</p>
+</td>
       </tr>
     </tbody>
   </table>

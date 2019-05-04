@@ -8,7 +8,7 @@
     <title>Getting Started with NetVips </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Getting Started with NetVips ">
-    <meta name="generator" content="docfx 2.40.7.0">
+    <meta name="generator" content="docfx 2.42.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -70,7 +70,7 @@
 <h1 id="getting-started-with-netvips">Getting Started with NetVips</h1>
 
 <p>See the main libvips site for an introduction to the underlying library. These
-notes introduce the Mono/.NET binding.</p>
+notes introduce the .NET binding.</p>
 <p><a href="https://libvips.github.io/libvips">https://libvips.github.io/libvips</a></p>
 <h2 id="example">Example</h2>
 <p>This example loads a file, boosts the green channel, sharpens the image,
@@ -216,7 +216,7 @@ resultImage = image1.Bandjoin(new[] {image2, 255});
 <p>NetVips can log warnings and debug messages from libvips. Some warnings are important,
 for example truncated files, and you might want to see them.</p>
 <p>Add these lines somewhere near the start of your program:</p>
-<pre><code class="lang-csharp">_handlerId = Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, (domain, level, message) =&gt;
+<pre><code class="lang-csharp">_handlerId = Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Warning, (domain, level, message) =&gt;
 {
     Console.WriteLine(&quot;Domain: '{0}' Level: {1}&quot;, domain, level);
     Console.WriteLine(&quot;Message: {0}&quot;, message);
