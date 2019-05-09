@@ -1104,6 +1104,13 @@ namespace NetVips.Tests
 
             FileLoader("heifload", Helper.HeicFile, HeifValid);
             BufferLoader("heifload_buffer", Helper.HeicFile, HeifValid);
+        }
+
+        [SkippableFact]
+        public void TestHeifsave()
+        {
+            Skip.IfNot(Helper.Have("heifsave"), "no HEIF support, skipping test");
+
             SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 80);
             SaveLoad("%s.heic", _colour);
 
