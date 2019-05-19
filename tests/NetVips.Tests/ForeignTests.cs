@@ -209,7 +209,7 @@ namespace NetVips.Tests
 
                 // can set, save and reload ASCII string fields
                 // added in 8.7
-                if (Base.AtLeastLibvips(8, 7))
+                if (NetVips.AtLeastLibvips(8, 7))
                 {
                     x = Image.NewFromFile(Helper.JpegFile);
                     x = x.Copy();
@@ -319,7 +319,7 @@ namespace NetVips.Tests
 
             FileLoader("tiffload", Helper.TifFile, TiffValid);
             BufferLoader("tiffload_buffer", Helper.TifFile, TiffValid);
-            if (Base.AtLeastLibvips(8, 5))
+            if (NetVips.AtLeastLibvips(8, 5))
             {
                 SaveLoadBuffer("tiffsave_buffer", "tiffload_buffer", _colour);
             }
@@ -380,7 +380,7 @@ namespace NetVips.Tests
             Assert.Equal(x1.Height, x2.Width);
 
             // OME support in 8.5
-            if (Base.AtLeastLibvips(8, 5))
+            if (NetVips.AtLeastLibvips(8, 5))
             {
                 x = Image.NewFromFile(Helper.OmeFile);
                 Assert.Equal(439, x.Width);
@@ -433,7 +433,7 @@ namespace NetVips.Tests
             }
 
             // pyr save to buffer added in 8.6
-            if (Base.AtLeastLibvips(8, 6))
+            if (NetVips.AtLeastLibvips(8, 6))
             {
                 x = Image.NewFromFile(Helper.TifFile);
                 var buf = x.TiffsaveBuffer(tile: true, pyramid: true);
@@ -456,7 +456,7 @@ namespace NetVips.Tests
             }
 
             // region-shrink added in 8.7
-            if (Base.AtLeastLibvips(8, 7))
+            if (NetVips.AtLeastLibvips(8, 7))
             {
                 x = Image.NewFromFile(Helper.TifFile);
                 _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mean");
@@ -500,7 +500,7 @@ namespace NetVips.Tests
 
             // page/n let you pick a range of pages
             // 'n' param added in 8.5
-            if (Base.AtLeastLibvips(8, 5))
+            if (NetVips.AtLeastLibvips(8, 5))
             {
                 x = Image.Magickload(Helper.GifAnimFile);
                 width = x.Width;
@@ -523,7 +523,7 @@ namespace NetVips.Tests
 
             // libvips has its own sniffer for ICO, test that
             // added in 8.7
-            if (Base.AtLeastLibvips(8, 7))
+            if (NetVips.AtLeastLibvips(8, 7))
             {
                 var buf = File.ReadAllBytes(Helper.IcoFile);
                 var im = Image.NewFromBuffer(buf);
@@ -622,7 +622,7 @@ namespace NetVips.Tests
             // try converting an animated gif to webp ... can't do back to gif
             // again without IM support
             // added in 8.8
-            if (Helper.Have("gifload") && Base.AtLeastLibvips(8, 8))
+            if (Helper.Have("gifload") && NetVips.AtLeastLibvips(8, 8))
             {
                 var x1 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
                 {
@@ -693,7 +693,7 @@ namespace NetVips.Tests
                     0.159668,
                     0.040375,
                     // OpenEXR alpha is scaled to 0 - 255 in libvips 8.7+
-                    Base.AtLeastLibvips(8, 7) ? 255 : 1.0
+                    NetVips.AtLeastLibvips(8, 7) ? 255 : 1.0
                 }, a, 0.00001);
                 Assert.Equal(610, im.Width);
                 Assert.Equal(406, im.Height);
@@ -782,7 +782,7 @@ namespace NetVips.Tests
 
                 // New sizing rules in libvips 8.8+, see:
                 // https://github.com/libvips/libvips/commit/29d29533d45848ecc12a3c50c39c26c835458a61
-                Assert.Equal(Base.AtLeastLibvips(8, 8) ? 1134 : 1133, im.Width);
+                Assert.Equal(NetVips.AtLeastLibvips(8, 8) ? 1134 : 1133, im.Width);
                 Assert.Equal(680, im.Height);
                 Assert.Equal(4, im.Bands);
             }
@@ -826,7 +826,7 @@ namespace NetVips.Tests
             BufferLoader("gifload_buffer", Helper.GifFile, GifValid);
 
             // 'n' param added in 8.5
-            if (Base.AtLeastLibvips(8, 5))
+            if (NetVips.AtLeastLibvips(8, 5))
             {
                 var x1 = Image.NewFromFile(Helper.GifAnimFile);
                 var x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
@@ -1001,7 +1001,7 @@ namespace NetVips.Tests
             // with 511x511, it'll fit exactly into 2x2 -- we we actually generate
             // 3x3, since we output the overlaps
             // 8.6 revised the rules on overlaps, so don't test earlier than that
-            if (Base.AtLeastLibvips(8, 6))
+            if (NetVips.AtLeastLibvips(8, 6))
             {
                 filename = Helper.GetTemporaryFile(_tempDir);
                 _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: "google", overlap: 1, depth: "one");
@@ -1075,7 +1075,7 @@ namespace NetVips.Tests
                 // be different
 
                 // added in 8.7
-                if (Base.AtLeastLibvips(8, 7))
+                if (NetVips.AtLeastLibvips(8, 7))
                 {
                     _ = _colour.DzsaveBuffer(regionShrink: "mean");
                     _ = _colour.DzsaveBuffer(regionShrink: "mode");

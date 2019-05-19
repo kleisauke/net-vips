@@ -1,7 +1,7 @@
 namespace NetVips
 {
     using System;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Make interpolators for operators like <see cref="Image.Affine"/>.

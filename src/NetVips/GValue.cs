@@ -5,7 +5,7 @@ namespace NetVips
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Text;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Wrap <see cref="Internal.GValue"/> in a C# class.
@@ -84,32 +84,32 @@ namespace NetVips
         /// <summary>
         /// The fundamental type for VipsImage.
         /// </summary>
-        public static readonly IntPtr ImageType = Base.TypeFromName("VipsImage");
+        public static readonly IntPtr ImageType = NetVips.TypeFromName("VipsImage");
 
         /// <summary>
         /// The fundamental type for VipsArrayInt.
         /// </summary>
-        public static readonly IntPtr ArrayIntType = Base.TypeFromName("VipsArrayInt");
+        public static readonly IntPtr ArrayIntType = NetVips.TypeFromName("VipsArrayInt");
 
         /// <summary>
         /// The fundamental type for VipsArrayDouble.
         /// </summary>
-        public static readonly IntPtr ArrayDoubleType = Base.TypeFromName("VipsArrayDouble");
+        public static readonly IntPtr ArrayDoubleType = NetVips.TypeFromName("VipsArrayDouble");
 
         /// <summary>
         /// The fundamental type for VipsArrayImage.
         /// </summary>
-        public static readonly IntPtr ArrayImageType = Base.TypeFromName("VipsArrayImage");
+        public static readonly IntPtr ArrayImageType = NetVips.TypeFromName("VipsArrayImage");
 
         /// <summary>
         /// The fundamental type for VipsRefString.
         /// </summary>
-        public static readonly IntPtr RefStrType = Base.TypeFromName("VipsRefString");
+        public static readonly IntPtr RefStrType = NetVips.TypeFromName("VipsRefString");
 
         /// <summary>
         /// The fundamental type for VipsBlob.
         /// </summary>
-        public static readonly IntPtr BlobType = Base.TypeFromName("VipsBlob");
+        public static readonly IntPtr BlobType = NetVips.TypeFromName("VipsBlob");
 
         /// <summary>
         /// The fundamental type for VipsBandFormat. See <see cref="Enums.BandFormat"/>.
@@ -129,12 +129,12 @@ namespace NetVips
         static GValue()
         {
             Vips.BandFormatGetType();
-            BandFormatType = Base.TypeFromName("VipsBandFormat");
+            BandFormatType = NetVips.TypeFromName("VipsBandFormat");
 
-            if (Base.AtLeastLibvips(8, 6))
+            if (NetVips.AtLeastLibvips(8, 6))
             {
                 Vips.BlendModeGetType();
-                BlendModeType = Base.TypeFromName("VipsBlendMode");
+                BlendModeType = NetVips.TypeFromName("VipsBlendMode");
             }
         }
 
@@ -296,7 +296,7 @@ namespace NetVips
                 if (!(value is GObject gObject))
                 {
                     throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
+                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
                 Internal.GValue.SetObject(ref Struct, gObject);
@@ -322,7 +322,7 @@ namespace NetVips
                         break;
                     default:
                         throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
+                            $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
                 VipsValue.SetArrayInt(ref Struct, integers, integers.Length);
@@ -348,7 +348,7 @@ namespace NetVips
                         break;
                     default:
                         throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
+                            $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
                 VipsValue.SetArrayDouble(ref Struct, doubles, doubles.Length);
@@ -358,7 +358,7 @@ namespace NetVips
                 if (!(value is Image[] images))
                 {
                     throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
+                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
                 var size = images.Length;
@@ -390,7 +390,7 @@ namespace NetVips
                         break;
                     default:
                         throw new Exception(
-                            $"unsupported value type {value.GetType()} for gtype {Base.TypeName(gtype)}");
+                            $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
                 // We need to set the blob to a copy of the string that vips
@@ -403,7 +403,7 @@ namespace NetVips
                 GC.AddMemoryPressure(memory.Length);
                 _memoryPressure = memory.Length;
 
-                if (Base.AtLeastLibvips(8, 6))
+                if (NetVips.AtLeastLibvips(8, 6))
                 {
                     VipsValue.SetBlobFree(ref Struct, ptr, (ulong)memory.Length);
                 }
@@ -422,7 +422,7 @@ namespace NetVips
             else
             {
                 throw new Exception(
-                    $"unsupported gtype for set {Base.TypeName(gtype)}, fundamental {Base.TypeName(fundamental)}, value type {value.GetType()}");
+                    $"unsupported gtype for set {NetVips.TypeName(gtype)}, fundamental {NetVips.TypeName(fundamental)}, value type {value.GetType()}");
             }
         }
 
@@ -527,7 +527,7 @@ namespace NetVips
             }
             else
             {
-                throw new Exception($"unsupported gtype for get {Base.TypeName(gtype)}");
+                throw new Exception($"unsupported gtype for get {NetVips.TypeName(gtype)}");
             }
 
             return result;

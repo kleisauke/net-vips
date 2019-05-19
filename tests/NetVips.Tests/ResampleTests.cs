@@ -215,7 +215,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestThumbnail()
         {
-            Skip.IfNot(Base.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
 
             var im = Image.Thumbnail(Helper.JpegFile, 100);
             Assert.Equal(100, im.Width);
@@ -303,7 +303,7 @@ namespace NetVips.Tests
             // this was a bug at one point, strangely, if executed with debug
             // enabled
             // fixed in 8.7.3
-            if (Base.AtLeastLibvips(8, 7, 3))
+            if (NetVips.AtLeastLibvips(8, 7, 3))
             {
                 var mp = Image.Xyz(im.Width, im.Height);
                 var interp = Interpolate.NewFromName("bicubic");

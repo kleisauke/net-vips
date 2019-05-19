@@ -3,15 +3,15 @@ namespace NetVips
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Basic utility stuff.
     /// </summary>
-    public static class Base
+    public static class NetVips
     {
         /// <summary>
-        /// VipsInit() starts up the world of VIPS.
+        /// Init() starts up the world of VIPS.
         /// </summary>
         /// <remarks>
         /// This function will be automatically called by <see cref="ModuleInitializer.Initialize"/>
@@ -19,7 +19,7 @@ namespace NetVips
         /// <see cref="ModuleInitializer"/> fails to initialize libvips.
         /// </remarks>
         /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" />.</returns>
-        public static bool VipsInit()
+        public static bool Init()
         {
             return Vips.Init("NetVips") == 0;
         }
@@ -35,6 +35,90 @@ namespace NetVips
         public static void LeakSet(bool leak)
         {
             Vips.LeakSet(leak ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Enable or disable libvips profile recording.
+        /// </summary>
+        /// <remarks>
+        /// If set, vips will record profiling information, and dump it on program
+        /// exit. These profiles can be analysed with the `vipsprofile` program.
+        /// </remarks>
+        /// <param name="profile">Bool indicating if profile recording should be turned on.</param>
+        public static void ProfileSet(bool profile)
+        {
+            Vips.ProfileSet(profile ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Set the maximum number of operations libvips will cache.
+        /// </summary>
+        /// <param name="max">Maximum number of operations.</param>
+        public static void CacheSetMax(int max)
+        {
+            Vips.CacheSetMax(max);
+        }
+
+        /// <summary>
+        /// Limit the operation cache by memory use.
+        /// </summary>
+        /// <param name="maxMem">Maximum memory use.</param>
+        public static void CacheSetMaxMem(ulong maxMem)
+        {
+            Vips.CacheSetMaxMem(maxMem);
+        }
+
+        /// <summary>
+        /// Limit the operation cache by number of open files.
+        /// </summary>
+        /// <param name="maxFiles">Maximum open files.</param>
+        public static void CacheSetMaxFiles(int maxFiles)
+        {
+            Vips.CacheSetMaxFiles(maxFiles);
+        }
+
+        /// <summary>
+        /// Turn on libvips cache tracing.
+        /// </summary>
+        /// <param name="trace">Bool indicating if tracing should be turned on.</param>
+        public static void CacheSetTrace(bool trace)
+        {
+            Vips.CacheSetTrace(trace ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Set the size of the pools of worker threads vips uses for image
+        /// evaluation.
+        /// </summary>
+        /// <param name="concurrency">The size of the pools of worker threads vips uses
+        /// for image evaluation.</param>
+        public static void ConcurrencySet(int concurrency)
+        {
+            Vips.ConcurrencySet(concurrency);
+        }
+
+        /// <summary>
+        /// Returns the number of worker threads that vips uses for image
+        /// evaluation.
+        /// </summary>
+        /// <returns>The number of worker threads.</returns>
+        public static int ConcurrencyGet()
+        {
+            return Vips.ConcurrencyGet();
+        }
+
+        /// <summary>
+        /// Enable or disable SIMD and the run-time compiler.
+        /// </summary>
+        /// <remarks>
+        /// This can give a nice speed-up, but can also be unstable on
+        /// some systems or with some versions of the run-time compiler.
+        /// </remarks>
+        /// <param name="enabled">Bool indicating if SIMD and the run-time
+        /// compiler should be turned on.</param>
+        public static void VectorSet(bool enabled)
+        {
+            Vips.VectorSet(enabled ? 1 : 0);
         }
 
         /// <summary>

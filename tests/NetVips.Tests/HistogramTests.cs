@@ -58,7 +58,7 @@ namespace NetVips.Tests
             Assert.True(im.Avg() < im2.Avg());
             Assert.True(im.Deviate() < im2.Deviate());
 
-            if (Base.AtLeastLibvips(8, 5))
+            if (NetVips.AtLeastLibvips(8, 5))
             {
                 var im3 = im.HistLocal(10, 10, maxSlope: 3);
                 Assert.Equal(im.Width, im3.Width);

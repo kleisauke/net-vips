@@ -68,7 +68,7 @@ To test your install, try this test program:
 ```csharp
 if (ModuleInitializer.VipsInitialized)
 {
-    Console.WriteLine($"Inited libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
+    Console.WriteLine($"Inited libvips {NetVips.Version(0)}.{NetVips.Version(1)}.{NetVips.Version(2)}");
 }
 else
 {

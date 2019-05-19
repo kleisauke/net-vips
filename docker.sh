@@ -5,6 +5,9 @@ if ! type docker > /dev/null; then
   exit 1
 fi
 
+# Ensure latest .NET Core SDK
+docker pull mcr.microsoft.com/dotnet/core/sdk:2.2-stretch
+
 # Create a machine image with all the required build tools pre-installed
 docker build . -t netvips
 

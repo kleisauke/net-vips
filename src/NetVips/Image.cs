@@ -6,7 +6,7 @@ namespace NetVips
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
     using SMath = System.Math;
 
     /// <summary>
@@ -706,7 +706,7 @@ namespace NetVips
         {
             // on libvips before 8.5, property types must be fetched separately,
             // since built-in enums were reported as ints
-            if (!Base.AtLeastLibvips(8, 5))
+            if (!NetVips.AtLeastLibvips(8, 5))
             {
                 var gtype = base.GetTypeOf(name);
                 if (gtype != IntPtr.Zero)
@@ -756,7 +756,7 @@ namespace NetVips
 
             // with old libvips, we must fetch properties (as opposed to
             // metadata) via VipsObject
-            if (!Base.AtLeastLibvips(8, 5))
+            if (!NetVips.AtLeastLibvips(8, 5))
             {
                 var gtype = base.GetTypeOf(name);
                 if (gtype != IntPtr.Zero)
@@ -783,7 +783,7 @@ namespace NetVips
         /// <returns>An array of strings or <see langword="null" />.</returns>
         public string[] GetFields()
         {
-            if (!Base.AtLeastLibvips(8, 5))
+            if (!NetVips.AtLeastLibvips(8, 5))
             {
                 return null;
             }
@@ -1375,7 +1375,7 @@ namespace NetVips
         public bool HasAlpha()
         {
             // use `vips_image_hasalpha` on libvips >= 8.5.
-            if (Base.AtLeastLibvips(8, 5))
+            if (NetVips.AtLeastLibvips(8, 5))
             {
                 return VipsImage.HasAlpha(this) == 1;
             }
@@ -1399,7 +1399,7 @@ namespace NetVips
         /// otherwise, <see langword="false" />.</returns>
         public bool IsKilled()
         {
-            if (!Base.AtLeastLibvips(8, 8))
+            if (!NetVips.AtLeastLibvips(8, 8))
             {
                 return false;
             }
@@ -1416,7 +1416,7 @@ namespace NetVips
         /// <param name="kill">The kill state.</param>
         public void SetKill(bool kill)
         {
-            if (!Base.AtLeastLibvips(8, 8))
+            if (!NetVips.AtLeastLibvips(8, 8))
             {
                 return;
             }

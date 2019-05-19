@@ -23,7 +23,7 @@ namespace NetVips
                 return;
             }
 
-            Console.WriteLine($"libvips {Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}");
+            Console.WriteLine($"libvips {NetVips.Version(0)}.{NetVips.Version(1)}.{NetVips.Version(2)}");
 
             Console.WriteLine(
                 $"Type a number (1-{_samples.Count}) to execute a sample of your choice. Press <Enter> or type 'Q' to quit.");

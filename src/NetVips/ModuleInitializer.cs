@@ -29,12 +29,12 @@ namespace NetVips
         {
             try
             {
-                VipsInitialized = Base.VipsInit();
+                VipsInitialized = NetVips.Init();
                 if (VipsInitialized)
                 {
-                    Version = Base.Version(0, false);
-                    Version = (Version << 8) + Base.Version(1, false);
-                    Version = (Version << 8) + Base.Version(2, false);
+                    Version = NetVips.Version(0, false);
+                    Version = (Version << 8) + NetVips.Version(1, false);
+                    Version = (Version << 8) + NetVips.Version(2, false);
                 }
                 else
                 {

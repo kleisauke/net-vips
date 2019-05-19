@@ -47,9 +47,9 @@ namespace NetVips.Samples
         /// <returns>Result.</returns>
         public string Execute(string[] args)
         {
-            Base.LeakSet(true);
+            NetVips.LeakSet(true);
 
-            Operation.VipsCacheSetMax(0);
+            NetVips.CacheSetMax(0);
 
             var imageBytes = File.ReadAllBytes(Filename);
 

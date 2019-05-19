@@ -718,7 +718,7 @@ namespace NetVips.Tests
         {
             // hough_line changed the way it codes parameter space in 8.7 ... don't
             // test earlier versions
-            Skip.IfNot(Base.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
 
             var test = Image.Black(100, 100).DrawLine(new double[] { 100 }, 10, 90, 90, 10);
 

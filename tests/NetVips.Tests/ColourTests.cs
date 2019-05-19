@@ -95,7 +95,7 @@ namespace NetVips.Tests
                     Math.Abs(pixelAfter[0] - pixelBefore[0]) < (monoFmt == Enums.Interpretation.Grey16 ? 30 : 1));
             }
 
-            if (Base.AtLeastLibvips(8, 8))
+            if (NetVips.AtLeastLibvips(8, 8))
             {
                 // we should be able to go from cmyk to any 3-band space and back again,
                 // approximately
@@ -214,7 +214,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestCmyk()
         {
-            Skip.IfNot(Base.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
 
             // even without lcms, we should have a working approximation
             var test = Image.NewFromFile(Helper.JpegFile);

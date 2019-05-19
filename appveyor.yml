@@ -1,3 +1,4 @@
+# https://github.com/appveyor/ci/issues/2907
 image: Visual Studio 2019 Preview
 
 # Version format

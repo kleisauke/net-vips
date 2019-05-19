@@ -440,7 +440,7 @@ namespace NetVips.Tests
         /// <returns><see langword="true" /> if the operator exists; otherwise, <see langword="false" /></returns>
         public static bool Have(string name)
         {
-            return Base.TypeFind("VipsOperation", name) != IntPtr.Zero;
+            return NetVips.TypeFind("VipsOperation", name) != IntPtr.Zero;
         }
     }
 

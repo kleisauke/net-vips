@@ -262,8 +262,8 @@ namespace NetVips.Tests
             Assert.Equal(20, im.Max());
 
             var total = im.Avg() * im.Width * im.Height;
-            var scale = im.Get("scale");
-            Assert.Equal(total, scale);
+            var scale = (double) im.Get("scale");
+            Assert.Equal(total, scale, 10);
             var p = im.Getpoint(im.Width / 2, im.Height / 2);
             Assert.Equal(20.0, p[0]);
 
@@ -274,8 +274,8 @@ namespace NetVips.Tests
             Assert.Equal(Enums.BandFormat.Double, im.Format);
             Assert.Equal(1.0, im.Max());
             total = im.Avg() * im.Width * im.Height;
-            scale = im.Get("scale");
-            Assert.Equal(total, scale);
+            scale = (double) im.Get("scale");
+            Assert.Equal(total, scale, 10);
             p = im.Getpoint(im.Width / 2, im.Height / 2);
             Assert.Equal(1.0, p[0]);
         }

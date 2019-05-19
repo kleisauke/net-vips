@@ -5,7 +5,7 @@ namespace NetVips
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Useful extension methods that we use in our codebase.

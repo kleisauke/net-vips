@@ -22,8 +22,8 @@ namespace NetVips.Tests
         {
             string[] Split(string path)
             {
-                var filename7 = Base.PathFilename7(path);
-                var mode7 = Base.PathMode7(path);
+                var filename7 = NetVips.PathFilename7(path);
+                var mode7 = NetVips.PathMode7(path);
                 return new[] { filename7, mode7 };
             }
 
@@ -118,7 +118,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestGetFields()
         {
-            Skip.IfNot(Base.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
 
             var im = Image.Black(10, 10);
             var fields = im.GetFields();
@@ -132,9 +132,9 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestGetSuffixes()
         {
-            Skip.IfNot(Base.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
 
-            var suffixes = Base.GetSuffixes();
+            var suffixes = NetVips.GetSuffixes();
 
             // vips supports these file types by default
             // (without being dependent on external dependencies):

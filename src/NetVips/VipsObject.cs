@@ -2,7 +2,7 @@ namespace NetVips
 {
     using System;
     using System.Runtime.InteropServices;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Manage a <see cref="Internal.VipsObject"/>.

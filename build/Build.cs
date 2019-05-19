@@ -13,7 +13,6 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-[CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
 partial class Build : NukeBuild
 {

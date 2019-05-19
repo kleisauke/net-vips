@@ -5,7 +5,7 @@ namespace NetVips
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Wrap a <see cref="VipsOperation"/> object.
@@ -108,7 +108,7 @@ namespace NetVips
             var args = new List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>>();
 
             // vips_object_get_args was added in 8.7
-            if (Base.AtLeastLibvips(8, 7))
+            if (NetVips.AtLeastLibvips(8, 7))
             {
                 var result = Internal.VipsObject.GetArgs(this, out var names, out var flags, out var nArgs);
 
@@ -292,7 +292,7 @@ namespace NetVips
             }
 
             // build operation
-            var vop = VipsCache.OperationBuild(op);
+            var vop = VipsOperation.Build(op);
             if (vop == IntPtr.Zero)
             {
                 throw new VipsException($"unable to call {operationName}");
@@ -796,7 +796,7 @@ namespace NetVips
 
         private static void AddNickname(IntPtr gtype, ICollection<string> allNickNames)
         {
-            var nickname = Base.NicknameFind(gtype);
+            var nickname = NetVips.NicknameFind(gtype);
             allNickNames.Add(nickname);
 
             IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
@@ -806,7 +806,7 @@ namespace NetVips
                 return IntPtr.Zero;
             }
 
-            Base.TypeMap(gtype, TypeMap);
+            NetVips.TypeMap(gtype, TypeMap);
         }
 
         /// <summary>
@@ -833,7 +833,7 @@ namespace NetVips
                 return IntPtr.Zero;
             }
 
-            Base.TypeMap(Base.TypeFromName("VipsOperation"), TypeMap);
+            NetVips.TypeMap(NetVips.TypeFromName("VipsOperation"), TypeMap);
 
             // Sort
             allNickNames.Sort();
@@ -864,7 +864,7 @@ namespace NetVips
 //------------------------------------------------------------------------------";
 
             var stringBuilder =
-                new StringBuilder(string.Format(preamble, $"{Base.Version(0)}.{Base.Version(1)}.{Base.Version(2)}"));
+                new StringBuilder(string.Format(preamble, $"{NetVips.Version(0)}.{NetVips.Version(1)}.{NetVips.Version(2)}"));
             stringBuilder.AppendLine()
                 .AppendLine()
                 .AppendLine("namespace NetVips")
@@ -907,42 +907,6 @@ namespace NetVips
                 .AppendLine("}");
 
             return stringBuilder.ToString();
-        }
-
-        /// <summary>
-        /// Set the maximum number of operations libvips will cache.
-        /// </summary>
-        /// <param name="max">Maximum number of operations.</param>
-        public static void VipsCacheSetMax(int max)
-        {
-            VipsCache.SetMax(max);
-        }
-
-        /// <summary>
-        /// Limit the operation cache by memory use.
-        /// </summary>
-        /// <param name="maxMem">Maximum memory use.</param>
-        public static void VipsCacheSetMaxMem(ulong maxMem)
-        {
-            VipsCache.SetMaxMem(maxMem);
-        }
-
-        /// <summary>
-        /// Limit the operation cache by number of open files.
-        /// </summary>
-        /// <param name="maxFiles">Maximum open files.</param>
-        public static void VipsCacheSetMaxFiles(int maxFiles)
-        {
-            VipsCache.SetMaxFiles(maxFiles);
-        }
-
-        /// <summary>
-        /// Turn on libvips cache tracing.
-        /// </summary>
-        /// <param name="trace">Bool indicating if tracing should be turned on.</param>
-        public static void VipsCacheSetTrace(bool trace)
-        {
-            VipsCache.SetTrace(trace ? 1 : 0);
         }
     }
 }

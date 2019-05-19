@@ -3,7 +3,7 @@ namespace NetVips
     using System;
     using System.Runtime.InteropServices;
     using System.Collections.Generic;
-    using NetVips.Internal;
+    using global::NetVips.Internal;
 
     /// <summary>
     /// Manage <see cref="Internal.GObject"/> lifetime.

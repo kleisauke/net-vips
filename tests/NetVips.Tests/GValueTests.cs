@@ -61,8 +61,8 @@ namespace NetVips.Tests
         {
             // the Interpretation enum is created when the first image is made --
             // make it ourselves in case we are run before the first image
-            Base.VipsInterpretationGetType();
-            var interpretationGtype = Base.TypeFromName("VipsInterpretation");
+            NetVips.VipsInterpretationGetType();
+            var interpretationGtype = NetVips.TypeFromName("VipsInterpretation");
             var gv = new GValue();
             gv.SetType(interpretationGtype);
             gv.Set("xyz");
@@ -75,8 +75,8 @@ namespace NetVips.Tests
         {
             // the OperationFlags enum is created when the first op is made --
             // make it ourselves in case we are run before that
-            Base.VipsOperationFlagsGetType();
-            var operationflagsGtype = Base.TypeFromName("VipsOperationFlags");
+            NetVips.VipsOperationFlagsGetType();
+            var operationflagsGtype = NetVips.TypeFromName("VipsOperationFlags");
             var gv = new GValue();
             gv.SetType(operationflagsGtype);
             gv.Set(12);

@@ -4,7 +4,7 @@ namespace NetVips.Benchmarks
     using System.IO;
     using BenchmarkDotNet.Attributes;
 
-    using Image = NetVips.Image;
+    using NetVipsImage = Image;
 
     using ImageMagick;
 
@@ -37,11 +37,11 @@ namespace NetVips.Benchmarks
         [Arguments("t.jpg", "t2.jpg")]
         public void NetVips(string input, string output)
         {
-            var im = Image.NewFromFile(input, access: Enums.Access.Sequential);
+            var im = NetVipsImage.NewFromFile(input, access: Enums.Access.Sequential);
 
             im = im.Crop(100, 100, im.Width - 200, im.Height - 200);
             im = im.Reduce(1.0 / 0.9, 1.0 / 0.9, kernel: Enums.Kernel.Linear);
-            var mask = Image.NewFromArray(new[,]
+            var mask = NetVipsImage.NewFromArray(new[,]
             {
                 {-1, -1, -1},
                 {-1, 16, -1},

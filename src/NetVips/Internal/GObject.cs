@@ -3,20 +3,21 @@ namespace NetVips.Internal
     using System;
     using System.Runtime.InteropServices;
     using System.Security;
-    using NetVips.Interop;
+    using global::NetVips.Interop;
+    using GObjectManaged = global::NetVips.GObject;
 
     internal static class GObject
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_object_set_property")]
-        internal static extern void SetProperty(NetVips.GObject @object,
+        internal static extern void SetProperty(GObjectManaged @object,
             [MarshalAs(UnmanagedType.LPStr)] string propertyName, in GValue.Struct value);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_object_get_property")]
-        internal static extern void GetProperty(NetVips.GObject @object,
+        internal static extern void GetProperty(GObjectManaged @object,
             [MarshalAs(UnmanagedType.LPStr)] string propertyName, ref GValue.Struct value);
 
         [SuppressUnmanagedCodeSecurity]
@@ -121,7 +122,7 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_set_object")]
-        internal static extern void SetObject(ref Struct value, NetVips.GObject vObject);
+        internal static extern void SetObject(ref Struct value, GObjectManaged vObject);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl, EntryPoint = "g_value_get_object")]
@@ -168,7 +169,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_signal_connect_data")]
-        internal static extern uint ConnectData(NetVips.GObject instance,
+        internal static extern uint ConnectData(GObjectManaged instance,
             [MarshalAs(UnmanagedType.LPStr)] string detailedSignal, IntPtr cHandler, IntPtr data,
             GClosureNotify destroyData, Enums.GConnectFlags connectFlags);
     }

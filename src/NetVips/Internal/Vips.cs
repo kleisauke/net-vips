@@ -4,7 +4,8 @@ namespace NetVips.Internal
     using System.Runtime.InteropServices;
     using System.Security;
     using System.Text;
-    using NetVips.Interop;
+    using global::NetVips.Interop;
+    using VipsObjectManaged = global::NetVips.VipsObject;
 
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate IntPtr VipsArgumentMapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
@@ -22,6 +23,38 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_leak_set")]
         internal static extern void LeakSet(int leak);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_profile_set")]
+        internal static extern void ProfileSet(int profile);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_max")]
+        internal static extern void CacheSetMax(int max);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_max_mem")]
+        internal static extern void CacheSetMaxMem(ulong maxMem);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_max_files")]
+        internal static extern void CacheSetMaxFiles(int maxFiles);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_trace")]
+        internal static extern void CacheSetTrace(int trace);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_concurrency_set")]
+        internal static extern void ConcurrencySet(int concurrency);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_concurrency_get")]
+        internal static extern int ConcurrencyGet();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_vector_set_enabled")]
+        internal static extern void VectorSet(int enabled);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_allocs")]
@@ -101,7 +134,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_argument_map")]
-        internal static extern IntPtr ArgumentMap(NetVips.VipsObject @object, VipsArgumentMapFn fn, IntPtr a,
+        internal static extern IntPtr ArgumentMap(VipsObjectManaged @object, VipsArgumentMapFn fn, IntPtr a,
             IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
@@ -157,13 +190,13 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_get_args")]
-        internal static extern int GetArgs(NetVips.VipsObject @object, out IntPtr names, out IntPtr flags,
+        internal static extern int GetArgs(VipsObjectManaged @object, out IntPtr names, out IntPtr flags,
             out int nArgs);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_get_argument")]
-        internal static extern int GetArgument(NetVips.VipsObject @object,
+        internal static extern int GetArgument(VipsObjectManaged @object,
             [MarshalAs(UnmanagedType.LPStr)] string name,
             out IntPtr pspec, out VipsArgumentClass.Struct argumentClass,
             out VipsArgumentInstance.Struct argumentInstance);
@@ -171,7 +204,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_set_from_string")]
-        internal static extern int SetFromString(NetVips.VipsObject @object,
+        internal static extern int SetFromString(VipsObjectManaged @object,
             [MarshalAs(UnmanagedType.LPStr)] string @string);
 
         [SuppressUnmanagedCodeSecurity]
@@ -182,12 +215,12 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_unref_outputs")]
-        internal static extern void UnrefOutputs(NetVips.VipsObject @object);
+        internal static extern void UnrefOutputs(VipsObjectManaged @object);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_object_get_description")]
-        internal static extern IntPtr GetDescription(NetVips.VipsObject @object);
+        internal static extern IntPtr GetDescription(VipsObjectManaged @object);
     }
 
     internal static class VipsArgument
@@ -391,34 +424,6 @@ namespace NetVips.Internal
         internal static extern IntPtr New([MarshalAs(UnmanagedType.LPStr)] string nickname);
     }
 
-    internal static class VipsCache
-    {
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_cache_operation_build")]
-        internal static extern IntPtr OperationBuild(Operation operation);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_cache_set_max")]
-        internal static extern void SetMax(int max);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_cache_set_max_mem")]
-        internal static extern void SetMaxMem(ulong maxMem);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_cache_set_max_files")]
-        internal static extern void SetMaxFiles(int maxFiles);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_cache_set_trace")]
-        internal static extern void SetTrace(int trace);
-    }
-
     internal static class VipsOperation
     {
         [SuppressUnmanagedCodeSecurity]
@@ -430,6 +435,11 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_operation_new")]
         internal static extern IntPtr New([MarshalAs(UnmanagedType.LPStr)] string name);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_cache_operation_build")]
+        internal static extern IntPtr Build(Operation operation);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

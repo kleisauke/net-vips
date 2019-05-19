@@ -3,13 +3,14 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0-rc1] - 2019-05-04
+## [1.1.0-rc2] - 2019-05-19
 ### Added
 - A new [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package containing the pre-compiled libvips binaries for Linux, macOS and Windows ([#21](https://github.com/kleisauke/net-vips/issues/21)).
   - Changes to the [NetVips.Native.*](https://www.nuget.org/packages?q=id%3ANetVips.Native) packages will be documented [here](CHANGELOG.native.md).
-- Add `Base.GetSuffixes()` to get a list of all the filename suffixes supported by libvips ([libvips/ruby-vips#186](https://github.com/libvips/ruby-vips/issues/186)).
+- Add `NetVips.GetSuffixes()` to get a list of all the filename suffixes supported by libvips ([libvips/ruby-vips#186](https://github.com/libvips/ruby-vips/issues/186)).
 - Add support for progress feedback (`image.SetProgress()`) and signal handling (`image.SignalConnect()`) ([#31](https://github.com/kleisauke/net-vips/issues/31)).
 - Add `image.SetKill()` and `image.IsKilled()` ([#31](https://github.com/kleisauke/net-vips/issues/31), [libvips/libvips@91d0e7e](https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305)).
+- Add `NetVips.ProfileSet()`, `NetVips.VectorSet()`, `NetVips.ConcurrencySet()` and `NetVips.ConcurrencyGet()` utilities.
 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).
@@ -17,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Update the [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks).
 - The overloadable operators `==` and `!=` have been changed to `Equal` and `NotEqual` to avoid conflicts with `null` checks.
 - Some methods are overloaded instead of defining the parameters as `object` type.
+- The base class was renamed from `Base` to `NetVips` to comply with the C# code conventions.
+- The `Operation.VipsCacheSet*` utilities has been moved to `NetVips.CacheSet*`.
 
 ### Removed
 - The `UseGlobalLibvips` property since the bundled libvips binaries were moved to the [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package.
@@ -85,7 +88,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[1.1.0-rc1]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0-rc1
+[1.1.0-rc2]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0-rc2
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5
