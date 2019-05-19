@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(BenchmarkWithNuGetBinaries)' == 'true'">
-    <PackageReference Include="NetVips.Native" Version="8.8.0-rc2" />
+    <PackageReference Include="NetVips.Native" Version="8.8.0-rc3" />
   </ItemGroup>
 
   <ItemGroup>
