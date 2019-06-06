@@ -8,7 +8,7 @@
     <title>Changelog </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Changelog ">
-    <meta name="generator" content="docfx 2.42.3.0">
+    <meta name="generator" content="docfx 2.42.4.0">
     
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -76,16 +76,19 @@
 <li>Add support for progress feedback (<code>image.SetProgress()</code>) and signal handling (<code>image.SignalConnect()</code>) (<a href="https://github.com/kleisauke/net-vips/issues/31">#31</a>).</li>
 <li>Add <code>image.SetKill()</code> and <code>image.IsKilled()</code> (<a href="https://github.com/kleisauke/net-vips/issues/31">#31</a>, <a href="https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305">libvips/libvips@91d0e7e</a>).</li>
 <li>Add <code>NetVips.ProfileSet()</code>, <code>NetVips.VectorSet()</code>, <code>NetVips.ConcurrencySet()</code> and <code>NetVips.ConcurrencyGet()</code> utilities.</li>
+<li>Add support for loading and saving from and to streams (<code>Image.NewFromStream()</code> / <code>image.WriteToStream()</code>) (<a href="https://github.com/kleisauke/net-vips/issues/33">#33</a>).</li>
 </ul>
 <h3 id="changed">Changed</h3>
 <ul>
 <li>Improve memory management (<a href="https://github.com/kleisauke/net-vips/issues/26">#26</a>).</li>
 <li>The bundled libvips Windows binaries were moved to the <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package.</li>
-<li>Update the <a href="https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks">NetVips.Benchmarks</a>.</li>
+<li>Update and improve the <a href="https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks">NetVips.Benchmarks</a> (<a href="https://github.com/kleisauke/net-vips/issues/34">#34</a>).</li>
 <li>The overloadable operators <code>==</code> and <code>!=</code> have been changed to <code>Equal</code> and <code>NotEqual</code> to avoid conflicts with <code>null</code> checks.</li>
 <li>Some methods are overloaded instead of defining the parameters as <code>object</code> type.</li>
 <li>The base class was renamed from <code>Base</code> to <code>NetVips</code> to comply with the C# code conventions.</li>
 <li>The <code>Operation.VipsCacheSet*</code> utilities has been moved to <code>NetVips.CacheSet*</code>.</li>
+<li>Speed-up <code>Operation.Call</code> by avoiding unnecessary loops.</li>
+<li>Remove usage of LINQ in several critical paths.</li>
 </ul>
 <h3 id="removed">Removed</h3>
 <ul>

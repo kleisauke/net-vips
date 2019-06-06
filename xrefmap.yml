@@ -4500,12 +4500,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Multiply
   nameWithType: Image.Multiply
-- uid: NetVips.Image.NewFromArray(System.Array,System.Double,System.Double)
-  name: NewFromArray(Array, Double, Double)
-  href: api/NetVips.Image.html#NetVips_Image_NewFromArray_System_Array_System_Double_System_Double_
-  commentId: M:NetVips.Image.NewFromArray(System.Array,System.Double,System.Double)
-  fullName: NetVips.Image.NewFromArray(System.Array, System.Double, System.Double)
-  nameWithType: Image.NewFromArray(Array, Double, Double)
 - uid: NetVips.Image.NewFromArray*
   name: NewFromArray
   href: api/NetVips.Image.html#NetVips_Image_NewFromArray_
@@ -4513,6 +4507,33 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewFromArray
   nameWithType: Image.NewFromArray
+- uid: NetVips.Image.NewFromArray``1(``0[],System.Double,System.Double)
+  name: NewFromArray<T>(T[], Double, Double)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromArray__1___0___System_Double_System_Double_
+  commentId: M:NetVips.Image.NewFromArray``1(``0[],System.Double,System.Double)
+  name.vb: NewFromArray(Of T)(T(), Double, Double)
+  fullName: NetVips.Image.NewFromArray<T>(T[], System.Double, System.Double)
+  fullName.vb: NetVips.Image.NewFromArray(Of T)(T(), System.Double, System.Double)
+  nameWithType: Image.NewFromArray<T>(T[], Double, Double)
+  nameWithType.vb: Image.NewFromArray(Of T)(T(), Double, Double)
+- uid: NetVips.Image.NewFromArray``1(``0[][],System.Double,System.Double)
+  name: NewFromArray<T>(T[][], Double, Double)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromArray__1___0_____System_Double_System_Double_
+  commentId: M:NetVips.Image.NewFromArray``1(``0[][],System.Double,System.Double)
+  name.vb: NewFromArray(Of T)(T()(), Double, Double)
+  fullName: NetVips.Image.NewFromArray<T>(T[][], System.Double, System.Double)
+  fullName.vb: NetVips.Image.NewFromArray(Of T)(T()(), System.Double, System.Double)
+  nameWithType: Image.NewFromArray<T>(T[][], Double, Double)
+  nameWithType.vb: Image.NewFromArray(Of T)(T()(), Double, Double)
+- uid: NetVips.Image.NewFromArray``1(``0[0:,0:],System.Double,System.Double)
+  name: NewFromArray<T>(T[,], Double, Double)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromArray__1___0_0__0___System_Double_System_Double_
+  commentId: M:NetVips.Image.NewFromArray``1(``0[0:,0:],System.Double,System.Double)
+  name.vb: NewFromArray(Of T)(T(,), Double, Double)
+  fullName: NetVips.Image.NewFromArray<T>(T[,], System.Double, System.Double)
+  fullName.vb: NetVips.Image.NewFromArray(Of T)(T(,), System.Double, System.Double)
+  nameWithType: Image.NewFromArray<T>(T[,], Double, Double)
+  nameWithType.vb: Image.NewFromArray(Of T)(T(,), Double, Double)
 - uid: NetVips.Image.NewFromBuffer(System.Byte[],System.String,System.String,System.Nullable{System.Boolean},NetVips.VOption)
   name: NewFromBuffer(Byte[], String, String, Nullable<Boolean>, VOption)
   href: api/NetVips.Image.html#NetVips_Image_NewFromBuffer_System_Byte___System_String_System_String_System_Nullable_System_Boolean__NetVips_VOption_
@@ -4607,6 +4628,22 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewFromMemory
   nameWithType: Image.NewFromMemory
+- uid: NetVips.Image.NewFromStream(System.IO.Stream,System.String,System.String,System.Nullable{System.Boolean},NetVips.VOption)
+  name: NewFromStream(Stream, String, String, Nullable<Boolean>, VOption)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromStream_System_IO_Stream_System_String_System_String_System_Nullable_System_Boolean__NetVips_VOption_
+  commentId: M:NetVips.Image.NewFromStream(System.IO.Stream,System.String,System.String,System.Nullable{System.Boolean},NetVips.VOption)
+  name.vb: NewFromStream(Stream, String, String, Nullable(Of Boolean), VOption)
+  fullName: NetVips.Image.NewFromStream(System.IO.Stream, System.String, System.String, System.Nullable<System.Boolean>, NetVips.VOption)
+  fullName.vb: NetVips.Image.NewFromStream(System.IO.Stream, System.String, System.String, System.Nullable(Of System.Boolean), NetVips.VOption)
+  nameWithType: Image.NewFromStream(Stream, String, String, Nullable<Boolean>, VOption)
+  nameWithType.vb: Image.NewFromStream(Stream, String, String, Nullable(Of Boolean), VOption)
+- uid: NetVips.Image.NewFromStream*
+  name: NewFromStream
+  href: api/NetVips.Image.html#NetVips_Image_NewFromStream_
+  commentId: Overload:NetVips.Image.NewFromStream
+  isSpec: "True"
+  fullName: NetVips.Image.NewFromStream
+  nameWithType: Image.NewFromStream
 - uid: NetVips.Image.NewTempFile(System.String)
   name: NewTempFile(String)
   href: api/NetVips.Image.html#NetVips_Image_NewTempFile_System_String_
@@ -6972,6 +7009,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.WriteToMemory
   nameWithType: Image.WriteToMemory
+- uid: NetVips.Image.WriteToStream(System.String,NetVips.VOption)
+  name: WriteToStream(String, VOption)
+  href: api/NetVips.Image.html#NetVips_Image_WriteToStream_System_String_NetVips_VOption_
+  commentId: M:NetVips.Image.WriteToStream(System.String,NetVips.VOption)
+  fullName: NetVips.Image.WriteToStream(System.String, NetVips.VOption)
+  nameWithType: Image.WriteToStream(String, VOption)
+- uid: NetVips.Image.WriteToStream*
+  name: WriteToStream
+  href: api/NetVips.Image.html#NetVips_Image_WriteToStream_
+  commentId: Overload:NetVips.Image.WriteToStream
+  isSpec: "True"
+  fullName: NetVips.Image.WriteToStream
+  nameWithType: Image.WriteToStream
 - uid: NetVips.Image.Xoffset
   name: Xoffset
   href: api/NetVips.Image.html#NetVips_Image_Xoffset
@@ -7755,6 +7805,19 @@ references:
   isSpec: "True"
   fullName: NetVips.VOption.Add
   nameWithType: VOption.Add
+- uid: NetVips.VOption.ContainsKey(System.String)
+  name: ContainsKey(String)
+  href: api/NetVips.VOption.html#NetVips_VOption_ContainsKey_System_String_
+  commentId: M:NetVips.VOption.ContainsKey(System.String)
+  fullName: NetVips.VOption.ContainsKey(System.String)
+  nameWithType: VOption.ContainsKey(String)
+- uid: NetVips.VOption.ContainsKey*
+  name: ContainsKey
+  href: api/NetVips.VOption.html#NetVips_VOption_ContainsKey_
+  commentId: Overload:NetVips.VOption.ContainsKey
+  isSpec: "True"
+  fullName: NetVips.VOption.ContainsKey
+  nameWithType: VOption.ContainsKey
 - uid: NetVips.VOption.Count
   name: Count
   href: api/NetVips.VOption.html#NetVips_VOption_Count
@@ -7797,6 +7860,19 @@ references:
   isSpec: "True"
   fullName: NetVips.VOption.Item
   nameWithType: VOption.Item
+- uid: NetVips.VOption.Keys
+  name: Keys
+  href: api/NetVips.VOption.html#NetVips_VOption_Keys
+  commentId: P:NetVips.VOption.Keys
+  fullName: NetVips.VOption.Keys
+  nameWithType: VOption.Keys
+- uid: NetVips.VOption.Keys*
+  name: Keys
+  href: api/NetVips.VOption.html#NetVips_VOption_Keys_
+  commentId: Overload:NetVips.VOption.Keys
+  isSpec: "True"
+  fullName: NetVips.VOption.Keys
+  nameWithType: VOption.Keys
 - uid: NetVips.VOption.Remove(System.String)
   name: Remove(String)
   href: api/NetVips.VOption.html#NetVips_VOption_Remove_System_String_
