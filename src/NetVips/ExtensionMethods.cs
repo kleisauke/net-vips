@@ -2,6 +2,7 @@ namespace NetVips
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
@@ -13,13 +14,13 @@ namespace NetVips
     internal static class ExtensionMethods
     {
         /// <summary>
-        /// Removes the element with the specified key from the <see cref="VOption" />
-        /// and retrieves the value to <paramref name="target" />.
+        /// Removes the element with the specified key from the <see cref="VOption"/>
+        /// and retrieves the value to <paramref name="target"/>.
         /// </summary>
-        /// <param name="self">The <see cref="VOption" /> to remove from.</param>
+        /// <param name="self">The <see cref="VOption"/> to remove from.</param>
         /// <param name="key">>The key of the element to remove.</param>
         /// <param name="target">The target to retrieve the value to.</param>
-        /// <returns><see langword="true" /> if the element is successfully removed; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the element is successfully removed; otherwise, <see langword="false"/>.</returns>
         public static bool Remove(this VOption self, string key, out object target)
         {
             self.TryGetValue(key, out target);
@@ -27,10 +28,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Merges 2 <see cref="VOption" />s.
+        /// Merges 2 <see cref="VOption"/>s.
         /// </summary>
-        /// <param name="self">The <see cref="VOption" /> to merge into.</param>
-        /// <param name="merge">The <see cref="VOption" /> to merge from.</param>
+        /// <param name="self">The <see cref="VOption"/> to merge into.</param>
+        /// <param name="merge">The <see cref="VOption"/> to merge from.</param>
         public static void Merge(this VOption self, VOption merge)
         {
             foreach (var item in merge)
@@ -43,7 +44,7 @@ namespace NetVips
         /// Test for rectangular array of something.
         /// </summary>
         /// <param name="array">Input array.</param>
-        /// <returns><see langword="true" /> if the object is a rectangular array; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the object is a rectangular array; otherwise, <see langword="false"/>.</returns>
         public static bool Is2D(this Array array)
         {
             return array.Length > 0 &&
@@ -157,7 +158,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Prepends <paramref name="image" /> to <paramref name="args" />.
+        /// Prepends <paramref name="image"/> to <paramref name="args"/>.
         /// </summary>
         /// <param name="args">The <see cref="Image"/> array.</param>
         /// <param name="image">The <see cref="Image"/> to prepend to <paramref name="args"/>.</param>
@@ -179,7 +180,7 @@ namespace NetVips
         /// Marshals a GLib UTF8 char* to a managed string.
         /// </summary>
         /// <param name="ptr">Pointer to the GLib string.</param>
-        /// <param name="freePtr">If set to <see langword="true" />, free the GLib string.</param>
+        /// <param name="freePtr">If set to <see langword="true"/>, free the GLib string.</param>
         /// <param name="size">Size of the GLib string, use 0 to read until the null character.</param>
         /// <returns>The managed string.</returns>
         public static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int size = 0)
@@ -195,7 +196,7 @@ namespace NetVips
         /// The byte array does not include the null terminator.
         /// </remarks>
         /// <param name="ptr">Pointer to the unmanaged string.</param>
-        /// <param name="freePtr">If set to <see langword="true" /> free the unmanaged memory.</param>
+        /// <param name="freePtr">If set to <see langword="true"/> free the unmanaged memory.</param>
         /// <param name="size">Size of the C string, use 0 to read until the null character.</param>
         /// <returns>The string as a byte array.</returns>
         public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int size = 0)
@@ -231,6 +232,33 @@ namespace NetVips
             }
 
             return managedArray;
+        }
+
+        /// <summary>
+        /// Writes the contents of <paramref name="stream"/> to a byte array.
+        /// </summary>
+        /// <param name="stream">The stream to convert.</param>
+        /// <returns>An array of bytes.</returns>
+        /// <exception cref="VipsException">If unable to read from <paramref name="stream"/>.</exception>
+        internal static byte[] ToByteArray(this Stream stream)
+        {
+            if (!stream.CanRead)
+            {
+                throw new VipsException("unable to read from the stream");
+            }
+
+            if (stream is MemoryStream inMemoryStream)
+            {
+                return inMemoryStream.ToArray();
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+
+                return memoryStream.ToArray();
+            }
         }
 
         /// <summary>

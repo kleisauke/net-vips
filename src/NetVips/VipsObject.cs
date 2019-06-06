@@ -46,8 +46,8 @@ namespace NetVips
         /// Get the GType of a GObject property.
         /// </summary>
         /// <param name="name">The name of the GType to get the type of.</param>
-        /// <returns>A new instance of <see cref="IntPtr" /> initialized to the GType or
-        /// <see cref="IntPtr.Zero" /> if the property does not exist.</returns>
+        /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
+        /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
         public virtual IntPtr GetTypeOf(string name)
         {
             // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
@@ -133,7 +133,7 @@ namespace NetVips
         /// "[fred=12]"
         /// </remarks>
         /// <param name="stringOptions">Arguments as a string.</param>
-        /// <returns><see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> on success; otherwise, <see langword="false"/>.</returns>
         public bool SetString(string stringOptions)
         {
             var result = Internal.VipsObject.SetFromString(this, stringOptions);

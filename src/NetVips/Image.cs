@@ -2,6 +2,7 @@ namespace NetVips
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
@@ -17,7 +18,7 @@ namespace NetVips
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Secret ref for <see cref="NewFromMemory" />.
+        /// Secret ref for <see cref="NewFromMemory"/>.
         /// </summary>
         private GCHandle _dataHandle;
 
@@ -78,7 +79,7 @@ namespace NetVips
 
         /// <summary>
         /// Turn a constant (eg. 1, "12", new[] {1, 2, 3}, new[] {new[] {1}}) into an image using
-        /// <paramref name="matchImage" /> as a guide.
+        /// <paramref name="matchImage"/> as a guide.
         /// </summary>
         /// <param name="matchImage">Image guide.</param>
         /// <param name="value">A constant.</param>
@@ -140,17 +141,17 @@ namespace NetVips
         /// </remarks>
         /// <param name="vipsFilename">The disc file to load the image from, with
         /// optional appended arguments.</param>
-        /// <param name="memory">If set to <see langword="true" />, load the image
+        /// <param name="memory">If set to <see langword="true"/>, load the image
         /// via memory rather than via a temporary disc file. See <see cref="NewTempFile"/>
         /// for notes on where temporary files are created. Small images are loaded via memory
         /// by default, use `VIPS_DISC_THRESHOLD` to set the definition of small.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set to <see langword="true" />, the loader will fail
+        /// <param name="fail">If set to <see langword="true"/>, the loader will fail
         /// with an error on the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename" />.</exception>
+        /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename"/>.</exception>
         public static Image NewFromFile(
             string vipsFilename,
             bool? memory = null,
@@ -205,14 +206,14 @@ namespace NetVips
         /// object can be a string or buffer.
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
-        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image. See <see cref="Enums.Access"/>.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
+        /// <exception cref="VipsException">If unable to load from <paramref name="data"/>.</exception>
         public static Image NewFromBuffer(
             byte[] data,
             string strOptions = "",
@@ -258,14 +259,14 @@ namespace NetVips
         /// object can be a string or buffer.
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
-        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
+        /// <exception cref="VipsException">If unable to load from <paramref name="data"/>.</exception>
         public static Image NewFromBuffer(
             string data,
             string strOptions = "",
@@ -282,20 +283,48 @@ namespace NetVips
         /// object can be a string or buffer.
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
-        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty" /> for no options.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to load from <paramref name="data" />.</exception>
+        /// <exception cref="VipsException">If unable to load from <paramref name="data"/>.</exception>
         public static Image NewFromBuffer(
             char[] data,
             string strOptions = "",
             string access = null,
             bool? fail = null,
             VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
+
+        /// <summary>
+        /// Load a formatted image from stream.
+        /// </summary>
+        /// <remarks>
+        /// True streaming is not yet supported within libvips. There has been
+        /// quite a bit of talk of adding this, and there's a branch that adds 
+        /// this, but it's never been merged for various reasons. See:
+        /// https://github.com/lovell/sharp/issues/30#issuecomment-46960443
+        ///
+        /// So this simply copies the stream to a byte array and loads it with
+        /// <see cref="NewFromBuffer(byte[], string, string, bool?, VOption)"/>.
+        /// </remarks>
+        /// <param name="stream">The stream object to load the image from.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="fail">If set True, the loader will fail with an error on
+        /// the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="kwargs">Optional options that depend on the load operation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        /// <exception cref="VipsException">If unable to load from <paramref name="stream"/>.</exception>
+        public static Image NewFromStream(
+            Stream stream,
+            string strOptions = "",
+            string access = null,
+            bool? fail = null,
+            VOption kwargs = null) => NewFromBuffer(stream.ToByteArray(), strOptions, access, fail, kwargs);
 
         /// <summary>
         /// Create an image from a 1D or 2D array.
@@ -312,7 +341,7 @@ namespace NetVips
         /// <param name="offset">Default to 0.0. What to subtract from each pixel
         /// after convolution.  Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to make image from <paramref name="array" />.</exception>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
         public static Image NewFromArray(Array array, double scale = 1.0, double offset = 0.0)
         {
             var is2D = array.Rank == 2;
@@ -381,7 +410,7 @@ namespace NetVips
         /// <param name="bands">Number of bands.</param>
         /// <param name="format">Band format.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to make image from <paramref name="data" />.</exception>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
         public static Image NewFromMemory(
             Array data,
             int width,
@@ -429,7 +458,7 @@ namespace NetVips
         /// `%s.v` for a vips format file. The `%s` is
         /// substituted by the file path.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="VipsException">If unable to make temp file from <paramref name="format" />.</exception>
+        /// <exception cref="VipsException">If unable to make temp file from <paramref name="format"/>.</exception>
         public static Image NewTempFile(string format)
         {
             var vi = VipsImage.NewTempFile(format);
@@ -550,7 +579,7 @@ namespace NetVips
         /// <param name="vipsFilename">The disc file to save the image to, with
         /// optional appended arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
-        /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename" />.</exception>
+        /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename"/>.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
             ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
@@ -644,6 +673,26 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Write an image to a stream.
+        /// </summary>
+        /// <remarks>
+        /// True streaming is not yet supported within libvips. There has been
+        /// quite a bit of talk of adding this, and there's a branch that adds 
+        /// this, but it's never been merged for various reasons. See:
+        /// https://github.com/lovell/sharp/issues/30#issuecomment-46960443
+        ///
+        /// So this simply creates a new non-resizable instance of the
+        /// <see cref="MemoryStream"/> class based on the byte array that is
+        /// returned from <see cref="WriteToBuffer"/>.
+        /// </remarks>
+        /// <param name="formatString">The suffix, plus any string-form arguments.</param>
+        /// <param name="kwargs">Optional options that depend on the save operation.</param>
+        /// <returns>A non-resizable <see cref="MemoryStream"/>.</returns>
+        /// <exception cref="VipsException">If unable to write to stream.</exception>
+        public Stream WriteToStream(string formatString, VOption kwargs = null) => 
+            new MemoryStream(WriteToBuffer(formatString, kwargs));
+
+        /// <summary>
         /// Write the image to a large memory array.
         /// </summary>
         /// <remarks>
@@ -696,12 +745,12 @@ namespace NetVips
         /// Get the GType of an item of metadata.
         /// </summary>
         /// <remarks>
-        /// Fetch the GType of a piece of metadata, or <see cref="IntPtr.Zero" /> if the named
+        /// Fetch the GType of a piece of metadata, or <see cref="IntPtr.Zero"/> if the named
         /// item does not exist. See <see cref="GValue"/>.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to get the type of.</param>
-        /// <returns>A new instance of <see cref="IntPtr" /> initialized to the GType or
-        /// <see cref="IntPtr.Zero" /> if the property does not exist.</returns>
+        /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
+        /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
         public override IntPtr GetTypeOf(string name)
         {
             // on libvips before 8.5, property types must be fetched separately,
@@ -722,7 +771,7 @@ namespace NetVips
         /// Check if the underlying image contains an property of metadata.
         /// </summary>
         /// <param name="name">The name of the piece of metadata to check for.</param>
-        /// <returns><see langword="true" /> if the metadata exits; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the metadata exits; otherwise, <see langword="false"/>.</returns>
         public bool Contains(string name)
         {
             return GetTypeOf(name) != IntPtr.Zero;
@@ -740,7 +789,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to get.</param>
         /// <returns>The metadata item as a C# value.</returns>
-        /// <exception cref="VipsException">If unable to get <paramref name="name" />.</exception>
+        /// <exception cref="VipsException">If unable to get <paramref name="name"/>.</exception>
         public override object Get(string name)
         {
             // scale and offset have default values
@@ -780,7 +829,7 @@ namespace NetVips
         /// <remarks>
         /// At least libvips 8.5 is needed.
         /// </remarks>
-        /// <returns>An array of strings or <see langword="null" />.</returns>
+        /// <returns>An array of strings or <see langword="null"/>.</returns>
         public string[] GetFields()
         {
             if (!NetVips.AtLeastLibvips(8, 5))
@@ -836,7 +885,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to set the value of.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the type of the metadata item, if possible.</param>
-        /// <exception cref="T:System.Exception">If metadata item <paramref name="name" /> does not exist.</exception>
+        /// <exception cref="T:System.Exception">If metadata item <paramref name="name"/> does not exist.</exception>
         public override void Set(string name, object value)
         {
             var gtype = GetTypeOf(name);
@@ -855,8 +904,8 @@ namespace NetVips
         /// The named metadata item is removed.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to remove.</param>
-        /// <returns><see langword="true" /> if the metadata is successfully removed; 
-        /// otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the metadata is successfully removed; 
+        /// otherwise, <see langword="false"/>.</returns>
         public bool Remove(string name)
         {
             return VipsImage.Remove(this, name) != 0;
@@ -1370,8 +1419,8 @@ namespace NetVips
         /// Uses colour space interpretation with number of channels to guess
         /// this.
         /// </remarks>
-        /// <returns><see langword="true" /> if this image has an alpha channel;
-        /// otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if this image has an alpha channel;
+        /// otherwise, <see langword="false"/>.</returns>
         public bool HasAlpha()
         {
             // use `vips_image_hasalpha` on libvips >= 8.5.
@@ -1393,10 +1442,10 @@ namespace NetVips
         /// <remarks>
         /// Handy for loops which need to run sets of threads which can fail.
         /// At least libvips 8.8 is needed. If this version requirement is not met,
-        /// it will always return <see langword="false" />.
+        /// it will always return <see langword="false"/>.
         /// </remarks>
-        /// <returns><see langword="true" /> if image has been killed; 
-        /// otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if image has been killed; 
+        /// otherwise, <see langword="false"/>.</returns>
         public bool IsKilled()
         {
             if (!NetVips.AtLeastLibvips(8, 8))
@@ -1580,7 +1629,7 @@ namespace NetVips
         /// Compares the hashcode of two images.
         /// </summary>
         /// <param name="other">The <see cref="Image"/> to compare.</param>
-        /// <returns><see langword="true" /> if equal; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if equal; otherwise, <see langword="false"/>.</returns>
         public bool Equals(Image other)
         {
             return Equals(GetHashCode(), other.GetHashCode());
@@ -1590,8 +1639,8 @@ namespace NetVips
         /// Determines whether the specified object is equal to the current image.
         /// </summary>
         /// <param name="obj">The object to compare with the current image.</param>
-        /// <returns><see langword="true" /> if the specified object is equal
-        /// to the current image; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the specified object is equal
+        /// to the current image; otherwise, <see langword="false"/>.</returns>
         public override bool Equals(object obj)
         {
             if (obj == null)

@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add support for progress feedback (`image.SetProgress()`) and signal handling (`image.SignalConnect()`) ([#31](https://github.com/kleisauke/net-vips/issues/31)).
 - Add `image.SetKill()` and `image.IsKilled()` ([#31](https://github.com/kleisauke/net-vips/issues/31), [libvips/libvips@91d0e7e](https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305)).
 - Add `NetVips.ProfileSet()`, `NetVips.VectorSet()`, `NetVips.ConcurrencySet()` and `NetVips.ConcurrencyGet()` utilities.
+- Add support for loading and saving from and to streams (`Image.NewFromStream()` / `image.WriteToStream()`) ([#33](https://github.com/kleisauke/net-vips/issues/33)).
 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).

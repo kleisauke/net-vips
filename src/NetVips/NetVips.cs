@@ -18,7 +18,7 @@ namespace NetVips
         /// once the assembly is loaded. You should only call this method in your own program if the
         /// <see cref="ModuleInitializer"/> fails to initialize libvips.
         /// </remarks>
-        /// <returns><see langword="true" /> if successful started; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if successful started; otherwise, <see langword="false"/>.</returns>
         public static bool Init()
         {
             return Vips.Init("NetVips") == 0;
@@ -152,10 +152,10 @@ namespace NetVips
         /// Get the major, minor or micro version number of the libvips library.
         /// </summary>
         /// <param name="flag">Pass 0 to get the major version number, 1 to get minor, 2 to get micro.</param>
-        /// <param name="fromModule"><see langword="true" /> to get this value from the pre-initialized
+        /// <param name="fromModule"><see langword="true"/> to get this value from the pre-initialized
         /// <see cref="ModuleInitializer.Version"/> variable.</param>
         /// <returns>The version number.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="flag" /> is not in range.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="flag"/> is not in range.</exception>
         public static int Version(int flag, bool fromModule = true)
         {
             if (fromModule && ModuleInitializer.Version.HasValue)
@@ -192,7 +192,7 @@ namespace NetVips
         /// <param name="x">Major component.</param>
         /// <param name="y">Minor component.</param>
         /// <param name="z">Micro component.</param>
-        /// <returns><see langword="true" /> if at least libvips x.y[.z]; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if at least libvips x.y[.z]; otherwise, <see langword="false"/>.</returns>
         public static bool AtLeastLibvips(int x, int y, int z = 0)
         {
             var major = Version(0);
@@ -208,7 +208,7 @@ namespace NetVips
         /// <remarks>
         /// At least libvips 8.8 is needed.
         /// </remarks>
-        /// <returns>An array of strings or <see langword="null" />.</returns>
+        /// <returns>An array of strings or <see langword="null"/>.</returns>
         public static string[] GetSuffixes()
         {
             if (!AtLeastLibvips(8, 8))
@@ -335,13 +335,13 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Map over a type's children. Stop when <paramref name="fn" /> returns
+        /// Map over a type's children. Stop when <paramref name="fn"/> returns
         /// non-<see cref="IntPtr.Zero"/> and return that value.
         /// </summary>
         /// <param name="type">Base type.</param>
         /// <param name="fn">Call this function for every type.</param>
-        /// <returns><see cref="IntPtr.Zero"/> if <paramref name="fn" /> returns <see cref="IntPtr.Zero"/> for all arguments,
-        /// otherwise the first non-<see cref="IntPtr.Zero"/> value from <paramref name="fn" />.</returns>
+        /// <returns><see cref="IntPtr.Zero"/> if <paramref name="fn"/> returns <see cref="IntPtr.Zero"/> for all arguments,
+        /// otherwise the first non-<see cref="IntPtr.Zero"/> value from <paramref name="fn"/>.</returns>
         internal static IntPtr TypeMap(IntPtr type, VipsTypeMap2Fn fn)
         {
             return Vips.TypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);

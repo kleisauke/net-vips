@@ -38,7 +38,7 @@ namespace NetVips
         /// <summary>
         /// Sets the log handler for a domain and a set of log levels.
         /// </summary>
-        /// <param name="logDomain">The log domain, or <see langword="null" /> for the default "" application domain.</param>
+        /// <param name="logDomain">The log domain, or <see langword="null"/> for the default "" application domain.</param>
         /// <param name="flags">The log levels to apply the log handler for.</param>
         /// <param name="logFunc">The log handler function.</param>
         /// <returns>The id of the handler.</returns>

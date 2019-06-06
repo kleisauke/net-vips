@@ -303,6 +303,20 @@ namespace NetVips.Tests
         }
 
         [SkippableFact]
+        public void TestStreamOverload()
+        {
+            Skip.IfNot(Helper.Have("pngload"), "no png support, skipping test");
+
+            var stream = _colour.WriteToStream(".png");
+            var x = Image.NewFromStream(stream);
+
+            Assert.Equal(x.Width, _colour.Width);
+            Assert.Equal(x.Height, _colour.Height);
+            Assert.Equal(x.Bands, _colour.Bands);
+            Assert.True((_colour - x).Abs().Max() <= 0);
+        }
+
+        [SkippableFact]
         public void TestTiff()
         {
             Skip.IfNot(Helper.Have("tiffload") && File.Exists(Helper.TifFile), "no tiff support, skipping test");
