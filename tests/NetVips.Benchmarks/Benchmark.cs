@@ -10,9 +10,10 @@ namespace NetVips.Benchmarks
 
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.Processing;
+    using SixLabors.ImageSharp.Processing.Processors;
+    using SixLabors.ImageSharp.Processing.Processors.Convolution;
     using ImageSharpImage = SixLabors.ImageSharp.Image;
     using ImageSharpRectangle = SixLabors.Primitives.Rectangle;
-    using ImageSharpSize = SixLabors.Primitives.Size;
 
     using System.Drawing;
     using System.Drawing.Drawing2D;
@@ -25,6 +26,15 @@ namespace NetVips.Benchmarks
     [Config(typeof(Config))]
     public class Benchmark
     {
+        private const int Quality = 75;
+
+        private readonly IImageProcessor _processor = new ConvolutionProcessor(new float[,]
+        {
+            {-1, -1, -1},
+            {-1, 16, -1},
+            {-1, -1, -1}
+        }, false);
+
         [GlobalSetup]
         public void GlobalSetup()
         {
@@ -49,6 +59,7 @@ namespace NetVips.Benchmarks
             }, 8);
             im = im.Conv(mask, precision: Enums.Precision.Integer);
 
+            // Default quality is 75
             im.WriteToFile(output);
         }
 
@@ -59,12 +70,19 @@ namespace NetVips.Benchmarks
         {
             using (var im = new MagickImage(input))
             {
+                im.Interpolate = PixelInterpolateMethod.Bilinear;
+                im.FilterType = FilterType.Triangle;
+
                 im.Shave(100, 100);
                 im.Resize(new Percentage(90.0));
 
-                // All values in the kernel are divided by 8 (to match libvips scale behavior)
-                var kernel = new ConvolveMatrix(3, -0.125, -0.125, -0.125, -0.125, 2, -0.125, -0.125, -0.125, -0.125);
+                var kernel = new ConvolveMatrix(3, -1, -1, -1, -1, 16, -1, -1, -1, -1);
+
+                im.SetArtifact("convolve:scale", "0.125");
                 im.Convolve(kernel);
+
+                // Default quality of ImageMagick is 92, we need 75
+                im.Quality = Quality;
 
                 im.Write(output);
             }
@@ -78,10 +96,11 @@ namespace NetVips.Benchmarks
             {
                 image.Mutate(x => x
                     .Crop(new ImageSharpRectangle(100, 100, image.Width - 200, image.Height - 200))
-                    .Resize(new ImageSharpSize((int)Math.Round(image.Width * .9F),
-                        (int)Math.Round(image.Height * .9F)))
-                    .GaussianSharpen(.75f));
+                    .Resize((int)Math.Round(image.Width * .9F), (int)Math.Round(image.Height * .9F),
+                        KnownResamplers.Triangle)
+                    .ApplyProcessor(_processor, image.Bounds()));
 
+                // Default quality is 75
                 image.Save(output);
             }
         }
@@ -97,7 +116,10 @@ namespace NetVips.Benchmarks
                 var targetWidth = (int)Math.Round(bitmap.Width * .9F);
                 var targetHeight = (int)Math.Round(bitmap.Height * .9F);
 
-                using (var resized = bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.High))
+                // bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKBitmapResizeMethod.Triangle)
+                // is deprecated, so we use `SKFilterQuality.Low` instead, see:
+                // https://github.com/mono/SkiaSharp/blob/1527bf392ebc7b4b57c992ef8bfe14c9899f76a3/binding/Binding/SKBitmap.cs#L24
+                using (var resized = bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Low))
                 {
                     using (var surface = SKSurface.Create(new SKImageInfo(targetWidth, targetHeight, bitmap.ColorType,
                         bitmap.AlphaType)))
@@ -122,8 +144,7 @@ namespace NetVips.Benchmarks
                         using (var fileStream = File.OpenWrite(output))
                         {
                             surface.Snapshot()
-                                // The default quality of 85 usually produces excellent results
-                                .Encode(SKEncodedImageFormat.Jpeg, 85)
+                                .Encode(SKEncodedImageFormat.Jpeg, Quality)
                                 .SaveTo(fileStream);
                         }
                     }
@@ -148,7 +169,7 @@ namespace NetVips.Benchmarks
                     {
                         cropGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                         cropGraphics.CompositingMode = CompositingMode.SourceCopy;
-                        cropGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        cropGraphics.InterpolationMode = InterpolationMode.Bilinear;
 
                         // Crop
                         cropGraphics.DrawImage(image, new SystemDrawingRectangle(0, 0, src.Width, src.Height),
@@ -167,7 +188,7 @@ namespace NetVips.Benchmarks
 
                         resizeGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                         resizeGraphics.CompositingMode = CompositingMode.SourceCopy;
-                        resizeGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        resizeGraphics.InterpolationMode = InterpolationMode.Bilinear;
 
                         // Resize
                         resizeGraphics.DrawImage(src, resizeRect, 0, 0, src.Width, src.Height, GraphicsUnit.Pixel,
@@ -175,6 +196,8 @@ namespace NetVips.Benchmarks
 
                         // No sharpening or convolution operation seems to be available
 
+                        // Default quality is 75, see:
+                        // https://stackoverflow.com/a/3959115/10952119
                         resized.Save(output);
                     }
                 }

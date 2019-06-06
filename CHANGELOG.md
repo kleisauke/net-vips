@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).
 - The bundled libvips Windows binaries were moved to the [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package. 
-- Update the [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks).
+- Update and improve the [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks) ([#34](https://github.com/kleisauke/net-vips/issues/34)).
 - The overloadable operators `==` and `!=` have been changed to `Equal` and `NotEqual` to avoid conflicts with `null` checks.
 - Some methods are overloaded instead of defining the parameters as `object` type.
 - The base class was renamed from `Base` to `NetVips` to comply with the C# code conventions.

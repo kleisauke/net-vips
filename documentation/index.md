@@ -28,7 +28,7 @@ documentType: index
         <section>
           <h2>Runs quickly and uses little memory</h2>
           <p class="lead">NetVips is fast and needs little memory. The <a href="https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks">NetVips.Benchmarks</a> project tests NetVips against Magick.NET and ImageSharp.
-          NetVips is around 15 times faster than Magick.NET and 6 times faster than ImageSharp.</p>
+          NetVips is around 12 times faster than Magick.NET and 5 times faster than ImageSharp.</p>
         </section>
       </div>
     </div>
@@ -42,7 +42,7 @@ documentType: index
         <section>
           <h2>Around 300 operations supported</h2>
           <p class="lead">It has around <a href="xref:NetVips.Image">300 operations</a> covering arithmetic, histograms, convolution, morphological operations, frequency filtering, colour, resampling, statistics and others.
-          It supports a large range of  <a href="xref:NetVips.Enums.BandFormat">numeric formats</a>, from 8-bit int to 128-bit complex. Images can have any number of bands.</p>
+          It supports a large range of <a href="xref:NetVips.Enums.BandFormat">numeric formats</a>, from 8-bit int to 128-bit complex. Images can have any number of bands.</p>
         </section>
       </div>
     </div>
