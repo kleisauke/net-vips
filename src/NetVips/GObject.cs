@@ -3,7 +3,7 @@ namespace NetVips
     using System;
     using System.Runtime.InteropServices;
     using System.Collections.Generic;
-    using global::NetVips.Internal;
+    using Internal;
 
     /// <summary>
     /// Manage <see cref="Internal.GObject"/> lifetime.
@@ -16,7 +16,7 @@ namespace NetVips
         /// We have to record all of the <see cref="SignalConnect"/> delegates to
         /// prevent them from being re-located or disposed of by the garbage collector.
         /// </summary>
-        private readonly List<GCHandle> _handles = new List<GCHandle>();
+        private readonly ICollection<GCHandle> _handles = new List<GCHandle>();
 
         // Handy for debugging
         // public static int NObjects;

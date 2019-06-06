@@ -5,7 +5,7 @@ namespace NetVips
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Text;
-    using global::NetVips.Internal;
+    using Internal;
 
     /// <summary>
     /// Wrap <see cref="Internal.GValue"/> in a C# class.
@@ -368,10 +368,11 @@ namespace NetVips
 
                 for (var i = 0; i < size; i++)
                 {
-                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, images[i].DangerousGetHandle());
+                    ref var image = ref images[i];
+                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, image.DangerousGetHandle());
 
                     // the gvalue needs a ref on each of the images
-                    images[i].ObjectRef();
+                    image.ObjectRef();
                 }
             }
             else if (gtype == BlobType)
@@ -510,8 +511,9 @@ namespace NetVips
                 for (var i = 0; i < psize; i++)
                 {
                     var vi = Marshal.ReadIntPtr(ptrArr, i * IntPtr.Size);
-                    images[i] = new Image(vi);
-                    images[i].ObjectRef();
+                    ref var image = ref images[i];
+                    image = new Image(vi);
+                    image.ObjectRef();
                 }
 
                 result = images;

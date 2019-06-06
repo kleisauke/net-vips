@@ -6,7 +6,7 @@ namespace NetVips
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using global::NetVips.Internal;
+    using Internal;
 
     /// <summary>
     /// Useful extension methods that we use in our codebase.
@@ -21,7 +21,7 @@ namespace NetVips
         /// <param name="key">>The key of the element to remove.</param>
         /// <param name="target">The target to retrieve the value to.</param>
         /// <returns><see langword="true"/> if the element is successfully removed; otherwise, <see langword="false"/>.</returns>
-        public static bool Remove(this VOption self, string key, out object target)
+        internal static bool Remove(this VOption self, string key, out object target)
         {
             self.TryGetValue(key, out target);
             return self.Remove(key);
@@ -32,24 +32,12 @@ namespace NetVips
         /// </summary>
         /// <param name="self">The <see cref="VOption"/> to merge into.</param>
         /// <param name="merge">The <see cref="VOption"/> to merge from.</param>
-        public static void Merge(this VOption self, VOption merge)
+        internal static void Merge(this VOption self, VOption merge)
         {
             foreach (var item in merge)
             {
                 self[item.Key] = item.Value;
             }
-        }
-
-        /// <summary>
-        /// Test for rectangular array of something.
-        /// </summary>
-        /// <param name="array">Input array.</param>
-        /// <returns><see langword="true"/> if the object is a rectangular array; otherwise, <see langword="false"/>.</returns>
-        public static bool Is2D(this Array array)
-        {
-            return array.Length > 0 &&
-                   (array.Rank == 2 || array.GetValue(0) is Array jaggedArray &&
-                    jaggedArray.Length == array.Length);
         }
 
         /// <summary>
@@ -60,7 +48,7 @@ namespace NetVips
         /// must represent a formatted class or a structure.</typeparam>
         /// <param name="ptr">A pointer to an unmanaged block of memory.</param>
         /// <returns>A newly allocated managed object of the specified type.</returns>
-        public static T Dereference<T>(this IntPtr ptr)
+        internal static T Dereference<T>(this IntPtr ptr)
         {
             return (T)Marshal.PtrToStructure(ptr, typeof(T));
         }
@@ -71,7 +59,7 @@ namespace NetVips
         /// <param name="image">A <see cref="Image"/> used as guide.</param>
         /// <param name="operationName">Operation name.</param>
         /// <returns>A new object.</returns>
-        public static object Call(this Image image, string operationName) =>
+        internal static object Call(this Image image, string operationName) =>
             Operation.Call(operationName, null, image);
 
         /// <summary>
@@ -81,7 +69,7 @@ namespace NetVips
         /// <param name="operationName">Operation name.</param>
         /// <param name="args">An arbitrary number and variety of arguments.</param>
         /// <returns>A new object.</returns>
-        public static object Call(this Image image, string operationName, params object[] args) =>
+        internal static object Call(this Image image, string operationName, params object[] args) =>
             Operation.Call(operationName, null, image, args);
 
         /// <summary>
@@ -91,7 +79,7 @@ namespace NetVips
         /// <param name="operationName">Operation name.</param>
         /// <param name="kwargs">Optional arguments.</param>
         /// <returns>A new object.</returns>
-        public static object Call(this Image image, string operationName, VOption kwargs) =>
+        internal static object Call(this Image image, string operationName, VOption kwargs) =>
             Operation.Call(operationName, kwargs, image);
 
         /// <summary>
@@ -102,7 +90,7 @@ namespace NetVips
         /// <param name="kwargs">Optional arguments.</param>
         /// <param name="args">An arbitrary number and variety of arguments.</param>
         /// <returns>A new object.</returns>
-        public static object Call(this Image image, string operationName, VOption kwargs, params object[] args) =>
+        internal static object Call(this Image image, string operationName, VOption kwargs, params object[] args) =>
             Operation.Call(operationName, kwargs, image, args);
 
         /// <summary>
@@ -110,7 +98,7 @@ namespace NetVips
         /// </summary>
         /// <param name="str">The input string.</param>
         /// <returns>A new string with the first letter upper case.</returns>
-        public static string FirstLetterToUpper(this string str)
+        internal static string FirstLetterToUpper(this string str)
         {
             if (str == null)
             {
@@ -130,7 +118,7 @@ namespace NetVips
         /// </summary>
         /// <param name="str">The input string.</param>
         /// <returns>A new string with the first letter lower case.</returns>
-        public static string FirstLetterToLower(this string str)
+        internal static string FirstLetterToLower(this string str)
         {
             if (str == null)
             {
@@ -150,7 +138,7 @@ namespace NetVips
         /// </summary>
         /// <param name="str">The input string.</param>
         /// <returns>A new camel cased string.</returns>
-        public static string ToPascalCase(this string str)
+        internal static string ToPascalCase(this string str)
         {
             return str.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
@@ -163,7 +151,7 @@ namespace NetVips
         /// <param name="args">The <see cref="Image"/> array.</param>
         /// <param name="image">The <see cref="Image"/> to prepend to <paramref name="args"/>.</param>
         /// <returns>A new object array.</returns>
-        public static object[] PrependImage(this Image[] args, Image image)
+        internal static object[] PrependImage(this Image[] args, Image image)
         {
             if (args == null)
             {
@@ -183,7 +171,7 @@ namespace NetVips
         /// <param name="freePtr">If set to <see langword="true"/>, free the GLib string.</param>
         /// <param name="size">Size of the GLib string, use 0 to read until the null character.</param>
         /// <returns>The managed string.</returns>
-        public static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int size = 0)
+        internal static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int size = 0)
         {
             return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr, size));
         }
@@ -199,7 +187,7 @@ namespace NetVips
         /// <param name="freePtr">If set to <see langword="true"/> free the unmanaged memory.</param>
         /// <param name="size">Size of the C string, use 0 to read until the null character.</param>
         /// <returns>The string as a byte array.</returns>
-        public static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int size = 0)
+        internal static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int size = 0)
         {
             if (ptr == IntPtr.Zero)
             {

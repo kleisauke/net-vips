@@ -1,7 +1,5 @@
 namespace NetVips
 {
-    using System.Linq;
-
     public sealed partial class Image
     {
         #region overloadable operators
@@ -66,8 +64,15 @@ namespace NetVips
         /// <param name="left">Left <see cref="Image"/>.</param>
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(Image left, double[] right) =>
-            left.Call("linear", 1, right.Select(x => x * -1).ToArray()) as Image;
+        public static Image operator -(Image left, double[] right)
+        {
+            for (var i = 0; i < right.Length; i++)
+            {
+                right[i] *= -1;
+            }
+
+            return left.Call("linear", 1, right) as Image;
+        }
 
         /// <summary>
         /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
@@ -84,8 +89,15 @@ namespace NetVips
         /// <param name="left">Left <see cref="Image"/>.</param>
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(Image left, int[] right) =>
-            left.Call("linear", 1, right.Select(x => x * -1).ToArray()) as Image;
+        public static Image operator -(Image left, int[] right)
+        {
+            for (var i = 0; i < right.Length; i++)
+            {
+                right[i] *= -1;
+            }
+
+            return left.Call("linear", 1, right) as Image;
+        }
 
         /// <summary>
         /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
@@ -156,8 +168,15 @@ namespace NetVips
         /// <param name="left">Left <see cref="Image"/>.</param>
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(Image left, double[] right) =>
-            left.Call("linear", right.Select(x => 1.0 / x).ToArray(), 0) as Image;
+        public static Image operator /(Image left, double[] right)
+        {
+            for (var i = 0; i < right.Length; i++)
+            {
+                right[i] = 1.0 / right[i];
+            }
+
+            return left.Call("linear", right, 0) as Image;
+        }
 
         /// <summary>
         /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
@@ -174,8 +193,17 @@ namespace NetVips
         /// <param name="left">Left <see cref="Image"/>.</param>
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(Image left, int[] right) =>
-            left.Call("linear", right.Select(x => 1.0 / x).ToArray(), 0) as Image;
+        public static Image operator /(Image left, int[] right)
+        {
+            var doubles = new double[right.Length];
+            for (var i = 0; i < right.Length; i++)
+            {
+                ref var value = ref doubles[i];
+                value = 1.0 / right[i];
+            }
+
+            return left.Call("linear", doubles, 0) as Image;
+        }
 
         /// <summary>
         /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.

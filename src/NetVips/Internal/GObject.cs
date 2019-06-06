@@ -3,7 +3,7 @@ namespace NetVips.Internal
     using System;
     using System.Runtime.InteropServices;
     using System.Security;
-    using global::NetVips.Interop;
+    using Interop;
     using GObjectManaged = global::NetVips.GObject;
 
     internal static class GObject

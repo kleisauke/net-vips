@@ -21,6 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Some methods are overloaded instead of defining the parameters as `object` type.
 - The base class was renamed from `Base` to `NetVips` to comply with the C# code conventions.
 - The `Operation.VipsCacheSet*` utilities has been moved to `NetVips.CacheSet*`.
+- Speed-up `Operation.Call` by avoiding unnecessary loops.
+- Remove usage of LINQ in several critical paths.
 
 ### Removed
 - The `UseGlobalLibvips` property since the bundled libvips binaries were moved to the [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package.

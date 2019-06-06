@@ -933,19 +933,19 @@ namespace NetVips.Tests
         [Fact]
         public void TestRecomb()
         {
-            var array = new[,]
+            var array = new[]
             {
-                {0.2, 0.5, 0.3}
+                0.2, 0.5, 0.3
             };
 
             dynamic Recomb(dynamic x)
             {
                 if (x is Image image)
                 {
-                    return image.Recomb(Image.NewFromArray(array));
+                    return image.Recomb(Image.NewFromArray(new[] { array }));
                 }
 
-                var sum = array.Cast<double>()
+                var sum = array
                     .Zip((IEnumerable<double>)x, (d, o) => new[] { d, o })
                     .Select(zip => zip[0] * zip[1])
                     .Sum();

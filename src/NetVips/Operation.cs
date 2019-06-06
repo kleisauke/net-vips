@@ -5,7 +5,7 @@ namespace NetVips
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using global::NetVips.Internal;
+    using Internal;
 
     /// <summary>
     /// Wrap a <see cref="VipsOperation"/> object.
@@ -76,21 +76,20 @@ namespace NetVips
                 }
                 else if (gtype == GValue.ArrayImageType)
                 {
-                    switch (value)
+                    if (!(value is Array values) || values.Rank != 1)
                     {
-                        case double[] doubles:
-                            value = doubles.Select(x => Image.Imageize(matchImage, x)).ToArray();
-                            break;
-                        case int[] ints:
-                            value = ints.Select(x => Image.Imageize(matchImage, x)).ToArray();
-                            break;
-                        case object[] objects:
-                            value = objects.Select(x => Image.Imageize(matchImage, x)).ToArray();
-                            break;
-                        default:
-                            throw new Exception(
-                                $"unsupported value type {value.GetType()}");
+                        throw new Exception(
+                            $"unsupported value type {value.GetType()} for VipsArrayImage");
                     }
+
+                    var images = new Image[values.Length];
+                    for (var i = 0; i < values.Length; i++)
+                    {
+                        ref var image = ref images[i];
+                        image = Image.Imageize(matchImage, values.GetValue(i));
+                    }
+
+                    value = images;
                 }
             }
 
@@ -103,7 +102,7 @@ namespace NetVips
         }
 
         // this is slow ... call as little as possible
-        private List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
+        private IReadOnlyList<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
         {
             var args = new List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>>();
 
@@ -120,7 +119,7 @@ namespace NetVips
                 for (var i = 0; i < nArgs; i++)
                 {
                     var flag = (Internal.Enums.VipsArgumentFlags)
-                        Marshal.PtrToStructure(flags + (i * sizeof(int)), typeof(int));
+                        Marshal.PtrToStructure(flags + i * sizeof(int), typeof(int));
                     if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_CONSTRUCT) == 0)
                     {
                         continue;
@@ -159,6 +158,7 @@ namespace NetVips
 
                 Vips.ArgumentMap(this, AddConstruct, IntPtr.Zero, IntPtr.Zero);
             }
+
 
             return args;
         }
@@ -225,11 +225,10 @@ namespace NetVips
 
             var op = NewFromName(operationName);
             var arguments = op.GetArgs();
+            var requiredOutput = new List<string>();
+            var optionalOutput = new List<string>();
 
             // logger.Debug($"VipsOperation.call: arguments = {arguments}");
-
-            // make a thing to quickly get flags from an arg name
-            var flagsFromName = new Dictionary<string, Internal.Enums.VipsArgumentFlags>();
 
             // set any string options before any args so they can't be
             // overridden
@@ -238,7 +237,6 @@ namespace NetVips
                 throw new VipsException($"unable to call {operationName}");
             }
 
-            // set required and optional args
             var n = 0;
             var memberX = matchImage == null;
             foreach (var entry in arguments)
@@ -246,8 +244,33 @@ namespace NetVips
                 var name = entry.Key;
                 var flag = entry.Value;
 
-                flagsFromName[name] = flag;
+                // fetch required output args, plus modified input images
+                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0 ||
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
+                {
+                    requiredOutput.Add(name);
+                }
 
+                // fetch and set optional args
+                if (kwargs != null &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0 &&
+                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0 &&
+                    kwargs.ContainsKey(name))
+                {
+                    op.Set(name, flag, matchImage, kwargs[name]);
+                    kwargs.Remove(name);
+
+                    if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0)
+                    {
+                        optionalOutput.Add(name);
+                    }
+                    continue;
+                }
+
+                // set required input args
                 if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
@@ -260,10 +283,12 @@ namespace NetVips
                     }
                     else
                     {
-                        if (n <= args.Length)
+                        if (n > args.Length)
                         {
-                            op.Set(name, flag, matchImage, args[n]);
+                            break;
                         }
+
+                        op.Set(name, flag, matchImage, args[n]);
                         n++;
                     }
                 }
@@ -275,20 +300,9 @@ namespace NetVips
                     $"unable to call {operationName}: {args.Length} arguments given, but {n} required");
             }
 
-            if (kwargs != null)
+            if (kwargs != null && kwargs.Count > 0)
             {
-                foreach (var entry in kwargs)
-                {
-                    var name = entry.Key;
-                    var value = entry.Value;
-
-                    if (!flagsFromName.ContainsKey(name))
-                    {
-                        throw new Exception($"{operationName} does not support argument {name}");
-                    }
-
-                    op.Set(name, flagsFromName[name], matchImage, value);
-                }
+                throw new Exception($"{operationName} does not support argument(s): {string.Join(", ", kwargs.Keys.ToArray())}");
             }
 
             // build operation
@@ -300,57 +314,37 @@ namespace NetVips
 
             op = new Operation(vop);
 
+            var results = new object[requiredOutput.Count];
+
             // fetch required output args, plus modified input images
-            var result = new List<object>();
-
-            foreach (var entry in arguments)
+            for (var i = 0; i < requiredOutput.Count; i++)
             {
-                var name = entry.Key;
-                var flag = entry.Value;
+                var name = requiredOutput[i];
 
-                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
-                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) != 0 &&
-                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
-                {
-                    result.Add(op.Get(name));
-                }
-
-                if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_INPUT) != 0 &&
-                    (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_MODIFY) != 0)
-                {
-                    result.Add(op.Get(name));
-                }
+                ref var result = ref results[i];
+                result = op.Get(name);
             }
 
-            // fetch optional output args
-            var opts = new VOption();
-
-            if (kwargs != null)
+            if (optionalOutput.Count > 0)
             {
-                foreach (var entry in kwargs)
-                {
-                    var name = entry.Key;
+                var optionalArgs = new VOption();
 
-                    var flags = flagsFromName[name];
-                    if ((flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0 &&
-                        (flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_REQUIRED) == 0 &&
-                        (flags & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0)
-                    {
-                        opts[name] = op.Get(name);
-                    }
+                // fetch optional output args
+                foreach (var name in optionalOutput)
+                {
+                    optionalArgs[name] = op.Get(name);
                 }
+
+                var resultsLength = results.Length;
+                Array.Resize(ref results, resultsLength + 1);
+                results[resultsLength] = optionalArgs;
             }
 
             Internal.VipsObject.UnrefOutputs(op);
 
-            if (opts.Count > 0)
-            {
-                result.Add(opts);
-            }
-
             // logger.Debug($"VipsOperation.call: result = {result}");
 
-            return result.Count == 0 ? null : (result.Count == 1 ? result[0] : result.ToArray());
+            return results.Length == 1 ? results[0] : results;
         }
 
         /// <summary>
@@ -364,7 +358,7 @@ namespace NetVips
         /// <param name="outParameters">The out parameters of this function.</param>
         /// <returns>A C#-style docstring + function declaration.</returns>
         private static string GenerateFunction(string operationName, string indent = "        ",
-            string[] outParameters = null)
+            IReadOnlyList<string> outParameters = null)
         {
             var op = NewFromName(operationName);
             if ((op.GetFlags() & Internal.Enums.VipsOperationFlags.VIPS_OPERATION_DEPRECATED) != 0)
@@ -678,11 +672,11 @@ namespace NetVips
                 {
                     result.AppendLine($"{indent}    var optionalOutput = new VOption")
                         .AppendLine($"{indent}    {{");
-                    for (var i = 0; i < outParameters.Length; i++)
+                    for (var i = 0; i < outParameters.Count; i++)
                     {
                         var outParameterName = outParameters[i];
                         result.Append($"{indent}        {{\"{outParameterName}\", true}}")
-                            .AppendLine(i != outParameters.Length - 1 ? "," : string.Empty);
+                            .AppendLine(i != outParameters.Count - 1 ? "," : string.Empty);
                     }
 
                     result.AppendLine($"{indent}    }};");
@@ -753,7 +747,7 @@ namespace NetVips
             {
                 result.AppendLine()
                     .AppendLine($"{indent}    var opts = results?[1] as VOption;");
-                for (var i = 0; i < outParameters.Length; i++)
+                for (var i = 0; i < outParameters.Count; i++)
                 {
                     var outParameter = outParameters[i];
                     result.Append(
@@ -784,11 +778,11 @@ namespace NetVips
                 result.AppendLine()
                     .Append(GenerateFunction(operationName, indent, new[] { optionalOutput[0] }));
             }
-            else if (outParameters != null && outParameters.Length != optionalOutput.Length)
+            else if (outParameters != null && outParameters.Count != optionalOutput.Length)
             {
                 result.AppendLine()
                     .Append(GenerateFunction(operationName, indent,
-                        optionalOutput.Take(outParameters.Length + 1).ToArray()));
+                        optionalOutput.Take(outParameters.Count + 1).ToArray()));
             }
 
             return result.ToString();

@@ -32,6 +32,11 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Gets a collection containing the keys in the <see cref="_internalDictionary"/>.
+        /// </summary>
+        public Dictionary<string, object>.KeyCollection Keys => _internalDictionary.Keys;
+
+        /// <summary>
         /// Gets the number of key/value pairs contained in the <see cref="_internalDictionary"/>.
         /// </summary>
         /// <returns>The number of key/value pairs contained in the <see cref="_internalDictionary"/>.</returns>
@@ -43,6 +48,13 @@ namespace NetVips
         /// <param name="key">The key of the element to add.</param>
         /// <param name="value">The value of the element to add. The value can be null for reference types.</param>
         public void Add(string key, object value) => _internalDictionary.Add(key, value);
+
+        /// <summary>
+        /// Determines whether the <see cref="_internalDictionary"/> contains the specified key.
+        /// </summary>
+        /// <param name="key">The key to locate in the <see cref="_internalDictionary"/>.</param>
+        /// <returns><see langword="true"/> if the <see cref="_internalDictionary"/> contains an element with the specified key; otherwise, <see langword="false"/>.</returns>
+        public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
 
         /// <summary>
         /// Removes the value with the specified key from the <see cref="_internalDictionary"/>.

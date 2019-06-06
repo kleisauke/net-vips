@@ -4,7 +4,7 @@ namespace NetVips
     using System.Collections.Concurrent;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
-    using global::NetVips.Internal;
+    using Internal;
 
     /// <summary>
     /// Specifies the prototype of log handler functions.

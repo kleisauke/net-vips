@@ -4645,7 +4645,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Resample with an mapim image.
+        /// Resample with a map image.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">

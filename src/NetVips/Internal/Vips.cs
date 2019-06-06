@@ -4,7 +4,7 @@ namespace NetVips.Internal
     using System.Runtime.InteropServices;
     using System.Security;
     using System.Text;
-    using global::NetVips.Interop;
+    using Interop;
     using VipsObjectManaged = global::NetVips.VipsObject;
 
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]

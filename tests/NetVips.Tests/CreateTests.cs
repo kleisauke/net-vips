@@ -45,10 +45,10 @@ namespace NetVips.Tests
         [Fact]
         public void TestBuildlut()
         {
-            var m = Image.NewFromArray(new[,]
+            var m = Image.NewFromArray(new[]
             {
-                {0, 0},
-                {255, 100}
+                new double[]{0, 0},
+                new double[]{255, 100}
             });
             var lut = m.Buildlut();
             Assert.Equal(256, lut.Width);
@@ -61,11 +61,11 @@ namespace NetVips.Tests
             p = lut.Getpoint(10, 0);
             Assert.Equal(100 * 10.0 / 255.0, p[0]);
 
-            m = Image.NewFromArray(new[,]
+            m = Image.NewFromArray(new[]
             {
-                {0, 0, 100},
-                {255, 100, 0},
-                {128, 10, 90}
+                new double[]{0, 0, 100},
+                new double[]{255, 100, 0},
+                new double[]{128, 10, 90}
             });
             lut = m.Buildlut();
             Assert.Equal(256, lut.Width);
@@ -262,7 +262,7 @@ namespace NetVips.Tests
             Assert.Equal(20, im.Max());
 
             var total = im.Avg() * im.Width * im.Height;
-            var scale = (double) im.Get("scale");
+            var scale = (double)im.Get("scale");
             Assert.Equal(total, scale, 10);
             var p = im.Getpoint(im.Width / 2, im.Height / 2);
             Assert.Equal(20.0, p[0]);
@@ -274,7 +274,7 @@ namespace NetVips.Tests
             Assert.Equal(Enums.BandFormat.Double, im.Format);
             Assert.Equal(1.0, im.Max());
             total = im.Avg() * im.Width * im.Height;
-            scale = (double) im.Get("scale");
+            scale = (double)im.Get("scale");
             Assert.Equal(total, scale, 10);
             p = im.Getpoint(im.Width / 2, im.Height / 2);
             Assert.Equal(1.0, p[0]);

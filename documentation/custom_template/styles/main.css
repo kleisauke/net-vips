@@ -6,38 +6,8 @@ button:hover, button:focus, a:hover, a:focus, .toc .nav > li.active > a:hover, .
     color: #6E8B60;
 }
 
-.buttons-unit-small a, .hero .minitext a {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.buttons-unit-small a:hover, .buttons-unit-small a:focus, .hero .minitext a:hover, .hero .minitext a:focus {
-    color: #fff;
-}
-
 a.disable, a.disable:hover {
     color: #90ABB9;
-}
-
-.hero {
-    color: #fff;
-    background: #159957 linear-gradient(120deg, #155799, #159957);
-}
-
-.buttons-unit a {
-    display: inline-block;
-    margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.3rem;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s
-}
-
-.buttons-unit a:hover {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3)
 }
 
 .toc .nav > li.active > a, .affix ul > li.active > a, .affix ul > li.active > a:before {
@@ -45,43 +15,25 @@ a.disable, a.disable:hover {
 }
 
 .affix ul > li > a:before {
-    color: #cccccc;
+    color: #ccc;
 }
 
 .toc .nav > li > a, .affix ul > li > a, .affix ul > li > a:hover {
-    color: #666666;
+    color: #666;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
 }
 
 svg:hover path {
-    fill: #ffffff;
+    fill: #fff;
 }
 
-.counter-key-section {
-    border: 2px solid #6E8B60;
-    -webkit-border-image-source: -webkit-gradient(linear, left, right, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(50%, #385361), color-stop(100%, rgba(0, 0, 0, 0)));
-    -webkit-border-image-source: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0), #385361 50%, rgba(0, 0, 0, 0));
-    -moz-border-image-source: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0), #385361 50%, rgba(0, 0, 0, 0));
-    -ms-border-image-source: -ms-linear-gradient(90deg, rgba(0, 0, 0, 0), #385361 50%, rgba(0, 0, 0, 0));
-    -o-border-image-source: -o-linear-gradient(90deg, rgba(0, 0, 0, 0), #385361 50%, rgba(0, 0, 0, 0));
-    border-image-source: linear-gradient(90deg, rgba(0, 0, 0, 0), #385361 50%, rgba(0, 0, 0, 0));
-    border-image-slice: 1;
-}
-
-.key-section h2:before, .counter-key-section h2:before {
-    content: normal;
-    display: inline;
-    position: initial;
-    width: auto;
-    height: auto;
-    margin-top: 0;
-}
-
-.value-prop-heading {
-    font-size: 24px;
-}
-
-#vp-container {
-    margin-top: 30px;
+.glyphicon {
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 .hero {
@@ -89,47 +41,13 @@ svg:hover path {
     padding-top: 50px;
     font-weight: 300;
     text-align: center;
-}
-
-.key-section {
-    padding: 30px 0;
-}
-
-.key-section .glyphicon, .counter-key-section .glyphicon {
-    font-size: 4em;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.glyphicon {
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-.key-section section, .counter-key-section section {
-    display: table-cell;
-    padding-left: 20px;
-}
-
-.key-section section p, .counter-key-section section p {
-    text-align: initial;
-}
-
-.counter-key-section {
-    padding: 30px 0;
-}
-
-.buttons-unit-small {
-    font-size: 16px;
-}
-
-.changelog-link, .github-link {
-    margin: 5px;
+    color: #fff;
+    background: #159957 linear-gradient(120deg, #155799, #159957);
 }
 
 .hero strong {
     font-weight: 400;
-    font-family: Rockwell;
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
 }
 
 .hero .text {
@@ -140,8 +58,24 @@ svg:hover path {
 .hero .minitext {
     font-size: 20px;
     text-align: center;
-    font-family: Candara;
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     color: rgba(255, 255, 255, 0.7);
+}
+
+.hero .glyphicon {
+    font-size: 16px;
+}
+
+.buttons-unit-small {
+    font-size: 16px;
+}
+
+.buttons-unit-small a, .hero .minitext a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.buttons-unit-small a:hover, .buttons-unit-small a:focus, .hero .minitext a:hover, .hero .minitext a:focus {
+    color: #fff;
 }
 
 .buttons-unit {
@@ -150,11 +84,27 @@ svg:hover path {
 }
 
 .buttons-unit a {
+    display: inline-block;
     font-size: 24px;
-    border-radius: 4px;
-    padding: 8px 16px;
     margin: 0 12px;
+    padding: 8px 16px;
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
     box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.buttons-unit a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3)
+}
+
+.changelog-link, .github-link {
+    margin: 5px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -169,7 +119,30 @@ svg:hover path {
     }
 }
 
-.navbar-brand {
+.key-section, .counter-key-section {
+    padding: 30px 0;
+}
+
+.key-section .row > div, .counter-key-section .row > div  {
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.key-section .glyphicon, .counter-key-section .glyphicon {
+    font-size: 4em;
+}
+
+.key-section section, .counter-key-section section {
+    padding-left: 10px;
+}
+
+.key-section section p, .counter-key-section section p {
+    text-align: left;
+}
+
+.counter-key-section {
+    border: 2px solid #6E8B60;
+    border-image: linear-gradient(90deg, rgba(0, 0, 0, 0), #385361 50%, rgba(0, 0, 0, 0)) 1;
 }

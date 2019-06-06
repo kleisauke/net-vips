@@ -1,5 +1,4 @@
-# https://github.com/appveyor/ci/issues/2907
-image: Visual Studio 2019 Preview
+image: Visual Studio 2019
 
 # Version format
 version: 1.1.0.{build}

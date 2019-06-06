@@ -3,11 +3,10 @@ namespace NetVips
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading;
-    using global::NetVips.Internal;
+    using Internal;
     using SMath = System.Math;
 
     /// <summary>
@@ -92,14 +91,16 @@ namespace NetVips
             {
                 case Image image:
                     return image;
-                case Array array when array.Is2D():
-                    return NewFromArray(array);
+                case double[,] doubleArray:
+                    return NewFromArray(doubleArray);
+                case int[,] intArray:
+                    return NewFromArray(intArray);
                 case double[] doubles:
                     return matchImage.NewFromImage(doubles);
-                case double doubleValue:
-                    return matchImage.NewFromImage(doubleValue);
                 case int[] ints:
                     return matchImage.NewFromImage(ints);
+                case double doubleValue:
+                    return matchImage.NewFromImage(doubleValue);
                 case int intValue:
                     return matchImage.NewFromImage(intValue);
                 default:
@@ -306,6 +307,7 @@ namespace NetVips
         /// quite a bit of talk of adding this, and there's a branch that adds 
         /// this, but it's never been merged for various reasons. See:
         /// https://github.com/lovell/sharp/issues/30#issuecomment-46960443
+        /// https://github.com/kleisauke/net-vips/issues/33
         ///
         /// So this simply copies the stream to a byte array and loads it with
         /// <see cref="NewFromBuffer(byte[], string, string, bool?, VOption)"/>.
@@ -327,7 +329,95 @@ namespace NetVips
             VOption kwargs = null) => NewFromBuffer(stream.ToByteArray(), strOptions, access, fail, kwargs);
 
         /// <summary>
-        /// Create an image from a 1D or 2D array.
+        /// Create an image from a 2D array.
+        /// </summary>
+        /// <remarks>
+        /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
+        /// created from the array. These image are useful with the libvips
+        /// convolution operator <see cref="Conv"/>.
+        /// </remarks>
+        /// <param name="array">Create the image from these values.</param>
+        /// <param name="scale">Default to 1.0. What to divide each pixel by after
+        /// convolution. Useful for integer convolution masks.</param>
+        /// <param name="offset">Default to 0.0. What to subtract from each pixel
+        /// after convolution. Useful for integer convolution masks.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
+        public static Image NewFromArray<T>(T[,] array, double scale = 1.0, double offset = 0.0) where T : struct, IEquatable<T>
+        {
+            var height = array.GetLength(0);
+            var width = array.GetLength(1);
+            var n = width * height;
+
+            var a = new double[n];
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    ref var value = ref a[x + (y * width)];
+                    value = Convert.ToDouble(array[y, x]);
+                }
+            }
+
+            var vi = VipsImage.NewMatrixFromArray(width, height, a, n);
+
+            if (vi == IntPtr.Zero)
+            {
+                throw new VipsException("unable to make image from matrix");
+            }
+
+            var image = new Image(vi);
+            image.SetType(GValue.GDoubleType, nameof(scale), scale);
+            image.SetType(GValue.GDoubleType, nameof(offset), offset);
+            return image;
+        }
+
+        /// <summary>
+        /// Create an image from a 2D array.
+        /// </summary>
+        /// <remarks>
+        /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
+        /// created from the array. These image are useful with the libvips
+        /// convolution operator <see cref="Conv"/>.
+        /// </remarks>
+        /// <param name="array">Create the image from these values.</param>
+        /// <param name="scale">Default to 1.0. What to divide each pixel by after
+        /// convolution. Useful for integer convolution masks.</param>
+        /// <param name="offset">Default to 0.0. What to subtract from each pixel
+        /// after convolution. Useful for integer convolution masks.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
+        public static Image NewFromArray<T>(T[][] array, double scale = 1.0, double offset = 0.0) where T : struct, IEquatable<T>
+        {
+            var height = array.Length;
+            var width = array[0].Length;
+            var n = width * height;
+
+            var a = new double[n];
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    ref var value = ref a[x + (y * width)];
+                    value = Convert.ToDouble(array[y][x]);
+                }
+            }
+
+            var vi = VipsImage.NewMatrixFromArray(width, height, a, n);
+
+            if (vi == IntPtr.Zero)
+            {
+                throw new VipsException("unable to make image from matrix");
+            }
+
+            var image = new Image(vi);
+            image.SetType(GValue.GDoubleType, nameof(scale), scale);
+            image.SetType(GValue.GDoubleType, nameof(offset), offset);
+            return image;
+        }
+
+        /// <summary>
+        /// Create an image from a 1D array.
         /// </summary>
         /// <remarks>
         /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
@@ -337,40 +427,22 @@ namespace NetVips
         /// <param name="array">Create the image from these values.
         /// 1D arrays become a single row of pixels.</param>
         /// <param name="scale">Default to 1.0. What to divide each pixel by after
-        /// convolution.  Useful for integer convolution masks.</param>
+        /// convolution. Useful for integer convolution masks.</param>
         /// <param name="offset">Default to 0.0. What to subtract from each pixel
-        /// after convolution.  Useful for integer convolution masks.</param>
+        /// after convolution. Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
-        public static Image NewFromArray(Array array, double scale = 1.0, double offset = 0.0)
+        public static Image NewFromArray<T>(T[] array, double scale = 1.0, double offset = 0.0) where T : struct, IEquatable<T>
         {
-            var is2D = array.Rank == 2;
-
-            var height = is2D ? array.GetLength(0) : array.Length;
-            var width = is2D ? array.GetLength(1) : (array.GetValue(0) is Array arrWidth ? arrWidth.Length : 1);
-            var n = width * height;
-
-            var a = new double[n];
+            var height = array.Length;
+            var a = new double[height];
             for (var y = 0; y < height; y++)
             {
-                for (var x = 0; x < width; x++)
-                {
-                    object value;
-                    if (is2D)
-                    {
-                        value = array.GetValue(y, x);
-                    }
-                    else
-                    {
-                        var yValue = array.GetValue(y);
-                        value = yValue is Array yArray ? (yArray.Length <= x ? 0 : yArray.GetValue(x)) : yValue;
-                    }
-
-                    a[x + (y * width)] = Convert.ToDouble(value);
-                }
+                ref var value = ref a[y];
+                value = Convert.ToDouble(array[y]);
             }
 
-            var vi = VipsImage.NewMatrixFromArray(width, height, a, n);
+            var vi = VipsImage.NewMatrixFromArray(1, height, a, height);
 
             if (vi == IntPtr.Zero)
             {
@@ -680,6 +752,7 @@ namespace NetVips
         /// quite a bit of talk of adding this, and there's a branch that adds 
         /// this, but it's never been merged for various reasons. See:
         /// https://github.com/lovell/sharp/issues/30#issuecomment-46960443
+        /// https://github.com/kleisauke/net-vips/issues/33
         ///
         /// So this simply creates a new non-resizable instance of the
         /// <see cref="MemoryStream"/> class based on the byte array that is
@@ -1176,9 +1249,16 @@ namespace NetVips
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Composite(Image[] images, string[] modes, int? x = null, int? y = null,
-            string compositingSpace = null, bool? premultiplied = null) =>
-            Composite(images, modes.Select(m => GValue.ToEnum(GValue.BlendModeType, m)).ToArray(), x, y,
-                compositingSpace, premultiplied);
+            string compositingSpace = null, bool? premultiplied = null)
+        {
+            var intModes = new int[modes.Length];
+            for (var i = 0; i < modes.Length; i++)
+            {
+                ref var value = ref intModes[i];
+                value = GValue.ToEnum(GValue.BlendModeType, modes[i]);
+            }
+            return Composite(images, intModes, x, y, compositingSpace, premultiplied);
+        }
 
         /// <summary>
         /// A synonym for <see cref="Composite2"/>.
@@ -1600,7 +1680,8 @@ namespace NetVips
                 var components = new object[componentsList.Count - 1];
                 for (var index = 1; index < componentsList.Count; index++)
                 {
-                    components[index - 1] = componentsList[index];
+                    ref var component = ref components[index - 1];
+                    component = componentsList[index];
                 }
 
                 if (this.Call("bandjoin", head, components) is Image bandImage)
@@ -1619,7 +1700,8 @@ namespace NetVips
             var images = new Image[Bands];
             for (var i = 0; i < Bands; i++)
             {
-                images[i] = this[i];
+                ref var image = ref images[i];
+                image = this[i];
             }
 
             return images;

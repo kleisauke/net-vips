@@ -3,7 +3,7 @@ namespace NetVips
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
-    using global::NetVips.Internal;
+    using Internal;
 
     /// <summary>
     /// Basic utility stuff.

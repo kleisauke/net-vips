@@ -3,7 +3,7 @@ namespace NetVips.Internal
     using System;
     using System.Runtime.InteropServices;
     using System.Security;
-    using global::NetVips.Interop;
+    using Interop;
     using LogLevelFlags = global::NetVips.Enums.LogLevelFlags;
 
     internal static class GLib

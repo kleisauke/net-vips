@@ -16,8 +16,8 @@ namespace NetVips.Samples
 
         public string Execute(string[] args)
         {
-            var main = Image.NewFromFile(MainFilename);
-            var watermark = Image.NewFromFile(WatermarkFilename);
+            var main = Image.NewFromFile(MainFilename, access: Enums.Access.Sequential);
+            var watermark = Image.NewFromFile(WatermarkFilename, access: Enums.Access.Sequential);
 
             var width = watermark.Width;
             var height = watermark.Height;
