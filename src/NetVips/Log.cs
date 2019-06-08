@@ -25,12 +25,17 @@ namespace NetVips
             IntPtr userData)
         {
             if (userData == IntPtr.Zero)
+            {
                 return;
+            }
+
             var logDomain = logDomainNative.ToUtf8String();
             var message = messageNative.ToUtf8String();
             var gch = (GCHandle)userData;
             if (gch.Target is LogFunc func)
+            {
                 func(logDomain, flags, message);
+            }
         }
 
         private static ConcurrentDictionary<uint, GCHandle> _handlers = new ConcurrentDictionary<uint, GCHandle>();
@@ -45,7 +50,9 @@ namespace NetVips
         public static uint SetLogHandler(string logDomain, Enums.LogLevelFlags flags, LogFunc logFunc)
         {
             if (_nativeHandler == null)
+            {
                 _nativeHandler = NativeCallback;
+            }
 
             var gch = GCHandle.Alloc(logFunc);
             var result = GLib.GLogSetHandler(logDomain, flags, _nativeHandler, (IntPtr)gch);

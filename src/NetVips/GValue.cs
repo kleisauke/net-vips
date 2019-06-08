@@ -471,7 +471,7 @@ namespace NetVips
             }
             else if (gtype == RefStrType)
             {
-                result = VipsValue.GetRefString(in Struct, out var psize).ToUtf8String(size: (int)psize);
+                result = VipsValue.GetRefString(in Struct, out var size).ToUtf8String(size: (int)size);
             }
             else if (gtype == ImageType)
             {
@@ -489,26 +489,26 @@ namespace NetVips
             }
             else if (gtype == ArrayIntType)
             {
-                var intPtr = VipsValue.GetArrayInt(in Struct, out var psize);
+                var intPtr = VipsValue.GetArrayInt(in Struct, out var size);
 
-                var intArr = new int[psize];
-                Marshal.Copy(intPtr, intArr, 0, psize);
+                var intArr = new int[size];
+                Marshal.Copy(intPtr, intArr, 0, size);
                 result = intArr;
             }
             else if (gtype == ArrayDoubleType)
             {
-                var intPtr = VipsValue.GetArrayDouble(in Struct, out var psize);
+                var intPtr = VipsValue.GetArrayDouble(in Struct, out var size);
 
-                var doubleArr = new double[psize];
-                Marshal.Copy(intPtr, doubleArr, 0, psize);
+                var doubleArr = new double[size];
+                Marshal.Copy(intPtr, doubleArr, 0, size);
                 result = doubleArr;
             }
             else if (gtype == ArrayImageType)
             {
-                var ptrArr = VipsValue.GetArrayImage(in Struct, out var psize);
+                var ptrArr = VipsValue.GetArrayImage(in Struct, out var size);
 
-                var images = new Image[psize];
-                for (var i = 0; i < psize; i++)
+                var images = new Image[size];
+                for (var i = 0; i < size; i++)
                 {
                     var vi = Marshal.ReadIntPtr(ptrArr, i * IntPtr.Size);
                     ref var image = ref images[i];
@@ -520,11 +520,11 @@ namespace NetVips
             }
             else if (gtype == BlobType)
             {
-                var array = VipsValue.GetBlob(in Struct, out var psize);
+                var array = VipsValue.GetBlob(in Struct, out var size);
 
                 // Blob types are returned as an array of bytes.
-                var byteArr = new byte[psize];
-                Marshal.Copy(array, byteArr, 0, (int)psize);
+                var byteArr = new byte[size];
+                Marshal.Copy(array, byteArr, 0, (int)size);
                 result = byteArr;
             }
             else

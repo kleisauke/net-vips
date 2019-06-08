@@ -1,8 +1,8 @@
 namespace NetVips
 {
     using System;
-    using System.Runtime.InteropServices;
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
     using Internal;
 
     /// <summary>

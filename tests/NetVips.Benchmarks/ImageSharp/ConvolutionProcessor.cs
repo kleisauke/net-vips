@@ -1,10 +1,10 @@
-﻿using System;
-using System.Reflection;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Primitives;
-
 namespace SixLabors.ImageSharp.Processing.Processors.Convolution
 {
+    using System;
+    using System.Reflection;
+    using PixelFormats;
+    using Primitives;
+
     /// <summary>
     /// Defines a processor that uses a 2 dimensional matrix to perform convolution against an image.
     /// </summary>
@@ -17,8 +17,8 @@ namespace SixLabors.ImageSharp.Processing.Processors.Convolution
         /// <param name="preserveAlpha">Whether the convolution filter is applied to alpha as well as the color channels.</param>
         public ConvolutionProcessor(in DenseMatrix<float> kernelXY, bool preserveAlpha)
         {
-            this.KernelXY = kernelXY;
-            this.PreserveAlpha = preserveAlpha;
+            KernelXY = kernelXY;
+            PreserveAlpha = preserveAlpha;
         }
 
         /// <summary>

@@ -34,7 +34,7 @@ namespace NetVips.Tests
                     Assert.Equal(minL, maxH);
                 }
 
-                var pixel = im.Getpoint(10, 10);
+                var pixel = im[10, 10];
                 Assert.Equal(42, pixel[3], 2);
             }
 
@@ -43,8 +43,8 @@ namespace NetVips.Tests
             im = im.Colourspace(Enums.Interpretation.Rgb16);
             im = im.Colourspace(Enums.Interpretation.Lab);
 
-            var before = test.Getpoint(10, 10);
-            var after = im.Getpoint(10, 10);
+            var before = test[10, 10];
+            var after = im[10, 10];
             Helper.AssertAlmostEqualObjects(before, after, 0.1);
 
             // go between every pair of colour spaces
@@ -55,8 +55,8 @@ namespace NetVips.Tests
                     im = test.Colourspace(start);
                     var im2 = im.Colourspace(end);
                     var im3 = im2.Colourspace(Enums.Interpretation.Lab);
-                    before = test.Getpoint(10, 10);
-                    after = im3.Getpoint(10, 10);
+                    before = test[10, 10];
+                    after = im3[10, 10];
                     Helper.AssertAlmostEqualObjects(before, after, 0.1);
                 }
             }
@@ -64,7 +64,7 @@ namespace NetVips.Tests
             // test Lab->XYZ on mid-grey
             // checked against http://www.brucelindbloom.com
             im = test.Colourspace(Enums.Interpretation.Xyz);
-            after = im.Getpoint(10, 10);
+            after = im[10, 10];
             Helper.AssertAlmostEqualObjects(new[]
             {
                 17.5064,
@@ -84,9 +84,9 @@ namespace NetVips.Tests
                     Assert.Equal(col, im.Interpretation);
                 }
 
-                var pixelBefore = testGrey.Getpoint(10, 10);
+                var pixelBefore = testGrey[10, 10];
                 var alphaBefore = pixelBefore[1];
-                var pixelAfter = im.Getpoint(10, 10);
+                var pixelAfter = im[10, 10];
                 var alphaAfter = pixelAfter[1];
                 Assert.True(Math.Abs(alphaAfter - alphaBefore) < 1);
 
@@ -105,8 +105,8 @@ namespace NetVips.Tests
                     im = cmyk.Colourspace(end);
                     var im2 = im.Colourspace(Enums.Interpretation.Cmyk);
 
-                    before = cmyk.Getpoint(10, 10);
-                    after = im2.Getpoint(10, 10);
+                    before = cmyk[10, 10];
+                    after = im2[10, 10];
 
                     Helper.AssertAlmostEqualObjects(before, after, 10);
                 }
@@ -127,7 +127,7 @@ namespace NetVips.Tests
             sample = sample.Copy(interpretation: Enums.Interpretation.Lab);
 
             var difference = reference.DE00(sample);
-            var diffPixel = difference.Getpoint(10, 10);
+            var diffPixel = difference[10, 10];
             Assert.Equal(30.238, diffPixel[0], 3);
             Assert.Equal(42.0, diffPixel[1], 3);
         }
@@ -142,7 +142,7 @@ namespace NetVips.Tests
             sample = sample.Copy(interpretation: Enums.Interpretation.Lab);
 
             var difference = reference.DE76(sample);
-            var diffPixel = difference.Getpoint(10, 10);
+            var diffPixel = difference[10, 10];
             Assert.Equal(33.166, diffPixel[0], 3);
             Assert.Equal(42.0, diffPixel[1], 3);
         }
@@ -162,7 +162,7 @@ namespace NetVips.Tests
             sample = sample.Copy(interpretation: Enums.Interpretation.Lab);
 
             var difference = reference.DECMC(sample);
-            var diffPixel = difference.Getpoint(10, 10);
+            var diffPixel = difference[10, 10];
             Assert.True(Math.Abs(diffPixel[0] - 4.97) < 0.5);
             Assert.Equal(42.0, diffPixel[1], 3);
         }
@@ -220,8 +220,8 @@ namespace NetVips.Tests
             var test = Image.NewFromFile(Helper.JpegFile);
             var im = test.Colourspace("cmyk").Colourspace("srgb");
 
-            var before = test.Getpoint(582, 210);
-            var after = im.Getpoint(582, 210);
+            var before = test[582, 210];
+            var after = im[582, 210];
 
             Helper.AssertAlmostEqualObjects(before, after, 10);
         }

@@ -4,24 +4,23 @@ namespace NetVips.Benchmarks
     using System.IO;
     using BenchmarkDotNet.Attributes;
 
-    using NetVipsImage = Image;
-
     using ImageMagick;
 
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.Processing;
     using SixLabors.ImageSharp.Processing.Processors;
     using SixLabors.ImageSharp.Processing.Processors.Convolution;
-    using ImageSharpImage = SixLabors.ImageSharp.Image;
-    using ImageSharpRectangle = SixLabors.Primitives.Rectangle;
+
+    using SkiaSharp;
 
     using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
-    using SystemDrawingImage = System.Drawing.Image;
-    using SystemDrawingRectangle = System.Drawing.Rectangle;
 
-    using SkiaSharp;
+    using NetVipsImage = Image;
+    using ImageSharpImage = SixLabors.ImageSharp.Image;
+    using ImageSharpRectangle = SixLabors.Primitives.Rectangle;
+    using SystemDrawingImage = System.Drawing.Image;
 
     [Config(typeof(Config))]
     public class Benchmark
@@ -159,8 +158,8 @@ namespace NetVips.Benchmarks
         {
             using (var image = SystemDrawingImage.FromFile(input, true))
             {
-                var cropRect = new SystemDrawingRectangle(100, 100, image.Width - 200, image.Height - 200);
-                var resizeRect = new SystemDrawingRectangle(0, 0, (int)Math.Round(cropRect.Width * .9F),
+                var cropRect = new Rectangle(100, 100, image.Width - 200, image.Height - 200);
+                var resizeRect = new Rectangle(0, 0, (int)Math.Round(cropRect.Width * .9F),
                     (int)Math.Round(cropRect.Height * .9F));
 
                 using (var src = new Bitmap(cropRect.Width, cropRect.Height))
@@ -172,7 +171,7 @@ namespace NetVips.Benchmarks
                         cropGraphics.InterpolationMode = InterpolationMode.Bilinear;
 
                         // Crop
-                        cropGraphics.DrawImage(image, new SystemDrawingRectangle(0, 0, src.Width, src.Height),
+                        cropGraphics.DrawImage(image, new Rectangle(0, 0, src.Width, src.Height),
                             cropRect, GraphicsUnit.Pixel);
 
                         // Dispose early, since we don't need it anymore

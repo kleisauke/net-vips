@@ -268,5 +268,75 @@ namespace NetVips
 
             return $"{dValue:n2} {sizeSuffixes[i]}";
         }
+
+        /// <summary>
+        /// Negate all elements in an array.
+        /// </summary>
+        /// <param name="array">An array of doubles.</param>
+        /// <returns>The negated array.</returns>
+        internal static double[] Negate(this double[] array)
+        {
+            for (var i = 0; i < array.Length; i++)
+            {
+                array[i] *= -1;
+            }
+
+            return array;
+        }
+
+        /// <summary>
+        /// Negate all elements in an array.
+        /// </summary>
+        /// <remarks>
+        /// It will output an array of doubles instead of integers.
+        /// </remarks>
+        /// <param name="array">An array of integers.</param>
+        /// <returns>The negated array.</returns>
+        internal static double[] Negate(this int[] array)
+        {
+            var doubles = new double[array.Length];
+            for (var i = 0; i < array.Length; i++)
+            {
+                ref var value = ref doubles[i];
+                value = array[i] * -1;
+            }
+
+            return doubles;
+        }
+
+        /// <summary>
+        /// Invert all elements in an array.
+        /// </summary>
+        /// <param name="array">An array of doubles.</param>
+        /// <returns>The inverted array.</returns>
+        internal static double[] Invert(this double[] array)
+        {
+            for (var i = 0; i < array.Length; i++)
+            {
+                array[i] = 1.0 / array[i];
+            }
+
+            return array;
+        }
+
+        /// <summary>
+        /// Invert all elements in an array.
+        /// </summary>
+        /// <remarks>
+        /// It will output an array of doubles instead of integers.
+        /// </remarks>
+        /// <param name="array">An array of integers.</param>
+        /// <returns>The inverted array.</returns>
+        internal static double[] Invert(this int[] array)
+        {
+            var doubles = new double[array.Length];
+            for (var i = 0; i < array.Length; i++)
+            {
+                ref var value = ref doubles[i];
+                value = 1.0 / array[i];
+            }
+
+            return doubles;
+        }
     }
 }

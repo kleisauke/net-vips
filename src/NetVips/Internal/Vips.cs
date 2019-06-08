@@ -17,55 +17,68 @@ namespace NetVips.Internal
     internal static class Vips
     {
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_init")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_init")]
         internal static extern int Init([MarshalAs(UnmanagedType.LPStr)] string argv0);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_leak_set")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_leak_set")]
         internal static extern void LeakSet(int leak);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_profile_set")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_profile_set")]
         internal static extern void ProfileSet(int profile);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_max")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_cache_set_max")]
         internal static extern void CacheSetMax(int max);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_max_mem")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_cache_set_max_mem")]
         internal static extern void CacheSetMaxMem(ulong maxMem);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_max_files")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_cache_set_max_files")]
         internal static extern void CacheSetMaxFiles(int maxFiles);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_cache_set_trace")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_cache_set_trace")]
         internal static extern void CacheSetTrace(int trace);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_concurrency_set")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_concurrency_set")]
         internal static extern void ConcurrencySet(int concurrency);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_concurrency_get")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_concurrency_get")]
         internal static extern int ConcurrencyGet();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_vector_set_enabled")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_vector_set_enabled")]
         internal static extern void VectorSet(int enabled);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_allocs")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_tracked_get_allocs")]
         internal static extern int TrackedGetAllocs();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_mem")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_tracked_get_mem")]
         internal static extern int TrackedGetMem();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_tracked_get_files")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_tracked_get_files")]
         internal static extern int TrackedGetFiles();
 
         [SuppressUnmanagedCodeSecurity]
@@ -74,11 +87,13 @@ namespace NetVips.Internal
         internal static extern ulong TrackedGetMemHighwater();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_version")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_version")]
         internal static extern int Version(int flag);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_enum_nick")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_enum_nick")]
         internal static extern IntPtr EnumNick(IntPtr enm, int value);
 
         [SuppressUnmanagedCodeSecurity]
@@ -103,7 +118,8 @@ namespace NetVips.Internal
         internal static extern IntPtr PathFilename7(in byte path);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_path_mode7")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_path_mode7")]
         internal static extern IntPtr PathMode7(in byte path);
 
         [SuppressUnmanagedCodeSecurity]
@@ -138,11 +154,13 @@ namespace NetVips.Internal
             IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_type_map")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_type_map")]
         internal static extern IntPtr TypeMap(IntPtr @base, VipsTypeMap2Fn fn, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_type_find")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_type_find")]
         internal static extern IntPtr TypeFind([MarshalAs(UnmanagedType.LPStr)] string basename,
             [MarshalAs(UnmanagedType.LPStr)] string nickname);
 
@@ -422,6 +440,29 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_interpolate_new")]
         internal static extern IntPtr New([MarshalAs(UnmanagedType.LPStr)] string nickname);
+    }
+
+    internal static class VipsRegion
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_region_new")]
+        internal static extern IntPtr New(Image image);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_region_fetch")]
+        internal static extern IntPtr Fetch(Region region, int left, int top, int width, int height, out ulong length);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_region_width")]
+        internal static extern int Width(Region region);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_region_height")]
+        internal static extern int Height(Region region);
     }
 
     internal static class VipsOperation

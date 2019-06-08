@@ -20,7 +20,7 @@ namespace NetVips.Tests
 
             var cum = im.HistCum();
 
-            var p = cum.Getpoint(255, 0);
+            var p = cum[255, 0];
             Assert.Equal(sum, p[0]);
         }
 

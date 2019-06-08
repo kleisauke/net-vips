@@ -260,13 +260,14 @@ namespace NetVips
                     (flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_DEPRECATED) == 0 &&
                     kwargs.ContainsKey(name))
                 {
-                    op.Set(name, flag, matchImage, kwargs[name]);
-                    kwargs.Remove(name);
+                    kwargs.Remove(name, out var value);
+                    op.Set(name, flag, matchImage, value);
 
                     if ((flag & Internal.Enums.VipsArgumentFlags.VIPS_ARGUMENT_OUTPUT) != 0)
                     {
                         optionalOutput.Add(name);
                     }
+
                     continue;
                 }
 
@@ -302,7 +303,8 @@ namespace NetVips
 
             if (kwargs != null && kwargs.Count > 0)
             {
-                throw new Exception($"{operationName} does not support argument(s): {string.Join(", ", kwargs.Keys.ToArray())}");
+                throw new Exception(
+                    $"{operationName} does not support argument(s): {string.Join(", ", kwargs.Keys.ToArray())}");
             }
 
             // build operation
@@ -858,7 +860,8 @@ namespace NetVips
 //------------------------------------------------------------------------------";
 
             var stringBuilder =
-                new StringBuilder(string.Format(preamble, $"{NetVips.Version(0)}.{NetVips.Version(1)}.{NetVips.Version(2)}"));
+                new StringBuilder(string.Format(preamble,
+                    $"{NetVips.Version(0)}.{NetVips.Version(1)}.{NetVips.Version(2)}"));
             stringBuilder.AppendLine()
                 .AppendLine()
                 .AppendLine("namespace NetVips")

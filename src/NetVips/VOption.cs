@@ -4,7 +4,7 @@ namespace NetVips
     using System.Collections.Generic;
 
     /// <summary>
-    /// This class wraps a <see cref="Dictionary{String, Object}"/>.
+    /// This class wraps a <see cref="Dictionary{TKey,TValue}"/>.
     /// This is used to call functions with optional arguments. See <see cref="Operation.Call(string, VOption, object[])"/>.
     /// </summary>
     public class VOption : IEnumerable<KeyValuePair<string, object>>

@@ -144,7 +144,7 @@ namespace NetVips.Tests
 
             void JpegValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
                 Assert.Equal(new double[] { 6, 5, 3 }, a);
                 var profile = im.Get("icc-profile-data") as byte[];
 
@@ -271,7 +271,7 @@ namespace NetVips.Tests
 
             void PngValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new[] { 38671.0, 33914.0, 26762.0 }, a);
                 Assert.Equal(290, im.Width);
@@ -323,7 +323,7 @@ namespace NetVips.Tests
 
             void TiffValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new[] { 38671.0, 33914.0, 26762.0 }, a);
                 Assert.Equal(290, im.Width);
@@ -428,9 +428,9 @@ namespace NetVips.Tests
                 {
                     {"n", -1}
                 });
-                Assert.Equal(96, x.Getpoint(0, 166)[0]);
-                Assert.Equal(0, x.Getpoint(0, 167)[0]);
-                Assert.Equal(1, x.Getpoint(0, 168)[0]);
+                Assert.Equal(96, x[0, 166][0]);
+                Assert.Equal(0, x[0, 167][0]);
+                Assert.Equal(1, x[0, 168][0]);
 
                 filename = Helper.GetTemporaryFile(_tempDir, ".tif");
                 x.WriteToFile(filename);
@@ -441,9 +441,9 @@ namespace NetVips.Tests
                 });
                 Assert.Equal(439, x.Width);
                 Assert.Equal(pageHeight * 15, x.Height);
-                Assert.Equal(96, x.Getpoint(0, 166)[0]);
-                Assert.Equal(0, x.Getpoint(0, 167)[0]);
-                Assert.Equal(1, x.Getpoint(0, 168)[0]);
+                Assert.Equal(96, x[0, 166][0]);
+                Assert.Equal(0, x[0, 167][0]);
+                Assert.Equal(1, x[0, 168][0]);
             }
 
             // pyr save to buffer added in 8.6
@@ -487,7 +487,7 @@ namespace NetVips.Tests
 
             void BmpValid(Image im)
             {
-                var a = im.Getpoint(100, 100);
+                var a = im[100, 100];
 
                 Helper.AssertAlmostEqualObjects(new double[] { 227, 216, 201 }, a);
                 Assert.Equal(1419, im.Width);
@@ -581,7 +581,7 @@ namespace NetVips.Tests
 
             void WebpValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new double[] { 71, 166, 236 }, a);
                 Assert.Equal(550, im.Width);
@@ -663,7 +663,7 @@ namespace NetVips.Tests
 
             void AnalyzeValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(3335, a[0]);
                 Assert.Equal(128, im.Width);
@@ -681,7 +681,7 @@ namespace NetVips.Tests
 
             void MatlabValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new[] { 38671.0, 33914.0, 26762.0 }, a);
                 Assert.Equal(290, im.Width);
@@ -699,7 +699,7 @@ namespace NetVips.Tests
 
             void ExrValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Helper.AssertAlmostEqualObjects(new[]
                 {
@@ -724,7 +724,7 @@ namespace NetVips.Tests
 
             void FitsValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Helper.AssertAlmostEqualObjects(new[]
                 {
@@ -749,7 +749,7 @@ namespace NetVips.Tests
 
             void NiftiValid(Image im)
             {
-                var a = im.Getpoint(30, 26);
+                var a = im[30, 26];
 
                 Helper.AssertAlmostEqualObjects(new[]
                 {
@@ -772,7 +772,7 @@ namespace NetVips.Tests
 
             void OpenslideValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new double[] { 244, 250, 243, 255 }, a);
                 Assert.Equal(2220, im.Width);
@@ -790,7 +790,7 @@ namespace NetVips.Tests
 
             void PdfValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new double[] { 35, 31, 32, 255 }, a);
 
@@ -828,7 +828,7 @@ namespace NetVips.Tests
 
             void GifValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Assert.Equal(new double[] { 33 }, a);
                 Assert.Equal(159, im.Width);
@@ -873,7 +873,7 @@ namespace NetVips.Tests
 
             void SvgValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 // some old rsvg versions are way, way off
                 Assert.True(Math.Abs(a[0] - 79) < 2);
@@ -1105,7 +1105,7 @@ namespace NetVips.Tests
 
             void HeifValid(Image im)
             {
-                var a = im.Getpoint(10, 10);
+                var a = im[10, 10];
 
                 Helper.AssertAlmostEqualObjects(new[]
                 {

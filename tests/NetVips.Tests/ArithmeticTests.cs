@@ -107,11 +107,6 @@ namespace NetVips.Tests
         {
             dynamic Add(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage + x;
-                }
-
                 return x + y;
             }
 
@@ -124,12 +119,6 @@ namespace NetVips.Tests
         {
             dynamic Sub(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    // There's no __rsub__ equivalent in C# :(
-                    return Operation.Call("linear", null, rightImage, -1, x) as Image;
-                }
-
                 return x - y;
             }
 
@@ -142,11 +131,6 @@ namespace NetVips.Tests
         {
             dynamic Mul(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage * x;
-                }
-
                 return x * y;
             }
 
@@ -159,12 +143,6 @@ namespace NetVips.Tests
         {
             dynamic Div(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    // There's no  __rdiv__ & __pow__ equivalent in C# :(
-                    return (Operation.Call("math2_const", null, rightImage, "pow", -1) as Image) * x;
-                }
-
                 return x / y;
             }
 
@@ -181,7 +159,7 @@ namespace NetVips.Tests
                 if (y is Image rightImage && !(x is Image))
                 {
                     // There's no  __rfloordiv__ & __pow__ equivalent in C# :(
-                    return ((Operation.Call("math2_const", null, rightImage, "pow", -1) as Image) * x).Floor();
+                    return (rightImage.Pow(-1) * x).Floor();
                 }
 
                 if (x is Image leftImage)
@@ -206,20 +184,13 @@ namespace NetVips.Tests
                 if (y is Image rightImage && !(x is Image))
                 {
                     // There's no  __rpow__ equivalent in C# :(
-                    return Operation.Call("math2_const", null, rightImage, "wop", x) as Image;
+                    return rightImage.Wop(x);
                 }
 
                 if (x is Image leftImage)
                 {
                     // There's no  __pow__ equivalent in C# :(
-                    if (y is Image)
-                    {
-                        return Operation.Call("math2", null, x, y, "pow") as Image;
-                    }
-                    else
-                    {
-                        return Operation.Call("math2_const", null, leftImage, "pow", y) as Image;
-                    }
+                    return leftImage.Pow(y);
                 }
 
                 return Math.Pow(x, y);
@@ -235,7 +206,7 @@ namespace NetVips.Tests
         {
             dynamic And(dynamic x, dynamic y)
             {
-                // C# doesn't allow bools on doubles
+                // C# doesn't allow bitwise AND on doubles
                 if (x is double dblX)
                 {
                     x = (int)dblX;
@@ -244,11 +215,6 @@ namespace NetVips.Tests
                 if (y is double dblY)
                 {
                     y = (int)dblY;
-                }
-
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage & x;
                 }
 
                 return x & y;
@@ -263,7 +229,7 @@ namespace NetVips.Tests
         {
             dynamic Or(dynamic x, dynamic y)
             {
-                // C# doesn't allow bools on doubles
+                // C# doesn't allow bitwise OR on doubles
                 if (x is double dblX)
                 {
                     x = (int)dblX;
@@ -272,11 +238,6 @@ namespace NetVips.Tests
                 if (y is double dblY)
                 {
                     y = (int)dblY;
-                }
-
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage | x;
                 }
 
                 return x | y;
@@ -291,7 +252,7 @@ namespace NetVips.Tests
         {
             dynamic Xor(dynamic x, dynamic y)
             {
-                // C# doesn't allow bools on doubles
+                // C# doesn't allow bitwise exclusive-OR on doubles
                 if (x is double dblX)
                 {
                     x = (int)dblX;
@@ -300,11 +261,6 @@ namespace NetVips.Tests
                 if (y is double dblY)
                 {
                     y = (int)dblY;
-                }
-
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage ^ x;
                 }
 
                 return x ^ y;
@@ -319,11 +275,6 @@ namespace NetVips.Tests
         {
             dynamic More(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage < x;
-                }
-
                 if (y is Image || x is Image)
                 {
                     return x > y;
@@ -341,11 +292,6 @@ namespace NetVips.Tests
         {
             dynamic MoreEq(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage <= x;
-                }
-
                 if (y is Image || x is Image)
                 {
                     return x >= y;
@@ -363,11 +309,6 @@ namespace NetVips.Tests
         {
             dynamic Less(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage > x;
-                }
-
                 if (y is Image || x is Image)
                 {
                     return x < y;
@@ -385,11 +326,6 @@ namespace NetVips.Tests
         {
             dynamic LessEq(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
-                {
-                    return rightImage >= x;
-                }
-
                 if (y is Image || x is Image)
                 {
                     return x <= y;
@@ -409,12 +345,17 @@ namespace NetVips.Tests
             {
                 if (y is Image rightImage && !(x is Image))
                 {
-                    return rightImage.Equal(x);
+                    return x == rightImage;
                 }
 
-                if (y is Image || x is Image)
+                if (x is Image leftImage && !(y is Image))
                 {
-                    return x.Equal(y);
+                    return y == leftImage;
+                }
+
+                if (y is Image)
+                {
+                    return y.Equal(x);
                 }
 
                 return x == y ? 255 : 0;
@@ -431,12 +372,17 @@ namespace NetVips.Tests
             {
                 if (y is Image rightImage && !(x is Image))
                 {
-                    return rightImage.NotEqual(x);
+                    return x != rightImage;
                 }
 
-                if (y is Image || x is Image)
+                if (x is Image leftImage && !(y is Image))
                 {
-                    return x.NotEqual(y);
+                    return y != leftImage;
+                }
+
+                if (y is Image)
+                {
+                    return y.NotEqual(x);
                 }
 
                 return x != y ? 255 : 0;
@@ -471,7 +417,7 @@ namespace NetVips.Tests
         {
             dynamic LShift(dynamic x)
             {
-                // C# doesn't allow bools on doubles
+                // C# doesn't allow lshift on doubles
                 if (x is double dblX)
                 {
                     x = (int)dblX;
@@ -489,7 +435,7 @@ namespace NetVips.Tests
         {
             dynamic RShift(dynamic x)
             {
-                // C# doesn't allow bools on doubles
+                // C# doesn't allow rshift on doubles
                 if (x is double dblX)
                 {
                     x = (int)dblX;
@@ -626,23 +572,23 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind();
-                Assert.Equal(new double[] { 5000 }, hist.Getpoint(0, 0));
-                Assert.Equal(new double[] { 5000 }, hist.Getpoint(10, 0));
-                Assert.Equal(new double[] { 0 }, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] { 5000 }, hist[0, 0]);
+                Assert.Equal(new double[] { 5000 }, hist[10, 0]);
+                Assert.Equal(new double[] { 0 }, hist[5, 0]);
             }
 
             test = test * new[] { 1, 2, 3 };
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind(band: 0);
-                Assert.Equal(new double[] { 5000 }, hist.Getpoint(0, 0));
-                Assert.Equal(new double[] { 5000 }, hist.Getpoint(10, 0));
-                Assert.Equal(new double[] { 0 }, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] { 5000 }, hist[0, 0]);
+                Assert.Equal(new double[] { 5000 }, hist[10, 0]);
+                Assert.Equal(new double[] { 0 }, hist[5, 0]);
 
                 hist = test.Cast(fmt).HistFind(band: 1);
-                Assert.Equal(new double[] { 5000 }, hist.Getpoint(0, 0));
-                Assert.Equal(new double[] { 5000 }, hist.Getpoint(20, 0));
-                Assert.Equal(new double[] { 0 }, hist.Getpoint(5, 0));
+                Assert.Equal(new double[] { 5000 }, hist[0, 0]);
+                Assert.Equal(new double[] { 5000 }, hist[20, 0]);
+                Assert.Equal(new double[] { 0 }, hist[5, 0]);
             }
         }
 
@@ -662,8 +608,8 @@ namespace NetVips.Tests
                     var a = test.Cast(x);
                     var b = index.Cast(y);
                     var hist = a.HistFindIndexed(b);
-                    Assert.Equal(new double[] { 0 }, hist.Getpoint(0, 0));
-                    Assert.Equal(new double[] { 50000 }, hist.Getpoint(1, 0));
+                    Assert.Equal(new double[] { 0 }, hist[0, 0]);
+                    Assert.Equal(new double[] { 50000 }, hist[1, 0]);
                 }
             }
         }
@@ -677,12 +623,12 @@ namespace NetVips.Tests
             {
                 var hist = im.Cast(fmt).HistFindNdim();
 
-                Assert.Equal(10000, hist.Getpoint(0, 0)[0]);
-                Assert.Equal(0, hist.Getpoint(5, 5)[5]);
+                Assert.Equal(10000, hist[0, 0][0]);
+                Assert.Equal(0, hist[5, 5][5]);
 
                 hist = im.Cast(fmt).HistFindNdim(bins: 1);
 
-                Assert.Equal(10000, hist.Getpoint(0, 0)[0]);
+                Assert.Equal(10000, hist[0, 0][0]);
                 Assert.Equal(1, hist.Width);
                 Assert.Equal(1, hist.Height);
                 Assert.Equal(1, hist.Bands);
@@ -704,7 +650,7 @@ namespace NetVips.Tests
                 var x = (int)maxPos[1];
                 var y = (int)maxPos[2];
 
-                var vec = hough.Getpoint(x, y);
+                var vec = hough[x, y];
                 var r = Array.IndexOf(vec, vec.Min(d => v)) + 35;
 
                 Assert.Equal(50, x);
@@ -1014,8 +960,8 @@ namespace NetVips.Tests
             {
                 var a = test.Cast(fmt);
                 var matrix = a.Measure(2, 1);
-                var p1 = matrix.Getpoint(0, 0)[0];
-                var p2 = matrix.Getpoint(0, 1)[0];
+                var p1 = matrix[0, 0][0];
+                var p2 = matrix[0, 1][0];
 
                 Assert.Equal(0, p1);
                 Assert.Equal(10, p2);
@@ -1045,7 +991,7 @@ namespace NetVips.Tests
                 Assert.Equal(60, height);
             }
 
-            var testRgb = test.Bandjoin(new[] { test, test });
+            var testRgb = test.Bandjoin(test, test);
             var trim2 = testRgb.FindTrim(background: new double[] { 255, 255, 255 });
             var left2 = trim2[0];
             var top2 = trim2[1];
@@ -1101,10 +1047,10 @@ namespace NetVips.Tests
                 var columns = profile[0] as Image;
                 var rows = profile[1] as Image;
 
-                Assert.Equal(new double[] { 0 }, columns.Getpoint(10, 0));
-                Assert.Equal(new double[] { 50 * 10 }, columns.Getpoint(70, 0));
+                Assert.Equal(new double[] { 0 }, columns[10, 0]);
+                Assert.Equal(new double[] { 50 * 10 }, columns[70, 0]);
 
-                Assert.Equal(new double[] { 50 * 10 }, rows.Getpoint(0, 10));
+                Assert.Equal(new double[] { 50 * 10 }, rows[0, 10]);
             }
         }
 
@@ -1119,19 +1065,19 @@ namespace NetVips.Tests
                 var a = test.Cast(fmt);
                 var matrix = a.Stats();
 
-                Assert.Equal(new[] { a.Min() }, matrix.Getpoint(0, 0));
-                Assert.Equal(new[] { a.Max() }, matrix.Getpoint(1, 0));
-                Assert.Equal(new double[] { 50 * 50 * 10 }, matrix.Getpoint(2, 0));
-                Assert.Equal(new double[] { 50 * 50 * 100 }, matrix.Getpoint(3, 0));
-                Assert.Equal(new[] { a.Avg() }, matrix.Getpoint(4, 0));
-                Assert.Equal(new[] { a.Deviate() }, matrix.Getpoint(5, 0));
+                Assert.Equal(new[] { a.Min() }, matrix[0, 0]);
+                Assert.Equal(new[] { a.Max() }, matrix[1, 0]);
+                Assert.Equal(new double[] { 50 * 50 * 10 }, matrix[2, 0]);
+                Assert.Equal(new double[] { 50 * 50 * 100 }, matrix[3, 0]);
+                Assert.Equal(new[] { a.Avg() }, matrix[4, 0]);
+                Assert.Equal(new[] { a.Deviate() }, matrix[5, 0]);
 
-                Assert.Equal(new[] { a.Min() }, matrix.Getpoint(0, 1));
-                Assert.Equal(new[] { a.Max() }, matrix.Getpoint(1, 1));
-                Assert.Equal(new double[] { 50 * 50 * 10 }, matrix.Getpoint(2, 1));
-                Assert.Equal(new double[] { 50 * 50 * 100 }, matrix.Getpoint(3, 1));
-                Assert.Equal(new[] { a.Avg() }, matrix.Getpoint(4, 1));
-                Assert.Equal(new[] { a.Deviate() }, matrix.Getpoint(5, 1));
+                Assert.Equal(new[] { a.Min() }, matrix[0, 1]);
+                Assert.Equal(new[] { a.Max() }, matrix[1, 1]);
+                Assert.Equal(new double[] { 50 * 50 * 10 }, matrix[2, 1]);
+                Assert.Equal(new double[] { 50 * 50 * 100 }, matrix[3, 1]);
+                Assert.Equal(new[] { a.Avg() }, matrix[4, 1]);
+                Assert.Equal(new[] { a.Deviate() }, matrix[5, 1]);
             }
         }
 

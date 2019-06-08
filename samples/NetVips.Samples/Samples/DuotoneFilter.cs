@@ -21,7 +21,7 @@ namespace NetVips.Samples
             // makes a lut which is a smooth gradient from start colour to stop colour,
             // with start and stop in CIELAB
             var lut = Image.Identity() / 255;
-            lut = lut * Stop + (lut * -1 + 1) * Start;
+            lut = lut * Stop + (1 - lut) * Start;
             lut = lut.Colourspace("srgb", sourceSpace: "lab");
 
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);

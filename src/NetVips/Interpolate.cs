@@ -33,6 +33,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="name">libvips class nickname.</param>
         /// <returns>A new <see cref="Interpolate"/>.</returns>
+        /// <exception cref="VipsException">If unable to make a new interpolator from <paramref name="name"/>.</exception>
         public static Interpolate NewFromName(string name)
         {
             // logger.Debug($"Interpolate.NewFromName: name = {name}");

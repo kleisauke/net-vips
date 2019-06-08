@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add `image.SetKill()` and `image.IsKilled()` ([#31](https://github.com/kleisauke/net-vips/issues/31), [libvips/libvips@91d0e7e](https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305)).
 - Add `NetVips.ProfileSet()`, `NetVips.VectorSet()`, `NetVips.ConcurrencySet()` and `NetVips.ConcurrencyGet()` utilities.
 - Add support for loading and saving from and to streams (`Image.NewFromStream()` / `image.WriteToStream()`) ([#33](https://github.com/kleisauke/net-vips/issues/33)).
+- Add `Region` class to read pixels from images without storing the entire image in memory.
+- Add `image[x, y]` overload as a synonym for `image.Getpoint(x, y)`.
+- Add missing arithmetic operators (`1 - image`, `1 / image`, etc.).
 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).

@@ -15,21 +15,21 @@ namespace NetVips.Tests
         {
             var im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] { 100 }, 50, 50, 25);
-            var pixel = im.Getpoint(25, 50);
+            var pixel = im[25, 50];
             Assert.Single(pixel);
             Assert.Equal(100, pixel[0]);
-            pixel = im.Getpoint(26, 50);
+            pixel = im[26, 50];
             Assert.Single(pixel);
             Assert.Equal(0, pixel[0]);
 
             im = Image.Black(100, 100);
             im = im.DrawCircle(new double[] { 100 }, 50, 50, 25, fill: true);
-            pixel = im.Getpoint(25, 50);
+            pixel = im[25, 50];
             Assert.Single(pixel);
             Assert.Equal(100, pixel[0]);
-            pixel = im.Getpoint(26, 50);
+            pixel = im[26, 50];
             Assert.Equal(100, pixel[0]);
-            pixel = im.Getpoint(24, 50);
+            pixel = im[24, 50];
             Assert.Equal(0, pixel[0]);
         }
 
@@ -68,10 +68,10 @@ namespace NetVips.Tests
         {
             var im = Image.Black(100, 100);
             im = im.DrawLine(new double[] { 100 }, 0, 0, 100, 0);
-            var pixel = im.Getpoint(0, 0);
+            var pixel = im[0, 0];
             Assert.Single(pixel);
             Assert.Equal(100, pixel[0]);
-            pixel = im.Getpoint(0, 1);
+            pixel = im[0, 1];
             Assert.Single(pixel);
             Assert.Equal(0, pixel[0]);
         }

@@ -5,7 +5,7 @@ namespace NetVips.Tests
 
     public class TestsFixture : IDisposable
     {
-        private uint _handlerId = 0;
+        private uint _handlerId;
 
         public void SetUpLogging(ITestOutputHelper output)
         {

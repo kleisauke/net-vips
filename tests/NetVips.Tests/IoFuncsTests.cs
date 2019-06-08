@@ -95,7 +95,7 @@ namespace NetVips.Tests
             Assert.Equal(1, im2.Bands);
             Assert.Equal(12, im2.Avg());
 
-            im2 = im.NewFromImage(new[] { 1, 2, 3 });
+            im2 = im.NewFromImage(1, 2, 3);
             Assert.Equal(3, im2.Bands);
             Assert.Equal(2, im2.Avg());
         }
@@ -151,6 +151,28 @@ namespace NetVips.Tests
             var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
             var t = im.WriteToMemory();
             Assert.True(s.SequenceEqual(t));
+        }
+
+        [SkippableFact]
+        public void TestRegion()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
+
+            var im = Image.Black(100, 100);
+            var region = Region.New(im);
+            var data = region.Fetch(0, 0, 10, 10);
+
+            Assert.Equal(10, region.Width);
+            Assert.Equal(10, region.Height);
+            Assert.True(data.Length == 100);
+            Assert.True(data.All(p => p == 0));
+
+            data = region.Fetch(0, 0, 20, 10);
+
+            Assert.Equal(20, region.Width);
+            Assert.Equal(10, region.Height);
+            Assert.True(data.Length == 200);
+            Assert.True(data.All(p => p == 0));
         }
 
         [Fact]

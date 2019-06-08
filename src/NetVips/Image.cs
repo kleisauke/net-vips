@@ -343,7 +343,8 @@ namespace NetVips
         /// after convolution. Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
-        public static Image NewFromArray<T>(T[,] array, double scale = 1.0, double offset = 0.0) where T : struct, IEquatable<T>
+        public static Image NewFromArray<T>(T[,] array, double scale = 1.0, double offset = 0.0)
+            where T : struct, IEquatable<T>
         {
             var height = array.GetLength(0);
             var width = array.GetLength(1);
@@ -387,7 +388,8 @@ namespace NetVips
         /// after convolution. Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
-        public static Image NewFromArray<T>(T[][] array, double scale = 1.0, double offset = 0.0) where T : struct, IEquatable<T>
+        public static Image NewFromArray<T>(T[][] array, double scale = 1.0, double offset = 0.0)
+            where T : struct, IEquatable<T>
         {
             var height = array.Length;
             var width = array[0].Length;
@@ -432,7 +434,8 @@ namespace NetVips
         /// after convolution. Useful for integer convolution masks.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to make image from <paramref name="array"/>.</exception>
-        public static Image NewFromArray<T>(T[] array, double scale = 1.0, double offset = 0.0) where T : struct, IEquatable<T>
+        public static Image NewFromArray<T>(T[] array, double scale = 1.0, double offset = 0.0)
+            where T : struct, IEquatable<T>
         {
             var height = array.Length;
             var a = new double[height];
@@ -762,7 +765,7 @@ namespace NetVips
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
         /// <returns>A non-resizable <see cref="MemoryStream"/>.</returns>
         /// <exception cref="VipsException">If unable to write to stream.</exception>
-        public Stream WriteToStream(string formatString, VOption kwargs = null) => 
+        public Stream WriteToStream(string formatString, VOption kwargs = null) =>
             new MemoryStream(WriteToBuffer(formatString, kwargs));
 
         /// <summary>
@@ -782,10 +785,10 @@ namespace NetVips
         /// <returns>An array of bytes.</returns>
         public byte[] WriteToMemory()
         {
-            var pointer = VipsImage.WriteToMemory(this, out var psize);
+            var pointer = VipsImage.WriteToMemory(this, out var size);
 
-            var managedArray = new byte[psize];
-            Marshal.Copy(pointer, managedArray, 0, (int)psize);
+            var managedArray = new byte[size];
+            Marshal.Copy(pointer, managedArray, 0, (int)size);
 
             GLib.GFree(pointer);
 
@@ -1136,7 +1139,7 @@ namespace NetVips
                 options.Add(nameof(index), index);
             }
 
-            return this.Call("bandrank", options, new object[] { doubles }) as Image;
+            return this.Call("bandrank", options, doubles) as Image;
         }
 
         /// <summary>
@@ -1257,6 +1260,7 @@ namespace NetVips
                 ref var value = ref intModes[i];
                 value = GValue.ToEnum(GValue.BlendModeType, modes[i]);
             }
+
             return Composite(images, intModes, x, y, compositingSpace, premultiplied);
         }
 
@@ -1406,6 +1410,62 @@ namespace NetVips
         public Image Exp10() => Math("exp10");
 
         /// <summary>
+        /// Raise to power of an image.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Pow(Image other) => Math2(other, "pow");
+
+        /// <summary>
+        /// Raise to power of an constant.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Pow(double other) => Math2Const("pow", new[] { other });
+
+        /// <summary>
+        /// Raise to power of an array.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Pow(double[] other) => Math2Const("pow", other);
+
+        /// <summary>
+        /// Raise to power of an array.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Pow(int[] other) => Math2Const("pow", Array.ConvertAll(other, Convert.ToDouble));
+
+        /// <summary>
+        /// Raise to power of an image, but with the arguments reversed.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Wop(Image other) => Math2(other, "wop");
+
+        /// <summary>
+        /// Raise to power of an constant, but with the arguments reversed.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Wop(double other) => Math2Const("wop", new[] { other });
+
+        /// <summary>
+        /// Raise to power of an array, but with the arguments reversed.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Wop(double[] other) => Math2Const("wop", other);
+
+        /// <summary>
+        /// Raise to power of an array, but with the arguments reversed.
+        /// </summary>
+        /// <param name="other">To the power of this.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Wop(int[] other) => Math2Const("wop", Array.ConvertAll(other, Convert.ToDouble));
+
+        /// <summary>
         /// Erode with a structuring element.
         /// </summary>
         /// <param name="mask">The structuring element.</param>
@@ -1491,6 +1551,70 @@ namespace NetVips
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image BandEor() => this.Call("bandbool", "eor") as Image;
+
+        /// <summary>
+        /// This operation compares two images on equality.
+        /// </summary>
+        /// <param name="right">A <see cref="Image"/> to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Equal(Image right) =>
+            this.Call("relational", right, "equal") as Image;
+
+        /// <summary>
+        /// This operation compares two images on equality.
+        /// </summary>
+        /// <param name="right">A double array to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Equal(double[] right) =>
+            this.Call("relational_const", "equal", right) as Image;
+
+        /// <summary>
+        /// This operation compares two images on equality.
+        /// </summary>
+        /// <param name="right">A integer array to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Equal(int[] right) =>
+            this.Call("relational_const", "equal", right) as Image;
+
+        /// <summary>
+        /// This operation compares two images on equality.
+        /// </summary>
+        /// <param name="right">A double constant to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Equal(double right) =>
+            this.Call("relational_const", "equal", right) as Image;
+
+        /// <summary>
+        /// This operation compares two images on inequality.
+        /// </summary>
+        /// <param name="right">A <see cref="Image"/> to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image NotEqual(Image right) =>
+            this.Call("relational", right, "noteq") as Image;
+
+        /// <summary>
+        /// This operation compares two images on inequality.
+        /// </summary>
+        /// <param name="right">A double constant  to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image NotEqual(double right) =>
+            this.Call("relational_const", "noteq", right) as Image;
+
+        /// <summary>
+        /// This operation compares two images on inequality.
+        /// </summary>
+        /// <param name="right">A double array to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image NotEqual(double[] right) =>
+            this.Call("relational_const", "noteq", right) as Image;
+
+        /// <summary>
+        /// This operation compares two images on inequality.
+        /// </summary>
+        /// <param name="right">A integer array to compare.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image NotEqual(int[] right) =>
+            this.Call("relational_const", "noteq", right) as Image;
 
         /// <summary>
         /// Does this image have an alpha channel?
@@ -1690,6 +1814,19 @@ namespace NetVips
                 }
             }
         }
+
+        /// <summary>
+        /// A synonym for <see cref="Getpoint"/>.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// double[] outArray = in[x, y];
+        /// </code>
+        /// </example>
+        /// <param name="x">Point to read.</param>
+        /// <param name="y">Point to read.</param>
+        /// <returns>An array of doubles.</returns>
+        public double[] this[int x, int y] => Getpoint(x, y);
 
         /// <summary>
         /// Split an n-band image into n separate images.
