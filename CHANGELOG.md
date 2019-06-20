@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add `Region` class to read pixels from images without storing the entire image in memory.
 - Add `image[x, y]` overload as a synonym for `image.Getpoint(x, y)`.
 - Add missing arithmetic operators (`1 - image`, `1 / image`, etc.).
+- Add support for identifying image formats (`Image.FindLoad()`, `Image.FindLoadBuffer()` and `Image.FindLoadStream()`) ([#37](https://github.com/kleisauke/net-vips/issues/37)).
 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).

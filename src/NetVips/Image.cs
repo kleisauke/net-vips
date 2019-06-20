@@ -109,6 +109,68 @@ namespace NetVips
             }
         }
 
+        /// <summary>
+        /// Find the name of the load operation vips will use to load a file.
+        /// </summary>
+        /// <remarks>
+        /// For example "VipsForeignLoadJpegFile". You can use this to work out what
+        /// options to pass to <see cref="NewFromFile"/>.
+        /// </remarks>
+        /// <param name="filename">The file to test.</param>
+        /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
+        public static string FindLoad(string filename)
+        {
+            return Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
+        }
+
+        /// <summary>
+        /// Find the name of the load operation vips will use to load a buffer.
+        /// </summary>
+        /// <remarks>
+        /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
+        /// options to pass to <see cref="NewFromBuffer(byte[], string, string, bool?, VOption)"/>.
+        /// </remarks>
+        /// <param name="data">The buffer to test.</param>
+        /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
+        public static string FindLoadBuffer(byte[] data)
+        {
+            return Marshal.PtrToStringAnsi(
+                VipsForeign.FindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()), (ulong)data.Length));
+        }
+
+        /// <summary>
+        /// Find the name of the load operation vips will use to load a buffer.
+        /// </summary>
+        /// <remarks>
+        /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
+        /// options to pass to <see cref="NewFromBuffer(string, string, string, bool?, VOption)"/>.
+        /// </remarks>
+        /// <param name="data">The buffer to test.</param>
+        /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
+        public static string FindLoadBuffer(string data) => FindLoadBuffer(Encoding.UTF8.GetBytes(data));
+
+        /// <summary>
+        /// Find the name of the load operation vips will use to load a buffer.
+        /// </summary>
+        /// <remarks>
+        /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
+        /// options to pass to <see cref="NewFromBuffer(char[], string, string, bool?, VOption)"/>.
+        /// </remarks>
+        /// <param name="data">The buffer to test.</param>
+        /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
+        public static string FindLoadBuffer(char[] data) => FindLoadBuffer(Encoding.UTF8.GetBytes(data));
+
+        /// <summary>
+        /// Find the name of the load operation vips will use to load a stream.
+        /// </summary>
+        /// <remarks>
+        /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
+        /// options to pass to <see cref="NewFromStream"/>.
+        /// </remarks>
+        /// <param name="stream">The stream to test.</param>
+        /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
+        public static string FindLoadStream(Stream stream) => FindLoadBuffer(stream.ToByteArray());
+
         #endregion
 
         #region constructors
@@ -222,9 +284,7 @@ namespace NetVips
             bool? fail = null,
             VOption kwargs = null)
         {
-            var name = Marshal.PtrToStringAnsi(
-                VipsForeign.FindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()), (ulong)data.Length));
-
+            var name = FindLoadBuffer(data);
             if (name == null)
             {
                 throw new VipsException("unable to load from buffer");
@@ -783,9 +843,14 @@ namespace NetVips
         /// will return a four byte buffer containing the values 1, 2, 3, 4.
         /// </remarks>
         /// <returns>An array of bytes.</returns>
+        /// <exception cref="VipsException">If unable to write to memory.</exception>
         public byte[] WriteToMemory()
         {
             var pointer = VipsImage.WriteToMemory(this, out var size);
+            if (pointer == IntPtr.Zero)
+            {
+                throw new VipsException("unable to write to memory");
+            }
 
             var managedArray = new byte[size];
             Marshal.Copy(pointer, managedArray, 0, (int)size);
@@ -1085,7 +1150,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(doubles);
+        /// Image @out = image.Bandjoin(127.5, 255.0);
         /// </code>
         /// </example>
         /// <param name="doubles">Array of constants.</param>
@@ -1098,7 +1163,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(ints);
+        /// Image @out = image.Bandjoin(255, 128);
         /// </code>
         /// </example>
         /// <param name="ints">Array of constants.</param>
@@ -1111,13 +1176,26 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(images);
+        /// Image @out = image.Bandjoin(image2, image3);
         /// </code>
         /// </example>
         /// <param name="images">Array of images.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandjoin(params Image[] images) =>
             this.Call("bandjoin", new object[] { images.PrependImage(this) }) as Image;
+
+        /// <summary>
+        /// Append a set of mixed images and constants bandwise.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandjoin(image2, 255);
+        /// </code>
+        /// </example>
+        /// <param name="objects">Array of mixed images and constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Bandjoin(params object[] objects) =>
+            this.Call("bandjoin", new object[] { objects.PrependImage(this) }) as Image;
 
         /// <summary>
         /// Band-wise rank a set of constants.
@@ -1192,6 +1270,28 @@ namespace NetVips
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandrank(Image other, int? index = null) =>
             Bandrank(new[] { other }, index);
+
+        /// <summary>
+        /// Band-wise rank a set of mixed images and constants.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = image.Bandrank(new object[] { image2, 255 }, index: int);
+        /// </code>
+        /// </example>
+        /// <param name="objects">Array of mixed images and constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Bandrank(object[] objects, int? index = null)
+        {
+            var options = new VOption();
+
+            if (index.HasValue)
+            {
+                options.Add(nameof(index), index);
+            }
+
+            return this.Call("bandrank", options, new object[] { objects.PrependImage(this) }) as Image;
+        }
 
         /// <summary>
         /// Blend an array of images with an array of blend modes.

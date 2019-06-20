@@ -151,7 +151,7 @@ namespace NetVips
         /// <param name="args">The <see cref="Image"/> array.</param>
         /// <param name="image">The <see cref="Image"/> to prepend to <paramref name="args"/>.</param>
         /// <returns>A new object array.</returns>
-        internal static object[] PrependImage(this Image[] args, Image image)
+        internal static object[] PrependImage<T>(this T[] args, Image image)
         {
             if (args == null)
             {
