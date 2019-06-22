@@ -37,6 +37,7 @@ partial class Build : NukeBuild
             Information("OS: macOS");
         }
 
+        Information("Bitness: " + (Environment.Is64BitProcess ? "64 bit" : "32 bit"));
         Information("Host type: " + Host);
         Information("Version of libvips: " + Parameters.VipsVersion);
         Information("Configuration: " + Parameters.Configuration);

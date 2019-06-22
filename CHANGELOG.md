@@ -3,7 +3,7 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0-rc2] - 2019-05-19
+## [1.1.0-rc3] - 2019-06-22
 ### Added
 - A new [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package containing the pre-compiled libvips binaries for Linux, macOS and Windows ([#21](https://github.com/kleisauke/net-vips/issues/21)).
   - Changes to the [NetVips.Native.*](https://www.nuget.org/packages?q=id%3ANetVips.Native) packages will be documented [here](CHANGELOG.native.md).
@@ -95,7 +95,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[1.1.0-rc2]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0-rc2
+[1.1.0-rc3]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0-rc3
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5

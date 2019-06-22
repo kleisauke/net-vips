@@ -1280,6 +1280,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="objects">Array of mixed images and constants.</param>
+        /// <param name="index">Select this band element from sorted list.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Bandrank(object[] objects, int? index = null)
         {
