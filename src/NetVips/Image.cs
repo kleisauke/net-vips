@@ -1310,32 +1310,9 @@ namespace NetVips
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Composite(Image[] images, int[] modes, int? x = null, int? y = null,
-            string compositingSpace = null, bool? premultiplied = null)
-        {
-            var options = new VOption();
-
-            if (x.HasValue)
-            {
-                options.Add(nameof(x), x);
-            }
-
-            if (y.HasValue)
-            {
-                options.Add(nameof(y), y);
-            }
-
-            if (compositingSpace != null)
-            {
-                options.Add("compositing_space", compositingSpace);
-            }
-
-            if (premultiplied.HasValue)
-            {
-                options.Add(nameof(premultiplied), premultiplied);
-            }
-
-            return this.Call("composite", options, images.PrependImage(this), modes) as Image;
-        }
+            string compositingSpace = null, bool? premultiplied = null) =>
+            Composite(images, modes, x.HasValue ? new int[] { x.Value } : new int[0], y.HasValue ? new int[] { y.Value } : new int[0], compositingSpace, premultiplied);
+        
 
         /// <summary>
         /// Blend an array of images with an array of blend modes.
@@ -1364,6 +1341,107 @@ namespace NetVips
 
             return Composite(images, intModes, x, y, compositingSpace, premultiplied);
         }
+
+        /// <summary>
+        /// Blend an array of images with an array of blend modes and array of overlay positions.
+        /// </summary>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="modes">Array of VipsBlendMode to join with.</param>
+        /// <param name="x">Array of x overlay positions.</param>
+        /// <param name="y">Array of y overlay positions.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Composite(Image[] images, int[] modes, int[] x, int[] y, 
+            string compositingSpace = null, bool? premultiplied = null)
+        {
+            var options = new VOption();
+            
+            if (x.Length > 0)
+            {
+                if (x.Length == 1)
+                    options.Add(nameof(x), x[0]);
+                else
+                    options.Add(nameof(x), x);
+            }
+
+            if (y.Length > 0)
+            {
+                if (y.Length == 1)
+                    options.Add(nameof(y), y[0]);
+                else
+                    options.Add(nameof(y), y);
+            }
+
+            if (compositingSpace != null)
+            {
+                options.Add("compositing_space", compositingSpace);
+            }
+
+            if (premultiplied.HasValue)
+            {
+                options.Add(nameof(premultiplied), premultiplied);
+            }
+
+            return this.Call("composite", options, images.PrependImage(this), modes) as Image;
+        }
+
+        /// <summary>
+        /// Blend an array of images with an array of blend modes and array of overlay positions.
+        /// </summary>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="modes">Array of VipsBlendMode to join with.</param>
+        /// <param name="x">Array of x overlay positions.</param>
+        /// <param name="y">Array of y overlay positions.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Composite(Image[] images, string[] modes, int[] x, int[] y,
+            string compositingSpace = null, bool? premultiplied = null)
+        {
+            var intModes = new int[modes.Length];
+            for (var i = 0; i < modes.Length; i++)
+            {
+                ref var value = ref intModes[i];
+                value = GValue.ToEnum(GValue.BlendModeType, modes[i]);
+            }
+
+            return Composite(images, intModes, x, y, compositingSpace, premultiplied);
+        }
+
+        /// <summary>
+        /// Blend an array of images with blend mode and array of overlay positions.
+        /// </summary>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="mode">VipsBlendMode to join with.</param>
+        /// <param name="x">Array of x overlay positions.</param>
+        /// <param name="y">Array of y overlay positions.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Composite(Image[] images, int mode, int[] x, int[] y,
+            string compositingSpace = null, bool? premultiplied = null)
+        {
+            var modes = new int[images.Length];
+            for (int i = 0; i < images.Length; i++)
+                modes[i] = mode;
+
+            return Composite(images, modes, x, y, compositingSpace, premultiplied);
+        }
+
+        /// <summary>
+        /// Blend an array of images with blend mode and array of overlay positions.
+        /// </summary>
+        /// <param name="images">Array of input images.</param>
+        /// <param name="mode">VipsBlendMode to join with.</param>
+        /// <param name="x">Array of x overlay positions.</param>
+        /// <param name="y">Array of y overlay positions.</param>
+        /// <param name="compositingSpace">Composite images in this colour space.</param>
+        /// <param name="premultiplied">Images have premultiplied alpha.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Composite(Image[] images, string mode, int[] x, int[] y,
+            string compositingSpace = null, bool? premultiplied = null) =>
+            Composite(images, GValue.ToEnum(GValue.BlendModeType, mode), x, y, compositingSpace, premultiplied);
 
         /// <summary>
         /// A synonym for <see cref="Composite2"/>.
