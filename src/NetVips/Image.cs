@@ -1299,27 +1299,27 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Composite(other, modes, x: int, y: int, compositingSpace: string, premultiplied: bool);
+        /// Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="images">Array of input images.</param>
         /// <param name="modes">Array of VipsBlendMode to join with.</param>
-        /// <param name="x">x position of overlay.</param>
-        /// <param name="y">y position of overlay.</param>
+        /// <param name="x">Array of x coordinates to join at.</param>
+        /// <param name="y">Array of y coordinates to join at.</param>
         /// <param name="compositingSpace">Composite images in this colour space.</param>
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite(Image[] images, int[] modes, int? x = null, int? y = null,
+        public Image Composite(Image[] images, int[] modes, int[] x = null, int[] y = null,
             string compositingSpace = null, bool? premultiplied = null)
         {
             var options = new VOption();
 
-            if (x.HasValue)
+            if (x != null && x.Length > 0)
             {
                 options.Add(nameof(x), x);
             }
 
-            if (y.HasValue)
+            if (y != null && y.Length > 0)
             {
                 options.Add(nameof(y), y);
             }
@@ -1342,17 +1342,17 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Composite(other, modes, x: int, y: int, compositingSpace: string, premultiplied: bool);
+        /// Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: string, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="images">Array of input images.</param>
         /// <param name="modes">Array of VipsBlendMode to join with.</param>
-        /// <param name="x">x position of overlay.</param>
-        /// <param name="y">y position of overlay.</param>
+        /// <param name="x">Array of x coordinates to join at.</param>
+        /// <param name="y">Array of y coordinates to join at.</param>
         /// <param name="compositingSpace">Composite images in this colour space.</param>
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite(Image[] images, string[] modes, int? x = null, int? y = null,
+        public Image Composite(Image[] images, string[] modes, int[] x = null, int[] y = null,
             string compositingSpace = null, bool? premultiplied = null)
         {
             var intModes = new int[modes.Length];
@@ -1380,8 +1380,8 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space.</param>
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null,
-            bool? premultiplied = null) =>
+        public Image Composite(Image overlay, string mode, int? x = null, int? y = null,
+            string compositingSpace = null, bool? premultiplied = null) =>
             Composite2(overlay, mode, x, y, compositingSpace, premultiplied);
 
         /// <summary>
