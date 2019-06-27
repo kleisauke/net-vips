@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - The `Operation.VipsCacheSet*` utilities has been moved to `NetVips.CacheSet*`.
 - Speed-up `Operation.Call` by avoiding unnecessary loops.
 - Remove usage of LINQ in several critical paths.
+- The composite x and y positions were changed into an array ([#39](https://github.com/kleisauke/net-vips/issues/39)).
 
 ### Removed
 - The `UseGlobalLibvips` property since the bundled libvips binaries were moved to the [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package.

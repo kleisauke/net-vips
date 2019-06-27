@@ -933,15 +933,13 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to get <paramref name="name"/>.</exception>
         public override object Get(string name)
         {
-            // scale and offset have default values
-            if (name == "scale" && !Contains("scale"))
+            switch (name)
             {
-                return 1.0;
-            }
-
-            if (name == "offset" && !Contains("offset"))
-            {
-                return 0.0;
+                // scale and offset have default values
+                case "scale" when !Contains("scale"):
+                    return 1.0;
+                case "offset" when !Contains("offset"):
+                    return 0.0;
             }
 
             // with old libvips, we must fetch properties (as opposed to

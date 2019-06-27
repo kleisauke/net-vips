@@ -102,7 +102,7 @@ namespace NetVips
         }
 
         // this is slow ... call as little as possible
-        private IReadOnlyList<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
+        private IEnumerable<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>> GetArgs()
         {
             var args = new List<KeyValuePair<string, Internal.Enums.VipsArgumentFlags>>();
 
@@ -575,21 +575,17 @@ namespace NetVips
             string outputType;
 
             var outputTypes = requiredOutput.Select(name => GValue.GTypeToCSharp(op.GetTypeOf(name))).ToArray();
-            if (outputTypes.Length == 1)
+            switch (outputTypes.Length)
             {
-                outputType = outputTypes[0];
-            }
-            else if (outputTypes.Length == 0)
-            {
-                outputType = "void";
-            }
-            else if (outputTypes.Any(o => o != outputTypes[0]))
-            {
-                outputType = $"{outputTypes[0]}[]";
-            }
-            else
-            {
-                outputType = "object[]";
+                case 0:
+                    outputType = "void";
+                    break;
+                case 1:
+                    outputType = outputTypes[0];
+                    break;
+                default:
+                    outputType = outputTypes.Any(o => o != outputTypes[0]) ? $"{outputTypes[0]}[]" : "object[]";
+                    break;
             }
 
             string ToCref(string name) =>

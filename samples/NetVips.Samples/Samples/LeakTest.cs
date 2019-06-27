@@ -53,7 +53,7 @@ namespace NetVips.Samples
 
             var imageBytes = File.ReadAllBytes(Filename);
 
-            for (int i = 0; i < 10000; i++)
+            for (var i = 0; i < 10000; i++)
             {
                 using (var img = Image.NewFromBuffer(imageBytes))
                 {
