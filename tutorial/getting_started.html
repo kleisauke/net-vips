@@ -8,7 +8,7 @@
     <title>Getting Started with NetVips </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Getting Started with NetVips ">
-    <meta name="generator" content="docfx 2.42.4.0">
+    <meta name="generator" content="docfx 2.43.2.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -208,8 +208,8 @@ images up bandwise. You can write:</p>
 <p>to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 course you can also write:</p>
 <pre><code class="lang-csharp">var resultImage = image1.Bandjoin(image2);
-resultImage = image1.Bandjoin(new[] {image2, image3});
-resultImage = image1.Bandjoin(new[] {image2, 255});
+resultImage = image1.Bandjoin(image2, image3);
+resultImage = image1.Bandjoin(image2, 255);
 </code></pre>
 <p>and so on.</p>
 <h2 id="logging-and-warnings">Logging and warnings</h2>

@@ -8,7 +8,7 @@
     <title>Changelog </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Changelog ">
-    <meta name="generator" content="docfx 2.42.4.0">
+    <meta name="generator" content="docfx 2.43.2.0">
     
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -64,7 +64,7 @@
 
 <p>All notable changes to NetVips will be documented in this file. See <a href="CHANGELOG.native.html">here</a> for the changes to the <a href="https://www.nuget.org/packages/NetVips.Native/">pre-compiled binaries of libvips</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="110-rc2---2019-05-19"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0-rc2">1.1.0-rc2</a> - 2019-05-19</h2>
+<h2 id="110---2019-07-29"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0">1.1.0</a> - 2019-07-29</h2>
 <h3 id="added">Added</h3>
 <ul>
 <li>A new <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package containing the pre-compiled libvips binaries for Linux, macOS and Windows (<a href="https://github.com/kleisauke/net-vips/issues/21">#21</a>).
@@ -77,6 +77,11 @@
 <li>Add <code>image.SetKill()</code> and <code>image.IsKilled()</code> (<a href="https://github.com/kleisauke/net-vips/issues/31">#31</a>, <a href="https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305">libvips/libvips@91d0e7e</a>).</li>
 <li>Add <code>NetVips.ProfileSet()</code>, <code>NetVips.VectorSet()</code>, <code>NetVips.ConcurrencySet()</code> and <code>NetVips.ConcurrencyGet()</code> utilities.</li>
 <li>Add support for loading and saving from and to streams (<code>Image.NewFromStream()</code> / <code>image.WriteToStream()</code>) (<a href="https://github.com/kleisauke/net-vips/issues/33">#33</a>).</li>
+<li>Add <code>Region</code> class to read pixels from images without storing the entire image in memory.</li>
+<li>Add <code>image[x, y]</code> overload as a synonym for <code>image.Getpoint(x, y)</code>.</li>
+<li>Add missing arithmetic operators (<code>1 - image</code>, <code>1 / image</code>, etc.).</li>
+<li>Add support for identifying image formats (<code>Image.FindLoad()</code>, <code>Image.FindLoadBuffer()</code> and <code>Image.FindLoadStream()</code>) (<a href="https://github.com/kleisauke/net-vips/issues/37">#37</a>).</li>
+<li>Add <code>image.PageHeight</code> property for retrieving the page height for multi-page images.</li>
 </ul>
 <h3 id="changed">Changed</h3>
 <ul>
@@ -89,6 +94,7 @@
 <li>The <code>Operation.VipsCacheSet*</code> utilities has been moved to <code>NetVips.CacheSet*</code>.</li>
 <li>Speed-up <code>Operation.Call</code> by avoiding unnecessary loops.</li>
 <li>Remove usage of LINQ in several critical paths.</li>
+<li>The composite x and y positions were changed into an array (<a href="https://github.com/kleisauke/net-vips/issues/39">#39</a>).</li>
 </ul>
 <h3 id="removed">Removed</h3>
 <ul>
