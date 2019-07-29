@@ -1844,6 +1844,19 @@ namespace NetVips
 
         #endregion
 
+        #region handwritten properties
+
+        /// <summary>
+        /// Multi-page images can have a page height.
+        /// If page-height is not set, it defaults to the image height.
+        /// </summary>
+        /// <remarks>
+        /// At least libvips 8.8 is needed.
+        /// </remarks>
+        public int PageHeight => VipsImage.GetPageHeight(this);
+
+        #endregion
+
         #region support with in the most trivial way
 
         /// <summary>

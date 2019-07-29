@@ -337,10 +337,10 @@ namespace NetVips.Tests
         /// <param name="func"></param>
         public static void RunCmp(Image im, int x, int y, Func<object, object> func)
         {
-            var a = im.Getpoint(x, y);
+            var a = im[x, y];
             var v1 = func(a);
-            var im2 = func(im) as Image;
-            var v2 = im2?.Getpoint(x, y);
+            var im2 = (Image) func(im);
+            var v2 = im2[x, y];
 
             AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
         }
@@ -357,11 +357,11 @@ namespace NetVips.Tests
         /// <returns></returns>
         public static void RunCmp2(Image left, Image right, int x, int y, Func<object, object, object> func)
         {
-            var a = left.Getpoint(x, y);
-            var b = right.Getpoint(x, y);
+            var a = left[x, y];
+            var b = right[x, y];
             var v1 = func(a, b);
-            var after = func(left, right) as Image;
-            var v2 = after?.Getpoint(x, y);
+            var after = (Image) func(left, right);
+            var v2 = after[x, y];
 
             AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
         }

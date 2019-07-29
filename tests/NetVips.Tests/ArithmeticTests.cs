@@ -1012,8 +1012,8 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.NonComplexFormats)
             {
                 var profile = test.Cast(fmt).Profile();
-                var columns = profile[0] as Image;
-                var rows = profile[1] as Image;
+                var columns = (Image)profile[0];
+                var rows = (Image)profile[1];
 
                 var minPos = columns.MinPos();
                 var v = minPos[0];
@@ -1044,8 +1044,8 @@ namespace NetVips.Tests
             foreach (var fmt in Helper.NonComplexFormats)
             {
                 var profile = test.Cast(fmt).Project();
-                var columns = profile[0] as Image;
-                var rows = profile[1] as Image;
+                var columns = (Image)profile[0];
+                var rows = (Image)profile[1];
 
                 Assert.Equal(new double[] { 0 }, columns[10, 0]);
                 Assert.Equal(new double[] { 50 * 10 }, columns[70, 0]);

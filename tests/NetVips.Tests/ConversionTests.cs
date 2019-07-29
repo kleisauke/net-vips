@@ -346,7 +346,7 @@ namespace NetVips.Tests
 
             foreach (var position in positions)
             {
-                var direction = position[0] as string;
+                var direction = (string)position[0];
                 var x = position[1] is int xInt ? xInt : 0;
                 var y = position[2] is int yInt ? yInt : 0;
                 var im2 = im.Gravity(direction, 3, 3);

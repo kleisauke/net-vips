@@ -3,7 +3,7 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0-rc3] - 2019-06-22
+## [1.1.0] - 2019-07-29
 ### Added
 - A new [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package containing the pre-compiled libvips binaries for Linux, macOS and Windows ([#21](https://github.com/kleisauke/net-vips/issues/21)).
   - Changes to the [NetVips.Native.*](https://www.nuget.org/packages?q=id%3ANetVips.Native) packages will be documented [here](CHANGELOG.native.md).
@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add `image[x, y]` overload as a synonym for `image.Getpoint(x, y)`.
 - Add missing arithmetic operators (`1 - image`, `1 / image`, etc.).
 - Add support for identifying image formats (`Image.FindLoad()`, `Image.FindLoadBuffer()` and `Image.FindLoadStream()`) ([#37](https://github.com/kleisauke/net-vips/issues/37)).
+- Add `image.PageHeight` property for retrieving the page height for multi-page images.
 
 ### Changed
 - Improve memory management ([#26](https://github.com/kleisauke/net-vips/issues/26)).
@@ -96,7 +97,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[1.1.0-rc3]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0-rc3
+[1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5

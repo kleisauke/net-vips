@@ -352,6 +352,11 @@ namespace NetVips.Internal
     internal static class VipsImage
     {
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, 
+            EntryPoint = "vips_image_get_page_height")]
+        internal static extern int GetPageHeight(Image image);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_set_progress")]
         internal static extern void SetProgress(Image image, int progress);

@@ -69,8 +69,8 @@ namespace NetVips.Tests
             {
                 for (var y = 0; y < mask.Height; y++)
                 {
-                    var m = mask.Getpoint(x, y);
-                    var i = image.Getpoint(x + xPosition, y + yPosition);
+                    var m = mask[x, y];
+                    var i = image[x + xPosition, y + yPosition];
                     var p = Helper.RunFn2((dynamic a, dynamic b) => a * b, m, i);
                     s = (object[])Helper.RunFn2((dynamic a, dynamic b) => a + b, s, p);
                 }

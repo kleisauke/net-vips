@@ -193,9 +193,9 @@ namespace NetVips.Tests
             im3 = im.Colourspace(Enums.Interpretation.Srgb);
             Assert.True(im2.DE76(im3).Max() < 6);
 
-            var beforeProfile = test.Get("icc-profile-data") as byte[];
+            var beforeProfile = (byte[])test.Get("icc-profile-data");
             im = test.IccTransform(Helper.SrgbFile);
-            var afterProfile = im.Get("icc-profile-data") as byte[];
+            var afterProfile = (byte[])im.Get("icc-profile-data");
             im2 = test.IccImport();
             im3 = im2.Colourspace(Enums.Interpretation.Srgb);
             Assert.True(im2.DE76(im3).Max() < 6);

@@ -51,7 +51,7 @@ namespace NetVips.Tests
 
         internal void FileLoader(string loader, string testFile, Action<Image> validate)
         {
-            var im = Operation.Call(loader, testFile) as Image;
+            var im = (Image)Operation.Call(loader, testFile);
             validate(im);
             im = Image.NewFromFile(testFile);
             validate(im);
@@ -60,7 +60,7 @@ namespace NetVips.Tests
         internal void BufferLoader(string loader, string testFile, Action<Image> validate)
         {
             var buf = File.ReadAllBytes(testFile);
-            var im = Operation.Call(loader, buf) as Image;
+            var im = (Image)Operation.Call(loader, buf);
             validate(im);
             im = Image.NewFromBuffer(buf);
             validate(im);
@@ -95,8 +95,8 @@ namespace NetVips.Tests
 
         internal void SaveLoadBuffer(string saver, string loader, Image im, int maxDiff = 0, VOption kwargs = null)
         {
-            var buf = Operation.Call(saver, kwargs, im) as byte[];
-            var x = Operation.Call(loader, buf) as Image;
+            var buf = (byte[])Operation.Call(saver, kwargs, im);
+            var x = (Image)Operation.Call(loader, buf);
 
             Assert.Equal(x.Width, im.Width);
             Assert.Equal(x.Height, im.Height);
@@ -108,7 +108,7 @@ namespace NetVips.Tests
         {
             var filename = Helper.GetTemporaryFile(_tempDir, suf);
 
-            var buf = Operation.Call(saver, im) as byte[];
+            var buf = (byte[])Operation.Call(saver, im);
             File.WriteAllBytes(filename, buf);
 
             var x = Image.NewFromFile(filename);
@@ -130,8 +130,8 @@ namespace NetVips.Tests
             var filename = Helper.GetTemporaryFile(_tempDir, ".v");
             _colour.WriteToFile(filename);
             var x = Image.NewFromFile(filename);
-            var beforeExif = _colour.Get("exif-data") as byte[];
-            var afterExif = x.Get("exif-data") as byte[];
+            var beforeExif = (byte[])_colour.Get("exif-data");
+            var afterExif = (byte[])x.Get("exif-data");
 
             Assert.Equal(beforeExif.Length, afterExif.Length);
             Assert.Equal(beforeExif, afterExif);
@@ -146,7 +146,7 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
                 Assert.Equal(new double[] { 6, 5, 3 }, a);
-                var profile = im.Get("icc-profile-data") as byte[];
+                var profile = (byte[])im.Get("icc-profile-data");
 
                 Assert.Equal(1352, profile.Length);
                 Assert.Equal(1024, im.Width);
@@ -572,6 +572,26 @@ namespace NetVips.Tests
             {
                 {"format", "JPG"}
             });
+
+            // try an animation
+            if (Helper.Have("gifload"))
+            {
+                var x1 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
+                {
+                    {"n", -1}
+                });
+                var w1 = x1.MagicksaveBuffer(format: "GIF");
+                var x2 = Image.NewFromBuffer(w1, kwargs: new VOption
+                {
+                    {"n", -1}
+                });
+
+                var delayName = NetVips.AtLeastLibvips(8, 9) ? "delay" : "gif-delay";
+                Assert.Equal(x2.Get(delayName), x1.Get(delayName));
+                Assert.Equal(x2.Get("page-height"), x1.Get("page-height"));
+                // magicks vary in how they handle this ... just pray we are close
+                Assert.True(Math.Abs((int)x1.Get("gif-loop") - (int)x2.Get("gif-loop")) < 5);
+            }
         }
 
         [SkippableFact]
@@ -583,7 +603,11 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
 
-                Assert.Equal(new double[] { 71, 166, 236 }, a);
+                // rgba -> rgb stage for WebP output added in libvips 8.9+,
+                // see: https://github.com/libvips/libvips/commit/25af46a1892b804fdd9ded5a5fe20a7496054944
+                var expected = NetVips.AtLeastLibvips(8, 9) ? new double[] { 70, 165, 235 } : new double[] { 71, 166, 236 };
+
+                Assert.Equal(expected, a);
                 Assert.Equal(550, im.Width);
                 Assert.Equal(368, im.Height);
                 Assert.Equal(3, im.Bands);
@@ -598,7 +622,7 @@ namespace NetVips.Tests
             var x = Image.NewFromFile(Helper.WebpFile);
             var buf = x.WebpsaveBuffer(lossless: true);
             var im2 = Image.NewFromBuffer(buf);
-            Assert.Equal(x.Avg(), im2.Avg());
+            Assert.True(Math.Abs(x.Avg() - im2.Avg()) < 1);
 
             // higher Q should mean a bigger buffer
             var b1 = x.WebpsaveBuffer(q: 10);
@@ -649,7 +673,9 @@ namespace NetVips.Tests
                 });
                 Assert.Equal(x2.Width, x1.Width);
                 Assert.Equal(x2.Height, x1.Height);
-                Assert.Equal(x2.Get("gif-delay"), x1.Get("gif-delay"));
+
+                var delayName = NetVips.AtLeastLibvips(8, 9) ? "delay" : "gif-delay";
+                Assert.Equal(x2.Get(delayName), x1.Get(delayName));
                 Assert.Equal(x2.Get("page-height"), x1.Get("page-height"));
                 Assert.Equal(x2.Get("gif-loop"), x1.Get("gif-loop"));
             }
@@ -856,6 +882,13 @@ namespace NetVips.Tests
                     {"n", -1}
                 });
                 Assert.Equal(5 * x1.Height, x2.Height);
+
+                // delay metadata was added in libvips 8.9
+                if (NetVips.AtLeastLibvips(8, 9))
+                {
+                    // our test gif has delay 0 for the first frame set in error
+                    Assert.Equal(new[] { 0, 50, 50, 50, 50 }, x2.Get("delay"));
+                }
 
                 x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
                 {
