@@ -783,6 +783,32 @@ namespace NetVips.Tests
             Helper.AssertAlmostEqualObjects(new[] { 3.0, 4.9, 6.9 }, result2, 0.1);
         }
 
+        [SkippableFact]
+        public void TestSwitch()
+        {
+            // switch was added in libvips 8.9.
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 9), "requires libvips >= 8.9");
+
+            var x = Image.Grey(256, 256, uchar: true);
+
+            // slice into two at 128, we should get 50% of pixels in each half
+            var index = Image.Switch(x < 128, x >= 128);
+            Assert.Equal(0.5, index.Avg());
+
+            // slice into four 
+            index = Image.Switch(
+                x < 64,
+                x >= 64 && x < 128,
+                x >= 128 && x < 192,
+                x >= 192
+            );
+            Assert.Equal(1.5, index.Avg());
+
+            // no match should return n + 1
+            index = Image.Switch(x.Equal(1000), x.Equal(2000));
+            Assert.Equal(2, index.Avg());
+        }
+
         [Fact]
         public void TestInsert()
         {

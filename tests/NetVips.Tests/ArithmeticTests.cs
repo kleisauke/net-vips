@@ -390,6 +390,17 @@ namespace NetVips.Tests
 
             RunArithConst(NotEq);
             RunArith(NotEq);
+
+            if (NetVips.AtLeastLibvips(8, 9))
+            {
+                // comparisons against out of range values should always fail, and
+                // comparisons to fractional values should always fail
+                var z = Image.Grey(256, 256, uchar: true);
+
+                Assert.Equal(0, z.Equal(1000).Max());
+                Assert.Equal(255, z.Equal(12).Max());
+                Assert.Equal(0, z.Equal(12.5).Max());
+            }
         }
 
         [Fact]

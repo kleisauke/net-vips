@@ -603,9 +603,20 @@ namespace NetVips
 
             result.Append($"{indent}public ")
                 .Append(memberX == null ? "static " : string.Empty)
-                .Append(outputType)
-                .Append(
+                .Append(outputType);
+
+            if (requiredInput.Length == 1 && outParameters == null && optionalInput.Length == 0 &&
+                op.GetTypeOf(requiredInput[0]) == GValue.ArrayImageType)
+            {
+                // We could safely use the params keyword
+                result.Append(
+                    $" {newOperationName}(params Image[] {SafeIdentifier(requiredInput[0]).ToPascalCase().FirstLetterToLower()}");
+            }
+            else
+            {
+                result.Append(
                     $" {newOperationName}({string.Join(", ", requiredInput.Select(name => $"{GValue.GTypeToCSharp(op.GetTypeOf(name))} {SafeIdentifier(name).ToPascalCase().FirstLetterToLower()}").ToArray())}");
+            }
 
             if (outParameters != null)
             {
@@ -840,7 +851,8 @@ namespace NetVips
                 "ifthenelse",
                 "bandjoin",
                 "bandrank",
-                "composite"
+                "composite",
+                "case"
             };
 
             allNickNames = allNickNames.Where(x => !exclude.Contains(x)).ToList();

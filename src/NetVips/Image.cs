@@ -1144,6 +1144,58 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Use pixel values to pick cases from an array of constants.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = index.Case(10.5, 20.5);
+        /// </code>
+        /// </example>
+        /// <param name="doubles">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Case(params double[] doubles) =>
+            this.Call("case", doubles) as Image;
+
+        /// <summary>
+        /// Use pixel values to pick cases from an array of constants.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = index.Case(10, 20);
+        /// </code>
+        /// </example>
+        /// <param name="ints">Array of constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Case(params int[] ints) =>
+            Case(Array.ConvertAll(ints, Convert.ToDouble));
+
+        /// <summary>
+        /// Use pixel values to pick cases from an array of images.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = index.Case(images);
+        /// </code>
+        /// </example>
+        /// <param name="images">Array of case images.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Case(params Image[] images) =>
+            this.Call("case", new object[] { images }) as Image;
+
+        /// <summary>
+        /// Use pixel values to pick cases from an a set of mixed images and constants.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = index.Case(image, 10);
+        /// </code>
+        /// </example>
+        /// <param name="objects">Array of mixed images and constants.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Case(params object[] objects) =>
+            this.Call("case", new object[] { objects }) as Image;
+
+        /// <summary>
         /// Append a set of constants bandwise.
         /// </summary>
         /// <example>

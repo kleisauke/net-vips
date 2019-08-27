@@ -497,9 +497,10 @@ namespace NetVips.Tests
             FileLoader("magickload", Helper.BmpFile, BmpValid);
             BufferLoader("magickload_buffer", Helper.BmpFile, BmpValid);
 
-            // we should have rgba for svg files
+            // we should have rgb or rgba for svg files ... different versions of
+            // IM handle this differently. GM even gives 1 band.
             var x = Image.Magickload(Helper.SvgFile);
-            Assert.Equal(4, x.Bands);
+            Assert.True(x.Bands == 3 || x.Bands == 4 || x.Bands == 1);
 
             // density should change size of generated svg
             x = Image.Magickload(Helper.SvgFile, density: "100");
@@ -566,9 +567,9 @@ namespace NetVips.Tests
             Assert.Equal(_colour.Height, x.Height);
 
             var maxDiff = (_colour - x).Abs().Max();
-            Assert.True(maxDiff <= 40);
+            Assert.True(maxDiff <= 60);
 
-            SaveLoadBuffer("magicksave_buffer", "magickload_buffer", _colour, 40, new VOption
+            SaveLoadBuffer("magicksave_buffer", "magickload_buffer", _colour, 60, new VOption
             {
                 {"format", "JPG"}
             });
@@ -603,11 +604,9 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
 
-                // rgba -> rgb stage for WebP output added in libvips 8.9+,
-                // see: https://github.com/libvips/libvips/commit/25af46a1892b804fdd9ded5a5fe20a7496054944
-                var expected = NetVips.AtLeastLibvips(8, 9) ? new double[] { 70, 165, 235 } : new double[] { 71, 166, 236 };
-
-                Assert.Equal(expected, a);
+                // different webp versions use different rounding systems leading
+                // to small variations
+                Helper.AssertAlmostEqualObjects(new double[] { 71, 166, 236 }, a, 2);
                 Assert.Equal(550, im.Width);
                 Assert.Equal(368, im.Height);
                 Assert.Equal(3, im.Bands);
@@ -908,14 +907,12 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
 
-                // some old rsvg versions are way, way off
-                Assert.True(Math.Abs(a[0] - 79) < 2);
-                Assert.True(Math.Abs(a[1] - 79) < 2);
-                Assert.True(Math.Abs(a[2] - 132) < 2);
-                Assert.True(Math.Abs(a[3] - 255) < 2);
-
-                Assert.Equal(288, im.Width);
-                Assert.Equal(470, im.Height);
+                Helper.AssertAlmostEqualObjects(new[]
+                {
+                    0, 0, 0, 0
+                }, a);
+                Assert.Equal(736, im.Width);
+                Assert.Equal(552, im.Height);
                 Assert.Equal(4, im.Bands);
             }
 
@@ -1140,10 +1137,12 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
 
+                // different versions of HEIC decode have slightly different 
+                // rounding
                 Helper.AssertAlmostEqualObjects(new[]
                 {
                     75.0, 86.0, 81.0
-                }, a);
+                }, a, 2);
                 Assert.Equal(4032, im.Width);
                 Assert.Equal(3024, im.Height);
                 Assert.Equal(3, im.Bands);

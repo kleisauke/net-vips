@@ -146,5 +146,31 @@ namespace NetVips.Tests
             // new mean should be closer to target mean
             Assert.True(Math.Abs(im.Avg() - 128) > Math.Abs(im2.Avg() - 128));
         }
+
+        [SkippableFact]
+        public void TestCase()
+        {
+            // case was added in libvips 8.9.
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 9), "requires libvips >= 8.9");
+
+            var x = Image.Grey(256, 256, uchar: true);
+
+            // slice into two at 128, we should get 50% of pixels in each half
+            var index = Image.Switch(x < 128, x >= 128);
+            var y = index.Case(10, 20);
+            Assert.Equal(15, y.Avg());
+
+            // slice into four 
+            index = Image.Switch(
+                x < 64,
+                x >= 64 && x < 128,
+                x >= 128 && x < 192,
+                x >= 192
+            );
+            Assert.Equal(25, index.Case(10, 20, 30, 40).Avg());
+
+            // values over N should use the last value
+            Assert.Equal(22.5, index.Case(10, 20, 30).Avg());
+        }
     }
 }

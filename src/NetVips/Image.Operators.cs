@@ -848,6 +848,24 @@ namespace NetVips
         public static Image operator >=(Image left, int[] right) =>
             left.Call("relational_const", "moreeq", right) as Image;
 
+        /// <summary>
+        /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="true"/>.
+        /// </summary>
+        /// <param name="image">The image to check.</param>
+        /// <returns><see langword="true"/> if <paramref name="image"/> is definitely <see langword="true"/>; otherwise, <see langword="false"/>.</returns>
+        public static bool operator true(Image image) =>
+            // Always evaluate to false so that each side of the && equation is evaluated
+            false;
+
+        /// <summary>
+        /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="false"/>.
+        /// </summary>
+        /// <param name="image">The image to check.</param>
+        /// <returns><see langword="true"/> if <paramref name="image"/> is definitely <see langword="false"/>; otherwise, <see langword="false"/>.</returns>
+        public static bool operator false(Image image) =>
+            // Always evaluate to false so that each side of the && equation is evaluated
+            false;
+
         #endregion
     }
 }

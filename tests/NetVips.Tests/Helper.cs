@@ -27,9 +27,9 @@ namespace NetVips.Tests
         public static readonly string OpenslideFile = Path.Combine(Images, "CMU-1-Small-Region.svs");
         public static readonly string PdfFile = Path.Combine(Images, "ISO_12233-reschart.pdf");
         public static readonly string CmykPdfFile = Path.Combine(Images, "cmyktest.pdf");
-        public static readonly string SvgFile = Path.Combine(Images, "vips-profile.svg");
-        public static readonly string SvgzFile = Path.Combine(Images, "vips-profile.svgz");
-        public static readonly string SvgGzFile = Path.Combine(Images, "vips-profile.svg.gz");
+        public static readonly string SvgFile = Path.Combine(Images, "logo.svg");
+        public static readonly string SvgzFile = Path.Combine(Images, "logo.svgz");
+        public static readonly string SvgGzFile = Path.Combine(Images, "logo.svg.gz");
         public static readonly string GifAnimFile = Path.Combine(Images, "cogs.gif");
         public static readonly string DicomFile = Path.Combine(Images, "dicom_test_image.dcm");
         public static readonly string BmpFile = Path.Combine(Images, "MARBLES.BMP");
