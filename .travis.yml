@@ -6,7 +6,7 @@ dotnet: 2.2.401
 
 env:
   global:
-    - VIPS_VERSION=8.8.1
+    - VIPS_VERSION=8.8.2
     - VIPS_WARNING=0
     - PATH=$HOME/vips/bin:$PATH
     - LD_LIBRARY_PATH=$HOME/vips/lib:$LD_LIBRARY_PATH

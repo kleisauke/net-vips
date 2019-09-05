@@ -149,9 +149,9 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Get the major, minor or micro version number of the libvips library.
+        /// Get the major, minor or patch version number of the libvips library.
         /// </summary>
-        /// <param name="flag">Pass 0 to get the major version number, 1 to get minor, 2 to get micro.</param>
+        /// <param name="flag">Pass 0 to get the major version number, 1 to get minor, 2 to get patch.</param>
         /// <param name="fromModule"><see langword="true"/> to get this value from the pre-initialized
         /// <see cref="ModuleInitializer.Version"/> variable.</param>
         /// <returns>The version number.</returns>
@@ -187,19 +187,21 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Is this at least libvips x.y[.z]?
+        /// Is this at least libvips major.minor[.patch]?
         /// </summary>
         /// <param name="x">Major component.</param>
         /// <param name="y">Minor component.</param>
-        /// <param name="z">Micro component.</param>
-        /// <returns><see langword="true"/> if at least libvips x.y[.z]; otherwise, <see langword="false"/>.</returns>
+        /// <param name="z">Patch component.</param>
+        /// <returns><see langword="true"/> if at least libvips major.minor[.patch]; otherwise, <see langword="false"/>.</returns>
         public static bool AtLeastLibvips(int x, int y, int z = 0)
         {
             var major = Version(0);
             var minor = Version(1);
-            var micro = Version(2);
+            var patch = Version(2);
 
-            return major > x || major == x && minor >= y && micro >= z;
+            return major > x ||
+                   major == x && minor > y ||
+                   major == x && minor == y && patch >= z;
         }
 
         /// <summary>
