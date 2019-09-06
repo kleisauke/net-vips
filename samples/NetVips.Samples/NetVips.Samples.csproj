@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetVips\NetVips.csproj" />
+    <ProjectReference Include="..\..\src\NetVips.Extensions\NetVips.Extensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

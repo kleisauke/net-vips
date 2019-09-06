@@ -22,6 +22,7 @@ public partial class Build
         public bool SkipTests { get; }
         public bool Package { get; }
         public string BuildSolution { get; }
+        public string BuildSolutionExtensions { get; }
         public string TestSolution { get; }
         public string[] NuGetArchitectures { get; }
         public string Version { get; }
@@ -39,6 +40,7 @@ public partial class Build
 
             // CONFIGURATION
             BuildSolution = RootDirectory / "src/NetVips/NetVips.csproj";
+            BuildSolutionExtensions = RootDirectory / "src/NetVips.Extensions/NetVips.Extensions.csproj";
             TestSolution = RootDirectory / "tests/NetVips.Tests/NetVips.Tests.csproj";
 
             // PARAMETERS

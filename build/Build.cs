@@ -55,6 +55,7 @@ partial class Build : NukeBuild
         .Executes(() =>
         {
             EnsureCleanDirectory(RootDirectory / "src/NetVips/bin" / Parameters.Configuration);
+            EnsureCleanDirectory(RootDirectory / "src/NetVips.Extensions/bin" / Parameters.Configuration);
             EnsureCleanDirectory(RootDirectory / "tests/NetVips.Tests/bin" / Parameters.Configuration);
             EnsureCleanDirectory(Parameters.ArtifactsDir);
             EnsureCleanDirectory(Parameters.PackDir);
@@ -153,6 +154,18 @@ partial class Build : NukeBuild
             );
         });
 
+    Target CreateNetVipsExtensionsNugetPackage => _ => _
+        .OnlyWhenStatic(() => Parameters.Package)
+        .After(RunTests)
+        .Executes(() =>
+        {
+            DotNetPack(c => c
+                .SetProject(Parameters.BuildSolutionExtensions)
+                .SetConfiguration(Parameters.Configuration)
+                .SetOutputDirectory(Parameters.ArtifactsDir)
+            );
+        });
+
     Target CreateNativeNuGetPackages => _ => _
         .OnlyWhenStatic(() => Parameters.Package)
         .DependsOn(DownloadBinaries)
@@ -177,6 +190,7 @@ partial class Build : NukeBuild
     Target All => _ => _
         .DependsOn(RunTests)
         .DependsOn(CreateNetVipsNugetPackage)
+        .DependsOn(CreateNetVipsExtensionsNugetPackage)
         .DependsOn(CreateNativeNuGetPackages);
 
     public static int Main() => Execute<Build>(x => x.All);
