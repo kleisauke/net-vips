@@ -73,13 +73,15 @@ addons:
       # needed for building libvips from source
       - gtk-doc-tools
       - gobject-introspection
+      # needed for the NetVips.Extensions tests
+      - libc6-dev
+      - libgdiplus
   homebrew:
     update: true
     packages:
-      - cfitsio
-      - gsl
-      - libmatio
       - vips
+      # needed for the NetVips.Extensions tests
+      - mono-libgdiplus
 
 before_install: ./build/travis.sh
 
