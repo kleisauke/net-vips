@@ -26,12 +26,14 @@ namespace NetVips.Tests
             AssertPixelValue(white.WriteToMemory(), white.ToBitmap());
         }
 
-        [Fact]
+        [SkippableFact]
         public void ToBitmap2Bands()
         {
-            var black = (Image.Black(1, 1) + new[] {0, 0}).Cast(Enums.BandFormat.Uchar);
-            var white = (Image.Black(1, 1) + new[] {255, 255}).Cast(Enums.BandFormat.Uchar);
-            var grey = (Image.Black(1, 1) + new[] {128, 255}).Cast(Enums.BandFormat.Uchar);
+            Skip.IfNot(RuntimeInformation.IsOSPlatform(OSPlatform.Windows), "not on Windows, skipping test");
+
+            var black = (Image.Black(1, 1) + new[] { 0, 0 }).Cast(Enums.BandFormat.Uchar);
+            var white = (Image.Black(1, 1) + new[] { 255, 255 }).Cast(Enums.BandFormat.Uchar);
+            var grey = (Image.Black(1, 1) + new[] { 128, 255 }).Cast(Enums.BandFormat.Uchar);
 
             AssertPixelValue(black.WriteToMemory(), black.ToBitmap());
             AssertPixelValue(white.WriteToMemory(), white.ToBitmap());
@@ -41,9 +43,9 @@ namespace NetVips.Tests
         [Fact]
         public void ToBitmap3Bands()
         {
-            var redColor = (Image.Black(1, 1) + new[] {255, 0, 0}).Cast(Enums.BandFormat.Uchar);
-            var blueColor = (Image.Black(1, 1) + new[] {0, 0, 255}).Cast(Enums.BandFormat.Uchar);
-            var greenColor = (Image.Black(1, 1) + new[] {0, 255, 0}).Cast(Enums.BandFormat.Uchar);
+            var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0 }).Cast(Enums.BandFormat.Uchar);
+            var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
+            var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0 }).Cast(Enums.BandFormat.Uchar);
 
             AssertPixelValue(redColor.WriteToMemory(), redColor.ToBitmap());
             AssertPixelValue(blueColor.WriteToMemory(), blueColor.ToBitmap());
@@ -53,9 +55,9 @@ namespace NetVips.Tests
         [Fact]
         public void ToBitmap4Bands()
         {
-            var redColor = (Image.Black(1, 1) + new[] {255, 0, 0, 255}).Cast(Enums.BandFormat.Uchar);
-            var blueColor = (Image.Black(1, 1) + new[] {0, 0, 255, 255}).Cast(Enums.BandFormat.Uchar);
-            var greenColor = (Image.Black(1, 1) + new[] {0, 255, 0, 255}).Cast(Enums.BandFormat.Uchar);
+            var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
+            var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255, 255 }).Cast(Enums.BandFormat.Uchar);
+            var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0, 255 }).Cast(Enums.BandFormat.Uchar);
 
             AssertPixelValue(redColor.WriteToMemory(), redColor.ToBitmap());
             AssertPixelValue(blueColor.WriteToMemory(), blueColor.ToBitmap());
