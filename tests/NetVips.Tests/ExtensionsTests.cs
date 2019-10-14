@@ -16,9 +16,17 @@ namespace NetVips.Tests
             testsFixture.SetUpLogging(output);
         }
 
-        [Fact]
+        /// <summary>
+        /// Disable the extensions tests, if we're running inside a musl-based Linux container.
+        /// Saves us the installation of libgdiplus.
+        /// </summary>
+        private static bool InDocker => Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+
+        [SkippableFact]
         public void ToBitmap1Band()
         {
+            Skip.If(InDocker, "on Docker, skipping test");
+
             var black = Image.Black(1, 1).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + 255).Cast(Enums.BandFormat.Uchar);
 
@@ -40,9 +48,11 @@ namespace NetVips.Tests
             AssertPixelValue(grey.WriteToMemory(), grey.ToBitmap());
         }
 
-        [Fact]
+        [SkippableFact]
         public void ToBitmap3Bands()
         {
+            Skip.If(InDocker, "on Docker, skipping test");
+
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
             var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0 }).Cast(Enums.BandFormat.Uchar);
@@ -52,9 +62,11 @@ namespace NetVips.Tests
             AssertPixelValue(greenColor.WriteToMemory(), greenColor.ToBitmap());
         }
 
-        [Fact]
+        [SkippableFact]
         public void ToBitmap4Bands()
         {
+            Skip.If(InDocker, "on Docker, skipping test");
+
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255, 255 }).Cast(Enums.BandFormat.Uchar);
             var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0, 255 }).Cast(Enums.BandFormat.Uchar);

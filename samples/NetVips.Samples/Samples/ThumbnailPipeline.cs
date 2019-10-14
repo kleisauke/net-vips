@@ -42,6 +42,7 @@ namespace NetVips.Samples
                    loader.StartsWith("VipsForeignLoadMagick");
         }
 
+#pragma warning disable CS0162 // Unreachable code detected
         public string Execute(string[] args)
         {
             // If you set a number to zero (0), it will resize on the other specified axis.
@@ -212,4 +213,5 @@ namespace NetVips.Samples
             return "See thumbnail.webp";
         }
     }
+#pragma warning restore CS0162 // Unreachable code detected
 }

@@ -1,3 +1,5 @@
+using SixLabors.Primitives;
+
 namespace SixLabors.ImageSharp.Processing.Processors.Convolution
 {
     using System;
@@ -32,17 +34,20 @@ namespace SixLabors.ImageSharp.Processing.Processors.Convolution
         public bool PreserveAlpha { get; }
 
         /// <inheritdoc />
-        public IImageProcessor<TPixel> CreatePixelSpecificProcessor<TPixel>()
-            where TPixel : struct, IPixel<TPixel>
+        public IImageProcessor<TPixel> CreatePixelSpecificProcessor<TPixel>(Image<TPixel> source,
+            Rectangle sourceRectangle) where TPixel : struct, IPixel<TPixel>
         {
             var type = Type.GetType(
                 "SixLabors.ImageSharp.Processing.Processors.Convolution.ConvolutionProcessor`1, SixLabors.ImageSharp");
             Type[] typeArgs = { typeof(TPixel) };
             Type genericType = type.MakeGenericType(typeArgs);
-            Type[] parameterTypes = { KernelXY.GetType().MakeByRefType(), PreserveAlpha.GetType() };
+            Type[] parameterTypes =
+            {
+                KernelXY.GetType().MakeByRefType(), PreserveAlpha.GetType(), source.GetType(), sourceRectangle.GetType()
+            };
             ConstructorInfo ctor = genericType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null,
                 parameterTypes, null);
-            object instance = ctor.Invoke(new object[] { KernelXY, PreserveAlpha });
+            object instance = ctor.Invoke(new object[] { KernelXY, PreserveAlpha, source, sourceRectangle });
 
             return (IImageProcessor<TPixel>)instance;
         }

@@ -15,9 +15,9 @@ namespace NetVips.Benchmarks
 
             Add(Job.Default.With(CsProjCoreToolchain.From(
                 new NetCoreAppSettings(
-                    targetFrameworkMoniker: "netcoreapp2.2",
-                    runtimeFrameworkVersion: "2.2.0",
-                    name: ".NET Core 2.2.0"))));
+                    targetFrameworkMoniker: "netcoreapp3.0",
+                    runtimeFrameworkVersion: "3.0.0",
+                    name: ".NET Core 3.0.0"))));
         }
     }
 }

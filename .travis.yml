@@ -2,7 +2,7 @@ language: csharp
 
 mono: none
 
-dotnet: 2.2.401
+dotnet: 3.0.100
 
 env:
   global:
@@ -25,12 +25,13 @@ matrix:
       env:
         - JOBS=`nproc`
     - os: osx
-      # OS X 10.13
+      # macOS 10.13
       osx_image: xcode10.1
       env:
         - JOBS="`sysctl -n hw.ncpu`"
         - PATH="/usr/local/opt/ccache/bin:$PATH"
         - HOMEBREW_NO_AUTO_UPDATE=1
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
 
 cache:
   ccache: true
