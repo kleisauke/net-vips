@@ -22,12 +22,14 @@ namespace NetVips.Tests
             _tempDir = Helper.GetTemporaryDirectory();
 
             _colour = Image.Jpegload(Helper.JpegFile);
-            _mono = _colour[0];
+            _mono = _colour[0].Copy();
 
             // we remove the ICC profile: the RGB one will no longer be appropriate
             _mono.Remove("icc-profile-data");
-            _rad = _colour.Float2rad();
+
+            _rad = _colour.Float2rad().Copy();
             _rad.Remove("icc-profile-data");
+
             _cmyk = _colour.Bandjoin(_mono);
             _cmyk = _cmyk.Copy(interpretation: Enums.Interpretation.Cmyk);
             _cmyk.Remove("icc-profile-data");
@@ -78,7 +80,7 @@ namespace NetVips.Tests
             Assert.Equal(0, maxDiff);
         }
 
-        internal void SaveLoadFile(string format, string options, Image im, int thresh)
+        internal void SaveLoadFile(string format, string options, Image im, int maxDiff = 0)
         {
             // yuk!
             // but we can't set format parameters for Image.NewTempFile()
@@ -90,7 +92,7 @@ namespace NetVips.Tests
             Assert.Equal(x.Width, im.Width);
             Assert.Equal(x.Height, im.Height);
             Assert.Equal(x.Bands, im.Bands);
-            Assert.True((im - x).Abs().Max() <= thresh);
+            Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
         internal void SaveLoadBuffer(string saver, string loader, Image im, int maxDiff = 0, VOption kwargs = null)
@@ -124,7 +126,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestVips()
         {
-            SaveLoadFile(".v", "", _colour, 0);
+            SaveLoadFile(".v", "", _colour);
 
             // check we can save and restore metadata
             var filename = Helper.GetTemporaryFile(_tempDir, ".v");
@@ -183,6 +185,7 @@ namespace NetVips.Tests
 
                 // can remove orientation, save, load again, orientation
                 // has reset
+                x = x.Copy();
                 x.Remove("orientation");
 
                 filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
@@ -284,8 +287,8 @@ namespace NetVips.Tests
             SaveLoadBuffer("pngsave_buffer", "pngload_buffer", _colour);
             SaveLoad("%s.png", _mono);
             SaveLoad("%s.png", _colour);
-            SaveLoadFile(".png", "[interlace]", _colour, 0);
-            SaveLoadFile(".png", "[interlace]", _mono, 0);
+            SaveLoadFile(".png", "[interlace]", _colour);
+            SaveLoadFile(".png", "[interlace]", _mono);
         }
 
         [SkippableFact]
@@ -343,15 +346,15 @@ namespace NetVips.Tests
             SaveLoad("%s.tif", _cmyk);
 
             SaveLoad("%s.tif", _oneBit);
-            SaveLoadFile(".tif", "[squash]", _oneBit, 0);
-            SaveLoadFile(".tif", "[miniswhite]", _oneBit, 0);
-            SaveLoadFile(".tif", "[squash,miniswhite]", _oneBit, 0);
+            SaveLoadFile(".tif", "[squash]", _oneBit);
+            SaveLoadFile(".tif", "[miniswhite]", _oneBit);
+            SaveLoadFile(".tif", "[squash,miniswhite]", _oneBit);
 
-            SaveLoadFile(".tif", $"[profile={Helper.SrgbFile}]", _colour, 0);
-            SaveLoadFile(".tif", "[tile]", _colour, 0);
-            SaveLoadFile(".tif", "[tile,pyramid]", _colour, 0);
+            SaveLoadFile(".tif", $"[profile={Helper.SrgbFile}]", _colour);
+            SaveLoadFile(".tif", "[tile]", _colour);
+            SaveLoadFile(".tif", "[tile,pyramid]", _colour);
             SaveLoadFile(".tif", "[tile,pyramid,compression=jpeg]", _colour, 80);
-            SaveLoadFile(".tif", "[bigtiff]", _colour, 0);
+            SaveLoadFile(".tif", "[bigtiff]", _colour);
             SaveLoadFile(".tif", "[compression=jpeg]", _colour, 80);
             SaveLoadFile(".tif", "[tile,tile-width=256]", _colour, 10);
 
@@ -372,6 +375,7 @@ namespace NetVips.Tests
             x = Image.NewFromFile(filename);
             y = x.Get("orientation");
             Assert.Equal(2, y);
+            x = x.Copy();
             x.Remove("orientation");
 
             filename = Helper.GetTemporaryFile(_tempDir, ".tif");

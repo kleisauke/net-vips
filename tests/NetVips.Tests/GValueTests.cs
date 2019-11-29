@@ -1,6 +1,5 @@
 namespace NetVips.Tests
 {
-    using System.Collections;
     using System.IO;
     using Xunit;
     using Xunit.Abstractions;
@@ -15,45 +14,57 @@ namespace NetVips.Tests
         [Fact]
         public void TestBool()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.GBoolType);
-            gv.Set(true);
-            var value = gv.Get();
-            Assert.True(value as bool?);
+            bool actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.GBoolType);
+                gv.Set(true);
+                actual = (bool)gv.Get();
+            }
 
-            gv.Set(false);
-            value = gv.Get();
-            Assert.False(value as bool?);
+            Assert.True(actual);
         }
 
         [Fact]
         public void TestInt()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.GIntType);
-            gv.Set(12);
-            var value = gv.Get();
-            Assert.Equal(12, value);
+            int actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.GIntType);
+                gv.Set(12);
+                actual = (int)gv.Get();
+            }
+
+            Assert.Equal(12, actual);
         }
 
         [Fact]
         public void TestUint64()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.GUint64Type);
-            gv.Set(ulong.MaxValue);
-            var value = gv.Get();
-            Assert.Equal(ulong.MaxValue, value);
+            ulong actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.GUint64Type);
+                gv.Set(ulong.MaxValue);
+                actual = (ulong)gv.Get();
+            }
+
+            Assert.Equal(ulong.MaxValue, actual);
         }
 
         [Fact]
         public void TestDouble()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.GDoubleType);
-            gv.Set(3.1415);
-            var value = gv.Get();
-            Assert.Equal(3.1415, value);
+            double actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.GDoubleType);
+                gv.Set(3.1415);
+                actual = (double)gv.Get();
+            }
+
+            Assert.Equal(3.1415, actual);
         }
 
         [Fact]
@@ -62,12 +73,17 @@ namespace NetVips.Tests
             // the Interpretation enum is created when the first image is made --
             // make it ourselves in case we are run before the first image
             NetVips.VipsInterpretationGetType();
-            var interpretationGtype = NetVips.TypeFromName("VipsInterpretation");
-            var gv = new GValue();
-            gv.SetType(interpretationGtype);
-            gv.Set("xyz");
-            var value = gv.Get();
-            Assert.Equal("xyz", value);
+            var gtype = NetVips.TypeFromName("VipsInterpretation");
+
+            string actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(gtype);
+                gv.Set("xyz");
+                actual = (string)gv.Get();
+            }
+
+            Assert.Equal("xyz", actual);
         }
 
         [Fact]
@@ -76,88 +92,128 @@ namespace NetVips.Tests
             // the OperationFlags enum is created when the first op is made --
             // make it ourselves in case we are run before that
             NetVips.VipsOperationFlagsGetType();
-            var operationflagsGtype = NetVips.TypeFromName("VipsOperationFlags");
-            var gv = new GValue();
-            gv.SetType(operationflagsGtype);
-            gv.Set(12);
-            var value = gv.Get();
-            Assert.Equal(12u, value);
+            var gtype = NetVips.TypeFromName("VipsOperationFlags");
+
+            uint actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(gtype);
+                gv.Set(12u);
+                actual = (uint)gv.Get();
+            }
+
+            Assert.Equal(12u, actual);
         }
 
         [Fact]
         public void TestString()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.GStrType);
-            gv.Set("banana");
-            var value = gv.Get();
-            Assert.Equal("banana", value);
+            string actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.GStrType);
+                gv.Set("banana");
+                actual = (string)gv.Get();
+            }
+
+            Assert.Equal("banana", actual);
         }
 
         [Fact]
         public void TestRefString()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.RefStrType);
-            gv.Set("banana");
-            var value = gv.Get();
-            Assert.Equal("banana", value);
+            string actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.RefStrType);
+                gv.Set("banana");
+                actual = (string)gv.Get();
+            }
+
+            Assert.Equal("banana", actual);
         }
 
         [Fact]
         public void TestArrayInt()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.ArrayIntType);
-            gv.Set(new[] { 1, 2, 3 });
-            var value = gv.Get();
-            Assert.Equal(new[] { 1, 2, 3 }, value as IEnumerable);
+            int[] actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.ArrayIntType);
+                gv.Set(new[] { 1, 2, 3 });
+                actual = (int[])gv.Get();
+            }
+
+            Assert.Equal(new[] { 1, 2, 3 }, actual);
         }
 
         [Fact]
         public void TestArrayDouble()
         {
-            var gv = new GValue();
-            gv.SetType(GValue.ArrayDoubleType);
-            gv.Set(new[] { 1.1, 2.1, 3.1 });
-            var value = gv.Get();
-            Assert.Equal(new[] { 1.1, 2.1, 3.1 }, value as IEnumerable);
+            double[] actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.ArrayDoubleType);
+                gv.Set(new[] { 1.1, 2.1, 3.1 });
+                actual = (double[])gv.Get();
+            }
+
+            Assert.Equal(new[] { 1.1, 2.1, 3.1 }, actual);
         }
 
         [Fact]
         public void TestImage()
         {
             var image = Image.NewFromFile(Helper.JpegFile);
-            var gv = new GValue();
-            gv.SetType(GValue.ImageType);
-            gv.Set(image);
-            var value = gv.Get();
-            Assert.Equal(image, value);
+
+            Image actual;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.ImageType);
+                gv.Set(image);
+                actual = (Image)gv.Get();
+            }
+
+
+            Assert.Equal(image, actual);
         }
 
         [Fact]
         public void TestArrayImage()
         {
-            var image = Image.NewFromFile(Helper.JpegFile);
-            var values = image.Bandsplit();
+            var images = Image.NewFromFile(Helper.JpegFile).Bandsplit();
 
-            var gv = new GValue();
-            gv.SetType(GValue.ArrayImageType);
-            gv.Set(values);
-            var value = gv.Get();
+            Image[] actualImages;
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.ArrayImageType);
+                gv.Set(images);
+                actualImages = (Image[])gv.Get();
+            }
 
-            Assert.Equal(values, value as IEnumerable);
+            for (var i = 0; i < actualImages.Length; i++)
+            {
+                var actual = actualImages[i];
+                var expected = images[i];
+
+                Assert.Equal(expected, actual);
+            }
         }
 
         [Fact]
         public void TestBlob()
         {
             var blob = File.ReadAllBytes(Helper.JpegFile);
-            var gv = new GValue();
-            gv.SetType(GValue.BlobType);
-            gv.Set(blob);
-            var value = gv.Get();
-            Assert.Equal(blob, value);
+            byte[] actual;
+
+            using (var gv = new GValue())
+            {
+                gv.SetType(GValue.BlobType);
+                gv.Set(blob);
+                actual = (byte[])gv.Get();
+            }
+
+            Assert.Equal(blob, actual);
         }
     }
 }

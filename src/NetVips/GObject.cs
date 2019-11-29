@@ -110,6 +110,11 @@ namespace NetVips
         /// <returns><see langword="true"/> if the handle is not valid; otherwise, <see langword="false"/>.</returns>
         public override bool IsInvalid => handle == IntPtr.Zero;
 
+        /// <summary>
+        /// Get the reference count of object. Handy for debugging.
+        /// </summary>
+        public uint RefCount => handle.Dereference<Internal.GObject.Struct>().RefCount;
+
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for us.
     }

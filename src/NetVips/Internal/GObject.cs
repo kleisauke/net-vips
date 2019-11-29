@@ -8,6 +8,16 @@ namespace NetVips.Internal
 
     internal static class GObject
     {
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Struct
+        {
+            internal GType.Instance GTypeInstance;
+
+            internal uint RefCount;
+
+            internal IntPtr QData;
+        }
+
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_object_set_property")]
@@ -33,6 +43,12 @@ namespace NetVips.Internal
 
     internal static class GType
     {
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Instance
+        {
+            internal IntPtr GClass;
+        }
+
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_type_name")]
@@ -155,15 +171,9 @@ namespace NetVips.Internal
     internal static class GParamSpec
     {
         [StructLayout(LayoutKind.Sequential)]
-        internal struct GTypeInstance
-        {
-            internal IntPtr GClass;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
         internal struct Struct
         {
-            internal GTypeInstance GTypeInstance;
+            internal GType.Instance GTypeInstance;
 
             internal IntPtr Name;
 
