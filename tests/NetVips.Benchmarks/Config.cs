@@ -3,7 +3,6 @@ namespace NetVips.Benchmarks
     using BenchmarkDotNet.Configs;
     using BenchmarkDotNet.Jobs;
     using BenchmarkDotNet.Toolchains.CsProj;
-    using BenchmarkDotNet.Toolchains.DotNetCli;
 
     public class Config : ManualConfig
     {
@@ -13,11 +12,15 @@ namespace NetVips.Benchmarks
             // to a non-optimized SkiaSharp that we do not own.
             Options |= ConfigOptions.DisableOptimizationsValidator;
 
-            Add(Job.Default.With(CsProjCoreToolchain.From(
-                new NetCoreAppSettings(
-                    targetFrameworkMoniker: "netcoreapp3.0",
-                    runtimeFrameworkVersion: "3.0.0",
-                    name: ".NET Core 3.0.0"))));
+            Add(Job.Default
+#if NETCOREAPP2_1
+                    .With(CsProjCoreToolchain.NetCoreApp21)
+                    .WithId(".Net Core 2.1 CLI")
+#elif NETCOREAPP3_0
+                    .With(CsProjCoreToolchain.NetCoreApp30)
+                    .WithId(".Net Core 3.0 CLI")
+#endif
+            );
         }
     }
 }
