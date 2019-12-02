@@ -34,7 +34,7 @@ namespace NetVips
         /// <param name="leak">Bool indicating if leak checking should be turned on.</param>
         public static void LeakSet(bool leak)
         {
-            Vips.LeakSet(leak ? 1 : 0);
+            Vips.LeakSet(leak);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace NetVips
         /// <param name="profile">Bool indicating if profile recording should be turned on.</param>
         public static void ProfileSet(bool profile)
         {
-            Vips.ProfileSet(profile ? 1 : 0);
+            Vips.ProfileSet(profile);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace NetVips
         /// <param name="trace">Bool indicating if tracing should be turned on.</param>
         public static void CacheSetTrace(bool trace)
         {
-            Vips.CacheSetTrace(trace ? 1 : 0);
+            Vips.CacheSetTrace(trace);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace NetVips
         /// compiler should be turned on.</param>
         public static void VectorSet(bool enabled)
         {
-            Vips.VectorSet(enabled ? 1 : 0);
+            Vips.VectorSet(enabled);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace NetVips
         /// <param name="fn">Call this function for every type.</param>
         /// <returns><see cref="IntPtr.Zero"/> if <paramref name="fn"/> returns <see cref="IntPtr.Zero"/> for all arguments,
         /// otherwise the first non-<see cref="IntPtr.Zero"/> value from <paramref name="fn"/>.</returns>
-        internal static IntPtr TypeMap(IntPtr type, VipsTypeMap2Fn fn)
+        internal static IntPtr TypeMap(IntPtr type, Vips.TypeMap2Fn fn)
         {
             return Vips.TypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
         }

@@ -7,15 +7,14 @@ namespace NetVips.Internal
     using Interop;
     using VipsObjectManaged = global::NetVips.VipsObject;
 
-    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate IntPtr VipsArgumentMapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
-        IntPtr argumentInstance, IntPtr a, IntPtr b);
-
-    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate IntPtr VipsTypeMap2Fn(IntPtr type, IntPtr a, IntPtr b);
-
     internal static class Vips
     {
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate IntPtr TypeMap2Fn(IntPtr type, IntPtr a, IntPtr b);
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int CallbackFn(IntPtr a, IntPtr b);
+
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_init")]
@@ -24,12 +23,12 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_leak_set")]
-        internal static extern void LeakSet(int leak);
+        internal static extern void LeakSet([MarshalAs(UnmanagedType.Bool)] bool leak);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_profile_set")]
-        internal static extern void ProfileSet(int profile);
+        internal static extern void ProfileSet([MarshalAs(UnmanagedType.Bool)] bool profile);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -49,7 +48,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_cache_set_trace")]
-        internal static extern void CacheSetTrace(int trace);
+        internal static extern void CacheSetTrace([MarshalAs(UnmanagedType.Bool)] bool trace);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -64,7 +63,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_vector_set_enabled")]
-        internal static extern void VectorSet(int enabled);
+        internal static extern void VectorSet([MarshalAs(UnmanagedType.Bool)] bool enabled);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -150,13 +149,13 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_argument_map")]
-        internal static extern IntPtr ArgumentMap(VipsObjectManaged @object, VipsArgumentMapFn fn, IntPtr a,
+        internal static extern IntPtr ArgumentMap(VipsObjectManaged @object, VipsArgument.MapFn fn, IntPtr a,
             IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_type_map")]
-        internal static extern IntPtr TypeMap(IntPtr @base, VipsTypeMap2Fn fn, IntPtr a, IntPtr b);
+        internal static extern IntPtr TypeMap(IntPtr @base, TypeMap2Fn fn, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -248,6 +247,10 @@ namespace NetVips.Internal
         {
             internal IntPtr Pspec;
         }
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate IntPtr MapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
+            IntPtr argumentInstance, IntPtr a, IntPtr b);
     }
 
     internal static class VipsArgumentClass
@@ -273,14 +276,12 @@ namespace NetVips.Internal
             internal IntPtr ArgumentClass;
             internal IntPtr Object;
 
-            internal int Assigned;
+            [MarshalAs(UnmanagedType.Bool)]
+            internal bool Assigned;
             internal uint CloseId;
             internal uint InvalidateId;
         }
     }
-
-    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int VipsCallbackFn(IntPtr a, IntPtr b);
 
     internal static class VipsValue
     {
@@ -302,7 +303,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_blob")]
-        internal static extern void SetBlob(ref GValue.Struct value, VipsCallbackFn freeFn,
+        internal static extern void SetBlob(ref GValue.Struct value, Vips.CallbackFn freeFn,
             IntPtr data, ulong length);
 
         [SuppressUnmanagedCodeSecurity]
@@ -359,17 +360,18 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_set_progress")]
-        internal static extern void SetProgress(Image image, int progress);
+        internal static extern void SetProgress(Image image, [MarshalAs(UnmanagedType.Bool)] bool progress);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_iskilled")]
-        internal static extern int IsKilled(Image image);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool IsKilled(Image image);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_set_kill")]
-        internal static extern void SetKill(Image image, int kill);
+        internal static extern void SetKill(Image image, [MarshalAs(UnmanagedType.Bool)] bool kill);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -400,7 +402,8 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_hasalpha")]
-        internal static extern int HasAlpha(Image image);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool HasAlpha(Image image);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -425,7 +428,8 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_remove")]
-        internal static extern int Remove(Image image, [MarshalAs(UnmanagedType.LPStr)] string name);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool Remove(Image image, [MarshalAs(UnmanagedType.LPStr)] string name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

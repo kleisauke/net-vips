@@ -90,12 +90,13 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_set_boolean")]
-        internal static extern void SetBoolean(ref Struct value, int vBoolean);
+        internal static extern void SetBoolean(ref Struct value, [MarshalAs(UnmanagedType.Bool)] bool vBoolean);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_get_boolean")]
-        internal static extern int GetBoolean(in Struct value);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetBoolean(in Struct value);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,

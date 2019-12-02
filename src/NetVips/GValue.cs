@@ -114,7 +114,7 @@ namespace NetVips
         /// <summary>
         /// The fundamental type for VipsBandFormat. See <see cref="Enums.BandFormat"/>.
         /// </summary>
-        public static readonly IntPtr BandFormatType;
+        public static readonly IntPtr BandFormatType = Vips.BandFormatGetType();
 
         /// <summary>
         /// The fundamental type for VipsBlendMode. See <see cref="Enums.BlendMode"/>.
@@ -128,13 +128,9 @@ namespace NetVips
 
         static GValue()
         {
-            Vips.BandFormatGetType();
-            BandFormatType = NetVips.TypeFromName("VipsBandFormat");
-
             if (NetVips.AtLeastLibvips(8, 6))
             {
-                Vips.BlendModeGetType();
-                BlendModeType = NetVips.TypeFromName("VipsBlendMode");
+                BlendModeType = Vips.BlendModeGetType();
             }
         }
 
@@ -259,7 +255,7 @@ namespace NetVips
             var fundamental = GType.Fundamental(gtype);
             if (gtype == GBoolType)
             {
-                Internal.GValue.SetBoolean(ref Struct, Convert.ToBoolean(value) ? 1 : 0);
+                Internal.GValue.SetBoolean(ref Struct, Convert.ToBoolean(value));
             }
             else if (gtype == GIntType)
             {
@@ -443,7 +439,7 @@ namespace NetVips
             object result;
             if (gtype == GBoolType)
             {
-                result = Internal.GValue.GetBoolean(in Struct) != 0;
+                result = Internal.GValue.GetBoolean(in Struct);
             }
             else if (gtype == GIntType)
             {

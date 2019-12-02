@@ -953,13 +953,16 @@ namespace NetVips
                 }
             }
 
-            var result = VipsImage.Get(this, name, out var gv);
+            var result = VipsImage.Get(this, name, out var gvCopy);
             if (result != 0)
             {
                 throw new VipsException($"unable to get {name}");
             }
 
-            return new GValue(gv).Get();
+            using (var gv = new GValue(gvCopy))
+            {
+                return gv.Get();
+            }
         }
 
         /// <summary>
@@ -1008,10 +1011,12 @@ namespace NetVips
         /// converted to the GType, if possible.</param>
         public void SetType(IntPtr gtype, string name, object value)
         {
-            var gv = new GValue();
-            gv.SetType(gtype);
-            gv.Set(value);
-            VipsImage.Set(this, name, in gv.Struct);
+            using (var gv = new GValue())
+            {
+                gv.SetType(gtype);
+                gv.Set(value);
+                VipsImage.Set(this, name, in gv.Struct);
+            }
         }
 
         /// <summary>
@@ -1047,7 +1052,7 @@ namespace NetVips
         /// otherwise, <see langword="false"/>.</returns>
         public bool Remove(string name)
         {
-            return VipsImage.Remove(this, name) != 0;
+            return VipsImage.Remove(this, name);
         }
 
         /// <summary>
@@ -1781,7 +1786,7 @@ namespace NetVips
             // use `vips_image_hasalpha` on libvips >= 8.5.
             if (NetVips.AtLeastLibvips(8, 5))
             {
-                return VipsImage.HasAlpha(this) == 1;
+                return VipsImage.HasAlpha(this);
             }
 
             return Bands == 2 ||
@@ -1808,7 +1813,7 @@ namespace NetVips
                 return false;
             }
 
-            return VipsImage.IsKilled(this) == 1;
+            return VipsImage.IsKilled(this);
         }
 
         /// <summary>
@@ -1825,7 +1830,7 @@ namespace NetVips
                 return;
             }
 
-            VipsImage.SetKill(this, kill ? 1 : 0);
+            VipsImage.SetKill(this, kill);
         }
 
         /// <summary>
@@ -1854,7 +1859,7 @@ namespace NetVips
         /// <param name="token">Cancellation token to block evaluation on this image.</param>
         public void SetProgress(IProgress<int> progress, CancellationToken token = default)
         {
-            VipsImage.SetProgress(this, progress == null ? 0 : 1);
+            VipsImage.SetProgress(this, progress != null);
             if (progress == null)
             {
                 return;
