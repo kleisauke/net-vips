@@ -428,8 +428,8 @@ namespace NetVips
             }
 
             var image = new Image(vi);
-            image.SetType(GValue.GDoubleType, nameof(scale), scale);
-            image.SetType(GValue.GDoubleType, nameof(offset), offset);
+            image.Set(GValue.GDoubleType, nameof(scale), scale);
+            image.Set(GValue.GDoubleType, nameof(offset), offset);
             return image;
         }
 
@@ -473,8 +473,8 @@ namespace NetVips
             }
 
             var image = new Image(vi);
-            image.SetType(GValue.GDoubleType, nameof(scale), scale);
-            image.SetType(GValue.GDoubleType, nameof(offset), offset);
+            image.Set(GValue.GDoubleType, nameof(scale), scale);
+            image.Set(GValue.GDoubleType, nameof(offset), offset);
             return image;
         }
 
@@ -513,8 +513,8 @@ namespace NetVips
             }
 
             var image = new Image(vi);
-            image.SetType(GValue.GDoubleType, nameof(scale), scale);
-            image.SetType(GValue.GDoubleType, nameof(offset), offset);
+            image.Set(GValue.GDoubleType, nameof(scale), scale);
+            image.Set(GValue.GDoubleType, nameof(offset), offset);
             return image;
         }
 
@@ -1009,7 +1009,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to create.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the GType, if possible.</param>
-        public void SetType(IntPtr gtype, string name, object value)
+        public override void Set(IntPtr gtype, string name, object value)
         {
             using (var gv = new GValue())
             {
@@ -1030,15 +1030,15 @@ namespace NetVips
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the type of the metadata item, if possible.</param>
         /// <exception cref="T:System.Exception">If metadata item <paramref name="name"/> does not exist.</exception>
-        public override void Set(string name, object value)
+        public void Set(string name, object value)
         {
             var gtype = GetTypeOf(name);
             if (gtype == IntPtr.Zero)
             {
-                throw new Exception($"metadata item {name} does not exist - use SetType() to create and set");
+                throw new Exception($"metadata item {name} does not exist - use the Set(IntPtr, string, object) overload to create and set");
             }
 
-            SetType(gtype, name, value);
+            Set(gtype, name, value);
         }
 
         /// <summary>
@@ -1896,7 +1896,7 @@ namespace NetVips
                 }
             };
 
-            SignalConnect(Internal.Enums.VipsEvaluation.Eval, evalCallback);
+            SignalConnect(Enums.Signals.Eval, evalCallback);
         }
 
         #endregion

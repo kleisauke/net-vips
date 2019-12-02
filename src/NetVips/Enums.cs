@@ -67,6 +67,93 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Flags we associate with each object argument.
+        /// </summary>
+        [Flags]
+        public enum ArgumentFlags
+        {
+            /// <summary>no flags.</summary>
+            NONE = 0,
+
+            /// <summary>must be set in the constructor.</summary>
+            REQUIRED = 1,
+
+            /// <summary>can only be set in the constructor.</summary>
+            CONSTRUCT = 2,
+
+            /// <summary>can only be set once.</summary>
+            SET_ONCE = 4,
+
+            /// <summary>don't do use-before-set checks.</summary>
+            SET_ALWAYS = 8,
+
+            /// <summary>is an input argument (one we depend on).</summary>
+            INPUT = 16,
+
+            /// <summary>is an output argument (depends on us).</summary>
+            OUTPUT = 32,
+
+            /// <summary>just there for back-compat, hide.</summary>
+            DEPRECATED = 64,
+
+            /// <summary>the input argument will be modified.</summary>
+            MODIFY = 128
+        }
+
+        /// <summary>
+        /// Flags we associate with an <see cref="Operation"/>.
+        /// </summary>
+        [Flags]
+        public enum OperationFlags
+        {
+            /// <summary>no flags.</summary>
+            NONE = 0,
+
+            /// <summary>can work sequentially with a small buffer.</summary>
+            SEQUENTIAL = 1,
+
+            /// <summary>can work sequentially without a buffer.</summary>
+            SEQUENTIAL_UNBUFFERED = 2,
+
+            /// <summary>must not be cached.</summary>
+            NOCACHE = 4,
+
+            /// <summary>a compatibility thing.</summary>
+            DEPRECATED = 8
+        }
+
+        /// <summary>
+        /// Signals that can be used on an <see cref="Image"/>. See <see cref="GObject.SignalConnect"/>.
+        /// </summary>
+        internal static class Signals
+        {
+            /// <summary>Evaluation is starting.</summary>
+            /// <remarks>
+            /// The preeval signal is emitted once before computation of <see cref="Image"/>
+            /// starts. It's a good place to set up evaluation feedback.
+            /// </remarks>
+            public const string PreEval = "preeval";
+
+            /// <summary>Evaluation progress.</summary>
+            /// <remarks>
+            /// The eval signal is emitted once per work unit (typically a 128 x
+            /// 128 area of pixels) during image computation.
+            ///
+            /// You can use this signal to update user-interfaces with progress
+            /// feedback. Beware of updating too frequently: you will usually
+            /// need some throttling mechanism.
+            /// </remarks>
+            public const string Eval = "eval";
+
+            /// <summary>Evaluation is ending.</summary>
+            /// <remarks>
+            /// The posteval signal is emitted once at the end of the computation
+            /// of <see cref="Image"/>. It's a good place to shut down evaluation feedback.
+            /// </remarks>
+            public const string PostEval = "posteval";
+        }
+
+        /// <summary>
         /// The format of image bands.
         /// </summary>
         /// <remarks>

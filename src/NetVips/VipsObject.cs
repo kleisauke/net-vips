@@ -68,7 +68,7 @@ namespace NetVips
         /// </summary>
         /// <param name="name">Arg to fetch.</param>
         /// <returns>The blurb.</returns>
-        internal string GetBlurb(string name)
+        public string GetBlurb(string name)
         {
             var pspec = GetPspec(name);
 
@@ -116,10 +116,10 @@ namespace NetVips
         /// </summary>
         /// <param name="name">The name of the property to set.</param>
         /// <param name="value">The value.</param>
-        public virtual void Set(string name, object value)
+        /// <param name="gtype">The GType of the property.</param>
+        public virtual void Set(IntPtr gtype, string name, object value)
         {
-            // logger.Debug($"Set: name = {name}, value = {value}");
-            var gtype = GetTypeOf(name);
+            // logger.Debug($"Set: gtype = {gtype}, name = {name}, value = {value}");
             using (var gv = new GValue())
             {
                 gv.SetType(gtype);

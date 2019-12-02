@@ -1,6 +1,7 @@
 namespace NetVips
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using Internal;
@@ -337,16 +338,47 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Map over a type's children. Stop when <paramref name="fn"/> returns
-        /// non-<see cref="IntPtr.Zero"/> and return that value.
+        /// Get a list of operations available within the libvips library.
         /// </summary>
-        /// <param name="type">Base type.</param>
-        /// <param name="fn">Call this function for every type.</param>
-        /// <returns><see cref="IntPtr.Zero"/> if <paramref name="fn"/> returns <see cref="IntPtr.Zero"/> for all arguments,
-        /// otherwise the first non-<see cref="IntPtr.Zero"/> value from <paramref name="fn"/>.</returns>
-        internal static IntPtr TypeMap(IntPtr type, Vips.TypeMap2Fn fn)
+        /// <remarks>
+        /// This can be useful for documentation generators.
+        /// </remarks>
+        /// <returns>A list of operations.</returns>
+        public static List<string> GetOperations()
         {
-            return Vips.TypeMap(type, fn, IntPtr.Zero, IntPtr.Zero);
+            var allNickNames = new List<string>();
+            var handle = GCHandle.Alloc(allNickNames);
+
+            IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
+            {
+                var nickname = NicknameFind(type);
+
+                // exclude base classes, for e.g. 'jpegload_base'
+                if (TypeFind("VipsOperation", nickname) != IntPtr.Zero)
+                {
+                    var list = (List<string>)GCHandle.FromIntPtr(a).Target;
+                    list.Add(NicknameFind(type));
+                }
+
+                return Vips.TypeMap(type, TypeMap, a, IntPtr.Zero);
+            }
+
+            try
+            {
+                Vips.TypeMap(TypeFromName("VipsOperation"), TypeMap, GCHandle.ToIntPtr(handle), IntPtr.Zero);
+            }
+            finally
+            {
+                handle.Free();
+            }
+
+            // Sort
+            allNickNames.Sort();
+
+            // Filter duplicates
+            allNickNames = allNickNames.Distinct().ToList();
+
+            return allNickNames;
         }
 
         /// <summary>
@@ -357,6 +389,16 @@ namespace NetVips
         public static IntPtr TypeFromName(string name)
         {
             return GType.FromName(name);
+        }
+
+        /// <summary>
+        /// Extract the fundamental type ID portion.
+        /// </summary>
+        /// <param name="type">A valid type ID.</param>
+        /// <returns>Fundamental type ID.</returns>
+        public static IntPtr FundamentalType(IntPtr type)
+        {
+            return GType.Fundamental(type);
         }
     }
 }

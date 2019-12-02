@@ -6,6 +6,8 @@ namespace NetVips.Internal
     using System.Text;
     using Interop;
     using VipsObjectManaged = global::NetVips.VipsObject;
+    using OperationFlags = global::NetVips.Enums.OperationFlags;
+    using ArgumentFlags = global::NetVips.Enums.ArgumentFlags;
 
     internal static class Vips
     {
@@ -260,7 +262,7 @@ namespace NetVips.Internal
         {
             internal VipsArgument.Struct Parent;
             internal IntPtr ObjectClass;
-            internal Enums.VipsArgumentFlags Flags;
+            internal ArgumentFlags Flags;
 
             internal int Priority;
             internal uint Offset;
@@ -353,7 +355,7 @@ namespace NetVips.Internal
     internal static class VipsImage
     {
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, 
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_get_page_height")]
         internal static extern int GetPageHeight(Image image);
 
@@ -479,7 +481,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_operation_get_flags")]
-        internal static extern Enums.VipsOperationFlags GetFlags(Operation operation);
+        internal static extern OperationFlags GetFlags(Operation operation);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

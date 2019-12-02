@@ -110,7 +110,7 @@ namespace NetVips.Tests
         {
             var filename = Helper.GetTemporaryFile(_tempDir, suf);
 
-            var buf = (byte[])Operation.Call(saver, im);
+            var buf = (byte[])Operation.Call(saver, matchImage: im);
             File.WriteAllBytes(filename, buf);
 
             var x = Image.NewFromFile(filename);
@@ -217,7 +217,7 @@ namespace NetVips.Tests
                     x = Image.NewFromFile(Helper.JpegFile);
                     x = x.Copy();
 
-                    x.SetType(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world");
+                    x.Set(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world");
 
                     filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                     x.WriteToFile(filename);
@@ -234,7 +234,7 @@ namespace NetVips.Tests
                     x = Image.NewFromFile(Helper.JpegFile);
                     x = x.Copy();
 
-                    x.SetType(GValue.GStrType, "exif-ifd0-XPComment", "йцук");
+                    x.Set(GValue.GStrType, "exif-ifd0-XPComment", "йцук");
 
                     filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                     x.WriteToFile(filename);
@@ -252,7 +252,7 @@ namespace NetVips.Tests
                     x = Image.NewFromFile(Helper.JpegFile);
                     x = x.Copy();
 
-                    x.SetType(GValue.GStrType, "exif-ifd2-UserComment", "hello world");
+                    x.Set(GValue.GStrType, "exif-ifd2-UserComment", "hello world");
 
                     filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                     x.WriteToFile(filename);

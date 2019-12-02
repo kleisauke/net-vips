@@ -134,46 +134,6 @@ namespace NetVips
             }
         }
 
-        private static readonly Dictionary<IntPtr, string> GTypeToCSharpDict = new Dictionary<IntPtr, string>
-        {
-            {GBoolType, "bool"},
-            {GIntType, "int"},
-            {GUint64Type, "ulong"},
-            {GEnumType, "string"},
-            {GFlagsType, "int"},
-            {GDoubleType, "double"},
-            {GStrType, "string"},
-            {GObjectType, "GObject"},
-            {ImageType, "Image"},
-            {ArrayIntType, "int[]"},
-            {ArrayDoubleType, "double[]"},
-            {ArrayImageType, "Image[]"},
-            {RefStrType, "string"},
-            {BlobType, "byte[]"}
-        };
-
-        /// <summary>
-        /// Map a GType to the name of the C# type we use to represent it.
-        /// </summary>
-        /// <param name="gtype">The GType to map.</param>
-        /// <returns>The C# type we use to represent it.</returns>
-        public static string GTypeToCSharp(IntPtr gtype)
-        {
-            var fundamental = GType.Fundamental(gtype);
-
-            if (GTypeToCSharpDict.ContainsKey(gtype))
-            {
-                return GTypeToCSharpDict[gtype];
-            }
-
-            if (GTypeToCSharpDict.ContainsKey(fundamental))
-            {
-                return GTypeToCSharpDict[fundamental];
-            }
-
-            return "object";
-        }
-
         /// <summary>
         /// Turn a string or integer into an enum value ready to be passed into libvips.
         /// </summary>
