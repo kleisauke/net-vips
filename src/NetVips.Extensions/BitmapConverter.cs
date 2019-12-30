@@ -4,7 +4,6 @@ namespace NetVips.Extensions
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Runtime.InteropServices;
-    using System.Collections.Generic;
     using Image = Image;
 
     /// <summary>
@@ -12,23 +11,6 @@ namespace NetVips.Extensions
     /// </summary>
     public static class BitmapConverter
     {
-        /// <summary>
-        /// Number of bytes for a band format.
-        /// </summary>
-        private static readonly Dictionary<string, int> SizeofBandFormat = new Dictionary<string, int>
-        {
-            {Enums.BandFormat.Uchar, sizeof(byte)},
-            {Enums.BandFormat.Char, sizeof(char)},
-            {Enums.BandFormat.Ushort, sizeof(ushort)},
-            {Enums.BandFormat.Short, sizeof(short)},
-            {Enums.BandFormat.Uint, sizeof(uint)},
-            {Enums.BandFormat.Int, sizeof(int)},
-            {Enums.BandFormat.Float, sizeof(float)},
-            {Enums.BandFormat.Complex, 2 * sizeof(float)},
-            {Enums.BandFormat.Double, sizeof(double)},
-            {Enums.BandFormat.Dpcomplex, 2 * sizeof(double)},
-        };
-
         /// <summary>
         /// Guess the number of bands for a <see cref="PixelFormat"/>.
         /// </summary>
@@ -87,7 +69,7 @@ namespace NetVips.Extensions
                 case PixelFormat.Format64bppPArgb:
                     return Enums.BandFormat.Ushort;
                 default:
-                    throw new NotImplementedException($"GuessBands({pixelFormat}) is not yet implemented.");
+                    throw new NotImplementedException($"GuessBandFormat({pixelFormat}) is not yet implemented.");
             }
         }
 
@@ -109,11 +91,11 @@ namespace NetVips.Extensions
 
             var rect = new Rectangle(0, 0, w, h);
             BitmapData bd = null;
-            var memory = new byte[w * h * bands * SizeofBandFormat[format]];
+            Image dst;
             try
             {
                 bd = src.LockBits(rect, ImageLockMode.ReadOnly, src.PixelFormat);
-                Marshal.Copy(bd.Scan0, memory, 0, memory.Length);
+                dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)(bd.Stride * h), w, h, bands, format);
             }
             finally
             {
@@ -121,19 +103,14 @@ namespace NetVips.Extensions
                     src.UnlockBits(bd);
             }
 
-            var dst = Image.NewFromMemory(memory, w, h, bands, format);
-
-            // Switch from BGR to RGB
-            if (bands == 3)
+            if (bands != 3)
             {
-                var images = dst.Bandsplit();
-                var t = images[0];
-                images[0] = images[2];
-                images[2] = t;
-                dst = (Image)Operation.Call("bandjoin", new object[] { images });
+                return dst;
             }
 
-            return dst;
+            // Switch from BGR to RGB
+            var images = dst.Bandsplit();
+            return images[2].Bandjoin(images[1], images[0]);
         }
 
         /// <summary>
@@ -167,10 +144,7 @@ namespace NetVips.Extensions
 
                     // Switch from RGB to BGR
                     var bands = src.Bandsplit();
-                    var t = bands[0];
-                    bands[0] = bands[2];
-                    bands[2] = t;
-                    src = (Image)Operation.Call("bandjoin", new object[] { bands });
+                    src = bands[2].Bandjoin(bands[1], bands[0]);
                     break;
                 case 4:
                     pf = src.Format == Enums.BandFormat.Ushort

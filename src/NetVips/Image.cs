@@ -556,8 +556,8 @@ namespace NetVips
             var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
 
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), new UIntPtr((ulong)data.Length),
-                width, height, bands, (Internal.Enums.VipsBandFormat)formatValue);
+            var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), (UIntPtr)data.Length, width, height, bands,
+                (Internal.Enums.VipsBandFormat)formatValue);
 
             if (vi == IntPtr.Zero)
             {
@@ -570,6 +570,38 @@ namespace NetVips
             }
 
             return new Image(vi) { _dataHandle = handle };
+        }
+
+        /// <summary>
+        /// Like <see cref="NewFromMemory"/>, but VIPS will make a copy of the memory area.
+        /// This means more memory use and an extra copy operation, but is much simpler and safer.
+        /// </summary>
+        /// <param name="data">A unmanaged block of memory.</param>
+        /// <param name="size">Length of memory.</param>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="bands">Number of bands.</param>
+        /// <param name="format">Band format.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
+        public static Image NewFromMemoryCopy(
+            IntPtr data,
+            ulong size,
+            int width,
+            int height,
+            int bands,
+            string format)
+        {
+            var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
+            var vi = VipsImage.NewFromMemoryCopy(data, (UIntPtr)size, width, height, bands,
+                (Internal.Enums.VipsBandFormat)formatValue);
+
+            if (vi == IntPtr.Zero)
+            {
+                throw new VipsException("unable to make image from memory");
+            }
+
+            return new Image(vi);
         }
 
         /// <summary>
@@ -1035,7 +1067,8 @@ namespace NetVips
             var gtype = GetTypeOf(name);
             if (gtype == IntPtr.Zero)
             {
-                throw new Exception($"metadata item {name} does not exist - use the Set(IntPtr, string, object) overload to create and set");
+                throw new Exception(
+                    $"metadata item {name} does not exist - use the Set(IntPtr, string, object) overload to create and set");
             }
 
             Set(gtype, name, value);

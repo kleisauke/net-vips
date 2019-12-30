@@ -207,8 +207,7 @@ namespace NetVips.Internal
     internal static class VipsObject
     {
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_object_get_args")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_object_get_args")]
         internal static extern int GetArgs(VipsObjectManaged @object, out IntPtr names, out IntPtr flags,
             out int nArgs);
 
@@ -227,8 +226,7 @@ namespace NetVips.Internal
             [MarshalAs(UnmanagedType.LPStr)] string @string);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_object_print_all")]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_object_print_all")]
         internal static extern void PrintAll();
 
         [SuppressUnmanagedCodeSecurity]
@@ -383,6 +381,12 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_image_new_from_memory_copy")]
+        internal static extern IntPtr NewFromMemoryCopy(IntPtr data, UIntPtr size, int width, int height,
+            int bands, Enums.VipsBandFormat format);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_new_matrix_from_array")]
         internal static extern IntPtr NewMatrixFromArray(int width, int height, double[] array, int size);
 
@@ -524,7 +528,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save_buffer")]
-        internal static extern IntPtr FindSaveBuffer(in byte suffix);
+        internal static extern IntPtr FindSaveBuffer(in byte name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
