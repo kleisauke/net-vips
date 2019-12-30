@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Benchmarks", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Build", "build\NetVips.Build.csproj", "{35598B6F-008D-4E0B-85CC-8C17FFA8387E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Docs", "documentation\NetVips.Docs.csproj", "{305AB2BA-D951-4CEF-85D1-22660B0F065C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Docs", "docs\NetVips.Docs.csproj", "{305AB2BA-D951-4CEF-85D1-22660B0F065C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetVips.Extensions", "src\NetVips.Extensions\NetVips.Extensions.csproj", "{853D1CDD-212D-4AEC-8934-E7A22D4217F4}"
 EndProject
