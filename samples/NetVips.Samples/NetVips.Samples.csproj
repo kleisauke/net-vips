@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Exe</OutputType>
     <RootNamespace>NetVips</RootNamespace>
     <Optimize>true</Optimize>

@@ -6,7 +6,7 @@ if ! type docker > /dev/null; then
 fi
 
 # Ensure latest .NET Core SDK
-docker pull mcr.microsoft.com/dotnet/core/sdk:3.0-alpine3.9
+docker pull mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.10
 
 # Create a machine image with all the required build tools pre-installed
 docker build . -t netvips
@@ -14,5 +14,5 @@ docker build . -t netvips
 # Run build scripts inside container, with netvips directory 
 # mounted at /app
 docker run --rm -t \
-	-v $PWD:/app \
-	netvips
+    -v $PWD:/app \
+    netvips

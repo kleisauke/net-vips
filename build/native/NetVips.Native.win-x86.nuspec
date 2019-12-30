@@ -28,8 +28,8 @@
     <!-- Include libvips Windows x86 binaries -->
     <file src="pack\win-x86\*" target="runtimes/win-x86/native" />
 
-    <!-- This is a dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <file src="_._" target="ref/netstandard" />
+    <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
+    <file src="_._" target="lib/netstandard1.0" />
 
   </files>
 </package>

@@ -45,7 +45,7 @@ partial class Build : NukeBuild
         void ExecWait(string preamble, string command, string args)
         {
             Console.WriteLine(preamble);
-            Process.Start(new ProcessStartInfo(command, args) { UseShellExecute = false })?.WaitForExit();
+            Process.Start(new ProcessStartInfo(command, args) {UseShellExecute = false})?.WaitForExit();
         }
 
         ExecWait("dotnet version:", "dotnet", "--version");
@@ -177,14 +177,16 @@ partial class Build : NukeBuild
                 NuGetPack(c => c
                     .SetTargetPath(RootDirectory / "build/native/NetVips.Native." + architecture + ".nuspec")
                     .SetVersion(Parameters.VipsVersion)
-                    .SetOutputDirectory(Parameters.ArtifactsDir));
+                    .SetOutputDirectory(Parameters.ArtifactsDir)
+                    .AddProperty("NoWarn", "NU5128"));
             }
 
             // Build the all-in-one package, which depends on the previous packages.
             NuGetPack(c => c
                 .SetTargetPath(RootDirectory / "build/native/NetVips.Native.nuspec")
                 .SetVersion(Parameters.VipsVersion)
-                .SetOutputDirectory(Parameters.ArtifactsDir));
+                .SetOutputDirectory(Parameters.ArtifactsDir)
+                .AddProperty("NoWarn", "NU5128"));
         });
 
     Target All => _ => _

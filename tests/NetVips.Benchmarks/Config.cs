@@ -12,13 +12,14 @@ namespace NetVips.Benchmarks
             // to a non-optimized SkiaSharp that we do not own.
             Options |= ConfigOptions.DisableOptimizationsValidator;
 
+            // Only support LTS releases
             Add(Job.Default
 #if NETCOREAPP2_1
                     .With(CsProjCoreToolchain.NetCoreApp21)
                     .WithId(".Net Core 2.1 CLI")
-#elif NETCOREAPP3_0
-                    .With(CsProjCoreToolchain.NetCoreApp30)
-                    .WithId(".Net Core 3.0 CLI")
+#elif NETCOREAPP3_1
+                    .With(CsProjCoreToolchain.NetCoreApp31)
+                    .WithId(".Net Core 3.1 CLI")
 #endif
             );
         }
