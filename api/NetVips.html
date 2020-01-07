@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace NetVips
    ">
-    <meta name="generator" content="docfx 2.43.2.0">
+    <meta name="generator" content="docfx 2.48.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -77,6 +77,9 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
+      <h4><a class="xref" href="NetVips.Connection.html">Connection</a></h4>
+      <section><p>The abstract base Connection class.</p>
+</section>
       <h4><a class="xref" href="NetVips.Enums.html">Enums</a></h4>
       <section><p>This module contains the various libvips enums as C# classes
 Enums values are represented in NetVips as strings. These classes contain the valid strings for each enum.</p>
@@ -127,6 +130,9 @@ Enums values are represented in NetVips as strings. These classes contain the va
       <h4><a class="xref" href="NetVips.Enums.Precision.html">Enums.Precision</a></h4>
       <section><p>Computation precision.</p>
 </section>
+      <h4><a class="xref" href="NetVips.Enums.Signals.html">Enums.Signals</a></h4>
+      <section><p>Signals that can be used on an <a class="xref" href="NetVips.Image.html">Image</a>. See <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_">SignalConnect(String, Delegate, IntPtr)</a>.</p>
+</section>
       <h4><a class="xref" href="NetVips.GObject.html">GObject</a></h4>
       <section><p>Manage <span class="xref">NetVips.Internal.GObject</span> lifetime.</p>
 </section>
@@ -138,6 +144,9 @@ Enums values are represented in NetVips as strings. These classes contain the va
 </section>
       <h4><a class="xref" href="NetVips.Interpolate.html">Interpolate</a></h4>
       <section><p>Make interpolators for operators like <a class="xref" href="NetVips.Image.html#NetVips_Image_Affine_System_Double___NetVips_GObject_System_Int32___System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___System_String_">Affine(Double[], GObject, Int32[], Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Double[], String)</a>.</p>
+</section>
+      <h4><a class="xref" href="NetVips.Introspect.html">Introspect</a></h4>
+      <section><p>Build introspection data for operations.</p>
 </section>
       <h4><a class="xref" href="NetVips.Log.html">Log</a></h4>
       <section><p>Wrapper for message logging functions.</p>
@@ -154,6 +163,18 @@ Enums values are represented in NetVips as strings. These classes contain the va
       <h4><a class="xref" href="NetVips.Region.html">Region</a></h4>
       <section><p>Wrap a <span class="xref">NetVips.Internal.VipsRegion</span> object.</p>
 </section>
+      <h4><a class="xref" href="NetVips.Source.html">Source</a></h4>
+      <section><p>An input connection.</p>
+</section>
+      <h4><a class="xref" href="NetVips.SourceCustom.html">SourceCustom</a></h4>
+      <section><p>An source you can connect delegates to implement behaviour.</p>
+</section>
+      <h4><a class="xref" href="NetVips.Target.html">Target</a></h4>
+      <section><p>An output connection.</p>
+</section>
+      <h4><a class="xref" href="NetVips.TargetCustom.html">TargetCustom</a></h4>
+      <section><p>An target you can connect delegates to implement behaviour.</p>
+</section>
       <h4><a class="xref" href="NetVips.VipsException.html">VipsException</a></h4>
       <section><p>Our own exception class which handles the libvips error buffer.</p>
 </section>
@@ -161,18 +182,54 @@ Enums values are represented in NetVips as strings. These classes contain the va
       <section><p>Manage a <span class="xref">NetVips.Internal.VipsObject</span>.</p>
 </section>
       <h4><a class="xref" href="NetVips.VOption.html">VOption</a></h4>
-      <section><p>This class wraps a <span class="xref">System.Collections.Generic.Dictionary`2</span>.
+      <section><p>This class wraps a <span class="xref">System.Collections.Generic.Dictionary&lt;TKey, TValue&gt;</span>.
 This is used to call functions with optional arguments. See <a class="xref" href="NetVips.Operation.html#NetVips_Operation_Call_System_String_NetVips_VOption_System_Object___">Call(String, VOption, Object[])</a>.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="NetVips.GTimer.html">GTimer</a></h4>
+      <section><p>Records a start time, and counts microseconds elapsed since that time.</p>
+</section>
+      <h4><a class="xref" href="NetVips.Introspect.Argument.html">Introspect.Argument</a></h4>
+      <section><p>An object structure that encapsulates the metadata
+required to specify arguments.</p>
+</section>
+      <h4><a class="xref" href="NetVips.VipsProgress.html">VipsProgress</a></h4>
+      <section><p>Struct we keep a record of execution time in. Passed to eval signal so
+it can assess progress.</p>
 </section>
     <h3 id="enums">Enums
   </h3>
+      <h4><a class="xref" href="NetVips.Enums.ArgumentFlags.html">Enums.ArgumentFlags</a></h4>
+      <section><p>Flags we associate with each object argument.</p>
+</section>
       <h4><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></h4>
       <section><p>Flags specifying the level of log messages.</p>
 </section>
+      <h4><a class="xref" href="NetVips.Enums.OperationFlags.html">Enums.OperationFlags</a></h4>
+      <section><p>Flags we associate with an <a class="xref" href="NetVips.Operation.html">Operation</a>.</p>
+</section>
     <h3 id="delegates">Delegates
   </h3>
-      <h4><a class="xref" href="NetVips.LogFunc.html">LogFunc</a></h4>
+      <h4><a class="xref" href="NetVips.Image.EvalDelegate.html">Image.EvalDelegate</a></h4>
+      <section><p>A evaluation delegate that can be used on the
+<a class="xref" href="NetVips.Enums.Signals.html#NetVips_Enums_Signals_PreEval">PreEval</a>, <a class="xref" href="NetVips.Enums.Signals.html#NetVips_Enums_Signals_Eval">Eval</a> and
+<a class="xref" href="NetVips.Enums.Signals.html#NetVips_Enums_Signals_PostEval">PostEval</a> signals.</p>
+</section>
+      <h4><a class="xref" href="NetVips.Log.LogDelegate.html">Log.LogDelegate</a></h4>
       <section><p>Specifies the prototype of log handler functions.</p>
+</section>
+      <h4><a class="xref" href="NetVips.SourceCustom.ReadDelegate.html">SourceCustom.ReadDelegate</a></h4>
+      <section><p>A read delegate.</p>
+</section>
+      <h4><a class="xref" href="NetVips.SourceCustom.SeekDelegate.html">SourceCustom.SeekDelegate</a></h4>
+      <section><p>A seek delegate.</p>
+</section>
+      <h4><a class="xref" href="NetVips.TargetCustom.FinishDelegate.html">TargetCustom.FinishDelegate</a></h4>
+      <section><p>A finish delegate.</p>
+</section>
+      <h4><a class="xref" href="NetVips.TargetCustom.WriteDelegate.html">TargetCustom.WriteDelegate</a></h4>
+      <section><p>A write delegate.</p>
 </section>
 </article>
           </div>

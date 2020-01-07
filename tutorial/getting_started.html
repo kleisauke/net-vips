@@ -8,7 +8,7 @@
     <title>Getting Started with NetVips </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Getting Started with NetVips ">
-    <meta name="generator" content="docfx 2.43.2.0">
+    <meta name="generator" content="docfx 2.48.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -225,15 +225,95 @@ for example truncated files, and you might want to see them.</p>
 <p>Make sure to remove the log handler, if you do not need it anymore:</p>
 <pre><code class="lang-csharp">Log.RemoveLogHandler(&quot;VIPS&quot;, _handlerId);
 </code></pre>
-<h2 id="automatic-documentation">Automatic documentation</h2>
-<p>These API docs are generated automatically by DocFX. It generates API reference documentation
-from triple-slash comments in our source code.</p>
-<h2 id="generated-methods">Generated methods</h2>
-<p>The <code>Image.Generated.cs</code> file where all libvips operations are located
-is generated automatically by <a class="xref" href="../api/NetVips.Operation.html#NetVips_Operation_GenerateImageClass_"><code>Operation.GenerateImageClass</code></a>.
-It examines libvips and writes the XML documentation and the corresponding code of each operation.</p>
-<p>Use the C API docs for more detail:</p>
-<p><a href="https://libvips.github.io/libvips/API/current">https://libvips.github.io/libvips/API/current</a></p>
+<h2 id="tracking-and-interrupting-computation">Tracking and interrupting computation</h2>
+<p>You can attach progress handlers to images to watch the progress of
+computation.</p>
+<p>For example:</p>
+<pre><code class="lang-csharp">var image = Image.Black(1, 500);
+
+var progress = new Progress&lt;int&gt;(percent =&gt;
+{
+    Console.Write($&quot;\r{percent}% complete&quot;);
+});
+
+var cts = new CancellationTokenSource();
+cts.CancelAfter(5000);
+
+// Uncomment to kill the image after 5 sec
+image.SetProgress(progress/*, cts.Token*/);
+
+var avg = image.Avg();
+</code></pre>
+<p>Or:</p>
+<pre><code class="lang-csharp">var image = Image.Black(1, 500);
+image.SetProgress(true);
+image.SignalConnect(Enums.Signals.PreEval, (Image.EvalDelegate)PreEvalHandler);
+image.SignalConnect(Enums.Signals.Eval, (Image.EvalDelegate)EvalHandler);
+image.SignalConnect(Enums.Signals.PostEval, (Image.EvalDelegate)PostEvalHandler);
+
+var avg = image.Avg();
+</code></pre>
+<p>Handlers are given a <a class="xref" href="../api/NetVips.VipsProgress.html"><code>VipsProgress</code></a> struct containing a number
+of useful fields. For example:</p>
+<pre><code class="lang-csharp">private void EvalHandler(Image image, VipsProgress progress)
+{
+    Console.WriteLine($&quot;run time so far (secs) = {progress.Run}&quot;);
+    Console.WriteLine($&quot;estimated time of arrival (secs) = {progress.Eta}&quot;);
+    Console.WriteLine($&quot;total number of pels to process = {progress.TPels}&quot;);
+    Console.WriteLine($&quot;number of pels processed so far = {progress.NPels}&quot;);
+    Console.WriteLine($&quot;percent complete = {progress.Percent}&quot;);
+}
+</code></pre>
+<p>Use <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_SetKill_"><code>SetKill</code></a> on the image to stop computation early.</p>
+<p>For example:</p>
+<pre><code class="lang-csharp">private void EvalHandler(Image image, VipsProgress progress)
+{
+    if (progress.Percent &gt; 50)
+    {
+        image.SetKill(true);
+    }
+}
+</code></pre>
+<h3 id="custom-sources-and-targets">Custom sources and targets</h3>
+<p>You can load and save images to and from <a class="xref" href="../api/NetVips.Source.html"><code>Source</code></a> and
+<a class="xref" href="../api/NetVips.Target.html"><code>Target</code></a>.</p>
+<p>For example:</p>
+<pre><code class="lang-csharp">var source = Source.NewFromFile(&quot;example.jpg&quot;);
+var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+var target = Target.NewToFile(&quot;example.png&quot;);
+image.WriteToTarget(target, &quot;.png&quot;);
+</code></pre>
+<p>Sources and targets can be files, descriptors (eg. pipes) and areas of memory.</p>
+<p>You can define <a class="xref" href="../api/NetVips.SourceCustom.html"><code>SourceCustom</code></a> and <a class="xref" href="../api/NetVips.TargetCustom.html"><code>TargetCustom</code></a> too.</p>
+<p>For example:</p>
+<pre><code class="lang-csharp">var input = File.OpenRead(&quot;example.jpg&quot;);
+
+var source = new SourceCustom();
+source.OnRead += (buffer, length) =&gt; input.Read(buffer, 0, length);
+source.OnSeek += (offset, origin) =&gt; input.Seek(offset, origin);
+
+var output = File.OpenWrite(&quot;example.png&quot;);
+
+var target = new TargetCustom();
+target.OnWrite += (buffer, length) =&gt;
+{
+    output.Write(buffer, 0, length);
+    return length;
+};
+target.OnFinish += () =&gt; output.Close();
+
+var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+image.WriteToTarget(target, &quot;.png&quot;);
+</code></pre>
+<p>The wrapper also defines a few extra useful stream functions. For example, the above can be written as:</p>
+<pre><code class="lang-csharp">using (var input = File.OpenRead(&quot;example.jpg&quot;))
+{
+    var image = Image.NewFromStream(input, access: Enums.Access.Sequential);
+
+    using var output = File.OpenWrite(&quot;example.png&quot;);
+    image.WriteToStream(output, &quot;.png&quot;);
+}
+</code></pre>
 <h2 id="exceptions">Exceptions</h2>
 <p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>.
 You can catch it in the usual way.</p>
@@ -241,18 +321,6 @@ You can catch it in the usual way.</p>
 <p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as strings constants
 like <code>&quot;uchar&quot;</code>. They are documented as a set of classes for convenience, see
 <a class="xref" href="../api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>, for example.</p>
-<h2 id="draw-operations">Draw operations</h2>
-<p>Paint operations like <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_DrawCircle_"><code>DrawCircle</code></a> and
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_DrawLine_"><code>DrawLine</code></a> modify their input image. This makes them
-hard to use with the rest of libvips: you need to be very careful about
-the order in which operations execute or you can get nasty crashes.</p>
-<p>The wrapper spots operations of this type and makes a private copy of the
-image in memory before calling the operation. This stops crashes, but it does
-make it inefficient. If you draw 100 lines on an image, for example, you'll
-copy the image 100 times. The wrapper does make sure that memory is recycled
-where possible, so you won't have 100 copies in memory.</p>
-<p>If you want to avoid the copies, you'll need to call drawing operations
-yourself.</p>
 <h2 id="overloads">Overloads</h2>
 <p>The wrapper defines the usual set of arithmetic, boolean and relational
 overloads on image. You can mix images, constants and lists of constants
@@ -275,6 +343,27 @@ named after the enum value. So you can also write:</p>
 <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_MaxPos_"><code>MaxPos</code></a>,
 <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_MinPos_"><code>MinPos</code></a>,
 and <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Median_"><code>Median</code></a>.</p>
+<h2 id="automatic-documentation">Automatic documentation</h2>
+<p>These API docs are generated automatically by DocFX. It generates API reference documentation
+from triple-slash comments in our source code.</p>
+<h2 id="generated-methods">Generated methods</h2>
+<p>The <code>Image.Generated.cs</code> file where all libvips operations are located
+is generated automatically by <a href="https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs"><code>GenerateImageClass.cs</code></a>.
+It examines libvips and writes the XML documentation and the corresponding code of each operation.</p>
+<p>Use the C API docs for more detail:</p>
+<p><a href="https://libvips.github.io/libvips/API/current">https://libvips.github.io/libvips/API/current</a></p>
+<h2 id="draw-operations">Draw operations</h2>
+<p>Paint operations like <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_DrawCircle_"><code>DrawCircle</code></a> and
+<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_DrawLine_"><code>DrawLine</code></a> modify their input image. This makes them
+hard to use with the rest of libvips: you need to be very careful about
+the order in which operations execute or you can get nasty crashes.</p>
+<p>The wrapper spots operations of this type and makes a private copy of the
+image in memory before calling the operation. This stops crashes, but it does
+make it inefficient. If you draw 100 lines on an image, for example, you'll
+copy the image 100 times. The wrapper does make sure that memory is recycled
+where possible, so you won't have 100 copies in memory.</p>
+<p>If you want to avoid the copies, you'll need to call drawing operations
+yourself.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -282,7 +371,7 @@ and <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Median_"><code
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/documentation/tutorial/getting_started.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/docs/tutorial/getting_started.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Enums.Angle
+    <title>Class BitmapConverter
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Enums.Angle
+    <meta name="title" content="Class BitmapConverter
    ">
     <meta name="generator" content="docfx 2.48.0.0">
     
@@ -68,18 +68,18 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.Angle">
+            <article class="content wrap" id="_content" data-uid="NetVips.Extensions.BitmapConverter">
   
   
-  <h1 id="NetVips_Enums_Angle" data-uid="NetVips.Enums.Angle" class="text-break">Class Enums.Angle
+  <h1 id="NetVips_Extensions_BitmapConverter" data-uid="NetVips.Extensions.BitmapConverter" class="text-break">Class BitmapConverter
   </h1>
-  <div class="markdown level0 summary"><p>Various fixed 90 degree rotation angles.</p>
+  <div class="markdown level0 summary"><p>Static class which provides conversion between <span class="xref">System.Drawing.Bitmap</span> and <a class="xref" href="NetVips.Image.html">Image</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Enums.Angle</span></div>
+    <div class="level1"><span class="xref">BitmapConverter</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -105,33 +105,49 @@
       <span class="xref">System.Object.ToString()</span>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
-  <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_Angle_syntax">Syntax</h5>
+  <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.Extensions.html">NetVips.Extensions</a></h6>
+  <h6><strong>Assembly</strong>: NetVips.Extensions.dll</h6>
+  <h5 id="NetVips_Extensions_BitmapConverter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Angle</code></pre>
+    <pre><code class="lang-csharp hljs">public static class BitmapConverter</code></pre>
   </div>
-  <h5 id="NetVips_Enums_Angle_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>See for example <a class="xref" href="NetVips.Image.html#NetVips_Image_Rot_System_String_">Rot(String)</a>.</p>
-</div>
-  <h3 id="fields">Fields
+  <h3 id="methods">Methods
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Angle_D0.md&amp;value=---%0Auid%3A%20NetVips.Enums.Angle.D0%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Extensions_BitmapConverter_ToBitmap_NetVips_Image_.md&amp;value=---%0Auid%3A%20NetVips.Extensions.BitmapConverter.ToBitmap(NetVips.Image)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L382">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips.Extensions/BitmapConverter.cs/#L121">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Angle_D0" data-uid="NetVips.Enums.Angle.D0">D0</h4>
-  <div class="markdown level1 summary"><p>No rotate.</p>
+  <a id="NetVips_Extensions_BitmapConverter_ToBitmap_" data-uid="NetVips.Extensions.BitmapConverter.ToBitmap*"></a>
+  <h4 id="NetVips_Extensions_BitmapConverter_ToBitmap_NetVips_Image_" data-uid="NetVips.Extensions.BitmapConverter.ToBitmap(NetVips.Image)">ToBitmap(Image)</h4>
+  <div class="markdown level1 summary"><p>Converts <a class="xref" href="NetVips.Image.html">Image</a> to <span class="xref">System.Drawing.Bitmap</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string D0 = &quot;d0&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public static Bitmap ToBitmap(this Image src)</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><span class="parametername">src</span></td>
+        <td><p><a class="xref" href="NetVips.Image.html">Image</a> to be converted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -141,57 +157,47 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><span class="xref">System.Drawing.Bitmap</span></td>
+        <td><p>A new <span class="xref">System.Drawing.Bitmap</span>.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Angle_D180.md&amp;value=---%0Auid%3A%20NetVips.Enums.Angle.D180%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Extensions_BitmapConverter_ToVips_System_Drawing_Bitmap_.md&amp;value=---%0Auid%3A%20NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Bitmap)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L388">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips.Extensions/BitmapConverter.cs/#L81">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Angle_D180" data-uid="NetVips.Enums.Angle.D180">D180</h4>
-  <div class="markdown level1 summary"><p>180 degrees.</p>
+  <a id="NetVips_Extensions_BitmapConverter_ToVips_" data-uid="NetVips.Extensions.BitmapConverter.ToVips*"></a>
+  <h4 id="NetVips_Extensions_BitmapConverter_ToVips_System_Drawing_Bitmap_" data-uid="NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Bitmap)">ToVips(Bitmap)</h4>
+  <div class="markdown level1 summary"><p>Converts <span class="xref">System.Drawing.Bitmap</span> to <a class="xref" href="NetVips.Image.html">Image</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string D180 = &quot;d180&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image ToVips(this Bitmap src)</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
+        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><span class="xref">System.Drawing.Bitmap</span></td>
+        <td><span class="parametername">src</span></td>
+        <td><p><span class="xref">System.Drawing.Bitmap</span> to be converted.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Angle_D270.md&amp;value=---%0Auid%3A%20NetVips.Enums.Angle.D270%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L391">View Source</a>
-  </span>
-  <h4 id="NetVips_Enums_Angle_D270" data-uid="NetVips.Enums.Angle.D270">D270</h4>
-  <div class="markdown level1 summary"><p>90 degrees anti-clockwise.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string D270 = &quot;d270&quot;</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -201,38 +207,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Angle_D90.md&amp;value=---%0Auid%3A%20NetVips.Enums.Angle.D90%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L385">View Source</a>
-  </span>
-  <h4 id="NetVips_Enums_Angle_D90" data-uid="NetVips.Enums.Angle.D90">D90</h4>
-  <div class="markdown level1 summary"><p>90 degrees clockwise.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string D90 = &quot;d90&quot;</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -243,10 +220,10 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Angle.md&amp;value=---%0Auid%3A%20NetVips.Enums.Angle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Extensions_BitmapConverter.md&amp;value=---%0Auid%3A%20NetVips.Extensions.BitmapConverter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L379" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips.Extensions/BitmapConverter.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

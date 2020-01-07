@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Log
    ">
-    <meta name="generator" content="docfx 2.43.2.0">
+    <meta name="generator" content="docfx 2.48.0.0">
     
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -252,7 +252,7 @@ Log.SetLogHandler(&quot;VIPS&quot;, Enums.LogLevelFlags.Critical, logFunc);</cod
       <tr>
         <td><span class="xref">System.UInt32</span></td>
         <td><span class="parametername">handlerId</span></td>
-        <td><p>The id of the handler, which was returned in <a class="xref" href="NetVips.Log.html#NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_">SetLogHandler(String, Enums.LogLevelFlags, LogFunc)</a>.</p>
+        <td><p>The id of the handler, which was returned in <a class="xref" href="NetVips.Log.html#NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_Log_LogDelegate_">SetLogHandler(String, Enums.LogLevelFlags, Log.LogDelegate)</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -366,19 +366,19 @@ When a message with any of these levels is logged the program terminates.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetLogHandler(System.String%2CNetVips.Enums.LogLevelFlags%2CNetVips.LogFunc)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_Log_LogDelegate_.md&amp;value=---%0Auid%3A%20NetVips.Log.SetLogHandler(System.String%2CNetVips.Enums.LogLevelFlags%2CNetVips.Log.LogDelegate)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L50">View Source</a>
   </span>
   <a id="NetVips_Log_SetLogHandler_" data-uid="NetVips.Log.SetLogHandler*"></a>
-  <h4 id="NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_LogFunc_" data-uid="NetVips.Log.SetLogHandler(System.String,NetVips.Enums.LogLevelFlags,NetVips.LogFunc)">SetLogHandler(String, Enums.LogLevelFlags, LogFunc)</h4>
+  <h4 id="NetVips_Log_SetLogHandler_System_String_NetVips_Enums_LogLevelFlags_NetVips_Log_LogDelegate_" data-uid="NetVips.Log.SetLogHandler(System.String,NetVips.Enums.LogLevelFlags,NetVips.Log.LogDelegate)">SetLogHandler(String, Enums.LogLevelFlags, Log.LogDelegate)</h4>
   <div class="markdown level1 summary"><p>Sets the log handler for a domain and a set of log levels.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static uint SetLogHandler(string logDomain, Enums.LogLevelFlags flags, LogFunc logFunc)</code></pre>
+    <pre><code class="lang-csharp hljs">public static uint SetLogHandler(string logDomain, Enums.LogLevelFlags flags, Log.LogDelegate logFunc)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -403,7 +403,7 @@ When a message with any of these levels is logged the program terminates.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="NetVips.LogFunc.html">LogFunc</a></td>
+        <td><a class="xref" href="NetVips.Log.LogDelegate.html">Log.LogDelegate</a></td>
         <td><span class="parametername">logFunc</span></td>
         <td><p>The log handler function.</p>
 </td>
@@ -436,7 +436,7 @@ When a message with any of these levels is logged the program terminates.</p>
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Log.md&amp;value=---%0Auid%3A%20NetVips.Log%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L20" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Log.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

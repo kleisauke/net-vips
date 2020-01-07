@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Enums.Extend
+    <title>Class Introspect
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Enums.Extend
+    <meta name="title" content="Class Introspect
    ">
     <meta name="generator" content="docfx 2.48.0.0">
     
@@ -68,18 +68,18 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.Extend">
+            <article class="content wrap" id="_content" data-uid="NetVips.Introspect">
   
   
-  <h1 id="NetVips_Enums_Extend" data-uid="NetVips.Enums.Extend" class="text-break">Class Enums.Extend
+  <h1 id="NetVips_Introspect" data-uid="NetVips.Introspect" class="text-break">Class Introspect
   </h1>
-  <div class="markdown level0 summary"><p>How to extend image edges.</p>
+  <div class="markdown level0 summary"><p>Build introspection data for operations.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Enums.Extend</span></div>
+    <div class="level1"><span class="xref">Introspect</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -107,31 +107,30 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_Extend_syntax">Syntax</h5>
+  <h5 id="NetVips_Introspect_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Extend</code></pre>
+    <pre><code class="lang-csharp hljs">public class Introspect</code></pre>
   </div>
-  <h5 id="NetVips_Enums_Extend_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>When the edges of an image are extended, you can specify how you want
-the extension done. See <a class="xref" href="NetVips.Image.html#NetVips_Image_Embed_System_Int32_System_Int32_System_Int32_System_Int32_System_String_System_Double___">Embed(Int32, Int32, Int32, Int32, String, Double[])</a>, <a class="xref" href="NetVips.Image.html#NetVips_Image_Conv_NetVips_Image_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__">Conv(Image, String, Nullable&lt;Int32&gt;, Nullable&lt;Int32&gt;)</a>, <a class="xref" href="NetVips.Image.html#NetVips_Image_Affine_System_Double___NetVips_GObject_System_Int32___System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___System_String_">Affine(Double[], GObject, Int32[], Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Double[], String)</a>
-and so on.</p>
+  <h5 id="NetVips_Introspect_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Make an operation, introspect it, and build a structure representing
+everything we know about it.</p>
 </div>
   <h3 id="fields">Fields
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend_Background.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend.Background%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect_MemberX.md&amp;value=---%0Auid%3A%20NetVips.Introspect.MemberX%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L474">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L51">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Extend_Background" data-uid="NetVips.Enums.Extend.Background">Background</h4>
-  <div class="markdown level1 summary"><p>Colour set from the @background property.</p>
+  <h4 id="NetVips_Introspect_MemberX" data-uid="NetVips.Introspect.MemberX">MemberX</h4>
+  <div class="markdown level1 summary"><p>The first required input image or <span class="xref">null</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Background = &quot;background&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public Introspect.Argument? MemberX</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -143,25 +142,25 @@ and so on.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="NetVips.Introspect.Argument.html">Introspect.Argument</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend_Black.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend.Black%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect_OptionalInput.md&amp;value=---%0Auid%3A%20NetVips.Introspect.OptionalInput%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L459">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L61">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Extend_Black" data-uid="NetVips.Enums.Extend.Black">Black</h4>
-  <div class="markdown level1 summary"><p>New pixels are black, ie. all bits are zero.</p>
+  <h4 id="NetVips_Introspect_OptionalInput" data-uid="NetVips.Introspect.OptionalInput">OptionalInput</h4>
+  <div class="markdown level1 summary"><p>The optional input for this operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Black = &quot;black&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, Introspect.Argument&gt; OptionalInput</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -173,25 +172,25 @@ and so on.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Collections.Generic.Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="NetVips.Introspect.Argument.html">Introspect.Argument</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend_Copy.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend.Copy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect_OptionalOutput.md&amp;value=---%0Auid%3A%20NetVips.Introspect.OptionalOutput%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L462">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L71">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Extend_Copy" data-uid="NetVips.Enums.Extend.Copy">Copy</h4>
-  <div class="markdown level1 summary"><p>Each new pixel takes the value of the nearest edge pixel.</p>
+  <h4 id="NetVips_Introspect_OptionalOutput" data-uid="NetVips.Introspect.OptionalOutput">OptionalOutput</h4>
+  <div class="markdown level1 summary"><p>The optional output for this operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Copy = &quot;copy&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, Introspect.Argument&gt; OptionalOutput</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -203,25 +202,25 @@ and so on.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Collections.Generic.Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="NetVips.Introspect.Argument.html">Introspect.Argument</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend_Mirror.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend.Mirror%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect_RequiredInput.md&amp;value=---%0Auid%3A%20NetVips.Introspect.RequiredInput%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L468">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L56">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Extend_Mirror" data-uid="NetVips.Enums.Extend.Mirror">Mirror</h4>
-  <div class="markdown level1 summary"><p>The image is reflected and tiled to reduce hash edges.</p>
+  <h4 id="NetVips_Introspect_RequiredInput" data-uid="NetVips.Introspect.RequiredInput">RequiredInput</h4>
+  <div class="markdown level1 summary"><p>The required input for this operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Mirror = &quot;mirror&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;Introspect.Argument&gt; RequiredInput</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -233,25 +232,25 @@ and so on.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="NetVips.Introspect.Argument.html">Introspect.Argument</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend_Repeat.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend.Repeat%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect_RequiredOutput.md&amp;value=---%0Auid%3A%20NetVips.Introspect.RequiredOutput%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L465">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L66">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Extend_Repeat" data-uid="NetVips.Enums.Extend.Repeat">Repeat</h4>
-  <div class="markdown level1 summary"><p>The image is tiled to fill the new area.</p>
+  <h4 id="NetVips_Introspect_RequiredOutput" data-uid="NetVips.Introspect.RequiredOutput">RequiredOutput</h4>
+  <div class="markdown level1 summary"><p>The required output for this operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Repeat = &quot;repeat&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;Introspect.Argument&gt; RequiredOutput</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -263,27 +262,48 @@ and so on.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="NetVips.Introspect.Argument.html">Introspect.Argument</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h3 id="methods">Methods
+  </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend_White.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend.White%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect_Get_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Introspect.Get(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L471">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L217">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Extend_White" data-uid="NetVips.Enums.Extend.White">White</h4>
-  <div class="markdown level1 summary"><p>New pixels are white, ie. all bits are set.</p>
+  <a id="NetVips_Introspect_Get_" data-uid="NetVips.Introspect.Get*"></a>
+  <h4 id="NetVips_Introspect_Get_System_String_" data-uid="NetVips.Introspect.Get(System.String)">Get(String)</h4>
+  <div class="markdown level1 summary"><p>Get introspection data for a specified operation name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string White = &quot;white&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public static Introspect Get(string operationName)</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">operationName</span></td>
+        <td><p>Operation name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -293,8 +313,9 @@ and so on.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><a class="xref" href="NetVips.Introspect.html">Introspect</a></td>
+        <td><p>Introspection data.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -305,10 +326,10 @@ and so on.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Extend.md&amp;value=---%0Auid%3A%20NetVips.Enums.Extend%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Introspect.md&amp;value=---%0Auid%3A%20NetVips.Introspect%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L456" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Introspect.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

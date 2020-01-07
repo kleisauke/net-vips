@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Interpolate
+    <title>Class SourceCustom
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Interpolate
+    <meta name="title" content="Class SourceCustom
    ">
     <meta name="generator" content="docfx 2.48.0.0">
     
@@ -68,12 +68,12 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Interpolate">
+            <article class="content wrap" id="_content" data-uid="NetVips.SourceCustom">
   
   
-  <h1 id="NetVips_Interpolate" data-uid="NetVips.Interpolate" class="text-break">Class Interpolate
+  <h1 id="NetVips_SourceCustom" data-uid="NetVips.SourceCustom" class="text-break">Class SourceCustom
   </h1>
-  <div class="markdown level0 summary"><p>Make interpolators for operators like <a class="xref" href="NetVips.Image.html#NetVips_Image_Affine_System_Double___NetVips_GObject_System_Int32___System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___System_String_">Affine(Double[], GObject, Int32[], Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Double[], String)</a>.</p>
+  <div class="markdown level0 summary"><p>An source you can connect delegates to implement behaviour.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -83,7 +83,9 @@
     <div class="level2"><span class="xref">System.Runtime.InteropServices.SafeHandle</span></div>
     <div class="level3"><a class="xref" href="NetVips.GObject.html">GObject</a></div>
     <div class="level4"><a class="xref" href="NetVips.VipsObject.html">VipsObject</a></div>
-    <div class="level5"><span class="xref">Interpolate</span></div>
+    <div class="level5"><a class="xref" href="NetVips.Connection.html">Connection</a></div>
+    <div class="level6"><a class="xref" href="NetVips.Source.html">Source</a></div>
+    <div class="level7"><span class="xref">SourceCustom</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -91,6 +93,30 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="NetVips.Source.html#NetVips_Source_NewFromDescriptor_System_Int32_">Source.NewFromDescriptor(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Source.html#NetVips_Source_NewFromFile_System_String_">Source.NewFromFile(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Source.html#NetVips_Source_NewFromMemory_System_Byte___">Source.NewFromMemory(Byte[])</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Source.html#NetVips_Source_NewFromMemory_System_String_">Source.NewFromMemory(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Source.html#NetVips_Source_NewFromMemory_System_Char___">Source.NewFromMemory(Char[])</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Source.html#NetVips_Source_Dispose_System_Boolean_">Source.Dispose(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Connection.html#NetVips_Connection_GetFileName">Connection.GetFileName()</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Connection.html#NetVips_Connection_GetNick">Connection.GetNick()</a>
+    </div>
     <div>
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetTypeOf_System_String_">VipsObject.GetTypeOf(String)</a>
     </div>
@@ -140,9 +166,6 @@
       <span class="xref">System.Runtime.InteropServices.SafeHandle.Dispose()</span>
     </div>
     <div>
-      <span class="xref">System.Runtime.InteropServices.SafeHandle.Dispose(System.Boolean)</span>
-    </div>
-    <div>
       <span class="xref">System.Runtime.InteropServices.SafeHandle.SetHandle(System.IntPtr)</span>
     </div>
     <div>
@@ -175,47 +198,45 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Interpolate_syntax">Syntax</h5>
+  <h5 id="NetVips_SourceCustom_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Interpolate : VipsObject, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SourceCustom : Source, IDisposable</code></pre>
   </div>
-  <h3 id="methods">Methods
+  <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Interpolate_NewFromName_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Interpolate.NewFromName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_SourceCustom__ctor.md&amp;value=---%0Auid%3A%20NetVips.SourceCustom.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Interpolate.cs/#L37">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/SourceCustom.cs/#L58">View Source</a>
   </span>
-  <a id="NetVips_Interpolate_NewFromName_" data-uid="NetVips.Interpolate.NewFromName*"></a>
-  <h4 id="NetVips_Interpolate_NewFromName_System_String_" data-uid="NetVips.Interpolate.NewFromName(System.String)">NewFromName(String)</h4>
-  <div class="markdown level1 summary"><p>Make a new interpolator by name.</p>
+  <a id="NetVips_SourceCustom__ctor_" data-uid="NetVips.SourceCustom.#ctor*"></a>
+  <h4 id="NetVips_SourceCustom__ctor" data-uid="NetVips.SourceCustom.#ctor">SourceCustom()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SourceCustom()</code></pre>
+  </div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_SourceCustom_OnRead.md&amp;value=---%0Auid%3A%20NetVips.SourceCustom.OnRead%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/SourceCustom.cs/#L50">View Source</a>
+  </span>
+  <h4 id="NetVips_SourceCustom_OnRead" data-uid="NetVips.SourceCustom.OnRead">OnRead</h4>
+  <div class="markdown level1 summary"><p>Attach a read delegate.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Interpolate NewFromName(string name)</code></pre>
+    <pre><code class="lang-csharp hljs">public event SourceCustom.ReadDelegate OnRead</code></pre>
   </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>libvips class nickname.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
+  <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -225,33 +246,38 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="NetVips.Interpolate.html">Interpolate</a></td>
-        <td><p>A new <a class="xref" href="NetVips.Interpolate.html">Interpolate</a>.</p>
-</td>
+        <td><a class="xref" href="NetVips.SourceCustom.ReadDelegate.html">SourceCustom.ReadDelegate</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Interpolate_NewFromName_System_String__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Make a new interpolator from the libvips class nickname. For example:</p>
-<pre><code class="lang-lang-csharp">var inter = Interpolate.NewFromName(&quot;bicubic&quot;);</code></pre>
-<p>You can get a list of all supported interpolators from the command-line
-with:</p>
-<pre><code class="lang-lang-shell">$ vips -l interpolate</code></pre>
-<p>See for example <a class="xref" href="NetVips.Image.html#NetVips_Image_Affine_System_Double___NetVips_GObject_System_Int32___System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Double___System_String_">Affine(Double[], GObject, Int32[], Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;, Double[], String)</a>.</p>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_SourceCustom_OnSeek.md&amp;value=---%0Auid%3A%20NetVips.SourceCustom.OnSeek%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/SourceCustom.cs/#L55">View Source</a>
+  </span>
+  <h4 id="NetVips_SourceCustom_OnSeek" data-uid="NetVips.SourceCustom.OnSeek">OnSeek</h4>
+  <div class="markdown level1 summary"><p>Attach a seek delegate.</p>
 </div>
-  <h5 class="exceptions">Exceptions</h5>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event SourceCustom.SeekDelegate OnSeek</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Condition</th>
+        <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="NetVips.VipsException.html">VipsException</a></td>
-        <td><p>If unable to make a new interpolator from <code data-dev-comment-type="paramref" class="paramref">name</code>.</p>
-</td>
+        <td><a class="xref" href="NetVips.SourceCustom.SeekDelegate.html">SourceCustom.SeekDelegate</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -266,10 +292,10 @@ with:</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Interpolate.md&amp;value=---%0Auid%3A%20NetVips.Interpolate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_SourceCustom.md&amp;value=---%0Auid%3A%20NetVips.SourceCustom%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Interpolate.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/SourceCustom.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
