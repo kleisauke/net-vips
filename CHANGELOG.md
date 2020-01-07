@@ -3,6 +3,25 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0-rc1] - 2020-01-07
+### Added
+- Add support for true streaming ([#33](https://github.com/kleisauke/net-vips/issues/33)).
+  - See the [blogpost](https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/tutorial/getting_started.html#custom-sources-and-targets) for more information.
+- A new [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package containing useful helpers ([#41](https://github.com/kleisauke/net-vips/issues/41)).
+- Add `Image.Switch()`, `image.Case()` and `image.NewFromMemoryCopy()` operations.
+- Add support for the short-circuit operators (`&&` / `||`).
+- Add `Enums.Signals` and `Image.EvalDelegate` that can be used with `image.SignalConnect()`.
+- Add `image.RefCount()` to get the reference count of an image.
+- Add `NetVips.GetOperations()` to get a list of operations available within the libvips library.
+- Add `VipsProgress` struct to the public API.
+
+### Changed
+- The `image.SetType()` function has been renamed to `image.Set()`.
+- The `Image.Sum()` function uses the params keyword.
+- Speed-up `Operation.Call`.
+- Free the `GValue` within `VipsObject.Set` and `VipsObject.Get` earlier.
+- The internal function `Operation.GenerateImageClass()` has moved to the [samples directory](https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs).
+
 ## [1.1.0] - 2019-07-29
 ### Added
 - A new [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package containing the pre-compiled libvips binaries for Linux, macOS and Windows ([#21](https://github.com/kleisauke/net-vips/issues/21)).
@@ -97,6 +116,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[1.2.0-rc1]: https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0-rc1
 [1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6

@@ -238,20 +238,121 @@ Make sure to remove the log handler, if you do not need it anymore:
 Log.RemoveLogHandler("VIPS", _handlerId);
 ```
 
-## Automatic documentation
+## Tracking and interrupting computation
 
-These API docs are generated automatically by DocFX. It generates API reference documentation
-from triple-slash comments in our source code.
+You can attach progress handlers to images to watch the progress of
+computation.
 
-## Generated methods
+For example:
 
-The `Image.Generated.cs` file where all libvips operations are located 
-is generated automatically by [`Operation.GenerateImageClass`](xref:NetVips.Operation.GenerateImageClass*).
-It examines libvips and writes the XML documentation and the corresponding code of each operation.
+```csharp
+var image = Image.Black(1, 500);
 
-Use the C API docs for more detail:
+var progress = new Progress<int>(percent =>
+{
+    Console.Write($"\r{percent}% complete");
+});
 
-https://libvips.github.io/libvips/API/current
+var cts = new CancellationTokenSource();
+cts.CancelAfter(5000);
+
+// Uncomment to kill the image after 5 sec
+image.SetProgress(progress/*, cts.Token*/);
+
+var avg = image.Avg();
+```
+
+Or:
+```csharp
+var image = Image.Black(1, 500);
+image.SetProgress(true);
+image.SignalConnect(Enums.Signals.PreEval, (Image.EvalDelegate)PreEvalHandler);
+image.SignalConnect(Enums.Signals.Eval, (Image.EvalDelegate)EvalHandler);
+image.SignalConnect(Enums.Signals.PostEval, (Image.EvalDelegate)PostEvalHandler);
+
+var avg = image.Avg();
+```
+
+Handlers are given a [`VipsProgress`](xref:NetVips.VipsProgress) struct containing a number
+of useful fields. For example:
+
+```csharp
+private void EvalHandler(Image image, VipsProgress progress)
+{
+    Console.WriteLine($"run time so far (secs) = {progress.Run}");
+    Console.WriteLine($"estimated time of arrival (secs) = {progress.Eta}");
+    Console.WriteLine($"total number of pels to process = {progress.TPels}");
+    Console.WriteLine($"number of pels processed so far = {progress.NPels}");
+    Console.WriteLine($"percent complete = {progress.Percent}");
+}
+```
+
+Use [`SetKill`](xref:NetVips.Image.SetKill*) on the image to stop computation early. 
+
+For example:
+
+```csharp
+private void EvalHandler(Image image, VipsProgress progress)
+{
+    if (progress.Percent > 50)
+    {
+        image.SetKill(true);
+    }
+}
+```
+
+### Custom sources and targets
+
+You can load and save images to and from [`Source`](xref:NetVips.Source) and
+[`Target`](xref:NetVips.Target). 
+
+For example:
+
+```csharp
+var source = Source.NewFromFile("example.jpg");
+var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+var target = Target.NewToFile("example.png");
+image.WriteToTarget(target, ".png");
+```
+
+Sources and targets can be files, descriptors (eg. pipes) and areas of memory.
+
+You can define [`SourceCustom`](xref:NetVips.SourceCustom) and [`TargetCustom`](xref:NetVips.TargetCustom) too. 
+
+For example:
+
+```csharp
+var input = File.OpenRead("example.jpg");
+
+var source = new SourceCustom();
+source.OnRead += (buffer, length) => input.Read(buffer, 0, length);
+source.OnSeek += (offset, origin) => input.Seek(offset, origin);
+
+var output = File.OpenWrite("example.png");
+
+var target = new TargetCustom();
+target.OnWrite += (buffer, length) =>
+{
+    output.Write(buffer, 0, length);
+    return length;
+};
+target.OnFinish += () => output.Close();
+
+var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+image.WriteToTarget(target, ".png");
+```
+
+The wrapper also defines a few extra useful stream functions. For example, the above can be written as:
+
+```csharp
+using (var input = File.OpenRead("example.jpg"))
+{
+    var image = Image.NewFromStream(input, access: Enums.Access.Sequential);
+
+    using var output = File.OpenWrite("example.png");
+    image.WriteToStream(output, ".png");
+}
+```
 
 ## Exceptions
 
@@ -263,22 +364,6 @@ You can catch it in the usual way.
 The libvips enums, such as `VipsBandFormat`, appear in NetVips as strings constants
 like `"uchar"`. They are documented as a set of classes for convenience, see 
 [`Enums.Access`](xref:NetVips.Enums.Access), for example.
-
-## Draw operations
-
-Paint operations like [`DrawCircle`](xref:NetVips.Image.DrawCircle*) and
-[`DrawLine`](xref:NetVips.Image.DrawLine*) modify their input image. This makes them
-hard to use with the rest of libvips: you need to be very careful about
-the order in which operations execute or you can get nasty crashes.
-
-The wrapper spots operations of this type and makes a private copy of the
-image in memory before calling the operation. This stops crashes, but it does
-make it inefficient. If you draw 100 lines on an image, for example, you'll
-copy the image 100 times. The wrapper does make sure that memory is recycled
-where possible, so you won't have 100 copies in memory.
-
-If you want to avoid the copies, you'll need to call drawing operations
-yourself.
 
 ## Overloads
 
@@ -314,3 +399,34 @@ The wrapper defines a few extra useful utility functions:
 [`MaxPos`](xref:NetVips.Image.MaxPos*), 
 [`MinPos`](xref:NetVips.Image.MinPos*), 
 and [`Median`](xref:NetVips.Image.Median*).
+
+## Automatic documentation
+
+These API docs are generated automatically by DocFX. It generates API reference documentation
+from triple-slash comments in our source code.
+
+## Generated methods
+
+The `Image.Generated.cs` file where all libvips operations are located 
+is generated automatically by [`GenerateImageClass.cs`](https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs).
+It examines libvips and writes the XML documentation and the corresponding code of each operation.
+
+Use the C API docs for more detail:
+
+https://libvips.github.io/libvips/API/current
+
+## Draw operations
+
+Paint operations like [`DrawCircle`](xref:NetVips.Image.DrawCircle*) and
+[`DrawLine`](xref:NetVips.Image.DrawLine*) modify their input image. This makes them
+hard to use with the rest of libvips: you need to be very careful about
+the order in which operations execute or you can get nasty crashes.
+
+The wrapper spots operations of this type and makes a private copy of the
+image in memory before calling the operation. This stops crashes, but it does
+make it inefficient. If you draw 100 lines on an image, for example, you'll
+copy the image 100 times. The wrapper does make sure that memory is recycled
+where possible, so you won't have 100 copies in memory.
+
+If you want to avoid the copies, you'll need to call drawing operations
+yourself.
