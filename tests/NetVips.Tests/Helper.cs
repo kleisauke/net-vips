@@ -14,6 +14,7 @@ namespace NetVips.Tests
             Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData");
 
         public static readonly string JpegFile = Path.Combine(Images, "йцук.jpg");
+        public static readonly string TruncatedFile = Path.Combine(Images, "truncated.jpg");
         public static readonly string SrgbFile = Path.Combine(Images, "sRGB.icm");
         public static readonly string MatlabFile = Path.Combine(Images, "sample.mat");
         public static readonly string PngFile = Path.Combine(Images, "sample.png");

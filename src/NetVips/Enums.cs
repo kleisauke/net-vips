@@ -125,7 +125,7 @@ namespace NetVips
         /// <summary>
         /// Signals that can be used on an <see cref="Image"/>. See <see cref="GObject.SignalConnect"/>.
         /// </summary>
-        internal static class Signals
+        public static class Signals
         {
             /// <summary>Evaluation is starting.</summary>
             /// <remarks>

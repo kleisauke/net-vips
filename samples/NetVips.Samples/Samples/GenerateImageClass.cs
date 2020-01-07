@@ -6,6 +6,7 @@ namespace NetVips.Samples
     using System.Text;
     using System.IO;
 
+    // TODO: Refactor this class (it's a mess).
     public class GenerateImageClass : ISample
     {
         public string Name => "Generate image class";
@@ -28,6 +29,15 @@ namespace NetVips.Samples
             {GValue.RefStrType, "string"},
             {GValue.BlobType, "byte[]"}
         };
+
+        public GenerateImageClass()
+        {
+            if (NetVips.AtLeastLibvips(8, 9))
+            {
+                _gTypeToCSharpDict.Add(GValue.SourceType, "Source");
+                _gTypeToCSharpDict.Add(GValue.TargetType, "Target");
+            }
+        }
 
         /// <summary>
         /// Map a GType to the name of the C# type we use to represent it.
@@ -76,12 +86,15 @@ namespace NetVips.Samples
             var optionalInput = intro.OptionalInput
                 .Where(arg => (arg.Value.Flags & Enums.ArgumentFlags.DEPRECATED) == 0)
                 .Select(x => x.Value)
-                .ToList();
-
+                .ToArray();
             var optionalOutput = intro.OptionalOutput
                 .Where(arg => (arg.Value.Flags & Enums.ArgumentFlags.DEPRECATED) == 0)
                 .Select(x => x.Value)
-                .ToList();
+                .ToArray();
+
+            // these are always non-deprecated
+            var requiredInput = intro.RequiredInput.ToArray();
+            var requiredOutput = intro.RequiredOutput.ToArray();
 
             string[] reservedKeywords =
             {
@@ -178,24 +191,24 @@ namespace NetVips.Samples
                 .AppendLine($"{indent}/// <code language=\"lang-csharp\">")
                 .Append($"{indent}/// ");
 
-            if (intro.RequiredOutput.Count == 1)
+            if (requiredOutput.Length == 1)
             {
-                var arg = intro.RequiredOutput.First();
+                var arg = requiredOutput.First();
                 result.Append(
                     $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
             }
-            else if (intro.RequiredOutput.Count > 1)
+            else if (requiredOutput.Length > 1)
             {
                 result.Append("var output = ");
             }
 
             result.Append(intro.MemberX.HasValue ? intro.MemberX.Value.Name : "NetVips.Image")
                 .Append(
-                    $".{newOperationName}({string.Join(", ", intro.RequiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()).ToArray())}");
+                    $".{newOperationName}({string.Join(", ", requiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()).ToArray())}");
 
             if (outParameters != null)
             {
-                if (intro.RequiredInput.Count > 0)
+                if (requiredInput.Length > 0)
                 {
                     result.Append(", ");
                 }
@@ -204,19 +217,19 @@ namespace NetVips.Samples
                     $"{string.Join(", ", outParameters.Select(arg => $"out var {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}").ToArray())}");
             }
 
-            if (optionalInput.Count > 0)
+            if (optionalInput.Length > 0)
             {
-                if (intro.RequiredInput.Count > 0 || outParameters != null)
+                if (requiredInput.Length > 0 || outParameters != null)
                 {
                     result.Append(", ");
                 }
 
-                for (var i = 0; i < optionalInput.Count; i++)
+                for (var i = 0; i < optionalInput.Length; i++)
                 {
                     var arg = optionalInput[i];
                     result.Append(
                             $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}: {GTypeToCSharp(arg.Type)}")
-                        .Append(i != optionalInput.Count - 1 ? ", " : string.Empty);
+                        .Append(i != optionalInput.Length - 1 ? ", " : string.Empty);
                 }
             }
 
@@ -225,7 +238,7 @@ namespace NetVips.Samples
             result.AppendLine($"{indent}/// </code>")
                 .AppendLine($"{indent}/// </example>");
 
-            foreach (var arg in intro.RequiredInput)
+            foreach (var arg in requiredInput)
             {
                 result.AppendLine(
                     $"{indent}/// <param name=\"{arg.Name.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(arg.Name)}.</param>");
@@ -248,7 +261,7 @@ namespace NetVips.Samples
 
             string outputType;
 
-            var outputTypes = intro.RequiredOutput.Select(arg => GTypeToCSharp(arg.Type)).ToArray();
+            var outputTypes = requiredOutput.Select(arg => GTypeToCSharp(arg.Type)).ToArray();
             switch (outputTypes.Length)
             {
                 case 0:
@@ -279,26 +292,26 @@ namespace NetVips.Samples
                 .Append(intro.MemberX.HasValue ? string.Empty : "static ")
                 .Append(outputType);
 
-            if (intro.RequiredInput.Count == 1 && outParameters == null && optionalInput.Count == 0 &&
-                intro.RequiredInput[0].Type == GValue.ArrayImageType)
+            if (requiredInput.Length == 1 && outParameters == null && optionalInput.Length == 0 &&
+                requiredInput[0].Type == GValue.ArrayImageType)
             {
                 // We could safely use the params keyword
                 result.Append(
-                    $" {newOperationName}(params Image[] {SafeIdentifier(intro.RequiredInput[0].Name).ToPascalCase().FirstLetterToLower()}");
+                    $" {newOperationName}(params Image[] {SafeIdentifier(requiredInput[0].Name).ToPascalCase().FirstLetterToLower()}");
             }
             else
             {
                 result.Append(
                     $" {newOperationName}(" +
                     string.Join(", ",
-                        intro.RequiredInput.Select(arg =>
+                        requiredInput.Select(arg =>
                                 $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
                             .ToArray()));
             }
 
             if (outParameters != null)
             {
-                if (intro.RequiredInput.Count > 0)
+                if (requiredInput.Length > 0)
                 {
                     result.Append(", ");
                 }
@@ -309,9 +322,9 @@ namespace NetVips.Samples
                         .ToArray()));
             }
 
-            if (optionalInput.Count > 0)
+            if (optionalInput.Length > 0)
             {
-                if (intro.RequiredInput.Count > 0 || outParameters != null)
+                if (requiredInput.Length > 0 || outParameters != null)
                 {
                     result.Append(", ");
                 }
@@ -325,7 +338,7 @@ namespace NetVips.Samples
             result.AppendLine(")")
                 .AppendLine($"{indent}{{");
 
-            if (optionalInput.Count > 0)
+            if (optionalInput.Length > 0)
             {
                 result.AppendLine($"{indent}    var options = new VOption();").AppendLine();
 
@@ -348,7 +361,7 @@ namespace NetVips.Samples
 
             if (outParameters != null)
             {
-                if (optionalInput.Count > 0)
+                if (optionalInput.Length > 0)
                 {
                     foreach (var arg in outParameters)
                     {
@@ -373,7 +386,7 @@ namespace NetVips.Samples
                     .Append($"{indent}    var results = ")
                     .Append(intro.MemberX.HasValue ? "this" : "Operation")
                     .Append($".Call(\"{operationName}\"")
-                    .Append(optionalInput.Count > 0 ? ", options" : ", optionalOutput");
+                    .Append(optionalInput.Length > 0 ? ", options" : ", optionalOutput");
             }
             else
             {
@@ -385,27 +398,27 @@ namespace NetVips.Samples
 
                 result.Append(intro.MemberX.HasValue ? "this" : "Operation")
                     .Append($".Call(\"{operationName}\"");
-                if (optionalInput.Count > 0)
+                if (optionalInput.Length > 0)
                 {
                     result.Append(", options");
                 }
             }
 
-            if (intro.RequiredInput.Count > 0)
+            if (requiredInput.Length > 0)
             {
                 result.Append(", ");
 
                 // Co-variant array conversion from Image[] to object[] can cause run-time exception on write operation.
                 // So we need to wrap the image array into a object array.
-                var needToWrap = intro.RequiredInput.Count == 1 &&
-                                 GTypeToCSharp(intro.RequiredInput[0].Type).Equals("Image[]");
+                var needToWrap = requiredInput.Length == 1 &&
+                                 GTypeToCSharp(requiredInput[0].Type).Equals("Image[]");
                 if (needToWrap)
                 {
                     result.Append("new object[] { ");
                 }
 
                 result.Append(string.Join(", ",
-                    intro.RequiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())
+                    requiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())
                         .ToArray()));
 
                 if (needToWrap)
@@ -454,13 +467,195 @@ namespace NetVips.Samples
             result.Append($"{indent}}}")
                 .AppendLine();
 
+            var firstArgType = requiredInput.Length > 0 ? op.GetTypeOf(requiredInput[0].Name) : IntPtr.Zero;
+
+            // Create stream overload if necessary
+            if (firstArgType == GValue.SourceType || firstArgType == GValue.TargetType)
+            {
+                var replace = firstArgType == GValue.SourceType ? "source" : "target";
+                requiredInput = requiredInput.Skip(1).ToArray();
+                var oldOperationName = newOperationName;
+                newOperationName = newOperationName.Replace(replace.FirstLetterToUpper(), "Stream");
+
+                result.AppendLine()
+                    .AppendLine($"{indent}/// <summary>")
+                    .AppendLine($"{indent}/// {description.Replace(replace, "stream").FirstLetterToUpper()}.")
+                    .AppendLine($"{indent}/// </summary>")
+                    .AppendLine($"{indent}/// <example>")
+                    .AppendLine($"{indent}/// <code language=\"lang-csharp\">")
+                    .Append($"{indent}/// ");
+
+                if (requiredOutput.Length == 1)
+                {
+                    var arg = requiredOutput.First();
+                    result.Append(
+                        $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
+                }
+                else if (requiredOutput.Length > 1)
+                {
+                    result.Append("var output = ");
+                }
+
+                result.Append(intro.MemberX.HasValue ? intro.MemberX.Value.Name : "NetVips.Image")
+                    .Append(
+                        $".{newOperationName}(stream, {string.Join(", ", requiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()).ToArray())}");
+
+                if (outParameters != null)
+                {
+                    if (requiredInput.Length > 0)
+                    {
+                        result.Append(", ");
+                    }
+
+                    result.Append(
+                        $"{string.Join(", ", outParameters.Select(arg => $"out var {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}").ToArray())}");
+                }
+
+                if (optionalInput.Length > 0)
+                {
+                    if (requiredInput.Length > 0 || outParameters != null)
+                    {
+                        result.Append(", ");
+                    }
+
+                    for (var i = 0; i < optionalInput.Length; i++)
+                    {
+                        var arg = optionalInput[i];
+                        result.Append(
+                                $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}: {GTypeToCSharp(arg.Type)}")
+                            .Append(i != optionalInput.Length - 1 ? ", " : string.Empty);
+                    }
+                }
+
+                result.AppendLine(");");
+
+                result.AppendLine($"{indent}/// </code>")
+                    .AppendLine($"{indent}/// </example>");
+
+                result.AppendLine(
+                    $"{indent}/// <param name=\"stream\">Stream to {(firstArgType == GValue.SourceType ? "load from" : "save to")}.</param>");
+
+                if (outParameters != null)
+                {
+                    foreach (var outParameter in outParameters)
+                    {
+                        result.AppendLine(
+                            $"{indent}/// <param name=\"{outParameter.Name.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(outParameter.Name)}.</param>");
+                    }
+                }
+
+                foreach (var arg in requiredInput)
+                {
+                    result.AppendLine(
+                        $"{indent}/// <param name=\"{arg.Name.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(arg.Name)}.</param>");
+                }
+
+                foreach (var arg in optionalInput)
+                {
+                    result.AppendLine(
+                        $"{indent}/// <param name=\"{arg.Name.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(arg.Name)}.</param>");
+                }
+
+                switch (outputTypes.Length)
+                {
+                    case 0:
+                        outputType = "void";
+                        break;
+                    case 1:
+                        outputType = outputTypes[0];
+                        break;
+                    default:
+                        outputType = outputTypes.Any(o => o != outputTypes[0]) ? $"{outputTypes[0]}[]" : "object[]";
+                        break;
+                }
+
+                if (!outputType.Equals("void"))
+                {
+                    result.AppendLine($"{indent}/// <returns>A {ToCref(outputType)}.</returns>");
+                }
+
+                result.Append($"{indent}public ")
+                    .Append(intro.MemberX.HasValue ? string.Empty : "static ")
+                    .Append(outputType);
+
+                result.Append(
+                    $" {newOperationName}(Stream stream, " +
+                    string.Join(", ",
+                        requiredInput.Select(arg =>
+                                $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                            .ToArray()));
+
+                if (outParameters != null)
+                {
+                    if (requiredInput.Length > 0)
+                    {
+                        result.Append(", ");
+                    }
+
+                    result.Append(string.Join(", ",
+                        outParameters.Select(arg =>
+                                $"out {GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                            .ToArray()));
+                }
+
+                if (optionalInput.Length > 0)
+                {
+                    if (requiredInput.Length > 0 || outParameters != null)
+                    {
+                        result.Append(", ");
+                    }
+
+                    result.Append(string.Join(", ",
+                        optionalInput.Select(arg =>
+                                $"{ToNullable(GTypeToCSharp(arg.Type), SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())}")
+                            .ToArray()));
+                }
+
+                var typeStream = firstArgType == GValue.SourceType ? "Source" : "Target";
+
+                result.AppendLine(") =>")
+                    .Append($"{indent}   ")
+                    .Append($"{oldOperationName}({typeStream}Stream.NewFromStream(stream), ")
+                    .Append(string.Join(", ",
+                        requiredInput.Select(arg => $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                            .ToArray()));
+
+                if (outParameters != null)
+                {
+                    if (requiredInput.Length > 0)
+                    {
+                        result.Append(", ");
+                    }
+
+                    result.Append(string.Join(", ",
+                        outParameters.Select(arg =>
+                                $"out {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                            .ToArray()));
+                }
+
+                if (optionalInput.Length > 0)
+                {
+                    if (requiredInput.Length > 0 || outParameters != null)
+                    {
+                        result.Append(", ");
+                    }
+
+                    result.Append(string.Join(", ",
+                        optionalInput.Select(arg =>
+                                $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                            .ToArray()));
+                }
+
+                result.AppendLine(");");
+            }
+
             // Create method overloading if necessary
-            if (optionalOutput.Count > 0 && outParameters == null)
+            if (optionalOutput.Length > 0 && outParameters == null)
             {
                 result.AppendLine()
-                    .Append(GenerateFunction(operationName, indent, new[] { optionalOutput.ElementAt(0) }));
+                    .Append(GenerateFunction(operationName, indent, new[] { optionalOutput[0] }));
             }
-            else if (outParameters != null && outParameters.Count != optionalOutput.Count)
+            else if (outParameters != null && outParameters.Count != optionalOutput.Length)
             {
                 result.AppendLine()
                     .Append(GenerateFunction(operationName, indent,
@@ -513,6 +708,8 @@ namespace NetVips.Samples
                 .AppendLine()
                 .AppendLine("namespace NetVips")
                 .AppendLine("{")
+                .AppendLine("    using System.IO;")
+                .AppendLine()
                 .AppendLine("    public sealed partial class Image")
                 .AppendLine("    {")
                 .AppendLine($"{indent}#region auto-generated functions")

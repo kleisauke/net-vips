@@ -15,6 +15,10 @@ namespace NetVips.Internal
         internal delegate IntPtr TypeMap2Fn(IntPtr type, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate IntPtr ArgumentMapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
+            IntPtr argumentInstance, IntPtr a, IntPtr b);
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate int CallbackFn(IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
@@ -151,7 +155,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_argument_map")]
-        internal static extern IntPtr ArgumentMap(VipsObjectManaged @object, VipsArgument.MapFn fn, IntPtr a,
+        internal static extern IntPtr ArgumentMap(VipsObjectManaged @object, ArgumentMapFn fn, IntPtr a,
             IntPtr b);
 
         [SuppressUnmanagedCodeSecurity]
@@ -183,27 +187,6 @@ namespace NetVips.Internal
         }
     }
 
-    internal static class VipsProgress
-    {
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Struct
-        {
-            internal IntPtr Im;
-
-            internal int Run;
-
-            internal int Eta;
-
-            internal long TPels;
-
-            internal long NPels;
-
-            internal int Percent;
-
-            internal IntPtr Start;
-        }
-    }
-
     internal static class VipsObject
     {
         [SuppressUnmanagedCodeSecurity]
@@ -216,8 +199,8 @@ namespace NetVips.Internal
             EntryPoint = "vips_object_get_argument")]
         internal static extern int GetArgument(VipsObjectManaged @object,
             [MarshalAs(UnmanagedType.LPStr)] string name,
-            out IntPtr pspec, out VipsArgumentClass.Struct argumentClass,
-            out VipsArgumentInstance.Struct argumentInstance);
+            out IntPtr pspec, out VipsArgumentClass argumentClass,
+            out VipsArgumentInstance argumentInstance);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -240,47 +223,34 @@ namespace NetVips.Internal
         internal static extern IntPtr GetDescription(VipsObjectManaged @object);
     }
 
-    internal static class VipsArgument
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct VipsArgument
     {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Struct
-        {
-            internal IntPtr Pspec;
-        }
-
-        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate IntPtr MapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
-            IntPtr argumentInstance, IntPtr a, IntPtr b);
+        internal IntPtr Pspec;
     }
 
-    internal static class VipsArgumentClass
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct VipsArgumentClass
     {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Struct
-        {
-            internal VipsArgument.Struct Parent;
-            internal IntPtr ObjectClass;
-            internal ArgumentFlags Flags;
+        internal VipsArgument Parent;
+        internal IntPtr ObjectClass;
+        internal ArgumentFlags Flags;
 
-            internal int Priority;
-            internal uint Offset;
-        }
+        internal int Priority;
+        internal uint Offset;
     }
 
-    internal static class VipsArgumentInstance
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct VipsArgumentInstance
     {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Struct
-        {
-            internal VipsArgument.Struct Parent;
-            internal IntPtr ArgumentClass;
-            internal IntPtr Object;
+        internal VipsArgument Parent;
+        internal IntPtr ArgumentClass;
+        internal IntPtr Object;
 
-            [MarshalAs(UnmanagedType.Bool)]
-            internal bool Assigned;
-            internal uint CloseId;
-            internal uint InvalidateId;
-        }
+        [MarshalAs(UnmanagedType.Bool)]
+        internal bool Assigned;
+        internal uint CloseId;
+        internal uint InvalidateId;
     }
 
     internal static class VipsValue
@@ -346,9 +316,6 @@ namespace NetVips.Internal
             EntryPoint = "vips_value_set_array_image")]
         internal static extern void SetArrayImage(ref GValue.Struct value, int n);
     }
-
-    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void EvalCallback(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr);
 
     internal static class VipsImage
     {
@@ -447,6 +414,9 @@ namespace NetVips.Internal
             ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(format);
             return NewTempFile(MemoryMarshal.GetReference(span));
         }
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate void EvalSignal(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr);
     }
 
     internal static class VipsInterpolate
@@ -522,6 +492,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_foreign_find_load_source")]
+        internal static extern IntPtr FindLoadSource(Source stream);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save")]
         internal static extern IntPtr FindSave(IntPtr filename);
 
@@ -532,7 +507,90 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_foreign_find_save_target")]
+        internal static extern IntPtr FindSaveTarget(in byte name);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_get_suffixes")]
         internal static extern IntPtr GetSuffixes();
+    }
+
+    internal static class VipsConnection
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_connection_filename")]
+        internal static extern IntPtr FileName(Connection connection);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_connection_nick")]
+        internal static extern IntPtr Nick(Connection connection);
+    }
+
+    internal static class VipsSource
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_source_new_from_descriptor")]
+        internal static extern IntPtr NewFromDescriptor(int descriptor);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_source_new_from_file")]
+        internal static extern IntPtr NewFromFile(in byte filename);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_source_new_from_memory")]
+        internal static extern IntPtr NewFromMemory(IntPtr data, UIntPtr size);
+    }
+
+    internal static class VipsSourceCustom
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_source_custom_new")]
+        internal static extern IntPtr New();
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate long ReadSignal(IntPtr sourcePtr, IntPtr buffer, long length, IntPtr userDataPtr);
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate long SeekSignal(IntPtr sourcePtr, long offset, int whence, IntPtr userDataPtr);
+    }
+
+    internal static class VipsTarget
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_target_new_to_descriptor")]
+        internal static extern IntPtr NewToDescriptor(int descriptor);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_target_new_to_file")]
+        internal static extern IntPtr NewToFile(in byte filename);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_target_new_to_memory")]
+        internal static extern IntPtr NewToMemory();
+    }
+
+    internal static class VipsTargetCustom
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_target_custom_new")]
+        internal static extern IntPtr New();
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate long WriteSignal(IntPtr targetPtr,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+            byte[] buffer, int length, IntPtr userDataPtr);
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate void FinishSignal(IntPtr targetPtr, IntPtr userDataPtr);
     }
 }

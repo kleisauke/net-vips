@@ -9,10 +9,16 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>NetVips.Extensions</PackageId>
     <AssemblyName>NetVips.Extensions</AssemblyName>
-    <Description>Extensions for NetVips</Description>
+    <Description>A set of extension methods and helpers for NetVips</Description>
+    <PackageTags>$(PackageTags);extensions</PackageTags>
     <OutputType>Library</OutputType>
     <Optimize>true</Optimize>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Use a different version number for the NetVips.Extensions package. -->
+    <AssemblyVersion>1.0.0.$(BuildNumber)</AssemblyVersion>
+    <AssemblyFileVersion>1.0.0.$(BuildNumber)</AssemblyFileVersion>
+    <InformationalVersion>1.0.0.$(BuildNumber)$(PrereleaseLabel)</InformationalVersion>
+    <PackageVersion>1.0.0.$(BuildNumber)$(PrereleaseLabel)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -324,22 +324,28 @@ namespace NetVips.Samples
             }
 
             stringBuilder.AppendLine($"{Indent}/// <summary>")
-                .AppendLine($"{Indent}/// Returns a value indicating whether a given <see cref=\"Image\"/> is definitely <see langword=\"true\"/>.")
+                .AppendLine(
+                    $"{Indent}/// Returns a value indicating whether a given <see cref=\"Image\"/> is definitely <see langword=\"true\"/>.")
                 .AppendLine($"{Indent}/// </summary>")
                 .AppendLine($"{Indent}/// <param name=\"image\">The image to check.</param>")
-                .AppendLine($"{Indent}/// <returns><see langword=\"true\"/> if <paramref name=\"image\"/> is definitely <see langword=\"true\"/>; otherwise, <see langword=\"false\"/>.</returns>")
+                .AppendLine(
+                    $"{Indent}/// <returns><see langword=\"true\"/> if <paramref name=\"image\"/> is definitely <see langword=\"true\"/>; otherwise, <see langword=\"false\"/>.</returns>")
                 .AppendLine($"{Indent}public static bool operator true(Image image) =>")
-                .AppendLine($"{Indent}    // Always evaluate to false so that each side of the && equation is evaluated")
+                .AppendLine(
+                    $"{Indent}    // Always evaluate to false so that each side of the && equation is evaluated")
                 .AppendLine($"{Indent}    false;")
                 .AppendLine();
 
             stringBuilder.AppendLine($"{Indent}/// <summary>")
-                .AppendLine($"{Indent}/// Returns a value indicating whether a given <see cref=\"Image\"/> is definitely <see langword=\"false\"/>.")
+                .AppendLine(
+                    $"{Indent}/// Returns a value indicating whether a given <see cref=\"Image\"/> is definitely <see langword=\"false\"/>.")
                 .AppendLine($"{Indent}/// </summary>")
                 .AppendLine($"{Indent}/// <param name=\"image\">The image to check.</param>")
-                .AppendLine($"{Indent}/// <returns><see langword=\"true\"/> if <paramref name=\"image\"/> is definitely <see langword=\"false\"/>; otherwise, <see langword=\"false\"/>.</returns>")
+                .AppendLine(
+                    $"{Indent}/// <returns><see langword=\"true\"/> if <paramref name=\"image\"/> is definitely <see langword=\"false\"/>; otherwise, <see langword=\"false\"/>.</returns>")
                 .AppendLine($"{Indent}public static bool operator false(Image image) =>")
-                .AppendLine($"{Indent}    // Always evaluate to false so that each side of the && equation is evaluated")
+                .AppendLine(
+                    $"{Indent}    // Always evaluate to false so that each side of the && equation is evaluated")
                 .AppendLine($"{Indent}    false;")
                 .AppendLine();
 

@@ -85,7 +85,7 @@ namespace NetVips.Samples
             Image image;
             try
             {
-                image = (Image) Operation.Call(loader, loadOptions, buffer);
+                image = (Image)Operation.Call(loader, loadOptions, buffer);
 
                 // Or:
                 // image = Image.NewFromBuffer(buffer, kwargs: loadOptions);
@@ -100,7 +100,7 @@ namespace NetVips.Samples
             var inputHeight = image.Height;
 
             // Use 64-bit unsigned type, to handle PNG decompression bombs.
-            if ((ulong) (inputWidth * inputHeight) > MaxImageSize)
+            if ((ulong)(inputWidth * inputHeight) > MaxImageSize)
             {
                 throw new Exception(
                     "Image is too large for processing. Width x height should be less than 71 megapixels.");
@@ -136,16 +136,16 @@ namespace NetVips.Samples
 
             if (width > 0 && height > 0) // Fixed width and height
             {
-                var xFactor = (double) inputWidth / width;
-                var yFactor = (double) pageHeight / height;
+                var xFactor = (double)inputWidth / width;
+                var yFactor = (double)pageHeight / height;
 
                 if (xFactor > yFactor) // Or: if (xFactor < yFactor)
                 {
-                    thumbnailHeight = (int) Math.Round(pageHeight / xFactor);
+                    thumbnailHeight = (int)Math.Round(pageHeight / xFactor);
                 }
                 else
                 {
-                    thumbnailWidth = (int) Math.Round(inputWidth / yFactor);
+                    thumbnailWidth = (int)Math.Round(inputWidth / yFactor);
                 }
             }
             else if (width > 0) // Fixed width
@@ -158,8 +158,8 @@ namespace NetVips.Samples
                 else
                 {
                     // Auto height
-                    var yFactor = (double) inputWidth / width;
-                    height = (int) Math.Round(pageHeight / yFactor);
+                    var yFactor = (double)inputWidth / width;
+                    height = (int)Math.Round(pageHeight / yFactor);
 
                     // Height is missing, replace with a huuuge value to prevent
                     // reduction or enlargement in that axis
@@ -176,8 +176,8 @@ namespace NetVips.Samples
                 else
                 {
                     // Auto width
-                    var xFactor = (double) pageHeight / height;
-                    width = (int) Math.Round(inputWidth / xFactor);
+                    var xFactor = (double)pageHeight / height;
+                    width = (int)Math.Round(inputWidth / xFactor);
 
                     // Width is missing, replace with a huuuge value to prevent
                     // reduction or enlargement in that axis

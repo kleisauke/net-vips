@@ -1,11 +1,12 @@
-using SixLabors.Primitives;
-
-namespace SixLabors.ImageSharp.Processing.Processors.Convolution
+namespace NetVips.Benchmarks.ImageSharp
 {
     using System;
     using System.Reflection;
-    using PixelFormats;
-    using Primitives;
+    using SixLabors.Primitives;
+    using SixLabors.ImageSharp;
+    using SixLabors.ImageSharp.PixelFormats;
+    using SixLabors.ImageSharp.Primitives;
+    using SixLabors.ImageSharp.Processing.Processors;
 
     /// <summary>
     /// Defines a processor that uses a 2 dimensional matrix to perform convolution against an image.

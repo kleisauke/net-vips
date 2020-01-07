@@ -1,5 +1,6 @@
 namespace NetVips.Tests
 {
+    using System;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -47,8 +48,8 @@ namespace NetVips.Tests
         {
             var m = Image.NewFromArray(new[]
             {
-                new double[]{0, 0},
-                new double[]{255, 100}
+                new double[] {0, 0},
+                new double[] {255, 100}
             });
             var lut = m.Buildlut();
             Assert.Equal(256, lut.Width);
@@ -63,9 +64,9 @@ namespace NetVips.Tests
 
             m = Image.NewFromArray(new[]
             {
-                new double[]{0, 0, 100},
-                new double[]{255, 100, 0},
-                new double[]{128, 10, 90}
+                new double[] {0, 0, 100},
+                new double[] {255, 100, 0},
+                new double[] {128, 10, 90}
             });
             lut = m.Buildlut();
             Assert.Equal(256, lut.Width);
@@ -468,6 +469,16 @@ namespace NetVips.Tests
             Assert.Equal(Enums.BandFormat.Uchar, im.Format);
             Assert.Equal(255, im.Max());
             Assert.Equal(0, im.Min());
+
+            if (NetVips.AtLeastLibvips(8, 9))
+            {
+                // test autofit
+                im = Image.Text("Hello, world!", width: 500, height: 500);
+
+                // quite a large threshold, since we need to work with a huge range of
+                // text rendering systems
+                Assert.True(Math.Abs(im.Width - 500) < 50);
+            }
         }
 
         [Fact]

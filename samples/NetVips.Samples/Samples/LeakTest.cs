@@ -55,12 +55,10 @@ namespace NetVips.Samples
 
             for (var i = 0; i < 10000; i++)
             {
-                using (var img = Image.NewFromBuffer(imageBytes))
-                {
-                    Console.WriteLine($"memory processing {img}");
-                    // uncomment this line together with the `NObjects` variable in GObject
-                    // Console.WriteLine($"{GObject.NObjects} vips objects known to net-vips");
-                }
+                using var img = Image.NewFromBuffer(imageBytes);
+                Console.WriteLine($"memory processing {img}");
+                // uncomment this line together with the `NObjects` variable in GObject
+                // Console.WriteLine($"{GObject.NObjects} vips objects known to net-vips");
             }
 
             return "All done!";

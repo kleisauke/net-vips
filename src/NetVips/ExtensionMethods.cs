@@ -2,8 +2,6 @@ namespace NetVips
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
     using Internal;
@@ -168,33 +166,6 @@ namespace NetVips
             }
 
             return managedArray;
-        }
-
-        /// <summary>
-        /// Writes the contents of <paramref name="stream"/> to a byte array.
-        /// </summary>
-        /// <param name="stream">The stream to convert.</param>
-        /// <returns>An array of bytes.</returns>
-        /// <exception cref="VipsException">If unable to read from <paramref name="stream"/>.</exception>
-        internal static byte[] ToByteArray(this Stream stream)
-        {
-            if (!stream.CanRead)
-            {
-                throw new VipsException("unable to read from the stream");
-            }
-
-            if (stream is MemoryStream inMemoryStream)
-            {
-                return inMemoryStream.ToArray();
-            }
-
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                memoryStream.Position = 0;
-
-                return memoryStream.ToArray();
-            }
         }
 
         /// <summary>

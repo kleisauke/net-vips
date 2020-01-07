@@ -7,19 +7,19 @@ namespace NetVips
     using Internal;
 
     /// <summary>
-    /// Specifies the prototype of log handler functions.
-    /// </summary>
-    /// <param name="logDomain">The log domain of the message.</param>
-    /// <param name="logLevel">The log level of the message (including the fatal and recursion flags).</param>
-    /// <param name="message">The message to process.</param>
-    public delegate void LogFunc(string logDomain, Enums.LogLevelFlags logLevel, string message);
-
-    /// <summary>
     /// Wrapper for message logging functions.
     /// </summary>
     public static class Log
     {
         private static GLib.LogFuncNative _nativeHandler;
+
+        /// <summary>
+        /// Specifies the prototype of log handler functions.
+        /// </summary>
+        /// <param name="logDomain">The log domain of the message.</param>
+        /// <param name="logLevel">The log level of the message (including the fatal and recursion flags).</param>
+        /// <param name="message">The message to process.</param>
+        public delegate void LogDelegate(string logDomain, Enums.LogLevelFlags logLevel, string message);
 
         private static void NativeCallback(IntPtr logDomainNative, Enums.LogLevelFlags flags, IntPtr messageNative,
             IntPtr userData)
@@ -32,7 +32,7 @@ namespace NetVips
             var logDomain = logDomainNative.ToUtf8String();
             var message = messageNative.ToUtf8String();
             var gch = (GCHandle)userData;
-            if (gch.Target is LogFunc func)
+            if (gch.Target is LogDelegate func)
             {
                 func(logDomain, flags, message);
             }
@@ -47,7 +47,7 @@ namespace NetVips
         /// <param name="flags">The log levels to apply the log handler for.</param>
         /// <param name="logFunc">The log handler function.</param>
         /// <returns>The id of the handler.</returns>
-        public static uint SetLogHandler(string logDomain, Enums.LogLevelFlags flags, LogFunc logFunc)
+        public static uint SetLogHandler(string logDomain, Enums.LogLevelFlags flags, LogDelegate logFunc)
         {
             if (_nativeHandler == null)
             {

@@ -9,7 +9,7 @@ namespace NetVips.Benchmarks
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.Processing;
     using SixLabors.ImageSharp.Processing.Processors;
-    using SixLabors.ImageSharp.Processing.Processors.Convolution;
+    // using SixLabors.ImageSharp.Processing.Processors.Convolution;
 
     using SkiaSharp;
 
@@ -27,7 +27,7 @@ namespace NetVips.Benchmarks
     {
         private const int Quality = 75;
 
-        private readonly IImageProcessor _processor = new ConvolutionProcessor(new float[,]
+        private readonly IImageProcessor _processor = new ImageSharp.ConvolutionProcessor(new float[,]
         {
             {-1, -1, -1},
             {-1, 16, -1},

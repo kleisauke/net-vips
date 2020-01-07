@@ -301,8 +301,8 @@ namespace NetVips.Samples
         /// Are pixel values in this image 16-bit integer?
         /// </summary>
         /// <param name="interpretation">The <see cref="Enums.Interpretation"/></param>
-        /// <returns><see langword="true" /> if the pixel values in this image are 16-bit; 
-        /// otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true"/> if the pixel values in this image are 16-bit; 
+        /// otherwise, <see langword="false"/></returns>
         public static bool Is16Bit(string interpretation)
         {
             return interpretation == Enums.Interpretation.Rgb16 ||

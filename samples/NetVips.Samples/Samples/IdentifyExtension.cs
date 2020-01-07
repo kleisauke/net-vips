@@ -1,9 +1,9 @@
-using System;
-using System.IO;
-using System.Text;
-
 namespace NetVips.Samples
 {
+    using System;
+    using System.IO;
+    using System.Text;
+
     public class IdentifyExtension : ISample
     {
         public string Name => "Identify image extension";
@@ -24,8 +24,9 @@ namespace NetVips.Samples
                 return null;
             }
 
-            const int startIndex = 15;
-            var suffixLength = loader.EndsWith("Buffer") ? 6 : 4;
+            const int startIndex = 15; // VipsForeignLoad
+            var suffixLength =
+                loader.EndsWith("Buffer") || loader.EndsWith("Source") ? 6 : 4 /* loader.EndsWith("File") */;
 
             return loader.Substring(startIndex,
                     loader.Length - startIndex - suffixLength)
@@ -50,8 +51,8 @@ namespace NetVips.Samples
 
                 // Unfortunately, vips-loader is the operation nickname, rather
                 // than the canonical name returned by vips_foreign_find_load().
-                var vipsLoader = (string) image.Get("vips-loader");
-                var suffixLength = vipsLoader.EndsWith("load_buffer") ? 11 : 4;
+                var vipsLoader = (string)image.Get("vips-loader");
+                var suffixLength = vipsLoader.EndsWith("load_buffer") || vipsLoader.EndsWith("load_source") ? 11 : 4;
 
                 return vipsLoader.Substring(0, vipsLoader.Length - suffixLength);
             }

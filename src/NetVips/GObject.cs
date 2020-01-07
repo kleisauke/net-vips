@@ -53,6 +53,26 @@ namespace NetVips
         /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
         public uint SignalConnect(string detailedSignal, Delegate callback, IntPtr data = default)
         {
+            if (callback is Image.EvalDelegate evalDelegate)
+            {
+                void EvalMarshal(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr)
+                {
+                    if (progressPtr == IntPtr.Zero || imagePtr == IntPtr.Zero)
+                    {
+                        return;
+                    }
+
+                    var image = new Image(imagePtr);
+                    image.ObjectRef();
+
+                    var progressStruct = progressPtr.Dereference<VipsProgress>();
+
+                    evalDelegate.Invoke(image, progressStruct);
+                }
+
+                callback = (VipsImage.EvalSignal) EvalMarshal;
+            }
+
             // prevent the delegate from being re-located or disposed of by the garbage collector
             var delegateHandle = GCHandle.Alloc(callback);
             _handles.Add(delegateHandle);

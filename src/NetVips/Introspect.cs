@@ -190,7 +190,7 @@ namespace NetVips
                     IntPtr a,
                     IntPtr b)
                 {
-                    var flags = argumentClass.Dereference<VipsArgumentClass.Struct>().Flags;
+                    var flags = argumentClass.Dereference<VipsArgumentClass>().Flags;
                     if ((flags & Enums.ArgumentFlags.CONSTRUCT) == 0)
                     {
                         return IntPtr.Zero;

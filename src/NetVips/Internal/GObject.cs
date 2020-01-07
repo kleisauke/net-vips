@@ -70,7 +70,8 @@ namespace NetVips.Internal
         [StructLayout(LayoutKind.Explicit, Size = 24)]
         internal struct Struct
         {
-            [FieldOffset(0)] internal IntPtr GType;
+            [FieldOffset(0)]
+            internal IntPtr GType;
 
             [FieldOffset(8)]
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]

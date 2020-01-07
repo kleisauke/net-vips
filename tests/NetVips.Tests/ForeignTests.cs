@@ -7,7 +7,7 @@ namespace NetVips.Tests
 
     public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     {
-        private string _tempDir;
+        private readonly string _tempDir;
 
         private Image _colour;
         private Image _mono;
@@ -106,6 +106,24 @@ namespace NetVips.Tests
             Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
+        internal void SaveLoadStream(string format, string options, Image im, int maxDiff = 0)
+        {
+            using (var stream = new MemoryStream())
+            {
+                im.WriteToStream(stream, format + options);
+
+                // Reset to start position
+                stream.Seek(0, SeekOrigin.Begin);
+
+                var x = Image.NewFromStream(stream);
+
+                Assert.Equal(x.Width, im.Width);
+                Assert.Equal(x.Height, im.Height);
+                Assert.Equal(x.Bands, im.Bands);
+                Assert.True((im - x).Abs().Max() <= maxDiff);
+            }
+        }
+
         internal void SaveBufferTempFile(string saver, string suf, Image im, int maxDiff = 0)
         {
             var filename = Helper.GetTemporaryFile(_tempDir, suf);
@@ -162,6 +180,10 @@ namespace NetVips.Tests
 
             BufferLoader("jpegload_buffer", Helper.JpegFile, JpegValid);
             SaveLoadBuffer("jpegsave_buffer", "jpegload_buffer", _colour, 80);
+            if (Helper.Have("jpegload_source"))
+            {
+                SaveLoadStream(".jpg", "", _colour, 80);
+            }
 
             // see if we have exif parsing: our test image has this field
             var x = Image.NewFromFile(Helper.JpegFile);
@@ -268,6 +290,25 @@ namespace NetVips.Tests
         }
 
         [SkippableFact]
+        public void TestTruncated()
+        {
+            Skip.IfNot(Helper.Have("jpegload"), "no jpeg support in this vips, skipping test");
+
+            // This should open (there's enough there for the header)
+            var im = Image.NewFromFile(Helper.TruncatedFile);
+
+            // but this should fail with a warning, and knock TRUNCATED_FILE out of
+            // the cache
+            var x = im.Avg();
+
+            // now we should open again, but it won't come from cache, it'll reload
+            im = Image.NewFromFile(Helper.TruncatedFile);
+
+            // and this should fail with a warning once more
+            x = im.Avg();
+        }
+
+        [SkippableFact]
         public void TestPng()
         {
             Skip.IfNot(Helper.Have("pngload") && File.Exists(Helper.PngFile), "no png support, skipping test");
@@ -289,6 +330,11 @@ namespace NetVips.Tests
             SaveLoad("%s.png", _colour);
             SaveLoadFile(".png", "[interlace]", _colour);
             SaveLoadFile(".png", "[interlace]", _mono);
+
+            if (Helper.Have("pngload_source"))
+            {
+                SaveLoadStream(".png", "", _colour);
+            }
         }
 
         [SkippableFact]
@@ -308,15 +354,26 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestStreamOverload()
         {
-            Skip.IfNot(Helper.Have("pngload"), "no png support, skipping test");
+            Skip.IfNot(Helper.Have("jpegload_source"), "no jpeg source support, skipping test");
 
-            var stream = _colour.WriteToStream(".png");
-            var x = Image.NewFromStream(stream);
+            using (var stream = new MemoryStream())
+            {
+                // Set the beginning of the stream to an arbitrary but carefully chosen number.
+                stream.Position = 42;
 
-            Assert.Equal(x.Width, _colour.Width);
-            Assert.Equal(x.Height, _colour.Height);
-            Assert.Equal(x.Bands, _colour.Bands);
-            Assert.True((_colour - x).Abs().Max() <= 0);
+                _colour.WriteToStream(stream, ".jpg");
+
+                // Set the current position of the stream to the chosen number.
+                stream.Position = 42;
+
+                // We should be able to read from this stream, even if it starts at any position.
+                var x = Image.NewFromStream(stream, access: Enums.Access.Sequential);
+
+                Assert.Equal(x.Width, _colour.Width);
+                Assert.Equal(x.Height, _colour.Height);
+                Assert.Equal(x.Bands, _colour.Bands);
+                Assert.True((_colour - x).Abs().Max() <= 80);
+            }
         }
 
         [SkippableFact]
@@ -620,6 +677,10 @@ namespace NetVips.Tests
             BufferLoader("webpload_buffer", Helper.WebpFile, WebpValid);
             SaveLoadBuffer("webpsave_buffer", "webpload_buffer", _colour, 60);
             SaveLoad("%s.webp", _colour);
+            if (Helper.Have("webpload_source"))
+            {
+                SaveLoadStream(".webp", "", _colour, 80);
+            }
 
             // test lossless mode
             var x = Image.NewFromFile(Helper.WebpFile);
@@ -974,6 +1035,11 @@ namespace NetVips.Tests
 
             SaveLoad("%s.hdr", _colour);
             SaveBufferTempFile("radsave_buffer", ".hdr", _rad);
+
+            if (Helper.Have("radload_source"))
+            {
+                SaveLoadStream(".hdr", "", _rad);
+            }
         }
 
         [SkippableFact]

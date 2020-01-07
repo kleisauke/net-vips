@@ -2,7 +2,6 @@ namespace NetVips
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Text;
     using Internal;
@@ -122,6 +121,16 @@ namespace NetVips
         public static readonly IntPtr BlendModeType;
 
         /// <summary>
+        /// The fundamental type for VipsSource. See <see cref="Source"/>.
+        /// </summary>
+        public static readonly IntPtr SourceType;
+
+        /// <summary>
+        /// The fundamental type for VipsTarget. See <see cref="Target"/>.
+        /// </summary>
+        public static readonly IntPtr TargetType;
+
+        /// <summary>
         /// Hint of how much native memory is actually occupied by the object.
         /// </summary>
         private long? _memoryPressure;
@@ -131,6 +140,12 @@ namespace NetVips
             if (NetVips.AtLeastLibvips(8, 6))
             {
                 BlendModeType = Vips.BlendModeGetType();
+            }
+
+            if (NetVips.AtLeastLibvips(8, 9))
+            {
+                SourceType = NetVips.TypeFromName("VipsSource");
+                TargetType = NetVips.TypeFromName("VipsTarget");
             }
         }
 

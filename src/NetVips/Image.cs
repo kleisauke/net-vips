@@ -21,6 +21,16 @@ namespace NetVips
         /// </summary>
         private GCHandle _dataHandle;
 
+        /// <summary>
+        /// A evaluation delegate that can be used on the
+        /// <see cref="Enums.Signals.PreEval"/>, <see cref="Enums.Signals.Eval"/> and
+        /// <see cref="Enums.Signals.PostEval"/> signals.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetProgress(bool)"/> to enable progress reporting on an image.
+        /// </remarks>
+        public delegate void EvalDelegate(Image image, VipsProgress progressStruct);
+
         /// <inheritdoc cref="VipsObject"/>
         internal Image(IntPtr pointer)
             : base(pointer)
@@ -118,10 +128,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="filename">The file to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
-        public static string FindLoad(string filename)
-        {
-            return Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
-        }
+        public static string FindLoad(string filename) => Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
 
         /// <summary>
         /// Find the name of the load operation vips will use to load a buffer.
@@ -132,11 +139,9 @@ namespace NetVips
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
-        public static string FindLoadBuffer(byte[] data)
-        {
-            return Marshal.PtrToStringAnsi(
-                VipsForeign.FindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()), (ulong)data.Length));
-        }
+        public static string FindLoadBuffer(byte[] data) =>
+            Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()),
+                (ulong)data.Length));
 
         /// <summary>
         /// Find the name of the load operation vips will use to load a buffer.
@@ -161,15 +166,27 @@ namespace NetVips
         public static string FindLoadBuffer(char[] data) => FindLoadBuffer(Encoding.UTF8.GetBytes(data));
 
         /// <summary>
+        /// Find the name of the load operation vips will use to load a source.
+        /// </summary>
+        /// <remarks>
+        /// For example "VipsForeignLoadJpegSource". You can use this to work out what
+        /// options to pass to <see cref="NewFromSource(Source, string, string, bool?, VOption)"/>.
+        /// </remarks>
+        /// <param name="source">The source to test.</param>
+        /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
+        public static string FindLoadSource(Source source) =>
+            Marshal.PtrToStringAnsi(VipsForeign.FindLoadSource(source));
+
+        /// <summary>
         /// Find the name of the load operation vips will use to load a stream.
         /// </summary>
         /// <remarks>
-        /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromStream"/>.
+        /// For example "VipsForeignLoadJpegSource". You can use this to work out what
+        /// options to pass to <see cref="NewFromStream(Stream, string, string, bool?, VOption)"/>.
         /// </remarks>
         /// <param name="stream">The stream to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
-        public static string FindLoadStream(Stream stream) => FindLoadBuffer(stream.ToByteArray());
+        public static string FindLoadStream(Stream stream) => FindLoadSource(SourceStream.NewFromStream(stream));
 
         #endregion
 
@@ -360,19 +377,65 @@ namespace NetVips
             VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
 
         /// <summary>
-        /// Load a formatted image from stream.
+        /// Load a formatted image from a source.
         /// </summary>
         /// <remarks>
-        /// True streaming is not yet supported within libvips. There has been
-        /// quite a bit of talk of adding this, and there's a branch that adds 
-        /// this, but it's never been merged for various reasons. See:
-        /// https://github.com/lovell/sharp/issues/30#issuecomment-46960443
-        /// https://github.com/kleisauke/net-vips/issues/33
-        ///
-        /// So this simply copies the stream to a byte array and loads it with
-        /// <see cref="NewFromBuffer(byte[], string, string, bool?, VOption)"/>.
+        /// This behaves exactly as <see cref="NewFromFile"/>, but the image is
+        /// loaded from a source rather than from a file.
+        /// At least libvips 8.9 is needed.
         /// </remarks>
-        /// <param name="stream">The stream object to load the image from.</param>
+        /// <param name="source">The source to load the image from.</param>
+        /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
+        /// <param name="fail">If set True, the loader will fail with an error on
+        /// the first serious error in the file. By default, libvips
+        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="kwargs">Optional options that depend on the load operation.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        /// <exception cref="VipsException">If unable to load from <paramref name="source"/>.</exception>
+        public static Image NewFromSource(
+            Source source,
+            string strOptions = "",
+            string access = null,
+            bool? fail = null,
+            VOption kwargs = null)
+        {
+            var name = FindLoadSource(source);
+            if (name == null)
+            {
+                throw new VipsException("unable to load from source");
+            }
+
+            var options = new VOption();
+            if (kwargs != null)
+            {
+                options.Merge(kwargs);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("string_options", strOptions);
+
+            return Operation.Call(name, options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load a formatted image from a stream.
+        /// </summary>
+        /// <remarks>
+        /// This behaves exactly as <see cref="NewFromSource"/>, but the image is
+        /// loaded from a stream rather than from a source.
+        /// At least libvips 8.9 is needed.
+        /// </remarks>
+        /// <param name="stream">The stream to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
@@ -386,7 +449,8 @@ namespace NetVips
             string strOptions = "",
             string access = null,
             bool? fail = null,
-            VOption kwargs = null) => NewFromBuffer(stream.ToByteArray(), strOptions, access, fail, kwargs);
+            VOption kwargs = null) =>
+            NewFromSource(SourceStream.NewFromStream(stream), strOptions, access, fail, kwargs);
 
         /// <summary>
         /// Create an image from a 2D array.
@@ -539,7 +603,7 @@ namespace NetVips
         ///
         /// Use <see cref="Copy"/> to set other image attributes.
         /// </remarks>
-        /// <param name="data">A memoryview or buffer object.</param>
+        /// <param name="data">A memory object.</param>
         /// <param name="width">Image width in pixels.</param>
         /// <param name="height">Image height in pixels.</param>
         /// <param name="bands">Number of bands.</param>
@@ -754,8 +818,8 @@ namespace NetVips
 
             var filename = Vips.GetFilename(filenameRef);
             var fileOptions = Vips.GetOptions(filenameRef).ToUtf8String(true);
-
             var name = Marshal.PtrToStringAnsi(VipsForeign.FindSave(filename));
+
             if (name == null)
             {
                 throw new VipsException($"unable to write to file {vipsFilename}");
@@ -840,25 +904,61 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Write an image to a target.
+        /// </summary>
+        /// <remarks>
+        /// This behaves exactly as <see cref="WriteToFile"/>, but the image is
+        /// written to a target rather than a file.
+        /// At least libvips 8.9 is needed.
+        /// </remarks>
+        /// <param name="target">Write to this target.</param>
+        /// <param name="formatString">The suffix, plus any string-form arguments.</param>
+        /// <param name="kwargs">Optional options that depend on the save operation.</param>
+        /// <exception cref="VipsException">If unable to write to target.</exception>
+        public void WriteToTarget(Target target, string formatString, VOption kwargs = null)
+        {
+            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(formatString);
+            ref var formatRef = ref MemoryMarshal.GetReference(span);
+
+            var bufferOptions = Vips.GetOptions(formatRef).ToUtf8String(true);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(formatRef));
+
+            if (name == null)
+            {
+                throw new VipsException("unable to write to target");
+            }
+
+            var stringOptions = new VOption
+            {
+                {"string_options", bufferOptions}
+            };
+
+            if (kwargs != null)
+            {
+                kwargs.Merge(stringOptions);
+            }
+            else
+            {
+                kwargs = stringOptions;
+            }
+
+            this.Call(name, kwargs, target);
+        }
+
+        /// <summary>
         /// Write an image to a stream.
         /// </summary>
         /// <remarks>
-        /// True streaming is not yet supported within libvips. There has been
-        /// quite a bit of talk of adding this, and there's a branch that adds 
-        /// this, but it's never been merged for various reasons. See:
-        /// https://github.com/lovell/sharp/issues/30#issuecomment-46960443
-        /// https://github.com/kleisauke/net-vips/issues/33
-        ///
-        /// So this simply creates a new non-resizable instance of the
-        /// <see cref="MemoryStream"/> class based on the byte array that is
-        /// returned from <see cref="WriteToBuffer"/>.
+        /// This behaves exactly as <see cref="WriteToTarget"/>, but the image is
+        /// written to a stream rather than a target.
+        /// At least libvips 8.9 is needed.
         /// </remarks>
+        /// <param name="stream">Write to this stream.</param>
         /// <param name="formatString">The suffix, plus any string-form arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
-        /// <returns>A non-resizable <see cref="MemoryStream"/>.</returns>
         /// <exception cref="VipsException">If unable to write to stream.</exception>
-        public Stream WriteToStream(string formatString, VOption kwargs = null) =>
-            new MemoryStream(WriteToBuffer(formatString, kwargs));
+        public void WriteToStream(Stream stream, string formatString, VOption kwargs = null) =>
+            WriteToTarget(TargetStream.NewFromStream(stream), formatString, kwargs);
 
         /// <summary>
         /// Write the image to a large memory array.
@@ -1867,6 +1967,21 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Enable progress reporting on an image.
+        /// </summary>
+        /// <remarks>
+        /// When progress reporting is enabled, evaluation of the most downstream
+        /// image from this image will report progress using the <see cref="Enums.Signals.PreEval"/>,
+        /// <see cref="Enums.Signals.Eval"/> and <see cref="Enums.Signals.PostEval"/> signals.
+        /// </remarks>
+        /// <param name="progress"><see langword="true"/> to enable progress reporting;
+        /// otherwise, <see langword="false"/>.</param>
+        public void SetProgress(bool progress)
+        {
+            VipsImage.SetProgress(this, progress);
+        }
+
+        /// <summary>
         /// Attach progress feedback, if required.
         /// </summary>
         /// <remarks>
@@ -1892,7 +2007,7 @@ namespace NetVips
         /// <param name="token">Cancellation token to block evaluation on this image.</param>
         public void SetProgress(IProgress<int> progress, CancellationToken token = default)
         {
-            VipsImage.SetProgress(this, progress != null);
+            SetProgress(progress != null);
             if (progress == null)
             {
                 return;
@@ -1901,7 +2016,7 @@ namespace NetVips
             var lastPercent = 0;
             var isKilled = false;
 
-            EvalCallback evalCallback = (imagePtr, progressPtr, userDataPtr) =>
+            void EvalCallback(Image image, VipsProgress progressStruct)
             {
                 // Block evaluation on this image if a cancellation
                 // has been requested for this token.
@@ -1909,27 +2024,21 @@ namespace NetVips
                 {
                     if (!isKilled)
                     {
-                        SetKill(true);
+                        image.SetKill(true);
                         isKilled = true;
                     }
 
                     return;
                 }
 
-                if (progressPtr == IntPtr.Zero)
-                {
-                    return;
-                }
-
-                var progressStruct = progressPtr.Dereference<VipsProgress.Struct>();
                 if (progressStruct.Percent != lastPercent)
                 {
                     progress.Report(progressStruct.Percent);
                     lastPercent = progressStruct.Percent;
                 }
-            };
+            }
 
-            SignalConnect(Enums.Signals.Eval, evalCallback);
+            SignalConnect(Enums.Signals.Eval, (EvalDelegate)EvalCallback);
         }
 
         #endregion
@@ -2093,7 +2202,7 @@ namespace NetVips
 
         #endregion
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="GObject"/>
         protected override void Dispose(bool disposing)
         {
             // release reference to our secret ref

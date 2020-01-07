@@ -10,6 +10,8 @@
 
 namespace NetVips
 {
+    using System.IO;
+
     public sealed partial class Image
     {
         #region auto-generated functions
@@ -1136,22 +1138,17 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Csvsave(filename, pageHeight: int, separator: string, strip: bool, background: double[]);
+        /// in.Csvsave(filename, separator: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="separator">Separator characters.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Csvsave(string filename, int? pageHeight = null, string separator = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Csvsave(string filename, string separator = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (separator != null)
             {
@@ -1166,6 +1163,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("csvsave", options, filename);
@@ -1588,13 +1590,12 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Dzsave(filename, basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, skipBlanks: int, strip: bool, background: double[]);
+        /// in.Dzsave(filename, basename: string, layout: string, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, skipBlanks: int, noStrip: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
         /// <param name="basename">Base name to save to.</param>
         /// <param name="layout">Directory layout.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="suffix">Filename suffix for tiles.</param>
         /// <param name="overlap">Tile overlap in pixels.</param>
         /// <param name="tileSize">Tile size in pixels.</param>
@@ -1606,9 +1607,11 @@ namespace NetVips
         /// <param name="compression">ZIP deflate compression level.</param>
         /// <param name="regionShrink">Method to shrink regions.</param>
         /// <param name="skipBlanks">Skip tiles which are nearly equal to the background.</param>
+        /// <param name="noStrip">Don't strip tile metadata.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Dzsave(string filename, string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, int? skipBlanks = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Dzsave(string filename, string basename = null, string layout = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, int? skipBlanks = null, bool? noStrip = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -1620,11 +1623,6 @@ namespace NetVips
             if (layout != null)
             {
                 options.Add(nameof(layout), layout);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
             }
 
             if (suffix != null)
@@ -1682,6 +1680,11 @@ namespace NetVips
                 options.Add("skip_blanks", skipBlanks);
             }
 
+            if (noStrip.HasValue)
+            {
+                options.Add("no_strip", noStrip);
+            }
+
             if (strip.HasValue)
             {
                 options.Add(nameof(strip), strip);
@@ -1690,6 +1693,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("dzsave", options, filename);
@@ -1700,12 +1708,11 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, pageHeight: int, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, skipBlanks: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, skipBlanks: int, noStrip: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="basename">Base name to save to.</param>
         /// <param name="layout">Directory layout.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="suffix">Filename suffix for tiles.</param>
         /// <param name="overlap">Tile overlap in pixels.</param>
         /// <param name="tileSize">Tile size in pixels.</param>
@@ -1717,10 +1724,12 @@ namespace NetVips
         /// <param name="compression">ZIP deflate compression level.</param>
         /// <param name="regionShrink">Method to shrink regions.</param>
         /// <param name="skipBlanks">Skip tiles which are nearly equal to the background.</param>
+        /// <param name="noStrip">Don't strip tile metadata.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] DzsaveBuffer(string basename = null, string layout = null, int? pageHeight = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, int? skipBlanks = null, bool? strip = null, double[] background = null)
+        public byte[] DzsaveBuffer(string basename = null, string layout = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, int? skipBlanks = null, bool? noStrip = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -1732,11 +1741,6 @@ namespace NetVips
             if (layout != null)
             {
                 options.Add(nameof(layout), layout);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
             }
 
             if (suffix != null)
@@ -1794,6 +1798,11 @@ namespace NetVips
                 options.Add("skip_blanks", skipBlanks);
             }
 
+            if (noStrip.HasValue)
+            {
+                options.Add("no_strip", noStrip);
+            }
+
             if (strip.HasValue)
             {
                 options.Add(nameof(strip), strip);
@@ -1802,6 +1811,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             return this.Call("dzsave_buffer", options) as byte[];
@@ -2089,21 +2103,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Fitssave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// in.Fitssave(filename, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Fitssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Fitssave(string filename, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -2113,6 +2122,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("fitssave", options, filename);
@@ -2909,24 +2923,19 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Heifsave(filename, pageHeight: int, q: int, lossless: bool, compression: string, strip: bool, background: double[]);
+        /// in.Heifsave(filename, q: int, lossless: bool, compression: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="lossless">Enable lossless compression.</param>
         /// <param name="compression">Compression format.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Heifsave(string filename, int? pageHeight = null, int? q = null, bool? lossless = null, string compression = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Heifsave(string filename, int? q = null, bool? lossless = null, string compression = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -2951,6 +2960,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("heifsave", options, filename);
@@ -2961,24 +2975,19 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.HeifsaveBuffer(pageHeight: int, q: int, lossless: bool, compression: string, strip: bool, background: double[]);
+        /// byte[] buffer = in.HeifsaveBuffer(q: int, lossless: bool, compression: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="lossless">Enable lossless compression.</param>
         /// <param name="compression">Compression format.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] HeifsaveBuffer(int? pageHeight = null, int? q = null, bool? lossless = null, string compression = null, bool? strip = null, double[] background = null)
+        public byte[] HeifsaveBuffer(int? q = null, bool? lossless = null, string compression = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -3003,6 +3012,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             return this.Call("heifsave_buffer", options) as byte[];
@@ -3779,15 +3793,153 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load image from jpeg source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image JpegloadSource(Source source, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (shrink.HasValue)
+            {
+                options.Add(nameof(shrink), shrink);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add(nameof(autorotate), autorotate);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("jpegload_source", options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load image from jpeg stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image JpegloadStream(Stream stream, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null) =>
+           JpegloadSource(SourceStream.NewFromStream(stream), shrink, autorotate, memory, access, fail);
+
+        /// <summary>
+        /// Load image from jpeg source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image JpegloadSource(Source source, out int flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (shrink.HasValue)
+            {
+                options.Add(nameof(shrink), shrink);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add(nameof(autorotate), autorotate);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("jpegload_source", options, source) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load image from jpeg stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="shrink">Shrink factor on load.</param>
+        /// <param name="autorotate">Rotate image using exif orientation.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image JpegloadStream(Stream stream, out int flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null) =>
+           JpegloadSource(SourceStream.NewFromStream(stream), out flags, shrink, autorotate, memory, access, fail);
+
+        /// <summary>
         /// Save image to jpeg file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Jpegsave(filename, pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
+        /// in.Jpegsave(filename, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
@@ -3795,18 +3947,14 @@ namespace NetVips
         /// <param name="noSubsample">Disable chroma subsample.</param>
         /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
         /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
-        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="optimizeScans">Split spectrum of DCT coefficients into separate scans.</param>
         /// <param name="quantTable">Use predefined quantization table with given index.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Jpegsave(string filename, int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Jpegsave(string filename, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -3861,6 +4009,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("jpegsave", options, filename);
@@ -3871,10 +4024,9 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.JpegsaveBuffer(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.JpegsaveBuffer(q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
@@ -3882,19 +4034,15 @@ namespace NetVips
         /// <param name="noSubsample">Disable chroma subsample.</param>
         /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
         /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
-        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="optimizeScans">Split spectrum of DCT coefficients into separate scans.</param>
         /// <param name="quantTable">Use predefined quantization table with given index.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] JpegsaveBuffer(int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
+        public byte[] JpegsaveBuffer(int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -3949,6 +4097,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             return this.Call("jpegsave_buffer", options) as byte[];
@@ -3959,10 +4112,9 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.JpegsaveMime(pageHeight: int, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[]);
+        /// in.JpegsaveMime(q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
@@ -3970,18 +4122,14 @@ namespace NetVips
         /// <param name="noSubsample">Disable chroma subsample.</param>
         /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
         /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
-        /// <param name="optimizeScans">Split the spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="optimizeScans">Split spectrum of DCT coefficients into separate scans.</param>
         /// <param name="quantTable">Use predefined quantization table with given index.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void JpegsaveMime(int? pageHeight = null, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void JpegsaveMime(int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -4038,8 +4186,125 @@ namespace NetVips
                 options.Add(nameof(background), background);
             }
 
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
             this.Call("jpegsave_mime", options);
         }
+
+        /// <summary>
+        /// Save image to jpeg target.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.JpegsaveTarget(target, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="target">Target to save to.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg.</param>
+        /// <param name="noSubsample">Disable chroma subsample.</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
+        /// <param name="optimizeScans">Split spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="quantTable">Use predefined quantization table with given index.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void JpegsaveTarget(Target target, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        {
+            var options = new VOption();
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (profile != null)
+            {
+                options.Add(nameof(profile), profile);
+            }
+
+            if (optimizeCoding.HasValue)
+            {
+                options.Add("optimize_coding", optimizeCoding);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add(nameof(interlace), interlace);
+            }
+
+            if (noSubsample.HasValue)
+            {
+                options.Add("no_subsample", noSubsample);
+            }
+
+            if (trellisQuant.HasValue)
+            {
+                options.Add("trellis_quant", trellisQuant);
+            }
+
+            if (overshootDeringing.HasValue)
+            {
+                options.Add("overshoot_deringing", overshootDeringing);
+            }
+
+            if (optimizeScans.HasValue)
+            {
+                options.Add("optimize_scans", optimizeScans);
+            }
+
+            if (quantTable.HasValue)
+            {
+                options.Add("quant_table", quantTable);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add(nameof(strip), strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            this.Call("jpegsave_target", options, target);
+        }
+
+        /// <summary>
+        /// Save image to jpeg stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.JpegsaveStream(stream, q: int, profile: string, optimizeCoding: bool, interlace: bool, noSubsample: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to save to.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="optimizeCoding">Compute optimal Huffman coding tables.</param>
+        /// <param name="interlace">Generate an interlaced (progressive) jpeg.</param>
+        /// <param name="noSubsample">Disable chroma subsample.</param>
+        /// <param name="trellisQuant">Apply trellis quantisation to each 8x8 block.</param>
+        /// <param name="overshootDeringing">Apply overshooting to samples with extreme values.</param>
+        /// <param name="optimizeScans">Split spectrum of DCT coefficients into separate scans.</param>
+        /// <param name="quantTable">Use predefined quantization table with given index.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void JpegsaveStream(Stream stream, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? noSubsample = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, bool? strip = null, double[] background = null, int? pageHeight = null) =>
+           JpegsaveTarget(TargetStream.NewFromStream(stream), q, profile, optimizeCoding, interlace, noSubsample, trellisQuant, overshootDeringing, optimizeScans, quantTable, strip, background, pageHeight);
 
         /// <summary>
         /// Transform float Lab to LabQ coding.
@@ -4569,7 +4834,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Magicksave(filename, format: string, quality: int, optimizeGifFrames: bool, optimizeGifTransparency: bool, pageHeight: int, strip: bool, background: double[]);
+        /// in.Magicksave(filename, format: string, quality: int, optimizeGifFrames: bool, optimizeGifTransparency: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -4577,10 +4842,10 @@ namespace NetVips
         /// <param name="quality">Quality to use.</param>
         /// <param name="optimizeGifFrames">Apply GIF frames optimization.</param>
         /// <param name="optimizeGifTransparency">Apply GIF transparency optimization.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Magicksave(string filename, string format = null, int? quality = null, bool? optimizeGifFrames = null, bool? optimizeGifTransparency = null, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Magicksave(string filename, string format = null, int? quality = null, bool? optimizeGifFrames = null, bool? optimizeGifTransparency = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -4604,11 +4869,6 @@ namespace NetVips
                 options.Add("optimize_gif_transparency", optimizeGifTransparency);
             }
 
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
-
             if (strip.HasValue)
             {
                 options.Add(nameof(strip), strip);
@@ -4617,6 +4877,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("magicksave", options, filename);
@@ -4627,18 +4892,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.MagicksaveBuffer(format: string, quality: int, optimizeGifFrames: bool, optimizeGifTransparency: bool, pageHeight: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.MagicksaveBuffer(format: string, quality: int, optimizeGifFrames: bool, optimizeGifTransparency: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="format">Format to save in.</param>
         /// <param name="quality">Quality to use.</param>
         /// <param name="optimizeGifFrames">Apply GIF frames optimization.</param>
         /// <param name="optimizeGifTransparency">Apply GIF transparency optimization.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] MagicksaveBuffer(string format = null, int? quality = null, bool? optimizeGifFrames = null, bool? optimizeGifTransparency = null, int? pageHeight = null, bool? strip = null, double[] background = null)
+        public byte[] MagicksaveBuffer(string format = null, int? quality = null, bool? optimizeGifFrames = null, bool? optimizeGifTransparency = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -4662,11 +4927,6 @@ namespace NetVips
                 options.Add("optimize_gif_transparency", optimizeGifTransparency);
             }
 
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
-
             if (strip.HasValue)
             {
                 options.Add(nameof(strip), strip);
@@ -4675,6 +4935,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             return this.Call("magicksave_buffer", options) as byte[];
@@ -5431,20 +5696,15 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Matrixprint(pageHeight: int, strip: bool, background: double[]);
+        /// in.Matrixprint(strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Matrixprint(int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Matrixprint(bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -5454,6 +5714,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("matrixprint", options);
@@ -5464,21 +5729,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Matrixsave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// in.Matrixsave(filename, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Matrixsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Matrixsave(string filename, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -5488,6 +5748,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("matrixsave", options, filename);
@@ -6578,21 +6843,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Niftisave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// in.Niftisave(filename, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Niftisave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Niftisave(string filename, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -6602,6 +6862,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("niftisave", options, filename);
@@ -7304,17 +7569,127 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load png from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.PngloadSource(source, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image PngloadSource(Source source, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("pngload_source", options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load png from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.PngloadStream(stream, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image PngloadStream(Stream stream, bool? memory = null, string access = null, bool? fail = null) =>
+           PngloadSource(SourceStream.NewFromStream(stream), memory, access, fail);
+
+        /// <summary>
+        /// Load png from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.PngloadSource(source, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image PngloadSource(Source source, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("pngload_source", options, source) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load png from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.PngloadStream(stream, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image PngloadStream(Stream stream, out int flags, bool? memory = null, string access = null, bool? fail = null) =>
+           PngloadSource(SourceStream.NewFromStream(stream), out flags, memory, access, fail);
+
+        /// <summary>
         /// Save image to png file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Pngsave(filename, compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[]);
+        /// in.Pngsave(filename, compression: int, interlace: bool, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
         /// <param name="compression">Compression factor.</param>
         /// <param name="interlace">Interlace image.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="filter">libpng row filter flag(s).</param>
         /// <param name="palette">Quantise to 8bpp palette.</param>
@@ -7323,7 +7698,8 @@ namespace NetVips
         /// <param name="dither">Amount of dithering.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Pngsave(string filename, int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Pngsave(string filename, int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -7335,11 +7711,6 @@ namespace NetVips
             if (interlace.HasValue)
             {
                 options.Add(nameof(interlace), interlace);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
             }
 
             if (profile != null)
@@ -7380,6 +7751,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("pngsave", options, filename);
@@ -7390,12 +7766,11 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, pageHeight: int, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[]);
+        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="compression">Compression factor.</param>
         /// <param name="interlace">Interlace image.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="filter">libpng row filter flag(s).</param>
         /// <param name="palette">Quantise to 8bpp palette.</param>
@@ -7404,8 +7779,9 @@ namespace NetVips
         /// <param name="dither">Amount of dithering.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, int? pageHeight = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null)
+        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -7417,11 +7793,6 @@ namespace NetVips
             if (interlace.HasValue)
             {
                 options.Add(nameof(interlace), interlace);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
             }
 
             if (profile != null)
@@ -7464,8 +7835,118 @@ namespace NetVips
                 options.Add(nameof(background), background);
             }
 
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
             return this.Call("pngsave_buffer", options) as byte[];
         }
+
+        /// <summary>
+        /// Save image to target as PNG.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.PngsaveTarget(target, compression: int, interlace: bool, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="target">Target to save to.</param>
+        /// <param name="compression">Compression factor.</param>
+        /// <param name="interlace">Interlace image.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="filter">libpng row filter flag(s).</param>
+        /// <param name="palette">Quantise to 8bpp palette.</param>
+        /// <param name="colours">Max number of palette colours.</param>
+        /// <param name="q">Quantisation quality.</param>
+        /// <param name="dither">Amount of dithering.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void PngsaveTarget(Target target, int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        {
+            var options = new VOption();
+
+            if (compression.HasValue)
+            {
+                options.Add(nameof(compression), compression);
+            }
+
+            if (interlace.HasValue)
+            {
+                options.Add(nameof(interlace), interlace);
+            }
+
+            if (profile != null)
+            {
+                options.Add(nameof(profile), profile);
+            }
+
+            if (filter.HasValue)
+            {
+                options.Add(nameof(filter), filter);
+            }
+
+            if (palette.HasValue)
+            {
+                options.Add(nameof(palette), palette);
+            }
+
+            if (colours.HasValue)
+            {
+                options.Add(nameof(colours), colours);
+            }
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (dither.HasValue)
+            {
+                options.Add(nameof(dither), dither);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add(nameof(strip), strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            this.Call("pngsave_target", options, target);
+        }
+
+        /// <summary>
+        /// Save image to stream as PNG.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.PngsaveStream(stream, compression: int, interlace: bool, profile: string, filter: int, palette: bool, colours: int, q: int, dither: double, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to save to.</param>
+        /// <param name="compression">Compression factor.</param>
+        /// <param name="interlace">Interlace image.</param>
+        /// <param name="profile">ICC profile to embed.</param>
+        /// <param name="filter">libpng row filter flag(s).</param>
+        /// <param name="palette">Quantise to 8bpp palette.</param>
+        /// <param name="colours">Max number of palette colours.</param>
+        /// <param name="q">Quantisation quality.</param>
+        /// <param name="dither">Amount of dithering.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void PngsaveStream(Stream stream, int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? colours = null, int? q = null, double? dither = null, bool? strip = null, double[] background = null, int? pageHeight = null) =>
+           PngsaveTarget(TargetStream.NewFromStream(stream), compression, interlace, profile, filter, palette, colours, q, dither, strip, background, pageHeight);
 
         /// <summary>
         /// Load ppm from file.
@@ -7550,23 +8031,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Ppmsave(filename, pageHeight: int, ascii: bool, squash: bool, strip: bool, background: double[]);
+        /// in.Ppmsave(filename, ascii: bool, squash: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="ascii">save as ascii.</param>
         /// <param name="squash">save as one bit.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Ppmsave(string filename, int? pageHeight = null, bool? ascii = null, bool? squash = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Ppmsave(string filename, bool? ascii = null, bool? squash = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (ascii.HasValue)
             {
@@ -7586,6 +8062,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("ppmsave", options, filename);
@@ -7772,25 +8253,209 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load rad from buffer.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image RadloadBuffer(byte[] buffer, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("radload_buffer", options, buffer) as Image;
+        }
+
+        /// <summary>
+        /// Load rad from buffer.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="buffer">Buffer to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image RadloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("radload_buffer", options, buffer) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load rad from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image RadloadSource(Source source, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("radload_source", options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load rad from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image RadloadStream(Stream stream, bool? memory = null, string access = null, bool? fail = null) =>
+           RadloadSource(SourceStream.NewFromStream(stream), memory, access, fail);
+
+        /// <summary>
+        /// Load rad from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image RadloadSource(Source source, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("radload_source", options, source) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load rad from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image RadloadStream(Stream stream, out int flags, bool? memory = null, string access = null, bool? fail = null) =>
+           RadloadSource(SourceStream.NewFromStream(stream), out flags, memory, access, fail);
+
+        /// <summary>
         /// Save image to Radiance file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Radsave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// in.Radsave(filename, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Radsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Radsave(string filename, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -7800,6 +8465,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("radsave", options, filename);
@@ -7810,21 +8480,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.RadsaveBuffer(pageHeight: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.RadsaveBuffer(strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] RadsaveBuffer(int? pageHeight = null, bool? strip = null, double[] background = null)
+        public byte[] RadsaveBuffer(bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -7836,8 +8501,62 @@ namespace NetVips
                 options.Add(nameof(background), background);
             }
 
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
             return this.Call("radsave_buffer", options) as byte[];
         }
+
+        /// <summary>
+        /// Save image to Radiance target.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.RadsaveTarget(target, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="target">Target to save to.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void RadsaveTarget(Target target, bool? strip = null, double[] background = null, int? pageHeight = null)
+        {
+            var options = new VOption();
+
+            if (strip.HasValue)
+            {
+                options.Add(nameof(strip), strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            this.Call("radsave_target", options, target);
+        }
+
+        /// <summary>
+        /// Save image to Radiance stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.RadsaveStream(stream, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to save to.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void RadsaveStream(Stream stream, bool? strip = null, double[] background = null, int? pageHeight = null) =>
+           RadsaveTarget(TargetStream.NewFromStream(stream), strip, background, pageHeight);
 
         /// <summary>
         /// Rank filter.
@@ -7861,7 +8580,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, offset: ulong, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, offset: ulong, format: string, interpretation: string, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7869,17 +8588,29 @@ namespace NetVips
         /// <param name="height">Image height in pixels.</param>
         /// <param name="bands">Number of bands in image.</param>
         /// <param name="offset">Offset in bytes from start of file.</param>
+        /// <param name="format">Pixel format in image.</param>
+        /// <param name="interpretation">Pixel interpretation.</param>
         /// <param name="memory">Force open via memory.</param>
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Rawload(string filename, int width, int height, int bands, ulong? offset = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Rawload(string filename, int width, int height, int bands, ulong? offset = null, string format = null, string interpretation = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
             if (offset.HasValue)
             {
                 options.Add(nameof(offset), offset);
+            }
+
+            if (format != null)
+            {
+                options.Add(nameof(format), format);
+            }
+
+            if (interpretation != null)
+            {
+                options.Add(nameof(interpretation), interpretation);
             }
 
             if (memory.HasValue)
@@ -7905,7 +8636,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, offset: ulong, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, offset: ulong, format: string, interpretation: string, memory: bool, access: string, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7914,17 +8645,29 @@ namespace NetVips
         /// <param name="bands">Number of bands in image.</param>
         /// <param name="flags">Flags for this file.</param>
         /// <param name="offset">Offset in bytes from start of file.</param>
+        /// <param name="format">Pixel format in image.</param>
+        /// <param name="interpretation">Pixel interpretation.</param>
         /// <param name="memory">Force open via memory.</param>
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Rawload(string filename, int width, int height, int bands, out int flags, ulong? offset = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Rawload(string filename, int width, int height, int bands, out int flags, ulong? offset = null, string format = null, string interpretation = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
             if (offset.HasValue)
             {
                 options.Add(nameof(offset), offset);
+            }
+
+            if (format != null)
+            {
+                options.Add(nameof(format), format);
+            }
+
+            if (interpretation != null)
+            {
+                options.Add(nameof(interpretation), interpretation);
             }
 
             if (memory.HasValue)
@@ -7957,21 +8700,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Rawsave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// in.Rawsave(filename, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Rawsave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Rawsave(string filename, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -7981,6 +8719,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("rawsave", options, filename);
@@ -7991,21 +8734,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.RawsaveFd(fd, pageHeight: int, strip: bool, background: double[]);
+        /// in.RawsaveFd(fd, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="fd">File descriptor to write to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void RawsaveFd(int fd, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void RawsaveFd(int fd, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -8015,6 +8753,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("rawsave_fd", options, fd);
@@ -9061,6 +9804,159 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load svg from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="unlimited">Allow SVG of any size.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image SvgloadSource(Source source, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (dpi.HasValue)
+            {
+                options.Add(nameof(dpi), dpi);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add(nameof(scale), scale);
+            }
+
+            if (unlimited.HasValue)
+            {
+                options.Add(nameof(unlimited), unlimited);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("svgload_source", options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load svg from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="unlimited">Allow SVG of any size.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image SvgloadStream(Stream stream, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null) =>
+           SvgloadSource(SourceStream.NewFromStream(stream), dpi, scale, unlimited, memory, access, fail);
+
+        /// <summary>
+        /// Load svg from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="unlimited">Allow SVG of any size.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image SvgloadSource(Source source, out int flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (dpi.HasValue)
+            {
+                options.Add(nameof(dpi), dpi);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add(nameof(scale), scale);
+            }
+
+            if (unlimited.HasValue)
+            {
+                options.Add(nameof(unlimited), unlimited);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("svgload_source", options, source) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load svg from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="dpi">Render at this DPI.</param>
+        /// <param name="scale">Scale output by this factor.</param>
+        /// <param name="unlimited">Allow SVG of any size.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image SvgloadStream(Stream stream, out int flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null) =>
+           SvgloadSource(SourceStream.NewFromStream(stream), out flags, dpi, scale, unlimited, memory, access, fail);
+
+        /// <summary>
         /// Find the index of the first non-zero pixel in tests.
         /// </summary>
         /// <example>
@@ -9534,6 +10430,101 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Generate thumbnail from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.ThumbnailSource(source, width, optionString: string, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="width">Size to this width.</param>
+        /// <param name="optionString">Options that are passed on to the underlying loader.</param>
+        /// <param name="height">Size to this height.</param>
+        /// <param name="size">Only upsize, only downsize, or both.</param>
+        /// <param name="noRotate">Don't use orientation tags to rotate image upright.</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop.</param>
+        /// <param name="linear">Reduce in linear light.</param>
+        /// <param name="importProfile">Fallback import profile.</param>
+        /// <param name="exportProfile">Fallback export profile.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image ThumbnailSource(Source source, int width, string optionString = null, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
+        {
+            var options = new VOption();
+
+            if (optionString != null)
+            {
+                options.Add("option_string", optionString);
+            }
+
+            if (height.HasValue)
+            {
+                options.Add(nameof(height), height);
+            }
+
+            if (size != null)
+            {
+                options.Add(nameof(size), size);
+            }
+
+            if (noRotate.HasValue)
+            {
+                options.Add("no_rotate", noRotate);
+            }
+
+            if (crop != null)
+            {
+                options.Add(nameof(crop), crop);
+            }
+
+            if (linear.HasValue)
+            {
+                options.Add(nameof(linear), linear);
+            }
+
+            if (importProfile != null)
+            {
+                options.Add("import_profile", importProfile);
+            }
+
+            if (exportProfile != null)
+            {
+                options.Add("export_profile", exportProfile);
+            }
+
+            if (intent != null)
+            {
+                options.Add(nameof(intent), intent);
+            }
+
+            return Operation.Call("thumbnail_source", options, source, width) as Image;
+        }
+
+        /// <summary>
+        /// Generate thumbnail from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.ThumbnailStream(stream, width, optionString: string, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="width">Size to this width.</param>
+        /// <param name="optionString">Options that are passed on to the underlying loader.</param>
+        /// <param name="height">Size to this height.</param>
+        /// <param name="size">Only upsize, only downsize, or both.</param>
+        /// <param name="noRotate">Don't use orientation tags to rotate image upright.</param>
+        /// <param name="crop">Reduce to fill target rectangle, then crop.</param>
+        /// <param name="linear">Reduce in linear light.</param>
+        /// <param name="importProfile">Fallback import profile.</param>
+        /// <param name="exportProfile">Fallback export profile.</param>
+        /// <param name="intent">Rendering intent.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image ThumbnailStream(Stream stream, int width, string optionString = null, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null) =>
+           ThumbnailSource(SourceStream.NewFromStream(stream), width, optionString, height, size, noRotate, crop, linear, importProfile, exportProfile, intent);
+
+        /// <summary>
         /// Load tiff from file.
         /// </summary>
         /// <example>
@@ -9762,18 +10753,170 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load tiff from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.TiffloadSource(source, page: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image TiffloadSource(Source source, int? page = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (page.HasValue)
+            {
+                options.Add(nameof(page), page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add(nameof(n), n);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add(nameof(autorotate), autorotate);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("tiffload_source", options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load tiff from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.TiffloadStream(stream, page: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image TiffloadStream(Stream stream, int? page = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null) =>
+           TiffloadSource(SourceStream.NewFromStream(stream), page, n, autorotate, memory, access, fail);
+
+        /// <summary>
+        /// Load tiff from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image TiffloadSource(Source source, out int flags, int? page = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (page.HasValue)
+            {
+                options.Add(nameof(page), page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add(nameof(n), n);
+            }
+
+            if (autorotate.HasValue)
+            {
+                options.Add(nameof(autorotate), autorotate);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("tiffload_source", options, source) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load tiff from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="page">Load this page from the image.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="autorotate">Rotate image using orientation tag.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image TiffloadStream(Stream stream, out int flags, int? page = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null) =>
+           TiffloadSource(SourceStream.NewFromStream(stream), out flags, page, n, autorotate, memory, access, fail);
+
+        /// <summary>
         /// Save image to tiff file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Tiffsave(filename, compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, level: int, lossless: bool, strip: bool, background: double[]);
+        /// in.Tiffsave(filename, compression: string, q: int, predictor: string, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, level: int, lossless: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
         /// <param name="compression">Compression for this file.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="predictor">Compression prediction.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="tile">Write a tiled tiff.</param>
         /// <param name="tileWidth">Tile width in pixels.</param>
@@ -9791,7 +10934,8 @@ namespace NetVips
         /// <param name="lossless">Enable WEBP lossless mode.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, int? level = null, bool? lossless = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, int? level = null, bool? lossless = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -9808,11 +10952,6 @@ namespace NetVips
             if (predictor != null)
             {
                 options.Add(nameof(predictor), predictor);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
             }
 
             if (profile != null)
@@ -9898,6 +11037,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("tiffsave", options, filename);
@@ -9908,13 +11052,12 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, pageHeight: int, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, level: int, lossless: bool, strip: bool, background: double[]);
+        /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, squash: bool, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, level: int, lossless: bool, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="compression">Compression for this file.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="predictor">Compression prediction.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="profile">ICC profile to embed.</param>
         /// <param name="tile">Write a tiled tiff.</param>
         /// <param name="tileWidth">Tile width in pixels.</param>
@@ -9932,8 +11075,9 @@ namespace NetVips
         /// <param name="lossless">Enable WEBP lossless mode.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null, int? pageHeight = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, int? level = null, bool? lossless = null, bool? strip = null, double[] background = null)
+        public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, bool? squash = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, int? level = null, bool? lossless = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -9950,11 +11094,6 @@ namespace NetVips
             if (predictor != null)
             {
                 options.Add(nameof(predictor), predictor);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
             }
 
             if (profile != null)
@@ -10040,6 +11179,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             return this.Call("tiffsave_buffer", options) as byte[];
@@ -10200,18 +11344,24 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Unpremultiply(maxAlpha: double);
+        /// Image @out = in.Unpremultiply(maxAlpha: double, alphaBand: int);
         /// </code>
         /// </example>
         /// <param name="maxAlpha">Maximum value of alpha channel.</param>
+        /// <param name="alphaBand">Unpremultiply with this alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Unpremultiply(double? maxAlpha = null)
+        public Image Unpremultiply(double? maxAlpha = null, int? alphaBand = null)
         {
             var options = new VOption();
 
             if (maxAlpha.HasValue)
             {
                 options.Add("max_alpha", maxAlpha);
+            }
+
+            if (alphaBand.HasValue)
+            {
+                options.Add("alpha_band", alphaBand);
             }
 
             return this.Call("unpremultiply", options) as Image;
@@ -10300,21 +11450,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Vipssave(filename, pageHeight: int, strip: bool, background: double[]);
+        /// in.Vipssave(filename, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Vipssave(string filename, int? pageHeight = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Vipssave(string filename, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (strip.HasValue)
             {
@@ -10324,6 +11469,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("vipssave", options, filename);
@@ -10558,15 +11708,167 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Load webp from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="scale">Scale factor on load.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image WebploadSource(Source source, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (page.HasValue)
+            {
+                options.Add(nameof(page), page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add(nameof(n), n);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add(nameof(scale), scale);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            return Operation.Call("webpload_source", options, source) as Image;
+        }
+
+        /// <summary>
+        /// Load webp from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="scale">Scale factor on load.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image WebploadStream(Stream stream, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null) =>
+           WebploadSource(SourceStream.NewFromStream(stream), page, n, scale, memory, access, fail);
+
+        /// <summary>
+        /// Load webp from source.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="source">Source to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="scale">Scale factor on load.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image WebploadSource(Source source, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        {
+            var options = new VOption();
+
+            if (page.HasValue)
+            {
+                options.Add(nameof(page), page);
+            }
+
+            if (n.HasValue)
+            {
+                options.Add(nameof(n), n);
+            }
+
+            if (scale.HasValue)
+            {
+                options.Add(nameof(scale), scale);
+            }
+
+            if (memory.HasValue)
+            {
+                options.Add(nameof(memory), memory);
+            }
+
+            if (access != null)
+            {
+                options.Add(nameof(access), access);
+            }
+
+            if (fail.HasValue)
+            {
+                options.Add(nameof(fail), fail);
+            }
+
+            options.Add("flags", true);
+
+            var results = Operation.Call("webpload_source", options, source) as object[];
+            var finalResult = results?[0] as Image;
+            var opts = results?[1] as VOption;
+            flags = opts?["flags"] is int out1 ? out1 : 0;
+
+            return finalResult;
+        }
+
+        /// <summary>
+        /// Load webp from stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to load from.</param>
+        /// <param name="flags">Flags for this file.</param>
+        /// <param name="page">Load this page from the file.</param>
+        /// <param name="n">Load this many pages.</param>
+        /// <param name="scale">Scale factor on load.</param>
+        /// <param name="memory">Force open via memory.</param>
+        /// <param name="access">Required access pattern for this file.</param>
+        /// <param name="fail">Fail on first error.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image WebploadStream(Stream stream, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null) =>
+           WebploadSource(SourceStream.NewFromStream(stream), out flags, page, n, scale, memory, access, fail);
+
+        /// <summary>
         /// Save image to webp file.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Webpsave(filename, pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[]);
+        /// in.Webpsave(filename, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="lossless">enable lossless compression.</param>
         /// <param name="preset">Preset for lossy compression.</param>
@@ -10579,14 +11881,10 @@ namespace NetVips
         /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
-        public void Webpsave(string filename, int? pageHeight = null, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null)
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void Webpsave(string filename, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -10646,6 +11944,11 @@ namespace NetVips
             if (background != null && background.Length > 0)
             {
                 options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
             }
 
             this.Call("webpsave", options, filename);
@@ -10656,10 +11959,9 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.WebpsaveBuffer(pageHeight: int, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[]);
+        /// byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
-        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <param name="q">Q factor.</param>
         /// <param name="lossless">enable lossless compression.</param>
         /// <param name="preset">Preset for lossy compression.</param>
@@ -10672,15 +11974,11 @@ namespace NetVips
         /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] WebpsaveBuffer(int? pageHeight = null, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null)
+        public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
 
             if (q.HasValue)
             {
@@ -10742,8 +12040,132 @@ namespace NetVips
                 options.Add(nameof(background), background);
             }
 
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
             return this.Call("webpsave_buffer", options) as byte[];
         }
+
+        /// <summary>
+        /// Save image to webp target.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.WebpsaveTarget(target, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="target">Target to save to.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="lossless">enable lossless compression.</param>
+        /// <param name="preset">Preset for lossy compression.</param>
+        /// <param name="smartSubsample">Enable high quality chroma subsampling.</param>
+        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q).</param>
+        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression.</param>
+        /// <param name="minSize">Optimise for minium size.</param>
+        /// <param name="kmin">Minimum number of frames between key frames.</param>
+        /// <param name="kmax">Maximum number of frames between key frames.</param>
+        /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        {
+            var options = new VOption();
+
+            if (q.HasValue)
+            {
+                options.Add("Q", q);
+            }
+
+            if (lossless.HasValue)
+            {
+                options.Add(nameof(lossless), lossless);
+            }
+
+            if (preset != null)
+            {
+                options.Add(nameof(preset), preset);
+            }
+
+            if (smartSubsample.HasValue)
+            {
+                options.Add("smart_subsample", smartSubsample);
+            }
+
+            if (nearLossless.HasValue)
+            {
+                options.Add("near_lossless", nearLossless);
+            }
+
+            if (alphaQ.HasValue)
+            {
+                options.Add("alpha_q", alphaQ);
+            }
+
+            if (minSize.HasValue)
+            {
+                options.Add("min_size", minSize);
+            }
+
+            if (kmin.HasValue)
+            {
+                options.Add(nameof(kmin), kmin);
+            }
+
+            if (kmax.HasValue)
+            {
+                options.Add(nameof(kmax), kmax);
+            }
+
+            if (reductionEffort.HasValue)
+            {
+                options.Add("reduction_effort", reductionEffort);
+            }
+
+            if (strip.HasValue)
+            {
+                options.Add(nameof(strip), strip);
+            }
+
+            if (background != null && background.Length > 0)
+            {
+                options.Add(nameof(background), background);
+            }
+
+            if (pageHeight.HasValue)
+            {
+                options.Add("page_height", pageHeight);
+            }
+
+            this.Call("webpsave_target", options, target);
+        }
+
+        /// <summary>
+        /// Save image to webp stream.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// in.WebpsaveStream(stream, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
+        /// </code>
+        /// </example>
+        /// <param name="stream">Stream to save to.</param>
+        /// <param name="q">Q factor.</param>
+        /// <param name="lossless">enable lossless compression.</param>
+        /// <param name="preset">Preset for lossy compression.</param>
+        /// <param name="smartSubsample">Enable high quality chroma subsampling.</param>
+        /// <param name="nearLossless">Enable preprocessing in lossless mode (uses Q).</param>
+        /// <param name="alphaQ">Change alpha plane fidelity for lossy compression.</param>
+        /// <param name="minSize">Optimise for minium size.</param>
+        /// <param name="kmin">Minimum number of frames between key frames.</param>
+        /// <param name="kmax">Maximum number of frames between key frames.</param>
+        /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
+        /// <param name="strip">Strip all metadata from image.</param>
+        /// <param name="background">Background value.</param>
+        /// <param name="pageHeight">Set page height for multipage save.</param>
+        public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null) =>
+           WebpsaveTarget(TargetStream.NewFromStream(stream), q, lossless, preset, smartSubsample, nearLossless, alphaQ, minSize, kmin, kmax, reductionEffort, strip, background, pageHeight);
 
         /// <summary>
         /// Make a worley noise image.
