@@ -86,8 +86,8 @@ namespace NetVips.Tests
             Marshal.Copy(bitmapData.Scan0, pixels, 0, expected.Length);
             actual.UnlockBits(bitmapData);
 
-            // Switch from BGR to RGB
-            if (expected.Length == 3)
+            // Switch from BGR(A) to RGB(A)
+            if (expected.Length > 2)
             {
                 var t = pixels[0];
                 pixels[0] = pixels[2];

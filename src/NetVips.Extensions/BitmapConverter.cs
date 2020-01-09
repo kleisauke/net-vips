@@ -85,9 +85,12 @@ namespace NetVips.Extensions
 
             var bands = GuessBands(src.PixelFormat);
             var format = GuessBandFormat(src.PixelFormat);
+            var sizeofFormat = format == Enums.BandFormat.Uchar ? sizeof(byte) : sizeof(ushort);
 
             var w = src.Width;
             var h = src.Height;
+            var stride = w * bands * sizeofFormat;
+            var size = stride * h;
 
             var rect = new Rectangle(0, 0, w, h);
             BitmapData bd = null;
@@ -95,7 +98,24 @@ namespace NetVips.Extensions
             try
             {
                 bd = src.LockBits(rect, ImageLockMode.ReadOnly, src.PixelFormat);
-                dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)(bd.Stride * h), w, h, bands, format);
+
+                // bd.Stride is aligned to a multiple of 4
+                if (bd.Stride == stride)
+                {
+                    dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)size, w, h, bands, format);
+                }
+                else
+                {
+                    var buffer = new byte[size];
+
+                    // Copy the bytes from src to the managed array for each scanline
+                    for (var y = 0; y < h; y++)
+                    {
+                        Marshal.Copy(bd.Scan0 + y * bd.Stride, buffer, y * stride, stride);
+                    }
+
+                    dst = Image.NewFromMemory(buffer, w, h, bands, format);
+                }
             }
             finally
             {
@@ -103,14 +123,33 @@ namespace NetVips.Extensions
                     src.UnlockBits(bd);
             }
 
-            if (bands != 3)
+            if (src.PixelFormat == PixelFormat.Format8bppIndexed)
             {
-                return dst;
+                var palette = new byte[256];
+                for (var i = 0; i < 256; i++)
+                {
+                    if (i >= src.Palette.Entries.Length)
+                        break;
+                    palette[i] = src.Palette.Entries[i].R;
+                }
+
+                var lut = Image.NewFromArray(palette);
+                return dst.Maplut(lut);
             }
 
-            // Switch from BGR to RGB
-            var images = dst.Bandsplit();
-            return images[2].Bandjoin(images[1], images[0]);
+            switch (bands)
+            {
+                case 3:
+                    // Switch from BGR to RGB
+                    var bgr = dst.Bandsplit();
+                    return bgr[2].Bandjoin(bgr[1], bgr[0]);
+                case 4:
+                    // Switch from BGRA to RGBA
+                    var bgra = dst.Bandsplit();
+                    return bgra[2].Bandjoin(bgra[1], bgra[0], bgra[3]);
+                default:
+                    return dst;
+            }
         }
 
         /// <summary>
@@ -122,6 +161,12 @@ namespace NetVips.Extensions
         {
             if (src == null)
                 throw new ArgumentNullException(nameof(src));
+
+            // Ensure image is casted to uint8 (unsigned char)
+            if (src.Bands < 3 || src.Format != Enums.BandFormat.Ushort)
+            {
+                src = src.Cast(Enums.BandFormat.Uchar);
+            }
 
             PixelFormat pf;
             switch (src.Bands)
@@ -143,13 +188,17 @@ namespace NetVips.Extensions
                         : PixelFormat.Format24bppRgb;
 
                     // Switch from RGB to BGR
-                    var bands = src.Bandsplit();
-                    src = bands[2].Bandjoin(bands[1], bands[0]);
+                    var rgb = src.Bandsplit();
+                    src = rgb[2].Bandjoin(rgb[1], rgb[0]);
                     break;
                 case 4:
                     pf = src.Format == Enums.BandFormat.Ushort
                         ? PixelFormat.Format64bppArgb
                         : PixelFormat.Format32bppArgb;
+
+                    // Switch from RGBA to BGRA
+                    var rgba = src.Bandsplit();
+                    src = rgba[2].Bandjoin(rgba[1], rgba[0], rgba[3]);
                     break;
                 default:
                     throw new NotImplementedException(
@@ -178,9 +227,35 @@ namespace NetVips.Extensions
             try
             {
                 bd = dst.LockBits(rect, ImageLockMode.WriteOnly, pf);
+                var dstSize = (ulong)(bd.Stride * h);
+                var memory = src.WriteToMemory(out var srcSize);
 
-                var memory = src.WriteToMemory();
-                Marshal.Copy(memory, 0, bd.Scan0, memory.Length);
+                // bd.Stride is aligned to a multiple of 4
+                if (dstSize == srcSize)
+                {
+                    unsafe
+                    {
+                        Buffer.MemoryCopy(memory.ToPointer(), bd.Scan0.ToPointer(), srcSize, srcSize);
+                    }
+                }
+                else
+                {
+                    var offset = w * src.Bands;
+
+                    // Copy the bytes from src to dst for each scanline
+                    for (var y = 0; y < h; y++)
+                    {
+                        var pSrc = memory + y * offset;
+                        var pDst = bd.Scan0 + y * bd.Stride;
+
+                        unsafe
+                        {
+                            Buffer.MemoryCopy(pSrc.ToPointer(), pDst.ToPointer(), offset, offset);
+                        }
+                    }
+                }
+
+                NetVips.Free(memory);
             }
             finally
             {

@@ -599,7 +599,7 @@ namespace NetVips
         /// This method is useful for efficiently transferring images from GDI+
         /// into libvips.
         ///
-        /// See <see cref="WriteToMemory"/> for the opposite operation.
+        /// See <see cref="WriteToMemory()"/> for the opposite operation.
         ///
         /// Use <see cref="Copy"/> to set other image attributes.
         /// </remarks>
@@ -961,6 +961,26 @@ namespace NetVips
             WriteToTarget(TargetStream.NewFromStream(stream), formatString, kwargs);
 
         /// <summary>
+        /// Write the image to memory as a simple, unformatted C-style array.
+        /// </summary>
+        /// <remarks>
+        /// The caller is responsible for freeing this memory with <see cref="NetVips.Free"/>.
+        /// </remarks>
+        /// <param name="size">Output buffer length.</param>
+        /// <returns>A <see cref="IntPtr"/> pointing to an unformatted C-style array.</returns>
+        /// <exception cref="VipsException">If unable to write to memory.</exception>
+        public IntPtr WriteToMemory(out ulong size)
+        {
+            var pointer = VipsImage.WriteToMemory(this, out size);
+            if (pointer == IntPtr.Zero)
+            {
+                throw new VipsException("unable to write to memory");
+            }
+
+            return pointer;
+        }
+
+        /// <summary>
         /// Write the image to a large memory array.
         /// </summary>
         /// <remarks>
@@ -978,11 +998,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to memory.</exception>
         public byte[] WriteToMemory()
         {
-            var pointer = VipsImage.WriteToMemory(this, out var size);
-            if (pointer == IntPtr.Zero)
-            {
-                throw new VipsException("unable to write to memory");
-            }
+            var pointer = WriteToMemory(out var size);
 
             var managedArray = new byte[size];
             Marshal.Copy(pointer, managedArray, 0, (int)size);

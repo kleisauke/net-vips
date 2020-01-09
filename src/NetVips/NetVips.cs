@@ -400,5 +400,17 @@ namespace NetVips
         {
             return GType.Fundamental(type);
         }
+
+        /// <summary>
+        /// Frees the memory pointed to by <paramref name="mem"/>.
+        /// </summary>
+        /// <remarks>
+        /// This is needed for <see cref="Image.WriteToMemory(out ulong)"/>.
+        /// </remarks>
+        /// <param name="mem">The memory to free.</param>
+        public static void Free(IntPtr mem)
+        {
+            GLib.GFree(mem);
+        }
     }
 }

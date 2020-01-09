@@ -19,6 +19,7 @@
     <AssemblyFileVersion>1.0.0.$(BuildNumber)</AssemblyFileVersion>
     <InformationalVersion>1.0.0.$(BuildNumber)$(PrereleaseLabel)</InformationalVersion>
     <PackageVersion>1.0.0.$(BuildNumber)$(PrereleaseLabel)</PackageVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
