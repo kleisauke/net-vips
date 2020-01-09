@@ -23,7 +23,7 @@
     <BuildNumber Condition="'$(APPVEYOR_BUILD_NUMBER)' != ''">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
 
-    <PrereleaseLabel>-rc1</PrereleaseLabel>
+    <PrereleaseLabel>-rc2</PrereleaseLabel>
     <PrereleaseLabel Condition="'$(APPVEYOR_BUILD_NUMBER)' != ''">-develop</PrereleaseLabel>
 
     <PrereleaseLabelConstants></PrereleaseLabelConstants>

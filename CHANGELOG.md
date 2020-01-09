@@ -3,7 +3,7 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0-rc1] - 2020-01-07
+## [1.2.0-rc2] - 2020-01-09
 ### Added
 - Add support for true streaming ([#33](https://github.com/kleisauke/net-vips/issues/33)).
   - See the [blogpost](https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/tutorial/getting_started.html#custom-sources-and-targets) for more information.
@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add `image.RefCount()` to get the reference count of an image.
 - Add `NetVips.GetOperations()` to get a list of operations available within the libvips library.
 - Add `VipsProgress` struct to the public API.
+- Add `image.WriteToMemory(out ulong)` to write the image to an unformatted C-style array.
+  - This is a low-level operation, make sure you free the returned memory with `NetVips.Free`.
 
 ### Changed
 - The `image.SetType()` function has been renamed to `image.Set()`.
@@ -116,7 +118,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[1.2.0-rc1]: https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0-rc1
+[1.2.0-rc2]: https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0-rc2
 [1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0
 [1.0.7]: https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6
