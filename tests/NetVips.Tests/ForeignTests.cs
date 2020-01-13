@@ -929,6 +929,24 @@ namespace NetVips.Tests
             FileLoader("gifload", Helper.GifFile, GifValid);
             BufferLoader("gifload_buffer", Helper.GifFile, GifValid);
 
+            // test fallback stream mechanism, needs libvips >= 8.9
+            if (NetVips.AtLeastLibvips(8,9))
+            {
+                // file-based loader fallback
+                using (var input = Source.NewFromFile(Helper.GifFile))
+                {
+                    var img = Image.NewFromSource(input, access: Enums.Access.Sequential);
+                    GifValid(img);
+                }
+
+                // buffer-based loader fallback
+                using (var input = File.OpenRead(Helper.GifFile))
+                {
+                    var img = Image.NewFromStream(input, access: Enums.Access.Sequential);
+                    GifValid(img);
+                }
+            }
+
             // 'n' param added in 8.5
             if (NetVips.AtLeastLibvips(8, 5))
             {
