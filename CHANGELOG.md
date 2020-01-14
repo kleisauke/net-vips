@@ -21,7 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - The `image.SetType()` function has been renamed to `image.Set()`.
 - The `Image.Sum()` function uses the params keyword.
 - Speed-up `Operation.Call`.
-- Free the `GValue` within `VipsObject.Set` and `VipsObject.Get` earlier.
+- Free the `VipsOperation` pointers within `Operation.Call` earlier ([#53](https://github.com/kleisauke/net-vips/issues/53)).
+- Unset the `GValue` within `VipsObject.Set` and `VipsObject.Get` earlier.
 - The internal function `Operation.GenerateImageClass()` has moved to the [samples directory](https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs).
 
 ## [1.1.0] - 2019-07-29

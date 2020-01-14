@@ -6,9 +6,9 @@ namespace NetVips.Samples
     /// <summary>
     /// See: https://github.com/libvips/pyvips/pull/104#issuecomment-554632653
     /// </summary>
-    public class ReferenceGC : ISample
+    public class NewFromMemoryRef : ISample
     {
-        public string Name => "Reference GC test";
+        public string Name => "NewFromMemory reference test";
         public string Category => "Internal";
 
         public string Execute(string[] args)

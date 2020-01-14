@@ -180,91 +180,93 @@ namespace NetVips
                     $"unable to call {operationName}: {args.Length} arguments given, but {intro.RequiredInput.Count} required");
             }
 
-            var op = NewFromName(operationName);
-
-            // set any string options before any args so they can't be
-            // overridden
-            if (stringOptions != null && !op.SetString(stringOptions as string))
+            IntPtr vop;
+            using (var op = NewFromName(operationName))
             {
-                throw new VipsException($"unable to call {operationName}");
-            }
-
-            // set all required inputs
-            if (matchImage != null && intro.MemberX.HasValue)
-            {
-                var memberX = intro.MemberX.Value;
-                op.Set(memberX.Type, memberX.Flags, memberX.Name, matchImage);
-            }
-
-            for (var i = 0; i < intro.RequiredInput.Count; i++)
-            {
-                var arg = intro.RequiredInput[i];
-                op.Set(arg.Type, arg.Flags, matchImage, arg.Name, args[i]);
-            }
-
-            // set all optional inputs, if any
-            if (kwargs != null)
-            {
-                foreach (var item in kwargs)
+                // set any string options before any args so they can't be
+                // overridden
+                if (stringOptions != null && !op.SetString(stringOptions as string))
                 {
-                    var name = item.Key;
-                    var value = item.Value;
+                    throw new VipsException($"unable to call {operationName}");
+                }
 
-                    if (intro.OptionalInput.TryGetValue(name, out var arg))
+                // set all required inputs
+                if (matchImage != null && intro.MemberX.HasValue)
+                {
+                    var memberX = intro.MemberX.Value;
+                    op.Set(memberX.Type, memberX.Flags, memberX.Name, matchImage);
+                }
+
+                for (var i = 0; i < intro.RequiredInput.Count; i++)
+                {
+                    var arg = intro.RequiredInput[i];
+                    op.Set(arg.Type, arg.Flags, matchImage, arg.Name, args[i]);
+                }
+
+                // set all optional inputs, if any
+                if (kwargs != null)
+                {
+                    foreach (var item in kwargs)
                     {
-                        op.Set(arg.Type, arg.Flags, matchImage, name, value);
-                    }
-                    else if (!intro.OptionalOutput.ContainsKey(name))
-                    {
-                        throw new Exception($"{operationName} does not support optional argument: {name}");
+                        var name = item.Key;
+                        var value = item.Value;
+
+                        if (intro.OptionalInput.TryGetValue(name, out var arg))
+                        {
+                            op.Set(arg.Type, arg.Flags, matchImage, name, value);
+                        }
+                        else if (!intro.OptionalOutput.ContainsKey(name))
+                        {
+                            throw new Exception($"{operationName} does not support optional argument: {name}");
+                        }
                     }
                 }
-            }
 
-            // build operation
-            var vop = VipsOperation.Build(op);
-            if (vop == IntPtr.Zero)
-            {
-                throw new VipsException($"unable to call {operationName}");
+                // build operation
+                vop = VipsOperation.Build(op);
+                if (vop == IntPtr.Zero)
+                {
+                    throw new VipsException($"unable to call {operationName}");
+                }
             }
-
-            op = new Operation(vop);
 
             var results = new object[intro.RequiredOutput.Count];
-
-            // get all required results
-            for (var i = 0; i < intro.RequiredOutput.Count; i++)
+            using (var op = new Operation(vop))
             {
-                var arg = intro.RequiredOutput[i];
-
-                ref var result = ref results[i];
-                result = op.Get(arg.Name);
-            }
-
-            // fetch optional output args, if any
-            if (kwargs != null)
-            {
-                var optionalArgs = new VOption();
-
-                foreach (var item in kwargs)
+                // get all required results
+                for (var i = 0; i < intro.RequiredOutput.Count; i++)
                 {
-                    var name = item.Key;
+                    var arg = intro.RequiredOutput[i];
 
-                    if (intro.OptionalOutput.ContainsKey(name))
+                    ref var result = ref results[i];
+                    result = op.Get(arg.Name);
+                }
+
+                // fetch optional output args, if any
+                if (kwargs != null)
+                {
+                    var optionalArgs = new VOption();
+
+                    foreach (var item in kwargs)
                     {
-                        optionalArgs[name] = op.Get(name);
+                        var name = item.Key;
+
+                        if (intro.OptionalOutput.ContainsKey(name))
+                        {
+                            optionalArgs[name] = op.Get(name);
+                        }
+                    }
+
+                    if (optionalArgs.Count > 0)
+                    {
+                        var resultsLength = results.Length;
+                        Array.Resize(ref results, resultsLength + 1);
+                        results[resultsLength] = optionalArgs;
                     }
                 }
 
-                if (optionalArgs.Count > 0)
-                {
-                    var resultsLength = results.Length;
-                    Array.Resize(ref results, resultsLength + 1);
-                    results[resultsLength] = optionalArgs;
-                }
+                Internal.VipsObject.UnrefOutputs(op);
             }
-
-            Internal.VipsObject.UnrefOutputs(op);
 
             // logger.Debug($"Operation.call: result = {result}");
 
