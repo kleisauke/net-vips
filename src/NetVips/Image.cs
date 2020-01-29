@@ -186,7 +186,13 @@ namespace NetVips
         /// </remarks>
         /// <param name="stream">The stream to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
-        public static string FindLoadStream(Stream stream) => FindLoadSource(SourceStream.NewFromStream(stream));
+        public static string FindLoadStream(Stream stream)
+        {
+            using (var source = SourceStream.NewFromStream(stream))
+            {
+                return FindLoadSource(source);
+            }
+        }
 
         #endregion
 
@@ -491,8 +497,14 @@ namespace NetVips
             string strOptions = "",
             string access = null,
             bool? fail = null,
-            VOption kwargs = null) =>
-            NewFromSource(SourceStream.NewFromStream(stream), strOptions, access, fail, kwargs);
+            VOption kwargs = null)
+        {
+            using (var source = SourceStream.NewFromStream(stream))
+            {
+                return NewFromSource(source, strOptions, access, fail, kwargs);
+            }
+        }
+
 
         /// <summary>
         /// Create an image from a 2D array.
@@ -707,7 +719,7 @@ namespace NetVips
                 throw new VipsException("unable to make image from memory");
             }
 
-            return new Image(vi);
+            return new Image(vi) { MemoryPressure = (long)size };
         }
 
         /// <summary>
@@ -815,7 +827,7 @@ namespace NetVips
                 throw new VipsException("unable to copy to memory");
             }
 
-            return new Image(vi);
+            return new Image(vi) { MemoryPressure = MemoryPressure };
         }
 
         #endregion
@@ -999,8 +1011,14 @@ namespace NetVips
         /// <param name="formatString">The suffix, plus any string-form arguments.</param>
         /// <param name="kwargs">Optional options that depend on the save operation.</param>
         /// <exception cref="VipsException">If unable to write to stream.</exception>
-        public void WriteToStream(Stream stream, string formatString, VOption kwargs = null) =>
-            WriteToTarget(TargetStream.NewFromStream(stream), formatString, kwargs);
+        public void WriteToStream(Stream stream, string formatString, VOption kwargs = null)
+        {
+            using (var target = TargetStream.NewFromStream(stream))
+            {
+                WriteToTarget(target, formatString, kwargs);
+            }
+        }
+
 
         /// <summary>
         /// Write the image to memory as a simple, unformatted C-style array.

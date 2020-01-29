@@ -283,6 +283,7 @@ namespace NetVips
             }
             else if (fundamental == GObjectType && value is GObject gObject)
             {
+                AddMemoryPressure(gObject.MemoryPressure);
                 Internal.GValue.SetObject(ref Struct, gObject);
             }
             else if (gtype == ArrayIntType)
@@ -351,6 +352,8 @@ namespace NetVips
 
                     // the gvalue needs a ref on each of the images
                     image.ObjectRef();
+
+                    AddMemoryPressure(image.MemoryPressure);
                 }
             }
             else if (gtype == BlobType && value is VipsBlob blob)

@@ -18,6 +18,11 @@ namespace NetVips
         /// </summary>
         private readonly ICollection<GCHandle> _handles = new List<GCHandle>();
 
+        /// <summary>
+        /// Hint of how much native memory is actually occupied by the object.
+        /// </summary>
+        internal long MemoryPressure;
+
         // Handy for debugging
         // public static int NObjects;
 
