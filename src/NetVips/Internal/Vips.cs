@@ -259,10 +259,33 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_blob_get")]
         internal static extern IntPtr Get(VipsBlobManaged blob, out ulong length);
+    }
+
+    internal static class VipsArea
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Struct
+        {
+            internal IntPtr Data;
+            internal UIntPtr Length;
+
+            internal int N;
+
+            // private
+
+            internal int Count;
+            internal IntPtr Lock;
+
+            internal Vips.CallbackFn FreeFn;
+            internal IntPtr Client;
+
+            internal IntPtr Type;
+            internal UIntPtr SizeofType;
+        }
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_area_unref")]
-        internal static extern IntPtr Unref(VipsBlobManaged blob);
+        internal static extern IntPtr Unref(IntPtr blob);
     }
 
     internal static class VipsValue
@@ -564,7 +587,7 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_source_map_blob")]
-        internal static extern IntPtr MapBlob(Source source, out ulong length);
+        internal static extern IntPtr MapBlob(Source source);
     }
 
     internal static class VipsSourceCustom

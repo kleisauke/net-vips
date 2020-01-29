@@ -1,39 +1,66 @@
 namespace NetVips
 {
     using System;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Manage a <see cref="Internal.VipsBlob"/>.
     /// </summary>
-    internal class VipsBlob : GObject
+    internal class VipsBlob : SafeHandle
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        /// <inheritdoc cref="GObject"/>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VipsBlob"/> class
+        /// with the specified pointer to wrap around.
+        /// </summary>
+        /// <param name="pointer">The pointer to wrap around.</param>
         internal VipsBlob(IntPtr pointer)
-            : base(pointer)
+            : base(IntPtr.Zero, true)
         {
+            // record the pointer we were given to manage
+            SetHandle(pointer);
+
             // logger.Debug($"VipsBlob = {pointer}");
         }
 
         /// <summary>
         /// Get the data from a <see cref="Internal.VipsBlob"/>.
         /// </summary>
-        /// <param name="length">return number of bytes of data</param>
+        /// <param name="length">Return number of bytes of data.</param>
         /// <returns>A <see cref="IntPtr"/> containing the data.</returns>
         internal IntPtr GetData(out ulong length)
         {
             return Internal.VipsBlob.Get(this, out length);
         }
 
-        /// <inheritdoc cref="GObject"/>
-        protected override void Dispose(bool disposing)
+        /// <summary>
+        /// Decreases the reference count of the blob.
+        /// When its reference count drops to 0, the blob is finalized (i.e. its memory is freed).
+        /// </summary>
+        /// <returns><see langword="true"/> if the handle is released successfully; otherwise,
+        /// in the event of a catastrophic failure, <see langword="false"/>.</returns>
+        protected override bool ReleaseHandle()
         {
-            // Free the VipsArea
-            Internal.VipsBlob.Unref(this);
+            // logger.Debug($"Unref: VipsBlob = {handle}");
+            if (!IsInvalid)
+            {
+                // Free the VipsArea
+                Internal.VipsArea.Unref(handle);
+            }
 
-            // Call our base Dispose method
-            base.Dispose(disposing);
+            return true;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the handle is invalid.
+        /// </summary>
+        /// <returns><see langword="true"/> if the handle is not valid; otherwise, <see langword="false"/>.</returns>
+        public override bool IsInvalid => handle == IntPtr.Zero;
+
+        /// <summary>
+        /// Get the reference count of the blob. Handy for debugging.
+        /// </summary>
+        internal int RefCount => handle.Dereference<Internal.VipsArea.Struct>().Count;
     }
 }

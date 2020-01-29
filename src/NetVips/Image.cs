@@ -447,7 +447,7 @@ namespace NetVips
             // This implicitly means that it will not work with network streams
             // (`is_pipe` streams).
 
-            var ptr = VipsSource.MapBlob(source, out _);
+            var ptr = VipsSource.MapBlob(source);
             if (ptr == IntPtr.Zero)
             {
                 throw new VipsException("unable to load from source");

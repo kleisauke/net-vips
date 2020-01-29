@@ -930,7 +930,7 @@ namespace NetVips.Tests
             BufferLoader("gifload_buffer", Helper.GifFile, GifValid);
 
             // test fallback stream mechanism, needs libvips >= 8.9
-            if (NetVips.AtLeastLibvips(8,9))
+            if (NetVips.AtLeastLibvips(8, 9))
             {
                 // file-based loader fallback
                 using (var input = Source.NewFromFile(Helper.GifFile))
