@@ -153,6 +153,16 @@ namespace NetVips.Extensions
         }
 
         /// <summary>
+        /// Converts <see cref="System.Drawing.Image"/> to <see cref="Image"/>.
+        /// </summary>
+        /// <param name="src"><see cref="System.Drawing.Image"/> to be converted.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public static Image ToVips(this System.Drawing.Image src)
+        {
+            return ToVips((Bitmap)src);
+        }
+
+        /// <summary>
         /// Converts <see cref="Image"/> to <see cref="Bitmap"/>.
         /// </summary>
         /// <param name="src"><see cref="Image"/> to be converted.</param>
