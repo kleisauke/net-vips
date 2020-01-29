@@ -401,10 +401,6 @@ namespace NetVips
             VOption kwargs = null)
         {
             var name = FindLoadSource(source);
-            if (name == null)
-            {
-                throw new VipsException("unable to load from source");
-            }
 
             var options = new VOption();
             if (kwargs != null)
@@ -424,7 +420,53 @@ namespace NetVips
 
             options.Add("string_options", strOptions);
 
-            return Operation.Call(name, options, source) as Image;
+            if (name != null)
+            {
+                return Operation.Call(name, options, source) as Image;
+            }
+
+            #region fallback mechanism; remove when all loaders are streaming based
+
+            var filename = source.GetFileName();
+            if (filename != null)
+            {
+                // Try with the old file-based loaders.
+                name = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
+                if (name == null)
+                {
+                    throw new VipsException("unable to load from source");
+                }
+
+                return Operation.Call(name, options, filename) as Image;
+            }
+
+            // Try with the old buffer-based loaders.
+            // TODO:
+            // Do we need to check if the source can be efficiently mapped into
+            // memory with `vips_source_is_mappable`?
+            // This implicitly means that it will not work with network streams
+            // (`is_pipe` streams).
+
+            var ptr = VipsSource.MapBlob(source, out _);
+            if (ptr == IntPtr.Zero)
+            {
+                throw new VipsException("unable to load from source");
+            }
+
+            using (var blob = new VipsBlob(ptr))
+            {
+                var buf = blob.GetData(out var length);
+
+                name = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, length));
+                if (name == null)
+                {
+                    throw new VipsException("unable to load from source");
+                }
+
+                return Operation.Call(name, options, blob) as Image;
+            }
+
+            #endregion
         }
 
         /// <summary>

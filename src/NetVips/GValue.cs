@@ -348,36 +348,47 @@ namespace NetVips
             }
             else if (gtype == BlobType)
             {
-                byte[] memory;
+                var ptr = IntPtr.Zero;
+                ulong length;
+
+                byte[] memory = null;
                 switch (value)
                 {
                     case string strValue:
                         memory = Encoding.UTF8.GetBytes(strValue);
+                        length = (ulong)memory.Length;
                         break;
                     case char[] charArrValue:
                         memory = Encoding.UTF8.GetBytes(charArrValue);
+                        length = (ulong)memory.Length;
                         break;
                     case byte[] byteArrValue:
                         memory = byteArrValue;
+                        length = (ulong)memory.Length;
+                        break;
+                    case VipsBlob blobValue:
+                        ptr = blobValue.GetData(out length);
                         break;
                     default:
                         throw new Exception(
                             $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
-                // We need to set the blob to a copy of the string that vips
-                // can own
-                var ptr = GLib.GMalloc((ulong)memory.Length);
-                Marshal.Copy(memory, 0, ptr, memory.Length);
+                if (memory != null)
+                {
+                    // We need to set the blob to a copy of the string that vips can own
+                    ptr = GLib.GMalloc(length);
+                    Marshal.Copy(memory, 0, ptr, (int)length);
+                }
 
                 // Make sure that the GC knows the true cost of the object during collection.
                 // If the object is actually bigger than the managed size reflects, it may be a candidate for quick(er) collection.
-                GC.AddMemoryPressure(memory.Length);
-                _memoryPressure = memory.Length;
+                GC.AddMemoryPressure((long)length);
+                _memoryPressure = (long)length;
 
                 if (NetVips.AtLeastLibvips(8, 6))
                 {
-                    VipsValue.SetBlobFree(ref Struct, ptr, (ulong)memory.Length);
+                    VipsValue.SetBlobFree(ref Struct, ptr, length);
                 }
                 else
                 {
@@ -388,7 +399,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsValue.SetBlob(ref Struct, FreeFn, ptr, (ulong)memory.Length);
+                    VipsValue.SetBlob(ref Struct, FreeFn, ptr, length);
                 }
             }
             else

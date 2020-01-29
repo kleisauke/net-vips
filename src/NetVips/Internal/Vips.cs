@@ -6,6 +6,7 @@ namespace NetVips.Internal
     using System.Text;
     using Interop;
     using VipsObjectManaged = global::NetVips.VipsObject;
+    using VipsBlobManaged = global::NetVips.VipsBlob;
     using OperationFlags = global::NetVips.Enums.OperationFlags;
     using ArgumentFlags = global::NetVips.Enums.ArgumentFlags;
 
@@ -253,6 +254,17 @@ namespace NetVips.Internal
         internal uint InvalidateId;
     }
 
+    internal static class VipsBlob
+    {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_blob_get")]
+        internal static extern IntPtr Get(VipsBlobManaged blob, out ulong length);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_area_unref")]
+        internal static extern IntPtr Unref(VipsBlobManaged blob);
+    }
+
     internal static class VipsValue
     {
         [SuppressUnmanagedCodeSecurity]
@@ -492,6 +504,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_foreign_find_load_buffer")]
+        internal static extern IntPtr FindLoadBuffer(IntPtr data, ulong size);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_load_source")]
         internal static extern IntPtr FindLoadSource(Source stream);
 
@@ -544,6 +561,10 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_source_new_from_memory")]
         internal static extern IntPtr NewFromMemory(IntPtr data, UIntPtr size);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_source_map_blob")]
+        internal static extern IntPtr MapBlob(Source source, out ulong length);
     }
 
     internal static class VipsSourceCustom
