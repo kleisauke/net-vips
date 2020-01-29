@@ -133,7 +133,7 @@ namespace NetVips
         /// <summary>
         /// Hint of how much native memory is actually occupied by the object.
         /// </summary>
-        private long? _memoryPressure;
+        private long _memoryPressure;
 
         static GValue()
         {
@@ -216,6 +216,25 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Ensure that the GC knows the true cost of the object during collection.
+        /// </summary>
+        /// <remarks>
+        /// If the object is actually bigger than the managed size reflects, it may
+        /// be a candidate for quick(er) collection.
+        /// </remarks>
+        /// <param name="bytesAllocated">The amount of unmanaged memory that has been allocated.</param>
+        private void AddMemoryPressure(long bytesAllocated)
+        {
+            if (bytesAllocated <= 0)
+            {
+                return;
+            }
+
+            GC.AddMemoryPressure(bytesAllocated);
+            _memoryPressure += bytesAllocated;
+        }
+
+        /// <summary>
         /// Set a GValue.
         /// </summary>
         /// <remarks>
@@ -262,14 +281,8 @@ namespace NetVips
                 ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
                 VipsValue.SetRefString(ref Struct, MemoryMarshal.GetReference(span));
             }
-            else if (fundamental == GObjectType)
+            else if (fundamental == GObjectType && value is GObject gObject)
             {
-                if (!(value is GObject gObject))
-                {
-                    throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
-                }
-
                 Internal.GValue.SetObject(ref Struct, gObject);
             }
             else if (gtype == ArrayIntType)
@@ -324,14 +337,8 @@ namespace NetVips
 
                 VipsValue.SetArrayDouble(ref Struct, doubles, doubles.Length);
             }
-            else if (gtype == ArrayImageType)
+            else if (gtype == ArrayImageType && value is Image[] images)
             {
-                if (!(value is Image[] images))
-                {
-                    throw new Exception(
-                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
-                }
-
                 var size = images.Length;
                 VipsValue.SetArrayImage(ref Struct, size);
 
@@ -346,49 +353,40 @@ namespace NetVips
                     image.ObjectRef();
                 }
             }
+            else if (gtype == BlobType && value is VipsBlob blob)
+            {
+                AddMemoryPressure((long)blob.Length);
+                Internal.GValue.SetBoxed(ref Struct, blob);
+            }
             else if (gtype == BlobType)
             {
-                var ptr = IntPtr.Zero;
-                ulong length;
+                byte[] memory;
 
-                byte[] memory = null;
                 switch (value)
                 {
                     case string strValue:
                         memory = Encoding.UTF8.GetBytes(strValue);
-                        length = (ulong)memory.Length;
                         break;
                     case char[] charArrValue:
                         memory = Encoding.UTF8.GetBytes(charArrValue);
-                        length = (ulong)memory.Length;
                         break;
                     case byte[] byteArrValue:
                         memory = byteArrValue;
-                        length = (ulong)memory.Length;
-                        break;
-                    case VipsBlob blobValue:
-                        ptr = blobValue.GetData(out length);
                         break;
                     default:
                         throw new Exception(
                             $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
-                if (memory != null)
-                {
-                    // We need to set the blob to a copy of the string that vips can own
-                    ptr = GLib.GMalloc(length);
-                    Marshal.Copy(memory, 0, ptr, (int)length);
-                }
+                // We need to set the blob to a copy of the string that vips can own
+                var ptr = GLib.GMalloc((ulong)memory.Length);
+                Marshal.Copy(memory, 0, ptr, memory.Length);
 
-                // Make sure that the GC knows the true cost of the object during collection.
-                // If the object is actually bigger than the managed size reflects, it may be a candidate for quick(er) collection.
-                GC.AddMemoryPressure((long)length);
-                _memoryPressure = (long)length;
+                AddMemoryPressure(memory.Length);
 
                 if (NetVips.AtLeastLibvips(8, 6))
                 {
-                    VipsValue.SetBlobFree(ref Struct, ptr, length);
+                    VipsValue.SetBlobFree(ref Struct, ptr, (ulong)memory.Length);
                 }
                 else
                 {
@@ -399,7 +397,7 @@ namespace NetVips
                         return 0;
                     }
 
-                    VipsValue.SetBlob(ref Struct, FreeFn, ptr, length);
+                    VipsValue.SetBlob(ref Struct, FreeFn, ptr, (ulong)memory.Length);
                 }
             }
             else
@@ -457,7 +455,7 @@ namespace NetVips
             }
             else if (gtype == ImageType)
             {
-                // GValueGetObject() will not add a ref ... that is
+                // g_value_get_object() will not add a ref ... that is
                 // held by the gvalue
                 var vi = Internal.GValue.GetObject(in Struct);
 
@@ -554,9 +552,10 @@ namespace NetVips
                 // and tag it to be unset on GC as well
                 Internal.GValue.Unset(ref Struct);
 
-                if (_memoryPressure.HasValue)
+                if (_memoryPressure > 0)
                 {
-                    GC.RemoveMemoryPressure(_memoryPressure.Value);
+                    GC.RemoveMemoryPressure(_memoryPressure);
+                    _memoryPressure = 0;
                 }
 
                 // Note disposing has been done.

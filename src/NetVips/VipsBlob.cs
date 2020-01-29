@@ -59,6 +59,11 @@ namespace NetVips
         public override bool IsInvalid => handle == IntPtr.Zero;
 
         /// <summary>
+        /// Get the number of bytes of data.
+        /// </summary>
+        internal ulong Length => (ulong) handle.Dereference<Internal.VipsArea.Struct>().Length;
+
+        /// <summary>
         /// Get the reference count of the blob. Handy for debugging.
         /// </summary>
         internal int RefCount => handle.Dereference<Internal.VipsArea.Struct>().Count;

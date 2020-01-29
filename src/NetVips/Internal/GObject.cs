@@ -5,6 +5,7 @@ namespace NetVips.Internal
     using System.Security;
     using Interop;
     using GObjectManaged = global::NetVips.GObject;
+    using VipsBlobManaged = global::NetVips.VipsBlob;
 
     internal static class GObject
     {
@@ -168,6 +169,11 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_get_object")]
         internal static extern IntPtr GetObject(in Struct value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_boxed")]
+        internal static extern void SetBoxed(ref Struct value, VipsBlobManaged boxed);
     }
 
     internal static class GParamSpec
