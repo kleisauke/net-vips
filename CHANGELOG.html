@@ -8,7 +8,7 @@
     <title>Changelog </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Changelog ">
-    <meta name="generator" content="docfx 2.48.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -64,7 +64,7 @@
 
 <p>All notable changes to NetVips will be documented in this file. See <a href="CHANGELOG.native.html">here</a> for the changes to the <a href="https://www.nuget.org/packages/NetVips.Native/">pre-compiled binaries of libvips</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="120-rc1---2020-01-07"><a href="https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0-rc1">1.2.0-rc1</a> - 2020-01-07</h2>
+<h2 id="120---2020-01-30"><a href="https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0">1.2.0</a> - 2020-01-30</h2>
 <h3 id="added">Added</h3>
 <ul>
 <li>Add support for true streaming (<a href="https://github.com/kleisauke/net-vips/issues/33">#33</a>).
@@ -79,13 +79,19 @@
 <li>Add <code>image.RefCount()</code> to get the reference count of an image.</li>
 <li>Add <code>NetVips.GetOperations()</code> to get a list of operations available within the libvips library.</li>
 <li>Add <code>VipsProgress</code> struct to the public API.</li>
+<li>Add <code>image.WriteToMemory(out ulong)</code> to write the image to an unformatted C-style array.
+<ul>
+<li>This is a low-level operation, make sure you free the returned memory with <code>NetVips.Free</code>.</li>
+</ul>
+</li>
 </ul>
 <h3 id="changed">Changed</h3>
 <ul>
 <li>The <code>image.SetType()</code> function has been renamed to <code>image.Set()</code>.</li>
 <li>The <code>Image.Sum()</code> function uses the params keyword.</li>
 <li>Speed-up <code>Operation.Call</code>.</li>
-<li>Free the <code>GValue</code> within <code>VipsObject.Set</code> and <code>VipsObject.Get</code> earlier.</li>
+<li>Free the <code>VipsOperation</code> pointers within <code>Operation.Call</code> earlier (<a href="https://github.com/kleisauke/net-vips/issues/53">#53</a>).</li>
+<li>Unset the <code>GValue</code> within <code>VipsObject.Set</code> and <code>VipsObject.Get</code> earlier.</li>
 <li>The internal function <code>Operation.GenerateImageClass()</code> has moved to the <a href="https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs">samples directory</a>.</li>
 </ul>
 <h2 id="110---2019-07-29"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0">1.1.0</a> - 2019-07-29</h2>

@@ -958,6 +958,12 @@ references:
   commentId: M:NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Bitmap)
   fullName: NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Bitmap)
   nameWithType: BitmapConverter.ToVips(Bitmap)
+- uid: NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Image)
+  name: ToVips(Image)
+  href: api/NetVips.Extensions.BitmapConverter.html#NetVips_Extensions_BitmapConverter_ToVips_System_Drawing_Image_
+  commentId: M:NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Image)
+  fullName: NetVips.Extensions.BitmapConverter.ToVips(System.Drawing.Image)
+  nameWithType: BitmapConverter.ToVips(Image)
 - uid: NetVips.Extensions.BitmapConverter.ToVips*
   name: ToVips
   href: api/NetVips.Extensions.BitmapConverter.html#NetVips_Extensions_BitmapConverter_ToVips_
@@ -8282,6 +8288,15 @@ references:
   commentId: M:NetVips.Image.WriteToMemory
   fullName: NetVips.Image.WriteToMemory()
   nameWithType: Image.WriteToMemory()
+- uid: NetVips.Image.WriteToMemory(System.UInt64@)
+  name: WriteToMemory(out UInt64)
+  href: api/NetVips.Image.html#NetVips_Image_WriteToMemory_System_UInt64__
+  commentId: M:NetVips.Image.WriteToMemory(System.UInt64@)
+  name.vb: WriteToMemory(ByRef UInt64)
+  fullName: NetVips.Image.WriteToMemory(out System.UInt64)
+  fullName.vb: NetVips.Image.WriteToMemory(ByRef System.UInt64)
+  nameWithType: Image.WriteToMemory(out UInt64)
+  nameWithType.vb: Image.WriteToMemory(ByRef UInt64)
 - uid: NetVips.Image.WriteToMemory*
   name: WriteToMemory
   href: api/NetVips.Image.html#NetVips_Image_WriteToMemory_
@@ -8789,6 +8804,19 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.ConcurrencySet
   nameWithType: NetVips.ConcurrencySet
+- uid: NetVips.NetVips.Free(System.IntPtr)
+  name: Free(IntPtr)
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Free_System_IntPtr_
+  commentId: M:NetVips.NetVips.Free(System.IntPtr)
+  fullName: NetVips.NetVips.Free(System.IntPtr)
+  nameWithType: NetVips.Free(IntPtr)
+- uid: NetVips.NetVips.Free*
+  name: Free
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Free_
+  commentId: Overload:NetVips.NetVips.Free
+  isSpec: "True"
+  fullName: NetVips.NetVips.Free
+  nameWithType: NetVips.Free
 - uid: NetVips.NetVips.FundamentalType(System.IntPtr)
   name: FundamentalType(IntPtr)
   href: api/NetVips.NetVips.html#NetVips_NetVips_FundamentalType_System_IntPtr_
