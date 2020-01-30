@@ -10,30 +10,30 @@ of VIPS library.
 
 ## Benchmarks
 
-Run on 29/07/19 with libvips 8.8.1, Magick.NET 7.14.1, ImageSharp 1.0.0-dev002762, SkiaSharp 1.68.0 and System.Drawing.Common 4.5.1.
+Run on 30/01/20 with libvips 8.9.1, Magick.NET 7.15.1, ImageSharp 1.0.0-unstable0608, SkiaSharp 1.68.1.1 and System.Drawing.Common 4.7.0.
 
 ``` ini
 
-BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
+BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
 Intel Core i5-8600K CPU 3.60GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
-.NET Core SDK=2.2.401
-  [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
-  Job-HVKOBT : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+.NET Core SDK=3.1.101
+  [Host]            : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+  .Net Core 3.1 CLI : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
 
-Toolchain=.NET Core 2.2.0  
+Job=.Net Core 3.1 CLI  Toolchain=.NET Core 3.1  
 
 ```
-|         Method | input | output |      Mean |     Error |    StdDev | Ratio | RatioSD |
-|--------------- |------ |------- |----------:|----------:|----------:|------:|--------:|
-|        **NetVips** | **t.jpg** | **t2.jpg** |  **28.95 ms** | **0.2038 ms** | **0.1906 ms** |  **1.00** |    **0.00** |
-|     Magick.NET | t.jpg | t2.jpg | 309.09 ms | 0.3860 ms | 0.3610 ms | 10.68 |    0.07 |
-|     ImageSharp¹ | t.jpg | t2.jpg | 158.57 ms | 2.3961 ms | 2.2413 ms |  5.48 |    0.09 |
-|      SkiaSharp¹ | t.jpg | t2.jpg | 236.11 ms | 0.0936 ms | 0.0875 ms |  8.16 |    0.05 |
-| System.Drawing² | t.jpg | t2.jpg | 264.08 ms | 1.0843 ms | 1.0143 ms |  9.12 |    0.07 |
-|                |       |        |           |           |           |       |         |
-|        **NetVips** | **t.tif** | **t2.tif** |  **19.57 ms** | **0.2321 ms** | **0.2171 ms** |  **1.00** |    **0.00** |
-|     Magick.NET | t.tif | t2.tif | 292.67 ms | 0.7910 ms | 0.6605 ms | 14.98 |    0.15 |
-| System.Drawing² | t.tif | t2.tif | 275.03 ms | 1.1997 ms | 1.1222 ms | 14.05 |    0.17 |
+|         Method | input | output |      Mean |    Error |   StdDev | Ratio | RatioSD |
+|--------------- |------ |------- |----------:|---------:|---------:|------:|--------:|
+|        **NetVips** | **t.jpg** | **t2.jpg** |  **29.53 ms** | **0.528 ms** | **0.494 ms** |  **1.00** |    **0.00** |
+|     Magick.NET | t.jpg | t2.jpg | 307.29 ms | 2.742 ms | 2.565 ms | 10.41 |    0.16 |
+|     ImageSharp¹ | t.jpg | t2.jpg | 149.57 ms | 0.808 ms | 0.716 ms |  5.06 |    0.10 |
+|      SkiaSharp¹ | t.jpg | t2.jpg | 229.10 ms | 0.150 ms | 0.140 ms |  7.76 |    0.13 |
+| System.Drawing² | t.jpg | t2.jpg | 261.82 ms | 0.252 ms | 0.235 ms |  8.87 |    0.15 |
+|                |       |        |           |          |          |       |         |
+|        **NetVips** | **t.tif** | **t2.tif** |  **18.87 ms** | **0.374 ms** | **0.431 ms** |  **1.00** |    **0.00** |
+|     Magick.NET | t.tif | t2.tif | 287.80 ms | 0.316 ms | 0.280 ms | 15.29 |    0.36 |
+| System.Drawing² | t.tif | t2.tif | 256.64 ms | 0.782 ms | 0.731 ms | 13.60 |    0.33 |
 
 ¹ ImageSharp and SkiaSharp does not have TIFF support, so I only tested with JPEG files.  
 ² System.Drawing does not have a sharpening or convolution operation, so I skipped that part of the benchmark.

@@ -2,10 +2,8 @@ namespace NetVips.Benchmarks.ImageSharp
 {
     using System;
     using System.Reflection;
-    using SixLabors.Primitives;
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.PixelFormats;
-    using SixLabors.ImageSharp.Primitives;
     using SixLabors.ImageSharp.Processing.Processors;
 
     /// <summary>
@@ -35,7 +33,8 @@ namespace NetVips.Benchmarks.ImageSharp
         public bool PreserveAlpha { get; }
 
         /// <inheritdoc />
-        public IImageProcessor<TPixel> CreatePixelSpecificProcessor<TPixel>(Image<TPixel> source,
+        public IImageProcessor<TPixel> CreatePixelSpecificProcessor<TPixel>(Configuration configuration,
+            Image<TPixel> source,
             Rectangle sourceRectangle) where TPixel : struct, IPixel<TPixel>
         {
             var type = Type.GetType(
@@ -44,11 +43,13 @@ namespace NetVips.Benchmarks.ImageSharp
             Type genericType = type.MakeGenericType(typeArgs);
             Type[] parameterTypes =
             {
-                KernelXY.GetType().MakeByRefType(), PreserveAlpha.GetType(), source.GetType(), sourceRectangle.GetType()
+                configuration.GetType(), KernelXY.GetType().MakeByRefType(), PreserveAlpha.GetType(), source.GetType(),
+                sourceRectangle.GetType()
             };
             ConstructorInfo ctor = genericType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null,
                 parameterTypes, null);
-            object instance = ctor.Invoke(new object[] { KernelXY, PreserveAlpha, source, sourceRectangle });
+            object instance =
+                ctor.Invoke(new object[] { configuration, KernelXY, PreserveAlpha, source, sourceRectangle });
 
             return (IImageProcessor<TPixel>)instance;
         }
