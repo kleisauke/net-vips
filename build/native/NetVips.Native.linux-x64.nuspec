@@ -23,7 +23,13 @@
   <files>
 
     <!-- Include libvips Linux x64 binaries -->
-    <file src="pack\linux-x64\*" target="runtimes/linux-x64/native" />
+    <file src="pack\linux-x64\*.so.*" target="runtimes/linux-x64/native" />
+
+    <!-- Include the latest third-party notices -->
+    <file src="pack\linux-x64\THIRD-PARTY-NOTICES.md" />
+
+    <!-- Include the version numbers of libvips and its dependencies -->
+    <file src="pack\linux-x64\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
     <file src="_._" target="lib/netstandard1.0" />

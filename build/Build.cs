@@ -45,7 +45,7 @@ partial class Build : NukeBuild
         void ExecWait(string preamble, string command, string args)
         {
             Console.WriteLine(preamble);
-            Process.Start(new ProcessStartInfo(command, args) {UseShellExecute = false})?.WaitForExit();
+            Process.Start(new ProcessStartInfo(command, args) { UseShellExecute = false })?.WaitForExit();
         }
 
         ExecWait("dotnet version:", "dotnet", "--version");
@@ -117,7 +117,7 @@ partial class Build : NukeBuild
                 var dllPackDir = Parameters.PackDir / architecture;
                 EnsureExistingDirectory(dllPackDir);
 
-                tempDir.GlobFiles("lib/*.dll", "lib/*.so.*", "lib/*.dylib")
+                tempDir.GlobFiles("lib/*.dll", "lib/*.so.*", "lib/*.dylib", "THIRD-PARTY-NOTICES.md", "versions.json")
                     .ForEach(f => CopyFileToDirectory(f, dllPackDir));
 
                 DeleteDirectory(tempDir);
