@@ -369,9 +369,9 @@ namespace NetVips.Tests
                 // We should be able to read from this stream, even if it starts at any position.
                 var x = Image.NewFromStream(stream, access: Enums.Access.Sequential);
 
-                Assert.Equal(x.Width, _colour.Width);
-                Assert.Equal(x.Height, _colour.Height);
-                Assert.Equal(x.Bands, _colour.Bands);
+                Assert.Equal(_colour.Width, x.Width);
+                Assert.Equal(_colour.Height, x.Height);
+                Assert.Equal( _colour.Bands, x.Bands);
                 Assert.True((_colour - x).Abs().Max() <= 80);
             }
         }

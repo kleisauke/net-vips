@@ -23,6 +23,11 @@ namespace NetVips
         /// </summary>
         internal long MemoryPressure;
 
+        /// <summary>
+        /// A delegate that is called when the object's reference count is decreased.
+        /// </summary>
+        internal event Action OnUnref;
+
         // Handy for debugging
         // public static int NObjects;
 
@@ -75,7 +80,7 @@ namespace NetVips
                     evalDelegate.Invoke(image, progressStruct);
                 }
 
-                callback = (VipsImage.EvalSignal) EvalMarshal;
+                callback = (VipsImage.EvalSignal)EvalMarshal;
             }
 
             // prevent the delegate from being re-located or disposed of by the garbage collector
@@ -105,12 +110,16 @@ namespace NetVips
             // logger.Debug($"Unref: GObject = {handle}");
             if (!IsInvalid)
             {
+                OnUnref?.Invoke();
                 Internal.GObject.Unref(handle);
 
                 // release all handles recorded by this object
                 foreach (var gcHandle in _handles)
                 {
-                    gcHandle.Free();
+                    if (gcHandle.IsAllocated)
+                    {
+                        gcHandle.Free();
+                    }
                 }
 
                 _handles.Clear();

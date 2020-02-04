@@ -17,11 +17,6 @@ namespace NetVips
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Secret ref for <see cref="NewFromMemory"/>.
-        /// </summary>
-        private GCHandle _dataHandle;
-
-        /// <summary>
         /// A evaluation delegate that can be used on the
         /// <see cref="Enums.Signals.PreEval"/>, <see cref="Enums.Signals.Eval"/> and
         /// <see cref="Enums.Signals.PostEval"/> signals.
@@ -499,10 +494,13 @@ namespace NetVips
             bool? fail = null,
             VOption kwargs = null)
         {
-            using (var source = SourceStream.NewFromStream(stream))
-            {
-                return NewFromSource(source, strOptions, access, fail, kwargs);
-            }
+            var source = SourceStream.NewFromStream(stream);
+            var image = NewFromSource(source, strOptions, access, fail, kwargs);
+
+            // Need to dispose the SourceStream when the image is unreferenced.
+            image.OnUnref += () => source.Dispose();
+
+            return image;
         }
 
 
@@ -687,7 +685,18 @@ namespace NetVips
                 throw new VipsException("unable to make image from memory");
             }
 
-            return new Image(vi) { _dataHandle = handle };
+            var image = new Image(vi);
+
+            // Need to release the pinned GCHandle when the image is unreferenced.
+            image.OnUnref += () =>
+            {
+                if (handle.IsAllocated)
+                {
+                    handle.Free();
+                }
+            };
+
+            return image;
         }
 
         /// <summary>
@@ -2277,18 +2286,5 @@ namespace NetVips
         }
 
         #endregion
-
-        /// <inheritdoc cref="GObject"/>
-        protected override void Dispose(bool disposing)
-        {
-            // release reference to our secret ref
-            if (_dataHandle.IsAllocated)
-            {
-                _dataHandle.Free();
-            }
-
-            // Call our base Dispose method
-            base.Dispose(disposing);
-        }
     }
 }

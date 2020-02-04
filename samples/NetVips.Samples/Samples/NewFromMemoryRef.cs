@@ -20,7 +20,7 @@ namespace NetVips.Samples
             using (var a = Image.NewFromMemory(Enumerable.Repeat((byte)255, 200).ToArray(), 20, 10, 1, "uchar"))
             {
                 b = a / 2;
-            } // g_object_unref and _dataHandle.Free();
+            } // g_object_unref
 
             Console.WriteLine($"Reference count b: {b.RefCount}");
 
