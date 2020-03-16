@@ -14,10 +14,10 @@
     <OutputType>Library</OutputType>
     <Optimize>true</Optimize>
     <!-- Use a different version number for the NetVips.Extensions package. -->
-    <AssemblyVersion>1.0.1.$(BuildNumber)</AssemblyVersion>
-    <AssemblyFileVersion>1.0.1.$(BuildNumber)</AssemblyFileVersion>
-    <InformationalVersion>1.0.1.$(BuildNumber)$(PrereleaseLabel)</InformationalVersion>
-    <PackageVersion>1.0.1.$(BuildNumber)$(PrereleaseLabel)</PackageVersion>
+    <AssemblyVersion>1.0.2.$(BuildNumber)</AssemblyVersion>
+    <AssemblyFileVersion>1.0.2.$(BuildNumber)</AssemblyFileVersion>
+    <InformationalVersion>1.0.2.$(BuildNumber)$(PrereleaseLabel)</InformationalVersion>
+    <PackageVersion>1.0.2.$(BuildNumber)$(PrereleaseLabel)</PackageVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 

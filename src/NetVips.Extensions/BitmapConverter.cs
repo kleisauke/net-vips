@@ -14,22 +14,26 @@ namespace NetVips.Extensions
         /// <summary>
         /// Guess the number of bands for a <see cref="PixelFormat"/>.
         /// </summary>
+        /// <remarks>
+        /// GDI+ does not support 16bpp images very well (even though they are still in the enumeration).
+        /// </remarks>
         /// <param name="pixelFormat"><see cref="PixelFormat"/> to guess for.</param>
         /// <returns>The number of bands.</returns>
         private static int GuessBands(PixelFormat pixelFormat)
         {
             switch (pixelFormat)
             {
-                case PixelFormat.Format1bppIndexed:
                 case PixelFormat.Format8bppIndexed:
+                    /* Note: Maplut below will create a 3-band image */
                     return 1;
                 /*case PixelFormat.Format16bppGrayScale:
                     return 2;*/
-                case PixelFormat.Format4bppIndexed:
+                /*case PixelFormat.Format1bppIndexed:*/
+                /*case PixelFormat.Format4bppIndexed:*/
                 /*case PixelFormat.Format16bppRgb555:*/
                 /*case PixelFormat.Format16bppRgb565:*/
                 case PixelFormat.Format24bppRgb:
-                case PixelFormat.Format32bppRgb:
+                /*case PixelFormat.Format32bppRgb:*/
                 case PixelFormat.Format48bppRgb:
                     return 3;
                 /*case PixelFormat.Format16bppArgb1555:*/
@@ -46,20 +50,23 @@ namespace NetVips.Extensions
         /// <summary>
         /// Guess the <see cref="Enums.BandFormat"/> for a <see cref="PixelFormat"/>.
         /// </summary>
+        /// <remarks>
+        /// GDI+ does not support 16bpp images very well (even though they are still in the enumeration).
+        /// </remarks>
         /// <param name="pixelFormat"><see cref="PixelFormat"/> to guess for.</param>
         /// <returns>The <see cref="Enums.BandFormat"/>.</returns>
         private static string GuessBandFormat(PixelFormat pixelFormat)
         {
             switch (pixelFormat)
             {
-                case PixelFormat.Format1bppIndexed:
-                case PixelFormat.Format4bppIndexed:
+                /*case PixelFormat.Format1bppIndexed:*/
+                /*case PixelFormat.Format4bppIndexed:*/
                 case PixelFormat.Format8bppIndexed:
                 /*case PixelFormat.Format16bppGrayScale:*/
                 /*case PixelFormat.Format16bppRgb555:*/
                 /*case PixelFormat.Format16bppRgb565:*/
                 case PixelFormat.Format24bppRgb:
-                case PixelFormat.Format32bppRgb:
+                /*case PixelFormat.Format32bppRgb:*/
                 /*case PixelFormat.Format16bppArgb1555:*/
                 case PixelFormat.Format32bppArgb:
                 case PixelFormat.Format32bppPArgb:
@@ -83,8 +90,19 @@ namespace NetVips.Extensions
             if (src == null)
                 throw new ArgumentNullException(nameof(src));
 
-            var bands = GuessBands(src.PixelFormat);
-            var format = GuessBandFormat(src.PixelFormat);
+            // Let LockBits convert the pixel data to Format24bppRgb for indexed
+            // (excluding Format8bppIndexed) and Format32bppRgb (the remaining
+            // 8 bits are not used anyway) images. This is faster than the pixel
+            // loops commented below and simplifies the code considerably.
+            var pf =
+                src.PixelFormat == PixelFormat.Format1bppIndexed ||
+                src.PixelFormat == PixelFormat.Format4bppIndexed ||
+                src.PixelFormat == PixelFormat.Format32bppRgb
+                    ? PixelFormat.Format24bppRgb
+                    : src.PixelFormat;
+
+            var bands = GuessBands(pf);
+            var format = GuessBandFormat(pf);
             var sizeofFormat = format == Enums.BandFormat.Uchar ? sizeof(byte) : sizeof(ushort);
 
             var w = src.Width;
@@ -97,27 +115,13 @@ namespace NetVips.Extensions
             Image dst;
             try
             {
-                bd = src.LockBits(rect, ImageLockMode.ReadOnly, src.PixelFormat);
+                bd = src.LockBits(rect, ImageLockMode.ReadOnly, pf);
 
-                switch (src.PixelFormat)
+                switch (pf)
                 {
-                    case PixelFormat.Format1bppIndexed:
+                    /*case PixelFormat.Format1bppIndexed:
                     {
                         var buffer = new byte[size];
-
-                        // Slightly slower:
-                        /*for (var y = 0; y < h; y++)
-                        {
-                            for (var x = 0; x < w; x++)
-                            {
-                                var chunk = Marshal.ReadByte(bd.Scan0, y * bd.Stride + (x >> 3));
-
-                                var mask = (byte)(0x80 >> (x & 0x7));
-                                //var colorIndex = (chunk & mask) == mask ? 1 : 0;
-                                //buffer[y * stride + x] = src.Palette.Entries[colorIndex].R
-                                buffer[y * stride + x] = (byte)((chunk & mask) == mask ? 0 : 255);
-                            }
-                        }*/
 
                         for (var y = 0; y < h; y++)
                         {
@@ -132,7 +136,10 @@ namespace NetVips.Extensions
                                     if (x >= w)
                                         break;
 
-                                    buffer[y * stride + x] = (byte)((b & 0x80) == 0x80 ? 0 : 255);
+                                    var colorIndex = (b & 0x80) == 0x80 ? 1 : 0;
+                                    buffer[y * stride + x * 3 + 0] = src.Palette.Entries[colorIndex].R;
+                                    buffer[y * stride + x * 3 + 1] = src.Palette.Entries[colorIndex].G;
+                                    buffer[y * stride + x * 3 + 2] = src.Palette.Entries[colorIndex].B;
                                     b <<= 1;
                                 }
                             }
@@ -144,25 +151,13 @@ namespace NetVips.Extensions
                     {
                         var buffer = new byte[size];
 
-                        var colorIndexMask = /*16*/src.Palette.Entries.Length - 1;
-
                         for (var y = 0; y < h; y++)
                         {
                             for (var x = 0; x < w; x++)
                             {
                                 var b = Marshal.ReadByte(bd.Scan0, y * bd.Stride + (x >> 1));
 
-                                if ((x & 1) == 1)
-                                {
-                                    b &= 0xF;
-                                }
-                                else
-                                {
-                                    b &= 0xF0;
-                                    b >>= 4;
-                                }
-
-                                var colorIndex = b & colorIndexMask;
+                                var colorIndex = (x & 1) == 0 ? b >> 4 : b & 0x0F;
                                 buffer[y * stride + x * 3 + 0] = src.Palette.Entries[colorIndex].R;
                                 buffer[y * stride + x * 3 + 1] = src.Palette.Entries[colorIndex].G;
                                 buffer[y * stride + x * 3 + 2] = src.Palette.Entries[colorIndex].B;
@@ -171,16 +166,6 @@ namespace NetVips.Extensions
 
                         return Image.NewFromMemory(buffer, w, h, bands, format);
                     }
-                    case PixelFormat.Format24bppRgb when bd.Stride == stride:
-                    case PixelFormat.Format8bppIndexed when bd.Stride == stride:
-                    case PixelFormat.Format32bppArgb:
-                    case PixelFormat.Format32bppPArgb:
-                    case PixelFormat.Format48bppRgb when bd.Stride == stride:
-                    case PixelFormat.Format64bppArgb:
-                    case PixelFormat.Format64bppPArgb:
-                        // bd.Stride is aligned to a multiple of 4
-                        dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)size, w, h, bands, format);
-                        break;
                     case PixelFormat.Format32bppRgb:
                     {
                         var buffer = new byte[size];
@@ -196,7 +181,17 @@ namespace NetVips.Extensions
 
                         dst = Image.NewFromMemory(buffer, w, h, bands, format);
                         break;
-                    }
+                    }*/
+                    case PixelFormat.Format24bppRgb when bd.Stride == stride:
+                    case PixelFormat.Format8bppIndexed when bd.Stride == stride:
+                    case PixelFormat.Format32bppArgb:
+                    case PixelFormat.Format32bppPArgb:
+                    case PixelFormat.Format48bppRgb when bd.Stride == stride:
+                    case PixelFormat.Format64bppArgb:
+                    case PixelFormat.Format64bppPArgb:
+                        // bd.Stride is aligned to a multiple of 4
+                        dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)size, w, h, bands, format);
+                        break;
                     default:
                     {
                         var buffer = new byte[size];
@@ -218,17 +213,17 @@ namespace NetVips.Extensions
                     src.UnlockBits(bd);
             }
 
-            if (src.PixelFormat == PixelFormat.Format8bppIndexed)
+            if (pf == PixelFormat.Format8bppIndexed)
             {
-                var palette = new byte[256];
-                for (var i = 0; i < 256; i++)
+                var palette = new byte[src.Palette.Entries.Length * 3];
+                for (var i = 0; i < src.Palette.Entries.Length; i++)
                 {
-                    if (i >= src.Palette.Entries.Length)
-                        break;
-                    palette[i] = src.Palette.Entries[i].R;
+                    palette[i * 3 + 0] = src.Palette.Entries[i].R;
+                    palette[i * 3 + 1] = src.Palette.Entries[i].G;
+                    palette[i * 3 + 2] = src.Palette.Entries[i].B;
                 }
 
-                var lut = Image.NewFromArray(palette);
+                var lut = Image.NewFromMemory(palette, src.Palette.Entries.Length, 1, 3, Enums.BandFormat.Uchar);
                 return dst.Maplut(lut);
             }
 

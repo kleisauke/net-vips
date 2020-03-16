@@ -83,7 +83,7 @@ namespace NetVips.Tests
 
             var length = expected.Length;
 
-            // An additional band is added for grayscale images
+            // An additional band is added for greyscale images
             if (length == 2)
             {
                 length++;
