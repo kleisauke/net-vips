@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.TravisCI;
-using static Nuke.Common.IO.PathConstruction;
 
 public partial class Build
 {
