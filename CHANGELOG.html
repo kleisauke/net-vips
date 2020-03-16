@@ -8,7 +8,7 @@
     <title>Changelog </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Changelog ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.50.0.0">
     
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -64,6 +64,15 @@
 
 <p>All notable changes to NetVips will be documented in this file. See <a href="CHANGELOG.native.html">here</a> for the changes to the <a href="https://www.nuget.org/packages/NetVips.Native/">pre-compiled binaries of libvips</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2 id="121---2020-03-16"><a href="https://github.com/kleisauke/net-vips/compare/v1.2.0...v1.2.1">1.2.1</a> - 2020-03-16</h2>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fix a bug that freed the stream within <code>Image.NewFromStream</code> too early (<a href="https://github.com/kleisauke/net-vips/issues/58">#58</a>).</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Update enums.</li>
+</ul>
 <h2 id="120---2020-01-30"><a href="https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0">1.2.0</a> - 2020-01-30</h2>
 <h3 id="added">Added</h3>
 <ul>
@@ -85,7 +94,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>The <code>image.SetType()</code> function has been renamed to <code>image.Set()</code>.</li>
 <li>The <code>Image.Sum()</code> function uses the params keyword.</li>
@@ -113,7 +122,7 @@
 <li>Add support for identifying image formats (<code>Image.FindLoad()</code>, <code>Image.FindLoadBuffer()</code> and <code>Image.FindLoadStream()</code>) (<a href="https://github.com/kleisauke/net-vips/issues/37">#37</a>).</li>
 <li>Add <code>image.PageHeight</code> property for retrieving the page height for multi-page images.</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Improve memory management (<a href="https://github.com/kleisauke/net-vips/issues/26">#26</a>).</li>
 <li>The bundled libvips Windows binaries were moved to the <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package.</li>
@@ -131,7 +140,7 @@
 <li>The <code>UseGlobalLibvips</code> property since the bundled libvips binaries were moved to the <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package.</li>
 </ul>
 <h2 id="107---2019-01-18"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.6...v1.0.7">1.0.7</a> - 2019-01-18</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Update bundled libvips x86/x64 binary to 8.7.4.</li>
 <li>Speed-up <code>Base.Version</code> by caching the libvips version as soon as the assembly is loaded.</li>
@@ -141,7 +150,7 @@
 <ul>
 <li>The <code>LibvipsOutputBase</code> property to specify the subdirectory (within your project's output directory) where the libvips binaries are copied to (<a href="https://github.com/kleisauke/net-vips/issues/20">#20</a>).</li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>Update bundled libvips x86/x64 binary to 8.7.3.</li>
 <li>No exceptions will be thrown by the <code>ModuleInitializer</code> (used to initialize libvips once the assembly is loaded) (<a href="https://github.com/kleisauke/net-vips/issues/15">#15</a>, <a href="https://github.com/kleisauke/net-vips/issues/20">#20</a>).</li>
@@ -155,11 +164,11 @@
 <ul>
 <li>Bundle pre-compiled libvips binary and its dependencies for 32-bit Windows.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Fix five small memleaks (<a href="https://github.com/libvips/lua-vips/issues/24">libvips/lua-vips#24</a>).</li>
 </ul>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>Update bundled libvips binary to 8.7.0.</li>
 </ul>
@@ -169,11 +178,11 @@
 <li>Add <code>contains</code> helper (to check if the image contains an property of metadata).</li>
 <li>Support 32-bit architecture (<a href="https://github.com/kleisauke/net-vips/issues/7">#7</a>).</li>
 </ul>
-<h3 id="changed-5">Changed</h3>
+<h3 id="changed-6">Changed</h3>
 <ul>
 <li>Update bundled libvips binary to 8.6.4.</li>
 </ul>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>Fix a bug that freed a string pointer too early (<a href="https://github.com/kleisauke/net-vips/issues/9">#9</a>).</li>
 </ul>
@@ -182,7 +191,7 @@
 <ul>
 <li>Bundle pre-compiled libvips binary and its dependencies for 64-bit Windows (<a href="https://github.com/kleisauke/net-vips/issues/3">#3</a>).</li>
 </ul>
-<h3 id="changed-6">Changed</h3>
+<h3 id="changed-7">Changed</h3>
 <ul>
 <li>Target .NET Standard 2.0 instead of .NET Core 2.0 (<a href="https://github.com/kleisauke/net-vips/issues/4">#4</a>).</li>
 <li>Lower the minimum required .NET Framework version to 4.5 (<a href="https://github.com/kleisauke/net-vips/issues/4">#4</a>).</li>
@@ -193,7 +202,7 @@
 <li>Add missing libvips 8.7 methods.</li>
 <li>Add logging handler to log warnings and debug messages from libvips.</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li>Fix a bug that tried to reference an empty pointer.</li>
 <li>Fix a bug that causes libvips arguments to be set incorrectly.</li>
@@ -201,7 +210,7 @@
 <li>Prevent the GC from unsetting the gvalue and disposing a delegate prematurely.</li>
 </ul>
 <h2 id="101---2018-04-10"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.0...v1.0.1">1.0.1</a> - 2018-04-10</h2>
-<h3 id="fixed-3">Fixed</h3>
+<h3 id="fixed-4">Fixed</h3>
 <ul>
 <li>Fix reference count bug.</li>
 </ul>
