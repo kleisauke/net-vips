@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [1.2.1] - ???
 ### Fixed
-- Fix a bug that freed stream within `Image.NewFromStream` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
+- Fix a bug that freed the stream within `Image.NewFromStream` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
+
+### Changed
+- Update enums.
 
 ## [1.2.0] - 2020-01-30
 ### Added

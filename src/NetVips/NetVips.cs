@@ -360,7 +360,7 @@ namespace NetVips
                     list.Add(NicknameFind(type));
                 }
 
-                return Vips.TypeMap(type, TypeMap, a, IntPtr.Zero);
+                return Vips.TypeMap(type, TypeMap, a, b);
             }
 
             try
@@ -379,6 +379,66 @@ namespace NetVips
             allNickNames = allNickNames.Distinct().ToList();
 
             return allNickNames;
+        }
+
+        /// <summary>
+        /// Get a list of enums available within the libvips library.
+        /// </summary>
+        /// <returns>A list of enums.</returns>
+        public static List<string> GetEnums()
+        {
+            var allEnums = new List<string>();
+            var handle = GCHandle.Alloc(allEnums);
+
+            IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
+            {
+                var nickname = TypeName(type);
+
+                var list = (List<string>)GCHandle.FromIntPtr(a).Target;
+                list.Add(nickname);
+
+                return Vips.TypeMap(type, TypeMap, a, b);
+            }
+
+            try
+            {
+                Vips.TypeMap(TypeFromName("GEnum"), TypeMap, GCHandle.ToIntPtr(handle), IntPtr.Zero);
+            }
+            finally
+            {
+                handle.Free();
+            }
+
+            // Sort
+            allEnums.Sort();
+
+            return allEnums;
+        }
+
+        /// <summary>
+        /// Get all values for a enum (GType).
+        /// </summary>
+        /// <param name="type">Type to return enum values for.</param>
+        /// <returns>A list of values.</returns>
+        public static List<string> ValuesForEnum(IntPtr type)
+        {
+            var typeClass = GType.ClassRef(type);
+            var enumClass = typeClass.Dereference<GEnumClass>();
+
+            var values = new List<string>((int)(enumClass.NValues - 1));
+
+            var ptr = enumClass.Values;
+
+            // -1 since we always have a "last" member
+            for (var i = 0; i < enumClass.NValues - 1; i++)
+            {
+                var nick = ptr.Dereference<GEnumValue>().ValueNick;
+                values.Add(nick);
+
+                ptr += Marshal.SizeOf(typeof(GEnumValue));
+            }
+
+            return values;
         }
 
         /// <summary>

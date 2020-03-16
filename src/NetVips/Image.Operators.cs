@@ -342,7 +342,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(Image left, Image right) =>
-            left.Call("boolean", right, "and") as Image;
+            left.Call("boolean", right, Enums.OperationBoolean.And) as Image;
 
         /// <summary>
         /// This operation computes the logical bitwise AND of its operands.
@@ -351,7 +351,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(double left, Image right) =>
-            right.Call("boolean_const", "and", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
 
         /// <summary>
         /// This operation computes the logical bitwise AND of its operands.
@@ -360,7 +360,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(Image left, double right) =>
-            left.Call("boolean_const", "and", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
 
         /// <summary>
         /// This operation computes the logical bitwise AND of its operands.
@@ -369,7 +369,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(double[] left, Image right) =>
-            right.Call("boolean_const", "and", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
 
         /// <summary>
         /// This operation computes the logical bitwise AND of its operands.
@@ -378,7 +378,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(Image left, double[] right) =>
-            left.Call("boolean_const", "and", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
 
         /// <summary>
         /// This operation computes the logical bitwise AND of its operands.
@@ -387,7 +387,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(int[] left, Image right) =>
-            right.Call("boolean_const", "and", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
 
         /// <summary>
         /// This operation computes the logical bitwise AND of its operands.
@@ -396,7 +396,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator &(Image left, int[] right) =>
-            left.Call("boolean_const", "and", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -405,7 +405,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(Image left, Image right) =>
-            left.Call("boolean", right, "or") as Image;
+            left.Call("boolean", right, Enums.OperationBoolean.Or) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -414,7 +414,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(double left, Image right) =>
-            right.Call("boolean_const", "or", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -423,7 +423,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(Image left, double right) =>
-            left.Call("boolean_const", "or", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -432,7 +432,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(double[] left, Image right) =>
-            right.Call("boolean_const", "or", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -441,7 +441,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(Image left, double[] right) =>
-            left.Call("boolean_const", "or", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -450,7 +450,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(int[] left, Image right) =>
-            right.Call("boolean_const", "or", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
 
         /// <summary>
         /// This operation computes the bitwise OR of its operands.
@@ -459,7 +459,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator |(Image left, int[] right) =>
-            left.Call("boolean_const", "or", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -468,7 +468,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(Image left, Image right) =>
-            left.Call("boolean", right, "eor") as Image;
+            left.Call("boolean", right, Enums.OperationBoolean.Eor) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -477,7 +477,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(double left, Image right) =>
-            right.Call("boolean_const", "eor", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -486,7 +486,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(Image left, double right) =>
-            left.Call("boolean_const", "eor", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -495,7 +495,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(double[] left, Image right) =>
-            right.Call("boolean_const", "eor", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -504,7 +504,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(Image left, double[] right) =>
-            left.Call("boolean_const", "eor", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -513,7 +513,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(int[] left, Image right) =>
-            right.Call("boolean_const", "eor", left) as Image;
+            right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
 
         /// <summary>
         /// This operation computes the bitwise exclusive-OR of its operands.
@@ -522,7 +522,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ^(Image left, int[] right) =>
-            left.Call("boolean_const", "eor", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
 
         /// <summary>
         /// This operation shifts its first operand left by the number of bits specified by its second operand.
@@ -531,7 +531,7 @@ namespace NetVips
         /// <param name="right">The number of bits.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <<(Image left, int right) =>
-            left.Call("boolean_const", "lshift", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Lshift, right) as Image;
 
         /// <summary>
         /// This operation shifts its first operand right by the number of bits specified by its second operand.
@@ -540,7 +540,7 @@ namespace NetVips
         /// <param name="right">The number of bits.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >>(Image left, int right) =>
-            left.Call("boolean_const", "rshift", right) as Image;
+            left.Call("boolean_const", Enums.OperationBoolean.Rshift, right) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -549,7 +549,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ==(double left, Image right) =>
-            right.Call("relational_const", "equal", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -558,7 +558,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ==(double[] left, Image right) =>
-            right.Call("relational_const", "equal", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -567,7 +567,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator ==(int[] left, Image right) =>
-            right.Call("relational_const", "equal", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -576,7 +576,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator !=(double left, Image right) =>
-            right.Call("relational_const", "noteq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -585,7 +585,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator !=(double[] left, Image right) =>
-            right.Call("relational_const", "noteq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -594,7 +594,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator !=(int[] left, Image right) =>
-            right.Call("relational_const", "noteq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -603,7 +603,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(Image left, Image right) =>
-            left.Call("relational", right, "less") as Image;
+            left.Call("relational", right, Enums.OperationRelational.Less) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -612,7 +612,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(double left, Image right) =>
-            right.Call("relational_const", "more", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -621,7 +621,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(Image left, double right) =>
-            left.Call("relational_const", "less", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -630,7 +630,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(double[] left, Image right) =>
-            right.Call("relational_const", "more", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -639,7 +639,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(Image left, double[] right) =>
-            left.Call("relational_const", "less", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -648,7 +648,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(int[] left, Image right) =>
-            right.Call("relational_const", "more", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than the right operand.
@@ -657,7 +657,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <(Image left, int[] right) =>
-            left.Call("relational_const", "less", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -666,7 +666,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(Image left, Image right) =>
-            left.Call("relational", right, "more") as Image;
+            left.Call("relational", right, Enums.OperationRelational.More) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -675,7 +675,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(double left, Image right) =>
-            right.Call("relational_const", "less", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -684,7 +684,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(Image left, double right) =>
-            left.Call("relational_const", "more", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -693,7 +693,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(double[] left, Image right) =>
-            right.Call("relational_const", "less", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -702,7 +702,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(Image left, double[] right) =>
-            left.Call("relational_const", "more", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -711,7 +711,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(int[] left, Image right) =>
-            right.Call("relational_const", "less", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than the right operand.
@@ -720,7 +720,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >(Image left, int[] right) =>
-            left.Call("relational_const", "more", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -729,7 +729,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(Image left, Image right) =>
-            left.Call("relational", right, "lesseq") as Image;
+            left.Call("relational", right, Enums.OperationRelational.Lesseq) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -738,7 +738,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(double left, Image right) =>
-            right.Call("relational_const", "moreeq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -747,7 +747,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(Image left, double right) =>
-            left.Call("relational_const", "lesseq", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -756,7 +756,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(double[] left, Image right) =>
-            right.Call("relational_const", "moreeq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -765,7 +765,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(Image left, double[] right) =>
-            left.Call("relational_const", "lesseq", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -774,7 +774,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(int[] left, Image right) =>
-            right.Call("relational_const", "moreeq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is less than or equal to the right operand.
@@ -783,7 +783,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator <=(Image left, int[] right) =>
-            left.Call("relational_const", "lesseq", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -792,7 +792,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(Image left, Image right) =>
-            left.Call("relational", right, "moreeq") as Image;
+            left.Call("relational", right, Enums.OperationRelational.Moreeq) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -801,7 +801,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(double left, Image right) =>
-            right.Call("relational_const", "lesseq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -810,7 +810,7 @@ namespace NetVips
         /// <param name="right">Right double constant.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(Image left, double right) =>
-            left.Call("relational_const", "moreeq", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -819,7 +819,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(double[] left, Image right) =>
-            right.Call("relational_const", "lesseq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -828,7 +828,7 @@ namespace NetVips
         /// <param name="right">Right double array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(Image left, double[] right) =>
-            left.Call("relational_const", "moreeq", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -837,7 +837,7 @@ namespace NetVips
         /// <param name="right">Right <see cref="Image"/>.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(int[] left, Image right) =>
-            right.Call("relational_const", "lesseq", left) as Image;
+            right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
 
         /// <summary>
         /// This operation compares if the left operand is greater than or equal to the right operand.
@@ -846,7 +846,7 @@ namespace NetVips
         /// <param name="right">Right integer array.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public static Image operator >=(Image left, int[] right) =>
-            left.Call("relational_const", "moreeq", right) as Image;
+            left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
 
         /// <summary>
         /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="true"/>.

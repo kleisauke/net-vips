@@ -1697,161 +1697,161 @@ namespace NetVips
         /// Return the real part of a complex image.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Real() => Complexget("real");
+        public Image Real() => Complexget(Enums.OperationComplexget.Real);
 
         /// <summary>
         /// Return the imaginary part of a complex image.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Imag() => Complexget("imag");
+        public Image Imag() => Complexget(Enums.OperationComplexget.Imag);
 
         /// <summary>
         ///  Return an image converted to polar coordinates.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Polar() => RunCmplx(x => x.Complex("polar"), this);
+        public Image Polar() => RunCmplx(x => x.Complex(Enums.OperationComplex.Polar), this);
 
         /// <summary>
         /// Return an image converted to rectangular coordinates.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Rect() => RunCmplx(x => x.Complex("rect"), this);
+        public Image Rect() => RunCmplx(x => x.Complex(Enums.OperationComplex.Rect), this);
 
         /// <summary>
         /// Return the complex conjugate of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Conj() => Complex("conj");
+        public Image Conj() => Complex(Enums.OperationComplex.Conj);
 
         /// <summary>
         /// Return the sine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Sin() => Math("sin");
+        public Image Sin() => Math(Enums.OperationMath.Sin);
 
         /// <summary>
         /// Return the cosine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Cos() => Math("cos");
+        public Image Cos() => Math(Enums.OperationMath.Cos);
 
         /// <summary>
         /// Return the tangent of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Tan() => Math("tan");
+        public Image Tan() => Math(Enums.OperationMath.Tan);
 
         /// <summary>
         /// Return the inverse sine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Asin() => Math("asin");
+        public Image Asin() => Math(Enums.OperationMath.Asin);
 
         /// <summary>
         /// Return the inverse cosine of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Acos() => Math("acos");
+        public Image Acos() => Math(Enums.OperationMath.Acos);
 
         /// <summary>
         /// Return the inverse tangent of an image in degrees.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Atan() => Math("atan");
+        public Image Atan() => Math(Enums.OperationMath.Atan);
 
         /// <summary>
         /// Return the natural log of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Log() => Math("log");
+        public Image Log() => Math(Enums.OperationMath.Log);
 
         /// <summary>
         /// Return the log base 10 of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Log10() => Math("log10");
+        public Image Log10() => Math(Enums.OperationMath.Log10);
 
         /// <summary>
         /// Return e ** pixel.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Exp() => Math("exp");
+        public Image Exp() => Math(Enums.OperationMath.Exp);
 
         /// <summary>
         /// Return 10 ** pixel.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Exp10() => Math("exp10");
+        public Image Exp10() => Math(Enums.OperationMath.Exp10);
 
         /// <summary>
         /// Raise to power of an image.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(Image other) => Math2(other, "pow");
+        public Image Pow(Image other) => Math2(other, Enums.OperationMath2.Pow);
 
         /// <summary>
         /// Raise to power of an constant.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(double other) => Math2Const("pow", new[] { other });
+        public Image Pow(double other) => Math2Const(Enums.OperationMath2.Pow, new[] { other });
 
         /// <summary>
         /// Raise to power of an array.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(double[] other) => Math2Const("pow", other);
+        public Image Pow(double[] other) => Math2Const(Enums.OperationMath2.Pow, other);
 
         /// <summary>
         /// Raise to power of an array.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(int[] other) => Math2Const("pow", Array.ConvertAll(other, Convert.ToDouble));
+        public Image Pow(int[] other) => Math2Const(Enums.OperationMath2.Pow, Array.ConvertAll(other, Convert.ToDouble));
 
         /// <summary>
         /// Raise to power of an image, but with the arguments reversed.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(Image other) => Math2(other, "wop");
+        public Image Wop(Image other) => Math2(other, Enums.OperationMath2.Wop);
 
         /// <summary>
         /// Raise to power of an constant, but with the arguments reversed.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(double other) => Math2Const("wop", new[] { other });
+        public Image Wop(double other) => Math2Const(Enums.OperationMath2.Wop, new[] { other });
 
         /// <summary>
         /// Raise to power of an array, but with the arguments reversed.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(double[] other) => Math2Const("wop", other);
+        public Image Wop(double[] other) => Math2Const(Enums.OperationMath2.Wop, other);
 
         /// <summary>
         /// Raise to power of an array, but with the arguments reversed.
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(int[] other) => Math2Const("wop", Array.ConvertAll(other, Convert.ToDouble));
+        public Image Wop(int[] other) => Math2Const(Enums.OperationMath2.Wop, Array.ConvertAll(other, Convert.ToDouble));
 
         /// <summary>
         /// Erode with a structuring element.
         /// </summary>
         /// <param name="mask">The structuring element.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Erode(Image mask) => Morph(mask, "erode");
+        public Image Erode(Image mask) => Morph(mask, Enums.OperationMorphology.Erode);
 
         /// <summary>
         /// Dilate with a structuring element.
         /// </summary>
         /// <param name="mask">The structuring element.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Dilate(Image mask) => Morph(mask, "dilate");
+        public Image Dilate(Image mask) => Morph(mask, Enums.OperationMorphology.Dilate);
 
         /// <summary>
         /// size x size median filter.
@@ -1894,37 +1894,37 @@ namespace NetVips
         /// Return the largest integral value not greater than the argument.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Floor() => this.Call("round", "floor") as Image;
+        public Image Floor() => this.Call("round", Enums.OperationRound.Floor) as Image;
 
         /// <summary>
         /// Return the largest integral value not greater than the argument.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Ceil() => this.Call("round", "ceil") as Image;
+        public Image Ceil() => this.Call("round", Enums.OperationRound.Ceil) as Image;
 
         /// <summary>
         /// Return the nearest integral value.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Rint() => this.Call("round", "rint") as Image;
+        public Image Rint() => this.Call("round", Enums.OperationRound.Rint) as Image;
 
         /// <summary>
         /// AND image bands together.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image BandAnd() => this.Call("bandbool", "and") as Image;
+        public Image BandAnd() => this.Call("bandbool", Enums.OperationBoolean.And) as Image;
 
         /// <summary>
         /// OR image bands together.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image BandOr() => this.Call("bandbool", "or") as Image;
+        public Image BandOr() => this.Call("bandbool", Enums.OperationBoolean.Or) as Image;
 
         /// <summary>
         /// EOR image bands together.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image BandEor() => this.Call("bandbool", "eor") as Image;
+        public Image BandEor() => this.Call("bandbool", Enums.OperationBoolean.Eor) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -1932,7 +1932,7 @@ namespace NetVips
         /// <param name="right">A <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Equal(Image right) =>
-            this.Call("relational", right, "equal") as Image;
+            this.Call("relational", right, Enums.OperationRelational.Equal) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -1940,7 +1940,7 @@ namespace NetVips
         /// <param name="right">A double array to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Equal(double[] right) =>
-            this.Call("relational_const", "equal", right) as Image;
+            this.Call("relational_const", Enums.OperationRelational.Equal, right) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -1948,7 +1948,7 @@ namespace NetVips
         /// <param name="right">A integer array to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Equal(int[] right) =>
-            this.Call("relational_const", "equal", right) as Image;
+            this.Call("relational_const", Enums.OperationRelational.Equal, right) as Image;
 
         /// <summary>
         /// This operation compares two images on equality.
@@ -1956,7 +1956,7 @@ namespace NetVips
         /// <param name="right">A double constant to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Equal(double right) =>
-            this.Call("relational_const", "equal", right) as Image;
+            this.Call("relational_const", Enums.OperationRelational.Equal, right) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -1964,7 +1964,7 @@ namespace NetVips
         /// <param name="right">A <see cref="Image"/> to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image NotEqual(Image right) =>
-            this.Call("relational", right, "noteq") as Image;
+            this.Call("relational", right, Enums.OperationRelational.Noteq) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -1972,7 +1972,7 @@ namespace NetVips
         /// <param name="right">A double constant  to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image NotEqual(double right) =>
-            this.Call("relational_const", "noteq", right) as Image;
+            this.Call("relational_const", Enums.OperationRelational.Noteq, right) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -1980,7 +1980,7 @@ namespace NetVips
         /// <param name="right">A double array to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image NotEqual(double[] right) =>
-            this.Call("relational_const", "noteq", right) as Image;
+            this.Call("relational_const", Enums.OperationRelational.Noteq, right) as Image;
 
         /// <summary>
         /// This operation compares two images on inequality.
@@ -1988,7 +1988,7 @@ namespace NetVips
         /// <param name="right">A integer array to compare.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image NotEqual(int[] right) =>
-            this.Call("relational_const", "noteq", right) as Image;
+            this.Call("relational_const", Enums.OperationRelational.Noteq, right) as Image;
 
         /// <summary>
         /// Does this image have an alpha channel?

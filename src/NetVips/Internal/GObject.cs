@@ -42,6 +42,30 @@ namespace NetVips.Internal
         internal static extern void Unref(IntPtr @object);
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct GEnumValue
+    {
+        internal int Value;
+
+        [MarshalAs(UnmanagedType.LPStr)]
+        internal string ValueName;
+
+        [MarshalAs(UnmanagedType.LPStr)]
+        internal string ValueNick;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct GEnumClass
+    {
+        internal IntPtr GTypeClass;
+
+        internal int Minimum;
+        internal int Maximum;
+        internal uint NValues;
+
+        internal IntPtr Values;
+    }
+
     internal static class GType
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -64,6 +88,11 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_type_fundamental")]
         internal static extern IntPtr Fundamental(IntPtr typeId);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_type_class_ref")]
+        internal static extern IntPtr ClassRef(IntPtr type);
     }
 
     internal static class GValue
@@ -76,7 +105,7 @@ namespace NetVips.Internal
 
             [FieldOffset(8)]
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-            internal IntPtr[] data;
+            internal IntPtr[] Data;
         }
 
         [SuppressUnmanagedCodeSecurity]

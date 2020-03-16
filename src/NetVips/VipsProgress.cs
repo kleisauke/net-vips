@@ -12,17 +12,17 @@ namespace NetVips
         /// <summary>
         /// Monotonic start time, in microseconds.
         /// </summary>
-        public ulong start;
+        public ulong Start;
 
         /// <summary>
         /// Monotonic end time, in microseconds.
         /// </summary>
-        public ulong end;
+        public ulong End;
 
         /// <summary>
         /// Is the timer currently active?
         /// </summary>
-        public int active;
+        public int Active;
     }
 
     /// <summary>

@@ -96,92 +96,92 @@ namespace NetVips.Samples
                 case "&":
                     summary = "computes the logical bitwise AND of its operands";
                     operation = isImage ? "boolean" : "boolean_const";
-                    leftArg = isImage ? rightParam : "\"and\"";
-                    rightArg = isImage ? "\"and\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationBoolean.And";
+                    rightArg = isImage ? "Enums.OperationBoolean.And" : rightParam;
                     break;
                 case "|":
                     summary = "computes the bitwise OR of its operands";
                     operation = isImage ? "boolean" : "boolean_const";
-                    leftArg = isImage ? rightParam : "\"or\"";
-                    rightArg = isImage ? "\"or\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationBoolean.Or";
+                    rightArg = isImage ? "Enums.OperationBoolean.Or" : rightParam;
                     break;
                 case "^":
                     summary = "computes the bitwise exclusive-OR of its operands";
                     operation = isImage ? "boolean" : "boolean_const";
-                    leftArg = isImage ? rightParam : "\"eor\"";
-                    rightArg = isImage ? "\"eor\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationBoolean.Eor";
+                    rightArg = isImage ? "Enums.OperationBoolean.Eor" : rightParam;
                     break;
                 case "==":
                     summary = "compares two images on equality";
                     operation = "relational_const";
-                    leftArg = "\"equal\"";
+                    leftArg = "Enums.OperationRelational.Equal";
                     rightArg = rightParam;
                     break;
                 case "!=":
                     summary = "compares two images on inequality";
                     operation = "relational_const";
-                    leftArg = "\"noteq\"";
+                    leftArg = "Enums.OperationRelational.Noteq";
                     rightArg = rightParam;
                     break;
                 case "<<":
                     summary = "shifts its first operand left by the number of bits specified by its second operand";
                     operation = "boolean_const";
-                    leftArg = "\"lshift\"";
+                    leftArg = "Enums.OperationBoolean.Lshift";
                     rightArg = rightParam;
                     break;
                 case ">>":
                     summary = "shifts its first operand right by the number of bits specified by its second operand";
                     operation = "boolean_const";
-                    leftArg = "\"rshift\"";
+                    leftArg = "Enums.OperationBoolean.Rshift";
                     rightArg = rightParam;
                     break;
                 case "<" when invert:
                     summary = "compares if the left operand is less than the right operand";
                     operation = "relational_const";
-                    leftArg = "\"more\"";
+                    leftArg = "Enums.OperationRelational.More";
                     rightArg = rightParam;
                     break;
                 case "<":
                     summary = "compares if the left operand is less than the right operand";
                     operation = isImage ? "relational" : "relational_const";
-                    leftArg = isImage ? rightParam : "\"less\"";
-                    rightArg = isImage ? "\"less\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationRelational.Less";
+                    rightArg = isImage ? "Enums.OperationRelational.Less" : rightParam;
                     break;
                 case ">" when invert:
                     summary = "compares if the left operand is greater than the right operand";
                     operation = "relational_const";
-                    leftArg = "\"less\"";
+                    leftArg = "Enums.OperationRelational.Less";
                     rightArg = rightParam;
                     break;
                 case ">":
                     summary = "compares if the left operand is greater than the right operand";
                     operation = isImage ? "relational" : "relational_const";
-                    leftArg = isImage ? rightParam : "\"more\"";
-                    rightArg = isImage ? "\"more\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationRelational.More";
+                    rightArg = isImage ? "Enums.OperationRelational.More" : rightParam;
                     break;
                 case "<=" when invert:
                     summary = "compares if the left operand is less than or equal to the right operand";
                     operation = "relational_const";
-                    leftArg = "\"moreeq\"";
+                    leftArg = "Enums.OperationRelational.Moreeq";
                     rightArg = rightParam;
                     break;
                 case "<=":
                     summary = "compares if the left operand is less than or equal to the right operand";
                     operation = isImage ? "relational" : "relational_const";
-                    leftArg = isImage ? rightParam : "\"lesseq\"";
-                    rightArg = isImage ? "\"lesseq\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationRelational.Lesseq";
+                    rightArg = isImage ? "Enums.OperationRelational.Lesseq" : rightParam;
                     break;
                 case ">=" when invert:
                     summary = "compares if the left operand is greater than or equal to the right operand";
                     operation = "relational_const";
-                    leftArg = "\"lesseq\"";
+                    leftArg = "Enums.OperationRelational.Lesseq";
                     rightArg = rightParam;
                     break;
                 case ">=":
                     summary = "compares if the left operand is greater than or equal to the right operand";
                     operation = isImage ? "relational" : "relational_const";
-                    leftArg = isImage ? rightParam : "\"moreeq\"";
-                    rightArg = isImage ? "\"moreeq\"" : rightParam;
+                    leftArg = isImage ? rightParam : "Enums.OperationRelational.Moreeq";
+                    rightArg = isImage ? "Enums.OperationRelational.Moreeq" : rightParam;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(operatorStr), operatorStr, "Operator out of range");
