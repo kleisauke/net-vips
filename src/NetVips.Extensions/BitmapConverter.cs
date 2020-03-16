@@ -21,18 +21,18 @@ namespace NetVips.Extensions
             switch (pixelFormat)
             {
                 case PixelFormat.Format1bppIndexed:
-                case PixelFormat.Format4bppIndexed:
                 case PixelFormat.Format8bppIndexed:
                     return 1;
-                case PixelFormat.Format16bppGrayScale:
-                    return 2;
-                case PixelFormat.Format16bppRgb555:
-                case PixelFormat.Format16bppRgb565:
+                /*case PixelFormat.Format16bppGrayScale:
+                    return 2;*/
+                case PixelFormat.Format4bppIndexed:
+                /*case PixelFormat.Format16bppRgb555:*/
+                /*case PixelFormat.Format16bppRgb565:*/
                 case PixelFormat.Format24bppRgb:
                 case PixelFormat.Format32bppRgb:
                 case PixelFormat.Format48bppRgb:
                     return 3;
-                case PixelFormat.Format16bppArgb1555:
+                /*case PixelFormat.Format16bppArgb1555:*/
                 case PixelFormat.Format32bppArgb:
                 case PixelFormat.Format32bppPArgb:
                 case PixelFormat.Format64bppArgb:
@@ -55,12 +55,12 @@ namespace NetVips.Extensions
                 case PixelFormat.Format1bppIndexed:
                 case PixelFormat.Format4bppIndexed:
                 case PixelFormat.Format8bppIndexed:
-                case PixelFormat.Format16bppGrayScale:
-                case PixelFormat.Format16bppRgb555:
-                case PixelFormat.Format16bppRgb565:
+                /*case PixelFormat.Format16bppGrayScale:*/
+                /*case PixelFormat.Format16bppRgb555:*/
+                /*case PixelFormat.Format16bppRgb565:*/
                 case PixelFormat.Format24bppRgb:
                 case PixelFormat.Format32bppRgb:
-                case PixelFormat.Format16bppArgb1555:
+                /*case PixelFormat.Format16bppArgb1555:*/
                 case PixelFormat.Format32bppArgb:
                 case PixelFormat.Format32bppPArgb:
                     return Enums.BandFormat.Uchar;
@@ -99,22 +99,117 @@ namespace NetVips.Extensions
             {
                 bd = src.LockBits(rect, ImageLockMode.ReadOnly, src.PixelFormat);
 
-                // bd.Stride is aligned to a multiple of 4
-                if (bd.Stride == stride)
+                switch (src.PixelFormat)
                 {
-                    dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)size, w, h, bands, format);
-                }
-                else
-                {
-                    var buffer = new byte[size];
-
-                    // Copy the bytes from src to the managed array for each scanline
-                    for (var y = 0; y < h; y++)
+                    case PixelFormat.Format1bppIndexed:
                     {
-                        Marshal.Copy(bd.Scan0 + y * bd.Stride, buffer, y * stride, stride);
-                    }
+                        var buffer = new byte[size];
 
-                    dst = Image.NewFromMemory(buffer, w, h, bands, format);
+                        // Slightly slower:
+                        /*for (var y = 0; y < h; y++)
+                        {
+                            for (var x = 0; x < w; x++)
+                            {
+                                var chunk = Marshal.ReadByte(bd.Scan0, y * bd.Stride + (x >> 3));
+
+                                var mask = (byte)(0x80 >> (x & 0x7));
+                                //var colorIndex = (chunk & mask) == mask ? 1 : 0;
+                                //buffer[y * stride + x] = src.Palette.Entries[colorIndex].R
+                                buffer[y * stride + x] = (byte)((chunk & mask) == mask ? 0 : 255);
+                            }
+                        }*/
+
+                        for (var y = 0; y < h; y++)
+                        {
+                            for (int bytePos = 0, x = 0; bytePos < bd.Stride; bytePos++)
+                            {
+                                if (x >= w)
+                                    continue;
+
+                                var b = Marshal.ReadByte(bd.Scan0, y * bd.Stride + bytePos);
+                                for (var i = 0; i < 8; i++, x++)
+                                {
+                                    if (x >= w)
+                                        break;
+
+                                    buffer[y * stride + x] = (byte)((b & 0x80) == 0x80 ? 0 : 255);
+                                    b <<= 1;
+                                }
+                            }
+                        }
+
+                        return Image.NewFromMemory(buffer, w, h, bands, format);
+                    }
+                    case PixelFormat.Format4bppIndexed:
+                    {
+                        var buffer = new byte[size];
+
+                        var colorIndexMask = /*16*/src.Palette.Entries.Length - 1;
+
+                        for (var y = 0; y < h; y++)
+                        {
+                            for (var x = 0; x < w; x++)
+                            {
+                                var b = Marshal.ReadByte(bd.Scan0, y * bd.Stride + (x >> 1));
+
+                                if ((x & 1) == 1)
+                                {
+                                    b &= 0xF;
+                                }
+                                else
+                                {
+                                    b &= 0xF0;
+                                    b >>= 4;
+                                }
+
+                                var colorIndex = b & colorIndexMask;
+                                buffer[y * stride + x * 3 + 0] = src.Palette.Entries[colorIndex].R;
+                                buffer[y * stride + x * 3 + 1] = src.Palette.Entries[colorIndex].G;
+                                buffer[y * stride + x * 3 + 2] = src.Palette.Entries[colorIndex].B;
+                            }
+                        }
+
+                        return Image.NewFromMemory(buffer, w, h, bands, format);
+                    }
+                    case PixelFormat.Format24bppRgb when bd.Stride == stride:
+                    case PixelFormat.Format8bppIndexed when bd.Stride == stride:
+                    case PixelFormat.Format32bppArgb:
+                    case PixelFormat.Format32bppPArgb:
+                    case PixelFormat.Format48bppRgb when bd.Stride == stride:
+                    case PixelFormat.Format64bppArgb:
+                    case PixelFormat.Format64bppPArgb:
+                        // bd.Stride is aligned to a multiple of 4
+                        dst = Image.NewFromMemoryCopy(bd.Scan0, (ulong)size, w, h, bands, format);
+                        break;
+                    case PixelFormat.Format32bppRgb:
+                    {
+                        var buffer = new byte[size];
+
+                        for (var y = 0; y < h; y++)
+                        {
+                            for (var x = 0; x < w; x++)
+                            {
+                                // The remaining 8 bits are not used
+                                Marshal.Copy(bd.Scan0 + y * bd.Stride + x * 4, buffer, y * stride + x * 3, 3);
+                            }
+                        }
+
+                        dst = Image.NewFromMemory(buffer, w, h, bands, format);
+                        break;
+                    }
+                    default:
+                    {
+                        var buffer = new byte[size];
+
+                        // Copy the bytes from src to the managed array for each scanline
+                        for (var y = 0; y < h; y++)
+                        {
+                            Marshal.Copy(bd.Scan0 + y * bd.Stride, buffer, y * stride, stride);
+                        }
+
+                        dst = Image.NewFromMemory(buffer, w, h, bands, format);
+                        break;
+                    }
                 }
             }
             finally
@@ -172,9 +267,21 @@ namespace NetVips.Extensions
             if (src == null)
                 throw new ArgumentNullException(nameof(src));
 
-            // Ensure image is casted to uint8 (unsigned char)
-            if (src.Bands < 3 || src.Format != Enums.BandFormat.Ushort)
+            if (src.Interpretation == Enums.Interpretation.Bw)
             {
+                // Convert to sRGB, since Format16bppGrayScale appears to be unsupported by GDI+.
+                // See: https://stackoverflow.com/a/19706842/10952119
+                src = src.Colourspace(Enums.Interpretation.Srgb);
+            }
+            else if (src.Bands == 2)
+            {
+                // Add an additional band
+                src = src.Bandjoin(255);
+            }
+
+            if (src.Bands == 1 || src.Format != Enums.BandFormat.Ushort)
+            {
+                // Ensure image is casted to uint8 (unsigned char)
                 src = src.Cast(Enums.BandFormat.Uchar);
             }
 
@@ -183,14 +290,6 @@ namespace NetVips.Extensions
             {
                 case 1:
                     pf = PixelFormat.Format8bppIndexed;
-                    break;
-                case 2:
-                    // Note: Format16bppGrayScale appears to be unsupported by GDI+.
-                    // See: https://stackoverflow.com/a/19706842/10952119
-                    pf = PixelFormat.Format16bppGrayScale;
-
-                    // pf = PixelFormat.Format8bppIndexed;
-                    // src = src[0];
                     break;
                 case 3:
                     pf = src.Format == Enums.BandFormat.Ushort
@@ -212,7 +311,7 @@ namespace NetVips.Extensions
                     break;
                 default:
                     throw new NotImplementedException(
-                        $"Number of bands must be in the range of 1 to 4. Got: {src.Bands}");
+                        $"Number of bands must be 1 or in the in the range of 3 to 4. Got: {src.Bands}");
             }
 
             var dst = new Bitmap(src.Width, src.Height, pf);

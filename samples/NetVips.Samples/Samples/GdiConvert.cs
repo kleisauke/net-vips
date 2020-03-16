@@ -12,13 +12,56 @@ namespace NetVips.Samples
 
         public string Execute(string[] args)
         {
-            var image = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
-            var bitmap = image.ToBitmap();
-            bitmap.Save("vips-convert.png", ImageFormat.Png);
-            var image2 = bitmap.ToVips();
-            image2.WriteToFile("gdi-convert.png");
+            var bitmap = new System.Drawing.Bitmap(Filename);
 
-            return "See gdi-convert.jpg";
+            // 24bpp -> 32bppArgb
+            /*using var bitmap32Argb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
+            using (var graphics = System.Drawing.Graphics.FromImage(bitmap32Argb))
+            {
+                graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            }
+            bitmap = bitmap32Argb;*/
+
+            // 24bpp -> 32bppRgb
+            /*using var bitmap32Rgb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppRgb);
+            using (var graphics = System.Drawing.Graphics.FromImage(bitmap32Rgb))
+            {
+                graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            }
+            bitmap = bitmap32Rgb;*/
+
+            // 24bpp -> 48bppRgb
+            /*using var bitmap48Rgb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format48bppRgb);
+            using (var graphics = System.Drawing.Graphics.FromImage(bitmap48Rgb))
+            {
+                graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            }
+
+            bitmap = bitmap48Rgb;*/
+
+            // 24bpp -> 64bppArgb
+            /*using var bitmap64Argb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format64bppArgb);
+            using (var graphics = System.Drawing.Graphics.FromImage(bitmap64Argb))
+            {
+                graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            }
+
+            bitmap = bitmap64Argb;*/
+
+            bitmap.Save("gdi-original.png", ImageFormat.Png);
+
+            var vipsImage = bitmap.ToVips();
+            vipsImage.WriteToFile("gdi-to-vips.png");
+            bitmap = vipsImage.ToBitmap();
+            bitmap.Save("vips-to-gdi.png", ImageFormat.Png);
+
+            /*vipsImage = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+            bitmap = vipsImage.ToBitmap();
+            bitmap.Save("vips-to-gdi2.png", ImageFormat.Png);
+            var image2 = bitmap.ToVips();
+            image2.WriteToFile("gdi-to-vips2.png");*/
+
+            return "See gdi-to-vips.png";
         }
     }
 }

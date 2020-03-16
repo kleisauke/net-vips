@@ -81,13 +81,21 @@ namespace NetVips.Tests
             if (actual.Width != 1 || actual.Height != 1)
                 throw new Exception("1x1 image only");
 
-            var pixels = new byte[expected.Length];
+            var length = expected.Length;
+
+            // An additional band is added for grayscale images
+            if (length == 2)
+            {
+                length++;
+            }
+
+            var pixels = new byte[length];
             var bitmapData = actual.LockBits(new Rectangle(0, 0, 1, 1), ImageLockMode.ReadOnly, actual.PixelFormat);
-            Marshal.Copy(bitmapData.Scan0, pixels, 0, expected.Length);
+            Marshal.Copy(bitmapData.Scan0, pixels, 0, length);
             actual.UnlockBits(bitmapData);
 
             // Switch from BGR(A) to RGB(A)
-            if (expected.Length > 2)
+            if (length > 2)
             {
                 var t = pixels[0];
                 pixels[0] = pixels[2];
