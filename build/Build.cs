@@ -117,6 +117,9 @@ partial class Build : NukeBuild
                 var dllPackDir = Parameters.PackDir / architecture;
                 EnsureExistingDirectory(dllPackDir);
 
+                // The C++ binding isn't needed.
+                tempDir.GlobFiles("lib/libvips-cpp*").ForEach(DeleteFile);
+
                 tempDir.GlobFiles("lib/*.dll", "lib/*.so.*", "lib/*.dylib", "THIRD-PARTY-NOTICES.md", "versions.json")
                     .ForEach(f => CopyFileToDirectory(f, dllPackDir));
 

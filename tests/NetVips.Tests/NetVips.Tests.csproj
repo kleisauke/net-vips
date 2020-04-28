@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TestWithNuGetBinaries)' == 'true'">
-    <PackageReference Include="NetVips.Native" Version="8.9.1" />
+    <PackageReference Include="NetVips.Native" Version="8.9.2" />
   </ItemGroup>
 
   <ItemGroup>
