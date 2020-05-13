@@ -29,7 +29,7 @@ namespace NetVips
         /// </summary>
         /// <param name="length">Return number of bytes of data.</param>
         /// <returns>A <see cref="IntPtr"/> containing the data.</returns>
-        internal IntPtr GetData(out ulong length)
+        internal IntPtr GetData(out UIntPtr length)
         {
             return Internal.VipsBlob.Get(this, out length);
         }
@@ -61,7 +61,7 @@ namespace NetVips
         /// <summary>
         /// Get the number of bytes of data.
         /// </summary>
-        internal ulong Length => (ulong) handle.Dereference<Internal.VipsArea.Struct>().Length;
+        internal ulong Length => (ulong)handle.Dereference<Internal.VipsArea.Struct>().Length;
 
         /// <summary>
         /// Get the reference count of the blob. Handy for debugging.

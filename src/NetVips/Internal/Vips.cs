@@ -258,7 +258,7 @@ namespace NetVips.Internal
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_blob_get")]
-        internal static extern IntPtr Get(VipsBlobManaged blob, out ulong length);
+        internal static extern IntPtr Get(VipsBlobManaged blob, out UIntPtr length);
     }
 
     internal static class VipsArea

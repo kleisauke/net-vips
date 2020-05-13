@@ -458,7 +458,7 @@ namespace NetVips
             {
                 var buf = blob.GetData(out var length);
 
-                name = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, length));
+                name = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, (ulong)length));
                 if (name == null)
                 {
                     throw new VipsException("unable to load from source");
@@ -1809,7 +1809,8 @@ namespace NetVips
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(int[] other) => Math2Const(Enums.OperationMath2.Pow, Array.ConvertAll(other, Convert.ToDouble));
+        public Image Pow(int[] other) =>
+            Math2Const(Enums.OperationMath2.Pow, Array.ConvertAll(other, Convert.ToDouble));
 
         /// <summary>
         /// Raise to power of an image, but with the arguments reversed.
@@ -1837,7 +1838,8 @@ namespace NetVips
         /// </summary>
         /// <param name="other">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(int[] other) => Math2Const(Enums.OperationMath2.Wop, Array.ConvertAll(other, Convert.ToDouble));
+        public Image Wop(int[] other) =>
+            Math2Const(Enums.OperationMath2.Wop, Array.ConvertAll(other, Convert.ToDouble));
 
         /// <summary>
         /// Erode with a structuring element.
