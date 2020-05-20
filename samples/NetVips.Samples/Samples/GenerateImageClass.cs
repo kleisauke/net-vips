@@ -611,11 +611,16 @@ namespace NetVips.Samples
                             .ToArray()));
                 }
 
-                var typeStream = firstArgType == GValue.SourceType ? "Source" : "Target";
-
-                result.AppendLine(") =>")
-                    .Append($"{indent}   ")
-                    .Append($"{oldOperationName}({typeStream}Stream.NewFromStream(stream), ")
+                result.AppendLine(")")
+                    .AppendLine($"{indent}{{")
+                    .AppendLine(firstArgType == GValue.SourceType
+                        ? $"{indent}    var source = SourceStream.NewFromStream(stream);"
+                        : $"{indent}    using (var target = TargetStream.NewFromStream(stream))")
+                    .Append($"{indent}    ")
+                    .Append(firstArgType == GValue.SourceType ? "var image = " : $"{{\n{indent}        ")
+                    .Append($"{oldOperationName}(")
+                    .Append(firstArgType == GValue.SourceType ? "source" : "target")
+                    .Append(", ")
                     .Append(string.Join(", ",
                         requiredInput.Select(arg => $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
                             .ToArray()));
@@ -647,6 +652,21 @@ namespace NetVips.Samples
                 }
 
                 result.AppendLine(");");
+
+                if (firstArgType == GValue.SourceType)
+                {
+                    result.AppendLine()
+                        .AppendLine($"{indent}    image.OnUnref += () => source.Dispose();")
+                        .AppendLine()
+                        .AppendLine($"{indent}    return image;");
+                }
+                else
+                {
+                    result.AppendLine($"{indent}    }}");
+                }
+
+                result
+                    .AppendLine($"{indent}}}");
             }
 
             // Create method overloading if necessary

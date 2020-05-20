@@ -3,6 +3,13 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - ???
+### Fixed
+- Fix the buffer-based fallback mechanism for `NewFromStream` / `NewFromSource` on Windows 32-bit.
+
+### Changed
+- Free the associated streams within `*loadStream` / `*saveStream` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
+
 ## [1.2.1] - 2020-03-16
 ### Fixed
 - Fix a bug that freed the stream within `Image.NewFromStream` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
@@ -126,6 +133,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[1.2.2]: https://github.com/kleisauke/net-vips/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/kleisauke/net-vips/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0
