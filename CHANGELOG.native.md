@@ -4,6 +4,11 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.9.2-build2] - 2020-06-16
+### Changed
+- Binaries are copied to the output directory for Mono runtime ([#80](https://github.com/kleisauke/net-vips/issues/80)).
+- A statically linked libvips binary is build for macOS ([kleisauke/libvips-packaging#1](https://github.com/kleisauke/libvips-packaging/issues/1)).
+
 ## [8.9.2] - 2020-04-28
 ### Note
 If you would like to see what's changed, please visit the the release notes of libvips:
@@ -73,6 +78,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.9.2-build2]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.2...v8.9.2-build2
 [8.9.2]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.1...v8.9.2
 [8.9.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.0...v8.9.1
 [8.9.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.8.4...v8.9.0

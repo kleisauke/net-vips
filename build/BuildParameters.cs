@@ -28,6 +28,7 @@ public partial class Build
         public string[] NuGetArchitectures { get; }
         public string Version { get; }
         public string VipsVersion { get; }
+        public string VipsTagVersion { get; }
         public AbsolutePath ArtifactsDir { get; }
         public AbsolutePath PackDir { get; }
         public AbsolutePath DownloadDir { get; }
@@ -50,11 +51,12 @@ public partial class Build
             // VERSION
             Version = GetVersion();
             VipsVersion = Environment.GetEnvironmentVariable("VIPS_VERSION");
+            VipsTagVersion = VipsVersion;
 
             var vipsPreVersion = Environment.GetEnvironmentVariable("VIPS_PRE_VERSION");
             if (!string.IsNullOrWhiteSpace(vipsPreVersion))
             {
-                VipsVersion += "-" + vipsPreVersion;
+                VipsTagVersion += "-" + vipsPreVersion;
             }
 
             // DIRECTORIES
