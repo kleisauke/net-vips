@@ -1,7 +1,7 @@
 namespace NetVips
 {
     using System;
-    using System.Collections.Generic;
+    using System.Buffers;
     using System.Runtime.InteropServices;
     using System.Text;
     using Internal;
@@ -113,59 +113,49 @@ namespace NetVips
         /// <summary>
         /// Marshals a GLib UTF8 char* to a managed string.
         /// </summary>
-        /// <param name="ptr">Pointer to the GLib string.</param>
+        /// <param name="utf8Str">Pointer to the GLib string.</param>
         /// <param name="freePtr">If set to <see langword="true"/>, free the GLib string.</param>
         /// <param name="size">Size of the GLib string, use 0 to read until the null character.</param>
         /// <returns>The managed string.</returns>
-        internal static string ToUtf8String(this IntPtr ptr, bool freePtr = false, int size = 0)
+        internal static string ToUtf8String(this IntPtr utf8Str, bool freePtr = false, int size = 0)
         {
-            return ptr == IntPtr.Zero ? null : Encoding.UTF8.GetString(ptr.ToByteString(freePtr, size));
-        }
-
-        /// <summary>
-        /// Marshals a C string pointer to a byte array.
-        /// </summary>
-        /// <remarks>
-        /// Since encoding is not specified, the string is returned as a byte array.
-        /// The byte array does not include the null terminator.
-        /// </remarks>
-        /// <param name="ptr">Pointer to the unmanaged string.</param>
-        /// <param name="freePtr">If set to <see langword="true"/> free the unmanaged memory.</param>
-        /// <param name="size">Size of the C string, use 0 to read until the null character.</param>
-        /// <returns>The string as a byte array.</returns>
-        internal static byte[] ToByteString(this IntPtr ptr, bool freePtr = false, int size = 0)
-        {
-            if (ptr == IntPtr.Zero)
+            if (utf8Str == IntPtr.Zero)
             {
                 return null;
             }
 
-            byte[] managedArray;
-            if (size > 0)
+            if (size == 0)
             {
-                managedArray = new byte[size];
-                Marshal.Copy(ptr, managedArray, 0, size);
-            }
-            else
-            {
-                var bytes = new List<byte>();
-                var offset = 0;
-
-                byte b;
-                while ((b = Marshal.ReadByte(ptr, offset++)) != 0)
+                while (Marshal.ReadByte(utf8Str, size) != 0)
                 {
-                    bytes.Add(b);
+                    ++size;
+                }
+            }
+
+            if (size == 0)
+            {
+                if (freePtr)
+                {
+                    GLib.GFree(utf8Str);
                 }
 
-                managedArray = bytes.ToArray();
+                return string.Empty;
             }
 
-            if (freePtr)
+            var bytes = ArrayPool<byte>.Shared.Rent(size);
+            try
             {
-                GLib.GFree(ptr);
+                Marshal.Copy(utf8Str, bytes, 0, size);
+                return Encoding.UTF8.GetString(bytes, 0, size);
             }
-
-            return managedArray;
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(bytes);
+                if (freePtr)
+                {
+                    GLib.GFree(utf8Str);
+                }
+            }
         }
 
         /// <summary>

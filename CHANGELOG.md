@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 - Free the associated streams within `*loadStream` / `*saveStream` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
+- Speed-up UTF8 string marshalling by using `System.Buffers.ArrayPool`.
 
 ## [1.2.1] - 2020-03-16
 ### Fixed
