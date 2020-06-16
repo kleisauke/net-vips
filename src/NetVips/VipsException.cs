@@ -1,7 +1,6 @@
 namespace NetVips
 {
     using System;
-    using System.Runtime.InteropServices;
     using Internal;
 
     /// <summary>
@@ -40,7 +39,7 @@ namespace NetVips
 
         private static string VipsErrorBuffer()
         {
-            return Marshal.PtrToStringAnsi(Vips.ErrorBuffer());
+            return Vips.ErrorBuffer().ToUtf8String();
         }
     }
 }
