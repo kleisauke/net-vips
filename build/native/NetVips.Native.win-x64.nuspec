@@ -22,7 +22,7 @@
   </metadata>
   <files>
 
-    <!-- The build bits -->
+    <!-- The .NET Framework >= 4.5 build bits -->
     <file src="targets\NetVips.Native.win-x64.targets" target="build/net45" />
 
     <!-- Include libvips Windows x64 binaries -->

@@ -22,6 +22,9 @@
   </metadata>
   <files>
 
+    <!-- The .NET Framework >= 4.6.1 build bits for Mono runtime -->
+    <file src="targets\NetVips.Native.osx-x64.targets" target="build/net461" />
+
     <!-- Include libvips OS X x64 binaries -->
     <file src="pack\osx-x64\*.dylib" target="runtimes/osx-x64/native" />
 

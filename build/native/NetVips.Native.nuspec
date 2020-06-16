@@ -21,11 +21,17 @@
 
     <!-- dependencies -->
     <dependencies>
-      <dependency id="NetVips.Native.linux-musl-x64" version="$version$" />
-      <dependency id="NetVips.Native.linux-x64" version="$version$" />
-      <dependency id="NetVips.Native.osx-x64" version="$version$" />
-      <dependency id="NetVips.Native.win-x64" version="$version$" />
-      <dependency id="NetVips.Native.win-x86" version="$version$" />
+      <group targetFramework="netstandard2.0">
+        <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.osx-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.win-x64" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86" version="$version$" include="native, build" />
+      </group>
+      <group targetFramework="net45">
+        <dependency id="NetVips.Native.win-x64" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86" version="$version$" include="native, build" />
+      </group>
     </dependencies>
 
   </metadata>
