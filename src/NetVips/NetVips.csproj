@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.4" />
-    <PackageReference Include="Fody" Version="6.1.1">
+    <PackageReference Include="Fody" Version="6.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
