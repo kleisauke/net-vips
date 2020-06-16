@@ -1,9 +1,5 @@
 language: csharp
 
-mono: none
-
-dotnet: 3.1.300
-
 env:
   global:
     - VIPS_VERSION=8.9.2
@@ -17,16 +13,31 @@ jobs:
   fast_finish: true
   allow_failures:
     - os: osx
+    - mono: latest
   include:
-    # these are just to make travis's UI a bit prettier
     - os: linux
-      # Ubuntu 16.04
-      dist: xenial
+      dist: xenial # Ubuntu 16.04
+      dotnet: 3.1.301
+      mono: none
+      env:
+        - JOBS=`nproc`
+    - os: linux
+      dist: xenial # Ubuntu 16.04
+      mono: latest
       env:
         - JOBS=`nproc`
     - os: osx
-      # macOS 10.13
-      osx_image: xcode10.1
+      osx_image: xcode10.1 # macOS 10.13
+      dotnet: 3.1.301
+      mono: none
+      env:
+        - JOBS="`sysctl -n hw.ncpu`"
+        - PATH="/usr/local/opt/ccache/bin:$PATH"
+        - HOMEBREW_NO_AUTO_UPDATE=1
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+    - os: osx
+      osx_image: xcode10.1 # macOS 10.13
+      mono: latest
       env:
         - JOBS="`sysctl -n hw.ncpu`"
         - PATH="/usr/local/opt/ccache/bin:$PATH"
@@ -86,4 +97,6 @@ addons:
 
 before_install: ./build/travis.sh
 
-script: ./build.sh
+script: 
+  - if [ -x "$(command -v dotnet)" ]; then ./build.sh; fi
+  - if [ -x "$(command -v mono)" ]; then ./build/test-mono.sh; fi

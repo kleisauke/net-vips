@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -e
+set -eo pipefail
 
 ###########################################################################
 # CONFIGURATION
 ###########################################################################
 
-SCRIPT_DIR=$(pwd)
+SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/NetVips.Build.csproj"
 
 ###########################################################################

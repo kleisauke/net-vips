@@ -11,7 +11,7 @@ namespace NetVips.Tests
     public static class Helper
     {
         public static readonly string Images =
-            Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData");
+            Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "TestData");
 
         public static readonly string JpegFile = Path.Combine(Images, "йцук.jpg");
         public static readonly string TruncatedFile = Path.Combine(Images, "truncated.jpg");
