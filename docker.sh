@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-if ! type docker > /dev/null; then
+if ! [ -x "$(command -v docker)" ]; then
   echo "Please install docker"
   exit 1
 fi
 
 # Ensure latest .NET Core SDK
-docker pull mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.10
+docker pull mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.12
 
 # Create a machine image with all the required build tools pre-installed
 docker build . -t netvips
