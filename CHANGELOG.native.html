@@ -65,14 +65,21 @@
 <p>All notable changes to the pre-compiled binaries of libvips will be documented in this file. The version number of these NuGet packages is in sync with libvips' version number.
 The changes of libvips are documented <a href="https://github.com/libvips/libvips/blob/master/ChangeLog">here</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="892-build2---2020-06-16"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.2...v8.9.2-build2">8.9.2-build2</a> - 2020-06-16</h2>
+<h2 id="892-build3---2020-06-21"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.2-build2...v8.9.2-build3">8.9.2-build3</a> - 2020-06-21</h2>
+<h3 id="note">Note</h3>
+<p>Requires NetVips v1.2.3.</p>
 <h3 id="changed">Changed</h3>
+<ul>
+<li>A single shared libvips binary is build for Linux and macOS (<a href="https://github.com/kleisauke/net-vips/issues/83">#83</a>).</li>
+</ul>
+<h2 id="892-build2---2020-06-16"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.2...v8.9.2-build2">8.9.2-build2</a> - 2020-06-16</h2>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Binaries are copied to the output directory for Mono runtime (<a href="https://github.com/kleisauke/net-vips/issues/80">#80</a>).</li>
 <li>A statically linked libvips binary is build for macOS (<a href="https://github.com/kleisauke/libvips-packaging/issues/1">kleisauke/libvips-packaging#1</a>).</li>
 </ul>
 <h2 id="892---2020-04-28"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.1...v8.9.2">8.9.2</a> - 2020-04-28</h2>
-<h3 id="note">Note</h3>
+<h3 id="note-1">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://github.com/libvips/libvips/releases/tag/v8.9.2">https://github.com/libvips/libvips/releases/tag/v8.9.2</a></p>
 <h3 id="fixed">Fixed</h3>
@@ -81,14 +88,14 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>A GLib regression when running inside the Visual Studio debugger (<a href="https://github.com/libvips/build-win64-mxe/issues/9">libvips/build-win64-mxe#9</a>).</li>
 </ul>
 <h2 id="891---2020-01-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.0...v8.9.1">8.9.1</a> - 2020-01-30</h2>
-<h3 id="note-1">Note</h3>
+<h3 id="note-2">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://github.com/libvips/libvips/releases/tag/v8.9.1">https://github.com/libvips/libvips/releases/tag/v8.9.1</a></p>
 <h2 id="890---2020-01-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.4...v8.9.0">8.9.0</a> - 2020-01-30</h2>
-<h3 id="note-2">Note</h3>
+<h3 id="note-3">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://libvips.github.io/libvips/2019/12/11/What%27s-new-in-8.9.html">https://libvips.github.io/libvips/2019/12/11/What's-new-in-8.9.html</a></p>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>A statically linked libvips binary is build for Linux (<a href="https://github.com/kleisauke/net-vips/issues/51">#51</a>).</li>
 <li>The NuGet packages now includes:
@@ -99,23 +106,23 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 </li>
 </ul>
 <h2 id="884---2019-12-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.3...v8.8.4">8.8.4</a> - 2019-12-30</h2>
-<h3 id="note-3">Note</h3>
+<h3 id="note-4">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.4">https://github.com/libvips/libvips/releases/tag/v8.8.4</a></p>
 <h2 id="883---2019-10-14"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.2...v8.8.3">8.8.3</a> - 2019-10-14</h2>
-<h3 id="note-4">Note</h3>
+<h3 id="note-5">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.3">https://github.com/libvips/libvips/releases/tag/v8.8.3</a></p>
 <h2 id="882---2019-09-05"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.1...v8.8.2">8.8.2</a> - 2019-09-05</h2>
-<h3 id="note-5">Note</h3>
+<h3 id="note-6">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.2">https://github.com/libvips/libvips/releases/tag/v8.8.2</a></p>
 <h2 id="881---2019-07-29"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.0...v8.8.1">8.8.1</a> - 2019-07-29</h2>
-<h3 id="note-6">Note</h3>
+<h3 id="note-7">Note</h3>
 <p>If you would like to see what's changed, please visit the the release notes of libvips:
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.1">https://github.com/libvips/libvips/releases/tag/v8.8.1</a></p>
 <h2 id="880---2019-06-22"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.7.4...v8.8.0">8.8.0</a> - 2019-06-22</h2>
-<h3 id="note-7">Note</h3>
+<h3 id="note-8">Note</h3>
 <p>If you would like to see what's new, please visit the the release notes of libvips:
 <a href="https://libvips.github.io/libvips/2019/04/22/What%27s-new-in-8.8.html">https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html</a></p>
 <h2 id="874---2019-04-10"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.7.4-beta1...v8.7.4">8.7.4</a> - 2019-04-10</h2>
@@ -123,7 +130,7 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <ul>
 <li>A <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package which depends on the other <a href="https://www.nuget.org/packages?q=id%3ANetVips.Native">NetVips.Native.*</a> packages.</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>The OS X binaries are now distributed with <a href="https://github.com/libjpeg-turbo/libjpeg-turbo"><code>jpeg-turbo</code></a> instead than <a href="https://www.ijg.org/"><code>jpeg</code></a> (<a href="https://github.com/lovell/package-libvips-darwin/pull/3">lovell/package-libvips-darwin#3</a>).</li>
 </ul>
@@ -140,7 +147,7 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 </ul>
 </li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 (<a href="https://github.com/libvips/build-win64/issues/21#issuecomment-458112440">libvips/build-win64#21</a>).</li>
 </ul>

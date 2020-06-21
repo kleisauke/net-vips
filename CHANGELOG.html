@@ -64,6 +64,11 @@
 
 <p>All notable changes to NetVips will be documented in this file. See <a href="CHANGELOG.native.html">here</a> for the changes to the <a href="https://www.nuget.org/packages/NetVips.Native/">pre-compiled binaries of libvips</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2 id="123---2020-06-21"><a href="https://github.com/kleisauke/net-vips/compare/v1.2.2...v1.2.3">1.2.3</a> - 2020-06-21</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li>Add support for a single shared libvips binary on Linux and macOS (<a href="https://github.com/kleisauke/net-vips/issues/83">#83</a>).</li>
+</ul>
 <h2 id="122---2020-06-16"><a href="https://github.com/kleisauke/net-vips/compare/v1.2.1...v1.2.2">1.2.2</a> - 2020-06-16</h2>
 <h3 id="fixed">Fixed</h3>
 <ul>
@@ -84,7 +89,7 @@
 <li>Update enums.</li>
 </ul>
 <h2 id="120---2020-01-30"><a href="https://github.com/kleisauke/net-vips/compare/v1.1.0...v1.2.0">1.2.0</a> - 2020-01-30</h2>
-<h3 id="added">Added</h3>
+<h3 id="added-1">Added</h3>
 <ul>
 <li>Add support for true streaming (<a href="https://github.com/kleisauke/net-vips/issues/33">#33</a>).
 <ul>
@@ -114,7 +119,7 @@
 <li>The internal function <code>Operation.GenerateImageClass()</code> has moved to the <a href="https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs">samples directory</a>.</li>
 </ul>
 <h2 id="110---2019-07-29"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.7...v1.1.0">1.1.0</a> - 2019-07-29</h2>
-<h3 id="added-1">Added</h3>
+<h3 id="added-2">Added</h3>
 <ul>
 <li>A new <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package containing the pre-compiled libvips binaries for Linux, macOS and Windows (<a href="https://github.com/kleisauke/net-vips/issues/21">#21</a>).
 <ul>
@@ -156,7 +161,7 @@
 <li>Speed-up <code>Base.Version</code> by caching the libvips version as soon as the assembly is loaded.</li>
 </ul>
 <h2 id="106---2019-01-10"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.5...v1.0.6">1.0.6</a> - 2019-01-10</h2>
-<h3 id="added-2">Added</h3>
+<h3 id="added-3">Added</h3>
 <ul>
 <li>The <code>LibvipsOutputBase</code> property to specify the subdirectory (within your project's output directory) where the libvips binaries are copied to (<a href="https://github.com/kleisauke/net-vips/issues/20">#20</a>).</li>
 </ul>
@@ -170,7 +175,7 @@
 <li>The redundant <code>LibvipsDLLPath</code> property.</li>
 </ul>
 <h2 id="105---2018-09-25"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.4...v1.0.5">1.0.5</a> - 2018-09-25</h2>
-<h3 id="added-3">Added</h3>
+<h3 id="added-4">Added</h3>
 <ul>
 <li>Bundle pre-compiled libvips binary and its dependencies for 32-bit Windows.</li>
 </ul>
@@ -183,7 +188,7 @@
 <li>Update bundled libvips binary to 8.7.0.</li>
 </ul>
 <h2 id="104---2018-06-28"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.3...v1.0.4">1.0.4</a> - 2018-06-28</h2>
-<h3 id="added-4">Added</h3>
+<h3 id="added-5">Added</h3>
 <ul>
 <li>Add <code>contains</code> helper (to check if the image contains an property of metadata).</li>
 <li>Support 32-bit architecture (<a href="https://github.com/kleisauke/net-vips/issues/7">#7</a>).</li>
@@ -197,7 +202,7 @@
 <li>Fix a bug that freed a string pointer too early (<a href="https://github.com/kleisauke/net-vips/issues/9">#9</a>).</li>
 </ul>
 <h2 id="103---2018-06-06"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.2...v1.0.3">1.0.3</a> - 2018-06-06</h2>
-<h3 id="added-5">Added</h3>
+<h3 id="added-6">Added</h3>
 <ul>
 <li>Bundle pre-compiled libvips binary and its dependencies for 64-bit Windows (<a href="https://github.com/kleisauke/net-vips/issues/3">#3</a>).</li>
 </ul>
@@ -207,7 +212,7 @@
 <li>Lower the minimum required .NET Framework version to 4.5 (<a href="https://github.com/kleisauke/net-vips/issues/4">#4</a>).</li>
 </ul>
 <h2 id="102---2018-04-23"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.1...v1.0.2">1.0.2</a> - 2018-04-23</h2>
-<h3 id="added-6">Added</h3>
+<h3 id="added-7">Added</h3>
 <ul>
 <li>Add missing libvips 8.7 methods.</li>
 <li>Add logging handler to log warnings and debug messages from libvips.</li>
@@ -225,7 +230,7 @@
 <li>Fix reference count bug.</li>
 </ul>
 <h2 id="100---2018-04-08"><a href="https://github.com/kleisauke/net-vips/releases/tag/v1.0.0">1.0.0</a> - 2018-04-08</h2>
-<h3 id="added-7">Added</h3>
+<h3 id="added-8">Added</h3>
 <ul>
 <li>First release!</li>
 </ul>
