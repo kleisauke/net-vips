@@ -16,8 +16,8 @@ DLL_FILE="$SCRIPT_DIR/tests/NetVips.Tests/bin/Release/net472/NetVips.Tests.dll"
 if [ "$(uname)" == "Darwin" ]; then
     RID="osx-x64"
 
-    # Prefer Homebrew's glib to avoid compatibility issues 
-    # with the one provided by mono.
+    # Prefer Homebrew's glib to avoid compatibility issues
+    # with the one provided by Mono.
     export DYLD_LIBRARY_PATH=$(brew --prefix glib)/lib
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     RID="linux-x64"
