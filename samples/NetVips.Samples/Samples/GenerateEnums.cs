@@ -112,7 +112,7 @@ namespace NetVips.Samples
 
             File.WriteAllText("Enums.Generated.cs", Generate());
 
-            return "See Image.Generated.cs";
+            return "See Enums.Generated.cs";
         }
     }
 }

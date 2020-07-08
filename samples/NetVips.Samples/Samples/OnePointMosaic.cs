@@ -59,10 +59,9 @@ namespace NetVips.Samples
                     mosaicedImage = mosaicedImage.Mosaic(horizontalPart, Enums.Direction.Vertical, verticalMarks[1][0],
                         verticalMarks[1][1], verticalMarks[0][0], verticalMarks[0][1]);
                 }
-
-                mosaicedImage = mosaicedImage.Globalbalance();
             }
 
+            mosaicedImage = mosaicedImage.Globalbalance();
             mosaicedImage.WriteToFile("1-pt-mosaic.jpg");
 
             return "See 1-pt-mosaic.jpg";

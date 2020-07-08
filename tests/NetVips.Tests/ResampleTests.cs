@@ -249,6 +249,41 @@ namespace NetVips.Tests
             var buf = File.ReadAllBytes(Helper.JpegFile);
             var im2 = Image.ThumbnailBuffer(buf, 100);
             Assert.True(Math.Abs(im1.Avg() - im2.Avg()) < 1);
+
+            // OME-TIFF subifd thumbnail support added in 8.10
+            if (NetVips.AtLeastLibvips(8, 10))
+            {
+                // should be able to thumbnail many-page tiff
+                im = Image.Thumbnail(Helper.OmeFile, 100);
+                Assert.Equal(100, im.Width);
+                Assert.Equal(38, im.Height);
+
+                // should be able to thumbnail individual pages from many-page tiff
+                // should be able to thumbnail individual pages from many-page tiff
+                im = Image.Thumbnail(Helper.OmeFile + "[page=0]", 100);
+                Assert.Equal(100, im.Width);
+                Assert.Equal(38, im.Height);
+                im2 = Image.Thumbnail(Helper.OmeFile + "[page=1]", 100);
+                Assert.Equal(100, im2.Width);
+                Assert.Equal(38, im2.Height);
+                Assert.True((im1 - im2).Abs().Max() != 0);
+
+                // should be able to thumbnail entire many-page tiff as a toilet-roll
+                // image
+                im = Image.Thumbnail(Helper.OmeFile + "[n=-1]", 100);
+                Assert.Equal(100, im.Width);
+                Assert.Equal(570, im.Height);
+
+                if (Helper.Have("heifload"))
+                {
+                    // this image is orientation 6 ... thumbnail should flip it
+                    var thumb = Image.Thumbnail(Helper.HeicFile, 100);
+
+                    // thumb should be portrait
+                    Assert.True(thumb.Width < thumb.Height);
+                    Assert.Equal(100, thumb.Height);
+                }
+            }
         }
 
         [Fact]

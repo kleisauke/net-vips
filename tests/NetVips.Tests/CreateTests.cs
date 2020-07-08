@@ -252,6 +252,32 @@ namespace NetVips.Tests
             Assert.Equal(0, p[2], 1);
         }
 
+        [SkippableFact]
+        public void TestMatrixinvert()
+        {
+            // matrixinvert was added in libvips 8.10.
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 10), "requires libvips >= 8.10");
+
+            // 4x4 matrix to check if PLU decomposition works
+            var mat = Image.NewFromArray(new[,]
+            {
+                {4, 0, 0, 0},
+                {0, 0, 2, 0},
+                {0, 1, 2, 0},
+                {1, 0, 0, 1}
+            });
+            var im = mat.Matrixinvert();
+            Assert.Equal(4, im.Width);
+            Assert.Equal(4, im.Height);
+            Assert.Equal(1, im.Bands);
+            Assert.Equal(Enums.BandFormat.Double, im.Format);
+
+            var p = im[0, 0];
+            Assert.Equal(0.25, p[0]);
+            p = im[3, 3];
+            Assert.Equal(1.0, p[0]);
+        }
+
         [Fact]
         public void TestLogmat()
         {

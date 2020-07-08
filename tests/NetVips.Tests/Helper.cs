@@ -19,6 +19,9 @@ namespace NetVips.Tests
         public static readonly string MatlabFile = Path.Combine(Images, "sample.mat");
         public static readonly string PngFile = Path.Combine(Images, "sample.png");
         public static readonly string TifFile = Path.Combine(Images, "sample.tif");
+        public static readonly string Tif1File = Path.Combine(Images, "1bit.tif");
+        public static readonly string Tif2File = Path.Combine(Images, "2bit.tif");
+        public static readonly string Tif4File = Path.Combine(Images, "4bit.tif");
         public static readonly string OmeFile = Path.Combine(Images, "multi-channel-z-series.ome.tif");
         public static readonly string AnalyzeFile = Path.Combine(Images, "t00740_tr1_segm.hdr");
         public static readonly string GifFile = Path.Combine(Images, "cramps.gif");
@@ -27,7 +30,6 @@ namespace NetVips.Tests
         public static readonly string FitsFile = Path.Combine(Images, "WFPC2u5780205r_c0fx.fits");
         public static readonly string OpenslideFile = Path.Combine(Images, "CMU-1-Small-Region.svs");
         public static readonly string PdfFile = Path.Combine(Images, "ISO_12233-reschart.pdf");
-        public static readonly string CmykPdfFile = Path.Combine(Images, "cmyktest.pdf");
         public static readonly string SvgFile = Path.Combine(Images, "logo.svg");
         public static readonly string SvgzFile = Path.Combine(Images, "logo.svgz");
         public static readonly string SvgGzFile = Path.Combine(Images, "logo.svg.gz");
@@ -36,7 +38,7 @@ namespace NetVips.Tests
         public static readonly string BmpFile = Path.Combine(Images, "MARBLES.BMP");
         public static readonly string NiftiFile = Path.Combine(Images, "avg152T1_LR_nifti.nii.gz");
         public static readonly string IcoFile = Path.Combine(Images, "favicon.ico");
-        public static readonly string HeicFile = Path.Combine(Images, "Example1.heic");
+        public static readonly string HeicFile = Path.Combine(Images, "heic-orientation-6.heic");
 
         public static readonly string[] UnsignedFormats =
         {

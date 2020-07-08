@@ -17,9 +17,14 @@ namespace NetVips.Tests
         /// test the vips7 filename splitter ... this is very fragile and annoying
         /// code with lots of cases
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void TestSplit7()
         {
+            Action act = () => NetVips.PathFilename7("");
+            var ex = Record.Exception(act);
+
+            Skip.IfNot(ex == null, "vips configured with --disable-deprecated, skipping test");
+
             string[] Split(string path)
             {
                 var filename7 = NetVips.PathFilename7(path);
@@ -182,10 +187,7 @@ namespace NetVips.Tests
 
             var lastPercent = 0;
 
-            var progress = new Progress<int>(percent =>
-            {
-                lastPercent = percent;
-            });
+            var progress = new Progress<int>(percent => lastPercent = percent);
             im.SetProgress(progress);
 
             var buf = im.DzsaveBuffer("image-pyramid");

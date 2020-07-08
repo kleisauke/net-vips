@@ -290,6 +290,36 @@ namespace NetVips.Tests
         }
 
         [SkippableFact]
+        public void TestJpegSave()
+        {
+            Skip.IfNot(Helper.Have("jpegsave") && NetVips.AtLeastLibvips(8, 10),
+                "requires libvips >= 8.10 with jpeg save support");
+
+            var im = Image.NewFromFile(Helper.JpegFile);
+
+            var q10 = im.JpegsaveBuffer(q: 10);
+            var q10SubsampleAuto = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignJpegSubsample.Auto);
+            var q10SubsampleOn = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignJpegSubsample.On);
+            var q10SubsampleOff = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignJpegSubsample.Off);
+
+            var q90 = im.JpegsaveBuffer(q: 90);
+            var q90SubsampleAuto = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignJpegSubsample.Auto);
+            var q90SubsampleOn = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignJpegSubsample.On);
+            var q90SubsampleOff = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignJpegSubsample.Off);
+
+            // higher Q should mean a bigger buffer
+            Assert.True(q90.Length > q10.Length);
+
+            Assert.Equal(q10.Length, q10SubsampleAuto.Length);
+            Assert.Equal(q10SubsampleAuto.Length, q10SubsampleOn.Length);
+            Assert.True(q10SubsampleOff.Length > q10.Length);
+
+            Assert.Equal(q90SubsampleAuto.Length, q90.Length);
+            Assert.True(q90SubsampleOn.Length < q90.Length);
+            Assert.Equal(q90SubsampleAuto.Length, q90SubsampleOff.Length);
+        }
+
+        [SkippableFact]
         public void TestTruncated()
         {
             Skip.IfNot(Helper.Have("jpegload"), "no jpeg support in this vips, skipping test");
@@ -335,6 +365,26 @@ namespace NetVips.Tests
             {
                 SaveLoadStream(".png", "", _colour);
             }
+
+            // bitdepth option was added in libvips 8.10
+            if (NetVips.AtLeastLibvips(8, 10))
+            {
+                // size of a regular mono PNG 
+                var lenMono = _mono.PngsaveBuffer().Length;
+
+                // 4-bit should be smaller
+                var lenMono4 = _mono.PngsaveBuffer(bitdepth: 4).Length;
+                Assert.True(lenMono4 < lenMono);
+
+                var lenMono2 = _mono.PngsaveBuffer(bitdepth: 2).Length;
+                Assert.True(lenMono2 < lenMono4);
+
+                var lenMono1 = _mono.PngsaveBuffer(bitdepth: 1).Length;
+                Assert.True(lenMono1 < lenMono2);
+
+                // we can't test palette save since we can't be sure libimagequant is
+                // available and there's no easy test for its presence
+            }
         }
 
         [SkippableFact]
@@ -371,7 +421,7 @@ namespace NetVips.Tests
 
                 Assert.Equal(_colour.Width, x.Width);
                 Assert.Equal(_colour.Height, x.Height);
-                Assert.Equal( _colour.Bands, x.Bands);
+                Assert.Equal(_colour.Bands, x.Bands);
                 Assert.True((_colour - x).Abs().Max() <= 80);
             }
         }
@@ -381,6 +431,8 @@ namespace NetVips.Tests
         {
             Skip.IfNot(Helper.Have("tiffload") && File.Exists(Helper.TifFile), "no tiff support, skipping test");
 
+            var vips810 = NetVips.AtLeastLibvips(8, 10);
+
             void TiffValid(Image im)
             {
                 var a = im[10, 10];
@@ -389,6 +441,48 @@ namespace NetVips.Tests
                 Assert.Equal(290, im.Width);
                 Assert.Equal(442, im.Height);
                 Assert.Equal(3, im.Bands);
+            }
+
+            if (vips810)
+            {
+                void Tiff1Valid(Image im)
+                {
+                    var a = im[127, 0];
+                    Assert.Equal(new[] { 0.0 }, a);
+                    a = im[128, 0];
+                    Assert.Equal(new[] { 255.0 }, a);
+                    Assert.Equal(256, im.Width);
+                    Assert.Equal(4, im.Height);
+                    Assert.Equal(1, im.Bands);
+                }
+
+                FileLoader("tiffload", Helper.Tif1File, Tiff1Valid);
+
+                void Tiff2Valid(Image im)
+                {
+                    var a = im[127, 0];
+                    Assert.Equal(new[] { 85.0 }, a);
+                    a = im[128, 0];
+                    Assert.Equal(new[] { 170.0 }, a);
+                    Assert.Equal(256, im.Width);
+                    Assert.Equal(4, im.Height);
+                    Assert.Equal(1, im.Bands);
+                }
+
+                FileLoader("tiffload", Helper.Tif2File, Tiff2Valid);
+
+                void Tiff4Valid(Image im)
+                {
+                    var a = im[127, 0];
+                    Assert.Equal(new[] { 119.0 }, a);
+                    a = im[128, 0];
+                    Assert.Equal(new[] { 136.0 }, a);
+                    Assert.Equal(256, im.Width);
+                    Assert.Equal(4, im.Height);
+                    Assert.Equal(1, im.Bands);
+                }
+
+                FileLoader("tiffload", Helper.Tif4File, Tiff4Valid);
             }
 
             FileLoader("tiffload", Helper.TifFile, TiffValid);
@@ -403,9 +497,11 @@ namespace NetVips.Tests
             SaveLoad("%s.tif", _cmyk);
 
             SaveLoad("%s.tif", _oneBit);
-            SaveLoadFile(".tif", "[squash]", _oneBit);
+            SaveLoadFile(".tif", vips810 ? "[bitdepth=1]" : "[squash]",
+                _oneBit);
             SaveLoadFile(".tif", "[miniswhite]", _oneBit);
-            SaveLoadFile(".tif", "[squash,miniswhite]", _oneBit);
+            SaveLoadFile(".tif", (vips810 ? "[bitdepth=1" : "[squash,") + "miniswhite]",
+                _oneBit);
 
             SaveLoadFile(".tif", $"[profile={Helper.SrgbFile}]", _colour);
             SaveLoadFile(".tif", "[tile]", _colour);
@@ -414,6 +510,19 @@ namespace NetVips.Tests
             SaveLoadFile(".tif", "[bigtiff]", _colour);
             SaveLoadFile(".tif", "[compression=jpeg]", _colour, 80);
             SaveLoadFile(".tif", "[tile,tile-width=256]", _colour, 10);
+
+            if (vips810)
+            {
+                // Support for SUBIFD tags was added in libvips 8.10
+                SaveLoadFile(".tif", "[tile,pyramid,subifd]", _colour);
+                SaveLoadFile(".tif", "[tile,pyramid,subifd,compression=jpeg]", _colour, 80);
+
+                // bitdepth option was added in libvips 8.10
+                var im = Image.NewFromFile(Helper.Tif2File);
+                SaveLoadFile(".tif", "[bitdepth=2]", im);
+                im = Image.NewFromFile(Helper.Tif4File);
+                SaveLoadFile(".tif", "[bitdepth=4]", im);
+            }
 
             var filename = Helper.GetTemporaryFile(_tempDir, ".tif");
             var x = Image.NewFromFile(Helper.TifFile);
@@ -537,6 +646,14 @@ namespace NetVips.Tests
                 _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mean");
                 _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mode");
                 _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "median");
+            }
+
+            // region-shrink max/min/nearest added in 8.10
+            if (vips810)
+            {
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "max");
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "min");
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "nearest");
             }
         }
 
@@ -1031,10 +1148,40 @@ namespace NetVips.Tests
             SaveLoad("%s.csv", _mono);
         }
 
+        [SkippableFact]
+        public void TestCsvConnection()
+        {
+            Skip.IfNot(Helper.Have("csvload_source") && Helper.Have("csvsave_target"),
+                "no CSV connection support, skipping test");
+
+            var x = Target.NewToMemory();
+            _mono.CsvsaveTarget(x);
+
+            var y = Source.NewFromMemory((byte[])x.Get("blob"));
+            var im = Image.CsvloadSource(y);
+
+            Assert.Equal(0, (im - _mono).Abs().Max());
+        }
+
         [Fact]
         public void TestMatrix()
         {
             SaveLoad("%s.mat", _mono);
+        }
+
+        [SkippableFact]
+        public void TestMatrixConnection()
+        {
+            Skip.IfNot(Helper.Have("matrixload_source") && Helper.Have("matrixsave_target"),
+                "no matrix connection support, skipping test");
+
+            var x = Target.NewToMemory();
+            _mono.MatrixsaveTarget(x);
+
+            var y = Source.NewFromMemory((byte[])x.Get("blob"));
+            var im = Image.MatrixloadSource(y);
+
+            Assert.Equal(0, (im - _mono).Abs().Max());
         }
 
         [SkippableFact]
@@ -1044,6 +1191,22 @@ namespace NetVips.Tests
 
             SaveLoad("%s.ppm", _mono);
             SaveLoad("%s.ppm", _colour);
+        }
+
+
+        [SkippableFact]
+        public void TestPpmConnection()
+        {
+            Skip.IfNot(Helper.Have("ppmload_source") && Helper.Have("ppmsave_target"),
+                "no PPM connection support, skipping test");
+
+            var x = Target.NewToMemory();
+            _mono.PpmsaveTarget(x);
+
+            var y = Source.NewFromMemory((byte[])x.Get("blob"));
+            var im = Image.PpmloadSource(y);
+
+            Assert.Equal(0, (im - _mono).Abs().Max());
         }
 
         [SkippableFact]
@@ -1225,14 +1388,30 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
 
-                // different versions of HEIC decode have slightly different 
-                // rounding
-                Helper.AssertAlmostEqualObjects(new[]
+                if (NetVips.AtLeastLibvips(8, 10))
                 {
-                    75.0, 86.0, 81.0
-                }, a, 2);
-                Assert.Equal(4032, im.Width);
-                Assert.Equal(3024, im.Height);
+                    // different versions of HEIC decode have slightly different 
+                    // rounding
+                    Helper.AssertAlmostEqualObjects(new[]
+                    {
+                        197.0, 181.0, 158.0
+                    }, a, 2);
+
+                    Assert.Equal(3024, im.Width);
+                    Assert.Equal(4032, im.Height);
+                }
+                else
+                {
+                    // This image has been rotated incorrectly prior to vips 8.10 
+                    Helper.AssertAlmostEqualObjects(new[]
+                    {
+                        255, 255, 255
+                    }, a, 2);
+
+                    Assert.Equal(4032, im.Width);
+                    Assert.Equal(3024, im.Height);
+                }
+
                 Assert.Equal(3, im.Bands);
             }
 

@@ -120,7 +120,7 @@ namespace NetVips.Tests
             var nSet = (msk.Avg() * msk.Width * msk.Height) / 255.0;
             var pcSet = 100 * nSet / (msk.Width * msk.Height);
 
-            Assert.Equal(90, pcSet, 0);
+            Assert.True(Math.Abs(pcSet - 90) < 1);
         }
 
         [Fact]

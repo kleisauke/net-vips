@@ -451,6 +451,21 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Set jpeg subsampling mode.
+        /// </summary>
+        public static class ForeignJpegSubsample
+        {
+            /// <summary>Default preset.</summary>
+            public const string Auto = "auto";
+
+            /// <summary>Always perform subsampling.</summary>
+            public const string On = "on";
+
+            /// <summary>Never perform subsampling.</summary>
+            public const string Off = "off";
+        }
+
+        /// <summary>
         /// The compression types supported by the tiff writer.
         /// </summary>
         public static class ForeignTiffCompression
@@ -576,6 +591,9 @@ namespace NetVips
 
             /// <summary>Position the crop towards the high coordinate.</summary>
             public const string High = "high";
+			
+            /// <summary>Everything is interesting.</summary>
+            public const string All = "all";
         }
 
         /// <summary>
@@ -660,7 +678,7 @@ namespace NetVips
             /// <summary>Cubic interpolation.</summary>
             public const string Cubic = "cubic";
 
-            /// <summary>TODO</summary>
+            /// <summary>Mitchell</summary>
             public const string Mitchell = "mitchell";
 
             /// <summary>Two-lobe Lanczos.</summary>
@@ -896,6 +914,15 @@ namespace NetVips
 
             /// <summary>Use the mode.</summary>
             public const string Mode = "mode";
+
+            /// <summary>Use the maximum.</summary>
+            public const string Max = "max";
+
+            /// <summary>Use the minimum.</summary>
+            public const string Min = "min";
+
+            /// <summary>Use the top-left pixel.</summary>
+            public const string Nearest = "nearest";
         }
 
         /// <summary>
