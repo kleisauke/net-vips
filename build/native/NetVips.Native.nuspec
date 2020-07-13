@@ -22,8 +22,10 @@
     <!-- dependencies -->
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />
         <dependency id="NetVips.Native.linux-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-arm" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-arm64" version="$version$" include="native" />
         <dependency id="NetVips.Native.osx-x64" version="$version$" include="native" />
         <dependency id="NetVips.Native.win-x64" version="$version$" include="native, build" />
         <dependency id="NetVips.Native.win-x86" version="$version$" include="native, build" />

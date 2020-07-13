@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata>
+
+    <!-- package -->
+    <id>NetVips.Native.linux-arm64</id>
+    <title>NetVips - Native binaries for Linux ARM64v8.</title>
+    <version>$version$</version>
+    <description>This package complements the NetVips package and contains native binaries of libvips for Linux (ARM64v8)</description>
+    <summary>Native binaries of libvips for Linux (ARM64v8)</summary>
+    <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
+    <repository type="git" url="https://github.com/kleisauke/net-vips" />
+    <tags>libvips binaries image-processing</tags>
+
+    <!-- legal -->
+    <license type="expression">MIT</license>
+    <authors>Kleis Auke Wolthuizen</authors>
+    <owners>Kleis Auke Wolthuizen</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Kleis Auke Wolthuizen</copyright>
+
+  </metadata>
+  <files>
+
+    <!-- The .NET Framework >= 4.6.1 build bits for Mono runtime -->
+    <file src="targets\NetVips.Native.linux-arm64.targets" target="build/net461" />
+
+    <!-- Include libvips Linux ARM64v8 binaries -->
+    <file src="pack\linux-arm64\*.so.*" target="runtimes/linux-arm64/native" />
+
+    <!-- Include the latest third-party notices -->
+    <file src="pack\linux-arm64\THIRD-PARTY-NOTICES.md" />
+
+    <!-- Include the version numbers of libvips and its dependencies -->
+    <file src="pack\linux-arm64\versions.json" />
+
+    <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
+    <file src="_._" target="lib/netstandard1.0" />
+
+  </files>
+</package>

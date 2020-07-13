@@ -92,7 +92,7 @@ partial class Build : NukeBuild
 
             foreach (var architecture in Parameters.NuGetArchitectures)
             {
-                var fileName = $"libvips-{Parameters.VipsVersion}-{architecture}.tar.gz";
+                var fileName = $"libvips-{Parameters.VipsTagVersion}-{architecture}.tar.gz";
                 var tarball =
                     new Uri(
                         $"https://github.com/kleisauke/libvips-packaging/releases/download/v{Parameters.VipsTagVersion}/{fileName}");

@@ -46,7 +46,8 @@ public partial class Build
             TestSolution = RootDirectory / "tests/NetVips.Tests/NetVips.Tests.csproj";
 
             // PARAMETERS
-            NuGetArchitectures = new[] { "win-x64", "win-x86", "linux-x64", "linux-musl-x64", "osx-x64" };
+            NuGetArchitectures = new[]
+                {"win-x64", "win-x86", "linux-x64", "linux-musl-x64", "linux-arm", "linux-arm64", "osx-x64"};
 
             // VERSION
             Version = GetVersion();
