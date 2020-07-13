@@ -35,7 +35,7 @@ namespace NetVips.Benchmarks.ImageSharp
         /// <inheritdoc />
         public IImageProcessor<TPixel> CreatePixelSpecificProcessor<TPixel>(Configuration configuration,
             Image<TPixel> source,
-            Rectangle sourceRectangle) where TPixel : struct, IPixel<TPixel>
+            Rectangle sourceRectangle) where TPixel : unmanaged, IPixel<TPixel>
         {
             var type = Type.GetType(
                 "SixLabors.ImageSharp.Processing.Processors.Convolution.ConvolutionProcessor`1, SixLabors.ImageSharp");

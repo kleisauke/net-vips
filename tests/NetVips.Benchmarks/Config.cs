@@ -8,10 +8,6 @@ namespace NetVips.Benchmarks
     {
         public Config()
         {
-            // Disable this policy because our benchmarks refer
-            // to a non-optimized SkiaSharp that we do not own.
-            Options |= ConfigOptions.DisableOptimizationsValidator;
-
             // Only support LTS releases
             AddJob(Job.Default
 #if NETCOREAPP2_1

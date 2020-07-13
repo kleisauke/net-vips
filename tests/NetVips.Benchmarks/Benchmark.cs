@@ -136,7 +136,7 @@ namespace NetVips.Benchmarks
                         var kernelOffset = new SKPointI(1, 1);
 
                         paint.ImageFilter = SKImageFilter.CreateMatrixConvolution(kernelSize, kernel, 0.125f, 0f,
-                            kernelOffset, SKMatrixConvolutionTileMode.Repeat, false);
+                            kernelOffset, SKShaderTileMode.Repeat, false);
 
                         canvas.DrawBitmap(resized, 0, 0, paint);
                         canvas.Flush();
