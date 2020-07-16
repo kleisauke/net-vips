@@ -39,7 +39,10 @@ partial class Build : NukeBuild
 
         Information("Bitness: " + (Environment.Is64BitProcess ? "64 bit" : "32 bit"));
         Information("Host type: " + Host);
-        Information("Version of libvips: " + Parameters.VipsVersion);
+        if (!string.IsNullOrWhiteSpace(Parameters.VipsVersion))
+        {
+            Information("Version of libvips: " + Parameters.VipsVersion);
+        }
         Information("Configuration: " + Parameters.Configuration);
 
         void ExecWait(string preamble, string command, string args)
@@ -76,11 +79,10 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            // Only test with the precompiled NuGet binaries if we're not on Travis.
             DotNetTest(c => c
                 .SetProjectFile(Parameters.TestSolution)
                 .SetConfiguration(Parameters.Configuration)
-                .AddProperty("TestWithNuGetBinaries", Host != HostType.Travis));
+                .AddProperty("TestWithNuGetBinaries", Parameters.TestWithNuGetBinaries));
         });
 
     Target DownloadBinaries => _ => _

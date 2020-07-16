@@ -15,6 +15,13 @@
     <TestWithNuGetBinaries>false</TestWithNuGetBinaries>
   </PropertyGroup>
 
+  <!-- https://github.com/mono/mono/issues/15569 -->
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Mono'">
+    <RuntimeIdentifier Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx-x64</RuntimeIdentifier>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />

@@ -17,11 +17,15 @@ public partial class Build
     [Parameter("package")]
     public bool Package { get; set; }
 
+    [Parameter("global-vips")]
+    public bool GlobalVips { get; set; }
+
     public class BuildParameters
     {
         public string Configuration { get; }
         public bool SkipTests { get; }
         public bool Package { get; }
+        public bool TestWithNuGetBinaries { get; }
         public string BuildSolution { get; }
         public string BuildSolutionExtensions { get; }
         public string TestSolution { get; }
@@ -39,6 +43,7 @@ public partial class Build
             Configuration = b.Configuration ?? "Release";
             SkipTests = b.SkipTests;
             Package = b.Package;
+            TestWithNuGetBinaries = !b.GlobalVips;
 
             // CONFIGURATION
             BuildSolution = RootDirectory / "src/NetVips/NetVips.csproj";
