@@ -925,7 +925,7 @@ namespace NetVips.Tests
         }
 
         [SkippableFact]
-        public void TestsFitsLoad()
+        public void TestFitsLoad()
         {
             Skip.IfNot(Helper.Have("fitsload") && File.Exists(Helper.FitsFile), "no fits support, skipping test");
 
@@ -950,7 +950,7 @@ namespace NetVips.Tests
         }
 
         [SkippableFact]
-        public void TestsNiftiLoad()
+        public void TestNiftiLoad()
         {
             Skip.IfNot(Helper.Have("niftiload") && File.Exists(Helper.NiftiFile), "no nifti support, skipping test");
 

@@ -9,7 +9,7 @@ init:
 # Environment
 environment:
   VIPS_VERSION: "8.10.0"
-  VIPS_PRE_VERSION: "beta2"
+  VIPS_PRE_VERSION: "rc1"
   VIPS_WARNING: 0
 
 # Build script
