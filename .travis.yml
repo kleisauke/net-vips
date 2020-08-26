@@ -17,7 +17,7 @@ jobs:
       dist: bionic
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -e FONTCONFIG_PATH=/etc/fonts -e DOTNET_RUNTIME_ID=linux-musl-x64 -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.11
+        - sudo docker run -dit --name netvips -e TRAVIS -e DOTNET_RUNTIME_ID=linux-musl-x64 -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.11
         - sudo docker exec netvips sh -c "apk add bash ttf-dejavu fontconfig --update-cache && fc-cache -f"
       script: sudo docker exec netvips bash -c "./build.sh"
     - name: "Linux ARM64v8 (Ubuntu 18.04, glibc 2.27) - .NET Core 3.1"
@@ -41,7 +41,7 @@ jobs:
       os: osx
       osx_image: xcode9.3
       language: csharp
-      dotnet: 3.1.301
+      dotnet: 3.1.401
       mono: none
       env:
         - HOMEBREW_NO_AUTO_UPDATE=1
