@@ -6882,7 +6882,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial merge.</param>
+        /// <param name="direction">Horizontal or vertical merge.</param>
         /// <param name="dx">Horizontal displacement from sec to ref.</param>
         /// <param name="dy">Vertical displacement from sec to ref.</param>
         /// <param name="mblend">Maximum blend size.</param>
@@ -7126,7 +7126,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7172,7 +7172,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7226,7 +7226,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7283,7 +7283,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7343,7 +7343,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7406,7 +7406,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7472,7 +7472,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xref">Position of reference tie-point.</param>
         /// <param name="yref">Position of reference tie-point.</param>
         /// <param name="xsec">Position of secondary tie-point.</param>
@@ -7541,7 +7541,7 @@ namespace NetVips
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
-        /// <param name="direction">Horizontal or vertcial mosaic.</param>
+        /// <param name="direction">Horizontal or vertical mosaic.</param>
         /// <param name="xr1">Position of first reference tie-point.</param>
         /// <param name="yr1">Position of first reference tie-point.</param>
         /// <param name="xs1">Position of first secondary tie-point.</param>
@@ -13255,7 +13255,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Webpsave(filename, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
+        /// in.Webpsave(filename, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -13269,10 +13269,11 @@ namespace NetVips
         /// <param name="kmin">Minimum number of frames between key frames.</param>
         /// <param name="kmax">Maximum number of frames between key frames.</param>
         /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
+        /// <param name="profile">ICC profile to embed.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Webpsave(string filename, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Webpsave(string filename, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -13324,6 +13325,11 @@ namespace NetVips
             if (reductionEffort.HasValue)
             {
                 options.Add("reduction_effort", reductionEffort);
+            }
+
+            if (profile != null)
+            {
+                options.Add(nameof(profile), profile);
             }
 
             if (strip.HasValue)
@@ -13349,7 +13355,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="q">Q factor.</param>
@@ -13362,11 +13368,12 @@ namespace NetVips
         /// <param name="kmin">Minimum number of frames between key frames.</param>
         /// <param name="kmax">Maximum number of frames between key frames.</param>
         /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
+        /// <param name="profile">ICC profile to embed.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -13418,6 +13425,11 @@ namespace NetVips
             if (reductionEffort.HasValue)
             {
                 options.Add("reduction_effort", reductionEffort);
+            }
+
+            if (profile != null)
+            {
+                options.Add(nameof(profile), profile);
             }
 
             if (strip.HasValue)
@@ -13443,7 +13455,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.WebpsaveTarget(target, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
+        /// in.WebpsaveTarget(target, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="target">Target to save to.</param>
@@ -13457,10 +13469,11 @@ namespace NetVips
         /// <param name="kmin">Minimum number of frames between key frames.</param>
         /// <param name="kmax">Maximum number of frames between key frames.</param>
         /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
+        /// <param name="profile">ICC profile to embed.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -13514,6 +13527,11 @@ namespace NetVips
                 options.Add("reduction_effort", reductionEffort);
             }
 
+            if (profile != null)
+            {
+                options.Add(nameof(profile), profile);
+            }
+
             if (strip.HasValue)
             {
                 options.Add(nameof(strip), strip);
@@ -13537,7 +13555,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.WebpsaveStream(stream, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, strip: bool, background: double[], pageHeight: int);
+        /// in.WebpsaveStream(stream, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to save to.</param>
@@ -13551,14 +13569,15 @@ namespace NetVips
         /// <param name="kmin">Minimum number of frames between key frames.</param>
         /// <param name="kmax">Maximum number of frames between key frames.</param>
         /// <param name="reductionEffort">Level of CPU effort to reduce file size.</param>
+        /// <param name="profile">ICC profile to embed.</param>
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             using (var target = TargetStream.NewFromStream(stream))
             {
-                WebpsaveTarget(target, q, lossless, preset, smartSubsample, nearLossless, alphaQ, minSize, kmin, kmax, reductionEffort, strip, background, pageHeight);
+                WebpsaveTarget(target, q, lossless, preset, smartSubsample, nearLossless, alphaQ, minSize, kmin, kmax, reductionEffort, profile, strip, background, pageHeight);
             }
         }
 
