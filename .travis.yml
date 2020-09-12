@@ -41,12 +41,11 @@ jobs:
       os: osx
       osx_image: xcode9.3
       language: csharp
-      dotnet: 3.1.401
+      dotnet: 3.1.402
       mono: none
       env:
         - HOMEBREW_NO_AUTO_UPDATE=1
         - HOMEBREW_NO_INSTALL_CLEANUP=1
-        - FONTCONFIG_PATH=/opt/X11/lib/X11/fontconfig
       script: ./build.sh
     - name: "macOS (10.13) - Mono 6.10"
       os: osx
@@ -56,7 +55,6 @@ jobs:
       env:
         - HOMEBREW_NO_AUTO_UPDATE=1
         - HOMEBREW_NO_INSTALL_CLEANUP=1
-        - FONTCONFIG_PATH=/opt/X11/lib/X11/fontconfig
       script: ./build/test-mono.sh
 
 cache:
