@@ -4,6 +4,11 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.10.1] - 2020-09-12
+### Note
+If you would like to see what's changed, please visit the the release notes of libvips:
+https://github.com/libvips/libvips/releases/tag/v8.10.1
+
 ## [8.10.0] - 2020-08-26
 ### Note
 If you would like to see what's changed, please visit the the release notes of libvips:
@@ -97,6 +102,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.10.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.0-build2...v8.10.1
 [8.10.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.2-build3...v8.10.0-build2
 [8.9.2-build3]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.2-build2...v8.9.2-build3
 [8.9.2-build2]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.2...v8.9.2-build2
