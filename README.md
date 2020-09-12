@@ -52,6 +52,8 @@ libvips binaries for a few distros (see
 |**Windows 32-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x86.svg)](https://www.nuget.org/packages/NetVips.Native.win-x86)|
 |**Linux x64 glibc²**|[![NetVips.Native.linux-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-x64)|
 |**Linux x64 musl³** |[![NetVips.Native.linux-musl-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-musl-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-musl-x64)|
+|**Linux ARM64v8**   |[![NetVips.Native.linux-arm64](https://img.shields.io/nuget/v/NetVips.Native.linux-arm64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-arm64)|
+|**Linux ARMv7**     |[![NetVips.Native.linux-arm](https://img.shields.io/nuget/v/NetVips.Native.linux-arm.svg)](https://www.nuget.org/packages/NetVips.Native.linux-arm)|
 |**macOS x64**       |[![NetVips.Native.osx-x64](https://img.shields.io/nuget/v/NetVips.Native.osx-x64.svg)](https://www.nuget.org/packages/NetVips.Native.osx-x64)|
 
 ¹ The version number of these NuGet packages is in sync with libvips' version number.  
