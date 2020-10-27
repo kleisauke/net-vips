@@ -33,9 +33,22 @@ namespace NetVips
         /// Enabling this option will make libvips run slightly more slowly.
         /// </remarks>
         /// <param name="leak">Bool indicating if leak checking should be turned on.</param>
+        [Obsolete("NetVips.LeakSet is deprecated, please use the NetVips.Leak setter instead.")]
         public static void LeakSet(bool leak)
         {
-            Vips.LeakSet(leak);
+            Leak = leak;
+        }
+
+        /// <summary>
+        /// Enable or disable libvips leak checking.
+        /// </summary>
+        /// <remarks>
+        /// With this enabled, libvips will check for object and area leaks on exit.
+        /// Enabling this option will make libvips run slightly more slowly.
+        /// </remarks>
+        public static bool Leak
+        {
+            set => Vips.LeakSet(value);
         }
 
         /// <summary>
@@ -43,69 +56,95 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// If set, vips will record profiling information, and dump it on program
-        /// exit. These profiles can be analysed with the `vipsprofile` program.
+        /// exit. These profiles can be analyzed with the `vipsprofile` program.
         /// </remarks>
         /// <param name="profile">Bool indicating if profile recording should be turned on.</param>
+        [Obsolete("NetVips.ProfileSet is deprecated, please use the NetVips.Profile setter instead.")]
         public static void ProfileSet(bool profile)
         {
-            Vips.ProfileSet(profile);
+            Profile = profile;
+        }
+
+        /// <summary>
+        /// Enable or disable libvips profile recording.
+        /// </summary>
+        /// <remarks>
+        /// If set, vips will record profiling information, and dump it on program
+        /// exit. These profiles can be analyzed with the `vipsprofile` program.
+        /// </remarks>
+        public static bool Profile
+        {
+            set => Vips.ProfileSet(value);
         }
 
         /// <summary>
         /// Set the maximum number of operations libvips will cache.
         /// </summary>
         /// <param name="max">Maximum number of operations.</param>
+        [Obsolete("NetVips.CacheSetMax is deprecated, please use the Cache.Max setter instead.")]
         public static void CacheSetMax(int max)
         {
-            Vips.CacheSetMax(max);
+            Cache.Max = max;
         }
 
         /// <summary>
         /// Limit the operation cache by memory use.
         /// </summary>
         /// <param name="maxMem">Maximum memory use.</param>
+        [Obsolete("NetVips.CacheSetMaxMem is deprecated, please use the Cache.MaxMem setter instead.")]
         public static void CacheSetMaxMem(ulong maxMem)
         {
-            Vips.CacheSetMaxMem(maxMem);
+            Cache.MaxMem = maxMem;
         }
 
         /// <summary>
         /// Limit the operation cache by number of open files.
         /// </summary>
         /// <param name="maxFiles">Maximum open files.</param>
+        [Obsolete("NetVips.CacheSetMaxFiles is deprecated, please use the Cache.MaxFiles setter instead.")]
         public static void CacheSetMaxFiles(int maxFiles)
         {
-            Vips.CacheSetMaxFiles(maxFiles);
+            Cache.MaxFiles = maxFiles;
         }
 
         /// <summary>
         /// Turn on libvips cache tracing.
         /// </summary>
         /// <param name="trace">Bool indicating if tracing should be turned on.</param>
+        [Obsolete("NetVips.CacheSetTrace is deprecated, please use the Cache.Trace setter instead.")]
         public static void CacheSetTrace(bool trace)
         {
-            Vips.CacheSetTrace(trace);
+            Cache.Trace = trace;
         }
 
         /// <summary>
-        /// Set the size of the pools of worker threads vips uses for image
-        /// evaluation.
+        /// Set the size of the pools of worker threads vips uses for image evaluation.
         /// </summary>
         /// <param name="concurrency">The size of the pools of worker threads vips uses
         /// for image evaluation.</param>
+        [Obsolete("NetVips.ConcurrencySet is deprecated, please use the NetVips.Concurrency setter instead.")]
         public static void ConcurrencySet(int concurrency)
         {
-            Vips.ConcurrencySet(concurrency);
+            Concurrency = concurrency;
         }
 
         /// <summary>
-        /// Returns the number of worker threads that vips uses for image
-        /// evaluation.
+        /// Returns the number of worker threads that vips uses for image evaluation.
         /// </summary>
         /// <returns>The number of worker threads.</returns>
+        [Obsolete("NetVips.ConcurrencyGet is deprecated, please use the NetVips.Concurrency getter instead.")]
         public static int ConcurrencyGet()
         {
-            return Vips.ConcurrencyGet();
+            return Concurrency;
+        }
+
+        /// <summary>
+        /// Gets or sets the number of worker threads libvips' should create to process each image.
+        /// </summary>
+        public static int Concurrency
+        {
+            get => Vips.ConcurrencyGet();
+            set => Vips.ConcurrencySet(value);
         }
 
         /// <summary>
@@ -117,9 +156,23 @@ namespace NetVips
         /// </remarks>
         /// <param name="enabled">Bool indicating if SIMD and the run-time
         /// compiler should be turned on.</param>
+        [Obsolete("NetVips.VectorSet is deprecated, please use the NetVips.Vector setter instead.")]
         public static void VectorSet(bool enabled)
         {
             Vips.VectorSet(enabled);
+        }
+
+        /// <summary>
+        /// Enable or disable SIMD and the run-time compiler.
+        /// </summary>
+        /// <remarks>
+        /// This can give a nice speed-up, but can also be unstable on
+        /// some systems or with some versions of the run-time compiler.
+        /// </remarks>
+        public static bool Vector
+        {
+            get => Vips.VectorIsEnabled();
+            set => Vips.VectorSet(value);
         }
 
         /// <summary>
@@ -129,13 +182,14 @@ namespace NetVips
         /// - the number of open files.
         /// </summary>
         /// <returns>An array with memory stats. Handy for debugging / leak testing.</returns>
+        [Obsolete("NetVips.MemoryStats is deprecated, please use the Stats class instead.")]
         public static int[] MemoryStats()
         {
             return new[]
             {
-                Vips.TrackedGetAllocs(),
-                Vips.TrackedGetMem(),
-                Vips.TrackedGetFiles()
+                Stats.Allocations,
+                Stats.Mem,
+                Stats.Files
             };
         }
 
@@ -144,9 +198,10 @@ namespace NetVips
         /// Handy for estimating max memory requirements for a program.
         /// </summary>
         /// <returns>The largest number of bytes simultaneously allocated.</returns>
+        [Obsolete("NetVips.MemoryHigh is deprecated, please use the Stats.MemHighwater getter instead.")]
         public static ulong MemoryHigh()
         {
-            return Vips.TrackedGetMemHighwater();
+            return Stats.MemHighwater;
         }
 
         /// <summary>

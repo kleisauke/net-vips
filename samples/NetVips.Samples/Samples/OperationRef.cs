@@ -18,7 +18,7 @@ namespace NetVips.Samples
 
         public string Execute(string[] args)
         {
-            NetVips.CacheSetMax(0);
+            Cache.Max = 0;
 
             using var fileStream = File.OpenRead(Filename);
             using var image = Image.NewFromStream(fileStream);
@@ -37,7 +37,7 @@ namespace NetVips.Samples
             var count = 0;
             var locker = new object();
 
-            Parallel.For(0, 1000, new ParallelOptions { MaxDegreeOfParallelism = NetVips.ConcurrencyGet() },
+            Parallel.For(0, 1000, new ParallelOptions { MaxDegreeOfParallelism = NetVips.Concurrency },
                 i =>
                 {
                     Interlocked.Increment(ref count);

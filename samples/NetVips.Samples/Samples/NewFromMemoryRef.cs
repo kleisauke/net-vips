@@ -13,7 +13,7 @@ namespace NetVips.Samples
 
         public string Execute(string[] args)
         {
-            NetVips.CacheSetMax(0);
+            Cache.Max = 0;
 
             Image b;
 

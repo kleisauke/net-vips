@@ -34,7 +34,7 @@ namespace NetVips.Samples
             using var fileStream = File.OpenRead(Filename);
             using var image = Image.NewFromStream(fileStream);
 
-            Parallel.For(0, 1000, new ParallelOptions {MaxDegreeOfParallelism = NetVips.ConcurrencyGet()},
+            Parallel.For(0, 1000, new ParallelOptions { MaxDegreeOfParallelism = NetVips.Concurrency },
                 i => RandomCrop(image, TileSize).WriteToFile($"x_{i}.png"));
 
             return "Done!";
