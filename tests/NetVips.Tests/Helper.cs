@@ -38,7 +38,7 @@ namespace NetVips.Tests
         public static readonly string BmpFile = Path.Combine(Images, "MARBLES.BMP");
         public static readonly string NiftiFile = Path.Combine(Images, "avg152T1_LR_nifti.nii.gz");
         public static readonly string IcoFile = Path.Combine(Images, "favicon.ico");
-        public static readonly string HeicFile = Path.Combine(Images, "heic-orientation-6.heic");
+        public static readonly string AvifFile = Path.Combine(Images, "avif-orientation-6.avif");
 
         public static readonly string[] UnsignedFormats =
         {

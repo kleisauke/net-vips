@@ -277,7 +277,7 @@ namespace NetVips.Tests
                 if (Helper.Have("heifload"))
                 {
                     // this image is orientation 6 ... thumbnail should flip it
-                    var thumb = Image.Thumbnail(Helper.HeicFile, 100);
+                    var thumb = Image.Thumbnail(Helper.AvifFile, 100);
 
                     // thumb should be portrait
                     Assert.True(thumb.Width < thumb.Height);

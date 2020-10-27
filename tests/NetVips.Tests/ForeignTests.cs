@@ -1390,7 +1390,7 @@ namespace NetVips.Tests
 
                 if (NetVips.AtLeastLibvips(8, 10))
                 {
-                    // different versions of HEIC decode have slightly different 
+                    // different versions of libheif decode have slightly different
                     // rounding
                     Helper.AssertAlmostEqualObjects(new[]
                     {
@@ -1415,8 +1415,8 @@ namespace NetVips.Tests
                 Assert.Equal(3, im.Bands);
             }
 
-            FileLoader("heifload", Helper.HeicFile, HeifValid);
-            BufferLoader("heifload_buffer", Helper.HeicFile, HeifValid);
+            FileLoader("heifload", Helper.AvifFile, HeifValid);
+            BufferLoader("heifload_buffer", Helper.AvifFile, HeifValid);
         }
 
         [SkippableFact]
@@ -1424,25 +1424,32 @@ namespace NetVips.Tests
         {
             Skip.IfNot(Helper.Have("heifsave"), "no HEIF support, skipping test");
 
-            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 80);
-            SaveLoad("%s.heic", _colour);
+            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 85, new VOption
+            {
+                {"compression", "av1"}
+            });
+            // TODO: perhaps we should automatically set the compression to
+            // av1 when we save to *.avif?
+            // SaveLoad("%s.avif", _colour);
+            SaveLoadFile(".avif", "[compression=av1]", _colour, 85);
 
-            // test lossless mode
-            var x = Image.NewFromFile(Helper.HeicFile);
-            var buf = x.HeifsaveBuffer(lossless: true);
-            var im2 = Image.NewFromBuffer(buf);
+            // uncomment to test lossless mode, will take a while
+            //var x = Image.NewFromFile(Helper.AvifFile);
+            //var buf = x.HeifsaveBuffer(lossless: true, compression: "av1");
+            //var im2 = Image.NewFromBuffer(buf);
 
-            //  not in fact quite lossless
-            Assert.True(Math.Abs(x.Avg() - im2.Avg()) < 3);
+            // not in fact quite lossless
+            //Assert.True(Math.Abs(x.Avg() - im2.Avg()) < 3);
 
-            // higher Q should mean a bigger buffer
-            var b1 = x.HeifsaveBuffer(q: 10);
-            var b2 = x.HeifsaveBuffer(q: 90);
+            // higher Q should mean a bigger buffer, needs libheif >= v1.8.0,
+            // see: https://github.com/libvips/libvips/issues/1757
+            var b1 = _mono.HeifsaveBuffer(q: 10, compression: "av1");
+            var b2 = _mono.HeifsaveBuffer(q: 90, compression: "av1");
             Assert.True(b2.Length > b1.Length);
 
             // try saving an image with an ICC profile and reading it back 
-            buf = _colour.HeifsaveBuffer();
-            x = Image.NewFromBuffer(buf);
+            var buf = _colour.HeifsaveBuffer(q: 10, compression: "av1");
+            var x = Image.NewFromBuffer(buf);
             if (x.Contains("icc-profile-data"))
             {
                 var p1 = _colour.Get("icc-profile-data");
@@ -1456,13 +1463,13 @@ namespace NetVips.Tests
 
             // test that exif changes change the output of heifsave
             // first make sure we have exif support
-            var z = Image.NewFromFile(Helper.JpegFile);
+            var z = Image.NewFromFile(Helper.AvifFile);
             if (z.Contains("exif-ifd0-Orientation"))
             {
-                x = _colour.Copy();
+                x = z.Copy();
                 x.Set("exif-ifd0-Make", "banana");
 
-                buf = x.HeifsaveBuffer();
+                buf = x.HeifsaveBuffer(q: 10, compression: "av1");
                 var y = Image.NewFromBuffer(buf);
                 Assert.StartsWith("banana", (string)y.Get("exif-ifd0-Make"));
             }

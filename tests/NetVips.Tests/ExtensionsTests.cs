@@ -25,7 +25,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap1Band()
         {
-            Skip.If(InDocker, "on Docker, skipping test");
+            Skip.If(InDocker, "running in Docker, skipping test");
 
             var black = Image.Black(1, 1).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + 255).Cast(Enums.BandFormat.Uchar);
@@ -37,7 +37,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap2Bands()
         {
-            Skip.IfNot(RuntimeInformation.IsOSPlatform(OSPlatform.Windows), "not on Windows, skipping test");
+            Skip.If(InDocker || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows), "running in Docker or not on Windows, skipping test");
 
             var black = (Image.Black(1, 1) + new[] { 0, 0 }).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + new[] { 255, 255 }).Cast(Enums.BandFormat.Uchar);
@@ -51,7 +51,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap3Bands()
         {
-            Skip.If(InDocker, "on Docker, skipping test");
+            Skip.If(InDocker, "running in Docker, skipping test");
 
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
@@ -65,7 +65,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap4Bands()
         {
-            Skip.If(InDocker, "on Docker, skipping test");
+            Skip.If(InDocker, "running in Docker, skipping test");
 
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255, 255 }).Cast(Enums.BandFormat.Uchar);
