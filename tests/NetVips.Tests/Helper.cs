@@ -5,13 +5,11 @@ namespace NetVips.Tests
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using Xunit;
 
     public static class Helper
     {
-        public static readonly string Images =
-            Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "TestData");
+        public static readonly string Images = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData");
 
         public static readonly string JpegFile = Path.Combine(Images, "йцук.jpg");
         public static readonly string TruncatedFile = Path.Combine(Images, "truncated.jpg");
@@ -342,7 +340,7 @@ namespace NetVips.Tests
         {
             var a = im[x, y];
             var v1 = func(a);
-            var im2 = (Image) func(im);
+            var im2 = (Image)func(im);
             var v2 = im2[x, y];
 
             AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
@@ -363,7 +361,7 @@ namespace NetVips.Tests
             var a = left[x, y];
             var b = right[x, y];
             var v1 = func(a, b);
-            var after = (Image) func(left, right);
+            var after = (Image)func(left, right);
             var v2 = after[x, y];
 
             AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);

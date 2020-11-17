@@ -4,29 +4,29 @@ jobs:
     - os: osx
     - mono: latest
   include:
-    - name: "Linux x64 (Ubuntu 18.04, glibc 2.27) - .NET Core 3.1"
+    - name: "Linux x64 (Debian 10.6, glibc 2.28) - .NET 5.0"
       os: linux
       dist: bionic
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/core/sdk:3.1-bionic
+        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:5.0-buster-slim
         - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fonts-dejavu"
       script: sudo docker exec netvips bash -c "./build.sh"
-    - name: "Linux x64 (Alpine 3.11, musl 1.1.24) - .NET Core 3.1"
+    - name: "Linux x64 (Alpine 3.12, musl 1.1.24) - .NET 5.0"
       os: linux
       dist: bionic
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -e DOTNET_RUNTIME_ID=linux-musl-x64 -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.11
+        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:5.0-alpine3.12
         - sudo docker exec netvips sh -c "apk add bash ttf-dejavu fontconfig --update-cache && fc-cache -f"
       script: sudo docker exec netvips bash -c "./build.sh"
-    - name: "Linux ARM64v8 (Ubuntu 18.04, glibc 2.27) - .NET Core 3.1"
+    - name: "Linux ARM64v8 (Debian 10.6, glibc 2.28) - .NET 5.0"
       arch: arm64
       os: linux
       dist: bionic
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/core/sdk:3.1-bionic-arm64v8
+        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm64v8
         - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fonts-dejavu"
       script: sudo docker exec netvips bash -c "./build.sh"
     - name: "Linux x64 (Ubuntu 18.04, glibc 2.27) - Mono 6.10"
@@ -37,11 +37,11 @@ jobs:
       env:
         - DOTNET_RUNNING_IN_CONTAINER="true"
       script: ./build/test-mono.sh
-    - name: "macOS (10.13) - .NET Core 3.1"
+    - name: "macOS (10.13) - .NET 5.0"
       os: osx
       osx_image: xcode9.3
       language: csharp
-      dotnet: 3.1.402
+      dotnet: 5.0.100
       mono: none
       env:
         - HOMEBREW_NO_AUTO_UPDATE=1

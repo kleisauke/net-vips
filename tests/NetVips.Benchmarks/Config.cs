@@ -8,7 +8,7 @@ namespace NetVips.Benchmarks
     {
         public Config()
         {
-            // Only support LTS releases
+            // Only support LTS and latest releases
             AddJob(Job.Default
 #if NETCOREAPP2_1
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp21)
@@ -16,6 +16,9 @@ namespace NetVips.Benchmarks
 #elif NETCOREAPP3_1
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp31)
                     .WithId(".Net Core 3.1 CLI")
+#elif NET5_0
+                    .WithToolchain(CsProjCoreToolchain.NetCoreApp50)
+                    .WithId(".Net 5.0 CLI")
 #endif
             );
         }

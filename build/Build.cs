@@ -105,10 +105,8 @@ partial class Build : NukeBuild
                     Information(filePath + " not in download directory. Downloading now ...");
                     EnsureExistingDirectory(Parameters.DownloadDir);
                     var response = await client.GetAsync(tarball);
-                    using (var fs = new FileStream(filePath, FileMode.CreateNew))
-                    {
-                        await response.Content.CopyToAsync(fs);
-                    }
+                    await using var fs = new FileStream(filePath, FileMode.CreateNew);
+                    await response.Content.CopyToAsync(fs);
                 }
 
                 var tempDir = Parameters.PackDir / "temp";

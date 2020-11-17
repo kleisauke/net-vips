@@ -159,7 +159,7 @@ namespace NetVips
         [Obsolete("NetVips.VectorSet is deprecated, please use the NetVips.Vector setter instead.")]
         public static void VectorSet(bool enabled)
         {
-            Vips.VectorSet(enabled);
+            Vector = enabled;
         }
 
         /// <summary>
@@ -298,17 +298,12 @@ namespace NetVips
         /// </summary>
         internal static void ReportLeak()
         {
-            var memStats = MemoryStats();
-            var activeAllocs = memStats[0];
-            var currentAllocs = memStats[1];
-            var files = memStats[2];
-
             VipsObject.PrintAll();
 
-            Console.WriteLine("memory: {0} allocations, {1} bytes", activeAllocs, currentAllocs);
-            Console.WriteLine("files: {0} open", files);
+            Console.WriteLine("memory: {0} allocations, {1} bytes", Stats.Allocations, Stats.Mem);
+            Console.WriteLine("files: {0} open", Stats.Files);
 
-            Console.WriteLine("memory: high-water mark: {0}", MemoryHigh().ToReadableBytes());
+            Console.WriteLine("memory: high-water mark: {0}", Stats.MemHighwater.ToReadableBytes());
 
             var errorBuffer = Marshal.PtrToStringAnsi(Vips.ErrorBuffer());
             if (!string.IsNullOrEmpty(errorBuffer))

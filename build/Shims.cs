@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
 using Nuke.Common;
@@ -17,14 +18,9 @@ public partial class Build
 
     public void ExtractTarball(string gzArchiveName, string destFolder)
     {
-        Stream inStream = File.OpenRead(gzArchiveName);
-        Stream gzipStream = new GZipInputStream(inStream);
-
-        var tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
+        using var inStream = File.OpenRead(gzArchiveName);
+        using var gzipStream = new GZipInputStream(inStream);
+        using var tarArchive = TarArchive.CreateInputTarArchive(gzipStream, Encoding.UTF8);
         tarArchive.ExtractContents(destFolder);
-        tarArchive.Close();
-
-        gzipStream.Close();
-        inStream.Close();
     }
 }
