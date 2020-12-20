@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Enums.Coding
+    <title>Class Stats
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Enums.Coding
+    <meta name="title" content="Class Stats
    ">
     <meta name="generator" content="docfx 2.56.6.0">
     
@@ -68,18 +68,18 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.Coding">
+            <article class="content wrap" id="_content" data-uid="NetVips.Stats">
   
   
-  <h1 id="NetVips_Enums_Coding" data-uid="NetVips.Enums.Coding" class="text-break">Class Enums.Coding
+  <h1 id="NetVips_Stats" data-uid="NetVips.Stats" class="text-break">Class Stats
   </h1>
-  <div class="markdown level0 summary"><p>How pixels are coded.</p>
+  <div class="markdown level0 summary"><p>A class that provides the statistics of memory usage and opened files.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Enums.Coding</span></div>
+    <div class="level1"><span class="xref">Stats</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -107,33 +107,33 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_Coding_syntax">Syntax</h5>
+  <h5 id="NetVips_Stats_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Coding</code></pre>
+    <pre><code class="lang-csharp hljs">public static class Stats</code></pre>
   </div>
-  <h5 id="NetVips_Enums_Coding_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Normally, pixels are uncoded and can be manipulated as you would expect.
-However some file formats code pixels for compression, and sometimes it's
-useful to be able to manipulate images in the coded format.</p>
+  <h5 id="NetVips_Stats_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>libvips watches the total amount of live tracked memory and
+uses this information to decide when to trim caches.</p>
 </div>
-  <h3 id="fields">Fields
+  <h3 id="properties">Properties
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Coding_Labq.md&amp;value=---%0Auid%3A%20NetVips.Enums.Coding.Labq%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Stats_Allocations.md&amp;value=---%0Auid%3A%20NetVips.Stats.Allocations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L248">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Stats.cs/#L17">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Coding_Labq" data-uid="NetVips.Enums.Coding.Labq">Labq</h4>
-  <div class="markdown level1 summary"><p>Pixels encode 3 float CIELAB values as 4 uchar.</p>
+  <a id="NetVips_Stats_Allocations_" data-uid="NetVips.Stats.Allocations*"></a>
+  <h4 id="NetVips_Stats_Allocations" data-uid="NetVips.Stats.Allocations">Allocations</h4>
+  <div class="markdown level1 summary"><p>Get the number of active allocations.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Labq = &quot;labq&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public static int Allocations { get; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -143,27 +143,28 @@ useful to be able to manipulate images in the coded format.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Int32</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Coding_None.md&amp;value=---%0Auid%3A%20NetVips.Enums.Coding.None%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Stats_Files.md&amp;value=---%0Auid%3A%20NetVips.Stats.Files%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L245">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Stats.cs/#L38">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Coding_None" data-uid="NetVips.Enums.Coding.None">None</h4>
-  <div class="markdown level1 summary"><p>Pixels are not coded.</p>
+  <a id="NetVips_Stats_Files_" data-uid="NetVips.Stats.Files*"></a>
+  <h4 id="NetVips_Stats_Files" data-uid="NetVips.Stats.Files">Files</h4>
+  <div class="markdown level1 summary"><p>Get the number of open files.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string None = &quot;none&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public static int Files { get; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -173,27 +174,28 @@ useful to be able to manipulate images in the coded format.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Int32</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Coding_Rad.md&amp;value=---%0Auid%3A%20NetVips.Enums.Coding.Rad%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Stats_Mem.md&amp;value=---%0Auid%3A%20NetVips.Stats.Mem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L251">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Stats.cs/#L25">View Source</a>
   </span>
-  <h4 id="NetVips_Enums_Coding_Rad" data-uid="NetVips.Enums.Coding.Rad">Rad</h4>
-  <div class="markdown level1 summary"><p>Pixels encode 3 float RGB as 4 uchar (Radiance coding).</p>
+  <a id="NetVips_Stats_Mem_" data-uid="NetVips.Stats.Mem*"></a>
+  <h4 id="NetVips_Stats_Mem" data-uid="NetVips.Stats.Mem">Mem</h4>
+  <div class="markdown level1 summary"><p>Get the number of bytes currently allocated <code>vips_malloc()</code> and friends.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string Rad = &quot;rad&quot;</code></pre>
+    <pre><code class="lang-csharp hljs">public static int Mem { get; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -203,11 +205,48 @@ useful to be able to manipulate images in the coded format.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Int32</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 id="NetVips_Stats_Mem_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>libvips uses this figure to decide when to start dropping cache.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Stats_MemHighwater.md&amp;value=---%0Auid%3A%20NetVips.Stats.MemHighwater%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Stats.cs/#L33">View Source</a>
+  </span>
+  <a id="NetVips_Stats_MemHighwater_" data-uid="NetVips.Stats.MemHighwater*"></a>
+  <h4 id="NetVips_Stats_MemHighwater" data-uid="NetVips.Stats.MemHighwater">MemHighwater</h4>
+  <div class="markdown level1 summary"><p>Returns the largest number of bytes simultaneously allocated via vips_tracked_malloc().</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ulong MemHighwater { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Stats_MemHighwater_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Handy for estimating max memory requirements for a program.</p>
+</div>
 </article>
           </div>
           
@@ -216,10 +255,10 @@ useful to be able to manipulate images in the coded format.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Coding.md&amp;value=---%0Auid%3A%20NetVips.Enums.Coding%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Stats.md&amp;value=---%0Auid%3A%20NetVips.Stats%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L242" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Stats.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

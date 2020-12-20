@@ -7,6 +7,77 @@ references:
   commentId: N:NetVips
   fullName: NetVips
   nameWithType: NetVips
+- uid: NetVips.Cache
+  name: Cache
+  href: api/NetVips.Cache.html
+  commentId: T:NetVips.Cache
+  fullName: NetVips.Cache
+  nameWithType: Cache
+- uid: NetVips.Cache.Max
+  name: Max
+  href: api/NetVips.Cache.html#NetVips_Cache_Max
+  commentId: P:NetVips.Cache.Max
+  fullName: NetVips.Cache.Max
+  nameWithType: Cache.Max
+- uid: NetVips.Cache.Max*
+  name: Max
+  href: api/NetVips.Cache.html#NetVips_Cache_Max_
+  commentId: Overload:NetVips.Cache.Max
+  isSpec: "True"
+  fullName: NetVips.Cache.Max
+  nameWithType: Cache.Max
+- uid: NetVips.Cache.MaxFiles
+  name: MaxFiles
+  href: api/NetVips.Cache.html#NetVips_Cache_MaxFiles
+  commentId: P:NetVips.Cache.MaxFiles
+  fullName: NetVips.Cache.MaxFiles
+  nameWithType: Cache.MaxFiles
+- uid: NetVips.Cache.MaxFiles*
+  name: MaxFiles
+  href: api/NetVips.Cache.html#NetVips_Cache_MaxFiles_
+  commentId: Overload:NetVips.Cache.MaxFiles
+  isSpec: "True"
+  fullName: NetVips.Cache.MaxFiles
+  nameWithType: Cache.MaxFiles
+- uid: NetVips.Cache.MaxMem
+  name: MaxMem
+  href: api/NetVips.Cache.html#NetVips_Cache_MaxMem
+  commentId: P:NetVips.Cache.MaxMem
+  fullName: NetVips.Cache.MaxMem
+  nameWithType: Cache.MaxMem
+- uid: NetVips.Cache.MaxMem*
+  name: MaxMem
+  href: api/NetVips.Cache.html#NetVips_Cache_MaxMem_
+  commentId: Overload:NetVips.Cache.MaxMem
+  isSpec: "True"
+  fullName: NetVips.Cache.MaxMem
+  nameWithType: Cache.MaxMem
+- uid: NetVips.Cache.Size
+  name: Size
+  href: api/NetVips.Cache.html#NetVips_Cache_Size
+  commentId: P:NetVips.Cache.Size
+  fullName: NetVips.Cache.Size
+  nameWithType: Cache.Size
+- uid: NetVips.Cache.Size*
+  name: Size
+  href: api/NetVips.Cache.html#NetVips_Cache_Size_
+  commentId: Overload:NetVips.Cache.Size
+  isSpec: "True"
+  fullName: NetVips.Cache.Size
+  nameWithType: Cache.Size
+- uid: NetVips.Cache.Trace
+  name: Trace
+  href: api/NetVips.Cache.html#NetVips_Cache_Trace
+  commentId: P:NetVips.Cache.Trace
+  fullName: NetVips.Cache.Trace
+  nameWithType: Cache.Trace
+- uid: NetVips.Cache.Trace*
+  name: Trace
+  href: api/NetVips.Cache.html#NetVips_Cache_Trace_
+  commentId: Overload:NetVips.Cache.Trace
+  isSpec: "True"
+  fullName: NetVips.Cache.Trace
+  nameWithType: Cache.Trace
 - uid: NetVips.Connection
   name: Connection
   href: api/NetVips.Connection.html
@@ -4309,15 +4380,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.HeifloadStream
   nameWithType: Image.HeifloadStream
-- uid: NetVips.Image.Heifsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name: Heifsave(String, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  href: api/NetVips.Image.html#NetVips_Image_Heifsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.Heifsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name.vb: Heifsave(String, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
-  fullName: NetVips.Image.Heifsave(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Image.Heifsave(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
-  nameWithType: Image.Heifsave(String, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  nameWithType.vb: Image.Heifsave(String, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
+- uid: NetVips.Image.Heifsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name: Heifsave(String, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  href: api/NetVips.Image.html#NetVips_Image_Heifsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.Heifsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name.vb: Heifsave(String, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
+  fullName: NetVips.Image.Heifsave(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
+  fullName.vb: NetVips.Image.Heifsave(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
+  nameWithType: Image.Heifsave(String, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  nameWithType.vb: Image.Heifsave(String, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
 - uid: NetVips.Image.Heifsave*
   name: Heifsave
   href: api/NetVips.Image.html#NetVips_Image_Heifsave_
@@ -4325,15 +4396,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Heifsave
   nameWithType: Image.Heifsave
-- uid: NetVips.Image.HeifsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name: HeifsaveBuffer(Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  href: api/NetVips.Image.html#NetVips_Image_HeifsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.HeifsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name.vb: HeifsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
-  fullName: NetVips.Image.HeifsaveBuffer(System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Image.HeifsaveBuffer(System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
-  nameWithType: Image.HeifsaveBuffer(Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  nameWithType.vb: Image.HeifsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
+- uid: NetVips.Image.HeifsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name: HeifsaveBuffer(Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  href: api/NetVips.Image.html#NetVips_Image_HeifsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.HeifsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name.vb: HeifsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
+  fullName: NetVips.Image.HeifsaveBuffer(System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
+  fullName.vb: NetVips.Image.HeifsaveBuffer(System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
+  nameWithType: Image.HeifsaveBuffer(Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  nameWithType.vb: Image.HeifsaveBuffer(Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
 - uid: NetVips.Image.HeifsaveBuffer*
   name: HeifsaveBuffer
   href: api/NetVips.Image.html#NetVips_Image_HeifsaveBuffer_
@@ -4341,15 +4412,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.HeifsaveBuffer
   nameWithType: Image.HeifsaveBuffer
-- uid: NetVips.Image.HeifsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name: HeifsaveStream(Stream, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  href: api/NetVips.Image.html#NetVips_Image_HeifsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.HeifsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name.vb: HeifsaveStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
-  fullName: NetVips.Image.HeifsaveStream(System.IO.Stream, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Image.HeifsaveStream(System.IO.Stream, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
-  nameWithType: Image.HeifsaveStream(Stream, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  nameWithType.vb: Image.HeifsaveStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
+- uid: NetVips.Image.HeifsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name: HeifsaveStream(Stream, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  href: api/NetVips.Image.html#NetVips_Image_HeifsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.HeifsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name.vb: HeifsaveStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
+  fullName: NetVips.Image.HeifsaveStream(System.IO.Stream, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
+  fullName.vb: NetVips.Image.HeifsaveStream(System.IO.Stream, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
+  nameWithType: Image.HeifsaveStream(Stream, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  nameWithType.vb: Image.HeifsaveStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
 - uid: NetVips.Image.HeifsaveStream*
   name: HeifsaveStream
   href: api/NetVips.Image.html#NetVips_Image_HeifsaveStream_
@@ -4357,15 +4428,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.HeifsaveStream
   nameWithType: Image.HeifsaveStream
-- uid: NetVips.Image.HeifsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name: HeifsaveTarget(Target, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  href: api/NetVips.Image.html#NetVips_Image_HeifsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.HeifsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
-  name.vb: HeifsaveTarget(Target, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
-  fullName: NetVips.Image.HeifsaveTarget(NetVips.Target, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
-  fullName.vb: NetVips.Image.HeifsaveTarget(NetVips.Target, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
-  nameWithType: Image.HeifsaveTarget(Target, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Boolean>, Double[], Nullable<Int32>)
-  nameWithType.vb: Image.HeifsaveTarget(Target, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Boolean), Double(), Nullable(Of Int32))
+- uid: NetVips.Image.HeifsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name: HeifsaveTarget(Target, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  href: api/NetVips.Image.html#NetVips_Image_HeifsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Double___System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.HeifsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Double[],System.Nullable{System.Int32})
+  name.vb: HeifsaveTarget(Target, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
+  fullName: NetVips.Image.HeifsaveTarget(NetVips.Target, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Double[], System.Nullable<System.Int32>)
+  fullName.vb: NetVips.Image.HeifsaveTarget(NetVips.Target, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Double(), System.Nullable(Of System.Int32))
+  nameWithType: Image.HeifsaveTarget(Target, Nullable<Int32>, Nullable<Boolean>, String, Nullable<Int32>, Nullable<Boolean>, Double[], Nullable<Int32>)
+  nameWithType.vb: Image.HeifsaveTarget(Target, Nullable(Of Int32), Nullable(Of Boolean), String, Nullable(Of Int32), Nullable(Of Boolean), Double(), Nullable(Of Int32))
 - uid: NetVips.Image.HeifsaveTarget*
   name: HeifsaveTarget
   href: api/NetVips.Image.html#NetVips_Image_HeifsaveTarget_
@@ -10016,6 +10087,19 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.CacheSetTrace
   nameWithType: NetVips.CacheSetTrace
+- uid: NetVips.NetVips.Concurrency
+  name: Concurrency
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Concurrency
+  commentId: P:NetVips.NetVips.Concurrency
+  fullName: NetVips.NetVips.Concurrency
+  nameWithType: NetVips.Concurrency
+- uid: NetVips.NetVips.Concurrency*
+  name: Concurrency
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Concurrency_
+  commentId: Overload:NetVips.NetVips.Concurrency
+  isSpec: "True"
+  fullName: NetVips.NetVips.Concurrency
+  nameWithType: NetVips.Concurrency
 - uid: NetVips.NetVips.ConcurrencyGet
   name: ConcurrencyGet()
   href: api/NetVips.NetVips.html#NetVips_NetVips_ConcurrencyGet
@@ -10120,6 +10204,19 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.Init
   nameWithType: NetVips.Init
+- uid: NetVips.NetVips.Leak
+  name: Leak
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Leak
+  commentId: P:NetVips.NetVips.Leak
+  fullName: NetVips.NetVips.Leak
+  nameWithType: NetVips.Leak
+- uid: NetVips.NetVips.Leak*
+  name: Leak
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Leak_
+  commentId: Overload:NetVips.NetVips.Leak
+  isSpec: "True"
+  fullName: NetVips.NetVips.Leak
+  nameWithType: NetVips.Leak
 - uid: NetVips.NetVips.LeakSet(System.Boolean)
   name: LeakSet(Boolean)
   href: api/NetVips.NetVips.html#NetVips_NetVips_LeakSet_System_Boolean_
@@ -10198,6 +10295,19 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.PathMode7
   nameWithType: NetVips.PathMode7
+- uid: NetVips.NetVips.Profile
+  name: Profile
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Profile
+  commentId: P:NetVips.NetVips.Profile
+  fullName: NetVips.NetVips.Profile
+  nameWithType: NetVips.Profile
+- uid: NetVips.NetVips.Profile*
+  name: Profile
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Profile_
+  commentId: Overload:NetVips.NetVips.Profile
+  isSpec: "True"
+  fullName: NetVips.NetVips.Profile
+  nameWithType: NetVips.Profile
 - uid: NetVips.NetVips.ProfileSet(System.Boolean)
   name: ProfileSet(Boolean)
   href: api/NetVips.NetVips.html#NetVips_NetVips_ProfileSet_System_Boolean_
@@ -10263,6 +10373,19 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.ValuesForEnum
   nameWithType: NetVips.ValuesForEnum
+- uid: NetVips.NetVips.Vector
+  name: Vector
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Vector
+  commentId: P:NetVips.NetVips.Vector
+  fullName: NetVips.NetVips.Vector
+  nameWithType: NetVips.Vector
+- uid: NetVips.NetVips.Vector*
+  name: Vector
+  href: api/NetVips.NetVips.html#NetVips_NetVips_Vector_
+  commentId: Overload:NetVips.NetVips.Vector
+  isSpec: "True"
+  fullName: NetVips.NetVips.Vector
+  nameWithType: NetVips.Vector
 - uid: NetVips.NetVips.VectorSet(System.Boolean)
   name: VectorSet(Boolean)
   href: api/NetVips.NetVips.html#NetVips_NetVips_VectorSet_System_Boolean_
@@ -10558,6 +10681,64 @@ references:
   commentId: T:NetVips.SourceCustom.SeekDelegate
   fullName: NetVips.SourceCustom.SeekDelegate
   nameWithType: SourceCustom.SeekDelegate
+- uid: NetVips.Stats
+  name: Stats
+  href: api/NetVips.Stats.html
+  commentId: T:NetVips.Stats
+  fullName: NetVips.Stats
+  nameWithType: Stats
+- uid: NetVips.Stats.Allocations
+  name: Allocations
+  href: api/NetVips.Stats.html#NetVips_Stats_Allocations
+  commentId: P:NetVips.Stats.Allocations
+  fullName: NetVips.Stats.Allocations
+  nameWithType: Stats.Allocations
+- uid: NetVips.Stats.Allocations*
+  name: Allocations
+  href: api/NetVips.Stats.html#NetVips_Stats_Allocations_
+  commentId: Overload:NetVips.Stats.Allocations
+  isSpec: "True"
+  fullName: NetVips.Stats.Allocations
+  nameWithType: Stats.Allocations
+- uid: NetVips.Stats.Files
+  name: Files
+  href: api/NetVips.Stats.html#NetVips_Stats_Files
+  commentId: P:NetVips.Stats.Files
+  fullName: NetVips.Stats.Files
+  nameWithType: Stats.Files
+- uid: NetVips.Stats.Files*
+  name: Files
+  href: api/NetVips.Stats.html#NetVips_Stats_Files_
+  commentId: Overload:NetVips.Stats.Files
+  isSpec: "True"
+  fullName: NetVips.Stats.Files
+  nameWithType: Stats.Files
+- uid: NetVips.Stats.Mem
+  name: Mem
+  href: api/NetVips.Stats.html#NetVips_Stats_Mem
+  commentId: P:NetVips.Stats.Mem
+  fullName: NetVips.Stats.Mem
+  nameWithType: Stats.Mem
+- uid: NetVips.Stats.Mem*
+  name: Mem
+  href: api/NetVips.Stats.html#NetVips_Stats_Mem_
+  commentId: Overload:NetVips.Stats.Mem
+  isSpec: "True"
+  fullName: NetVips.Stats.Mem
+  nameWithType: Stats.Mem
+- uid: NetVips.Stats.MemHighwater
+  name: MemHighwater
+  href: api/NetVips.Stats.html#NetVips_Stats_MemHighwater
+  commentId: P:NetVips.Stats.MemHighwater
+  fullName: NetVips.Stats.MemHighwater
+  nameWithType: Stats.MemHighwater
+- uid: NetVips.Stats.MemHighwater*
+  name: MemHighwater
+  href: api/NetVips.Stats.html#NetVips_Stats_MemHighwater_
+  commentId: Overload:NetVips.Stats.MemHighwater
+  isSpec: "True"
+  fullName: NetVips.Stats.MemHighwater
+  nameWithType: Stats.MemHighwater
 - uid: NetVips.Target
   name: Target
   href: api/NetVips.Target.html

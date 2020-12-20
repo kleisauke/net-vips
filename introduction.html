@@ -5,16 +5,16 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Getting Started with NetVips </title>
+    <title>Introduction </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Getting Started with NetVips ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="title" content="Introduction ">
+    <meta name="generator" content="docfx 2.56.6.0">
     
-    <link rel="shortcut icon" href="../images/favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
     <meta property="docfx:tocrel" content="toc.html">
     
     
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -57,17 +57,10 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
+        <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="getting-started-with-netvips">Getting Started with NetVips</h1>
+<h1 id="introduction">Introduction</h1>
 
 <p>See the main libvips site for an introduction to the underlying library. These
 notes introduce the .NET binding.</p>
@@ -94,22 +87,30 @@ image.WriteToFile(&quot;x.jpg&quot;);
 <p>Reading this example line by line, we have:</p>
 <pre><code class="lang-csharp">var image = Image.NewFromFile(&quot;some-image.jpg&quot;, access: Enums.Access.Sequential);
 </code></pre>
-<p><a class="xref" href="../api/NetVips.Image.html#NetVips_Image_NewFromFile_"><code>NewFromFile</code></a> can load any image file supported by libvips. In
-this example, we will be accessing pixels top-to-bottom as we sweep through
-the image reading and writing, so <code>sequential</code> access mode is best for us.</p>
-<p>The default mode is <code>random</code> which allows for full random access to image
-pixels, but is slower and needs more memory. See <a class="xref" href="../api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>
-for full details on the various modes available.</p>
-<p>You can also load formatted images from memory, create images that
-wrap C-style memory arrays held as an byte array, or make images from
-constants.</p>
+<p><a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromFile_"><code>NewFromFile</code></a> can load any image file supported by libvips.
+When you load an image, only the header is fetched from the file. Pixels will
+not be read until you have built a pipeline of operations and connected it
+to an output.</p>
+<p>When you load, you can hint what type of access you will need. In this
+example, we will be accessing pixels top-to-bottom as we sweep through
+the image reading and writing, so <code>sequential</code> access mode is best for us.
+The default mode is <code>random</code> which allows for full random access to image
+pixels, but is slower and needs more memory. See <a class="xref" href="api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>
+for details on the various modes available.</p>
+<p>You can also load formatted images from memory with
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromBuffer_"><code>NewFromBuffer</code></a>, create images that wrap C-style memory arrays
+held as C# arrays with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromMemory_"><code>NewFromMemory</code></a>, or make images
+from constants with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromArray_"><code>NewFromArray</code></a>. You can also create custom
+sources and targets that link image processing pipelines to your own code,
+see <a href="introduction.html#custom-sources-and-targets">Custom sources and targets</a>.</p>
 <p>The next line:</p>
 <pre><code class="lang-csharp">image *= new[] {1, 2, 1};
 </code></pre>
-<p>Multiplying the image by an array constant uses one array element for each
+<p>Multiplies the image by an array constant using one array element for each
 image band. This line assumes that the input image has three bands and will
 double the middle band. For RGB images, that's doubling green.</p>
-<p>There are the usual range of arithmetic operator overloads.</p>
+<p>There is <a href="introduction.html#overloads">a full set arithmetic operator overloads</a>, so you can compute with
+entire images just as you would with single numbers.</p>
 <p>Next we have:</p>
 <pre><code class="lang-csharp">var mask = Image.NewFromArray(new[,]
 {
@@ -119,56 +120,54 @@ double the middle band. For RGB images, that's doubling green.</p>
 }, scale: 8);
 image = image.Conv(mask, precision: Enums.Precision.Integer);
 </code></pre>
-<p><a class="xref" href="../api/NetVips.Image.html#NetVips_Image_NewFromArray_"><code>NewFromArray</code></a> creates an image from an array constant. The
+<p><a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromArray_"><code>NewFromArray</code></a> creates an image from an array constant. The
 scale is the amount to divide the image by after integer convolution.</p>
 <p>See the libvips API docs for <a href="http://libvips.github.io/libvips/API/current/libvips-convolution.html#vips-conv"><code>vips_conv()</code></a>
-(the operation invoked by <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Conv_"><code>Conv</code></a>) for details on the convolution operator. By
+(the operation invoked by <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Conv_"><code>Conv</code></a>) for details on the convolution operator. By
 default, it computes with a float mask, but <code>integer</code> is fine for this case,
 and is much faster.</p>
 <p>Finally:</p>
 <pre><code class="lang-csharp">image.WriteToFile(&quot;x.jpg&quot;);
 </code></pre>
-<p><a class="xref" href="../api/NetVips.Image.html#NetVips_Image_WriteToFile_"><code>WriteToFile</code></a> writes an image back to the filesystem. It can
+<p><a class="xref" href="api/NetVips.Image.html#NetVips_Image_WriteToFile_"><code>WriteToFile</code></a> writes an image back to the filesystem. It can
 write any format supported by vips: the file type is set from the filename
 suffix. You can also write formatted images to memory, or dump
-image data to a C-style array in an byte array.</p>
+image data to a C-style array in an C# byte array.</p>
 <h2 id="metadata-and-attributes">Metadata and attributes</h2>
-<p>NetVips has a <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a> method to look up unknown names in libvips.
+<p>NetVips has a <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a> method to look up unknown names in libvips.
 To make it a bit easier, common properties that libvips keeps for images are accessible by C# properties,
-see <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Width_"><code>.Width</code></a> and friends.</p>
+see <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Width_"><code>.Width</code></a> and friends.</p>
 <p>As well as the core properties, you can read and write the metadata
-that libvips keeps for images with <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a> and
+that libvips keeps for images with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a> and
 friends. For example:</p>
 <pre><code class="lang-csharp">var image = Image.NewFromFile(&quot;some-image.jpg&quot;);
 var iptcString = image.Get(&quot;iptc-data&quot;);
 var exifDateString = image.Get(&quot;exif-ifd0-DateTime&quot;);
 </code></pre>
-<p>Use <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_GetFields_"><code>GetFields()</code></a> to get a list of all the field names you can use with
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a>.</p>
-<p>libvips caches and shares images behind your back, so you can't change an image
-unless you are certain you have the only reference to it.</p>
-<p>Set image properties, like <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Xres_"><code>.Xres</code></a> with <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a>. For
-example:</p>
+<p>Use <a class="xref" href="api/NetVips.Image.html#NetVips_Image_GetFields_"><code>GetFields()</code></a> to get a list of all the field names you can use with
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a>.</p>
+<p>libvips caches and shares images between different parts of your program. This
+means that you can't modify an image unless you are certain that you have
+the only reference to it. You can make a private copy of an image with
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a>, for example:</p>
 <pre><code class="lang-csharp">var newImage = image.Copy(xres: 12, yres: 13);
 </code></pre>
-<p>Now <code>newImage</code> is a private clone of <code>image</code> with <code>xres</code> and <code>yres</code>
-changed.</p>
-<p>Set image metadata with <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Set_"><code>Set</code></a>. Use <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a> to make
+<p>Now <code>newImage</code> is a private clone of <code>image</code> with <code>xres</code> and <code>yres</code> changed.</p>
+<p>Set image metadata with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Set_"><code>Set</code></a>. Use <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a> to make
 a private copy of the image first, for example:</p>
 <pre><code class="lang-csharp">var newImage = image.Copy();
 newImage.Set(&quot;icc-profile-data&quot;, newProfile);
 </code></pre>
-<p>Now <code>newImage</code> is a clone of <code>image</code> with a new ICC profile attached to
-it.</p>
+<p>Now <code>newImage</code> is a clone of <code>image</code> with a new ICC profile attached to it.</p>
 <h2 id="calling-libvips-operations">Calling libvips operations</h2>
 <p>All libvips operations were generated automatically to a PascalCase method in NetVips.
 For example, the libvips operation <code>add</code>, which appears in C as
 <a href="http://libvips.github.io/libvips/API/current/libvips-arithmetic.html#vips-add"><code>vips_add()</code></a>,
-appears in C# as <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Add_"><code>Add</code></a> method.</p>
+appears in C# as <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Add_"><code>Add</code></a> method.</p>
 <p>By taking advantage of nullable types (which allows you to omit any parameters in any position),
 we are able to call libvips operations that have optional arguments.</p>
 <p>Some libvips operations have optional output arguments, for such operations we generated
-the corresponding method overloads. For example, <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Min_"><code>Min</code></a>, the vips operation
+the corresponding method overloads. For example, <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Min_"><code>Min</code></a>, the vips operation
 that searches an image for the minimum value, has a large number of optional arguments.
 You can use it to find the minimum value like this:</p>
 <pre><code class="lang-csharp">var minValue = image.Min();
@@ -177,7 +176,7 @@ You can use it to find the minimum value like this:</p>
 <pre><code class="lang-csharp">var minValue = image.Min(out var xPos, out var yPos);
 </code></pre>
 <p>Now <code>xPos</code> and <code>yPos</code> will have the coordinates of the minimum value.
-There's actually a convenience method for this, <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_MinPos_"><code>MinPos</code></a>.</p>
+There's actually a convenience method for this, <a class="xref" href="api/NetVips.Image.html#NetVips_Image_MinPos_"><code>MinPos</code></a>.</p>
 <p>You can also ask for the top <em>n</em> minimum, for example:</p>
 <pre><code class="lang-csharp">// We explicitly discard the first three arguments
 var minValue = image.Max(out _, out _, out _, out var xPos, out var yPos);
@@ -188,10 +187,10 @@ chain them. For example, you can write:</p>
 <pre><code class="lang-csharp">var resultImage = image.Real().Cos();
 </code></pre>
 <p>to calculate the cosine of the real part of a complex image. There is
-also a full set of arithmetic operator overloads, see below.</p>
+also <a href="introduction.html#overloads">a full set of arithmetic operator overloads</a>.</p>
 <p>If an operation takes several input images, you can use a constant for all but
 one of them and the wrapper will expand the constant to an image for you. For
-example, <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Ifthenelse_"><code>Ifthenelse</code></a> uses a condition image to pick
+example, <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Ifthenelse_"><code>Ifthenelse</code></a> uses a condition image to pick
 pixels between a then and an else image:</p>
 <pre><code class="lang-csharp">var resultImage = conditionImage.Ifthenelse(thenImage, elseImage);
 </code></pre>
@@ -201,7 +200,7 @@ else, it will be expanded to match the condition image. For example:</p>
 <pre><code class="lang-csharp">var resultImage = conditionImage.Ifthenelse(new[] {0, 255, 0}, new[] {255, 0, 0});
 </code></pre>
 <p>Will make an image where true pixels are green and false pixels are red.</p>
-<p>This is useful for <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Bandjoin_"><code>Bandjoin</code></a>, the thing to join two or more
+<p>This is useful for <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Bandjoin_"><code>Bandjoin</code></a>, the thing to join two or more
 images up bandwise. You can write:</p>
 <pre><code class="lang-csharp">var rgba = rgb.Bandjoin(255);
 </code></pre>
@@ -225,6 +224,35 @@ for example truncated files, and you might want to see them.</p>
 <p>Make sure to remove the log handler, if you do not need it anymore:</p>
 <pre><code class="lang-csharp">Log.RemoveLogHandler(&quot;VIPS&quot;, _handlerId);
 </code></pre>
+<h2 id="exceptions">Exceptions</h2>
+<p>The wrapper spots errors from vips operations and raises the <a class="xref" href="api/NetVips.VipsException.html"><code>VipsException</code></a>.
+You can catch it in the usual way.</p>
+<h2 id="enums">Enums</h2>
+<p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as strings constants
+like <code>&quot;uchar&quot;</code>. They are documented as a set of classes for convenience, see
+<a class="xref" href="api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>, for example.</p>
+<h2 id="overloads">Overloads</h2>
+<p>The wrapper defines the usual set of arithmetic, boolean and relational
+overloads on image. You can mix images, constants and lists of constants
+freely. For example, you can write:</p>
+<pre><code class="lang-csharp">var resultImage = ((image * new[] {1, 2, 3}).Abs() &lt; 128) | 4;
+</code></pre>
+<h2 id="expansions">Expansions</h2>
+<p>Some vips operators take an enum to select an action, for example
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_Math_"><code>Math</code></a> can be used to calculate sine of every pixel
+like this:</p>
+<pre><code class="lang-csharp">var resultImage = image.Math(&quot;sin&quot;);
+</code></pre>
+<p>This is annoying, so the wrapper expands all these enums into separate members
+named after the enum value. So you can also write:</p>
+<pre><code class="lang-csharp">var resultImage = image.Sin();
+</code></pre>
+<h2 id="convenience-functions">Convenience functions</h2>
+<p>The wrapper defines a few extra useful utility functions:
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_Bandsplit_"><code>Bandsplit</code></a>,
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_MaxPos_"><code>MaxPos</code></a>,
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_MinPos_"><code>MinPos</code></a>,
+and <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Median_"><code>Median</code></a>.</p>
 <h2 id="tracking-and-interrupting-computation">Tracking and interrupting computation</h2>
 <p>You can attach progress handlers to images to watch the progress of
 computation.</p>
@@ -253,7 +281,7 @@ image.SignalConnect(Enums.Signals.PostEval, (Image.EvalDelegate)PostEvalHandler)
 
 var avg = image.Avg();
 </code></pre>
-<p>Handlers are given a <a class="xref" href="../api/NetVips.VipsProgress.html"><code>VipsProgress</code></a> struct containing a number
+<p>Handlers are given a <a class="xref" href="api/NetVips.VipsProgress.html"><code>VipsProgress</code></a> struct containing a number
 of useful fields. For example:</p>
 <pre><code class="lang-csharp">private void EvalHandler(Image image, VipsProgress progress)
 {
@@ -264,7 +292,7 @@ of useful fields. For example:</p>
     Console.WriteLine($&quot;percent complete = {progress.Percent}&quot;);
 }
 </code></pre>
-<p>Use <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_SetKill_"><code>SetKill</code></a> on the image to stop computation early.</p>
+<p>Use <a class="xref" href="api/NetVips.Image.html#NetVips_Image_SetKill_"><code>SetKill</code></a> on the image to stop computation early.</p>
 <p>For example:</p>
 <pre><code class="lang-csharp">private void EvalHandler(Image image, VipsProgress progress)
 {
@@ -274,9 +302,9 @@ of useful fields. For example:</p>
     }
 }
 </code></pre>
-<h3 id="custom-sources-and-targets">Custom sources and targets</h3>
-<p>You can load and save images to and from <a class="xref" href="../api/NetVips.Source.html"><code>Source</code></a> and
-<a class="xref" href="../api/NetVips.Target.html"><code>Target</code></a>.</p>
+<h2 id="custom-sources-and-targets">Custom sources and targets</h2>
+<p>You can load and save images to and from <a class="xref" href="api/NetVips.Source.html"><code>Source</code></a> and
+<a class="xref" href="api/NetVips.Target.html"><code>Target</code></a>.</p>
 <p>For example:</p>
 <pre><code class="lang-csharp">var source = Source.NewFromFile(&quot;example.jpg&quot;);
 var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
@@ -284,7 +312,7 @@ var target = Target.NewToFile(&quot;example.png&quot;);
 image.WriteToTarget(target, &quot;.png&quot;);
 </code></pre>
 <p>Sources and targets can be files, descriptors (eg. pipes) and areas of memory.</p>
-<p>You can define <a class="xref" href="../api/NetVips.SourceCustom.html"><code>SourceCustom</code></a> and <a class="xref" href="../api/NetVips.TargetCustom.html"><code>TargetCustom</code></a> too.</p>
+<p>You can define <a class="xref" href="api/NetVips.SourceCustom.html"><code>SourceCustom</code></a> and <a class="xref" href="api/NetVips.TargetCustom.html"><code>TargetCustom</code></a> too.</p>
 <p>For example:</p>
 <pre><code class="lang-csharp">var input = File.OpenRead(&quot;example.jpg&quot;);
 
@@ -314,35 +342,6 @@ image.WriteToTarget(target, &quot;.png&quot;);
     image.WriteToStream(output, &quot;.png&quot;);
 }
 </code></pre>
-<h2 id="exceptions">Exceptions</h2>
-<p>The wrapper spots errors from vips operations and raises the <a class="xref" href="../api/NetVips.VipsException.html"><code>VipsException</code></a>.
-You can catch it in the usual way.</p>
-<h2 id="enums">Enums</h2>
-<p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as strings constants
-like <code>&quot;uchar&quot;</code>. They are documented as a set of classes for convenience, see
-<a class="xref" href="../api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>, for example.</p>
-<h2 id="overloads">Overloads</h2>
-<p>The wrapper defines the usual set of arithmetic, boolean and relational
-overloads on image. You can mix images, constants and lists of constants
-freely. For example, you can write:</p>
-<pre><code class="lang-csharp">var resultImage = ((image * new[] {1, 2, 3}).Abs() &lt; 128) | 4;
-</code></pre>
-<h2 id="expansions">Expansions</h2>
-<p>Some vips operators take an enum to select an action, for example
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Math_"><code>Math</code></a> can be used to calculate sine of every pixel
-like this:</p>
-<pre><code class="lang-csharp">var resultImage = image.Math(&quot;sin&quot;);
-</code></pre>
-<p>This is annoying, so the wrapper expands all these enums into separate members
-named after the enum value. So you can also write:</p>
-<pre><code class="lang-csharp">var resultImage = image.Sin();
-</code></pre>
-<h2 id="convenience-functions">Convenience functions</h2>
-<p>The wrapper defines a few extra useful utility functions:
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Bandsplit_"><code>Bandsplit</code></a>,
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_MaxPos_"><code>MaxPos</code></a>,
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_MinPos_"><code>MinPos</code></a>,
-and <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_Median_"><code>Median</code></a>.</p>
 <h2 id="automatic-documentation">Automatic documentation</h2>
 <p>These API docs are generated automatically by DocFX. It generates API reference documentation
 from triple-slash comments in our source code.</p>
@@ -353,8 +352,8 @@ It examines libvips and writes the XML documentation and the corresponding code 
 <p>Use the C API docs for more detail:</p>
 <p><a href="https://libvips.github.io/libvips/API/current">https://libvips.github.io/libvips/API/current</a></p>
 <h2 id="draw-operations">Draw operations</h2>
-<p>Paint operations like <a class="xref" href="../api/NetVips.Image.html#NetVips_Image_DrawCircle_"><code>DrawCircle</code></a> and
-<a class="xref" href="../api/NetVips.Image.html#NetVips_Image_DrawLine_"><code>DrawLine</code></a> modify their input image. This makes them
+<p>Paint operations like <a class="xref" href="api/NetVips.Image.html#NetVips_Image_DrawCircle_"><code>DrawCircle</code></a> and
+<a class="xref" href="api/NetVips.Image.html#NetVips_Image_DrawLine_"><code>DrawLine</code></a> modify their input image. This makes them
 hard to use with the rest of libvips: you need to be very careful about
 the order in which operations execute or you can get nasty crashes.</p>
 <p>The wrapper spots operations of this type and makes a private copy of the
@@ -366,17 +365,19 @@ where possible, so you won't have 100 copies in memory.</p>
 yourself.</p>
 </article>
           </div>
+          
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/docs/tutorial/getting_started.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/docs/introduction.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>
@@ -396,6 +397,9 @@ yourself.</p>
         </div>
       </footer>
     </div>
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>  </body>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
 </html>
