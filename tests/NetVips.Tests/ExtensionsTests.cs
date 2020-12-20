@@ -17,15 +17,16 @@ namespace NetVips.Tests
         }
 
         /// <summary>
-        /// Disable the extensions tests, if we're running inside a musl-based Linux container.
+        /// Disable the extensions tests, if we're running inside virtual environments.
         /// Saves us the installation of libgdiplus.
         /// </summary>
-        private static bool InDocker => Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+        private static bool InVirtualEnv => Helper.GetEnvironmentVariableAsBool("CI") ||
+                                            Helper.GetEnvironmentVariableAsBool("DOTNET_RUNNING_IN_CONTAINER");
 
         [SkippableFact]
         public void ToBitmap1Band()
         {
-            Skip.If(InDocker, "running in Docker, skipping test");
+            Skip.If(InVirtualEnv, "running in virtual environment, skipping test");
 
             var black = Image.Black(1, 1).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + 255).Cast(Enums.BandFormat.Uchar);
@@ -37,7 +38,8 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap2Bands()
         {
-            Skip.If(InDocker || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows), "running in Docker or not on Windows, skipping test");
+            Skip.If(InVirtualEnv || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows),
+                "running in virtual environment or not on Windows, skipping test");
 
             var black = (Image.Black(1, 1) + new[] { 0, 0 }).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + new[] { 255, 255 }).Cast(Enums.BandFormat.Uchar);
@@ -51,7 +53,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap3Bands()
         {
-            Skip.If(InDocker, "running in Docker, skipping test");
+            Skip.If(InVirtualEnv, "running in virtual environment, skipping test");
 
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
@@ -65,7 +67,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void ToBitmap4Bands()
         {
-            Skip.If(InDocker, "running in Docker, skipping test");
+            Skip.If(InVirtualEnv, "running in virtual environment, skipping test");
 
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255, 255 }).Cast(Enums.BandFormat.Uchar);

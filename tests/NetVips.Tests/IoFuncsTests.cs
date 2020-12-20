@@ -20,9 +20,7 @@ namespace NetVips.Tests
         [SkippableFact]
         public void TestSplit7()
         {
-            Action act = () => NetVips.PathFilename7("");
-            var ex = Record.Exception(act);
-
+            var ex = Record.Exception(() => NetVips.PathFilename7(""));
             Skip.IfNot(ex == null, "vips configured with --disable-deprecated, skipping test");
 
             string[] Split(string path)

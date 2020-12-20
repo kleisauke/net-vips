@@ -329,13 +329,13 @@ namespace NetVips.Tests
 
             // but this should fail with a warning, and knock TRUNCATED_FILE out of
             // the cache
-            var x = im.Avg();
+            var _ = im.Avg();
 
             // now we should open again, but it won't come from cache, it'll reload
             im = Image.NewFromFile(Helper.TruncatedFile);
 
             // and this should fail with a warning once more
-            x = im.Avg();
+            _ = im.Avg();
         }
 
         [SkippableFact]

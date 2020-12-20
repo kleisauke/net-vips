@@ -588,7 +588,7 @@ namespace NetVips.Tests
                 Assert.Equal(new double[] { 0 }, hist[5, 0]);
             }
 
-            test = test * new[] { 1, 2, 3 };
+            test *= new[] { 1, 2, 3 };
             foreach (var fmt in Helper.AllFormats)
             {
                 var hist = test.Cast(fmt).HistFind(band: 0);

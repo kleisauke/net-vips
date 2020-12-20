@@ -1,6 +1,5 @@
 namespace NetVips
 {
-    using System;
     using Internal;
 
     /// <summary>

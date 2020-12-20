@@ -1,0 +1,46 @@
+on:
+  - push
+  - pull_request
+jobs:
+  CI:
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            container: mcr.microsoft.com/dotnet/sdk:5.0-buster-slim
+            script: ./build.sh
+          - os: ubuntu-20.04
+            container: centos:7
+            script: ./build.sh
+          - os: ubuntu-20.04
+            container: mcr.microsoft.com/dotnet/sdk:5.0-alpine3.12
+            script: ./build.sh
+          - os: ubuntu-20.04
+            script: ./build/test-mono.sh
+            allow_failures: true
+          - os: macos-10.15
+            script: ./build.sh
+          - os: windows-2019
+            script: .\build.ps1
+    steps:
+      - name: Dependencies (Linux glibc)
+        if: contains(matrix.container, 'buster')
+        run: |
+          apt-get update
+          apt-get install -y fonts-dejavu
+      - name: Dependencies (Linux glibc)
+        if: contains(matrix.container, 'centos')
+        run: |
+          rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+          yum install -y dotnet-sdk-5.0 dejavu-sans-fonts which
+      - name: Dependencies (Linux musl)
+        if: contains(matrix.container, 'alpine')
+        run: apk add bash ttf-dejavu --update-cache
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        continue-on-error: ${{ matrix.allow_failures == true }}
+        run: ${{ matrix.script }}
