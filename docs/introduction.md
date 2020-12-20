@@ -1,4 +1,8 @@
-Getting Started with NetVips
+---
+_disableToc: true
+---
+
+Introduction
 ============================
 
 See the main libvips site for an introduction to the underlying library. These
@@ -35,17 +39,24 @@ Reading this example line by line, we have:
 var image = Image.NewFromFile("some-image.jpg", access: Enums.Access.Sequential);
 ```
 
-[`NewFromFile`](xref:NetVips.Image.NewFromFile*) can load any image file supported by libvips. In
-this example, we will be accessing pixels top-to-bottom as we sweep through
-the image reading and writing, so `sequential` access mode is best for us.
+[`NewFromFile`](xref:NetVips.Image.NewFromFile*) can load any image file supported by libvips. 
+When you load an image, only the header is fetched from the file. Pixels will
+not be read until you have built a pipeline of operations and connected it
+to an output. 
 
+When you load, you can hint what type of access you will need. In this
+example, we will be accessing pixels top-to-bottom as we sweep through
+the image reading and writing, so `sequential` access mode is best for us.
 The default mode is `random` which allows for full random access to image
 pixels, but is slower and needs more memory. See [`Enums.Access`](xref:NetVips.Enums.Access)
-for full details on the various modes available.
+for details on the various modes available.
 
-You can also load formatted images from memory, create images that
-wrap C-style memory arrays held as an byte array, or make images from 
-constants.
+You can also load formatted images from memory with
+[`NewFromBuffer`](xref:NetVips.Image.NewFromBuffer*), create images that wrap C-style memory arrays
+held as C# arrays with [`NewFromMemory`](xref:NetVips.Image.NewFromMemory*), or make images
+from constants with [`NewFromArray`](xref:NetVips.Image.NewFromArray*). You can also create custom
+sources and targets that link image processing pipelines to your own code,
+see [Custom sources and targets](introduction.md#custom-sources-and-targets).
 
 The next line:
 
@@ -53,11 +64,12 @@ The next line:
 image *= new[] {1, 2, 1};
 ```
 
-Multiplying the image by an array constant uses one array element for each
+Multiplies the image by an array constant using one array element for each
 image band. This line assumes that the input image has three bands and will
 double the middle band. For RGB images, that's doubling green.
 
-There are the usual range of arithmetic operator overloads.
+There is [a full set arithmetic operator overloads](introduction.md#overloads), so you can compute with
+entire images just as you would with single numbers.
 
 Next we have:
 
@@ -88,7 +100,7 @@ image.WriteToFile("x.jpg");
 [`WriteToFile`](xref:NetVips.Image.WriteToFile*) writes an image back to the filesystem. It can
 write any format supported by vips: the file type is set from the filename
 suffix. You can also write formatted images to memory, or dump
-image data to a C-style array in an byte array.
+image data to a C-style array in an C# byte array.
 
 ## Metadata and attributes
 
@@ -109,18 +121,16 @@ var exifDateString = image.Get("exif-ifd0-DateTime");
 Use [`GetFields()`](xref:NetVips.Image.GetFields*) to get a list of all the field names you can use with
 [`Get`](xref:NetVips.Image.Get*).
 
-libvips caches and shares images behind your back, so you can't change an image
-unless you are certain you have the only reference to it. 
-
-Set image properties, like [`.Xres`](xref:NetVips.Image.Xres*) with [`Copy`](xref:NetVips.Image.Copy*). For
-example:
+libvips caches and shares images between different parts of your program. This
+means that you can't modify an image unless you are certain that you have
+the only reference to it. You can make a private copy of an image with
+[`Copy`](xref:NetVips.Image.Copy*), for example:
 
 ```csharp
 var newImage = image.Copy(xres: 12, yres: 13);
 ```
 
-Now `newImage` is a private clone of `image` with `xres` and `yres`
-changed.
+Now `newImage` is a private clone of `image` with `xres` and `yres` changed.
 
 Set image metadata with [`Set`](xref:NetVips.Image.Set*). Use [`Copy`](xref:NetVips.Image.Copy*) to make
 a private copy of the image first, for example:
@@ -130,8 +140,7 @@ var newImage = image.Copy();
 newImage.Set("icc-profile-data", newProfile);
 ```
 
-Now `newImage` is a clone of `image` with a new ICC profile attached to
-it.
+Now `newImage` is a clone of `image` with a new ICC profile attached to it.
 
 ## Calling libvips operations
 
@@ -178,7 +187,7 @@ var resultImage = image.Real().Cos();
 ```
 
 to calculate the cosine of the real part of a complex image. There is
-also a full set of arithmetic operator overloads, see below.
+also [a full set of arithmetic operator overloads](introduction.md#overloads).
 
 If an operation takes several input images, you can use a constant for all but
 one of them and the wrapper will expand the constant to an image for you. For
@@ -237,6 +246,52 @@ Make sure to remove the log handler, if you do not need it anymore:
 ```csharp
 Log.RemoveLogHandler("VIPS", _handlerId);
 ```
+
+## Exceptions
+
+The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException).
+You can catch it in the usual way.
+
+## Enums
+
+The libvips enums, such as `VipsBandFormat`, appear in NetVips as strings constants
+like `"uchar"`. They are documented as a set of classes for convenience, see 
+[`Enums.Access`](xref:NetVips.Enums.Access), for example.
+
+## Overloads
+
+The wrapper defines the usual set of arithmetic, boolean and relational
+overloads on image. You can mix images, constants and lists of constants
+freely. For example, you can write:
+
+```csharp
+var resultImage = ((image * new[] {1, 2, 3}).Abs() < 128) | 4;
+```
+
+## Expansions
+
+Some vips operators take an enum to select an action, for example
+[`Math`](xref:NetVips.Image.Math*) can be used to calculate sine of every pixel
+like this:
+
+```csharp
+var resultImage = image.Math("sin");
+```
+
+This is annoying, so the wrapper expands all these enums into separate members
+named after the enum value. So you can also write:
+
+```csharp
+var resultImage = image.Sin();
+```
+
+## Convenience functions
+
+The wrapper defines a few extra useful utility functions:
+[`Bandsplit`](xref:NetVips.Image.Bandsplit*), 
+[`MaxPos`](xref:NetVips.Image.MaxPos*), 
+[`MinPos`](xref:NetVips.Image.MinPos*), 
+and [`Median`](xref:NetVips.Image.Median*).
 
 ## Tracking and interrupting computation
 
@@ -301,7 +356,7 @@ private void EvalHandler(Image image, VipsProgress progress)
 }
 ```
 
-### Custom sources and targets
+## Custom sources and targets
 
 You can load and save images to and from [`Source`](xref:NetVips.Source) and
 [`Target`](xref:NetVips.Target). 
@@ -353,52 +408,6 @@ using (var input = File.OpenRead("example.jpg"))
     image.WriteToStream(output, ".png");
 }
 ```
-
-## Exceptions
-
-The wrapper spots errors from vips operations and raises the [`VipsException`](xref:NetVips.VipsException).
-You can catch it in the usual way.
-
-## Enums
-
-The libvips enums, such as `VipsBandFormat`, appear in NetVips as strings constants
-like `"uchar"`. They are documented as a set of classes for convenience, see 
-[`Enums.Access`](xref:NetVips.Enums.Access), for example.
-
-## Overloads
-
-The wrapper defines the usual set of arithmetic, boolean and relational
-overloads on image. You can mix images, constants and lists of constants
-freely. For example, you can write:
-
-```csharp
-var resultImage = ((image * new[] {1, 2, 3}).Abs() < 128) | 4;
-```
-
-## Expansions
-
-Some vips operators take an enum to select an action, for example
-[`Math`](xref:NetVips.Image.Math*) can be used to calculate sine of every pixel
-like this:
-
-```csharp
-var resultImage = image.Math("sin");
-```
-
-This is annoying, so the wrapper expands all these enums into separate members
-named after the enum value. So you can also write:
-
-```csharp
-var resultImage = image.Sin();
-```
-
-## Convenience functions
-
-The wrapper defines a few extra useful utility functions:
-[`Bandsplit`](xref:NetVips.Image.Bandsplit*), 
-[`MaxPos`](xref:NetVips.Image.MaxPos*), 
-[`MinPos`](xref:NetVips.Image.MinPos*), 
-and [`Median`](xref:NetVips.Image.Median*).
 
 ## Automatic documentation
 

@@ -1,6 +1,13 @@
 ---
 title: NetVips documentation
 documentType: index
+_enableSearch: false
+_disableNavbar: true
+_disableBreadcrumb: true
+_disableToc: true
+_disableAffix: true
+_disableContribution: true
+_disableFooter: true
 ---
 <div class="hero">
   <div class="wrap">
@@ -14,7 +21,7 @@ documentType: index
     .NET binding for the <a href="https://libvips.github.io/libvips">libvips image processing library</a>.
     </div>
     <div class="buttons-unit">
-      <a href="tutorial/getting_started.md"><i class="glyphicon glyphicon-send"></i>Getting Started</a>
+      <a href="introduction.md"><i class="glyphicon glyphicon-send"></i>Introduction</a>
       <a href="xref:NetVips"><i class="glyphicon glyphicon-book"></i>API Documentation</a>
       <a href="https://github.com/kleisauke/net-vips/releases"><i class="glyphicon glyphicon-download"></i>Download Latest</a>
     </div>

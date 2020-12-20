@@ -57,8 +57,6 @@
       }
     ],
     "globalMetadata": {
-      "_appFaviconPath": "images/favicon.ico",
-      "_appLogoPath": "images/logo.svg",
       "_gitContribute": {
         "branch": "master"
       }
