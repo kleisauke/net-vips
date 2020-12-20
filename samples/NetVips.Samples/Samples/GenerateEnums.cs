@@ -20,7 +20,7 @@ namespace NetVips.Samples
         {
             const string prefix = "Vips";
 
-            return enumStr.StartsWith(prefix) ? enumStr.Substring(prefix.Length) : enumStr;
+            return enumStr.StartsWith(prefix) ? enumStr[prefix.Length..] : enumStr;
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace NetVips
 
             if (str.Length > 1)
             {
-                return char.ToUpper(str[0]) + str.Substring(1);
+                return char.ToUpper(str[0]) + str[1..];
             }
 
             return str.ToUpper();
@@ -39,7 +39,7 @@ namespace NetVips
 
             if (str.Length > 1)
             {
-                return char.ToLower(str[0]) + str.Substring(1);
+                return char.ToLower(str[0]) + str[1..];
             }
 
             return str.ToLower();
@@ -53,7 +53,7 @@ namespace NetVips
         internal static string ToPascalCase(this string str)
         {
             return str.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
+                .Select(s => char.ToUpperInvariant(s[0]) + s[1..])
                 .Aggregate(string.Empty, (s1, s2) => s1 + s2);
         }
 

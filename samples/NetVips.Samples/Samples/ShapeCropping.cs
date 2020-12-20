@@ -233,7 +233,7 @@ namespace NetVips.Samples
                 var radius = i % 2 == 0 ? outerRadius : innerRadius;
                 if (i == 0)
                 {
-                    path.Append("M");
+                    path.Append('M');
 
                     // If an odd number of points, add an additional point at the top of the polygon
                     // -- this will shift the calculated center point of the shape so that the center point

@@ -12,14 +12,12 @@ namespace NetVips.Samples
 
         public string Execute(string[] args)
         {
-            using (var input = File.OpenRead(Filename))
-            {
-                var thumbnail = Image.ThumbnailStream(input, 300, height: 300);
-                Console.WriteLine(thumbnail.ToString());
+            using var input = File.OpenRead(Filename);
+            var thumbnail = Image.ThumbnailStream(input, 300, height: 300);
+            Console.WriteLine(thumbnail.ToString());
 
-                using var output = File.OpenWrite("thumbnail-stream.jpg");
-                thumbnail.WriteToStream(output, ".jpg");
-            }
+            using var output = File.OpenWrite("thumbnail-stream.jpg");
+            thumbnail.WriteToStream(output, ".jpg");
 
             return "See thumbnail-stream.jpg";
         }

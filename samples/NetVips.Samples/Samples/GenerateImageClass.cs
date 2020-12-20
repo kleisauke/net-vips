@@ -262,18 +262,12 @@ namespace NetVips.Samples
             string outputType;
 
             var outputTypes = requiredOutput.Select(arg => GTypeToCSharp(arg.Type)).ToArray();
-            switch (outputTypes.Length)
+            outputType = outputTypes.Length switch
             {
-                case 0:
-                    outputType = "void";
-                    break;
-                case 1:
-                    outputType = outputTypes[0];
-                    break;
-                default:
-                    outputType = outputTypes.Any(o => o != outputTypes[0]) ? $"{outputTypes[0]}[]" : "object[]";
-                    break;
-            }
+                0 => "void",
+                1 => outputTypes[0],
+                _ => outputTypes.Any(o => o != outputTypes[0]) ? $"{outputTypes[0]}[]" : "object[]"
+            };
 
             string ToCref(string name) =>
                 name.Equals("Image") || name.Equals("GObject") ? $"new <see cref=\"{name}\"/>" : name;
@@ -427,7 +421,7 @@ namespace NetVips.Samples
                 }
             }
 
-            result.Append(")");
+            result.Append(')');
 
             if (outParameters != null)
             {
@@ -556,18 +550,12 @@ namespace NetVips.Samples
                         $"{indent}/// <param name=\"{arg.Name.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(arg.Name)}.</param>");
                 }
 
-                switch (outputTypes.Length)
+                outputType = outputTypes.Length switch
                 {
-                    case 0:
-                        outputType = "void";
-                        break;
-                    case 1:
-                        outputType = outputTypes[0];
-                        break;
-                    default:
-                        outputType = outputTypes.Any(o => o != outputTypes[0]) ? $"{outputTypes[0]}[]" : "object[]";
-                        break;
-                }
+                    0 => "void",
+                    1 => outputTypes[0],
+                    _ => outputTypes.Any(o => o != outputTypes[0]) ? $"{outputTypes[0]}[]" : "object[]"
+                };
 
                 if (!outputType.Equals("void"))
                 {
