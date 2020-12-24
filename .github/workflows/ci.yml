@@ -1,3 +1,4 @@
+name: CI
 on:
   - push
   - pull_request
@@ -39,6 +40,9 @@ jobs:
       - name: Dependencies (Linux musl)
         if: contains(matrix.container, 'alpine')
         run: apk add bash ttf-dejavu --update-cache
+      - name: Prepare environment (Linux musl)
+        if: contains(matrix.container, 'alpine')
+        run: echo "VIPS_MIN_STACK_SIZE=2m" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test

@@ -4,10 +4,10 @@
 
     <!-- package -->
     <id>NetVips.Native.osx-x64</id>
-    <title>NetVips - Native binaries for OS X x64</title>
+    <title>NetVips - Native binaries for macOS x64</title>
     <version>$version$</version>
-    <description>This package complements the NetVips package and contains native binaries of libvips for OS X (x64)</description>
-    <summary>Native binaries of libvips for OS X (x64)</summary>
+    <description>This package complements the NetVips package and contains native binaries of libvips for macOS (x64)</description>
+    <summary>Native binaries of libvips for macOS (x64)</summary>
     <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
     <repository type="git" url="https://github.com/kleisauke/net-vips" />
     <tags>libvips binaries image-processing</tags>

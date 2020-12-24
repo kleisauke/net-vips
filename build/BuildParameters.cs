@@ -52,7 +52,16 @@ public partial class Build
 
             // PARAMETERS
             NuGetArchitectures = new[]
-                {"win-x64", "win-x86", "linux-x64", "linux-musl-x64", "linux-arm", "linux-arm64", "osx-x64"};
+            {
+                "win-x64",
+                "win-x86",
+                "win-arm64",
+                "linux-x64",
+                "linux-musl-x64",
+                "linux-arm",
+                "linux-arm64",
+                "osx-x64"
+            };
 
             // VERSION
             Version = GetVersion();

@@ -21,6 +21,18 @@
 
     <!-- dependencies -->
     <dependencies>
+      <group targetFramework="netstandard2.1">
+        <!-- In-sync with netstandard2.0 below except for NetVips.Native.win-arm64 -->
+        <dependency id="NetVips.Native.linux-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-arm" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-arm64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.osx-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.win-x64" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86" version="$version$" include="native, build" />
+        <!-- Windows ARM64 is supported since .NET 5.0 and back-ported to .NET Core 3.1 (.NET Standard 2.1) -->
+        <dependency id="NetVips.Native.win-arm64" version="$version$" include="native" />
+      </group>
       <group targetFramework="netstandard2.0">
         <dependency id="NetVips.Native.linux-x64" version="$version$" include="native" />
         <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />

@@ -3,11 +3,11 @@
   <metadata>
 
     <!-- package -->
-    <id>NetVips.Native.linux-arm64</id>
-    <title>NetVips - Native binaries for Linux ARM64v8</title>
+    <id>NetVips.Native.win-arm64</id>
+    <title>NetVips - Native binaries for Windows ARM64</title>
     <version>$version$</version>
-    <description>This package complements the NetVips package and contains native binaries of libvips for Linux (ARM64v8)</description>
-    <summary>Native binaries of libvips for Linux (ARM64v8)</summary>
+    <description>This package complements the NetVips package and contains native binaries of libvips for Windows (ARM64)</description>
+    <summary>Native binaries of libvips for Windows (ARM64)</summary>
     <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
     <repository type="git" url="https://github.com/kleisauke/net-vips" />
     <tags>libvips binaries image-processing</tags>
@@ -22,20 +22,18 @@
   </metadata>
   <files>
 
-    <!-- The .NET Framework >= 4.6.1 build bits for Mono runtime -->
-    <file src="targets\NetVips.Native.linux-arm64.targets" target="build/net461" />
-
-    <!-- Include libvips Linux ARM64v8 binaries -->
-    <file src="pack\linux-arm64\*.so.*" target="runtimes/linux-arm64/native" />
+    <!-- Include libvips Windows ARM64 binaries -->
+    <file src="pack\win-arm64\*.dll" target="runtimes/win-arm64/native" />
 
     <!-- Include the latest third-party notices -->
-    <file src="pack\linux-arm64\THIRD-PARTY-NOTICES.md" />
+    <file src="pack\win-arm64\THIRD-PARTY-NOTICES.md" />
 
     <!-- Include the version numbers of libvips and its dependencies -->
-    <file src="pack\linux-arm64\versions.json" />
+    <file src="pack\win-arm64\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <file src="_._" target="lib/netstandard1.0" />
+    <!-- Note: Windows ARM64 is supported since .NET 5.0 and back-ported to .NET Core 3.1 (.NET Standard 2.1) -->
+    <file src="_._" target="lib/netstandard2.1" />
 
   </files>
 </package>

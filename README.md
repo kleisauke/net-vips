@@ -1,8 +1,9 @@
 # NetVips
 
 [![NuGet](https://img.shields.io/nuget/v/NetVips.svg)](https://www.nuget.org/packages/NetVips)
-[![Build Status](https://travis-ci.org/kleisauke/net-vips.svg?branch=master)](https://travis-ci.org/kleisauke/net-vips)
-[![Build status](https://ci.appveyor.com/api/projects/status/d2r9uanb5yij07pt/branch/master?svg=true)](https://ci.appveyor.com/project/kleisauke/net-vips/branch/master)
+[![CI status (x64 Linux, macOS and Windows)](https://github.com/kleisauke/net-vips/workflows/CI/badge.svg?branch=master)](https://github.com/kleisauke/net-vips/actions)
+[![CI status (Linux ARM64v8)](https://travis-ci.org/kleisauke/net-vips.svg?branch=master)](https://travis-ci.org/kleisauke/net-vips)
+[![CI status (NetVips nightly packaging)](https://ci.appveyor.com/api/projects/status/d2r9uanb5yij07pt/branch/master?svg=true)](https://ci.appveyor.com/project/kleisauke/net-vips/branch/master)
 
 This NuGet package provides a .NET binding for the [libvips image processing library](https://libvips.github.io/libvips).
 
@@ -43,13 +44,14 @@ which gives some more background.
 
 You need the libvips shared library on your library search path, version 8.2 or
 later. There are separate NuGet packages that will contain the pre-compiled 
-libvips binaries for a few distros (see
+libvips binaries for the most common platforms (see
 [this repo](https://github.com/kleisauke/libvips-packaging) for details):
 
 |                    |NuGet Package¹|
 |--------------------|:------------:|
 |**Windows 64-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x64.svg)](https://www.nuget.org/packages/NetVips.Native.win-x64)|
 |**Windows 32-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x86.svg)](https://www.nuget.org/packages/NetVips.Native.win-x86)|
+|**Windows ARM64**   |[![NetVips.Native.win-arm64](https://img.shields.io/nuget/v/NetVips.Native.win-arm64.svg)](https://www.nuget.org/packages/NetVips.Native.win-arm64)|
 |**Linux x64 glibc²**|[![NetVips.Native.linux-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-x64)|
 |**Linux x64 musl³** |[![NetVips.Native.linux-musl-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-musl-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-musl-x64)|
 |**Linux ARM64v8**   |[![NetVips.Native.linux-arm64](https://img.shields.io/nuget/v/NetVips.Native.linux-arm64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-arm64)|

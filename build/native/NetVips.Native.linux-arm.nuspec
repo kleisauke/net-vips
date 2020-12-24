@@ -4,7 +4,7 @@
 
     <!-- package -->
     <id>NetVips.Native.linux-arm</id>
-    <title>NetVips - Native binaries for Linux ARMv7.</title>
+    <title>NetVips - Native binaries for Linux ARMv7</title>
     <version>$version$</version>
     <description>This package complements the NetVips package and contains native binaries of libvips for Linux (ARMv7)</description>
     <summary>Native binaries of libvips for Linux (ARMv7)</summary>
