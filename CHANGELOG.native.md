@@ -4,6 +4,11 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.10.5.1] - 2020-12-27
+### Fixed
+- AVIF decode/encode on Windows with CPUs lacking support for the AVX2 instruction set ([#104](https://github.com/kleisauke/net-vips/issues/104)).
+- Compatibility with older Linux ARM64v8 and ARMv7 distributions ([kleisauke/libvips-packaging#3](https://github.com/kleisauke/libvips-packaging/issues/3)).
+
 ## [8.10.5] - 2020-12-24
 ### Note
 If you would like to see what's changed, please visit the the release notes of libvips:
@@ -111,6 +116,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.10.5.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.5...v8.10.5-build2
 [8.10.5]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.1...v8.10.5
 [8.10.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.0-build2...v8.10.1
 [8.10.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.9.2-build3...v8.10.0-build2
