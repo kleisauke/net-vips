@@ -456,22 +456,22 @@ namespace NetVips
         public static class ForeignPngFilter
         {
           /// <summary>No filtering.</summary>
-          public const string None = "none";
+          public const int None =  0x08; // "none"
 
           // <summary>Difference to the left.</summary>
-          public const string Sub = "sub";
+          public const int Sub =  0x10; // "sub"
 
           // <summary>Difference up.</summary>
-          public const string Up = "up";
+          public const int Up = 0x20; // "up"
 
           // <summary>Average of left and up.</summary>
-          public const string Avg = "avg";
+          public const int Avg = 0x40; // "avg"
 
           // <summary>Pick best neighbor predictor automatically.</summary>
-          public const string Paeth = "paeth";
+          public const int Paeth = 0x80; // "paeth"
 
           // <summary>Adaptive.</summary>
-          public const string All = "all";
+          public const int All = 0xF8; // "all"
         }
 
         /// <summary>
