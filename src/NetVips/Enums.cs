@@ -451,6 +451,30 @@ namespace NetVips
         }
 
         /// <summary>
+        /// The PNG filter to use.
+        /// </summary>
+        public static class ForeignPngFilter
+        {
+          /// <summary>No filtering.</summary>
+          public const string None = "none";
+
+          // <summary>Difference to the left.</summary>
+          public const string Sub = "sub";
+
+          // <summary>Difference up.</summary>
+          public const string Up = "up";
+
+          // <summary>Average of left and up.</summary>
+          public const string Avg = "avg";
+
+          // <summary>Pick best neighbor predictor automatically.</summary>
+          public const string Paeth = "paeth";
+
+          // <summary>Adaptive.</summary>
+          public const string All = "all";
+        }
+
+        /// <summary>
         /// Set jpeg subsampling mode.
         /// </summary>
         public static class ForeignJpegSubsample
