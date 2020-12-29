@@ -456,23 +456,23 @@ namespace NetVips
         [Flags]
         public enum ForeignPngFilter
         {
-          /// <summary>No filtering.</summary>
-          None = 0x08, // "none"
+            /// <summary>No filtering.</summary>
+            None = 0x08, // "none"
 
-          // <summary>Difference to the left.</summary>
-          Sub = 0x10, // "sub"
+            /// <summary>Difference to the left.</summary>
+            Sub = 0x10, // "sub"
 
-          // <summary>Difference up.</summary>
-          Up = 0x20, // "up"
+            /// <summary>Difference up.</summary>
+            Up = 0x20, // "up"
 
-          // <summary>Average of left and up.</summary>
-          Avg = 0x40, // "avg"
+            /// <summary>Average of left and up.</summary>
+            Avg = 0x40, // "avg"
 
-          // <summary>Pick best neighbor predictor automatically.</summary>
-          Paeth = 0x80, // "paeth"
+            /// <summary>Pick best neighbor predictor automatically.</summary>
+            Paeth = 0x80, // "paeth"
 
-          // <summary>Adaptive.</summary>
-          All = 0xF8, // "all"
+            /// <summary>Adaptive.</summary>
+            All = None | Sub | Up | Avg | Paeth // "all"
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace NetVips
 
             /// <summary>Position the crop towards the high coordinate.</summary>
             public const string High = "high";
-			
+
             /// <summary>Everything is interesting.</summary>
             public const string All = "all";
         }
@@ -1006,31 +1006,31 @@ namespace NetVips
             #region Internal log flags
 
             /// <summary>Internal flag.</summary>
-            FlagRecursion = 1/* << 0*/,
+            FlagRecursion = 1 << 0,
 
-            /// <summary>internal flag.</summary>
+            /// <summary>Internal flag.</summary>
             FlagFatal = 1 << 1,
 
             #endregion
 
             #region GLib log levels
 
-            /// <summary>log level for errors.</summary>
-            Error = 1 << 2, /* always fatal */
+            /// <summary>Log level for errors.</summary>
+            Error = 1 << 2, // always fatal
 
-            /// <summary>log level for critical warning messages.</summary>
+            /// <summary>Log level for critical warning messages.</summary>
             Critical = 1 << 3,
 
-            /// <summary>log level for warnings.</summary>
+            /// <summary>Log level for warnings.</summary>
             Warning = 1 << 4,
 
-            /// <summary>log level for messages.</summary>
+            /// <summary>Log level for messages.</summary>
             Message = 1 << 5,
 
-            /// <summary>log level for informational messages.</summary>
+            /// <summary>Log level for informational messages.</summary>
             Info = 1 << 6,
 
-            /// <summary>log level for debug messages.</summary>
+            /// <summary>Log level for debug messages.</summary>
             Debug = 1 << 7,
 
             #endregion
@@ -1038,19 +1038,22 @@ namespace NetVips
             #region Convenience values
 
             /// <summary>All log levels except fatal.</summary>
-            AllButFatal = 253,
+            AllButFatal = All & ~FlagFatal,
 
             /// <summary>All log levels except recursion.</summary>
-            AllButRecursion = 254,
+            AllButRecursion = All & ~FlagRecursion,
 
             /// <summary>All log levels.</summary>
-            All = 255,
+            All = FlagMask | Error | Critical | Warning | Message | Info | Debug,
 
             /// <summary>Flag mask.</summary>
-            FlagMask = 3,
+            FlagMask = ~LevelMask,
 
-            /// <summary>A mask including all log levels..</summary>
-            LevelMask = unchecked((int) 0xFFFFFFFC)
+            /// <summary>A mask including all log levels.</summary>
+            LevelMask = ~(FlagRecursion | FlagFatal),
+
+            /// <summary>A mask with log levels that are considered fatal by default.</summary>
+            FatalMask = FlagRecursion | Error
 
             #endregion
         }
