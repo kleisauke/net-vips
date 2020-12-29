@@ -453,6 +453,7 @@ namespace NetVips
         /// <summary>
         /// The PNG filter to use.
         /// </summary>
+        [Flags]
         public static class ForeignPngFilter
         {
           /// <summary>No filtering.</summary>
