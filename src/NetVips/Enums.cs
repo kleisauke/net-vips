@@ -457,7 +457,7 @@ namespace NetVips
         public static class ForeignPngFilter
         {
           /// <summary>No filtering.</summary>
-          public const int None =  0x08; // "none"
+          public const int None = 0x08; // "none"
 
           // <summary>Difference to the left.</summary>
           public const int Sub =  0x10; // "sub"
