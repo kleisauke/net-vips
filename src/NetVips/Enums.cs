@@ -451,6 +451,31 @@ namespace NetVips
         }
 
         /// <summary>
+        /// The PNG filter to use.
+        /// </summary>
+        [Flags]
+        public enum ForeignPngFilter
+        {
+          /// <summary>No filtering.</summary>
+          None = 0x08, // "none"
+
+          // <summary>Difference to the left.</summary>
+          Sub = 0x10, // "sub"
+
+          // <summary>Difference up.</summary>
+          Up = 0x20, // "up"
+
+          // <summary>Average of left and up.</summary>
+          Avg = 0x40, // "avg"
+
+          // <summary>Pick best neighbor predictor automatically.</summary>
+          Paeth = 0x80, // "paeth"
+
+          // <summary>Adaptive.</summary>
+          All = 0xF8, // "all"
+        }
+
+        /// <summary>
         /// Set jpeg subsampling mode.
         /// </summary>
         public static class ForeignJpegSubsample
