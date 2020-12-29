@@ -460,7 +460,7 @@ namespace NetVips
           public const int None = 0x08; // "none"
 
           // <summary>Difference to the left.</summary>
-          public const int Sub =  0x10; // "sub"
+          public const int Sub = 0x10; // "sub"
 
           // <summary>Difference up.</summary>
           public const int Up = 0x20; // "up"
