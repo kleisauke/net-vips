@@ -454,25 +454,25 @@ namespace NetVips
         /// The PNG filter to use.
         /// </summary>
         [Flags]
-        public static class ForeignPngFilter
+        public enum ForeignPngFilter
         {
           /// <summary>No filtering.</summary>
-          public const int None = 0x08; // "none"
+          None = 0x08, // "none"
 
           // <summary>Difference to the left.</summary>
-          public const int Sub = 0x10; // "sub"
+          Sub = 0x10, // "sub"
 
           // <summary>Difference up.</summary>
-          public const int Up = 0x20; // "up"
+          Up = 0x20, // "up"
 
           // <summary>Average of left and up.</summary>
-          public const int Avg = 0x40; // "avg"
+          Avg = 0x40, // "avg"
 
           // <summary>Pick best neighbor predictor automatically.</summary>
-          public const int Paeth = 0x80; // "paeth"
+          Paeth = 0x80, // "paeth"
 
           // <summary>Adaptive.</summary>
-          public const int All = 0xF8; // "all"
+          All = 0xF8, // "all"
         }
 
         /// <summary>
