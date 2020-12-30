@@ -33,7 +33,7 @@ branches:
 
 # Build cache
 cache:
-- download -> appveyor.yml
+- download -> appveyor.yml, build\Build.cs
 
 artifacts:
   - path: '**\NetVips.*.nupkg' # find all NuGet packages recursively
