@@ -185,6 +185,9 @@ namespace NetVips.Tests
                 SaveLoadStream(".jpg", "", _colour, 80);
             }
 
+            var _ = Image.Jpegload(Helper.JpegFile, out var flags);
+            Assert.Equal(Enums.ForeignFlags.SEQUENTIAL, flags);
+
             // see if we have exif parsing: our test image has this field
             var x = Image.NewFromFile(Helper.JpegFile);
             if (x.Contains("exif-ifd0-Orientation"))

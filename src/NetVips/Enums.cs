@@ -1068,28 +1068,28 @@ namespace NetVips
             NONE = 0,
 
             /// <summary>Must be set in the constructor.</summary>
-            REQUIRED = 1,
+            REQUIRED = 1 << 0,
 
             /// <summary>Can only be set in the constructor.</summary>
-            CONSTRUCT = 2,
+            CONSTRUCT = 1 << 1,
 
             /// <summary>Can only be set once.</summary>
-            SET_ONCE = 4,
+            SET_ONCE = 1 << 2,
 
             /// <summary>Don't do use-before-set checks.</summary>
-            SET_ALWAYS = 8,
+            SET_ALWAYS = 1 << 3,
 
             /// <summary>Is an input argument (one we depend on).</summary>
-            INPUT = 16,
+            INPUT = 1 << 4,
 
             /// <summary>Is an output argument (depends on us).</summary>
-            OUTPUT = 32,
+            OUTPUT = 1 << 5,
 
             /// <summary>Just there for back-compat, hide.</summary>
-            DEPRECATED = 64,
+            DEPRECATED = 1 << 6,
 
             /// <summary>The input argument will be modified.</summary>
-            MODIFY = 128
+            MODIFY = 1 << 7
         }
 
         /// <summary>
@@ -1102,16 +1102,38 @@ namespace NetVips
             NONE = 0,
 
             /// <summary>Can work sequentially with a small buffer.</summary>
-            SEQUENTIAL = 1,
+            SEQUENTIAL = 1 << 0,
 
             /// <summary>Can work sequentially without a buffer.</summary>
-            SEQUENTIAL_UNBUFFERED = 2,
+            SEQUENTIAL_UNBUFFERED = 1 << 1,
 
             /// <summary>Must not be cached.</summary>
-            NOCACHE = 4,
+            NOCACHE = 1 << 2,
 
             /// <summary>A compatibility thing.</summary>
-            DEPRECATED = 8
+            DEPRECATED = 1 << 3
+        }
+
+        /// <summary>
+        /// Flags we associate with a file load operation.
+        /// </summary>
+        [Flags]
+        public enum ForeignFlags : uint
+        {
+            /// <summary>No flags set.</summary>
+            NONE = 0,
+
+            /// <summary>Lazy read OK (eg. tiled tiff).</summary>
+            PARTIAL = 1 << 0,
+
+            /// <summary>Most-significant byte first.</summary>
+            BIGENDIAN = 1 << 1,
+
+            /// <summary>Top-to-bottom lazy read OK.</summary>
+            SEQUENTIAL = 1 << 2,
+
+            /// <summary>All flags set.</summary>
+            ALL = 1 << 3
         }
 
         /// <summary>

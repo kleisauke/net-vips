@@ -165,7 +165,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Analyzeload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Analyzeload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -189,7 +189,7 @@ namespace NetVips
             var results = Operation.Call("analyzeload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -1118,7 +1118,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Csvload(string filename, out int flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Csvload(string filename, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -1162,7 +1162,7 @@ namespace NetVips
             var results = Operation.Call("csvload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -1271,7 +1271,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image CsvloadSource(Source source, out int flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image CsvloadSource(Source source, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -1315,7 +1315,7 @@ namespace NetVips
             var results = Operation.Call("csvload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -1338,7 +1338,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image CsvloadStream(Stream stream, out int flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image CsvloadStream(Stream stream, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = CsvloadSource(source, out flags, skip, lines, whitespace, separator, memory, access, fail);
@@ -2357,7 +2357,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Fitsload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Fitsload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2381,7 +2381,7 @@ namespace NetVips
             var results = Operation.Call("fitsload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -2713,7 +2713,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Gifload(string filename, out int flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Gifload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2747,7 +2747,7 @@ namespace NetVips
             var results = Operation.Call("gifload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -2815,7 +2815,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadBuffer(byte[] buffer, out int flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2849,7 +2849,7 @@ namespace NetVips
             var results = Operation.Call("gifload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -2942,7 +2942,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadSource(Source source, out int flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2976,7 +2976,7 @@ namespace NetVips
             var results = Operation.Call("gifload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -2997,7 +2997,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadStream(Stream stream, out int flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = GifloadSource(source, out flags, page, n, memory, access, fail);
@@ -3177,7 +3177,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Heifload(string filename, out int flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Heifload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3216,7 +3216,7 @@ namespace NetVips
             var results = Operation.Call("heifload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -3291,7 +3291,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadBuffer(byte[] buffer, out int flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3330,7 +3330,7 @@ namespace NetVips
             var results = Operation.Call("heifload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -3431,7 +3431,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadSource(Source source, out int flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3470,7 +3470,7 @@ namespace NetVips
             var results = Operation.Call("heifload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -3492,7 +3492,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadStream(Stream stream, out int flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = HeifloadSource(source, out flags, page, n, thumbnail, memory, access, fail);
@@ -4329,7 +4329,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Jpegload(string filename, out int flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Jpegload(string filename, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4363,7 +4363,7 @@ namespace NetVips
             var results = Operation.Call("jpegload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -4431,7 +4431,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadBuffer(byte[] buffer, out int flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4465,7 +4465,7 @@ namespace NetVips
             var results = Operation.Call("jpegload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -4558,7 +4558,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadSource(Source source, out int flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadSource(Source source, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4592,7 +4592,7 @@ namespace NetVips
             var results = Operation.Call("jpegload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -4613,7 +4613,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadStream(Stream stream, out int flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadStream(Stream stream, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = JpegloadSource(source, out flags, shrink, autorotate, memory, access, fail);
@@ -5368,7 +5368,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Magickload(string filename, out int flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Magickload(string filename, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -5407,7 +5407,7 @@ namespace NetVips
             var results = Operation.Call("magickload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -5482,7 +5482,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MagickloadBuffer(byte[] buffer, out int flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MagickloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -5521,7 +5521,7 @@ namespace NetVips
             var results = Operation.Call("magickload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -6281,7 +6281,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Matload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Matload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6305,7 +6305,7 @@ namespace NetVips
             var results = Operation.Call("matload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -6373,7 +6373,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Matrixload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Matrixload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6397,7 +6397,7 @@ namespace NetVips
             var results = Operation.Call("matrixload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -6474,7 +6474,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MatrixloadSource(Source source, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MatrixloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6498,7 +6498,7 @@ namespace NetVips
             var results = Operation.Call("matrixload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -6517,7 +6517,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MatrixloadStream(Stream stream, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MatrixloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = MatrixloadSource(source, out flags, memory, access, fail);
@@ -7699,7 +7699,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Niftiload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Niftiload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7723,7 +7723,7 @@ namespace NetVips
             var results = Operation.Call("niftiload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -7811,7 +7811,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openexrload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openexrload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7835,7 +7835,7 @@ namespace NetVips
             var results = Operation.Call("openexrload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -7917,7 +7917,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openslideload(string filename, out int flags, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openslideload(string filename, out Enums.ForeignFlags flags, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7961,7 +7961,7 @@ namespace NetVips
             var results = Operation.Call("openslideload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8050,7 +8050,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Pdfload(string filename, out int flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Pdfload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8099,7 +8099,7 @@ namespace NetVips
             var results = Operation.Call("pdfload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8188,7 +8188,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadBuffer(byte[] buffer, out int flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8237,7 +8237,7 @@ namespace NetVips
             var results = Operation.Call("pdfload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8354,7 +8354,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadSource(Source source, out int flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8403,7 +8403,7 @@ namespace NetVips
             var results = Operation.Call("pdfload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8427,7 +8427,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadStream(Stream stream, out int flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PdfloadSource(source, out flags, page, n, dpi, scale, background, memory, access, fail);
@@ -8546,7 +8546,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Pngload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Pngload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8570,7 +8570,7 @@ namespace NetVips
             var results = Operation.Call("pngload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8624,7 +8624,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8648,7 +8648,7 @@ namespace NetVips
             var results = Operation.Call("pngload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8725,7 +8725,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadSource(Source source, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8749,7 +8749,7 @@ namespace NetVips
             var results = Operation.Call("pngload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -8768,7 +8768,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadStream(Stream stream, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PngloadSource(source, out flags, memory, access, fail);
@@ -8783,7 +8783,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Pngsave(filename, compression: int, interlace: bool, profile: string, filter: int, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
+        /// in.Pngsave(filename, compression: int, interlace: bool, profile: string, filter: Enums.ForeignPngFilter, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -8798,7 +8798,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Pngsave(string filename, int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Pngsave(string filename, int? compression = null, bool? interlace = null, string profile = null, Enums.ForeignPngFilter? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -8865,7 +8865,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, profile: string, filter: int, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.PngsaveBuffer(compression: int, interlace: bool, profile: string, filter: Enums.ForeignPngFilter, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="compression">Compression factor.</param>
@@ -8880,7 +8880,7 @@ namespace NetVips
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] PngsaveBuffer(int? compression = null, bool? interlace = null, string profile = null, Enums.ForeignPngFilter? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -8947,7 +8947,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.PngsaveTarget(target, compression: int, interlace: bool, profile: string, filter: int, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
+        /// in.PngsaveTarget(target, compression: int, interlace: bool, profile: string, filter: Enums.ForeignPngFilter, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="target">Target to save to.</param>
@@ -8962,7 +8962,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void PngsaveTarget(Target target, int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void PngsaveTarget(Target target, int? compression = null, bool? interlace = null, string profile = null, Enums.ForeignPngFilter? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -9029,7 +9029,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.PngsaveStream(stream, compression: int, interlace: bool, profile: string, filter: int, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
+        /// in.PngsaveStream(stream, compression: int, interlace: bool, profile: string, filter: Enums.ForeignPngFilter, palette: bool, q: int, dither: double, bitdepth: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to save to.</param>
@@ -9044,7 +9044,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void PngsaveStream(Stream stream, int? compression = null, bool? interlace = null, string profile = null, int? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void PngsaveStream(Stream stream, int? compression = null, bool? interlace = null, string profile = null, Enums.ForeignPngFilter? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             using (var target = TargetStream.NewFromStream(stream))
             {
@@ -9101,7 +9101,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Ppmload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Ppmload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9125,7 +9125,7 @@ namespace NetVips
             var results = Operation.Call("ppmload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -9202,7 +9202,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PpmloadSource(Source source, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PpmloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9226,7 +9226,7 @@ namespace NetVips
             var results = Operation.Call("ppmload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -9245,7 +9245,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PpmloadStream(Stream stream, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PpmloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PpmloadSource(source, out flags, memory, access, fail);
@@ -9520,7 +9520,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Radload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Radload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9544,7 +9544,7 @@ namespace NetVips
             var results = Operation.Call("radload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -9598,7 +9598,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadBuffer(byte[] buffer, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9622,7 +9622,7 @@ namespace NetVips
             var results = Operation.Call("radload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -9699,7 +9699,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadSource(Source source, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9723,7 +9723,7 @@ namespace NetVips
             var results = Operation.Call("radload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -9742,7 +9742,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadStream(Stream stream, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = RadloadSource(source, out flags, memory, access, fail);
@@ -9967,7 +9967,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Rawload(string filename, int width, int height, int bands, out int flags, ulong? offset = null, string format = null, string interpretation = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Rawload(string filename, int width, int height, int bands, out Enums.ForeignFlags flags, ulong? offset = null, string format = null, string interpretation = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10006,7 +10006,7 @@ namespace NetVips
             var results = Operation.Call("rawload", options, filename, width, height, bands) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -10943,7 +10943,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Svgload(string filename, out int flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Svgload(string filename, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10982,7 +10982,7 @@ namespace NetVips
             var results = Operation.Call("svgload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -11057,7 +11057,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadBuffer(byte[] buffer, out int flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11096,7 +11096,7 @@ namespace NetVips
             var results = Operation.Call("svgload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -11197,7 +11197,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadSource(Source source, out int flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadSource(Source source, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11236,7 +11236,7 @@ namespace NetVips
             var results = Operation.Call("svgload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -11258,7 +11258,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadStream(Stream stream, out int flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadStream(Stream stream, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = SvgloadSource(source, out flags, dpi, scale, unlimited, memory, access, fail);
@@ -11920,7 +11920,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Tiffload(string filename, out int flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Tiffload(string filename, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11964,7 +11964,7 @@ namespace NetVips
             var results = Operation.Call("tiffload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -12046,7 +12046,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadBuffer(byte[] buffer, out int flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12090,7 +12090,7 @@ namespace NetVips
             var results = Operation.Call("tiffload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -12199,7 +12199,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadSource(Source source, out int flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12243,7 +12243,7 @@ namespace NetVips
             var results = Operation.Call("tiffload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -12266,7 +12266,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadStream(Stream stream, out int flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = TiffloadSource(source, out flags, page, subifd, n, autorotate, memory, access, fail);
@@ -12811,7 +12811,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Vipsload(string filename, out int flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Vipsload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12835,7 +12835,7 @@ namespace NetVips
             var results = Operation.Call("vipsload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -12944,7 +12944,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Webpload(string filename, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Webpload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12983,7 +12983,7 @@ namespace NetVips
             var results = Operation.Call("webpload", options, filename) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -13058,7 +13058,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadBuffer(byte[] buffer, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -13097,7 +13097,7 @@ namespace NetVips
             var results = Operation.Call("webpload_buffer", options, buffer) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -13198,7 +13198,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadSource(Source source, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -13237,7 +13237,7 @@ namespace NetVips
             var results = Operation.Call("webpload_source", options, source) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            flags = opts?["flags"] is int out1 ? out1 : 0;
+            flags = (Enums.ForeignFlags)opts?["flags"];
 
             return finalResult;
         }
@@ -13259,7 +13259,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadStream(Stream stream, out int flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = WebploadSource(source, out flags, page, n, scale, memory, access, fail);

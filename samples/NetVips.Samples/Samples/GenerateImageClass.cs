@@ -18,7 +18,7 @@ namespace NetVips.Samples
             {GValue.GIntType, "int"},
             {GValue.GUint64Type, "ulong"},
             {GValue.GEnumType, "string"},
-            {GValue.GFlagsType, "int"},
+            //{GValue.GFlagsType, "int"}, // Checked below
             {GValue.GDoubleType, "double"},
             {GValue.GStrType, "string"},
             {GValue.GObjectType, "GObject"},
@@ -42,9 +42,10 @@ namespace NetVips.Samples
         /// <summary>
         /// Map a GType to the name of the C# type we use to represent it.
         /// </summary>
+        /// <param name="name">The GType identifier.</param>
         /// <param name="gtype">The GType to map.</param>
         /// <returns>The C# type we use to represent it.</returns>
-        private string GTypeToCSharp(IntPtr gtype)
+        private string GTypeToCSharp(string name, IntPtr gtype)
         {
             if (_gTypeToCSharpDict.ContainsKey(gtype))
             {
@@ -56,6 +57,16 @@ namespace NetVips.Samples
             if (_gTypeToCSharpDict.ContainsKey(fundamental))
             {
                 return _gTypeToCSharpDict[fundamental];
+            }
+
+            if (fundamental == GValue.GFlagsType)
+            {
+                return name switch
+                {
+                    "flags" => "Enums.ForeignFlags",
+                    "filter" => "Enums.ForeignPngFilter",
+                    _ => throw new Exception($"Unsupported type: {gtype} name: {name}")
+                };
             }
 
             return "object";
@@ -103,7 +114,7 @@ namespace NetVips.Samples
 
             string SafeIdentifier(string name) =>
                 reservedKeywords.Contains(name)
-                    ? "@" + name
+                    ? $"@{name}"
                     : name;
 
             string SafeCast(string type, string name = "result")
@@ -133,6 +144,15 @@ namespace NetVips.Samples
                 }
             }
 
+            string ExplicitCast(string type)
+            {
+                return type switch
+                {
+                    "Enums.ForeignFlags" => $"({type})",
+                    _ => string.Empty
+                };
+            }
+
             string ToNullable(string type, string name)
             {
                 switch (type)
@@ -150,9 +170,10 @@ namespace NetVips.Samples
                     case "int":
                     case "ulong":
                     case "double":
+                    case "Enums.ForeignPngFilter":
                         return $"{type}? {name} = null";
                     default:
-                        throw new Exception("Unsupported type: " + type);
+                        throw new Exception($"Unsupported type: {type}");
                 }
             }
 
@@ -174,9 +195,10 @@ namespace NetVips.Samples
                     case "int":
                     case "ulong":
                     case "double":
+                    case "Enums.ForeignPngFilter":
                         return $"{name}.HasValue";
                     default:
-                        throw new Exception("Unsupported type: " + type);
+                        throw new Exception($"Unsupported type: {type}");
                 }
             }
 
@@ -195,7 +217,7 @@ namespace NetVips.Samples
             {
                 var arg = requiredOutput.First();
                 result.Append(
-                    $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
+                    $"{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
             }
             else if (requiredOutput.Length > 1)
             {
@@ -228,7 +250,7 @@ namespace NetVips.Samples
                 {
                     var arg = optionalInput[i];
                     result.Append(
-                            $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}: {GTypeToCSharp(arg.Type)}")
+                            $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}: {GTypeToCSharp(arg.Name, arg.Type)}")
                         .Append(i != optionalInput.Length - 1 ? ", " : string.Empty);
                 }
             }
@@ -261,7 +283,7 @@ namespace NetVips.Samples
 
             string outputType;
 
-            var outputTypes = requiredOutput.Select(arg => GTypeToCSharp(arg.Type)).ToArray();
+            var outputTypes = requiredOutput.Select(arg => GTypeToCSharp(arg.Name, arg.Type)).ToArray();
             outputType = outputTypes.Length switch
             {
                 0 => "void",
@@ -299,7 +321,7 @@ namespace NetVips.Samples
                     $" {newOperationName}(" +
                     string.Join(", ",
                         requiredInput.Select(arg =>
-                                $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                                $"{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
                             .ToArray()));
             }
 
@@ -312,7 +334,7 @@ namespace NetVips.Samples
 
                 result.Append(string.Join(", ",
                     outParameters.Select(arg =>
-                            $"out {GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                            $"out {GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
                         .ToArray()));
             }
 
@@ -325,7 +347,7 @@ namespace NetVips.Samples
 
                 result.Append(string.Join(", ",
                     optionalInput.Select(arg =>
-                            $"{ToNullable(GTypeToCSharp(arg.Type), SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())}")
+                            $"{ToNullable(GTypeToCSharp(arg.Name, arg.Type), SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())}")
                         .ToArray()));
             }
 
@@ -340,11 +362,11 @@ namespace NetVips.Samples
                 {
                     var safeIdentifier = SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower();
                     var optionsName = safeIdentifier == arg.Name
-                        ? "nameof(" + arg.Name + ")"
-                        : "\"" + arg.Name + "\"";
+                        ? $"nameof({arg.Name})"
+                        : $"\"{arg.Name}\"";
 
                     result.Append($"{indent}    if (")
-                        .Append(CheckNullable(GTypeToCSharp(arg.Type), safeIdentifier))
+                        .Append(CheckNullable(GTypeToCSharp(arg.Name, arg.Type), safeIdentifier))
                         .AppendLine(")")
                         .AppendLine($"{indent}    {{")
                         .AppendLine($"{indent}        options.Add({optionsName}, {safeIdentifier});")
@@ -405,7 +427,7 @@ namespace NetVips.Samples
                 // Co-variant array conversion from Image[] to object[] can cause run-time exception on write operation.
                 // So we need to wrap the image array into a object array.
                 var needToWrap = requiredInput.Length == 1 &&
-                                 GTypeToCSharp(requiredInput[0].Type).Equals("Image[]");
+                                 GTypeToCSharp(requiredInput[0].Name, requiredInput[0].Type).Equals("Image[]");
                 if (needToWrap)
                 {
                     result.Append("new object[] { ");
@@ -446,8 +468,8 @@ namespace NetVips.Samples
                 {
                     var arg = outParameters[i];
                     result.Append(
-                            $"{indent}    {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = opts?[\"{arg.Name}\"]")
-                        .AppendLine(SafeCast(GTypeToCSharp(arg.Type), $"out{i + 1}"));
+                            $"{indent}    {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = {ExplicitCast(GTypeToCSharp(arg.Name, arg.Type))}opts?[\"{arg.Name}\"]")
+                        .AppendLine(SafeCast(GTypeToCSharp(arg.Name, arg.Type), $"out{i + 1}"));
                 }
 
                 if (outputType != "void")
@@ -483,7 +505,7 @@ namespace NetVips.Samples
                 {
                     var arg = requiredOutput.First();
                     result.Append(
-                        $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
+                        $"{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
                 }
                 else if (requiredOutput.Length > 1)
                 {
@@ -516,7 +538,7 @@ namespace NetVips.Samples
                     {
                         var arg = optionalInput[i];
                         result.Append(
-                                $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}: {GTypeToCSharp(arg.Type)}")
+                                $"{SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}: {GTypeToCSharp(arg.Name, arg.Type)}")
                             .Append(i != optionalInput.Length - 1 ? ", " : string.Empty);
                     }
                 }
@@ -570,7 +592,7 @@ namespace NetVips.Samples
                     $" {newOperationName}(Stream stream, " +
                     string.Join(", ",
                         requiredInput.Select(arg =>
-                                $"{GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                                $"{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
                             .ToArray()));
 
                 if (outParameters != null)
@@ -582,7 +604,7 @@ namespace NetVips.Samples
 
                     result.Append(string.Join(", ",
                         outParameters.Select(arg =>
-                                $"out {GTypeToCSharp(arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
+                                $"out {GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()}")
                             .ToArray()));
                 }
 
@@ -595,7 +617,7 @@ namespace NetVips.Samples
 
                     result.Append(string.Join(", ",
                         optionalInput.Select(arg =>
-                                $"{ToNullable(GTypeToCSharp(arg.Type), SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())}")
+                                $"{ToNullable(GTypeToCSharp(arg.Name, arg.Type), SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower())}")
                             .ToArray()));
                 }
 
@@ -743,7 +765,7 @@ namespace NetVips.Samples
             var allProperties = tmpFile.GetFields();
             foreach (var property in allProperties)
             {
-                var type = GTypeToCSharp(tmpFile.GetTypeOf(property));
+                var type = GTypeToCSharp(property, tmpFile.GetTypeOf(property));
                 stringBuilder.AppendLine($"{indent}/// <summary>")
                     .AppendLine($"{indent}/// {tmpFile.GetBlurb(property)}")
                     .AppendLine($"{indent}/// </summary>")
