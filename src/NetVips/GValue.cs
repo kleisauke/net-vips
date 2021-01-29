@@ -243,13 +243,13 @@ namespace NetVips
             }
             else if (gtype == GStrType)
             {
-                ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
-                Internal.GValue.SetString(ref Struct, MemoryMarshal.GetReference(span));
+                var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value));
+                Internal.GValue.SetString(ref Struct, bytes);
             }
             else if (gtype == RefStrType)
             {
-                ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(Convert.ToString(value));
-                VipsValue.SetRefString(ref Struct, MemoryMarshal.GetReference(span));
+                var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value));
+                VipsValue.SetRefString(ref Struct, bytes);
             }
             else if (fundamental == GObjectType && value is GObject gObject)
             {

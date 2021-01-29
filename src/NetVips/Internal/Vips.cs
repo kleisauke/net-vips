@@ -137,22 +137,22 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_path_filename7")]
-        internal static extern IntPtr PathFilename7(in byte path);
+        internal static extern IntPtr PathFilename7(byte[] path);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_path_mode7")]
-        internal static extern IntPtr PathMode7(in byte path);
+        internal static extern IntPtr PathMode7(byte[] path);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_filename_get_filename")]
-        internal static extern IntPtr GetFilename(in byte vipsFilename);
+        internal static extern IntPtr GetFilename(byte[] vipsFilename);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_filename_get_options")]
-        internal static extern IntPtr GetOptions(in byte vipsFilename);
+        internal static extern IntPtr GetOptions(byte[] vipsFilename);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -193,14 +193,14 @@ namespace NetVips.Internal
 
         internal static string PathFilename7(string path)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(path);
-            return PathFilename7(MemoryMarshal.GetReference(span)).ToUtf8String();
+            var bytes = Encoding.UTF8.GetBytes(path);
+            return PathFilename7(bytes).ToUtf8String();
         }
 
         internal static string PathMode7(string path)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(path);
-            return PathMode7(MemoryMarshal.GetReference(span)).ToUtf8String();
+            var bytes = Encoding.UTF8.GetBytes(path);
+            return PathMode7(bytes).ToUtf8String();
         }
     }
 
@@ -314,7 +314,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_value_set_ref_string")]
-        internal static extern void SetRefString(ref GValue.Struct value, in byte str);
+        internal static extern void SetRefString(ref GValue.Struct value, byte[] str);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -411,7 +411,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_new_temp_file")]
-        internal static extern IntPtr NewTempFile(in byte format);
+        internal static extern IntPtr NewTempFile(byte[] format);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -467,8 +467,8 @@ namespace NetVips.Internal
 
         internal static IntPtr NewTempFile(string format)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(format);
-            return NewTempFile(MemoryMarshal.GetReference(span));
+            var bytes = Encoding.UTF8.GetBytes(format);
+            return NewTempFile(bytes);
         }
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -544,7 +544,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_load_buffer")]
-        internal static extern IntPtr FindLoadBuffer(in byte data, ulong size);
+        internal static extern IntPtr FindLoadBuffer(byte[] data, ulong size);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -564,12 +564,12 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save_buffer")]
-        internal static extern IntPtr FindSaveBuffer(in byte name);
+        internal static extern IntPtr FindSaveBuffer(byte[] name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save_target")]
-        internal static extern IntPtr FindSaveTarget(in byte name);
+        internal static extern IntPtr FindSaveTarget(byte[] name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -599,7 +599,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_source_new_from_file")]
-        internal static extern IntPtr NewFromFile(in byte filename);
+        internal static extern IntPtr NewFromFile(byte[] filename);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -635,7 +635,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_target_new_to_file")]
-        internal static extern IntPtr NewToFile(in byte filename);
+        internal static extern IntPtr NewToFile(byte[] filename);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

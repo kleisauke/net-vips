@@ -67,8 +67,8 @@ namespace NetVips
         {
             // logger.Debug($"Source.NewFromFile: filename = {filename}");
 
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(filename);
-            var pointer = Internal.VipsSource.NewFromFile(MemoryMarshal.GetReference(span));
+            var bytes = Encoding.UTF8.GetBytes(filename);
+            var pointer = Internal.VipsSource.NewFromFile(bytes);
             if (pointer == IntPtr.Zero)
             {
                 throw new VipsException($"can't create source from filename {filename}");

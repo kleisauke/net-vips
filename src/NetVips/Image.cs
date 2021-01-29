@@ -147,8 +147,7 @@ namespace NetVips
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
         public static string FindLoadBuffer(byte[] data) =>
-            Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(MemoryMarshal.GetReference(data.AsSpan()),
-                (ulong)data.Length));
+            Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(data, (ulong)data.Length));
 
         /// <summary>
         /// Find the name of the load operation vips will use to load a buffer.
@@ -250,11 +249,9 @@ namespace NetVips
             bool? fail = null,
             VOption kwargs = null)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
-            ref var filenameRef = ref MemoryMarshal.GetReference(span);
-
-            var filename = Vips.GetFilename(filenameRef);
-            var fileOptions = Vips.GetOptions(filenameRef).ToUtf8String(true);
+            var bytes = Encoding.UTF8.GetBytes(vipsFilename);
+            var filename = Vips.GetFilename(bytes);
+            var fileOptions = Vips.GetOptions(bytes).ToUtf8String(true);
 
             var name = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
             if (name == null)
@@ -891,11 +888,9 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename"/>.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(vipsFilename);
-            ref var filenameRef = ref MemoryMarshal.GetReference(span);
-
-            var filename = Vips.GetFilename(filenameRef);
-            var fileOptions = Vips.GetOptions(filenameRef).ToUtf8String(true);
+            var bytes = Encoding.UTF8.GetBytes(vipsFilename);
+            var filename = Vips.GetFilename(bytes);
+            var fileOptions = Vips.GetOptions(bytes).ToUtf8String(true);
             var name = Marshal.PtrToStringAnsi(VipsForeign.FindSave(filename));
 
             if (name == null)
@@ -953,11 +948,9 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to buffer.</exception>
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(formatString);
-            ref var formatRef = ref MemoryMarshal.GetReference(span);
-
-            var bufferOptions = Vips.GetOptions(formatRef).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveBuffer(formatRef));
+            var bytes = Encoding.UTF8.GetBytes(formatString);
+            var bufferOptions = Vips.GetOptions(bytes).ToUtf8String(true);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveBuffer(bytes));
 
             if (name == null)
             {
@@ -995,11 +988,9 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to target.</exception>
         public void WriteToTarget(Target target, string formatString, VOption kwargs = null)
         {
-            ReadOnlySpan<byte> span = Encoding.UTF8.GetBytes(formatString);
-            ref var formatRef = ref MemoryMarshal.GetReference(span);
-
-            var bufferOptions = Vips.GetOptions(formatRef).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(formatRef));
+            var bytes = Encoding.UTF8.GetBytes(formatString);
+            var bufferOptions = Vips.GetOptions(bytes).ToUtf8String(true);
+            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(bytes));
 
             if (name == null)
             {
