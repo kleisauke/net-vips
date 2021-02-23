@@ -431,6 +431,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_addalpha")]
+        internal static extern int AddAlpha(Image image, out IntPtr @out);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_copy_memory")]
         internal static extern IntPtr CopyMemory(Image image);
 

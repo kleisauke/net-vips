@@ -1983,6 +1983,35 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Append an alpha channel to an image.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// using rgba = rgb.AddAlpha();
+        /// </code>
+        /// </example>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image AddAlpha()
+        {
+            // use `vips_addalpha` on libvips >= 8.6.
+            if (NetVips.AtLeastLibvips(8, 6))
+            {
+                var result = VipsImage.AddAlpha(this, out var vi);
+                if (result != 0)
+                {
+                    throw new VipsException("unable to append alpha channel to image.");
+                }
+
+                return new Image(vi);
+            }
+
+            var maxAlpha = Interpretation == Enums.Interpretation.Grey16 || Interpretation == Enums.Interpretation.Rgb16
+                ? 65535
+                : 255;
+            return Bandjoin(maxAlpha);
+        }
+
+        /// <summary>
         /// If image has been killed (see <see cref="SetKill"/>), set an error message,
         /// clear the `kill` flag and return <see langword="true"/>.
         /// Otherwise return <see langword="false"/>.

@@ -166,7 +166,6 @@ namespace NetVips.Tests
         public void TestBandJoinConst()
         {
             var x = _colour.Bandjoin(1);
-
             Assert.Equal(4, x.Bands);
             Assert.Equal(1, x[3].Avg());
 
@@ -174,6 +173,18 @@ namespace NetVips.Tests
             Assert.Equal(5, x.Bands);
             Assert.Equal(1, x[3].Avg());
             Assert.Equal(2, x[4].Avg());
+        }
+
+        [Fact]
+        public void TestAddAlpha()
+        {
+            var x = _colour.AddAlpha();
+            Assert.Equal(4, x.Bands);
+            Assert.Equal(255, x[3].Avg());
+
+            x = _colour.Copy(interpretation: Enums.Interpretation.Rgb16).AddAlpha();
+            Assert.Equal(4, x.Bands);
+            Assert.Equal(65535, x[3].Avg());
         }
 
         [Fact]
