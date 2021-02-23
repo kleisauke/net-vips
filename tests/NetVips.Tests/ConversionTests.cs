@@ -59,7 +59,8 @@ namespace NetVips.Tests
             Helper.RunCmp2(left, right, 10, 10, func);
         }
 
-        internal void RunUnary(IEnumerable<Image> images, Func<object, object> func, string[] formats = null)
+        internal void RunUnary(IEnumerable<Image> images, Func<object, object> func,
+            Enums.BandFormat[] formats = null)
         {
             if (formats == null)
             {
@@ -75,7 +76,8 @@ namespace NetVips.Tests
             }
         }
 
-        internal void RunBinary(IEnumerable<Image> images, Func<object, object, object> func, string[] formats = null)
+        internal void RunBinary(IEnumerable<Image> images, Func<object, object, object> func,
+            Enums.BandFormat[] formats = null)
         {
             if (formats == null)
             {
@@ -276,7 +278,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestByteswap()
         {
-            var x = _mono.Cast("ushort");
+            var x = _mono.Cast(Enums.BandFormat.Ushort);
             var y = x.Byteswap().Byteswap();
             Assert.Equal(x.Width, y.Width);
             Assert.Equal(x.Height, y.Height);
@@ -331,24 +333,24 @@ namespace NetVips.Tests
             Skip.IfNot(Helper.Have("gravity"), "no gravity in this vips, skipping test");
 
             var im = Image.Black(1, 1) + 255;
-            var positions = new[]
+            var positions = new Dictionary<Enums.CompassDirection, int[]>
             {
-                new object[] {"centre", 1, 1},
-                new object[] {"north", 1, 0},
-                new object[] {"south", 1, 2},
-                new object[] {"east", 2, 1},
-                new object[] {"west", 0, 1},
-                new object[] {"north-east", 2, 0},
-                new object[] {"south-east", 2, 2},
-                new object[] {"south-west", 0, 2},
-                new object[] {"north-west", 0, 0}
+                {Enums.CompassDirection.Centre, new[] {1, 1}},
+                {Enums.CompassDirection.North, new[] {1, 0}},
+                {Enums.CompassDirection.South, new[] {1, 2}},
+                {Enums.CompassDirection.East, new[] {2, 1}},
+                {Enums.CompassDirection.West, new[] {0, 1}},
+                {Enums.CompassDirection.NorthEast, new[] {2, 0}},
+                {Enums.CompassDirection.SouthEast, new[] {2, 2}},
+                {Enums.CompassDirection.SouthWest, new[] {0, 2}},
+                {Enums.CompassDirection.NorthWest, new[] {0, 0}}
             };
 
-            foreach (var position in positions)
+            foreach (var kvp in positions)
             {
-                var direction = (string)position[0];
-                var x = position[1] is int xInt ? xInt : 0;
-                var y = position[2] is int yInt ? yInt : 0;
+                var direction = kvp.Key;
+                var x = kvp.Value[0];
+                var y = kvp.Value[1];
                 var im2 = im.Gravity(direction, 3, 3);
                 Assert.Equal(new double[] { 255 }, im2[x, y]);
                 Assert.Equal(255.0 / 9.0, im2.Avg());

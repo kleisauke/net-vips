@@ -9,6 +9,7 @@ namespace NetVips.Internal
     using VipsBlobManaged = global::NetVips.VipsBlob;
     using OperationFlags = global::NetVips.Enums.OperationFlags;
     using ArgumentFlags = global::NetVips.Enums.ArgumentFlags;
+    using BandFormat = global::NetVips.Enums.BandFormat;
 
     internal static class Vips
     {
@@ -122,17 +123,6 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_version")]
         internal static extern int Version(int flag);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_enum_nick")]
-        internal static extern IntPtr EnumNick(IntPtr enm, int value);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_enum_from_nick")]
-        internal static extern int EnumFromNick([MarshalAs(UnmanagedType.LPStr)] string domain, IntPtr type,
-            [MarshalAs(UnmanagedType.LPStr)] string str);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
@@ -405,13 +395,13 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_new_from_memory")]
         internal static extern IntPtr NewFromMemory(IntPtr data, UIntPtr size, int width, int height,
-            int bands, Enums.VipsBandFormat format);
+            int bands, BandFormat format);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_new_from_memory_copy")]
         internal static extern IntPtr NewFromMemoryCopy(IntPtr data, UIntPtr size, int width, int height,
-            int bands, Enums.VipsBandFormat format);
+            int bands, BandFormat format);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

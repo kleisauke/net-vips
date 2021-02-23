@@ -20,18 +20,18 @@ namespace NetVips.Samples
             im.SetProgress(true);
 
             // Connect signals
-            im.SignalConnect(Enums.Signals.PreEval, (Image.EvalDelegate)PreEvalHandler);
-            im.SignalConnect(Enums.Signals.Eval, (Image.EvalDelegate)EvalHandler);
-            im.SignalConnect(Enums.Signals.PostEval, (Image.EvalDelegate)PostEvalHandler);
+            im.SignalConnect(Enums.Signals.PreEval, PreEvalHandler);
+            im.SignalConnect(Enums.Signals.Eval, EvalHandler);
+            im.SignalConnect(Enums.Signals.PostEval, PostEvalHandler);
 
             var avg = im.Avg();
 
             return "Done!";
         }
 
-        private void ProgressPrint(string name, VipsProgress progress)
+        private void ProgressPrint(Enums.Signals signal, VipsProgress progress)
         {
-            Console.WriteLine($"{name}:");
+            Console.WriteLine($"{signal}:");
             Console.WriteLine($"   Run = : {progress.Run}");
             Console.WriteLine($"   Eta = : {progress.Eta}");
             Console.WriteLine($"   TPels = : {progress.TPels}");

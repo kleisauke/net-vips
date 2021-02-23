@@ -218,7 +218,7 @@ namespace NetVips.Tests
 
             // even without lcms, we should have a working approximation
             var test = Image.NewFromFile(Helper.JpegFile);
-            var im = test.Colourspace("cmyk").Colourspace("srgb");
+            var im = test.Colourspace(Enums.Interpretation.Cmyk).Colourspace(Enums.Interpretation.Srgb);
 
             var before = test[582, 210];
             var after = im[582, 210];

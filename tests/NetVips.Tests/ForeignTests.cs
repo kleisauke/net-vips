@@ -301,14 +301,14 @@ namespace NetVips.Tests
             var im = Image.NewFromFile(Helper.JpegFile);
 
             var q10 = im.JpegsaveBuffer(q: 10);
-            var q10SubsampleAuto = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignJpegSubsample.Auto);
-            var q10SubsampleOn = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignJpegSubsample.On);
-            var q10SubsampleOff = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignJpegSubsample.Off);
+            var q10SubsampleAuto = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignSubsample.Auto);
+            var q10SubsampleOn = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignSubsample.On);
+            var q10SubsampleOff = im.JpegsaveBuffer(q: 10, subsampleMode: Enums.ForeignSubsample.Off);
 
             var q90 = im.JpegsaveBuffer(q: 90);
-            var q90SubsampleAuto = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignJpegSubsample.Auto);
-            var q90SubsampleOn = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignJpegSubsample.On);
-            var q90SubsampleOff = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignJpegSubsample.Off);
+            var q90SubsampleAuto = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignSubsample.Auto);
+            var q90SubsampleOn = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignSubsample.On);
+            var q90SubsampleOff = im.JpegsaveBuffer(q: 90, subsampleMode: Enums.ForeignSubsample.Off);
 
             // higher Q should mean a bigger buffer
             Assert.True(q90.Length > q10.Length);
@@ -646,17 +646,17 @@ namespace NetVips.Tests
             if (NetVips.AtLeastLibvips(8, 7))
             {
                 x = Image.NewFromFile(Helper.TifFile);
-                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mean");
-                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "mode");
-                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "median");
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Mean);
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Mode);
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Median);
             }
 
             // region-shrink max/min/nearest added in 8.10
             if (vips810)
             {
-                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "max");
-                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "min");
-                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: "nearest");
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Max);
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Min);
+                _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Nearest);
             }
         }
 
@@ -1271,7 +1271,7 @@ namespace NetVips.Tests
 
             // default google layout
             filename = Helper.GetTemporaryFile(_tempDir);
-            _colour.Dzsave(filename, layout: "google");
+            _colour.Dzsave(filename, layout: Enums.ForeignDzLayout.Google);
 
             // test bottom-right tile ... default is 256x256 tiles, overlap 0
             x = Image.NewFromFile(filename + "/2/2/3.jpg");
@@ -1289,7 +1289,7 @@ namespace NetVips.Tests
             // tiles, though in fact the bottom and right edges will be white
             filename = Helper.GetTemporaryFile(_tempDir);
 
-            _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, layout: "google", overlap: 1, depth: "one");
+            _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1, depth: Enums.ForeignDzDepth.One);
 
             x = Image.NewFromFile(filename + "/0/1/1.jpg");
             Assert.Equal(256, x.Width);
@@ -1302,7 +1302,7 @@ namespace NetVips.Tests
             if (NetVips.AtLeastLibvips(8, 6))
             {
                 filename = Helper.GetTemporaryFile(_tempDir);
-                _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: "google", overlap: 1, depth: "one");
+                _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1, depth: Enums.ForeignDzDepth.One);
 
                 x = Image.NewFromFile(filename + "/0/2/2.jpg");
                 Assert.Equal(256, x.Width);
@@ -1312,7 +1312,7 @@ namespace NetVips.Tests
 
             // default zoomify layout
             filename = Helper.GetTemporaryFile(_tempDir);
-            _colour.Dzsave(filename, layout: "zoomify");
+            _colour.Dzsave(filename, layout: Enums.ForeignDzLayout.Zoomify);
 
             // 256x256 tiles, no overlap
             Assert.True(File.Exists(filename + "/ImageProperties.xml"));
@@ -1375,9 +1375,9 @@ namespace NetVips.Tests
                 // added in 8.7
                 if (NetVips.AtLeastLibvips(8, 7))
                 {
-                    _ = _colour.DzsaveBuffer(regionShrink: "mean");
-                    _ = _colour.DzsaveBuffer(regionShrink: "mode");
-                    _ = _colour.DzsaveBuffer(regionShrink: "median");
+                    _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Mean);
+                    _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Mode);
+                    _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Median);
                 }
             }
         }
@@ -1429,7 +1429,7 @@ namespace NetVips.Tests
 
             SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 85, new VOption
             {
-                {"compression", "av1"}
+                {"compression", Enums.ForeignHeifCompression.Av1}
             });
             // TODO: perhaps we should automatically set the compression to
             // av1 when we save to *.avif?
@@ -1446,12 +1446,12 @@ namespace NetVips.Tests
 
             // higher Q should mean a bigger buffer, needs libheif >= v1.8.0,
             // see: https://github.com/libvips/libvips/issues/1757
-            var b1 = _mono.HeifsaveBuffer(q: 10, compression: "av1");
-            var b2 = _mono.HeifsaveBuffer(q: 90, compression: "av1");
+            var b1 = _mono.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
+            var b2 = _mono.HeifsaveBuffer(q: 90, compression: Enums.ForeignHeifCompression.Av1);
             Assert.True(b2.Length > b1.Length);
 
             // try saving an image with an ICC profile and reading it back 
-            var buf = _colour.HeifsaveBuffer(q: 10, compression: "av1");
+            var buf = _colour.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
             var x = Image.NewFromBuffer(buf);
             if (x.Contains("icc-profile-data"))
             {
@@ -1472,7 +1472,7 @@ namespace NetVips.Tests
                 x = z.Copy();
                 x.Set("exif-ifd0-Make", "banana");
 
-                buf = x.HeifsaveBuffer(q: 10, compression: "av1");
+                buf = x.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
                 var y = Image.NewFromBuffer(buf);
                 Assert.StartsWith("banana", (string)y.Get("exif-ifd0-Make"));
             }

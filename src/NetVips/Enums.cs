@@ -3,8 +3,7 @@ namespace NetVips
     using System;
 
     /// <summary>
-    /// This module contains the various libvips enums as C# classes
-    /// Enums values are represented in NetVips as strings. These classes contain the valid strings for each enum.
+    /// This module contains the various libvips enums.
     /// </summary>
     public static class Enums
     {
@@ -16,20 +15,20 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Tilecache"/>.
         /// </remarks>
-        public static class Access
+        public enum Access
         {
             /// <summary>Requests can come in any order.</summary>
-            public const string Random = "random";
+            Random = 0, // "random"
 
             /// <summary>
             /// Means requests will be top-to-bottom, but with some
             /// amount of buffering behind the read point for small non-local
             /// accesses.
             /// </summary>
-            public const string Sequential = "sequential";
+            Sequential = 1, // "sequential"
 
             /// <summary>Top-to-bottom without a buffer.</summary>
-            public const string SequentialUnbuffered = "sequential-unbuffered";
+            SequentialUnbuffered = 2 // "sequential-unbuffered"
         }
 
         /// <summary>
@@ -38,16 +37,16 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Join"/>.
         /// </remarks>
-        public static class Align
+        public enum Align
         {
             /// <summary>Align on the low coordinate edge.</summary>
-            public const string Low = "low";
+            Low = 0, // "low"
 
             /// <summary>Align on the centre.</summary>
-            public const string Centre = "centre";
+            Centre = 1, // "centre"
 
             /// <summary>Align on the high coordinate edge.</summary>
-            public const string High = "high";
+            High = 2 // "high"
         }
 
         /// <summary>
@@ -56,19 +55,19 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Rot"/>.
         /// </remarks>
-        public static class Angle
+        public enum Angle
         {
             /// <summary>No rotate.</summary>
-            public const string D0 = "d0";
+            D0 = 0, // "d0"
 
             /// <summary>90 degrees clockwise.</summary>
-            public const string D90 = "d90";
+            D90 = 1, // "d90"
 
             /// <summary>180 degrees.</summary>
-            public const string D180 = "d180";
+            D180 = 2, // "d180"
 
             /// <summary>90 degrees anti-clockwise.</summary>
-            public const string D270 = "d270";
+            D270 = 3 // "d270"
         }
 
         /// <summary>
@@ -77,31 +76,31 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Rot45"/>.
         /// </remarks>
-        public static class Angle45
+        public enum Angle45
         {
             /// <summary>No rotate.</summary>
-            public const string D0 = "d0";
+            D0 = 0, // "d0"
 
             /// <summary>45 degrees clockwise.</summary>
-            public const string D45 = "d45";
+            D45 = 1, // "d45"
 
             /// <summary>90 degrees clockwise.</summary>
-            public const string D90 = "d90";
+            D90 = 2, // "d90"
 
             /// <summary>135 degrees clockwise.</summary>
-            public const string D135 = "d135";
+            D135 = 3, // "d135"
 
             /// <summary>180 degrees.</summary>
-            public const string D180 = "d180";
+            D180 = 4, // "d180"
 
             /// <summary>135 degrees anti-clockwise.</summary>
-            public const string D225 = "d225";
+            D225 = 5, // "d225"
 
             /// <summary>90 degrees anti-clockwise.</summary>
-            public const string D270 = "d270";
+            D270 = 6, // "d270"
 
             /// <summary>45 degrees anti-clockwise.</summary>
-            public const string D315 = "d315";
+            D315 = 7 // "d315"
         }
 
         /// <summary>
@@ -111,37 +110,40 @@ namespace NetVips
         /// The format used for each band element. Each corresponds to a native C type
         /// for the current machine.
         /// </remarks>
-        public static class BandFormat
+        public enum BandFormat
         {
+            /// <summary>Invalid setting.</summary>
+            Notset = -1, // "notset"
+
             /// <summary>unsigned char format.</summary>
-            public const string Uchar = "uchar";
+            Uchar = 0, // "uchar"
 
             /// <summary>char format.</summary>
-            public const string Char = "char";
+            Char = 1, // "char"
 
             /// <summary>unsigned short format.</summary>
-            public const string Ushort = "ushort";
+            Ushort = 2, // "ushort"
 
             /// <summary>short format.</summary>
-            public const string Short = "short";
+            Short = 3, // "short"
 
             /// <summary>unsigned int format.</summary>
-            public const string Uint = "uint";
+            Uint = 4, // "uint"
 
             /// <summary>int format.</summary>
-            public const string Int = "int";
+            Int = 5, // "int"
 
             /// <summary>float format.</summary>
-            public const string Float = "float";
+            Float = 6, // "float"
 
             /// <summary>complex (two floats) format.</summary>
-            public const string Complex = "complex";
+            Complex = 7, // "complex"
 
             /// <summary>double float format.</summary>
-            public const string Double = "double";
+            Double = 8, // "double"
 
             /// <summary>double complex (two double) format.</summary>
-            public const string Dpcomplex = "dpcomplex";
+            Dpcomplex = 9 // "dpcomplex"
         }
 
         /// <summary>
@@ -153,82 +155,82 @@ namespace NetVips
         ///
         /// The non-separable modes are not implemented.
         /// </remarks>
-        public static class BlendMode
+        public enum BlendMode
         {
             /// <summary>Where the second object is drawn, the first is removed.</summary>
-            public const string Clear = "clear";
+            Clear = 0, // "clear"
 
             /// <summary>The second object is drawn as if nothing were below.</summary>
-            public const string Source = "source";
+            Source = 1, // "source"
 
             /// <summary>The image shows what you would expect if you held two semi-transparent slides on top of each other.</summary>
-            public const string Over = "over";
+            Over = 2, // "over"
 
             /// <summary>The first object is removed completely, the second is only drawn where the first was.</summary>
-            public const string In = "in";
+            In = 3, // "in"
 
             /// <summary>The second is drawn only where the first isn't.</summary>
-            public const string Out = "out";
+            Out = 4, // "out"
 
             /// <summary>This leaves the first object mostly intact, but mixes both objects in the overlapping area.</summary>
-            public const string Atop = "atop";
+            Atop = 5, // "atop"
 
             /// <summary>Leaves the first object untouched, the second is discarded completely.</summary>
-            public const string Dest = "dest";
+            Dest = 6, // "dest"
 
             /// <summary>Like Over, but swaps the arguments.</summary>
-            public const string DestOver = "dest-over";
+            DestOver = 7, // "dest-over"
 
             /// <summary>Like In, but swaps the arguments.</summary>
-            public const string DestIn = "dest-in";
+            DestIn = 8, // "dest-in"
 
             /// <summary>Like Out, but swaps the arguments.</summary>
-            public const string DestOut = "dest-out";
+            DestOut = 9, // "dest-out"
 
             /// <summary>Like Atop, but swaps the arguments.</summary>
-            public const string DestAtop = "dest-atop";
+            DestAtop = 10, // "dest-atop"
 
             /// <summary>Something like a difference operator.</summary>
-            public const string Xor = "xor";
+            Xor = 11, // "xor"
 
             /// <summary>A bit like adding the two images.</summary>
-            public const string Add = "add";
+            Add = 12, // "add"
 
             /// <summary>A bit like the darker of the two.</summary>
-            public const string Saturate = "saturate";
+            Saturate = 13, // "saturate"
 
             /// <summary>At least as dark as the darker of the two inputs.</summary>
-            public const string Multiply = "multiply";
+            Multiply = 14, // "multiply"
 
             /// <summary>At least as light as the lighter of the inputs.</summary>
-            public const string Screen = "screen";
+            Screen = 15, // "screen"
 
             /// <summary>Multiplies or screens colors, depending on the lightness.</summary>
-            public const string Overlay = "overlay";
+            Overlay = 16, // "overlay"
 
             /// <summary>The darker of each component.</summary>
-            public const string Darken = "darken";
+            Darken = 17, // "darken"
 
             /// <summary>The lighter of each component.</summary>
-            public const string Lighten = "lighten";
+            Lighten = 18, // "lighten"
 
             /// <summary>Brighten first by a factor second.</summary>
-            public const string ColourDodge = "colour-dodge";
+            ColourDodge = 19, // "colour-dodge"
 
             /// <summary>Darken first by a factor of second.</summary>
-            public const string ColourBurn = "colour-burn";
+            ColourBurn = 20, // "colour-burn"
 
             /// <summary>Multiply or screen, depending on lightness.</summary>
-            public const string HardLight = "hard-light";
+            HardLight = 21, // "hard-light"
 
             /// <summary>Darken or lighten, depending on lightness.</summary>
-            public const string SoftLight = "soft-light";
+            SoftLight = 22, // "soft-light"
 
             /// <summary>Difference of the two.</summary>
-            public const string Difference = "difference";
+            Difference = 23, // "difference"
 
             /// <summary>Somewhat like Difference, but lower-contrast.</summary>
-            public const string Exclusion = "exclusion";
+            Exclusion = 24 // "exclusion"
         }
 
         /// <summary>
@@ -239,16 +241,19 @@ namespace NetVips
         /// However some file formats code pixels for compression, and sometimes it's
         /// useful to be able to manipulate images in the coded format.
         /// </remarks>
-        public static class Coding
+        public enum Coding
         {
+            /// <summary>Invalid setting.</summary>
+            Error = -1, // "error"
+
             /// <summary>Pixels are not coded.</summary>
-            public const string None = "none";
+            None = 0, // "none"
 
             /// <summary>Pixels encode 3 float CIELAB values as 4 uchar.</summary>
-            public const string Labq = "labq";
+            Labq = 2, // "labq"
 
             /// <summary>Pixels encode 3 float RGB as 4 uchar (Radiance coding).</summary>
-            public const string Rad = "rad";
+            Rad = 6 // "rad"
         }
 
         /// <summary>
@@ -257,16 +262,16 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Compass"/>.
         /// </remarks>
-        public static class Combine
+        public enum Combine
         {
             /// <summary>Take the maximum of all values.</summary>
-            public const string Max = "max";
+            Max = 0, // "max"
 
             /// <summary>Take the sum of all values.</summary>
-            public const string Sum = "sum";
+            Sum = 1, // "sum"
 
             /// <summary>Take the minimum value.</summary>
-            public const string Min = "min";
+            Min = 2 // "min"
         }
 
         /// <summary>
@@ -276,61 +281,64 @@ namespace NetVips
         /// Operations like <see cref="Image.DrawImage"/> need to be told how to
         /// combine images from two sources. See also <see cref="Image.Join"/>.
         /// </remarks>
-        public static class CombineMode
+        public enum CombineMode
         {
             /// <summary>Set pixels to the new value.</summary>
-            public const string Set = "set";
+            Set = 0, // "set"
 
             /// <summary>Add pixels.</summary>
-            public const string Add = "add";
+            Add = 1 // "add"
         }
 
         /// <summary>
         /// A direction on a compass. Used for <see cref="Image.Gravity"/>, for example.
         /// </summary>
-        public static class CompassDirection
+        public enum CompassDirection
         {
             /// <summary>Centre</summary>
-            public const string Centre = "centre";
+            Centre = 0, // "centre"
 
             /// <summary>North</summary>
-            public const string North = "north";
+            North = 1, // "north"
 
             /// <summary>East</summary>
-            public const string East = "east";
+            East = 2, // "east"
 
             /// <summary>South</summary>
-            public const string South = "south";
+            South = 3, // "south"
 
             /// <summary>West</summary>
-            public const string West = "west";
+            West = 4, // "west"
 
             /// <summary>North-east</summary>
-            public const string NorthEast = "north-east";
+            NorthEast = 5, // "north-east"
 
             /// <summary>South-east</summary>
-            public const string SouthEast = "south-east";
+            SouthEast = 6, // "south-east"
 
             /// <summary>South-west</summary>
-            public const string SouthWest = "south-west";
+            SouthWest = 7, // "south-west"
 
             /// <summary>North-west</summary>
-            public const string NorthWest = "north-west";
+            NorthWest = 8 // "north-west"
         }
 
         /// <summary>
         /// A hint about the kind of demand geometry VIPS images prefer.
         /// </summary>
-        public static class DemandStyle
+        public enum DemandStyle
         {
+            /// <summary>Invalid setting.</summary>
+            Error = -1, // "error"
+
             /// <summary>Demand in small (typically 64x64 pixel) tiles.</summary>
-            public const string Smalltile = "smalltile";
+            Smalltile = 0, // "smalltile"
 
             /// <summary>Demand in fat (typically 10 pixel high) strips.</summary>
-            public const string Fatstrip = "fatstrip";
+            Fatstrip = 1, // "fatstrip"
 
             /// <summary>Demand in thin (typically 1 pixel high) strips.</summary>
-            public const string Thinstrip = "thinstrip";
+            Thinstrip = 2 // "thinstrip"
         }
 
         /// <summary>
@@ -340,13 +348,13 @@ namespace NetVips
         /// Operations like <see cref="Image.Flip"/> need to be told whether to flip
         /// left-right or top-bottom.
         /// </remarks>
-        public static class Direction
+        public enum Direction
         {
             /// <summary>left-right.</summary>
-            public const string Horizontal = "horizontal";
+            Horizontal = 0, // "horizontal"
 
             /// <summary>top-bottom.</summary>
-            public const string Vertical = "vertical";
+            Vertical = 1 // "vertical"
         }
 
         /// <summary>
@@ -357,25 +365,25 @@ namespace NetVips
         /// the extension done. See <see cref="Image.Embed"/>, <see cref="Image.Conv"/>, <see cref="Image.Affine"/>
         /// and so on.
         /// </remarks>
-        public static class Extend
+        public enum Extend
         {
             /// <summary>New pixels are black, ie. all bits are zero.</summary>
-            public const string Black = "black";
+            Black = 0, // "black"
 
             /// <summary>Each new pixel takes the value of the nearest edge pixel.</summary>
-            public const string Copy = "copy";
+            Copy = 1, // "copy"
 
             /// <summary>The image is tiled to fill the new area.</summary>
-            public const string Repeat = "repeat";
+            Repeat = 2, // "repeat"
 
             /// <summary>The image is reflected and tiled to reduce hash edges.</summary>
-            public const string Mirror = "mirror";
+            Mirror = 3, // "mirror"
 
             /// <summary>New pixels are white, ie. all bits are set.</summary>
-            public const string White = "white";
+            White = 4, // "white"
 
             /// <summary>Colour set from the @background property.</summary>
-            public const string Background = "background";
+            Background = 5 // "background"
         }
 
         /// <summary>
@@ -384,16 +392,16 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Dzsave"/>.
         /// </remarks>
-        public static class ForeignDzContainer
+        public enum ForeignDzContainer
         {
             /// <summary>Write tiles to the filesystem.</summary>
-            public const string Fs = "fs";
+            Fs = 0, // "fs"
 
             /// <summary>Write tiles to a zip file.</summary>
-            public const string Zip = "zip";
+            Zip = 1, // "zip"
 
             /// <summary>Write to a szi file.</summary>
-            public const string Szi = "szi";
+            Szi = 2 // "szi"
         }
 
         /// <summary>
@@ -402,52 +410,52 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Dzsave"/>.
         /// </remarks>
-        public static class ForeignDzDepth
+        public enum ForeignDzDepth
         {
             /// <summary>Create layers down to 1x1 pixel.</summary>
-            public const string Onepixel = "onepixel";
+            Onepixel = 0, // "onepixel"
 
             /// <summary>Create layers down to 1x1 tile.</summary>
-            public const string Onetile = "onetile";
+            Onetile = 1, // "onetile"
 
             /// <summary>Only create a single layer.</summary>
-            public const string One = "one";
+            One = 2 // "one"
         }
 
         /// <summary>
         /// What directory layout and metadata standard to use.
         /// </summary>
-        public static class ForeignDzLayout
+        public enum ForeignDzLayout
         {
             /// <summary>Use DeepZoom directory layout.</summary>
-            public const string Dz = "dz";
+            Dz = 0, // "dz"
 
             /// <summary>Use Zoomify directory layout.</summary>
-            public const string Zoomify = "zoomify";
+            Zoomify = 1, // "zoomify"
 
             /// <summary>Use Google maps directory layout.</summary>
-            public const string Google = "google";
+            Google = 2, // "google"
 
             /// <summary>Use IIIF directory layout.</summary>
-            public const string Iiif = "iiif";
+            Iiif = 3 // "iiif"
         }
 
         /// <summary>
         /// The compression format to use inside a HEIF container.
         /// </summary>
-        public static class ForeignHeifCompression
+        public enum ForeignHeifCompression
         {
             /// <summary>x265</summary>
-            public const string Hevc = "hevc";
+            Hevc = 1, // "hevc"
 
             /// <summary>x264</summary>
-            public const string Avc = "avc";
+            Avc = 2, // "avc"
 
             /// <summary>JPEG</summary>
-            public const string Jpeg = "jpeg";
+            Jpeg = 3, // "jpeg"
 
             /// <summary>AOM</summary>
-            public const string Av1 = "av1";
+            Av1 = 4 // "av1"
         }
 
         /// <summary>
@@ -476,100 +484,100 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Set jpeg subsampling mode.
+        /// Set JPEG/HEIF subsampling mode.
         /// </summary>
-        public static class ForeignJpegSubsample
+        public enum ForeignSubsample
         {
-            /// <summary>Default preset.</summary>
-            public const string Auto = "auto";
+            /// <summary>Prevent subsampling when quality > 90.</summary>
+            Auto = 0, // "auto"
 
             /// <summary>Always perform subsampling.</summary>
-            public const string On = "on";
+            On = 1, // "on"
 
             /// <summary>Never perform subsampling.</summary>
-            public const string Off = "off";
+            Off = 2 // "off"
         }
 
         /// <summary>
         /// The compression types supported by the tiff writer.
         /// </summary>
-        public static class ForeignTiffCompression
+        public enum ForeignTiffCompression
         {
             /// <summary>No compression.</summary>
-            public const string None = "none";
+            None = 0, // "none"
 
             /// <summary>JPEG compression.</summary>
-            public const string Jpeg = "jpeg";
+            Jpeg = 1, // "jpeg"
 
             /// <summary>Deflate (zip) compression.</summary>
-            public const string Deflate = "deflate";
+            Deflate = 2, // "deflate"
 
             /// <summary>Packbits compression.</summary>
-            public const string Packbits = "packbits";
+            Packbits = 3, // "packbits"
 
             /// <summary>Fax4 compression.</summary>
-            public const string Ccittfax4 = "ccittfax4";
+            Ccittfax4 = 4, // "ccittfax4"
 
             /// <summary>LZW compression.</summary>
-            public const string Lzw = "lzw";
+            Lzw = 5, // "lzw"
 
             /// <summary>WebP compression.</summary>
-            public const string Webp = "webp";
+            Webp = 6, // "webp"
 
             /// <summary>ZSTD compression.</summary>
-            public const string Zstd = "zstd";
+            Zstd = 7 // "zstd"
         }
 
         /// <summary>
         /// The predictor can help deflate and lzw compression.
         /// The values are fixed by the tiff library.
         /// </summary>
-        public static class ForeignTiffPredictor
+        public enum ForeignTiffPredictor
         {
             /// <summary>No prediction.</summary>
-            public const string None = "none";
+            None = 1, // "none"
 
             /// <summary>Horizontal differencing.</summary>
-            public const string Horizontal = "horizontal";
+            Horizontal = 2, // "horizontal"
 
             /// <summary>Float predictor.</summary>
-            public const string Float = "float";
+            Float = 3 // "float"
         }
 
         /// <summary>
         /// Use inches or centimeters as the resolution unit for a tiff file.
         /// </summary>
-        public static class ForeignTiffResunit
+        public enum ForeignTiffResunit
         {
             /// <summary>Use centimeters.</summary>
-            public const string Cm = "cm";
+            Cm = 0, // "cm"
 
             /// <summary>Use inches.</summary>
-            public const string Inch = "inch";
+            Inch = 1 // "inch"
         }
 
         /// <summary>
         /// Tune lossy encoder settings for different image types.
         /// </summary>
-        public static class ForeignWebpPreset
+        public enum ForeignWebpPreset
         {
             /// <summary>Default preset.</summary>
-            public const string Default = "default";
+            Default = 0, // "default"
 
             /// <summary>Digital picture, like portrait, inner shot.</summary>
-            public const string Picture = "picture";
+            Picture = 1, // "picture"
 
             /// <summary>Outdoor photograph, with natural lighting.</summary>
-            public const string Photo = "photo";
+            Photo = 2, // "photo"
 
             /// <summary>Hand or line drawing, with high-contrast details.</summary>
-            public const string Drawing = "drawing";
+            Drawing = 3, // "drawing"
 
             /// <summary>Small-sized colorful images/</summary>
-            public const string Icon = "icon";
+            Icon = 4, // "icon"
 
             /// <summary>Text-like.</summary>
-            public const string Text = "text";
+            Text = 5 // "text"
         }
 
         /// <summary>
@@ -578,47 +586,47 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.IccTransform"/>.
         /// </remarks>
-        public static class Intent
+        public enum Intent
         {
             /// <summary>Perceptual rendering intent.</summary>
-            public const string Perceptual = "perceptual";
+            Perceptual = 0, // "perceptual"
 
             /// <summary>Relative colorimetric rendering intent.</summary>
-            public const string Relative = "relative";
+            Relative = 1, // "relative"
 
             /// <summary>Saturation rendering intent.</summary>
-            public const string Saturation = "saturation";
+            Saturation = 2, // "saturation"
 
             /// <summary>Absolute colorimetric rendering intent.</summary>
-            public const string Absolute = "absolute";
+            Absolute = 3 // "absolute"
         }
 
         /// <summary>
         /// Pick the algorithm vips uses to decide image "interestingness".
         /// This is used by <see cref="Image.Smartcrop"/>, for example, to decide what parts of the image to keep.
         /// </summary>
-        public static class Interesting
+        public enum Interesting
         {
             /// <summary>Do nothing.</summary>
-            public const string None = "none";
+            None = 0, // "none"
 
             /// <summary>Just take the centre.</summary>
-            public const string Centre = "centre";
+            Centre = 1, // "centre"
 
             /// <summary>Use an entropy measure.</summary>
-            public const string Entropy = "entropy";
+            Entropy = 2, // "entropy"
 
             /// <summary>Look for features likely to draw human attention.</summary>
-            public const string Attention = "attention";
+            Attention = 3, // "attention"
 
             /// <summary>Position the crop towards the low coordinate.</summary>
-            public const string Low = "low";
+            Low = 4, // "low"
 
             /// <summary>Position the crop towards the high coordinate.</summary>
-            public const string High = "high";
+            High = 5, // "high"
 
             /// <summary>Everything is interesting.</summary>
-            public const string All = "all";
+            All = 6 // "all"
         }
 
         /// <summary>
@@ -628,89 +636,92 @@ namespace NetVips
         /// For example, a three-band float image of type LAB should have its
         /// pixels interpreted as coordinates in CIE Lab space.
         /// </remarks>
-        public static class Interpretation
+        public enum Interpretation
         {
+            /// <summary>Invalid setting.</summary>
+            Error = -1, // "error"
+
             /// <summary>Generic many-band image.</summary>
-            public const string Multiband = "multiband";
+            Multiband = 0, // "multiband"
 
             /// <summary>Some kind of single-band image.</summary>
-            public const string Bw = "b-w";
+            Bw = 1, // "b-w"
 
             /// <summary>A 1D image, eg. histogram or lookup table.</summary>
-            public const string Histogram = "histogram";
+            Histogram = 10, // "histogram"
 
             /// <summary>The first three bands are CIE XYZ.</summary>
-            public const string Xyz = "xyz";
+            Xyz = 12, // "xyz"
 
             /// <summary>Pixels are in CIE Lab space.</summary>
-            public const string Lab = "lab";
+            Lab = 13, // "lab"
 
             /// <summary>The first four bands are in CMYK space.</summary>
-            public const string Cmyk = "cmyk";
+            Cmyk = 15, // "cmyk"
 
             /// <summary>Implies #VIPS_CODING_LABQ.</summary>
-            public const string Labq = "labq";
+            Labq = 16, // "labq"
 
             /// <summary>Generic RGB space.</summary>
-            public const string Rgb = "rgb";
+            Rgb = 17, // "rgb"
 
             /// <summary>A uniform colourspace based on CMC(1:1).</summary>
-            public const string Cmc = "cmc";
+            Cmc = 18, // "cmc"
 
             /// <summary>Pixels are in CIE LCh space.</summary>
-            public const string Lch = "lch";
+            Lch = 19, // "lch"
 
             /// <summary>CIE LAB coded as three signed 16-bit values.</summary>
-            public const string Labs = "labs";
+            Labs = 21, // "labs"
 
             /// <summary>Pixels are sRGB.</summary>
-            public const string Srgb = "srgb";
+            Srgb = 22, // "srgb"
 
             /// <summary>Pixels are CIE Yxy.</summary>
-            public const string Yxy = "yxy";
+            Yxy = 23, // "yxy"
 
             /// <summary>Image is in fourier space.</summary>
-            public const string Fourier = "fourier";
+            Fourier = 24, // "fourier"
 
             /// <summary>Generic 16-bit RGB.</summary>
-            public const string Rgb16 = "rgb16";
+            Rgb16 = 25, // "rgb16"
 
             /// <summary>Generic 16-bit mono.</summary>
-            public const string Grey16 = "grey16";
+            Grey16 = 26, // "grey16"
 
             /// <summary>A matrix.</summary>
-            public const string Matrix = "matrix";
+            Matrix = 27, // "matrix"
 
             /// <summary>Pixels are scRGB.</summary>
-            public const string Scrgb = "scrgb";
+            Scrgb = 28, // "scrgb"
 
             /// <summary>Pixels are HSV.</summary>
-            public const string Hsv = "hsv";
+            Hsv = 29 // "hsv"
         }
 
         /// <summary>
         /// A resizing kernel. One of these can be given to operations like
         /// <see cref="Image.Reduce"/> or <see cref="Image.Resize"/> to select the resizing kernel to use.
         /// </summary>
-        public static class Kernel
+        public enum Kernel
         {
             /// <summary>Nearest-neighbour interpolation.</summary>
-            public const string Nearest = "nearest";
+            Nearest = 0, // "nearest"
 
             /// <summary>Linear interpolation.</summary>
-            public const string Linear = "linear";
+            Linear = 1, // "linear"
 
             /// <summary>Cubic interpolation.</summary>
-            public const string Cubic = "cubic";
+            Cubic = 2, // "cubic"
 
             /// <summary>Mitchell</summary>
-            public const string Mitchell = "mitchell";
+            Mitchell = 3, // "mitchell"
 
             /// <summary>Two-lobe Lanczos.</summary>
-            public const string Lanczos2 = "lanczos2";
+            Lanczos2 = 4, // "lanczos2"
 
             /// <summary>Three-lobe Lanczos.</summary>
-            public const string Lanczos3 = "lanczos3";
+            Lanczos3 = 5 // "lanczos3"
         }
 
         /// <summary>
@@ -719,22 +730,22 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Boolean"/>.
         /// </remarks>
-        public static class OperationBoolean
+        public enum OperationBoolean
         {
             /// <summary>&amp;</summary>
-            public const string And = "and";
+            And = 0, // "and"
 
             /// <summary>|</summary>
-            public const string Or = "or";
+            Or = 1, // "or"
 
             /// <summary>^</summary>
-            public const string Eor = "eor";
+            Eor = 2, // "eor"
 
             /// <summary>&lt;&lt;</summary>
-            public const string Lshift = "lshift";
+            Lshift = 3, // "lshift"
 
             /// <summary>&gt;&gt;</summary>
-            public const string Rshift = "rshift";
+            Rshift = 4 // "rshift"
         }
 
         /// <summary>
@@ -743,16 +754,16 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Complex"/>.
         /// </remarks>
-        public static class OperationComplex
+        public enum OperationComplex
         {
             /// <summary>Convert to polar coordinates.</summary>
-            public const string Polar = "polar";
+            Polar = 0, // "polar"
 
             /// <summary>Convert to rectangular coordinates.</summary>
-            public const string Rect = "rect";
+            Rect = 1, // "rect"
 
             /// <summary>Complex conjugate.</summary>
-            public const string Conj = "conj";
+            Conj = 2 // "conj"
         }
 
         /// <summary>
@@ -761,10 +772,10 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Complex2"/>.
         /// </remarks>
-        public static class OperationComplex2
+        public enum OperationComplex2
         {
             /// <summary>Convert to polar coordinates.</summary>
-            public const string CrossPhase = "cross-phase";
+            CrossPhase = 0 // "cross-phase"
         }
 
         /// <summary>
@@ -773,13 +784,13 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Complexget"/>.
         /// </remarks>
-        public static class OperationComplexget
+        public enum OperationComplexget
         {
             /// <summary>Get real component.</summary>
-            public const string Real = "real";
+            Real = 0, // "real"
 
             /// <summary>Get imaginary component.</summary>
-            public const string Imag = "imag";
+            Imag = 1 // "imag"
         }
 
         /// <summary>
@@ -788,37 +799,37 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Math"/>.
         /// </remarks>
-        public static class OperationMath
+        public enum OperationMath
         {
             /// <summary>sin(), angles in degrees.</summary>
-            public const string Sin = "sin";
+            Sin = 0, // "sin"
 
             /// <summary>cos(), angles in degrees.</summary>
-            public const string Cos = "cos";
+            Cos = 1, // "cos"
 
             /// <summary>tan(), angles in degrees.</summary>
-            public const string Tan = "tan";
+            Tan = 2, // "tan"
 
             /// <summary>asin(), angles in degrees.</summary>
-            public const string Asin = "asin";
+            Asin = 3, // "asin"
 
             /// <summary>acos(), angles in degrees.</summary>
-            public const string Acos = "acos";
+            Acos = 4, // "acos"
 
             /// <summary>atan(), angles in degrees.</summary>
-            public const string Atan = "atan";
+            Atan = 5, // "atan"
 
             /// <summary>log base e.</summary>
-            public const string Log = "log";
+            Log = 6, // "log"
 
             /// <summary>log base 10.</summary>
-            public const string Log10 = "log10";
+            Log10 = 7, // "log10"
 
             /// <summary>e to the something.</summary>
-            public const string Exp = "exp";
+            Exp = 8, // "exp"
 
             /// <summary>10 to the something.</summary>
-            public const string Exp10 = "exp10";
+            Exp10 = 9 // "exp10"
         }
 
         /// <summary>
@@ -827,13 +838,13 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Math"/>.
         /// </remarks>
-        public static class OperationMath2
+        public enum OperationMath2
         {
             /// <summary>pow( left, right ).</summary>
-            public const string Pow = "pow";
+            Pow = 0, // "pow"
 
             /// <summary>pow( right, left ).</summary>
-            public const string Wop = "wop";
+            Wop = 1 // "wop"
         }
 
         /// <summary>
@@ -842,13 +853,13 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Morph"/>.
         /// </remarks>
-        public static class OperationMorphology
+        public enum OperationMorphology
         {
             /// <summary>true if all set.</summary>
-            public const string Erode = "erode";
+            Erode = 0, // "erode"
 
             /// <summary>true if one set.</summary>
-            public const string Dilate = "dilate";
+            Dilate = 1 // "dilate"
         }
 
         /// <summary>
@@ -857,40 +868,40 @@ namespace NetVips
         /// <remarks>
         /// See <see cref="Image.Relational"/>.
         /// </remarks>
-        public static class OperationRelational
+        public enum OperationRelational
         {
             /// <summary>==</summary>
-            public const string Equal = "equal";
+            Equal = 0, // "equal"
 
             /// <summary>!=</summary>
-            public const string Noteq = "noteq";
+            Noteq = 1, // "noteq"
 
             /// <summary>&lt;</summary>
-            public const string Less = "less";
+            Less = 2, // "less"
 
             /// <summary>&lt;=</summary>
-            public const string Lesseq = "lesseq";
+            Lesseq = 3, // "lesseq"
 
             /// <summary>&gt;</summary>
-            public const string More = "more";
+            More = 4, // "more"
 
             /// <summary>&gt;=</summary>
-            public const string Moreeq = "moreeq";
+            Moreeq = 5 // "moreeq"
         }
 
         /// <summary>
         /// Round operations.
         /// </summary>
-        public static class OperationRound
+        public enum OperationRound
         {
             /// <summary>Round to nearest.</summary>
-            public const string Rint = "rint";
+            Rint = 0, // "rint"
 
             /// <summary>The smallest integral value not less than.</summary>
-            public const string Ceil = "ceil";
+            Ceil = 1, // "ceil"
 
             /// <summary>Largest integral value not greater than.</summary>
-            public const string Floor = "floor";
+            Floor = 2 // "floor"
         }
 
         /// <summary>
@@ -899,13 +910,13 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.IccImport"/>.
         /// </remarks>
-        public static class PCS
+        public enum PCS
         {
             /// <summary>CIE Lab space.</summary>
-            public const string Lab = "lab";
+            Lab = 0, // "lab"
 
             /// <summary>CIE XYZ space.</summary>
-            public const string Xyz = "xyz";
+            Xyz = 1 // "xyz"
         }
 
         /// <summary>
@@ -914,64 +925,64 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Conv"/>.
         /// </remarks>
-        public static class Precision
+        public enum Precision
         {
             /// <summary>Integer.</summary>
-            public const string Integer = "integer";
+            Integer = 0, // "integer"
 
             /// <summary>Floating point.</summary>
-            public const string Float = "float";
+            Float = 1, // "float"
 
             /// <summary>Compute approximate result.</summary>
-            public const string Approximate = "approximate";
+            Approximate = 2 // "approximate"
         }
 
         /// <summary>
         /// How to calculate the output pixels when shrinking a 2x2 region.
         /// </summary>
-        public static class RegionShrink
+        public enum RegionShrink
         {
             /// <summary>Use the average.</summary>
-            public const string Mean = "mean";
+            Mean = 0, // "mean"
 
             /// <summary>Use the median.</summary>
-            public const string Median = "median";
+            Median = 1, // "median"
 
             /// <summary>Use the mode.</summary>
-            public const string Mode = "mode";
+            Mode = 2, // "mode"
 
             /// <summary>Use the maximum.</summary>
-            public const string Max = "max";
+            Max = 3, // "max"
 
             /// <summary>Use the minimum.</summary>
-            public const string Min = "min";
+            Min = 4, // "min"
 
             /// <summary>Use the top-left pixel.</summary>
-            public const string Nearest = "nearest";
+            Nearest = 5 // "nearest"
         }
 
         /// <summary>
         /// Some hints about the image saver.
         /// </summary>
-        public static class Saveable
+        public enum Saveable
         {
             /// <summary>1 band (eg. CSV)</summary>
-            public const string Mono = "mono";
+            Mono = 0, // "mono"
 
             /// <summary>1 or 3 bands (eg. PPM)</summary>
-            public const string Rgb = "rgb";
+            Rgb = 1, // "rgb"
 
             /// <summary>1, 2, 3 or 4 bands (eg. PNG)</summary>
-            public const string Rgba = "rgba";
+            Rgba = 2, // "rgba"
 
             /// <summary>3 or 4 bands (eg. WEBP)</summary>
-            public const string RgbaOnly = "rgba-only";
+            RgbaOnly = 3, // "rgba-only"
 
             /// <summary>1, 3 or 4 bands (eg.JPEG)</summary>
-            public const string RgbCmyk = "rgb-cmyk";
+            RgbCmyk = 4, // "rgb-cmyk"
 
             /// <summary>Any number of bands (eg. TIFF)</summary>
-            public const string Any = "any";
+            Any = 5 // "any"
         }
 
         /// <summary>
@@ -980,19 +991,19 @@ namespace NetVips
         /// <remarks>
         /// See for example <see cref="Image.Thumbnail"/>.
         /// </remarks>
-        public static class Size
+        public enum Size
         {
             /// <summary>Size both up and down.</summary>
-            public const string Both = "both";
+            Both = 0, // "both"
 
             /// <summary>Only upsize.</summary>
-            public const string Up = "up";
+            Up = 1, // "up"
 
             /// <summary>Only downsize.</summary>
-            public const string Down = "down";
+            Down = 2, // "down"
 
             /// <summary>Force size, that is, break aspect ratio.</summary>
-            public const string Force = "force";
+            Force = 3 // "force"
         }
 
         #endregion
@@ -1096,7 +1107,7 @@ namespace NetVips
         /// Flags we associate with an <see cref="Operation"/>.
         /// </summary>
         [Flags]
-        public enum OperationFlags
+        public enum OperationFlags : uint
         {
             /// <summary>No flags.</summary>
             NONE = 0,
@@ -1139,14 +1150,14 @@ namespace NetVips
         /// <summary>
         /// Signals that can be used on an <see cref="Image"/>. See <see cref="GObject.SignalConnect"/>.
         /// </summary>
-        public static class Signals
+        public enum Signals
         {
             /// <summary>Evaluation is starting.</summary>
             /// <remarks>
             /// The preeval signal is emitted once before computation of <see cref="Image"/>
             /// starts. It's a good place to set up evaluation feedback.
             /// </remarks>
-            public const string PreEval = "preeval";
+            PreEval = 0, // "preeval"
 
             /// <summary>Evaluation progress.</summary>
             /// <remarks>
@@ -1157,14 +1168,14 @@ namespace NetVips
             /// feedback. Beware of updating too frequently: you will usually
             /// need some throttling mechanism.
             /// </remarks>
-            public const string Eval = "eval";
+            Eval = 1, // "eval"
 
             /// <summary>Evaluation is ending.</summary>
             /// <remarks>
             /// The posteval signal is emitted once at the end of the computation
             /// of <see cref="Image"/>. It's a good place to shut down evaluation feedback.
             /// </remarks>
-            public const string PostEval = "posteval";
+            PostEval = 2 // "posteval"
         }
     }
 }

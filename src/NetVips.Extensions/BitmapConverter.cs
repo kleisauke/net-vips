@@ -55,7 +55,7 @@ namespace NetVips.Extensions
         /// </remarks>
         /// <param name="pixelFormat"><see cref="PixelFormat"/> to guess for.</param>
         /// <returns>The <see cref="Enums.BandFormat"/>.</returns>
-        private static string GuessBandFormat(PixelFormat pixelFormat)
+        private static Enums.BandFormat GuessBandFormat(PixelFormat pixelFormat)
         {
             switch (pixelFormat)
             {

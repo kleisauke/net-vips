@@ -17,7 +17,7 @@ namespace NetVips.Samples
             {GValue.GBoolType, "bool"},
             {GValue.GIntType, "int"},
             {GValue.GUint64Type, "ulong"},
-            {GValue.GEnumType, "string"},
+            //{GValue.GEnumType, "string"}, // Checked below
             //{GValue.GFlagsType, "int"}, // Checked below
             {GValue.GDoubleType, "double"},
             {GValue.GStrType, "string"},
@@ -30,6 +30,8 @@ namespace NetVips.Samples
             {GValue.BlobType, "byte[]"}
         };
 
+        private readonly List<string> _allNickNames = NetVips.GetOperations();
+
         public GenerateImageClass()
         {
             if (NetVips.AtLeastLibvips(8, 9))
@@ -37,6 +39,53 @@ namespace NetVips.Samples
                 _gTypeToCSharpDict.Add(GValue.SourceType, "Source");
                 _gTypeToCSharpDict.Add(GValue.TargetType, "Target");
             }
+
+            // Enums
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsAccess"), "Enums.Access");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsAlign"), "Enums.Align");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsAngle"), "Enums.Angle");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsAngle45"), "Enums.Angle45");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsBandFormat"), "Enums.BandFormat");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsBlendMode"), "Enums.BlendMode");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCoding"), "Enums.Coding");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCombine"), "Enums.Combine");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCombineMode"), "Enums.CombineMode");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCompassDirection"), "Enums.CompassDirection");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDemandStyle"), "Enums.DemandStyle");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDirection"), "Enums.Direction");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsExtend"), "Enums.Extend");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzContainer"), "Enums.ForeignDzContainer");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzDepth"), "Enums.ForeignDzDepth");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzLayout"), "Enums.ForeignDzLayout");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifCompression"), "Enums.ForeignHeifCompression");
+            //_gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignSubsample"), "Enums.ForeignSubsample"); // Uncomment when libvips >= 8.11
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignJpegSubsample"), "Enums.ForeignSubsample");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffCompression"), "Enums.ForeignTiffCompression");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffPredictor"), "Enums.ForeignTiffPredictor");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffResunit"), "Enums.ForeignTiffResunit");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignWebpPreset"), "Enums.ForeignWebpPreset");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsIntent"), "Enums.Intent");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsInteresting"), "Enums.Interesting");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsInterpretation"), "Enums.Interpretation");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsKernel"), "Enums.Kernel");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationBoolean"), "Enums.OperationBoolean");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationComplex"), "Enums.OperationComplex");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationComplex2"), "Enums.OperationComplex2");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationComplexget"), "Enums.OperationComplexget");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationMath"), "Enums.OperationMath");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationMath2"), "Enums.OperationMath2");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationMorphology"), "Enums.OperationMorphology");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationRelational"), "Enums.OperationRelational");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsOperationRound"), "Enums.OperationRound");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsPCS"), "Enums.PCS");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsPrecision"), "Enums.Precision");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsRegionShrink"), "Enums.RegionShrink");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSaveable"), "Enums.Saveable");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSize"), "Enums.Size");
+
+            // Flags
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignFlags"), "Enums.ForeignFlags");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPngFilter"), "Enums.ForeignPngFilter");
         }
 
         /// <summary>
@@ -59,17 +108,7 @@ namespace NetVips.Samples
                 return _gTypeToCSharpDict[fundamental];
             }
 
-            if (fundamental == GValue.GFlagsType)
-            {
-                return name switch
-                {
-                    "flags" => "Enums.ForeignFlags",
-                    "filter" => "Enums.ForeignPngFilter",
-                    _ => throw new Exception($"Unsupported type: {gtype} name: {name}")
-                };
-            }
-
-            return "object";
+            throw new Exception($"Unsupported type: {gtype} name: {name}");
         }
 
         /// <summary>
@@ -148,7 +187,7 @@ namespace NetVips.Samples
             {
                 return type switch
                 {
-                    "Enums.ForeignFlags" => $"({type})",
+                    { } enumString when enumString.StartsWith("Enums.") => $"({type})",
                     _ => string.Empty
                 };
             }
@@ -170,7 +209,7 @@ namespace NetVips.Samples
                     case "int":
                     case "ulong":
                     case "double":
-                    case "Enums.ForeignPngFilter":
+                    case { } enumString when enumString.StartsWith("Enums."):
                         return $"{type}? {name} = null";
                     default:
                         throw new Exception($"Unsupported type: {type}");
@@ -195,7 +234,7 @@ namespace NetVips.Samples
                     case "int":
                     case "ulong":
                     case "double":
-                    case "Enums.ForeignPngFilter":
+                    case { } enumString when enumString.StartsWith("Enums."):
                         return $"{name}.HasValue";
                     default:
                         throw new Exception($"Unsupported type: {type}");
@@ -705,9 +744,6 @@ namespace NetVips.Samples
         /// <returns>The `Image.Generated.cs` as string.</returns>
         private string Generate(string indent = "        ")
         {
-            // get the list of all nicknames we can generate docstrings for.
-            var allNickNames = NetVips.GetOperations();
-
             // remove operations we have to wrap by hand
             var exclude = new[]
             {
@@ -719,7 +755,8 @@ namespace NetVips.Samples
                 "case"
             };
 
-            allNickNames = allNickNames.Where(x => !exclude.Contains(x)).ToList();
+            // get the list of all nicknames we can generate docstrings for.
+            var allNickNames = _allNickNames.Where(x => !exclude.Contains(x)).ToList();
 
             const string preamble = @"//------------------------------------------------------------------------------
 // <auto-generated>

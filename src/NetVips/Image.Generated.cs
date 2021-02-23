@@ -50,7 +50,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], premultiplied: bool, extend: string);
+        /// Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], premultiplied: bool, extend: Enums.Extend);
         /// </code>
         /// </example>
         /// <param name="matrix">Transformation matrix.</param>
@@ -64,7 +64,7 @@ namespace NetVips
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <param name="extend">How to generate the extra pixels.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Affine(double[] matrix, GObject interpolate = null, int[] oarea = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null, double[] background = null, bool? premultiplied = null, string extend = null)
+        public Image Affine(double[] matrix, GObject interpolate = null, int[] oarea = null, double? odx = null, double? ody = null, double? idx = null, double? idy = null, double[] background = null, bool? premultiplied = null, Enums.Extend? extend = null)
         {
             var options = new VOption();
 
@@ -108,7 +108,7 @@ namespace NetVips
                 options.Add(nameof(premultiplied), premultiplied);
             }
 
-            if (extend != null)
+            if (extend.HasValue)
             {
                 options.Add(nameof(extend), extend);
             }
@@ -121,7 +121,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -129,7 +129,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Analyzeload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Analyzeload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -138,7 +138,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -156,7 +156,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -165,7 +165,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Analyzeload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Analyzeload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -174,7 +174,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -199,7 +199,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: string, valign: string, hspacing: int, vspacing: int);
+        /// Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: Enums.Align, valign: Enums.Align, hspacing: int, vspacing: int);
         /// </code>
         /// </example>
         /// <param name="in">Array of input images.</param>
@@ -211,7 +211,7 @@ namespace NetVips
         /// <param name="hspacing">Horizontal spacing between images.</param>
         /// <param name="vspacing">Vertical spacing between images.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Arrayjoin(Image[] @in, int? across = null, int? shim = null, double[] background = null, string halign = null, string valign = null, int? hspacing = null, int? vspacing = null)
+        public static Image Arrayjoin(Image[] @in, int? across = null, int? shim = null, double[] background = null, Enums.Align? halign = null, Enums.Align? valign = null, int? hspacing = null, int? vspacing = null)
         {
             var options = new VOption();
 
@@ -230,12 +230,12 @@ namespace NetVips
                 options.Add(nameof(background), background);
             }
 
-            if (halign != null)
+            if (halign.HasValue)
             {
                 options.Add(nameof(halign), halign);
             }
 
-            if (valign != null)
+            if (valign.HasValue)
             {
                 options.Add(nameof(valign), valign);
             }
@@ -277,7 +277,7 @@ namespace NetVips
         /// </example>
         /// <param name="angle">Angle image was rotated by.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Autorot(out string angle)
+        public Image Autorot(out Enums.Angle angle)
         {
             var optionalOutput = new VOption
             {
@@ -287,7 +287,7 @@ namespace NetVips
             var results = this.Call("autorot", optionalOutput) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            angle = opts?["angle"] is string out1 ? out1 : null;
+            angle = (Enums.Angle)opts?["angle"];
 
             return finalResult;
         }
@@ -303,7 +303,7 @@ namespace NetVips
         /// <param name="angle">Angle image was rotated by.</param>
         /// <param name="flip">Whether the image was flipped or not.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Autorot(out string angle, out bool flip)
+        public Image Autorot(out Enums.Angle angle, out bool flip)
         {
             var optionalOutput = new VOption
             {
@@ -314,7 +314,7 @@ namespace NetVips
             var results = this.Call("autorot", optionalOutput) as object[];
             var finalResult = results?[0] as Image;
             var opts = results?[1] as VOption;
-            angle = opts?["angle"] is string out1 ? out1 : null;
+            angle = (Enums.Angle)opts?["angle"];
             flip = opts?["flip"] is bool out2 && out2;
 
             return finalResult;
@@ -344,7 +344,7 @@ namespace NetVips
         /// </example>
         /// <param name="boolean">boolean to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Bandbool(string boolean)
+        public Image Bandbool(Enums.OperationBoolean boolean)
         {
             return this.Call("bandbool", boolean) as Image;
         }
@@ -457,7 +457,7 @@ namespace NetVips
         /// <param name="right">Right-hand image argument.</param>
         /// <param name="boolean">boolean to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Boolean(Image right, string boolean)
+        public Image Boolean(Image right, Enums.OperationBoolean boolean)
         {
             return this.Call("boolean", right, boolean) as Image;
         }
@@ -473,7 +473,7 @@ namespace NetVips
         /// <param name="boolean">boolean to perform.</param>
         /// <param name="c">Array of constants.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image BooleanConst(string boolean, double[] c)
+        public Image BooleanConst(Enums.OperationBoolean boolean, double[] c)
         {
             return this.Call("boolean_const", boolean, c) as Image;
         }
@@ -545,13 +545,13 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Canny(sigma: double, precision: string);
+        /// Image @out = in.Canny(sigma: double, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
         /// <param name="precision">Convolve with this precision.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Canny(double? sigma = null, string precision = null)
+        public Image Canny(double? sigma = null, Enums.Precision? precision = null)
         {
             var options = new VOption();
 
@@ -560,7 +560,7 @@ namespace NetVips
                 options.Add(nameof(sigma), sigma);
             }
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -579,7 +579,7 @@ namespace NetVips
         /// <param name="format">Format to cast to.</param>
         /// <param name="shift">Shift integer values up and down.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Cast(string format, bool? shift = null)
+        public Image Cast(Enums.BandFormat format, bool? shift = null)
         {
             var options = new VOption();
 
@@ -624,17 +624,17 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Colourspace(space, sourceSpace: string);
+        /// Image @out = in.Colourspace(space, sourceSpace: Enums.Interpretation);
         /// </code>
         /// </example>
         /// <param name="space">Destination color space.</param>
         /// <param name="sourceSpace">Source color space.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Colourspace(string space, string sourceSpace = null)
+        public Image Colourspace(Enums.Interpretation space, Enums.Interpretation? sourceSpace = null)
         {
             var options = new VOption();
 
-            if (sourceSpace != null)
+            if (sourceSpace.HasValue)
             {
                 options.Add("source_space", sourceSpace);
             }
@@ -647,7 +647,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Compass(mask, times: int, angle: string, combine: string, precision: string, layers: int, cluster: int);
+        /// Image @out = in.Compass(mask, times: int, angle: Enums.Angle45, combine: Enums.Combine, precision: Enums.Precision, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -658,7 +658,7 @@ namespace NetVips
         /// <param name="layers">Use this many layers in approximation.</param>
         /// <param name="cluster">Cluster lines closer than this in approximation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Compass(Image mask, int? times = null, string angle = null, string combine = null, string precision = null, int? layers = null, int? cluster = null)
+        public Image Compass(Image mask, int? times = null, Enums.Angle45? angle = null, Enums.Combine? combine = null, Enums.Precision? precision = null, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
 
@@ -667,17 +667,17 @@ namespace NetVips
                 options.Add(nameof(times), times);
             }
 
-            if (angle != null)
+            if (angle.HasValue)
             {
                 options.Add(nameof(angle), angle);
             }
 
-            if (combine != null)
+            if (combine.HasValue)
             {
                 options.Add(nameof(combine), combine);
             }
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -705,7 +705,7 @@ namespace NetVips
         /// </example>
         /// <param name="cmplx">complex to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Complex(string cmplx)
+        public Image Complex(Enums.OperationComplex cmplx)
         {
             return this.Call("complex", cmplx) as Image;
         }
@@ -721,7 +721,7 @@ namespace NetVips
         /// <param name="right">Right-hand image argument.</param>
         /// <param name="cmplx">binary complex operation to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Complex2(Image right, string cmplx)
+        public Image Complex2(Image right, Enums.OperationComplex2 cmplx)
         {
             return this.Call("complex2", right, cmplx) as Image;
         }
@@ -751,7 +751,7 @@ namespace NetVips
         /// </example>
         /// <param name="get">complex to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Complexget(string get)
+        public Image Complexget(Enums.OperationComplexget get)
         {
             return this.Call("complexget", get) as Image;
         }
@@ -761,7 +761,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = base.Composite2(overlay, mode, x: int, y: int, compositingSpace: string, premultiplied: bool);
+        /// Image @out = base.Composite2(overlay, mode, x: int, y: int, compositingSpace: Enums.Interpretation, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="overlay">Overlay image.</param>
@@ -771,7 +771,7 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space.</param>
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite2(Image overlay, string mode, int? x = null, int? y = null, string compositingSpace = null, bool? premultiplied = null)
+        public Image Composite2(Image overlay, Enums.BlendMode mode, int? x = null, int? y = null, Enums.Interpretation? compositingSpace = null, bool? premultiplied = null)
         {
             var options = new VOption();
 
@@ -785,7 +785,7 @@ namespace NetVips
                 options.Add(nameof(y), y);
             }
 
-            if (compositingSpace != null)
+            if (compositingSpace.HasValue)
             {
                 options.Add("compositing_space", compositingSpace);
             }
@@ -803,7 +803,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Conv(mask, precision: string, layers: int, cluster: int);
+        /// Image @out = in.Conv(mask, precision: Enums.Precision, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -811,11 +811,11 @@ namespace NetVips
         /// <param name="layers">Use this many layers in approximation.</param>
         /// <param name="cluster">Cluster lines closer than this in approximation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Conv(Image mask, string precision = null, int? layers = null, int? cluster = null)
+        public Image Conv(Image mask, Enums.Precision? precision = null, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -920,7 +920,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Convsep(mask, precision: string, layers: int, cluster: int);
+        /// Image @out = in.Convsep(mask, precision: Enums.Precision, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -928,11 +928,11 @@ namespace NetVips
         /// <param name="layers">Use this many layers in approximation.</param>
         /// <param name="cluster">Cluster lines closer than this in approximation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Convsep(Image mask, string precision = null, int? layers = null, int? cluster = null)
+        public Image Convsep(Image mask, Enums.Precision? precision = null, int? layers = null, int? cluster = null)
         {
             var options = new VOption();
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -955,7 +955,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Copy(width: int, height: int, bands: int, format: string, coding: string, interpretation: string, xres: double, yres: double, xoffset: int, yoffset: int);
+        /// Image @out = in.Copy(width: int, height: int, bands: int, format: Enums.BandFormat, coding: Enums.Coding, interpretation: Enums.Interpretation, xres: double, yres: double, xoffset: int, yoffset: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -969,7 +969,7 @@ namespace NetVips
         /// <param name="xoffset">Horizontal offset of origin.</param>
         /// <param name="yoffset">Vertical offset of origin.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Copy(int? width = null, int? height = null, int? bands = null, string format = null, string coding = null, string interpretation = null, double? xres = null, double? yres = null, int? xoffset = null, int? yoffset = null)
+        public Image Copy(int? width = null, int? height = null, int? bands = null, Enums.BandFormat? format = null, Enums.Coding? coding = null, Enums.Interpretation? interpretation = null, double? xres = null, double? yres = null, int? xoffset = null, int? yoffset = null)
         {
             var options = new VOption();
 
@@ -988,17 +988,17 @@ namespace NetVips
                 options.Add(nameof(bands), bands);
             }
 
-            if (format != null)
+            if (format.HasValue)
             {
                 options.Add(nameof(format), format);
             }
 
-            if (coding != null)
+            if (coding.HasValue)
             {
                 options.Add(nameof(coding), coding);
             }
 
-            if (interpretation != null)
+            if (interpretation.HasValue)
             {
                 options.Add(nameof(interpretation), interpretation);
             }
@@ -1036,7 +1036,7 @@ namespace NetVips
         /// </example>
         /// <param name="direction">Countlines left-right or up-down.</param>
         /// <returns>A double.</returns>
-        public double Countlines(string direction)
+        public double Countlines(Enums.Direction direction)
         {
             return this.Call("countlines", direction) is double result ? result : 0d;
         }
@@ -1046,7 +1046,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Csvload(filename, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Csvload(filename, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -1058,7 +1058,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Csvload(string filename, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Csvload(string filename, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -1087,7 +1087,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -1105,7 +1105,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Csvload(filename, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Csvload(filename, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -1118,7 +1118,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Csvload(string filename, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Csvload(string filename, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -1147,7 +1147,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -1172,7 +1172,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadSource(source, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.CsvloadSource(source, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -1184,7 +1184,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image CsvloadSource(Source source, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image CsvloadSource(Source source, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -1213,7 +1213,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -1231,7 +1231,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadStream(stream, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.CsvloadStream(stream, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -1243,7 +1243,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image CsvloadStream(Stream stream, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image CsvloadStream(Stream stream, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = CsvloadSource(source, skip, lines, whitespace, separator, memory, access, fail);
@@ -1258,7 +1258,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadSource(source, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.CsvloadSource(source, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -1271,7 +1271,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image CsvloadSource(Source source, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image CsvloadSource(Source source, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -1300,7 +1300,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -1325,7 +1325,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadStream(stream, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.CsvloadStream(stream, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -1338,7 +1338,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image CsvloadStream(Stream stream, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image CsvloadStream(Stream stream, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = CsvloadSource(source, out flags, skip, lines, whitespace, separator, memory, access, fail);
@@ -1759,7 +1759,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawImage(sub, x, y, mode: string);
+        /// Image image = image.DrawImage(sub, x, y, mode: Enums.CombineMode);
         /// </code>
         /// </example>
         /// <param name="sub">Sub-image to insert into main image.</param>
@@ -1767,11 +1767,11 @@ namespace NetVips
         /// <param name="y">Draw image here.</param>
         /// <param name="mode">Combining mode.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image DrawImage(Image sub, int x, int y, string mode = null)
+        public Image DrawImage(Image sub, int x, int y, Enums.CombineMode? mode = null)
         {
             var options = new VOption();
 
-            if (mode != null)
+            if (mode.HasValue)
             {
                 options.Add(nameof(mode), mode);
             }
@@ -1866,7 +1866,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Dzsave(filename, basename: string, layout: string, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, skipBlanks: int, noStrip: bool, id: string, strip: bool, background: double[], pageHeight: int);
+        /// in.Dzsave(filename, basename: string, layout: Enums.ForeignDzLayout, suffix: string, overlap: int, tileSize: int, centre: bool, depth: Enums.ForeignDzDepth, angle: Enums.Angle, container: Enums.ForeignDzContainer, properties: bool, compression: int, regionShrink: Enums.RegionShrink, skipBlanks: int, noStrip: bool, id: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -1888,7 +1888,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Dzsave(string filename, string basename = null, string layout = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, int? skipBlanks = null, bool? noStrip = null, string id = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Dzsave(string filename, string basename = null, Enums.ForeignDzLayout? layout = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, Enums.ForeignDzDepth? depth = null, Enums.Angle? angle = null, Enums.ForeignDzContainer? container = null, bool? properties = null, int? compression = null, Enums.RegionShrink? regionShrink = null, int? skipBlanks = null, bool? noStrip = null, string id = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -1897,7 +1897,7 @@ namespace NetVips
                 options.Add(nameof(basename), basename);
             }
 
-            if (layout != null)
+            if (layout.HasValue)
             {
                 options.Add(nameof(layout), layout);
             }
@@ -1922,17 +1922,17 @@ namespace NetVips
                 options.Add(nameof(centre), centre);
             }
 
-            if (depth != null)
+            if (depth.HasValue)
             {
                 options.Add(nameof(depth), depth);
             }
 
-            if (angle != null)
+            if (angle.HasValue)
             {
                 options.Add(nameof(angle), angle);
             }
 
-            if (container != null)
+            if (container.HasValue)
             {
                 options.Add(nameof(container), container);
             }
@@ -1947,7 +1947,7 @@ namespace NetVips
                 options.Add(nameof(compression), compression);
             }
 
-            if (regionShrink != null)
+            if (regionShrink.HasValue)
             {
                 options.Add("region_shrink", regionShrink);
             }
@@ -1990,7 +1990,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: string, suffix: string, overlap: int, tileSize: int, centre: bool, depth: string, angle: string, container: string, properties: bool, compression: int, regionShrink: string, skipBlanks: int, noStrip: bool, id: string, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.DzsaveBuffer(basename: string, layout: Enums.ForeignDzLayout, suffix: string, overlap: int, tileSize: int, centre: bool, depth: Enums.ForeignDzDepth, angle: Enums.Angle, container: Enums.ForeignDzContainer, properties: bool, compression: int, regionShrink: Enums.RegionShrink, skipBlanks: int, noStrip: bool, id: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="basename">Base name to save to.</param>
@@ -2012,7 +2012,7 @@ namespace NetVips
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] DzsaveBuffer(string basename = null, string layout = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, string depth = null, string angle = null, string container = null, bool? properties = null, int? compression = null, string regionShrink = null, int? skipBlanks = null, bool? noStrip = null, string id = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] DzsaveBuffer(string basename = null, Enums.ForeignDzLayout? layout = null, string suffix = null, int? overlap = null, int? tileSize = null, bool? centre = null, Enums.ForeignDzDepth? depth = null, Enums.Angle? angle = null, Enums.ForeignDzContainer? container = null, bool? properties = null, int? compression = null, Enums.RegionShrink? regionShrink = null, int? skipBlanks = null, bool? noStrip = null, string id = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -2021,7 +2021,7 @@ namespace NetVips
                 options.Add(nameof(basename), basename);
             }
 
-            if (layout != null)
+            if (layout.HasValue)
             {
                 options.Add(nameof(layout), layout);
             }
@@ -2046,17 +2046,17 @@ namespace NetVips
                 options.Add(nameof(centre), centre);
             }
 
-            if (depth != null)
+            if (depth.HasValue)
             {
                 options.Add(nameof(depth), depth);
             }
 
-            if (angle != null)
+            if (angle.HasValue)
             {
                 options.Add(nameof(angle), angle);
             }
 
-            if (container != null)
+            if (container.HasValue)
             {
                 options.Add(nameof(container), container);
             }
@@ -2071,7 +2071,7 @@ namespace NetVips
                 options.Add(nameof(compression), compression);
             }
 
-            if (regionShrink != null)
+            if (regionShrink.HasValue)
             {
                 options.Add("region_shrink", regionShrink);
             }
@@ -2114,7 +2114,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Embed(x, y, width, height, extend: string, background: double[]);
+        /// Image @out = in.Embed(x, y, width, height, extend: Enums.Extend, background: double[]);
         /// </code>
         /// </example>
         /// <param name="x">Left edge of input in output.</param>
@@ -2124,11 +2124,11 @@ namespace NetVips
         /// <param name="extend">How to generate the extra pixels.</param>
         /// <param name="background">Color for background pixels.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Embed(int x, int y, int width, int height, string extend = null, double[] background = null)
+        public Image Embed(int x, int y, int width, int height, Enums.Extend? extend = null, double[] background = null)
         {
             var options = new VOption();
 
-            if (extend != null)
+            if (extend.HasValue)
             {
                 options.Add(nameof(extend), extend);
             }
@@ -2313,7 +2313,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Fitsload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Fitsload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2321,7 +2321,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Fitsload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Fitsload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2330,7 +2330,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2348,7 +2348,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Fitsload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Fitsload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2357,7 +2357,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Fitsload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Fitsload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2366,7 +2366,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2458,7 +2458,7 @@ namespace NetVips
         /// </example>
         /// <param name="direction">Direction to flip image.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Flip(string direction)
+        public Image Flip(Enums.Direction direction)
         {
             return this.Call("flip", direction) as Image;
         }
@@ -2550,14 +2550,14 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Gaussblur(sigma, minAmpl: double, precision: string);
+        /// Image @out = in.Gaussblur(sigma, minAmpl: double, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
         /// <param name="minAmpl">Minimum amplitude of Gaussian.</param>
         /// <param name="precision">Convolve with this precision.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Gaussblur(double sigma, double? minAmpl = null, string precision = null)
+        public Image Gaussblur(double sigma, double? minAmpl = null, Enums.Precision? precision = null)
         {
             var options = new VOption();
 
@@ -2566,7 +2566,7 @@ namespace NetVips
                 options.Add("min_ampl", minAmpl);
             }
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -2579,7 +2579,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: string);
+        /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
@@ -2587,7 +2587,7 @@ namespace NetVips
         /// <param name="separable">Generate separable Gaussian.</param>
         /// <param name="precision">Generate with this precision.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Gaussmat(double sigma, double minAmpl, bool? separable = null, string precision = null)
+        public static Image Gaussmat(double sigma, double minAmpl, bool? separable = null, Enums.Precision? precision = null)
         {
             var options = new VOption();
 
@@ -2596,7 +2596,7 @@ namespace NetVips
                 options.Add(nameof(separable), separable);
             }
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -2655,7 +2655,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gifload(filename, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Gifload(filename, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2665,7 +2665,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Gifload(string filename, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Gifload(string filename, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2684,7 +2684,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2702,7 +2702,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gifload(filename, out var flags, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Gifload(filename, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2713,7 +2713,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Gifload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Gifload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2732,7 +2732,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2757,7 +2757,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadBuffer(buffer, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.GifloadBuffer(buffer, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -2767,7 +2767,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2786,7 +2786,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2804,7 +2804,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -2815,7 +2815,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2834,7 +2834,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2859,7 +2859,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadSource(source, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.GifloadSource(source, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -2869,7 +2869,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadSource(Source source, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadSource(Source source, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2888,7 +2888,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2906,7 +2906,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadStream(stream, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.GifloadStream(stream, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -2916,7 +2916,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadStream(Stream stream, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadStream(Stream stream, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = GifloadSource(source, page, n, memory, access, fail);
@@ -2931,7 +2931,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadSource(source, out var flags, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.GifloadSource(source, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -2942,7 +2942,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -2961,7 +2961,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -2986,7 +2986,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadStream(stream, out var flags, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.GifloadStream(stream, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -2997,7 +2997,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image GifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image GifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = GifloadSource(source, out flags, page, n, memory, access, fail);
@@ -3040,7 +3040,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Gravity(direction, width, height, extend: string, background: double[]);
+        /// Image @out = in.Gravity(direction, width, height, extend: Enums.Extend, background: double[]);
         /// </code>
         /// </example>
         /// <param name="direction">direction to place image within width/height.</param>
@@ -3049,11 +3049,11 @@ namespace NetVips
         /// <param name="extend">How to generate the extra pixels.</param>
         /// <param name="background">Color for background pixels.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Gravity(string direction, int width, int height, string extend = null, double[] background = null)
+        public Image Gravity(Enums.CompassDirection direction, int width, int height, Enums.Extend? extend = null, double[] background = null)
         {
             var options = new VOption();
 
-            if (extend != null)
+            if (extend.HasValue)
             {
                 options.Add(nameof(extend), extend);
             }
@@ -3112,7 +3112,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Heifload(filename, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Heifload(filename, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -3123,7 +3123,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Heifload(string filename, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Heifload(string filename, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3147,7 +3147,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -3165,7 +3165,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Heifload(filename, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Heifload(filename, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -3177,7 +3177,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Heifload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Heifload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3201,7 +3201,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -3226,7 +3226,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadBuffer(buffer, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.HeifloadBuffer(buffer, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -3237,7 +3237,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3261,7 +3261,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -3279,7 +3279,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadBuffer(buffer, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.HeifloadBuffer(buffer, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -3291,7 +3291,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3315,7 +3315,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -3340,7 +3340,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadSource(source, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.HeifloadSource(source, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -3351,7 +3351,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadSource(Source source, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadSource(Source source, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3375,7 +3375,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -3393,7 +3393,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadStream(stream, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.HeifloadStream(stream, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -3404,7 +3404,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadStream(Stream stream, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadStream(Stream stream, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = HeifloadSource(source, page, n, thumbnail, memory, access, fail);
@@ -3419,7 +3419,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadSource(source, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.HeifloadSource(source, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -3431,7 +3431,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -3455,7 +3455,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -3480,7 +3480,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadStream(stream, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.HeifloadStream(stream, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -3492,7 +3492,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image HeifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image HeifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = HeifloadSource(source, out flags, page, n, thumbnail, memory, access, fail);
@@ -3507,7 +3507,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Heifsave(filename, q: int, lossless: bool, compression: string, speed: int, strip: bool, background: double[], pageHeight: int);
+        /// in.Heifsave(filename, q: int, lossless: bool, compression: Enums.ForeignHeifCompression, speed: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -3518,7 +3518,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Heifsave(string filename, int? q = null, bool? lossless = null, string compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Heifsave(string filename, int? q = null, bool? lossless = null, Enums.ForeignHeifCompression? compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -3532,7 +3532,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (compression != null)
+            if (compression.HasValue)
             {
                 options.Add(nameof(compression), compression);
             }
@@ -3565,7 +3565,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.HeifsaveBuffer(q: int, lossless: bool, compression: string, speed: int, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.HeifsaveBuffer(q: int, lossless: bool, compression: Enums.ForeignHeifCompression, speed: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="q">Q factor.</param>
@@ -3576,7 +3576,7 @@ namespace NetVips
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] HeifsaveBuffer(int? q = null, bool? lossless = null, string compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] HeifsaveBuffer(int? q = null, bool? lossless = null, Enums.ForeignHeifCompression? compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -3590,7 +3590,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (compression != null)
+            if (compression.HasValue)
             {
                 options.Add(nameof(compression), compression);
             }
@@ -3623,7 +3623,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.HeifsaveTarget(target, q: int, lossless: bool, compression: string, speed: int, strip: bool, background: double[], pageHeight: int);
+        /// in.HeifsaveTarget(target, q: int, lossless: bool, compression: Enums.ForeignHeifCompression, speed: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="target">Target to save to.</param>
@@ -3634,7 +3634,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void HeifsaveTarget(Target target, int? q = null, bool? lossless = null, string compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void HeifsaveTarget(Target target, int? q = null, bool? lossless = null, Enums.ForeignHeifCompression? compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -3648,7 +3648,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (compression != null)
+            if (compression.HasValue)
             {
                 options.Add(nameof(compression), compression);
             }
@@ -3681,7 +3681,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.HeifsaveStream(stream, q: int, lossless: bool, compression: string, speed: int, strip: bool, background: double[], pageHeight: int);
+        /// in.HeifsaveStream(stream, q: int, lossless: bool, compression: Enums.ForeignHeifCompression, speed: int, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to save to.</param>
@@ -3692,7 +3692,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void HeifsaveStream(Stream stream, int? q = null, bool? lossless = null, string compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void HeifsaveStream(Stream stream, int? q = null, bool? lossless = null, Enums.ForeignHeifCompression? compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             using (var target = TargetStream.NewFromStream(stream))
             {
@@ -3777,17 +3777,17 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistFindIndexed(index, combine: string);
+        /// Image @out = in.HistFindIndexed(index, combine: Enums.Combine);
         /// </code>
         /// </example>
         /// <param name="index">Index image.</param>
         /// <param name="combine">Combine bins like this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image HistFindIndexed(Image index, string combine = null)
+        public Image HistFindIndexed(Image index, Enums.Combine? combine = null)
         {
             var options = new VOption();
 
-            if (combine != null)
+            if (combine.HasValue)
             {
                 options.Add(nameof(combine), combine);
             }
@@ -3979,7 +3979,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.IccExport(pcs: string, intent: string, outputProfile: string, depth: int);
+        /// Image @out = in.IccExport(pcs: Enums.PCS, intent: Enums.Intent, outputProfile: string, depth: int);
         /// </code>
         /// </example>
         /// <param name="pcs">Set Profile Connection Space.</param>
@@ -3987,16 +3987,16 @@ namespace NetVips
         /// <param name="outputProfile">Filename to load output profile from.</param>
         /// <param name="depth">Output device space depth in bits.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image IccExport(string pcs = null, string intent = null, string outputProfile = null, int? depth = null)
+        public Image IccExport(Enums.PCS? pcs = null, Enums.Intent? intent = null, string outputProfile = null, int? depth = null)
         {
             var options = new VOption();
 
-            if (pcs != null)
+            if (pcs.HasValue)
             {
                 options.Add(nameof(pcs), pcs);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -4019,7 +4019,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.IccImport(pcs: string, intent: string, embedded: bool, inputProfile: string);
+        /// Image @out = in.IccImport(pcs: Enums.PCS, intent: Enums.Intent, embedded: bool, inputProfile: string);
         /// </code>
         /// </example>
         /// <param name="pcs">Set Profile Connection Space.</param>
@@ -4027,16 +4027,16 @@ namespace NetVips
         /// <param name="embedded">Use embedded input profile, if available.</param>
         /// <param name="inputProfile">Filename to load input profile from.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image IccImport(string pcs = null, string intent = null, bool? embedded = null, string inputProfile = null)
+        public Image IccImport(Enums.PCS? pcs = null, Enums.Intent? intent = null, bool? embedded = null, string inputProfile = null)
         {
             var options = new VOption();
 
-            if (pcs != null)
+            if (pcs.HasValue)
             {
                 options.Add(nameof(pcs), pcs);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -4059,7 +4059,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.IccTransform(outputProfile, pcs: string, intent: string, embedded: bool, inputProfile: string, depth: int);
+        /// Image @out = in.IccTransform(outputProfile, pcs: Enums.PCS, intent: Enums.Intent, embedded: bool, inputProfile: string, depth: int);
         /// </code>
         /// </example>
         /// <param name="outputProfile">Filename to load output profile from.</param>
@@ -4069,16 +4069,16 @@ namespace NetVips
         /// <param name="inputProfile">Filename to load input profile from.</param>
         /// <param name="depth">Output device space depth in bits.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image IccTransform(string outputProfile, string pcs = null, string intent = null, bool? embedded = null, string inputProfile = null, int? depth = null)
+        public Image IccTransform(string outputProfile, Enums.PCS? pcs = null, Enums.Intent? intent = null, bool? embedded = null, string inputProfile = null, int? depth = null)
         {
             var options = new VOption();
 
-            if (pcs != null)
+            if (pcs.HasValue)
             {
                 options.Add(nameof(pcs), pcs);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -4229,7 +4229,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: string);
+        /// Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: Enums.Align);
         /// </code>
         /// </example>
         /// <param name="in2">Second input image.</param>
@@ -4239,7 +4239,7 @@ namespace NetVips
         /// <param name="background">Colour for new pixels.</param>
         /// <param name="align">Align on the low, centre or high coordinate edge.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Join(Image in2, string direction, bool? expand = null, int? shim = null, double[] background = null, string align = null)
+        public Image Join(Image in2, Enums.Direction direction, bool? expand = null, int? shim = null, double[] background = null, Enums.Align? align = null)
         {
             var options = new VOption();
 
@@ -4258,7 +4258,7 @@ namespace NetVips
                 options.Add(nameof(background), background);
             }
 
-            if (align != null)
+            if (align.HasValue)
             {
                 options.Add(nameof(align), align);
             }
@@ -4271,7 +4271,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Jpegload(filename, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Jpegload(filename, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -4281,7 +4281,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Jpegload(string filename, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Jpegload(string filename, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4300,7 +4300,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -4318,7 +4318,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Jpegload(filename, out var flags, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Jpegload(filename, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -4329,7 +4329,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Jpegload(string filename, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Jpegload(string filename, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4348,7 +4348,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -4373,7 +4373,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -4383,7 +4383,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadBuffer(byte[] buffer, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadBuffer(byte[] buffer, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4402,7 +4402,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -4420,7 +4420,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -4431,7 +4431,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4450,7 +4450,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -4475,7 +4475,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -4485,7 +4485,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadSource(Source source, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadSource(Source source, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4504,7 +4504,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -4522,7 +4522,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -4532,7 +4532,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadStream(Stream stream, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadStream(Stream stream, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = JpegloadSource(source, shrink, autorotate, memory, access, fail);
@@ -4547,7 +4547,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -4558,7 +4558,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadSource(Source source, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadSource(Source source, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -4577,7 +4577,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -4602,7 +4602,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -4613,7 +4613,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image JpegloadStream(Stream stream, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image JpegloadStream(Stream stream, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = JpegloadSource(source, out flags, shrink, autorotate, memory, access, fail);
@@ -4628,7 +4628,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Jpegsave(filename, q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: string, strip: bool, background: double[], pageHeight: int);
+        /// in.Jpegsave(filename, q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: Enums.ForeignSubsample, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -4644,7 +4644,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Jpegsave(string filename, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, string subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Jpegsave(string filename, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, Enums.ForeignSubsample? subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -4688,7 +4688,7 @@ namespace NetVips
                 options.Add("quant_table", quantTable);
             }
 
-            if (subsampleMode != null)
+            if (subsampleMode.HasValue)
             {
                 options.Add("subsample_mode", subsampleMode);
             }
@@ -4716,7 +4716,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.JpegsaveBuffer(q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: string, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.JpegsaveBuffer(q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: Enums.ForeignSubsample, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="q">Q factor.</param>
@@ -4732,7 +4732,7 @@ namespace NetVips
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] JpegsaveBuffer(int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, string subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] JpegsaveBuffer(int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, Enums.ForeignSubsample? subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -4776,7 +4776,7 @@ namespace NetVips
                 options.Add("quant_table", quantTable);
             }
 
-            if (subsampleMode != null)
+            if (subsampleMode.HasValue)
             {
                 options.Add("subsample_mode", subsampleMode);
             }
@@ -4804,7 +4804,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.JpegsaveMime(q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: string, strip: bool, background: double[], pageHeight: int);
+        /// in.JpegsaveMime(q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: Enums.ForeignSubsample, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="q">Q factor.</param>
@@ -4819,7 +4819,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void JpegsaveMime(int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, string subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void JpegsaveMime(int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, Enums.ForeignSubsample? subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -4863,7 +4863,7 @@ namespace NetVips
                 options.Add("quant_table", quantTable);
             }
 
-            if (subsampleMode != null)
+            if (subsampleMode.HasValue)
             {
                 options.Add("subsample_mode", subsampleMode);
             }
@@ -4891,7 +4891,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.JpegsaveTarget(target, q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: string, strip: bool, background: double[], pageHeight: int);
+        /// in.JpegsaveTarget(target, q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: Enums.ForeignSubsample, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="target">Target to save to.</param>
@@ -4907,7 +4907,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void JpegsaveTarget(Target target, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, string subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void JpegsaveTarget(Target target, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, Enums.ForeignSubsample? subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -4951,7 +4951,7 @@ namespace NetVips
                 options.Add("quant_table", quantTable);
             }
 
-            if (subsampleMode != null)
+            if (subsampleMode.HasValue)
             {
                 options.Add("subsample_mode", subsampleMode);
             }
@@ -4979,7 +4979,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.JpegsaveStream(stream, q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: string, strip: bool, background: double[], pageHeight: int);
+        /// in.JpegsaveStream(stream, q: int, profile: string, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: Enums.ForeignSubsample, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to save to.</param>
@@ -4995,7 +4995,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void JpegsaveStream(Stream stream, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, string subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void JpegsaveStream(Stream stream, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, Enums.ForeignSubsample? subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             using (var target = TargetStream.NewFromStream(stream))
             {
@@ -5233,7 +5233,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Linecache(tileHeight: int, access: string, threaded: bool, persistent: bool);
+        /// Image @out = in.Linecache(tileHeight: int, access: Enums.Access, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
         /// <param name="tileHeight">Tile height in pixels.</param>
@@ -5241,7 +5241,7 @@ namespace NetVips
         /// <param name="threaded">Allow threaded access.</param>
         /// <param name="persistent">Keep cache between evaluations.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Linecache(int? tileHeight = null, string access = null, bool? threaded = null, bool? persistent = null)
+        public Image Linecache(int? tileHeight = null, Enums.Access? access = null, bool? threaded = null, bool? persistent = null)
         {
             var options = new VOption();
 
@@ -5250,7 +5250,7 @@ namespace NetVips
                 options.Add("tile_height", tileHeight);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -5273,7 +5273,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: string);
+        /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Radius of Logmatian.</param>
@@ -5281,7 +5281,7 @@ namespace NetVips
         /// <param name="separable">Generate separable Logmatian.</param>
         /// <param name="precision">Generate with this precision.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Logmat(double sigma, double minAmpl, bool? separable = null, string precision = null)
+        public static Image Logmat(double sigma, double minAmpl, bool? separable = null, Enums.Precision? precision = null)
         {
             var options = new VOption();
 
@@ -5290,7 +5290,7 @@ namespace NetVips
                 options.Add(nameof(separable), separable);
             }
 
-            if (precision != null)
+            if (precision.HasValue)
             {
                 options.Add(nameof(precision), precision);
             }
@@ -5303,7 +5303,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -5314,7 +5314,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Magickload(string filename, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Magickload(string filename, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -5338,7 +5338,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -5356,7 +5356,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -5368,7 +5368,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Magickload(string filename, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Magickload(string filename, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -5392,7 +5392,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -5417,7 +5417,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -5428,7 +5428,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MagickloadBuffer(byte[] buffer, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MagickloadBuffer(byte[] buffer, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -5452,7 +5452,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -5470,7 +5470,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -5482,7 +5482,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MagickloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MagickloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -5506,7 +5506,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6195,7 +6195,7 @@ namespace NetVips
         /// </example>
         /// <param name="math">math to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Math(string math)
+        public Image Math(Enums.OperationMath math)
         {
             return this.Call("math", math) as Image;
         }
@@ -6211,7 +6211,7 @@ namespace NetVips
         /// <param name="right">Right-hand image argument.</param>
         /// <param name="math2">math to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Math2(Image right, string math2)
+        public Image Math2(Image right, Enums.OperationMath2 math2)
         {
             return this.Call("math2", right, math2) as Image;
         }
@@ -6227,7 +6227,7 @@ namespace NetVips
         /// <param name="math2">math to perform.</param>
         /// <param name="c">Array of constants.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Math2Const(string math2, double[] c)
+        public Image Math2Const(Enums.OperationMath2 math2, double[] c)
         {
             return this.Call("math2_const", math2, c) as Image;
         }
@@ -6237,7 +6237,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Matload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6245,7 +6245,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Matload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Matload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6254,7 +6254,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6272,7 +6272,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6281,7 +6281,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Matload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Matload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6290,7 +6290,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6329,7 +6329,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6337,7 +6337,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Matrixload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Matrixload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6346,7 +6346,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6364,7 +6364,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6373,7 +6373,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Matrixload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Matrixload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6382,7 +6382,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6407,7 +6407,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadSource(source, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.MatrixloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -6415,7 +6415,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MatrixloadSource(Source source, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MatrixloadSource(Source source, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6424,7 +6424,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6442,7 +6442,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadStream(stream, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.MatrixloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -6450,7 +6450,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MatrixloadStream(Stream stream, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MatrixloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = MatrixloadSource(source, memory, access, fail);
@@ -6465,7 +6465,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadSource(source, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.MatrixloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -6474,7 +6474,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MatrixloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MatrixloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -6483,7 +6483,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -6508,7 +6508,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadStream(stream, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.MatrixloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -6517,7 +6517,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image MatrixloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image MatrixloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = MatrixloadSource(source, out flags, memory, access, fail);
@@ -6906,7 +6906,7 @@ namespace NetVips
         /// <param name="dy">Vertical displacement from sec to ref.</param>
         /// <param name="mblend">Maximum blend size.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Merge(Image sec, string direction, int dx, int dy, int? mblend = null)
+        public Image Merge(Image sec, Enums.Direction direction, int dx, int dy, int? mblend = null)
         {
             var options = new VOption();
 
@@ -7131,7 +7131,7 @@ namespace NetVips
         /// <param name="mask">Input matrix image.</param>
         /// <param name="morph">Morphological operation to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Morph(Image mask, string morph)
+        public Image Morph(Image mask, Enums.OperationMorphology morph)
         {
             return this.Call("morph", mask, morph) as Image;
         }
@@ -7155,7 +7155,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7202,7 +7202,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, out int dx0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7257,7 +7257,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7315,7 +7315,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7376,7 +7376,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7440,7 +7440,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, out double dy1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, out double dy1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7507,7 +7507,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic(Image sec, string direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, out double dy1, out double dx1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic(Image sec, Enums.Direction direction, int xref, int yref, int xsec, int ysec, out int dx0, out int dy0, out double scale1, out double angle1, out double dy1, out double dx1, int? hwindow = null, int? harea = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7576,7 +7576,7 @@ namespace NetVips
         /// <param name="mblend">Maximum blend size.</param>
         /// <param name="bandno">Band to search for features on.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Mosaic1(Image sec, string direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, int? hwindow = null, int? harea = null, bool? search = null, GObject interpolate = null, int? mblend = null, int? bandno = null)
+        public Image Mosaic1(Image sec, Enums.Direction direction, int xr1, int yr1, int xs1, int ys1, int xr2, int yr2, int xs2, int ys2, int? hwindow = null, int? harea = null, bool? search = null, GObject interpolate = null, int? mblend = null, int? bandno = null)
         {
             var options = new VOption();
 
@@ -7655,7 +7655,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Niftiload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Niftiload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7663,7 +7663,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Niftiload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Niftiload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7672,7 +7672,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -7690,7 +7690,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Niftiload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Niftiload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7699,7 +7699,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Niftiload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Niftiload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7708,7 +7708,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -7767,7 +7767,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openexrload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Openexrload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7775,7 +7775,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openexrload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openexrload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7784,7 +7784,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -7802,7 +7802,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openexrload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Openexrload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7811,7 +7811,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openexrload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openexrload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7820,7 +7820,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -7845,7 +7845,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openslideload(filename, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Openslideload(filename, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7857,7 +7857,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openslideload(string filename, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openslideload(string filename, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7886,7 +7886,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -7904,7 +7904,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7917,7 +7917,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Openslideload(string filename, out Enums.ForeignFlags flags, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Openslideload(string filename, out Enums.ForeignFlags flags, bool? attachAssociated = null, int? level = null, bool? autocrop = null, string associated = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -7946,7 +7946,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -7971,7 +7971,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pdfload(filename, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Pdfload(filename, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7984,7 +7984,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Pdfload(string filename, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Pdfload(string filename, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8018,7 +8018,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8036,7 +8036,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8050,7 +8050,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Pdfload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Pdfload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8084,7 +8084,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8109,7 +8109,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8122,7 +8122,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadBuffer(byte[] buffer, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadBuffer(byte[] buffer, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8156,7 +8156,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8174,7 +8174,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8188,7 +8188,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8222,7 +8222,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8247,7 +8247,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadSource(source, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PdfloadSource(source, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8260,7 +8260,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadSource(Source source, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadSource(Source source, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8294,7 +8294,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8312,7 +8312,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadStream(stream, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PdfloadStream(stream, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8325,7 +8325,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadStream(Stream stream, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadStream(Stream stream, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PdfloadSource(source, page, n, dpi, scale, background, memory, access, fail);
@@ -8340,7 +8340,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadSource(source, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PdfloadSource(source, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8354,7 +8354,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8388,7 +8388,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8413,7 +8413,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadStream(stream, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PdfloadStream(stream, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8427,7 +8427,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PdfloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PdfloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PdfloadSource(source, out flags, page, n, dpi, scale, background, memory, access, fail);
@@ -8502,7 +8502,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pngload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Pngload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8510,7 +8510,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Pngload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Pngload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8519,7 +8519,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8537,7 +8537,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8546,7 +8546,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Pngload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Pngload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8555,7 +8555,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8580,7 +8580,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8588,7 +8588,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadBuffer(byte[] buffer, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8597,7 +8597,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8615,7 +8615,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8624,7 +8624,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8633,7 +8633,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8658,7 +8658,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadSource(source, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PngloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8666,7 +8666,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadSource(Source source, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadSource(Source source, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8675,7 +8675,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8693,7 +8693,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadStream(stream, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PngloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8701,7 +8701,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadStream(Stream stream, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PngloadSource(source, memory, access, fail);
@@ -8716,7 +8716,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadSource(source, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PngloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8725,7 +8725,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -8734,7 +8734,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -8759,7 +8759,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadStream(stream, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PngloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8768,7 +8768,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PngloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PngloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PngloadSource(source, out flags, memory, access, fail);
@@ -9057,7 +9057,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9065,7 +9065,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Ppmload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Ppmload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9074,7 +9074,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9092,7 +9092,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9101,7 +9101,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Ppmload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Ppmload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9110,7 +9110,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9135,7 +9135,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadSource(source, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PpmloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9143,7 +9143,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PpmloadSource(Source source, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PpmloadSource(Source source, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9152,7 +9152,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9170,7 +9170,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadStream(stream, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PpmloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9178,7 +9178,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PpmloadStream(Stream stream, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PpmloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PpmloadSource(source, memory, access, fail);
@@ -9193,7 +9193,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadSource(source, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PpmloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9202,7 +9202,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PpmloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PpmloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9211,7 +9211,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9236,7 +9236,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadStream(stream, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.PpmloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9245,7 +9245,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image PpmloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image PpmloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = PpmloadSource(source, out flags, memory, access, fail);
@@ -9476,7 +9476,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Radload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Radload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9484,7 +9484,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Radload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Radload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9493,7 +9493,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9511,7 +9511,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9520,7 +9520,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Radload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Radload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9529,7 +9529,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9554,7 +9554,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -9562,7 +9562,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadBuffer(byte[] buffer, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9571,7 +9571,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9589,7 +9589,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -9598,7 +9598,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9607,7 +9607,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9632,7 +9632,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9640,7 +9640,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadSource(Source source, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadSource(Source source, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9649,7 +9649,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9667,7 +9667,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9675,7 +9675,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadStream(Stream stream, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = RadloadSource(source, memory, access, fail);
@@ -9690,7 +9690,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9699,7 +9699,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9708,7 +9708,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9733,7 +9733,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9742,7 +9742,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image RadloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image RadloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = RadloadSource(source, out flags, memory, access, fail);
@@ -9896,7 +9896,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, offset: ulong, format: string, interpretation: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, offset: ulong, format: Enums.BandFormat, interpretation: Enums.Interpretation, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9910,7 +9910,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Rawload(string filename, int width, int height, int bands, ulong? offset = null, string format = null, string interpretation = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Rawload(string filename, int width, int height, int bands, ulong? offset = null, Enums.BandFormat? format = null, Enums.Interpretation? interpretation = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9919,12 +9919,12 @@ namespace NetVips
                 options.Add(nameof(offset), offset);
             }
 
-            if (format != null)
+            if (format.HasValue)
             {
                 options.Add(nameof(format), format);
             }
 
-            if (interpretation != null)
+            if (interpretation.HasValue)
             {
                 options.Add(nameof(interpretation), interpretation);
             }
@@ -9934,7 +9934,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -9952,7 +9952,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, offset: ulong, format: string, interpretation: string, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, offset: ulong, format: Enums.BandFormat, interpretation: Enums.Interpretation, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9967,7 +9967,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Rawload(string filename, int width, int height, int bands, out Enums.ForeignFlags flags, ulong? offset = null, string format = null, string interpretation = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Rawload(string filename, int width, int height, int bands, out Enums.ForeignFlags flags, ulong? offset = null, Enums.BandFormat? format = null, Enums.Interpretation? interpretation = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -9976,12 +9976,12 @@ namespace NetVips
                 options.Add(nameof(offset), offset);
             }
 
-            if (format != null)
+            if (format.HasValue)
             {
                 options.Add(nameof(format), format);
             }
 
-            if (interpretation != null)
+            if (interpretation.HasValue)
             {
                 options.Add(nameof(interpretation), interpretation);
             }
@@ -9991,7 +9991,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -10099,18 +10099,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Reduce(hshrink, vshrink, kernel: string);
+        /// Image @out = in.Reduce(hshrink, vshrink, kernel: Enums.Kernel);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor.</param>
         /// <param name="vshrink">Vertical shrink factor.</param>
         /// <param name="kernel">Resampling kernel.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Reduce(double hshrink, double vshrink, string kernel = null)
+        public Image Reduce(double hshrink, double vshrink, Enums.Kernel? kernel = null)
         {
             var options = new VOption();
 
-            if (kernel != null)
+            if (kernel.HasValue)
             {
                 options.Add(nameof(kernel), kernel);
             }
@@ -10123,17 +10123,17 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Reduceh(hshrink, kernel: string);
+        /// Image @out = in.Reduceh(hshrink, kernel: Enums.Kernel);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor.</param>
         /// <param name="kernel">Resampling kernel.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Reduceh(double hshrink, string kernel = null)
+        public Image Reduceh(double hshrink, Enums.Kernel? kernel = null)
         {
             var options = new VOption();
 
-            if (kernel != null)
+            if (kernel.HasValue)
             {
                 options.Add(nameof(kernel), kernel);
             }
@@ -10146,17 +10146,17 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Reducev(vshrink, kernel: string);
+        /// Image @out = in.Reducev(vshrink, kernel: Enums.Kernel);
         /// </code>
         /// </example>
         /// <param name="vshrink">Vertical shrink factor.</param>
         /// <param name="kernel">Resampling kernel.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Reducev(double vshrink, string kernel = null)
+        public Image Reducev(double vshrink, Enums.Kernel? kernel = null)
         {
             var options = new VOption();
 
-            if (kernel != null)
+            if (kernel.HasValue)
             {
                 options.Add(nameof(kernel), kernel);
             }
@@ -10175,7 +10175,7 @@ namespace NetVips
         /// <param name="right">Right-hand image argument.</param>
         /// <param name="relational">relational to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Relational(Image right, string relational)
+        public Image Relational(Image right, Enums.OperationRelational relational)
         {
             return this.Call("relational", right, relational) as Image;
         }
@@ -10191,7 +10191,7 @@ namespace NetVips
         /// <param name="relational">relational to perform.</param>
         /// <param name="c">Array of constants.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image RelationalConst(string relational, double[] c)
+        public Image RelationalConst(Enums.OperationRelational relational, double[] c)
         {
             return this.Call("relational_const", relational, c) as Image;
         }
@@ -10247,18 +10247,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Resize(scale, kernel: string, vscale: double);
+        /// Image @out = in.Resize(scale, kernel: Enums.Kernel, vscale: double);
         /// </code>
         /// </example>
         /// <param name="scale">Scale image by this factor.</param>
         /// <param name="kernel">Resampling kernel.</param>
         /// <param name="vscale">Vertical scale image by this factor.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Resize(double scale, string kernel = null, double? vscale = null)
+        public Image Resize(double scale, Enums.Kernel? kernel = null, double? vscale = null)
         {
             var options = new VOption();
 
-            if (kernel != null)
+            if (kernel.HasValue)
             {
                 options.Add(nameof(kernel), kernel);
             }
@@ -10281,7 +10281,7 @@ namespace NetVips
         /// </example>
         /// <param name="angle">Angle to rotate image.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Rot(string angle)
+        public Image Rot(Enums.Angle angle)
         {
             return this.Call("rot", angle) as Image;
         }
@@ -10291,16 +10291,16 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Rot45(angle: string);
+        /// Image @out = in.Rot45(angle: Enums.Angle45);
         /// </code>
         /// </example>
         /// <param name="angle">Angle to rotate image.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Rot45(string angle = null)
+        public Image Rot45(Enums.Angle45? angle = null)
         {
             var options = new VOption();
 
-            if (angle != null)
+            if (angle.HasValue)
             {
                 options.Add(nameof(angle), angle);
             }
@@ -10371,7 +10371,7 @@ namespace NetVips
         /// </example>
         /// <param name="round">rounding operation to perform.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Round(string round)
+        public Image Round(Enums.OperationRound round)
         {
             return this.Call("round", round) as Image;
         }
@@ -10673,18 +10673,18 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = input.Smartcrop(width, height, interesting: string);
+        /// Image @out = input.Smartcrop(width, height, interesting: Enums.Interesting);
         /// </code>
         /// </example>
         /// <param name="width">Width of extract area.</param>
         /// <param name="height">Height of extract area.</param>
         /// <param name="interesting">How to measure interestingness.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Smartcrop(int width, int height, string interesting = null)
+        public Image Smartcrop(int width, int height, Enums.Interesting? interesting = null)
         {
             var options = new VOption();
 
-            if (interesting != null)
+            if (interesting.HasValue)
             {
                 options.Add(nameof(interesting), interesting);
             }
@@ -10878,7 +10878,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Svgload(filename, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Svgload(filename, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -10889,7 +10889,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Svgload(string filename, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Svgload(string filename, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10913,7 +10913,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -10931,7 +10931,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Svgload(filename, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Svgload(filename, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -10943,7 +10943,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Svgload(string filename, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Svgload(string filename, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -10967,7 +10967,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -10992,7 +10992,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11003,7 +11003,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadBuffer(byte[] buffer, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadBuffer(byte[] buffer, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11027,7 +11027,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -11045,7 +11045,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11057,7 +11057,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11081,7 +11081,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -11106,7 +11106,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -11117,7 +11117,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadSource(Source source, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadSource(Source source, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11141,7 +11141,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -11159,7 +11159,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -11170,7 +11170,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadStream(Stream stream, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadStream(Stream stream, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = SvgloadSource(source, dpi, scale, unlimited, memory, access, fail);
@@ -11185,7 +11185,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -11197,7 +11197,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadSource(Source source, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadSource(Source source, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11221,7 +11221,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -11246,7 +11246,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -11258,7 +11258,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image SvgloadStream(Stream stream, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image SvgloadStream(Stream stream, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = SvgloadSource(source, out flags, dpi, scale, unlimited, memory, access, fail);
@@ -11405,7 +11405,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: string, dpi: int, justify: bool, spacing: int, fontfile: string);
+        /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: Enums.Align, dpi: int, justify: bool, spacing: int, fontfile: string);
         /// </code>
         /// </example>
         /// <param name="text">Text to render.</param>
@@ -11418,7 +11418,7 @@ namespace NetVips
         /// <param name="spacing">Line spacing.</param>
         /// <param name="fontfile">Load this font file.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Text(string text, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, bool? justify = null, int? spacing = null, string fontfile = null)
+        public static Image Text(string text, string font = null, int? width = null, int? height = null, Enums.Align? align = null, int? dpi = null, bool? justify = null, int? spacing = null, string fontfile = null)
         {
             var options = new VOption();
 
@@ -11437,7 +11437,7 @@ namespace NetVips
                 options.Add(nameof(height), height);
             }
 
-            if (align != null)
+            if (align.HasValue)
             {
                 options.Add(nameof(align), align);
             }
@@ -11470,7 +11470,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: string, dpi: int, justify: bool, spacing: int, fontfile: string);
+        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: Enums.Align, dpi: int, justify: bool, spacing: int, fontfile: string);
         /// </code>
         /// </example>
         /// <param name="text">Text to render.</param>
@@ -11484,7 +11484,7 @@ namespace NetVips
         /// <param name="spacing">Line spacing.</param>
         /// <param name="fontfile">Load this font file.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Text(string text, out int autofitDpi, string font = null, int? width = null, int? height = null, string align = null, int? dpi = null, bool? justify = null, int? spacing = null, string fontfile = null)
+        public static Image Text(string text, out int autofitDpi, string font = null, int? width = null, int? height = null, Enums.Align? align = null, int? dpi = null, bool? justify = null, int? spacing = null, string fontfile = null)
         {
             var options = new VOption();
 
@@ -11503,7 +11503,7 @@ namespace NetVips
                 options.Add(nameof(height), height);
             }
 
-            if (align != null)
+            if (align.HasValue)
             {
                 options.Add(nameof(align), align);
             }
@@ -11543,7 +11543,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to read from.</param>
@@ -11557,7 +11557,7 @@ namespace NetVips
         /// <param name="exportProfile">Fallback export profile.</param>
         /// <param name="intent">Rendering intent.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Thumbnail(string filename, int width, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
+        public static Image Thumbnail(string filename, int width, int? height = null, Enums.Size? size = null, bool? noRotate = null, Enums.Interesting? crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, Enums.Intent? intent = null)
         {
             var options = new VOption();
 
@@ -11566,7 +11566,7 @@ namespace NetVips
                 options.Add(nameof(height), height);
             }
 
-            if (size != null)
+            if (size.HasValue)
             {
                 options.Add(nameof(size), size);
             }
@@ -11576,7 +11576,7 @@ namespace NetVips
                 options.Add("no_rotate", noRotate);
             }
 
-            if (crop != null)
+            if (crop.HasValue)
             {
                 options.Add(nameof(crop), crop);
             }
@@ -11596,7 +11596,7 @@ namespace NetVips
                 options.Add("export_profile", exportProfile);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -11609,7 +11609,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, optionString: string, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11624,7 +11624,7 @@ namespace NetVips
         /// <param name="exportProfile">Fallback export profile.</param>
         /// <param name="intent">Rendering intent.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image ThumbnailBuffer(byte[] buffer, int width, string optionString = null, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
+        public static Image ThumbnailBuffer(byte[] buffer, int width, string optionString = null, int? height = null, Enums.Size? size = null, bool? noRotate = null, Enums.Interesting? crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, Enums.Intent? intent = null)
         {
             var options = new VOption();
 
@@ -11638,7 +11638,7 @@ namespace NetVips
                 options.Add(nameof(height), height);
             }
 
-            if (size != null)
+            if (size.HasValue)
             {
                 options.Add(nameof(size), size);
             }
@@ -11648,7 +11648,7 @@ namespace NetVips
                 options.Add("no_rotate", noRotate);
             }
 
-            if (crop != null)
+            if (crop.HasValue)
             {
                 options.Add(nameof(crop), crop);
             }
@@ -11668,7 +11668,7 @@ namespace NetVips
                 options.Add("export_profile", exportProfile);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -11681,7 +11681,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.ThumbnailImage(width, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// Image @out = in.ThumbnailImage(width, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="width">Size to this width.</param>
@@ -11694,7 +11694,7 @@ namespace NetVips
         /// <param name="exportProfile">Fallback export profile.</param>
         /// <param name="intent">Rendering intent.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image ThumbnailImage(int width, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
+        public Image ThumbnailImage(int width, int? height = null, Enums.Size? size = null, bool? noRotate = null, Enums.Interesting? crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, Enums.Intent? intent = null)
         {
             var options = new VOption();
 
@@ -11703,7 +11703,7 @@ namespace NetVips
                 options.Add(nameof(height), height);
             }
 
-            if (size != null)
+            if (size.HasValue)
             {
                 options.Add(nameof(size), size);
             }
@@ -11713,7 +11713,7 @@ namespace NetVips
                 options.Add("no_rotate", noRotate);
             }
 
-            if (crop != null)
+            if (crop.HasValue)
             {
                 options.Add(nameof(crop), crop);
             }
@@ -11733,7 +11733,7 @@ namespace NetVips
                 options.Add("export_profile", exportProfile);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -11746,7 +11746,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.ThumbnailSource(source, width, optionString: string, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// Image @out = NetVips.Image.ThumbnailSource(source, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -11761,7 +11761,7 @@ namespace NetVips
         /// <param name="exportProfile">Fallback export profile.</param>
         /// <param name="intent">Rendering intent.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image ThumbnailSource(Source source, int width, string optionString = null, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
+        public static Image ThumbnailSource(Source source, int width, string optionString = null, int? height = null, Enums.Size? size = null, bool? noRotate = null, Enums.Interesting? crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, Enums.Intent? intent = null)
         {
             var options = new VOption();
 
@@ -11775,7 +11775,7 @@ namespace NetVips
                 options.Add(nameof(height), height);
             }
 
-            if (size != null)
+            if (size.HasValue)
             {
                 options.Add(nameof(size), size);
             }
@@ -11785,7 +11785,7 @@ namespace NetVips
                 options.Add("no_rotate", noRotate);
             }
 
-            if (crop != null)
+            if (crop.HasValue)
             {
                 options.Add(nameof(crop), crop);
             }
@@ -11805,7 +11805,7 @@ namespace NetVips
                 options.Add("export_profile", exportProfile);
             }
 
-            if (intent != null)
+            if (intent.HasValue)
             {
                 options.Add(nameof(intent), intent);
             }
@@ -11818,7 +11818,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.ThumbnailStream(stream, width, optionString: string, height: int, size: string, noRotate: bool, crop: string, linear: bool, importProfile: string, exportProfile: string, intent: string);
+        /// Image @out = NetVips.Image.ThumbnailStream(stream, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -11833,7 +11833,7 @@ namespace NetVips
         /// <param name="exportProfile">Fallback export profile.</param>
         /// <param name="intent">Rendering intent.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image ThumbnailStream(Stream stream, int width, string optionString = null, int? height = null, string size = null, bool? noRotate = null, string crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, string intent = null)
+        public static Image ThumbnailStream(Stream stream, int width, string optionString = null, int? height = null, Enums.Size? size = null, bool? noRotate = null, Enums.Interesting? crop = null, bool? linear = null, string importProfile = null, string exportProfile = null, Enums.Intent? intent = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = ThumbnailSource(source, width, optionString, height, size, noRotate, crop, linear, importProfile, exportProfile, intent);
@@ -11848,7 +11848,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Tiffload(filename, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Tiffload(filename, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -11860,7 +11860,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Tiffload(string filename, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Tiffload(string filename, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11889,7 +11889,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -11907,7 +11907,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Tiffload(filename, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Tiffload(filename, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -11920,7 +11920,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Tiffload(string filename, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Tiffload(string filename, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -11949,7 +11949,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -11974,7 +11974,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11986,7 +11986,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadBuffer(byte[] buffer, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadBuffer(byte[] buffer, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12015,7 +12015,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12033,7 +12033,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -12046,7 +12046,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12075,7 +12075,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12100,7 +12100,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadSource(source, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.TiffloadSource(source, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -12112,7 +12112,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadSource(Source source, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadSource(Source source, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12141,7 +12141,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12159,7 +12159,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadStream(stream, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.TiffloadStream(stream, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -12171,7 +12171,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadStream(Stream stream, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadStream(Stream stream, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = TiffloadSource(source, page, subifd, n, autorotate, memory, access, fail);
@@ -12186,7 +12186,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -12199,7 +12199,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12228,7 +12228,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12253,7 +12253,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -12266,7 +12266,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image TiffloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image TiffloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? subifd = null, int? n = null, bool? autorotate = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = TiffloadSource(source, out flags, page, subifd, n, autorotate, memory, access, fail);
@@ -12281,7 +12281,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Tiffsave(filename, compression: string, q: int, predictor: string, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, bitdepth: int, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, level: int, subifd: bool, lossless: bool, depth: string, strip: bool, background: double[], pageHeight: int);
+        /// in.Tiffsave(filename, compression: Enums.ForeignTiffCompression, q: int, predictor: Enums.ForeignTiffPredictor, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, bitdepth: int, resunit: Enums.ForeignTiffResunit, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: Enums.RegionShrink, level: int, subifd: bool, lossless: bool, depth: Enums.ForeignDzDepth, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -12308,11 +12308,11 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Tiffsave(string filename, string compression = null, int? q = null, string predictor = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, int? bitdepth = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, int? level = null, bool? subifd = null, bool? lossless = null, string depth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Tiffsave(string filename, Enums.ForeignTiffCompression? compression = null, int? q = null, Enums.ForeignTiffPredictor? predictor = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, int? bitdepth = null, Enums.ForeignTiffResunit? resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, Enums.RegionShrink? regionShrink = null, int? level = null, bool? subifd = null, bool? lossless = null, Enums.ForeignDzDepth? depth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
-            if (compression != null)
+            if (compression.HasValue)
             {
                 options.Add(nameof(compression), compression);
             }
@@ -12322,7 +12322,7 @@ namespace NetVips
                 options.Add("Q", q);
             }
 
-            if (predictor != null)
+            if (predictor.HasValue)
             {
                 options.Add(nameof(predictor), predictor);
             }
@@ -12362,7 +12362,7 @@ namespace NetVips
                 options.Add(nameof(bitdepth), bitdepth);
             }
 
-            if (resunit != null)
+            if (resunit.HasValue)
             {
                 options.Add(nameof(resunit), resunit);
             }
@@ -12387,7 +12387,7 @@ namespace NetVips
                 options.Add(nameof(properties), properties);
             }
 
-            if (regionShrink != null)
+            if (regionShrink.HasValue)
             {
                 options.Add("region_shrink", regionShrink);
             }
@@ -12407,7 +12407,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (depth != null)
+            if (depth.HasValue)
             {
                 options.Add(nameof(depth), depth);
             }
@@ -12435,7 +12435,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.TiffsaveBuffer(compression: string, q: int, predictor: string, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, bitdepth: int, resunit: string, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: string, level: int, subifd: bool, lossless: bool, depth: string, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.TiffsaveBuffer(compression: Enums.ForeignTiffCompression, q: int, predictor: Enums.ForeignTiffPredictor, profile: string, tile: bool, tileWidth: int, tileHeight: int, pyramid: bool, miniswhite: bool, bitdepth: int, resunit: Enums.ForeignTiffResunit, xres: double, yres: double, bigtiff: bool, properties: bool, regionShrink: Enums.RegionShrink, level: int, subifd: bool, lossless: bool, depth: Enums.ForeignDzDepth, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="compression">Compression for this file.</param>
@@ -12462,11 +12462,11 @@ namespace NetVips
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] TiffsaveBuffer(string compression = null, int? q = null, string predictor = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, int? bitdepth = null, string resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, string regionShrink = null, int? level = null, bool? subifd = null, bool? lossless = null, string depth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] TiffsaveBuffer(Enums.ForeignTiffCompression? compression = null, int? q = null, Enums.ForeignTiffPredictor? predictor = null, string profile = null, bool? tile = null, int? tileWidth = null, int? tileHeight = null, bool? pyramid = null, bool? miniswhite = null, int? bitdepth = null, Enums.ForeignTiffResunit? resunit = null, double? xres = null, double? yres = null, bool? bigtiff = null, bool? properties = null, Enums.RegionShrink? regionShrink = null, int? level = null, bool? subifd = null, bool? lossless = null, Enums.ForeignDzDepth? depth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
-            if (compression != null)
+            if (compression.HasValue)
             {
                 options.Add(nameof(compression), compression);
             }
@@ -12476,7 +12476,7 @@ namespace NetVips
                 options.Add("Q", q);
             }
 
-            if (predictor != null)
+            if (predictor.HasValue)
             {
                 options.Add(nameof(predictor), predictor);
             }
@@ -12516,7 +12516,7 @@ namespace NetVips
                 options.Add(nameof(bitdepth), bitdepth);
             }
 
-            if (resunit != null)
+            if (resunit.HasValue)
             {
                 options.Add(nameof(resunit), resunit);
             }
@@ -12541,7 +12541,7 @@ namespace NetVips
                 options.Add(nameof(properties), properties);
             }
 
-            if (regionShrink != null)
+            if (regionShrink.HasValue)
             {
                 options.Add("region_shrink", regionShrink);
             }
@@ -12561,7 +12561,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (depth != null)
+            if (depth.HasValue)
             {
                 options.Add(nameof(depth), depth);
             }
@@ -12589,7 +12589,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: string, threaded: bool, persistent: bool);
+        /// Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: Enums.Access, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
         /// <param name="tileWidth">Tile width in pixels.</param>
@@ -12599,7 +12599,7 @@ namespace NetVips
         /// <param name="threaded">Allow threaded access.</param>
         /// <param name="persistent">Keep cache between evaluations.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Tilecache(int? tileWidth = null, int? tileHeight = null, int? maxTiles = null, string access = null, bool? threaded = null, bool? persistent = null)
+        public Image Tilecache(int? tileWidth = null, int? tileHeight = null, int? maxTiles = null, Enums.Access? access = null, bool? threaded = null, bool? persistent = null)
         {
             var options = new VOption();
 
@@ -12618,7 +12618,7 @@ namespace NetVips
                 options.Add("max_tiles", maxTiles);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12767,7 +12767,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12775,7 +12775,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Vipsload(string filename, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Vipsload(string filename, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12784,7 +12784,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12802,7 +12802,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12811,7 +12811,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Vipsload(string filename, out Enums.ForeignFlags flags, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Vipsload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12820,7 +12820,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12879,7 +12879,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Webpload(filename, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Webpload(filename, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12890,7 +12890,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Webpload(string filename, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Webpload(string filename, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12914,7 +12914,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12932,7 +12932,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Webpload(filename, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.Webpload(filename, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12944,7 +12944,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image Webpload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image Webpload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -12968,7 +12968,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -12993,7 +12993,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -13004,7 +13004,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadBuffer(byte[] buffer, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadBuffer(byte[] buffer, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -13028,7 +13028,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -13046,7 +13046,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -13058,7 +13058,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -13082,7 +13082,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -13107,7 +13107,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -13118,7 +13118,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadSource(Source source, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadSource(Source source, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -13142,7 +13142,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -13160,7 +13160,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -13171,7 +13171,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadStream(Stream stream, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadStream(Stream stream, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = WebploadSource(source, page, n, scale, memory, access, fail);
@@ -13186,7 +13186,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -13198,7 +13198,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var options = new VOption();
 
@@ -13222,7 +13222,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -13247,7 +13247,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: string, fail: bool);
+        /// Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -13259,7 +13259,7 @@ namespace NetVips
         /// <param name="access">Required access pattern for this file.</param>
         /// <param name="fail">Fail on first error.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image WebploadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, string access = null, bool? fail = null)
+        public static Image WebploadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, bool? fail = null)
         {
             var source = SourceStream.NewFromStream(stream);
             var image = WebploadSource(source, out flags, page, n, scale, memory, access, fail);
@@ -13274,7 +13274,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.Webpsave(filename, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
+        /// in.Webpsave(filename, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to save to.</param>
@@ -13292,7 +13292,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void Webpsave(string filename, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void Webpsave(string filename, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -13306,7 +13306,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (preset != null)
+            if (preset.HasValue)
             {
                 options.Add(nameof(preset), preset);
             }
@@ -13374,7 +13374,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
+        /// byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="q">Q factor.</param>
@@ -13392,7 +13392,7 @@ namespace NetVips
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
         /// <returns>An array of bytes.</returns>
-        public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -13406,7 +13406,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (preset != null)
+            if (preset.HasValue)
             {
                 options.Add(nameof(preset), preset);
             }
@@ -13474,7 +13474,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.WebpsaveTarget(target, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
+        /// in.WebpsaveTarget(target, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="target">Target to save to.</param>
@@ -13492,7 +13492,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             var options = new VOption();
 
@@ -13506,7 +13506,7 @@ namespace NetVips
                 options.Add(nameof(lossless), lossless);
             }
 
-            if (preset != null)
+            if (preset.HasValue)
             {
                 options.Add(nameof(preset), preset);
             }
@@ -13574,7 +13574,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// in.WebpsaveStream(stream, q: int, lossless: bool, preset: string, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
+        /// in.WebpsaveStream(stream, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, reductionEffort: int, profile: string, strip: bool, background: double[], pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to save to.</param>
@@ -13592,7 +13592,7 @@ namespace NetVips
         /// <param name="strip">Strip all metadata from image.</param>
         /// <param name="background">Background value.</param>
         /// <param name="pageHeight">Set page height for multipage save.</param>
-        public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, string preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
+        public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
             using (var target = TargetStream.NewFromStream(stream))
             {
@@ -13828,17 +13828,17 @@ namespace NetVips
         /// <summary>
         /// Pixel format in image
         /// </summary>
-        public string Format => (string)Get("format");
+        public Enums.BandFormat Format => (Enums.BandFormat)Get("format");
 
         /// <summary>
         /// Pixel coding
         /// </summary>
-        public string Coding => (string)Get("coding");
+        public Enums.Coding Coding => (Enums.Coding)Get("coding");
 
         /// <summary>
         /// Pixel interpretation
         /// </summary>
-        public string Interpretation => (string)Get("interpretation");
+        public Enums.Interpretation Interpretation => (Enums.Interpretation)Get("interpretation");
 
         /// <summary>
         /// Horizontal offset of origin

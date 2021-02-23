@@ -22,7 +22,7 @@ namespace NetVips.Samples
             // with start and stop in CIELAB
             var lut = Image.Identity() / 255;
             lut = lut * Stop + (1 - lut) * Start;
-            lut = lut.Colourspace("srgb", sourceSpace: "lab");
+            lut = lut.Colourspace(Enums.Interpretation.Srgb, sourceSpace: Enums.Interpretation.Lab);
 
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
 

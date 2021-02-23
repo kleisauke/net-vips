@@ -17,7 +17,7 @@ namespace NetVips.Samples
 
             Image b;
 
-            using (var a = Image.NewFromMemory(Enumerable.Repeat((byte)255, 200).ToArray(), 20, 10, 1, "uchar"))
+            using (var a = Image.NewFromMemory(Enumerable.Repeat((byte)255, 200).ToArray(), 20, 10, 1, Enums.BandFormat.Uchar))
             {
                 b = a / 2;
             } // g_object_unref

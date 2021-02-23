@@ -38,39 +38,39 @@ namespace NetVips.Tests
         public static readonly string IcoFile = Path.Combine(Images, "favicon.ico");
         public static readonly string AvifFile = Path.Combine(Images, "avif-orientation-6.avif");
 
-        public static readonly string[] UnsignedFormats =
+        public static readonly Enums.BandFormat[] UnsignedFormats =
         {
             Enums.BandFormat.Uchar,
             Enums.BandFormat.Ushort,
             Enums.BandFormat.Uint
         };
 
-        public static readonly string[] SignedFormats =
+        public static readonly Enums.BandFormat[] SignedFormats =
         {
             Enums.BandFormat.Char,
             Enums.BandFormat.Short,
             Enums.BandFormat.Int
         };
 
-        public static readonly string[] FloatFormats =
+        public static readonly Enums.BandFormat[] FloatFormats =
         {
             Enums.BandFormat.Float,
             Enums.BandFormat.Double
         };
 
-        public static readonly string[] ComplexFormats =
+        public static readonly Enums.BandFormat[] ComplexFormats =
         {
             Enums.BandFormat.Complex,
             Enums.BandFormat.Dpcomplex
         };
 
-        public static readonly string[] IntFormats = UnsignedFormats.Concat(SignedFormats).ToArray();
+        public static readonly Enums.BandFormat[] IntFormats = UnsignedFormats.Concat(SignedFormats).ToArray();
 
-        public static readonly string[] NonComplexFormats = IntFormats.Concat(FloatFormats).ToArray();
+        public static readonly Enums.BandFormat[] NonComplexFormats = IntFormats.Concat(FloatFormats).ToArray();
 
-        public static readonly string[] AllFormats = IntFormats.Concat(FloatFormats).Concat(ComplexFormats).ToArray();
+        public static readonly Enums.BandFormat[] AllFormats = IntFormats.Concat(FloatFormats).Concat(ComplexFormats).ToArray();
 
-        public static readonly string[] ColourColourspaces =
+        public static readonly Enums.Interpretation[] ColourColourspaces =
         {
             Enums.Interpretation.Xyz,
             Enums.Interpretation.Lab,
@@ -83,34 +83,34 @@ namespace NetVips.Tests
             Enums.Interpretation.Yxy
         };
 
-        public static readonly string[] CodedColourspaces =
+        public static readonly Enums.Interpretation[] CodedColourspaces =
         {
             Enums.Interpretation.Labq
         };
 
-        public static readonly string[] MonoColourspaces =
+        public static readonly Enums.Interpretation[] MonoColourspaces =
         {
             Enums.Interpretation.Bw
         };
 
-        public static readonly string[] SixteenbitColourspaces =
+        public static readonly Enums.Interpretation[] SixteenbitColourspaces =
         {
             Enums.Interpretation.Grey16,
             Enums.Interpretation.Rgb16
         };
 
-        public static readonly string[] CmykColourspaces =
+        public static readonly Enums.Interpretation[] CmykColourspaces =
         {
             Enums.Interpretation.Cmyk
         };
 
-        public static string[] AllColourspaces = ColourColourspaces.Concat(MonoColourspaces)
+        public static Enums.Interpretation[] AllColourspaces = ColourColourspaces.Concat(MonoColourspaces)
             .Concat(CodedColourspaces)
             .Concat(SixteenbitColourspaces)
             .Concat(CmykColourspaces)
             .ToArray();
 
-        public static readonly Dictionary<string, double> MaxValue = new Dictionary<string, double>
+        public static readonly Dictionary<Enums.BandFormat, double> MaxValue = new Dictionary<Enums.BandFormat, double>
         {
             {
                 Enums.BandFormat.Uchar,
@@ -154,7 +154,7 @@ namespace NetVips.Tests
             }
         };
 
-        public static readonly Dictionary<string, int> SizeOfFormat = new Dictionary<string, int>
+        public static readonly Dictionary<Enums.BandFormat, int> SizeOfFormat = new Dictionary<Enums.BandFormat, int>
         {
             {
                 Enums.BandFormat.Uchar,
@@ -198,7 +198,7 @@ namespace NetVips.Tests
             }
         };
 
-        public static readonly string[] Rot45Angles =
+        public static readonly Enums.Angle45[] Rot45Angles =
         {
             Enums.Angle45.D0,
             Enums.Angle45.D45,
@@ -210,7 +210,7 @@ namespace NetVips.Tests
             Enums.Angle45.D315
         };
 
-        public static readonly string[] Rot45AngleBonds =
+        public static readonly Enums.Angle45[] Rot45AngleBonds =
         {
             Enums.Angle45.D0,
             Enums.Angle45.D315,
@@ -222,7 +222,7 @@ namespace NetVips.Tests
             Enums.Angle45.D45
         };
 
-        public static readonly string[] RotAngles =
+        public static readonly Enums.Angle[] RotAngles =
         {
             Enums.Angle.D0,
             Enums.Angle.D90,
@@ -230,7 +230,7 @@ namespace NetVips.Tests
             Enums.Angle.D270
         };
 
-        public static readonly string[] RotAngleBonds =
+        public static readonly Enums.Angle[] RotAngleBonds =
         {
             Enums.Angle.D0,
             Enums.Angle.D270,

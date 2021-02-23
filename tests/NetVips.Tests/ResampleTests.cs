@@ -22,7 +22,7 @@ namespace NetVips.Tests
         /// <returns></returns>
         public Image RunCmplx(Func<Image, Image> func, Image image)
         {
-            string newFormat;
+            Enums.BandFormat newFormat;
             switch (image.Format)
             {
                 case Enums.BandFormat.Float:
@@ -163,7 +163,7 @@ namespace NetVips.Tests
             // try constant images ... should not change the constant
             foreach (var @const in new[] { 0, 1, 2, 254, 255 })
             {
-                im = (Image.Black(10, 10) + @const).Cast("uchar");
+                im = (Image.Black(10, 10) + @const).Cast(Enums.BandFormat.Uchar);
                 foreach (var kernel in new[]
                 {
                     Enums.Kernel.Nearest,
@@ -241,7 +241,7 @@ namespace NetVips.Tests
             Assert.Equal(100, im.Height);
 
             // with @crop, should fit both width and height
-            im = Image.Thumbnail(Helper.JpegFile, 100, height: 300, crop: "centre");
+            im = Image.Thumbnail(Helper.JpegFile, 100, height: 300, crop: Enums.Interesting.Centre);
             Assert.Equal(100, im.Width);
             Assert.Equal(300, im.Height);
 

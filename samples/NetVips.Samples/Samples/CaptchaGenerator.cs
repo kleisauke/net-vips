@@ -53,7 +53,7 @@ namespace NetVips.Samples
 
                 var letter = Image.Text(c.ToString(), dpi: 600);
 
-                var image = letter.Gravity(Enums.Align.Centre, letter.Width + 50, letter.Height + 50);
+                var image = letter.Gravity(Enums.CompassDirection.Centre, letter.Width + 50, letter.Height + 50);
 
                 // random scale and rotate
                 image = image.Similarity(scale: random.NextDouble(0, 0.2) + 0.8, angle: random.Next(0, 40) - 20);

@@ -254,9 +254,9 @@ You can catch it in the usual way.
 
 ## Enums
 
-The libvips enums, such as `VipsBandFormat`, appear in NetVips as strings constants
-like `"uchar"`. They are documented as a set of classes for convenience, see 
-[`Enums.Access`](xref:NetVips.Enums.Access), for example.
+The libvips enums, such as `VipsBandFormat`, appear in NetVips as C# enums
+like `Enums.BandFormat.Uchar`. They are documented for convenience,
+see [`Enums.Access`](xref:NetVips.Enums.Access), for example.
 
 ## Overloads
 
@@ -275,7 +275,7 @@ Some vips operators take an enum to select an action, for example
 like this:
 
 ```csharp
-var resultImage = image.Math("sin");
+var resultImage = image.Math(Enums.OperationMath.Sin);
 ```
 
 This is annoying, so the wrapper expands all these enums into separate members
@@ -321,9 +321,9 @@ Or:
 ```csharp
 var image = Image.Black(1, 500);
 image.SetProgress(true);
-image.SignalConnect(Enums.Signals.PreEval, (Image.EvalDelegate)PreEvalHandler);
-image.SignalConnect(Enums.Signals.Eval, (Image.EvalDelegate)EvalHandler);
-image.SignalConnect(Enums.Signals.PostEval, (Image.EvalDelegate)PostEvalHandler);
+image.SignalConnect(Enums.Signals.PreEval, PreEvalHandler);
+image.SignalConnect(Enums.Signals.Eval, EvalHandler);
+image.SignalConnect(Enums.Signals.PostEval, PostEvalHandler);
 
 var avg = image.Avg();
 ```

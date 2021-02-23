@@ -292,7 +292,7 @@ namespace NetVips.Samples
         /// </summary>
         /// <param name="interpretation">The <see cref="Enums.Interpretation"/></param>
         /// <returns>the image alpha maximum</returns>
-        public static int MaximumImageAlpha(string interpretation)
+        public static int MaximumImageAlpha(Enums.Interpretation interpretation)
         {
             return Is16Bit(interpretation) ? 65535 : 255;
         }
@@ -303,7 +303,7 @@ namespace NetVips.Samples
         /// <param name="interpretation">The <see cref="Enums.Interpretation"/></param>
         /// <returns><see langword="true"/> if the pixel values in this image are 16-bit; 
         /// otherwise, <see langword="false"/></returns>
-        public static bool Is16Bit(string interpretation)
+        public static bool Is16Bit(Enums.Interpretation interpretation)
         {
             return interpretation == Enums.Interpretation.Rgb16 ||
                    interpretation == Enums.Interpretation.Grey16;

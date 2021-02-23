@@ -75,15 +75,15 @@ namespace NetVips.Tests
             NetVips.VipsInterpretationGetType();
             var gtype = NetVips.TypeFromName("VipsInterpretation");
 
-            string actual;
+            Enums.Interpretation actual;
             using (var gv = new GValue())
             {
                 gv.SetType(gtype);
-                gv.Set("xyz");
-                actual = (string)gv.Get();
+                gv.Set(Enums.Interpretation.Xyz);
+                actual = (Enums.Interpretation)gv.Get();
             }
 
-            Assert.Equal("xyz", actual);
+            Assert.Equal(Enums.Interpretation.Xyz, actual);
         }
 
         [Fact]
@@ -94,15 +94,15 @@ namespace NetVips.Tests
             NetVips.VipsOperationFlagsGetType();
             var gtype = NetVips.TypeFromName("VipsOperationFlags");
 
-            uint actual;
+            Enums.OperationFlags actual;
             using (var gv = new GValue())
             {
                 gv.SetType(gtype);
-                gv.Set(12u);
-                actual = (uint)gv.Get();
+                gv.Set(Enums.OperationFlags.DEPRECATED);
+                actual = (Enums.OperationFlags)gv.Get();
             }
 
-            Assert.Equal(12u, actual);
+            Assert.Equal(Enums.OperationFlags.DEPRECATED, actual);
         }
 
         [Fact]

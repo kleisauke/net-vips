@@ -12,7 +12,7 @@ namespace NetVips.Samples
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
 
             // Optionally, convert to greyscale
-            // im = im.Colourspace("b-w");
+            // im = im.Colourspace(Enums.Interpretation.Bw);
 
             // Canny edge detector
             im = im.Canny(1.4, precision: Enums.Precision.Integer);

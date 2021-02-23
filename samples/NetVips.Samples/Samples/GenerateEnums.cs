@@ -2,6 +2,7 @@ namespace NetVips.Samples
 {
     using System;
     using System.Text;
+    using System.Linq;
     using System.IO;
     using System.Security;
     using System.Runtime.InteropServices;
@@ -75,22 +76,18 @@ namespace NetVips.Samples
                 stringBuilder.AppendLine("        /// <summary>")
                     .AppendLine($"        /// {csharpName}")
                     .AppendLine("        /// </summary>")
-                    .AppendLine($"        public static class {csharpName}")
+                    .AppendLine($"        public enum {csharpName}")
                     .AppendLine("        {");
 
                 var enumValues = NetVips.ValuesForEnum(gtype);
                 for (var i = 0; i < enumValues.Count; i++)
                 {
-                    var value = enumValues[i];
-                    var csharpValue = value.Replace('-', '_').ToPascalCase();
+                    var kvp = enumValues.ElementAt(i);
+                    var enumKey = kvp.Key.Replace('-', '_').ToPascalCase();
 
-                    stringBuilder.AppendLine($"            /// <summary>{csharpValue}</summary>")
-                        .AppendLine($"            public const string {csharpValue} = \"{value}\";");
-
-                    if (i != enumValues.Count - 1)
-                    {
-                        stringBuilder.AppendLine();
-                    }
+                    stringBuilder.AppendLine($"            /// <summary>{enumKey}</summary>")
+                        .Append($"            {enumKey} = {kvp.Value}")
+                        .AppendLine((i != enumValues.Count - 1 ? "," : string.Empty) + $" // \"{kvp.Key}\"");
                 }
 
                 stringBuilder.AppendLine("        }").AppendLine();

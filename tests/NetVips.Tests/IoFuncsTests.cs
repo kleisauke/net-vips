@@ -107,10 +107,10 @@ namespace NetVips.Tests
         public void TestNewFromMemory()
         {
             var s = Enumerable.Repeat((byte)0, 200).ToArray();
-            var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
+            var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
             Assert.Equal(20, im.Width);
             Assert.Equal(10, im.Height);
-            Assert.Equal("uchar", im.Format);
+            Assert.Equal(Enums.BandFormat.Uchar, im.Format);
             Assert.Equal(1, im.Bands);
             Assert.Equal(0, im.Avg());
 
@@ -151,7 +151,7 @@ namespace NetVips.Tests
         public void TestWriteToMemory()
         {
             var s = Enumerable.Repeat((byte)0, 200).ToArray();
-            var im = Image.NewFromMemory(s, 20, 10, 1, "uchar");
+            var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
             var t = im.WriteToMemory();
             Assert.True(s.SequenceEqual(t));
         }

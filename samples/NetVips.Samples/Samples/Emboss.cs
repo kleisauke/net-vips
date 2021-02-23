@@ -12,7 +12,7 @@ namespace NetVips.Samples
             var im = Image.NewFromFile(Filename);
 
             // Optionally, Convert the image to greyscale
-            // im = im.Colourspace("b-w");
+            // im = im.Colourspace(Enums.Interpretation.Bw);
 
             // The four primary emboss kernels.
             // Offset the pixel values by 128 to achieve the emboss effect.

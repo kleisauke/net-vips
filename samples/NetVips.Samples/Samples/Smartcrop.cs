@@ -9,7 +9,7 @@ namespace NetVips.Samples
 
         public string Execute(string[] args)
         {
-            var image = Image.Thumbnail(Filename, 300, height: 300, crop: "attention");
+            var image = Image.Thumbnail(Filename, 300, height: 300, crop: Enums.Interesting.Attention);
             image.WriteToFile("smartcrop.jpg");
 
             return "See smartcrop.jpg";

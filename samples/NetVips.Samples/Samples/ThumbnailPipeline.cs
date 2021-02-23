@@ -49,11 +49,11 @@ namespace NetVips.Samples
             var width = 200;
             var height = 0;
 
-            // "both" - for both up and down.
-            // "up" - only upsize.
-            // "down" - only downsize.
-            // "force" - force size, that is, break aspect ratio.
-            const string size = "both";
+            // Enums.Size.Both - for both up and down.
+            // Enums.Size.Up - only upsize.
+            // Enums.Size.Down - only downsize.
+            // Enums.Size.Force - force size, that is, break aspect ratio.
+            const Enums.Size size = Enums.Size.Both;
 
             // Just for example.
             var buffer = File.ReadAllBytes(Filename);
@@ -114,17 +114,17 @@ namespace NetVips.Samples
 
             string importProfile = null;
             string exportProfile = null;
-            string intent = null;
+            Enums.Intent? intent = null;
 
             // Ensure we're using a device-independent color space
             if ((embeddedProfile || isCmyk) && !isLabs)
             {
                 // Embedded profile; fallback in case the profile embedded in the image
                 // is broken. No embedded profile; import using default CMYK profile.
-                importProfile = isCmyk ? Enums.Interpretation.Cmyk : Enums.Interpretation.Srgb;
+                importProfile = isCmyk ? "cmyk" : "srgb";
 
                 // Convert to sRGB using embedded or import profile.
-                exportProfile = Enums.Interpretation.Srgb;
+                exportProfile = "srgb";
 
                 // Use "perceptual" intent to better match imagemagick.
                 intent = Enums.Intent.Perceptual;
@@ -150,7 +150,7 @@ namespace NetVips.Samples
             }
             else if (width > 0) // Fixed width
             {
-                if (size == "force")
+                if (size == Enums.Size.Force)
                 {
                     thumbnailHeight = pageHeight;
                     height = pageHeight;
@@ -168,7 +168,7 @@ namespace NetVips.Samples
             }
             else if (height > 0) // Fixed height
             {
-                if (size == "force")
+                if (size == Enums.Size.Force)
                 {
                     thumbnailWidth = inputWidth;
                     width = inputWidth;

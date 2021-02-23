@@ -150,36 +150,6 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Turn a string or integer into an enum value ready to be passed into libvips.
-        /// </summary>
-        /// <param name="gtype">The GType.</param>
-        /// <param name="value">The string or integer to convert.</param>
-        /// <returns>An enum value ready to be passed into libvips.</returns>
-        public static int ToEnum(IntPtr gtype, object value)
-        {
-            return value is string strValue
-                ? Vips.EnumFromNick("NetVips", gtype, strValue)
-                : Convert.ToInt32(value);
-        }
-
-        /// <summary>
-        /// Turn an int back into an enum string.
-        /// </summary>
-        /// <param name="gtype">The GType.</param>
-        /// <param name="enumValue">The integer to convert.</param>
-        /// <returns>An enum value as string.</returns>
-        public static string FromEnum(IntPtr gtype, int enumValue)
-        {
-            var cstr = Marshal.PtrToStringAnsi(Vips.EnumNick(gtype, enumValue));
-            if (cstr == null)
-            {
-                throw new VipsException("value not in enum");
-            }
-
-            return cstr;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GValue"/> class.
         /// </summary>
         public GValue()
@@ -265,7 +235,7 @@ namespace NetVips
             }
             else if (fundamental == GEnumType)
             {
-                Internal.GValue.SetEnum(ref Struct, ToEnum(gtype, value));
+                Internal.GValue.SetEnum(ref Struct, Convert.ToInt32(value));
             }
             else if (fundamental == GFlagsType)
             {
@@ -442,7 +412,7 @@ namespace NetVips
             }
             else if (fundamental == GEnumType)
             {
-                result = FromEnum(gtype, Internal.GValue.GetEnum(in Struct));
+                result = Internal.GValue.GetEnum(in Struct);
             }
             else if (fundamental == GFlagsType)
             {

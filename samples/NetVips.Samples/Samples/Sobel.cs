@@ -12,7 +12,7 @@ namespace NetVips.Samples
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
 
             // Optionally, convert to greyscale
-            // im = im.Colourspace("b-w");
+            // im = im.Colourspace(Enums.Interpretation.Bw);
 
             // Apply sobel operator
             im = im.Sobel();

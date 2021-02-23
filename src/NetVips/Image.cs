@@ -130,7 +130,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromBuffer(byte[], string, string, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromBuffer(byte[], string, Enums.Access?, bool?, VOption)"/>.
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -143,7 +143,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromBuffer(string, string, string, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromBuffer(string, string, Enums.Access?, bool?, VOption)"/>.
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -154,7 +154,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromBuffer(char[], string, string, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromBuffer(char[], string, Enums.Access?, bool?, VOption)"/>.
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -165,7 +165,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegSource". You can use this to work out what
-        /// options to pass to <see cref="NewFromSource(Source, string, string, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromSource(Source, string, Enums.Access?, bool?, VOption)"/>.
         /// </remarks>
         /// <param name="source">The source to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -177,7 +177,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegSource". You can use this to work out what
-        /// options to pass to <see cref="NewFromStream(Stream, string, string, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromStream(Stream, string, Enums.Access?, bool?, VOption)"/>.
         /// </remarks>
         /// <param name="stream">The stream to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -236,7 +236,7 @@ namespace NetVips
         public static Image NewFromFile(
             string vipsFilename,
             bool? memory = null,
-            string access = null,
+            Enums.Access? access = null,
             bool? fail = null,
             VOption kwargs = null)
         {
@@ -263,7 +263,7 @@ namespace NetVips
                 options.Add(nameof(memory), memory);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -288,7 +288,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="data">The memory object to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
-        /// <param name="access">Hint the expected access pattern for the image. See <see cref="Enums.Access"/>.</param>
+        /// <param name="access">Hint the expected access pattern for the image.</param>
         /// <param name="fail">If set True, the loader will fail with an error on
         /// the first serious error in the file. By default, libvips
         /// will attempt to read everything it can from a damaged image.</param>
@@ -298,7 +298,7 @@ namespace NetVips
         public static Image NewFromBuffer(
             byte[] data,
             string strOptions = "",
-            string access = null,
+            Enums.Access? access = null,
             bool? fail = null,
             VOption kwargs = null)
         {
@@ -314,7 +314,7 @@ namespace NetVips
                 options.Merge(kwargs);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -349,7 +349,7 @@ namespace NetVips
         public static Image NewFromBuffer(
             string data,
             string strOptions = "",
-            string access = null,
+            Enums.Access? access = null,
             bool? fail = null,
             VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
 
@@ -373,7 +373,7 @@ namespace NetVips
         public static Image NewFromBuffer(
             char[] data,
             string strOptions = "",
-            string access = null,
+            Enums.Access? access = null,
             bool? fail = null,
             VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
 
@@ -397,7 +397,7 @@ namespace NetVips
         public static Image NewFromSource(
             Source source,
             string strOptions = "",
-            string access = null,
+            Enums.Access? access = null,
             bool? fail = null,
             VOption kwargs = null)
         {
@@ -409,7 +409,7 @@ namespace NetVips
                 options.Merge(kwargs);
             }
 
-            if (access != null)
+            if (access.HasValue)
             {
                 options.Add(nameof(access), access);
             }
@@ -490,7 +490,7 @@ namespace NetVips
         public static Image NewFromStream(
             Stream stream,
             string strOptions = "",
-            string access = null,
+            Enums.Access? access = null,
             bool? fail = null,
             VOption kwargs = null)
         {
@@ -643,7 +643,7 @@ namespace NetVips
         /// values 1, 2, 3, 4, you can make a one-band, 2x2 uchar image from
         /// it like this:
         /// <code language="lang-csharp">
-        /// var image = Image.NewFromMemory(data, 2, 2, 1, "uchar");
+        /// var image = Image.NewFromMemory(data, 2, 2, 1, Enums.BandFormat.Uchar);
         /// </code>
         /// A reference is kept to the data object, so it will not be
         /// garbage-collected until the returned image is garbage-collected.
@@ -667,13 +667,11 @@ namespace NetVips
             int width,
             int height,
             int bands,
-            string format)
+            Enums.BandFormat format)
         {
-            var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
-
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
             var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), (UIntPtr)data.Length, width, height, bands,
-                (Internal.Enums.VipsBandFormat)formatValue);
+                format);
 
             if (vi == IntPtr.Zero)
             {
@@ -717,11 +715,9 @@ namespace NetVips
             int width,
             int height,
             int bands,
-            string format)
+            Enums.BandFormat format)
         {
-            var formatValue = GValue.ToEnum(GValue.BandFormatType, format);
-            var vi = VipsImage.NewFromMemoryCopy(data, (UIntPtr)size, width, height, bands,
-                (Internal.Enums.VipsBandFormat)formatValue);
+            var vi = VipsImage.NewFromMemoryCopy(data, (UIntPtr)size, width, height, bands, format);
 
             if (vi == IntPtr.Zero)
             {
@@ -778,7 +774,7 @@ namespace NetVips
         public Image NewFromImage(Image value)
         {
             var pixel = (Black(1, 1) + value).Cast(Format);
-            var image = pixel.Embed(0, 0, Width, Height, extend: "copy");
+            var image = pixel.Embed(0, 0, Width, Height, extend: Enums.Extend.Copy);
             image = image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
                 yoffset: Yoffset);
             return image;
@@ -798,7 +794,7 @@ namespace NetVips
         public Image NewFromImage(params double[] doubles)
         {
             var pixel = (Black(1, 1) + doubles).Cast(Format);
-            var image = pixel.Embed(0, 0, Width, Height, extend: "copy");
+            var image = pixel.Embed(0, 0, Width, Height, extend: Enums.Extend.Copy);
             image = image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
                 yoffset: Yoffset);
             return image;
@@ -1572,7 +1568,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: string, premultiplied: bool);
+        /// Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: Enums.Interpretation, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="images">Array of input images.</param>
@@ -1582,8 +1578,8 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space.</param>
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite(Image[] images, int[] modes, int[] x = null, int[] y = null,
-            string compositingSpace = null, bool? premultiplied = null)
+        public Image Composite(Image[] images, Enums.BlendMode[] modes, int[] x = null, int[] y = null,
+            Enums.Interpretation? compositingSpace = null, bool? premultiplied = null)
         {
             var options = new VOption();
 
@@ -1597,7 +1593,7 @@ namespace NetVips
                 options.Add(nameof(y), y);
             }
 
-            if (compositingSpace != null)
+            if (compositingSpace.HasValue)
             {
                 options.Add("compositing_space", compositingSpace);
             }
@@ -1611,39 +1607,11 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Blend an array of images with an array of blend modes.
-        /// </summary>
-        /// <example>
-        /// <code language="lang-csharp">
-        /// Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: string, premultiplied: bool);
-        /// </code>
-        /// </example>
-        /// <param name="images">Array of input images.</param>
-        /// <param name="modes">Array of VipsBlendMode to join with.</param>
-        /// <param name="x">Array of x coordinates to join at.</param>
-        /// <param name="y">Array of y coordinates to join at.</param>
-        /// <param name="compositingSpace">Composite images in this colour space.</param>
-        /// <param name="premultiplied">Images have premultiplied alpha.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite(Image[] images, string[] modes, int[] x = null, int[] y = null,
-            string compositingSpace = null, bool? premultiplied = null)
-        {
-            var intModes = new int[modes.Length];
-            for (var i = 0; i < modes.Length; i++)
-            {
-                ref var value = ref intModes[i];
-                value = GValue.ToEnum(GValue.BlendModeType, modes[i]);
-            }
-
-            return Composite(images, intModes, x, y, compositingSpace, premultiplied);
-        }
-
-        /// <summary>
         /// A synonym for <see cref="Composite2"/>.
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = base.Composite(overlay, mode, x: int, y: int, compositingSpace: string, premultiplied: bool);
+        /// Image @out = base.Composite(overlay, mode, x: int, y: int, compositingSpace: Enums.Interpretation, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="overlay">Overlay image.</param>
@@ -1653,8 +1621,8 @@ namespace NetVips
         /// <param name="compositingSpace">Composite images in this colour space.</param>
         /// <param name="premultiplied">Images have premultiplied alpha.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Composite(Image overlay, string mode, int? x = null, int? y = null,
-            string compositingSpace = null, bool? premultiplied = null) =>
+        public Image Composite(Image overlay, Enums.BlendMode mode, int? x = null, int? y = null,
+            Enums.Interpretation? compositingSpace = null, bool? premultiplied = null) =>
             Composite2(overlay, mode, x, y, compositingSpace, premultiplied);
 
         /// <summary>
@@ -2054,6 +2022,33 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Connects a callback function (<paramref name="callback"/>) to a signal on this image.
+        /// </summary>
+        /// <remarks>
+        /// The callback will be triggered every time this signal is issued on this image.
+        /// </remarks>
+        /// <param name="signal">A signal to be used on this image. See <see cref="Enums.Signals"/>.</param>
+        /// <param name="callback">The callback to connect.</param>
+        /// <param name="data">Data to pass to handler calls.</param>
+        /// <returns>The handler id.</returns>
+        /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
+        public uint SignalConnect(Enums.Signals signal, EvalDelegate callback, IntPtr data = default)
+        {
+            switch (signal)
+            {
+                case Enums.Signals.PreEval:
+                    return SignalConnect("preeval", callback, data);
+                case Enums.Signals.Eval:
+                    return SignalConnect("eval", callback, data);
+                case Enums.Signals.PostEval:
+                    return SignalConnect("posteval", callback, data);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(signal), signal,
+                        $"The value of argument '{nameof(signal)}' ({signal}) is invalid for enum type '{nameof(Enums.Signals)}'.");
+            }
+        }
+
+        /// <summary>
         /// Enable progress reporting on an image.
         /// </summary>
         /// <remarks>
@@ -2125,7 +2120,7 @@ namespace NetVips
                 }
             }
 
-            SignalConnect(Enums.Signals.Eval, (EvalDelegate)EvalCallback);
+            SignalConnect(Enums.Signals.Eval, EvalCallback);
         }
 
         #endregion

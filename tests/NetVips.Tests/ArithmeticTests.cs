@@ -29,7 +29,7 @@ namespace NetVips.Tests
 
         #region helpers
 
-        internal void RunArith(Func<object, object, object> func, string[] formats = null)
+        internal void RunArith(Func<object, object, object> func, Enums.BandFormat[] formats = null)
         {
             if (formats == null)
             {
@@ -48,7 +48,7 @@ namespace NetVips.Tests
             }
         }
 
-        internal void RunArithConst(Func<object, object, object> func, string[] formats = null)
+        internal void RunArithConst(Func<object, object, object> func, Enums.BandFormat[] formats = null)
         {
             if (formats == null)
             {
@@ -82,7 +82,7 @@ namespace NetVips.Tests
             Helper.RunCmp(im, 10, 10, x => Helper.RunFn(func, x));
         }
 
-        internal void RunUnary(IEnumerable<Image> images, Func<object, object> func, string[] formats = null)
+        internal void RunUnary(IEnumerable<Image> images, Func<object, object> func, Enums.BandFormat[] formats = null)
         {
             if (formats == null)
             {
@@ -985,7 +985,7 @@ namespace NetVips.Tests
             Skip.IfNot(Helper.Have("find_trim"), "no find_trim in this vips, skipping test");
 
             var im = Image.Black(50, 60) + 100;
-            var test = im.Embed(10, 20, 200, 300, extend: "white");
+            var test = im.Embed(10, 20, 200, 300, extend: Enums.Extend.White);
 
             foreach (var x in Helper.UnsignedFormats.Concat(Helper.FloatFormats).ToArray())
             {
