@@ -226,6 +226,7 @@ namespace NetVips
                 vop = VipsOperation.Build(op);
                 if (vop == IntPtr.Zero)
                 {
+                    Internal.VipsObject.UnrefOutputs(op);
                     throw new VipsException($"unable to call {operationName}");
                 }
             }
