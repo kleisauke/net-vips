@@ -10,16 +10,16 @@ namespace NetVips.Samples
 
         public const string Filename = "images/lichtenstein.jpg";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             using var input = File.OpenRead(Filename);
-            var thumbnail = Image.ThumbnailStream(input, 300, height: 300);
+            using var thumbnail = Image.ThumbnailStream(input, 300, height: 300);
             Console.WriteLine(thumbnail.ToString());
 
             using var output = File.OpenWrite("thumbnail-stream.jpg");
             thumbnail.WriteToStream(output, ".jpg");
 
-            return "See thumbnail-stream.jpg";
+            Console.WriteLine("See thumbnail-stream.jpg");
         }
     }
 }

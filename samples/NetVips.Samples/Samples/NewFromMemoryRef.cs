@@ -11,16 +11,13 @@ namespace NetVips.Samples
         public string Name => "NewFromMemory reference test";
         public string Category => "Internal";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             Cache.Max = 0;
 
-            Image b;
-
-            using (var a = Image.NewFromMemory(Enumerable.Repeat((byte)255, 200).ToArray(), 20, 10, 1, Enums.BandFormat.Uchar))
-            {
-                b = a / 2;
-            } // g_object_unref
+            using var a = Image.NewFromMemory(Enumerable.Repeat((byte)255, 200).ToArray(),
+                20, 10, 1, Enums.BandFormat.Uchar);
+            using var b = a / 2;
 
             Console.WriteLine($"Reference count b: {b.RefCount}");
 
@@ -34,8 +31,6 @@ namespace NetVips.Samples
             average = b.Avg();
 
             Console.WriteLine($"After GC: {average}");
-
-            return "All done!";
         }
     }
 }

@@ -318,10 +318,9 @@ namespace NetVips
                 for (var i = 0; i < size; i++)
                 {
                     ref var image = ref images[i];
-                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, image.DangerousGetHandle());
 
                     // the gvalue needs a ref on each of the images
-                    image.ObjectRef();
+                    Marshal.WriteIntPtr(ptrArr, i * IntPtr.Size, image.ObjectRef());
 
                     AddMemoryPressure(image.MemoryPressure);
                 }

@@ -223,20 +223,37 @@ namespace NetVips.Extensions
                     palette[i * 3 + 2] = src.Palette.Entries[i].B;
                 }
 
-                var lut = Image.NewFromMemory(palette, src.Palette.Entries.Length, 1, 3, Enums.BandFormat.Uchar);
-                return dst.Maplut(lut);
+                using var lut = Image.NewFromMemory(palette, src.Palette.Entries.Length, 1, 3, Enums.BandFormat.Uchar);
+                using (dst)
+                {
+                    return dst.Maplut(lut);
+                }
             }
 
             switch (bands)
             {
                 case 3:
                     // Switch from BGR to RGB
-                    var bgr = dst.Bandsplit();
-                    return bgr[2].Bandjoin(bgr[1], bgr[0]);
+                    using (dst)
+                    {
+                        var bgr = dst.Bandsplit();
+                        using var b = bgr[0];
+                        using var g = bgr[1];
+                        using var r = bgr[2];
+                        return r.Bandjoin(g, b);
+                    }
                 case 4:
                     // Switch from BGRA to RGBA
-                    var bgra = dst.Bandsplit();
-                    return bgra[2].Bandjoin(bgra[1], bgra[0], bgra[3]);
+                    using (dst)
+                    {
+                        var bgra = dst.Bandsplit();
+                        using var b = bgra[0];
+                        using var g = bgra[1];
+                        using var r = bgra[2];
+                        using var a = bgra[3];
+
+                        return r.Bandjoin(g, b, a);
+                    }
                 default:
                     return dst;
             }
@@ -262,51 +279,89 @@ namespace NetVips.Extensions
             if (src == null)
                 throw new ArgumentNullException(nameof(src));
 
-            if (src.Interpretation == Enums.Interpretation.Bw)
+            // Ensure image is converted to sRGB
+            if (src.Bands >= 3)
             {
-                // Convert to sRGB, since Format16bppGrayScale appears to be unsupported by GDI+.
-                // See: https://stackoverflow.com/a/19706842/10952119
                 src = src.Colourspace(Enums.Interpretation.Srgb);
-            }
-            else if (src.Bands == 2)
-            {
-                // Add an additional band
-                src = src.Bandjoin(255);
-            }
-
-            if (src.Bands == 1 || src.Format != Enums.BandFormat.Ushort)
-            {
-                // Ensure image is casted to uint8 (unsigned char)
-                src = src.Cast(Enums.BandFormat.Uchar);
             }
 
             PixelFormat pf;
             switch (src.Bands)
             {
                 case 1:
+                    // when src.Interpretation == Enums.Interpretation.Multiband ||
+                    //      src.Interpretation == Enums.Interpretation.Bw ||
+                    //      src.Interpretation == Enums.Interpretation.Matrix
                     pf = PixelFormat.Format8bppIndexed;
+
+                    // Ensure image is casted to uint8 (unsigned char)
+                    src = src.Cast(Enums.BandFormat.Uchar);
+
                     break;
+                case 2 when src.Interpretation == Enums.Interpretation.Grey16:
+                    // Convert to sRGB, since Format16bppGrayScale appears to be unsupported by GDI+.
+                    // See: https://stackoverflow.com/a/19706842/10952119
+                    src = src.Colourspace(Enums.Interpretation.Srgb);
+
+                    goto case 4;
+                case 2:
+                    // when src.Interpretation == Enums.Interpretation.Multiband ||
+                    //      src.Interpretation == Enums.Interpretation.Bw
+                    // Add an additional band
+                    src = src.Bandjoin(255);
+
+                    goto case 3;
                 case 3:
                     pf = src.Format == Enums.BandFormat.Ushort
                         ? PixelFormat.Format48bppRgb
                         : PixelFormat.Format24bppRgb;
 
+                {
                     // Switch from RGB to BGR
                     var rgb = src.Bandsplit();
-                    src = rgb[2].Bandjoin(rgb[1], rgb[0]);
+                    using var r = rgb[0];
+                    using var g = rgb[1];
+                    using var b = rgb[2];
+
+                    using (src)
+                    {
+                        src = b.Bandjoin(g, r);
+                    }
+                }
+
                     break;
                 case 4:
                     pf = src.Format == Enums.BandFormat.Ushort
                         ? PixelFormat.Format64bppArgb
                         : PixelFormat.Format32bppArgb;
 
+                {
                     // Switch from RGBA to BGRA
                     var rgba = src.Bandsplit();
-                    src = rgba[2].Bandjoin(rgba[1], rgba[0], rgba[3]);
+                    using var r = rgba[0];
+                    using var g = rgba[1];
+                    using var b = rgba[2];
+                    using var a = rgba[3];
+
+                    using (src)
+                    {
+                        src = b.Bandjoin(g, r, a);
+                    }
+                }
+
                     break;
                 default:
                     throw new NotImplementedException(
                         $"Number of bands must be 1 or in the in the range of 3 to 4. Got: {src.Bands}");
+            }
+
+            if (src.Format != Enums.BandFormat.Uchar || src.Format != Enums.BandFormat.Ushort)
+            {
+                // Pixel formats other than uchar and ushort needs to be casted to uint8 (unsigned char)
+                using (src)
+                {
+                    src = src.Cast(Enums.BandFormat.Uchar);
+                }
             }
 
             var dst = new Bitmap(src.Width, src.Height, pf);
@@ -325,14 +380,21 @@ namespace NetVips.Extensions
 
             var w = src.Width;
             var h = src.Height;
+            var bands = src.Bands;
             var rect = new Rectangle(0, 0, w, h);
             BitmapData bd = null;
+            var memory = IntPtr.Zero;
 
             try
             {
                 bd = dst.LockBits(rect, ImageLockMode.WriteOnly, pf);
                 var dstSize = (ulong)(bd.Stride * h);
-                var memory = src.WriteToMemory(out var srcSize);
+                ulong srcSize;
+
+                using (src)
+                {
+                    memory = src.WriteToMemory(out srcSize);
+                }
 
                 // bd.Stride is aligned to a multiple of 4
                 if (dstSize == srcSize)
@@ -344,7 +406,7 @@ namespace NetVips.Extensions
                 }
                 else
                 {
-                    var offset = w * src.Bands;
+                    var offset = w * bands;
 
                     // Copy the bytes from src to dst for each scanline
                     for (var y = 0; y < h; y++)
@@ -358,13 +420,13 @@ namespace NetVips.Extensions
                         }
                     }
                 }
-
-                NetVips.Free(memory);
             }
             finally
             {
                 if (bd != null)
                     dst.UnlockBits(bd);
+                if (memory != IntPtr.Zero)
+                    NetVips.Free(memory);
             }
 
             return dst;

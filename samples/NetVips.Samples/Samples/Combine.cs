@@ -1,5 +1,7 @@
 namespace NetVips.Samples
 {
+    using System;
+
     /// <summary>
     /// From: https://github.com/libvips/lua-vips/blob/master/example/combine.lua
     /// </summary>
@@ -14,30 +16,29 @@ namespace NetVips.Samples
         public const int Left = 100;
         public const int Top = 100;
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
-            var main = Image.NewFromFile(MainFilename, access: Enums.Access.Sequential);
-            var watermark = Image.NewFromFile(WatermarkFilename, access: Enums.Access.Sequential);
+            using var main = Image.NewFromFile(MainFilename, access: Enums.Access.Sequential);
+            using var watermark = Image.NewFromFile(WatermarkFilename, access: Enums.Access.Sequential);
 
             var width = watermark.Width;
             var height = watermark.Height;
 
             // extract related area from main image
-            var baseImage = main.Crop(Left, Top, width, height);
+            using var baseImage = main.Crop(Left, Top, width, height);
 
             // composite the two areas using the PDF "over" mode
-            var composite = baseImage.Composite(watermark, Enums.BlendMode.Over);
+            using var composite = baseImage.Composite(watermark, Enums.BlendMode.Over);
 
-            // the result will have an alpha, and our base image does not..we must flatten
+            // the result will have an alpha, and our base image does not .. we must flatten
             // out the alpha before we can insert it back into a plain RGB JPG image
-            composite = composite.Flatten();
+            using var rgb = composite.Flatten();
 
             // insert composite back in to main image on related area
-            var combined = main.Insert(composite, Left, Top);
-
+            using var combined = main.Insert(rgb, Left, Top);
             combined.WriteToFile("combine.jpg");
 
-            return "See combine.jpg";
+            Console.WriteLine("See combine.jpg");
         }
     }
 }

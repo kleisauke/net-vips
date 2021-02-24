@@ -18,25 +18,25 @@ and saves it back to disc again:
 ```csharp
 using NetVips;
 
-var image = Image.NewFromFile("some-image.jpg", access: Enums.Access.Sequential);
+using var image = Image.NewFromFile("some-image.jpg", access: Enums.Access.Sequential);
 
-image *= new[] {1, 2, 1};
+using var multiply = image * new[] { 1, 2, 1 };
 
-var mask = Image.NewFromArray(new[,]
+using var mask = Image.NewFromArray(new[,]
 {
     {-1, -1, -1},
     {-1, 16, -1},
     {-1, -1, -1}
 }, scale: 8);
-image = image.Conv(mask, precision: Enums.Precision.Integer);
+using var convolve = multiply.Conv(mask, precision: Enums.Precision.Integer);
 
-image.WriteToFile("x.jpg");
+convolve.WriteToFile("x.jpg");
 ```
 
 Reading this example line by line, we have:
 
 ```csharp
-var image = Image.NewFromFile("some-image.jpg", access: Enums.Access.Sequential);
+using var image = Image.NewFromFile("some-image.jpg", access: Enums.Access.Sequential);
 ```
 
 [`NewFromFile`](xref:NetVips.Image.NewFromFile*) can load any image file supported by libvips. 
@@ -61,7 +61,7 @@ see [Custom sources and targets](introduction.md#custom-sources-and-targets).
 The next line:
 
 ```csharp
-image *= new[] {1, 2, 1};
+using var multiply = image * new[] { 1, 2, 1 };
 ```
 
 Multiplies the image by an array constant using one array element for each
@@ -74,13 +74,13 @@ entire images just as you would with single numbers.
 Next we have:
 
 ```csharp
-var mask = Image.NewFromArray(new[,]
+using var mask = Image.NewFromArray(new[,]
 {
     {-1, -1, -1},
     {-1, 16, -1},
     {-1, -1, -1}
 }, scale: 8);
-image = image.Conv(mask, precision: Enums.Precision.Integer);
+using var convolve = multiply.Conv(mask, precision: Enums.Precision.Integer);
 ```
 
 [`NewFromArray`](xref:NetVips.Image.NewFromArray*) creates an image from an array constant. The
@@ -94,7 +94,7 @@ and is much faster.
 Finally:
 
 ```csharp
-image.WriteToFile("x.jpg");
+convolve.WriteToFile("x.jpg");
 ```
 
 [`WriteToFile`](xref:NetVips.Image.WriteToFile*) writes an image back to the filesystem. It can
@@ -113,7 +113,7 @@ that libvips keeps for images with [`Get`](xref:NetVips.Image.Get*) and
 friends. For example:
 
 ```csharp
-var image = Image.NewFromFile("some-image.jpg");
+using var image = Image.NewFromFile("some-image.jpg");
 var iptcString = image.Get("iptc-data");
 var exifDateString = image.Get("exif-ifd0-DateTime");
 ```
@@ -127,7 +127,7 @@ the only reference to it. You can make a private copy of an image with
 [`Copy`](xref:NetVips.Image.Copy*), for example:
 
 ```csharp
-var newImage = image.Copy(xres: 12, yres: 13);
+using var newImage = image.Copy(xres: 12, yres: 13);
 ```
 
 Now `newImage` is a private clone of `image` with `xres` and `yres` changed.
@@ -136,7 +136,7 @@ Set image metadata with [`Set`](xref:NetVips.Image.Set*). Use [`Copy`](xref:NetV
 a private copy of the image first, for example:
 
 ```csharp
-var newImage = image.Copy();
+using var newImage = image.Copy();
 newImage.Set("icc-profile-data", newProfile);
 ```
 
@@ -183,8 +183,17 @@ Because operations are member functions and return the result image, you can
 chain them. For example, you can write:
 
 ```csharp
-var resultImage = image.Real().Cos();
+using var resultImage = image.Real().Cos();
 ```
+
+> [!WARNING]
+> Chaining does not automatically dispose the temporary images.
+> To ensure that these images are disposed early, you should use:
+> ```csharp
+> using var real = image.Real();
+> using var resultImage = real.Cos();
+> ```
+> Otherwise, these images will not be disposed until the next GC cycle runs.
 
 to calculate the cosine of the real part of a complex image. There is
 also [a full set of arithmetic operator overloads](introduction.md#overloads).
@@ -195,7 +204,7 @@ example, [`Ifthenelse`](xref:NetVips.Image.Ifthenelse*) uses a condition image t
 pixels between a then and an else image:
 
 ```csharp
-var resultImage = conditionImage.Ifthenelse(thenImage, elseImage);
+using var resultImage = conditionImage.Ifthenelse(thenImage, elseImage);
 ```
 
 You can use a constant instead of either the then or the else parts and it
@@ -203,7 +212,7 @@ will be expanded to an image for you. If you use a constant for both then and
 else, it will be expanded to match the condition image. For example:
 
 ```csharp
-var resultImage = conditionImage.Ifthenelse(new[] {0, 255, 0}, new[] {255, 0, 0});
+using var resultImage = conditionImage.Ifthenelse(new[] { 0, 255, 0 }, new[] { 255, 0, 0 });
 ```
 
 Will make an image where true pixels are green and false pixels are red.
@@ -212,16 +221,16 @@ This is useful for [`Bandjoin`](xref:NetVips.Image.Bandjoin*), the thing to join
 images up bandwise. You can write:
 
 ```csharp
-var rgba = rgb.Bandjoin(255);
+using var rgba = rgb.Bandjoin(255);
 ```
 
 to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 course you can also write:
 
 ```csharp
-var resultImage = image1.Bandjoin(image2);
-resultImage = image1.Bandjoin(image2, image3);
-resultImage = image1.Bandjoin(image2, 255);
+using var bandjoin = image1.Bandjoin(image2);
+using var bandjoin2 = image1.Bandjoin(image2, image3);
+using var bandjoin3 = image1.Bandjoin(image2, 255);
 ```
 
 and so on.
@@ -265,8 +274,19 @@ overloads on image. You can mix images, constants and lists of constants
 freely. For example, you can write:
 
 ```csharp
-var resultImage = ((image * new[] {1, 2, 3}).Abs() < 128) | 4;
+using var resultImage = ((image * new[] { 1, 2, 3 }).Abs() < 128) | 4;
 ```
+
+> [!WARNING]
+> Chaining does not automatically dispose the temporary images.
+> To ensure that these images are disposed early, you should use:
+> ```csharp
+> using var multiply = image * new[] { 1, 2, 3 };
+> using var absolute = multiply.Abs();
+> using var threshold = absolute < 128;
+> using var resultImage = threshold | 4;
+> ```
+> Otherwise, these images will not be disposed until the next GC cycle runs.
 
 ## Expansions
 
@@ -275,14 +295,14 @@ Some vips operators take an enum to select an action, for example
 like this:
 
 ```csharp
-var resultImage = image.Math(Enums.OperationMath.Sin);
+using var resultImage = image.Math(Enums.OperationMath.Sin);
 ```
 
 This is annoying, so the wrapper expands all these enums into separate members
 named after the enum value. So you can also write:
 
 ```csharp
-var resultImage = image.Sin();
+using var resultImage = image.Sin();
 ```
 
 ## Convenience functions
@@ -301,7 +321,7 @@ computation.
 For example:
 
 ```csharp
-var image = Image.Black(1, 500);
+using var image = Image.Black(1, 500);
 
 var progress = new Progress<int>(percent =>
 {
@@ -319,7 +339,7 @@ var avg = image.Avg();
 
 Or:
 ```csharp
-var image = Image.Black(1, 500);
+using var image = Image.Black(1, 500);
 image.SetProgress(true);
 image.SignalConnect(Enums.Signals.PreEval, PreEvalHandler);
 image.SignalConnect(Enums.Signals.Eval, EvalHandler);
@@ -364,9 +384,9 @@ You can load and save images to and from [`Source`](xref:NetVips.Source) and
 For example:
 
 ```csharp
-var source = Source.NewFromFile("example.jpg");
-var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
-var target = Target.NewToFile("example.png");
+using var source = Source.NewFromFile("example.jpg");
+using var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+using var target = Target.NewToFile("example.png");
 image.WriteToTarget(target, ".png");
 ```
 
@@ -377,15 +397,15 @@ You can define [`SourceCustom`](xref:NetVips.SourceCustom) and [`TargetCustom`](
 For example:
 
 ```csharp
-var input = File.OpenRead("example.jpg");
+using var input = File.OpenRead("example.jpg");
 
-var source = new SourceCustom();
+using var source = new SourceCustom();
 source.OnRead += (buffer, length) => input.Read(buffer, 0, length);
 source.OnSeek += (offset, origin) => input.Seek(offset, origin);
 
-var output = File.OpenWrite("example.png");
+using var output = File.OpenWrite("example.png");
 
-var target = new TargetCustom();
+using var target = new TargetCustom();
 target.OnWrite += (buffer, length) =>
 {
     output.Write(buffer, 0, length);
@@ -393,20 +413,18 @@ target.OnWrite += (buffer, length) =>
 };
 target.OnFinish += () => output.Close();
 
-var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+using var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
 image.WriteToTarget(target, ".png");
 ```
 
 The wrapper also defines a few extra useful stream functions. For example, the above can be written as:
 
 ```csharp
-using (var input = File.OpenRead("example.jpg"))
-{
-    var image = Image.NewFromStream(input, access: Enums.Access.Sequential);
+using var input = File.OpenRead("example.jpg")
+using var image = Image.NewFromStream(input, access: Enums.Access.Sequential);
 
-    using var output = File.OpenWrite("example.png");
-    image.WriteToStream(output, ".png");
-}
+using var output = File.OpenWrite("example.png");
+image.WriteToStream(output, ".png");
 ```
 
 ## Automatic documentation

@@ -10,23 +10,21 @@ namespace NetVips.Samples
         public const int TileSize = 50;
         public const string Filename = "images/sample2.v";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             // Build test image
-            var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
-            im = im.Replicate(TileSize, TileSize);
+            using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+            using var test = im.Replicate(TileSize, TileSize);
 
             // Enable progress reporting
-            im.SetProgress(true);
+            test.SetProgress(true);
 
             // Connect signals
-            im.SignalConnect(Enums.Signals.PreEval, PreEvalHandler);
-            im.SignalConnect(Enums.Signals.Eval, EvalHandler);
-            im.SignalConnect(Enums.Signals.PostEval, PostEvalHandler);
+            test.SignalConnect(Enums.Signals.PreEval, PreEvalHandler);
+            test.SignalConnect(Enums.Signals.Eval, EvalHandler);
+            test.SignalConnect(Enums.Signals.PostEval, PostEvalHandler);
 
-            var avg = im.Avg();
-
-            return "Done!";
+            var avg = test.Avg();
         }
 
         private void ProgressPrint(Enums.Signals signal, VipsProgress progress)

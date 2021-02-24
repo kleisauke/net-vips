@@ -124,7 +124,7 @@ namespace NetVips.Samples
         private string GenerateFunction(string operationName, string indent = "        ",
             IReadOnlyList<Introspect.Argument> outParameters = null)
         {
-            var op = Operation.NewFromName(operationName);
+            using var op = Operation.NewFromName(operationName);
             if ((op.GetFlags() & Enums.OperationFlags.DEPRECATED) != 0)
             {
                 throw new Exception($"No such operator. Operator \"{operationName}\" is deprecated");
@@ -256,7 +256,7 @@ namespace NetVips.Samples
             {
                 var arg = requiredOutput.First();
                 result.Append(
-                    $"{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
+                    $"{(arg.Type == GValue.ImageType ? "using " : string.Empty)}{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
             }
             else if (requiredOutput.Length > 1)
             {
@@ -544,7 +544,7 @@ namespace NetVips.Samples
                 {
                     var arg = requiredOutput.First();
                     result.Append(
-                        $"{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
+                        $"{(arg.Type == GValue.ImageType ? "using " : string.Empty)}{GTypeToCSharp(arg.Name, arg.Type)} {SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()} = ");
                 }
                 else if (requiredOutput.Length > 1)
                 {
@@ -664,9 +664,9 @@ namespace NetVips.Samples
                     .AppendLine($"{indent}{{")
                     .AppendLine(firstArgType == GValue.SourceType
                         ? $"{indent}    var source = SourceStream.NewFromStream(stream);"
-                        : $"{indent}    using (var target = TargetStream.NewFromStream(stream))")
+                        : $"{indent}    using var target = TargetStream.NewFromStream(stream);")
                     .Append($"{indent}    ")
-                    .Append(firstArgType == GValue.SourceType ? "var image = " : $"{{\n{indent}        ")
+                    .Append(firstArgType == GValue.SourceType ? "var image = " : string.Empty)
                     .Append($"{oldOperationName}(")
                     .Append(firstArgType == GValue.SourceType ? "source" : "target")
                     .Append(", ")
@@ -708,10 +708,6 @@ namespace NetVips.Samples
                         .AppendLine($"{indent}    image.OnUnref += () => source.Dispose();")
                         .AppendLine()
                         .AppendLine($"{indent}    return image;");
-                }
-                else
-                {
-                    result.AppendLine($"{indent}    }}");
                 }
 
                 result
@@ -817,11 +813,11 @@ namespace NetVips.Samples
             return stringBuilder.ToString();
         }
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             File.WriteAllText("Image.Generated.cs", Generate());
 
-            return "See Image.Generated.cs";
+            Console.WriteLine("See Image.Generated.cs");
         }
     }
 }

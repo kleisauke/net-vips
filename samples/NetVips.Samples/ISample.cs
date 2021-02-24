@@ -6,6 +6,6 @@ namespace NetVips
 
         string Category { get; }
 
-        string Execute(string[] args);
+        void Execute(string[] args);
     }
 }

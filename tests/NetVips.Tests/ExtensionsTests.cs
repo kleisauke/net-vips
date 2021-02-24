@@ -41,7 +41,7 @@ namespace NetVips.Tests
             Skip.If(InVirtualEnv || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows),
                 "running in virtual environment or not on Windows, skipping test");
 
-            var black = (Image.Black(1, 1) + new[] { 0, 0 }).Cast(Enums.BandFormat.Uchar);
+            var black = Image.Black(1, 1, bands: 2).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + new[] { 255, 255 }).Cast(Enums.BandFormat.Uchar);
             var grey = (Image.Black(1, 1) + new[] { 128, 255 }).Cast(Enums.BandFormat.Uchar);
 
@@ -83,31 +83,26 @@ namespace NetVips.Tests
             if (actual.Width != 1 || actual.Height != 1)
                 throw new Exception("1x1 image only");
 
-            var length = expected.Length;
-
             // An additional band is added for greyscale images
-            if (length == 2)
+            if (expected.Length == 2)
             {
-                length++;
+                expected = new byte[] { expected[0], expected[1], 255 };
             }
 
-            var pixels = new byte[length];
+            var pixels = new byte[expected.Length];
             var bitmapData = actual.LockBits(new Rectangle(0, 0, 1, 1), ImageLockMode.ReadOnly, actual.PixelFormat);
-            Marshal.Copy(bitmapData.Scan0, pixels, 0, length);
+            Marshal.Copy(bitmapData.Scan0, pixels, 0, expected.Length);
             actual.UnlockBits(bitmapData);
 
             // Switch from BGR(A) to RGB(A)
-            if (length > 2)
+            if (expected.Length > 2)
             {
                 var t = pixels[0];
                 pixels[0] = pixels[2];
                 pixels[2] = t;
             }
 
-            for (var i = 0; i < expected.Length; i++)
-            {
-                Assert.Equal(expected[i], pixels[i]);
-            }
+            Assert.Equal(expected, pixels);
         }
     }
 }

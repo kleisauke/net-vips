@@ -43,7 +43,7 @@ namespace NetVips.Samples
             try
             {
                 // The fail option makes NetVips throw an exception on a file format error
-                var image = Image.NewFromBuffer(buffer, fail: true, access: Enums.Access.Sequential);
+                using var image = Image.NewFromBuffer(buffer, fail: true, access: Enums.Access.Sequential);
 
                 // Calculate the average pixel value. That way you are guaranteed to read every pixel
                 // and the operation is cheap.
@@ -63,7 +63,7 @@ namespace NetVips.Samples
             }
         }
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             Console.WriteLine("FindLoadBuffer function (non-truncated buffer)");
             Console.WriteLine(GetExtension(File.ReadAllBytes("images/lichtenstein.jpg")));
@@ -76,8 +76,6 @@ namespace NetVips.Samples
 
             Console.WriteLine("vips-loader function (truncated buffer)");
             Console.WriteLine(GetExtensionNonTruncated(Encoding.UTF8.GetBytes("GIF89a")));
-
-            return "All done!";
         }
     }
 }

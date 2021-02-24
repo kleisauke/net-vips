@@ -49,10 +49,7 @@ namespace NetVips
         /// <returns>The id of the handler.</returns>
         public static uint SetLogHandler(string logDomain, Enums.LogLevelFlags flags, LogDelegate logFunc)
         {
-            if (_nativeHandler == null)
-            {
-                _nativeHandler = NativeCallback;
-            }
+            _nativeHandler ??= NativeCallback;
 
             var gch = GCHandle.Alloc(logFunc);
             var result = GLib.GLogSetHandler(logDomain, flags, _nativeHandler, (IntPtr)gch);

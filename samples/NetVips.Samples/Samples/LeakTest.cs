@@ -45,7 +45,7 @@ namespace NetVips.Samples
         /// </summary>
         /// <param name="args">Command-line arguments.</param>
         /// <returns>Result.</returns>
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             NetVips.Leak = true;
 
@@ -60,8 +60,6 @@ namespace NetVips.Samples
                 // uncomment this line together with the `NObjects` variable in GObject
                 // Console.WriteLine($"{GObject.NObjects} vips objects known to net-vips");
             }
-
-            return "All done!";
         }
     }
 }

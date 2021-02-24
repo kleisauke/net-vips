@@ -1,5 +1,7 @@
 namespace NetVips.Samples
 {
+    using System;
+
     public class Sobel : ISample
     {
         public string Name => "Sobel";
@@ -7,19 +9,18 @@ namespace NetVips.Samples
 
         public const string Filename = "images/lichtenstein.jpg";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
-            var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+            using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
 
             // Optionally, convert to greyscale
-            // im = im.Colourspace(Enums.Interpretation.Bw);
+            //using var mono = im.Colourspace(Enums.Interpretation.Bw);
 
             // Apply sobel operator
-            im = im.Sobel();
+            using var sobel = /*mono*/im.Sobel();
+            sobel.WriteToFile("sobel.jpg");
 
-            im.WriteToFile("sobel.jpg");
-
-            return "See sobel.jpg";
+            Console.WriteLine("See sobel.jpg");
         }
     }
 }

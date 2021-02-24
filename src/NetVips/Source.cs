@@ -28,7 +28,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new source that is attached to the descriptor. For example:
         /// <code language="lang-csharp">
-        /// var source = Source.NewFromDescriptor(0);
+        /// using var source = Source.NewFromDescriptor(0);
         /// </code>
         /// Makes a descriptor attached to stdin.
         ///
@@ -56,7 +56,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new source that is attached to the named file. For example:
         /// <code language="lang-csharp">
-        /// var source = Source.NewFromFile("myfile.jpg");
+        /// using var source = Source.NewFromFile("myfile.jpg");
         /// </code>
         /// You can pass this source to (for example) <see cref="Image.NewFromSource"/>.
         /// </remarks>
@@ -83,7 +83,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new source that is attached to the memory object. For example:
         /// <code language="lang-csharp">
-        /// var source = Source.NewFromMemory(data);
+        /// using var source = Source.NewFromMemory(data);
         /// </code>
         /// You can pass this source to (for example) <see cref="Image.NewFromSource"/>.
         /// </remarks>
@@ -116,7 +116,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new source that is attached to the memory object. For example:
         /// <code language="lang-csharp">
-        /// var source = Source.NewFromMemory(data);
+        /// using var source = Source.NewFromMemory(data);
         /// </code>
         /// You can pass this source to (for example) <see cref="Image.NewFromSource"/>.
         /// </remarks>
@@ -131,7 +131,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new source that is attached to the memory object. For example:
         /// <code language="lang-csharp">
-        /// var source = Source.NewFromMemory(data);
+        /// using var source = Source.NewFromMemory(data);
         /// </code>
         /// You can pass this source to (for example) <see cref="Image.NewFromSource"/>.
         /// </remarks>

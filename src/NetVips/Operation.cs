@@ -119,7 +119,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// <code language="lang-csharp">
-        /// var blackImage = Operation.Call("black", 10, 10);
+        /// using Image blackImage = Operation.Call("black", 10, 10) as Image;
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -135,7 +135,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// <code language="lang-csharp">
-        /// var blackImage = Operation.Call("black", 10, 10);
+        /// using Image blackImage = Operation.Call("black", 10, 10) as Image;
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>
@@ -152,7 +152,7 @@ namespace NetVips
         /// <remarks>
         /// Use this method to call any libvips operation. For example:
         /// <code language="lang-csharp">
-        /// var blackImage = Operation.Call("black", 10, 10);
+        /// using Image blackImage = Operation.Call("black", 10, 10) as Image;
         /// </code>
         /// See the Introduction for notes on how this works.
         /// </remarks>

@@ -20,12 +20,12 @@ namespace NetVips.Samples
         // -1 to test https://github.com/kleisauke/net-vips/issues/101
         public const int BufferSize = 4096 - 1;
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             using var web = new WebClient();
             using var stream = web.OpenRead(Uri);
 
-            var source = new SourceCustom();
+            using var source = new SourceCustom();
             source.OnRead += (buffer, length) =>
             {
                 Console.WriteLine($"-> {length} bytes");
@@ -34,14 +34,14 @@ namespace NetVips.Samples
                 return bytesRead;
             };
 
-            // var image = Image.NewFromStream(stream, access: Enums.Access.Sequential);
-            var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+            //using var image = Image.NewFromStream(stream, access: Enums.Access.Sequential);
+            using var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
             Console.WriteLine(image.ToString());
 
             using var output = File.OpenWrite("stream-network.jpg");
             image.WriteToStream(output, ".jpg");
 
-            return "See stream-network.jpg";
+            Console.WriteLine("See stream-network.jpg");
         }
     }
 }

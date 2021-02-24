@@ -31,10 +31,7 @@ namespace NetVips.Tests
 
         internal void RunArith(Func<object, object, object> func, Enums.BandFormat[] formats = null)
         {
-            if (formats == null)
-            {
-                formats = Helper.AllFormats;
-            }
+            formats ??= Helper.AllFormats;
 
             foreach (var x in _allImages)
             {
@@ -50,10 +47,7 @@ namespace NetVips.Tests
 
         internal void RunArithConst(Func<object, object, object> func, Enums.BandFormat[] formats = null)
         {
-            if (formats == null)
-            {
-                formats = Helper.AllFormats;
-            }
+            formats ??= Helper.AllFormats;
 
             foreach (var x in _allImages)
             {
@@ -84,10 +78,7 @@ namespace NetVips.Tests
 
         internal void RunUnary(IEnumerable<Image> images, Func<object, object> func, Enums.BandFormat[] formats = null)
         {
-            if (formats == null)
-            {
-                formats = Helper.AllFormats;
-            }
+            formats ??= Helper.AllFormats;
 
             foreach (var x in images)
             {

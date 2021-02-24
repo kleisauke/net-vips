@@ -77,64 +77,62 @@ namespace NetVips
         private Introspect(string operationName)
         {
             // logger.Debug($"Introspect = {operationName}");
-            using (var op = Operation.NewFromName(operationName))
+            using var op = Operation.NewFromName(operationName);
+            var arguments = GetArgs(op);
+
+            foreach (var entry in arguments)
             {
-                var arguments = GetArgs(op);
+                var name = entry.Key;
+                var flag = entry.Value;
+                var gtype = op.GetTypeOf(name);
 
-                foreach (var entry in arguments)
+                var details = new Argument
                 {
-                    var name = entry.Key;
-                    var flag = entry.Value;
-                    var gtype = op.GetTypeOf(name);
+                    Name = name,
+                    Flags = flag,
+                    Type = gtype
+                };
 
-                    var details = new Argument
+                if ((flag & Enums.ArgumentFlags.INPUT) != 0)
+                {
+                    if ((flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
+                        (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
                     {
-                        Name = name,
-                        Flags = flag,
-                        Type = gtype
-                    };
-
-                    if ((flag & Enums.ArgumentFlags.INPUT) != 0)
-                    {
-                        if ((flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
-                            (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
+                        // the first required input image arg will be self
+                        if (!MemberX.HasValue && gtype == GValue.ImageType)
                         {
-                            // the first required input image arg will be self
-                            if (!MemberX.HasValue && gtype == GValue.ImageType)
-                            {
-                                MemberX = details;
-                            }
-                            else
-                            {
-                                RequiredInput.Add(details);
-                            }
+                            MemberX = details;
                         }
                         else
                         {
-                            // we allow deprecated optional args
-                            OptionalInput[name] = details;
-                        }
-
-                        // modified input arguments count as output as well
-                        if ((flag & Enums.ArgumentFlags.MODIFY) != 0 &&
-                            (flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
-                            (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
-                        {
-                            RequiredOutput.Add(details);
+                            RequiredInput.Add(details);
                         }
                     }
-                    else if ((flag & Enums.ArgumentFlags.OUTPUT) != 0)
+                    else
                     {
-                        if ((flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
-                            (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
-                        {
-                            RequiredOutput.Add(details);
-                        }
-                        else
-                        {
-                            // again, allow deprecated optional args
-                            OptionalOutput[name] = details;
-                        }
+                        // we allow deprecated optional args
+                        OptionalInput[name] = details;
+                    }
+
+                    // modified input arguments count as output as well
+                    if ((flag & Enums.ArgumentFlags.MODIFY) != 0 &&
+                        (flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
+                        (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
+                    {
+                        RequiredOutput.Add(details);
+                    }
+                }
+                else if ((flag & Enums.ArgumentFlags.OUTPUT) != 0)
+                {
+                    if ((flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
+                        (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
+                    {
+                        RequiredOutput.Add(details);
+                    }
+                    else
+                    {
+                        // again, allow deprecated optional args
+                        OptionalOutput[name] = details;
                     }
                 }
             }

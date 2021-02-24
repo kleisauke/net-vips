@@ -33,9 +33,9 @@ namespace NetVips.Samples
 
         public const bool Crop = true;
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
-            var image = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+            using var image = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
             var width = image.Width;
             var height = image.Height;
 
@@ -50,13 +50,10 @@ namespace NetVips.Samples
             svg.Append(path);
             svg.Append("</svg>");
 
-            var mask = Image.NewFromBuffer(svg.ToString(), access: Enums.Access.Sequential);
-
-            // Ensure image to composite is premultiplied sRGB
-            mask = mask.Premultiply();
+            using var mask = Image.NewFromBuffer(svg.ToString(), access: Enums.Access.Sequential);
 
             // Cutout via dest-in
-            image = image.Composite(mask, Enums.BlendMode.DestIn, premultiplied: true);
+            var composite = image.Composite(mask, Enums.BlendMode.DestIn);
 
             // Crop the image to the mask dimensions
             if (Crop && !CurrentShape.Equals(Shape.Ellipse))
@@ -70,13 +67,19 @@ namespace NetVips.Samples
                 // Crop if the trim dimensions is less than the image dimensions
                 if (trimWidth < width || trimHeight < height)
                 {
-                    image = image.Crop(left, top, trimWidth, trimHeight);
+                    using (composite)
+                    {
+                        composite = composite.Crop(left, top, trimWidth, trimHeight);
+                    }
                 }
             }
 
-            image.WriteToFile("shape.png");
+            using (composite)
+            {
+                composite.WriteToFile("shape.png");
+            }
 
-            return "See shape.png";
+            Console.WriteLine("See shape.png");
         }
 
         /// <summary>

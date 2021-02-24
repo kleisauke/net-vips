@@ -21,7 +21,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Abs();
+        /// using Image @out = in.Abs();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -35,7 +35,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Add(right);
+        /// using Image @out = left.Add(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -50,7 +50,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], premultiplied: bool, extend: Enums.Extend);
+        /// using Image @out = in.Affine(matrix, interpolate: GObject, oarea: int[], odx: double, ody: double, idx: double, idy: double, background: double[], premultiplied: bool, extend: Enums.Extend);
         /// </code>
         /// </example>
         /// <param name="matrix">Transformation matrix.</param>
@@ -121,7 +121,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Analyzeload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -156,7 +156,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Analyzeload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -199,7 +199,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: Enums.Align, valign: Enums.Align, hspacing: int, vspacing: int);
+        /// using Image @out = NetVips.Image.Arrayjoin(@in, across: int, shim: int, background: double[], halign: Enums.Align, valign: Enums.Align, hspacing: int, vspacing: int);
         /// </code>
         /// </example>
         /// <param name="in">Array of input images.</param>
@@ -258,7 +258,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Autorot();
+        /// using Image @out = in.Autorot();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -272,7 +272,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Autorot(out var angle);
+        /// using Image @out = in.Autorot(out var angle);
         /// </code>
         /// </example>
         /// <param name="angle">Angle image was rotated by.</param>
@@ -297,7 +297,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Autorot(out var angle, out var flip);
+        /// using Image @out = in.Autorot(out var angle, out var flip);
         /// </code>
         /// </example>
         /// <param name="angle">Angle image was rotated by.</param>
@@ -339,7 +339,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Bandbool(boolean);
+        /// using Image @out = in.Bandbool(boolean);
         /// </code>
         /// </example>
         /// <param name="boolean">boolean to perform.</param>
@@ -354,7 +354,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Bandfold(factor: int);
+        /// using Image @out = in.Bandfold(factor: int);
         /// </code>
         /// </example>
         /// <param name="factor">Fold by this factor.</param>
@@ -376,7 +376,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.BandjoinConst(c);
+        /// using Image @out = in.BandjoinConst(c);
         /// </code>
         /// </example>
         /// <param name="c">Array of constants to add.</param>
@@ -391,7 +391,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Bandmean();
+        /// using Image @out = in.Bandmean();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -405,7 +405,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Bandunfold(factor: int);
+        /// using Image @out = in.Bandunfold(factor: int);
         /// </code>
         /// </example>
         /// <param name="factor">Unfold by this factor.</param>
@@ -427,7 +427,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Black(width, height, bands: int);
+        /// using Image @out = NetVips.Image.Black(width, height, bands: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -451,7 +451,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Boolean(right, boolean);
+        /// using Image @out = left.Boolean(right, boolean);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -467,7 +467,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.BooleanConst(boolean, c);
+        /// using Image @out = in.BooleanConst(boolean, c);
         /// </code>
         /// </example>
         /// <param name="boolean">boolean to perform.</param>
@@ -483,7 +483,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Buildlut();
+        /// using Image @out = in.Buildlut();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -497,7 +497,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Byteswap();
+        /// using Image @out = in.Byteswap();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -511,7 +511,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Cache(maxTiles: int, tileHeight: int, tileWidth: int);
+        /// using Image @out = in.Cache(maxTiles: int, tileHeight: int, tileWidth: int);
         /// </code>
         /// </example>
         /// <param name="maxTiles">Maximum number of tiles to cache.</param>
@@ -545,7 +545,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Canny(sigma: double, precision: Enums.Precision);
+        /// using Image @out = in.Canny(sigma: double, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
@@ -573,7 +573,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Cast(format, shift: bool);
+        /// using Image @out = in.Cast(format, shift: bool);
         /// </code>
         /// </example>
         /// <param name="format">Format to cast to.</param>
@@ -596,7 +596,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.CMC2LCh();
+        /// using Image @out = in.CMC2LCh();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -610,7 +610,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.CMYK2XYZ();
+        /// using Image @out = in.CMYK2XYZ();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -624,7 +624,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Colourspace(space, sourceSpace: Enums.Interpretation);
+        /// using Image @out = in.Colourspace(space, sourceSpace: Enums.Interpretation);
         /// </code>
         /// </example>
         /// <param name="space">Destination color space.</param>
@@ -647,7 +647,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Compass(mask, times: int, angle: Enums.Angle45, combine: Enums.Combine, precision: Enums.Precision, layers: int, cluster: int);
+        /// using Image @out = in.Compass(mask, times: int, angle: Enums.Angle45, combine: Enums.Combine, precision: Enums.Precision, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -700,7 +700,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Complex(cmplx);
+        /// using Image @out = in.Complex(cmplx);
         /// </code>
         /// </example>
         /// <param name="cmplx">complex to perform.</param>
@@ -715,7 +715,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Complex2(right, cmplx);
+        /// using Image @out = left.Complex2(right, cmplx);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -731,7 +731,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Complexform(right);
+        /// using Image @out = left.Complexform(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -746,7 +746,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Complexget(get);
+        /// using Image @out = in.Complexget(get);
         /// </code>
         /// </example>
         /// <param name="get">complex to perform.</param>
@@ -761,7 +761,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = base.Composite2(overlay, mode, x: int, y: int, compositingSpace: Enums.Interpretation, premultiplied: bool);
+        /// using Image @out = base.Composite2(overlay, mode, x: int, y: int, compositingSpace: Enums.Interpretation, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="overlay">Overlay image.</param>
@@ -803,7 +803,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Conv(mask, precision: Enums.Precision, layers: int, cluster: int);
+        /// using Image @out = in.Conv(mask, precision: Enums.Precision, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -838,7 +838,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Conva(mask, layers: int, cluster: int);
+        /// using Image @out = in.Conva(mask, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -867,7 +867,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Convasep(mask, layers: int);
+        /// using Image @out = in.Convasep(mask, layers: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -890,7 +890,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Convf(mask);
+        /// using Image @out = in.Convf(mask);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -905,7 +905,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Convi(mask);
+        /// using Image @out = in.Convi(mask);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -920,7 +920,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Convsep(mask, precision: Enums.Precision, layers: int, cluster: int);
+        /// using Image @out = in.Convsep(mask, precision: Enums.Precision, layers: int, cluster: int);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -955,7 +955,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Copy(width: int, height: int, bands: int, format: Enums.BandFormat, coding: Enums.Coding, interpretation: Enums.Interpretation, xres: double, yres: double, xoffset: int, yoffset: int);
+        /// using Image @out = in.Copy(width: int, height: int, bands: int, format: Enums.BandFormat, coding: Enums.Coding, interpretation: Enums.Interpretation, xres: double, yres: double, xoffset: int, yoffset: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -1046,7 +1046,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Csvload(filename, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Csvload(filename, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -1105,7 +1105,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Csvload(filename, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Csvload(filename, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -1172,7 +1172,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadSource(source, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.CsvloadSource(source, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -1231,7 +1231,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadStream(stream, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.CsvloadStream(stream, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -1258,7 +1258,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadSource(source, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.CsvloadSource(source, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -1325,7 +1325,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.CsvloadStream(stream, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.CsvloadStream(stream, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -1443,10 +1443,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void CsvsaveStream(Stream stream, string separator = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                CsvsaveTarget(target, separator, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            CsvsaveTarget(target, separator, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -1454,7 +1452,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.DE00(right);
+        /// using Image @out = left.DE00(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image.</param>
@@ -1469,7 +1467,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.DE76(right);
+        /// using Image @out = left.DE76(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image.</param>
@@ -1484,7 +1482,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.DECMC(right);
+        /// using Image @out = left.DECMC(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand input image.</param>
@@ -1513,7 +1511,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Divide(right);
+        /// using Image @out = left.Divide(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -1528,7 +1526,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawCircle(ink, cx, cy, radius, fill: bool);
+        /// using Image image = image.DrawCircle(ink, cx, cy, radius, fill: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1554,7 +1552,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawFlood(ink, x, y, test: Image, equal: bool);
+        /// using Image image = image.DrawFlood(ink, x, y, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1585,7 +1583,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawFlood(ink, x, y, out var left, test: Image, equal: bool);
+        /// using Image image = image.DrawFlood(ink, x, y, out var left, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1624,7 +1622,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, test: Image, equal: bool);
+        /// using Image image = image.DrawFlood(ink, x, y, out var left, out var top, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1666,7 +1664,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, test: Image, equal: bool);
+        /// using Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1711,7 +1709,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, test: Image, equal: bool);
+        /// using Image image = image.DrawFlood(ink, x, y, out var left, out var top, out var width, out var height, test: Image, equal: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1759,7 +1757,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawImage(sub, x, y, mode: Enums.CombineMode);
+        /// using Image image = image.DrawImage(sub, x, y, mode: Enums.CombineMode);
         /// </code>
         /// </example>
         /// <param name="sub">Sub-image to insert into main image.</param>
@@ -1784,7 +1782,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawLine(ink, x1, y1, x2, y2);
+        /// using Image image = image.DrawLine(ink, x1, y1, x2, y2);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1803,7 +1801,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawMask(ink, mask, x, y);
+        /// using Image image = image.DrawMask(ink, mask, x, y);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1821,7 +1819,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawRect(ink, left, top, width, height, fill: bool);
+        /// using Image image = image.DrawRect(ink, left, top, width, height, fill: bool);
         /// </code>
         /// </example>
         /// <param name="ink">Color for pixels.</param>
@@ -1848,7 +1846,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image image = image.DrawSmudge(left, top, width, height);
+        /// using Image image = image.DrawSmudge(left, top, width, height);
         /// </code>
         /// </example>
         /// <param name="left">Rect to fill.</param>
@@ -2114,7 +2112,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Embed(x, y, width, height, extend: Enums.Extend, background: double[]);
+        /// using Image @out = in.Embed(x, y, width, height, extend: Enums.Extend, background: double[]);
         /// </code>
         /// </example>
         /// <param name="x">Left edge of input in output.</param>
@@ -2146,7 +2144,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = input.ExtractArea(left, top, width, height);
+        /// using Image @out = input.ExtractArea(left, top, width, height);
         /// </code>
         /// </example>
         /// <param name="left">Left edge of extract area.</param>
@@ -2164,7 +2162,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.ExtractBand(band, n: int);
+        /// using Image @out = in.ExtractBand(band, n: int);
         /// </code>
         /// </example>
         /// <param name="band">Band to extract.</param>
@@ -2187,7 +2185,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Eye(width, height, uchar: bool, factor: double);
+        /// using Image @out = NetVips.Image.Eye(width, height, uchar: bool, factor: double);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -2217,7 +2215,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Falsecolour();
+        /// using Image @out = in.Falsecolour();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -2231,7 +2229,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Fastcor(@ref);
+        /// using Image @out = in.Fastcor(@ref);
         /// </code>
         /// </example>
         /// <param name="ref">Input reference image.</param>
@@ -2246,7 +2244,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.FillNearest();
+        /// using Image @out = in.FillNearest();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -2260,7 +2258,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.FillNearest(out var distance);
+        /// using Image @out = in.FillNearest(out var distance);
         /// </code>
         /// </example>
         /// <param name="distance">Distance to nearest non-zero pixel.</param>
@@ -2313,7 +2311,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Fitsload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Fitsload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2348,7 +2346,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Fitsload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Fitsload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2425,7 +2423,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Flatten(background: double[], maxAlpha: double);
+        /// using Image @out = in.Flatten(background: double[], maxAlpha: double);
         /// </code>
         /// </example>
         /// <param name="background">Background value.</param>
@@ -2453,7 +2451,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Flip(direction);
+        /// using Image @out = in.Flip(direction);
         /// </code>
         /// </example>
         /// <param name="direction">Direction to flip image.</param>
@@ -2468,7 +2466,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Float2rad();
+        /// using Image @out = in.Float2rad();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -2482,7 +2480,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Fractsurf(width, height, fractalDimension);
+        /// using Image @out = NetVips.Image.Fractsurf(width, height, fractalDimension);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -2499,7 +2497,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Freqmult(mask);
+        /// using Image @out = in.Freqmult(mask);
         /// </code>
         /// </example>
         /// <param name="mask">Input mask image.</param>
@@ -2514,7 +2512,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Fwfft();
+        /// using Image @out = in.Fwfft();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -2528,7 +2526,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Gamma(exponent: double);
+        /// using Image @out = in.Gamma(exponent: double);
         /// </code>
         /// </example>
         /// <param name="exponent">Gamma factor.</param>
@@ -2550,7 +2548,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Gaussblur(sigma, minAmpl: double, precision: Enums.Precision);
+        /// using Image @out = in.Gaussblur(sigma, minAmpl: double, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
@@ -2579,7 +2577,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: Enums.Precision);
+        /// using Image @out = NetVips.Image.Gaussmat(sigma, minAmpl, separable: bool, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
@@ -2609,7 +2607,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gaussnoise(width, height, sigma: double, mean: double);
+        /// using Image @out = NetVips.Image.Gaussnoise(width, height, sigma: double, mean: double);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -2655,7 +2653,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gifload(filename, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Gifload(filename, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2702,7 +2700,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Gifload(filename, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Gifload(filename, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -2757,7 +2755,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadBuffer(buffer, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.GifloadBuffer(buffer, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -2804,7 +2802,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -2859,7 +2857,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadSource(source, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.GifloadSource(source, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -2906,7 +2904,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadStream(stream, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.GifloadStream(stream, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -2931,7 +2929,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadSource(source, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.GifloadSource(source, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -2986,7 +2984,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.GifloadStream(stream, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.GifloadStream(stream, out var flags, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -3012,7 +3010,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Globalbalance(gamma: double, intOutput: bool);
+        /// using Image @out = in.Globalbalance(gamma: double, intOutput: bool);
         /// </code>
         /// </example>
         /// <param name="gamma">Image gamma.</param>
@@ -3040,7 +3038,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Gravity(direction, width, height, extend: Enums.Extend, background: double[]);
+        /// using Image @out = in.Gravity(direction, width, height, extend: Enums.Extend, background: double[]);
         /// </code>
         /// </example>
         /// <param name="direction">direction to place image within width/height.</param>
@@ -3071,7 +3069,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Grey(width, height, uchar: bool);
+        /// using Image @out = NetVips.Image.Grey(width, height, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -3095,7 +3093,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Grid(tileHeight, across, down);
+        /// using Image @out = in.Grid(tileHeight, across, down);
         /// </code>
         /// </example>
         /// <param name="tileHeight">chop into tiles this high.</param>
@@ -3112,7 +3110,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Heifload(filename, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Heifload(filename, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -3165,7 +3163,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Heifload(filename, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Heifload(filename, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -3226,7 +3224,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadBuffer(buffer, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.HeifloadBuffer(buffer, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -3279,7 +3277,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadBuffer(buffer, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.HeifloadBuffer(buffer, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -3340,7 +3338,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadSource(source, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.HeifloadSource(source, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -3393,7 +3391,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadStream(stream, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.HeifloadStream(stream, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -3419,7 +3417,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadSource(source, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.HeifloadSource(source, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -3480,7 +3478,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.HeifloadStream(stream, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.HeifloadStream(stream, out var flags, page: int, n: int, thumbnail: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -3694,10 +3692,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void HeifsaveStream(Stream stream, int? q = null, bool? lossless = null, Enums.ForeignHeifCompression? compression = null, int? speed = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                HeifsaveTarget(target, q, lossless, compression, speed, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            HeifsaveTarget(target, q, lossless, compression, speed, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -3705,7 +3701,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistCum();
+        /// using Image @out = in.HistCum();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -3733,7 +3729,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistEqual(band: int);
+        /// using Image @out = in.HistEqual(band: int);
         /// </code>
         /// </example>
         /// <param name="band">Equalise with this band.</param>
@@ -3755,7 +3751,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistFind(band: int);
+        /// using Image @out = in.HistFind(band: int);
         /// </code>
         /// </example>
         /// <param name="band">Find histogram of band.</param>
@@ -3777,7 +3773,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistFindIndexed(index, combine: Enums.Combine);
+        /// using Image @out = in.HistFindIndexed(index, combine: Enums.Combine);
         /// </code>
         /// </example>
         /// <param name="index">Index image.</param>
@@ -3800,7 +3796,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistFindNdim(bins: int);
+        /// using Image @out = in.HistFindNdim(bins: int);
         /// </code>
         /// </example>
         /// <param name="bins">Number of bins in each dimension.</param>
@@ -3836,7 +3832,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistLocal(width, height, maxSlope: int);
+        /// using Image @out = in.HistLocal(width, height, maxSlope: int);
         /// </code>
         /// </example>
         /// <param name="width">Window width in pixels.</param>
@@ -3860,7 +3856,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistMatch(@ref);
+        /// using Image @out = in.HistMatch(@ref);
         /// </code>
         /// </example>
         /// <param name="ref">Reference histogram.</param>
@@ -3875,7 +3871,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistNorm();
+        /// using Image @out = in.HistNorm();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -3889,7 +3885,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HistPlot();
+        /// using Image @out = in.HistPlot();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -3903,7 +3899,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HoughCircle(scale: int, minRadius: int, maxRadius: int);
+        /// using Image @out = in.HoughCircle(scale: int, minRadius: int, maxRadius: int);
         /// </code>
         /// </example>
         /// <param name="scale">Scale down dimensions by this factor.</param>
@@ -3937,7 +3933,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HoughLine(width: int, height: int);
+        /// using Image @out = in.HoughLine(width: int, height: int);
         /// </code>
         /// </example>
         /// <param name="width">horizontal size of parameter space.</param>
@@ -3965,7 +3961,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.HSV2sRGB();
+        /// using Image @out = in.HSV2sRGB();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -3979,7 +3975,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.IccExport(pcs: Enums.PCS, intent: Enums.Intent, outputProfile: string, depth: int);
+        /// using Image @out = in.IccExport(pcs: Enums.PCS, intent: Enums.Intent, outputProfile: string, depth: int);
         /// </code>
         /// </example>
         /// <param name="pcs">Set Profile Connection Space.</param>
@@ -4019,7 +4015,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.IccImport(pcs: Enums.PCS, intent: Enums.Intent, embedded: bool, inputProfile: string);
+        /// using Image @out = in.IccImport(pcs: Enums.PCS, intent: Enums.Intent, embedded: bool, inputProfile: string);
         /// </code>
         /// </example>
         /// <param name="pcs">Set Profile Connection Space.</param>
@@ -4059,7 +4055,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.IccTransform(outputProfile, pcs: Enums.PCS, intent: Enums.Intent, embedded: bool, inputProfile: string, depth: int);
+        /// using Image @out = in.IccTransform(outputProfile, pcs: Enums.PCS, intent: Enums.Intent, embedded: bool, inputProfile: string, depth: int);
         /// </code>
         /// </example>
         /// <param name="outputProfile">Filename to load output profile from.</param>
@@ -4106,7 +4102,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Identity(bands: int, @ushort: bool, size: int);
+        /// using Image @out = NetVips.Image.Identity(bands: int, @ushort: bool, size: int);
         /// </code>
         /// </example>
         /// <param name="bands">Number of bands in LUT.</param>
@@ -4140,7 +4136,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = main.Insert(sub, x, y, expand: bool, background: double[]);
+        /// using Image @out = main.Insert(sub, x, y, expand: bool, background: double[]);
         /// </code>
         /// </example>
         /// <param name="sub">Sub-image to insert into main image.</param>
@@ -4171,7 +4167,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Invert();
+        /// using Image @out = in.Invert();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -4185,7 +4181,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Invertlut(size: int);
+        /// using Image @out = in.Invertlut(size: int);
         /// </code>
         /// </example>
         /// <param name="size">LUT size to generate.</param>
@@ -4207,7 +4203,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Invfft(real: bool);
+        /// using Image @out = in.Invfft(real: bool);
         /// </code>
         /// </example>
         /// <param name="real">Output only the real part of the transform.</param>
@@ -4229,7 +4225,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: Enums.Align);
+        /// using Image @out = in1.Join(in2, direction, expand: bool, shim: int, background: double[], align: Enums.Align);
         /// </code>
         /// </example>
         /// <param name="in2">Second input image.</param>
@@ -4271,7 +4267,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Jpegload(filename, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Jpegload(filename, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -4318,7 +4314,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Jpegload(filename, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Jpegload(filename, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -4373,7 +4369,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.JpegloadBuffer(buffer, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -4420,7 +4416,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -4475,7 +4471,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -4522,7 +4518,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -4547,7 +4543,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -4602,7 +4598,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -4997,10 +4993,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void JpegsaveStream(Stream stream, int? q = null, string profile = null, bool? optimizeCoding = null, bool? interlace = null, bool? trellisQuant = null, bool? overshootDeringing = null, bool? optimizeScans = null, int? quantTable = null, Enums.ForeignSubsample? subsampleMode = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                JpegsaveTarget(target, q, profile, optimizeCoding, interlace, trellisQuant, overshootDeringing, optimizeScans, quantTable, subsampleMode, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            JpegsaveTarget(target, q, profile, optimizeCoding, interlace, trellisQuant, overshootDeringing, optimizeScans, quantTable, subsampleMode, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -5008,7 +5002,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Lab2LabQ();
+        /// using Image @out = in.Lab2LabQ();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5022,7 +5016,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Lab2LabS();
+        /// using Image @out = in.Lab2LabS();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5036,7 +5030,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Lab2LCh();
+        /// using Image @out = in.Lab2LCh();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5050,7 +5044,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Lab2XYZ(temp: double[]);
+        /// using Image @out = in.Lab2XYZ(temp: double[]);
         /// </code>
         /// </example>
         /// <param name="temp">Color temperature.</param>
@@ -5072,7 +5066,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image mask = in.Labelregions();
+        /// using Image mask = in.Labelregions();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5086,7 +5080,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image mask = in.Labelregions(out var segments);
+        /// using Image mask = in.Labelregions(out var segments);
         /// </code>
         /// </example>
         /// <param name="segments">Number of discrete contigious regions.</param>
@@ -5111,7 +5105,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LabQ2Lab();
+        /// using Image @out = in.LabQ2Lab();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5125,7 +5119,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LabQ2LabS();
+        /// using Image @out = in.LabQ2LabS();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5139,7 +5133,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LabQ2sRGB();
+        /// using Image @out = in.LabQ2sRGB();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5153,7 +5147,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LabS2Lab();
+        /// using Image @out = in.LabS2Lab();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5167,7 +5161,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LabS2LabQ();
+        /// using Image @out = in.LabS2LabQ();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5181,7 +5175,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LCh2CMC();
+        /// using Image @out = in.LCh2CMC();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5195,7 +5189,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.LCh2Lab();
+        /// using Image @out = in.LCh2Lab();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -5209,7 +5203,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Linear(a, b, uchar: bool);
+        /// using Image @out = in.Linear(a, b, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="a">Multiply by this.</param>
@@ -5233,7 +5227,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Linecache(tileHeight: int, access: Enums.Access, threaded: bool, persistent: bool);
+        /// using Image @out = in.Linecache(tileHeight: int, access: Enums.Access, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
         /// <param name="tileHeight">Tile height in pixels.</param>
@@ -5273,7 +5267,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: Enums.Precision);
+        /// using Image @out = NetVips.Image.Logmat(sigma, minAmpl, separable: bool, precision: Enums.Precision);
         /// </code>
         /// </example>
         /// <param name="sigma">Radius of Logmatian.</param>
@@ -5303,7 +5297,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Magickload(filename, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -5356,7 +5350,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Magickload(filename, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -5417,7 +5411,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -5470,7 +5464,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -5647,7 +5641,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Mapim(index, interpolate: GObject);
+        /// using Image @out = in.Mapim(index, interpolate: GObject);
         /// </code>
         /// </example>
         /// <param name="index">Index pixels with this.</param>
@@ -5670,7 +5664,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Maplut(lut, band: int);
+        /// using Image @out = in.Maplut(lut, band: int);
         /// </code>
         /// </example>
         /// <param name="lut">Look-up table image.</param>
@@ -5693,7 +5687,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskButterworth(width, height, order, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -5738,7 +5732,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskButterworthBand(width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -5785,7 +5779,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskButterworthRing(width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -5831,7 +5825,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskFractal(width, height, fractalDimension, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -5874,7 +5868,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskGaussian(width, height, frequencyCutoff, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -5918,7 +5912,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskGaussianBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -5964,7 +5958,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskGaussianRing(width, height, frequencyCutoff, amplitudeCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -6009,7 +6003,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskIdeal(width, height, frequencyCutoff, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -6052,7 +6046,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskIdealBand(width, height, frequencyCutoffX, frequencyCutoffY, radius, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -6097,7 +6091,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
+        /// using Image @out = NetVips.Image.MaskIdealRing(width, height, frequencyCutoff, ringwidth, uchar: bool, nodc: bool, reject: bool, optical: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -6141,7 +6135,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject);
+        /// using Image @out = ref.Match(sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -6190,7 +6184,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Math(math);
+        /// using Image @out = in.Math(math);
         /// </code>
         /// </example>
         /// <param name="math">math to perform.</param>
@@ -6205,7 +6199,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Math2(right, math2);
+        /// using Image @out = left.Math2(right, math2);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -6221,7 +6215,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Math2Const(math2, c);
+        /// using Image @out = in.Math2Const(math2, c);
         /// </code>
         /// </example>
         /// <param name="math2">math to perform.</param>
@@ -6237,7 +6231,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Matload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6272,7 +6266,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Matload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6315,7 +6309,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Matrixinvert();
+        /// using Image @out = in.Matrixinvert();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -6329,7 +6323,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Matrixload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6364,7 +6358,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Matrixload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -6407,7 +6401,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadSource(source, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.MatrixloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -6442,7 +6436,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.MatrixloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -6465,7 +6459,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.MatrixloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -6508,7 +6502,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.MatrixloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.MatrixloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -6642,10 +6636,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void MatrixsaveStream(Stream stream, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                MatrixsaveTarget(target, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            MatrixsaveTarget(target, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -6855,7 +6847,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Measure(h, v, left: int, top: int, width: int, height: int);
+        /// using Image @out = in.Measure(h, v, left: int, top: int, width: int, height: int);
         /// </code>
         /// </example>
         /// <param name="h">Number of patches across chart.</param>
@@ -6897,7 +6889,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Merge(sec, direction, dx, dy, mblend: int);
+        /// using Image @out = ref.Merge(sec, direction, dx, dy, mblend: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7125,7 +7117,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Morph(mask, morph);
+        /// using Image @out = in.Morph(mask, morph);
         /// </code>
         /// </example>
         /// <param name="mask">Input matrix image.</param>
@@ -7141,7 +7133,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7187,7 +7179,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7241,7 +7233,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7298,7 +7290,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7358,7 +7350,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7421,7 +7413,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7487,7 +7479,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, hwindow: int, harea: int, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic(sec, direction, xref, yref, xsec, ysec, out var dx0, out var dy0, out var scale1, out var angle1, out var dy1, out var dx1, hwindow: int, harea: int, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7556,7 +7548,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject, mblend: int, bandno: int);
+        /// using Image @out = ref.Mosaic1(sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2, hwindow: int, harea: int, search: bool, interpolate: GObject, mblend: int, bandno: int);
         /// </code>
         /// </example>
         /// <param name="sec">Secondary image.</param>
@@ -7618,7 +7610,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Msb(band: int);
+        /// using Image @out = in.Msb(band: int);
         /// </code>
         /// </example>
         /// <param name="band">Band to msb.</param>
@@ -7640,7 +7632,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Multiply(right);
+        /// using Image @out = left.Multiply(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -7655,7 +7647,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Niftiload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Niftiload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7690,7 +7682,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Niftiload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Niftiload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7767,7 +7759,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openexrload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Openexrload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7802,7 +7794,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openexrload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Openexrload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7845,7 +7837,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openslideload(filename, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Openslideload(filename, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7904,7 +7896,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Openslideload(filename, out var flags, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Openslideload(filename, out var flags, attachAssociated: bool, level: int, autocrop: bool, associated: string, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -7971,7 +7963,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pdfload(filename, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Pdfload(filename, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8036,7 +8028,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pdfload(filename, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Pdfload(filename, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8109,7 +8101,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PdfloadBuffer(buffer, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8174,7 +8166,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8247,7 +8239,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadSource(source, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PdfloadSource(source, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8312,7 +8304,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadStream(stream, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PdfloadStream(stream, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8340,7 +8332,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadSource(source, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PdfloadSource(source, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8413,7 +8405,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PdfloadStream(stream, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PdfloadStream(stream, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8457,7 +8449,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Perlin(width, height, cellSize: int, uchar: bool);
+        /// using Image @out = NetVips.Image.Perlin(width, height, cellSize: int, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -8487,7 +8479,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Phasecor(in2);
+        /// using Image @out = in.Phasecor(in2);
         /// </code>
         /// </example>
         /// <param name="in2">Second input image.</param>
@@ -8502,7 +8494,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pngload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Pngload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8537,7 +8529,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Pngload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -8580,7 +8572,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PngloadBuffer(buffer, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8615,7 +8607,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -8658,7 +8650,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadSource(source, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PngloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8693,7 +8685,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PngloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -8716,7 +8708,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PngloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -8759,7 +8751,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PngloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PngloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9046,10 +9038,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void PngsaveStream(Stream stream, int? compression = null, bool? interlace = null, string profile = null, Enums.ForeignPngFilter? filter = null, bool? palette = null, int? q = null, double? dither = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                PngsaveTarget(target, compression, interlace, profile, filter, palette, q, dither, bitdepth, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            PngsaveTarget(target, compression, interlace, profile, filter, palette, q, dither, bitdepth, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -9057,7 +9047,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Ppmload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9092,7 +9082,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Ppmload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9135,7 +9125,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadSource(source, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PpmloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9170,7 +9160,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PpmloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9193,7 +9183,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PpmloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9236,7 +9226,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.PpmloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.PpmloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9363,10 +9353,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void PpmsaveStream(Stream stream, bool? ascii = null, int? bitdepth = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                PpmsaveTarget(target, ascii, bitdepth, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            PpmsaveTarget(target, ascii, bitdepth, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -9374,7 +9362,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Premultiply(maxAlpha: double);
+        /// using Image @out = in.Premultiply(maxAlpha: double);
         /// </code>
         /// </example>
         /// <param name="maxAlpha">Maximum value of alpha channel.</param>
@@ -9439,7 +9427,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Quadratic(coeff, interpolate: GObject);
+        /// using Image @out = in.Quadratic(coeff, interpolate: GObject);
         /// </code>
         /// </example>
         /// <param name="coeff">Coefficient matrix.</param>
@@ -9462,7 +9450,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Rad2float();
+        /// using Image @out = in.Rad2float();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -9476,7 +9464,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Radload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Radload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9511,7 +9499,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Radload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9554,7 +9542,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -9589,7 +9577,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -9632,7 +9620,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9667,7 +9655,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9690,7 +9678,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -9733,7 +9721,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -9868,10 +9856,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void RadsaveStream(Stream stream, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                RadsaveTarget(target, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            RadsaveTarget(target, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -9879,7 +9865,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Rank(width, height, index);
+        /// using Image @out = in.Rank(width, height, index);
         /// </code>
         /// </example>
         /// <param name="width">Window width in pixels.</param>
@@ -9896,7 +9882,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, offset: ulong, format: Enums.BandFormat, interpretation: Enums.Interpretation, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Rawload(filename, width, height, bands, offset: ulong, format: Enums.BandFormat, interpretation: Enums.Interpretation, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -9952,7 +9938,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, offset: ulong, format: Enums.BandFormat, interpretation: Enums.Interpretation, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Rawload(filename, width, height, bands, out var flags, offset: ulong, format: Enums.BandFormat, interpretation: Enums.Interpretation, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -10084,7 +10070,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Recomb(m);
+        /// using Image @out = in.Recomb(m);
         /// </code>
         /// </example>
         /// <param name="m">matrix of coefficients.</param>
@@ -10099,7 +10085,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Reduce(hshrink, vshrink, kernel: Enums.Kernel);
+        /// using Image @out = in.Reduce(hshrink, vshrink, kernel: Enums.Kernel);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor.</param>
@@ -10123,7 +10109,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Reduceh(hshrink, kernel: Enums.Kernel);
+        /// using Image @out = in.Reduceh(hshrink, kernel: Enums.Kernel);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor.</param>
@@ -10146,7 +10132,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Reducev(vshrink, kernel: Enums.Kernel);
+        /// using Image @out = in.Reducev(vshrink, kernel: Enums.Kernel);
         /// </code>
         /// </example>
         /// <param name="vshrink">Vertical shrink factor.</param>
@@ -10169,7 +10155,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Relational(right, relational);
+        /// using Image @out = left.Relational(right, relational);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -10185,7 +10171,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.RelationalConst(relational, c);
+        /// using Image @out = in.RelationalConst(relational, c);
         /// </code>
         /// </example>
         /// <param name="relational">relational to perform.</param>
@@ -10201,7 +10187,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Remainder(right);
+        /// using Image @out = left.Remainder(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -10216,7 +10202,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.RemainderConst(c);
+        /// using Image @out = in.RemainderConst(c);
         /// </code>
         /// </example>
         /// <param name="c">Array of constants.</param>
@@ -10231,7 +10217,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Replicate(across, down);
+        /// using Image @out = in.Replicate(across, down);
         /// </code>
         /// </example>
         /// <param name="across">Repeat this many times horizontally.</param>
@@ -10247,7 +10233,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Resize(scale, kernel: Enums.Kernel, vscale: double);
+        /// using Image @out = in.Resize(scale, kernel: Enums.Kernel, vscale: double);
         /// </code>
         /// </example>
         /// <param name="scale">Scale image by this factor.</param>
@@ -10276,7 +10262,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Rot(angle);
+        /// using Image @out = in.Rot(angle);
         /// </code>
         /// </example>
         /// <param name="angle">Angle to rotate image.</param>
@@ -10291,7 +10277,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Rot45(angle: Enums.Angle45);
+        /// using Image @out = in.Rot45(angle: Enums.Angle45);
         /// </code>
         /// </example>
         /// <param name="angle">Angle to rotate image.</param>
@@ -10313,7 +10299,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Rotate(angle, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
+        /// using Image @out = in.Rotate(angle, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
         /// <param name="angle">Rotate anticlockwise by this many degrees.</param>
@@ -10366,7 +10352,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Round(round);
+        /// using Image @out = in.Round(round);
         /// </code>
         /// </example>
         /// <param name="round">rounding operation to perform.</param>
@@ -10381,7 +10367,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.ScRGB2BW(depth: int);
+        /// using Image @out = in.ScRGB2BW(depth: int);
         /// </code>
         /// </example>
         /// <param name="depth">Output device space depth in bits.</param>
@@ -10403,7 +10389,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.ScRGB2sRGB(depth: int);
+        /// using Image @out = in.ScRGB2sRGB(depth: int);
         /// </code>
         /// </example>
         /// <param name="depth">Output device space depth in bits.</param>
@@ -10425,7 +10411,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.ScRGB2XYZ();
+        /// using Image @out = in.ScRGB2XYZ();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10439,7 +10425,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Sequential(tileHeight: int);
+        /// using Image @out = in.Sequential(tileHeight: int);
         /// </code>
         /// </example>
         /// <param name="tileHeight">Tile height in pixels.</param>
@@ -10461,7 +10447,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Sharpen(sigma: double, x1: double, y2: double, y3: double, m1: double, m2: double);
+        /// using Image @out = in.Sharpen(sigma: double, x1: double, y2: double, y3: double, m1: double, m2: double);
         /// </code>
         /// </example>
         /// <param name="sigma">Sigma of Gaussian.</param>
@@ -10513,7 +10499,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Shrink(hshrink, vshrink);
+        /// using Image @out = in.Shrink(hshrink, vshrink);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor.</param>
@@ -10529,7 +10515,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Shrinkh(hshrink);
+        /// using Image @out = in.Shrinkh(hshrink);
         /// </code>
         /// </example>
         /// <param name="hshrink">Horizontal shrink factor.</param>
@@ -10544,7 +10530,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Shrinkv(vshrink);
+        /// using Image @out = in.Shrinkv(vshrink);
         /// </code>
         /// </example>
         /// <param name="vshrink">Vertical shrink factor.</param>
@@ -10559,7 +10545,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Sign();
+        /// using Image @out = in.Sign();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10573,7 +10559,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Similarity(scale: double, angle: double, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
+        /// using Image @out = in.Similarity(scale: double, angle: double, interpolate: GObject, background: double[], odx: double, ody: double, idx: double, idy: double);
         /// </code>
         /// </example>
         /// <param name="scale">Scale by this factor.</param>
@@ -10637,7 +10623,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Sines(width, height, uchar: bool, hfreq: double, vfreq: double);
+        /// using Image @out = NetVips.Image.Sines(width, height, uchar: bool, hfreq: double, vfreq: double);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -10673,7 +10659,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = input.Smartcrop(width, height, interesting: Enums.Interesting);
+        /// using Image @out = input.Smartcrop(width, height, interesting: Enums.Interesting);
         /// </code>
         /// </example>
         /// <param name="width">Width of extract area.</param>
@@ -10697,7 +10683,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Sobel();
+        /// using Image @out = in.Sobel();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10711,7 +10697,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Spcor(@ref);
+        /// using Image @out = in.Spcor(@ref);
         /// </code>
         /// </example>
         /// <param name="ref">Input reference image.</param>
@@ -10726,7 +10712,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Spectrum();
+        /// using Image @out = in.Spectrum();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10740,7 +10726,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.SRGB2HSV();
+        /// using Image @out = in.SRGB2HSV();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10754,7 +10740,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.SRGB2scRGB();
+        /// using Image @out = in.SRGB2scRGB();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10768,7 +10754,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Stats();
+        /// using Image @out = in.Stats();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -10782,7 +10768,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Stdif(width, height, s0: double, b: double, m0: double, a: double);
+        /// using Image @out = in.Stdif(width, height, s0: double, b: double, m0: double, a: double);
         /// </code>
         /// </example>
         /// <param name="width">Window width in pixels.</param>
@@ -10824,7 +10810,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = input.Subsample(xfac, yfac, point: bool);
+        /// using Image @out = input.Subsample(xfac, yfac, point: bool);
         /// </code>
         /// </example>
         /// <param name="xfac">Horizontal subsample factor.</param>
@@ -10848,7 +10834,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = left.Subtract(right);
+        /// using Image @out = left.Subtract(right);
         /// </code>
         /// </example>
         /// <param name="right">Right-hand image argument.</param>
@@ -10863,7 +10849,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Sum(@in);
+        /// using Image @out = NetVips.Image.Sum(@in);
         /// </code>
         /// </example>
         /// <param name="in">Array of input images.</param>
@@ -10878,7 +10864,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Svgload(filename, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Svgload(filename, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -10931,7 +10917,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Svgload(filename, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Svgload(filename, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -10992,7 +10978,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.SvgloadBuffer(buffer, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11045,7 +11031,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11106,7 +11092,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -11159,7 +11145,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -11185,7 +11171,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -11246,7 +11232,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -11273,7 +11259,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Switch(tests);
+        /// using Image @out = NetVips.Image.Switch(tests);
         /// </code>
         /// </example>
         /// <param name="tests">Table of images to test.</param>
@@ -11405,7 +11391,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: Enums.Align, dpi: int, justify: bool, spacing: int, fontfile: string);
+        /// using Image @out = NetVips.Image.Text(text, font: string, width: int, height: int, align: Enums.Align, dpi: int, justify: bool, spacing: int, fontfile: string);
         /// </code>
         /// </example>
         /// <param name="text">Text to render.</param>
@@ -11470,7 +11456,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: Enums.Align, dpi: int, justify: bool, spacing: int, fontfile: string);
+        /// using Image @out = NetVips.Image.Text(text, out var autofitDpi, font: string, width: int, height: int, align: Enums.Align, dpi: int, justify: bool, spacing: int, fontfile: string);
         /// </code>
         /// </example>
         /// <param name="text">Text to render.</param>
@@ -11543,7 +11529,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
+        /// using Image @out = NetVips.Image.Thumbnail(filename, width, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to read from.</param>
@@ -11609,7 +11595,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
+        /// using Image @out = NetVips.Image.ThumbnailBuffer(buffer, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -11681,7 +11667,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.ThumbnailImage(width, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
+        /// using Image @out = in.ThumbnailImage(width, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="width">Size to this width.</param>
@@ -11746,7 +11732,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.ThumbnailSource(source, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
+        /// using Image @out = NetVips.Image.ThumbnailSource(source, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -11818,7 +11804,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.ThumbnailStream(stream, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
+        /// using Image @out = NetVips.Image.ThumbnailStream(stream, width, optionString: string, height: int, size: Enums.Size, noRotate: bool, crop: Enums.Interesting, linear: bool, importProfile: string, exportProfile: string, intent: Enums.Intent);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -11848,7 +11834,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Tiffload(filename, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Tiffload(filename, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -11907,7 +11893,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Tiffload(filename, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Tiffload(filename, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -11974,7 +11960,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.TiffloadBuffer(buffer, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -12033,7 +12019,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -12100,7 +12086,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadSource(source, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.TiffloadSource(source, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -12159,7 +12145,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadStream(stream, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.TiffloadStream(stream, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -12186,7 +12172,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -12253,7 +12239,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, subifd: int, n: int, autorotate: bool, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -12589,7 +12575,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: Enums.Access, threaded: bool, persistent: bool);
+        /// using Image @out = in.Tilecache(tileWidth: int, tileHeight: int, maxTiles: int, access: Enums.Access, threaded: bool, persistent: bool);
         /// </code>
         /// </example>
         /// <param name="tileWidth">Tile width in pixels.</param>
@@ -12641,7 +12627,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Tonelut(inMax: int, outMax: int, lb: double, lw: double, ps: double, pm: double, ph: double, s: double, m: double, h: double);
+        /// using Image @out = NetVips.Image.Tonelut(inMax: int, outMax: int, lb: double, lw: double, ps: double, pm: double, ph: double, s: double, m: double, h: double);
         /// </code>
         /// </example>
         /// <param name="inMax">Size of LUT to build.</param>
@@ -12717,7 +12703,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Transpose3d(pageHeight: int);
+        /// using Image @out = in.Transpose3d(pageHeight: int);
         /// </code>
         /// </example>
         /// <param name="pageHeight">Height of each input page.</param>
@@ -12739,7 +12725,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Unpremultiply(maxAlpha: double, alphaBand: int);
+        /// using Image @out = in.Unpremultiply(maxAlpha: double, alphaBand: int);
         /// </code>
         /// </example>
         /// <param name="maxAlpha">Maximum value of alpha channel.</param>
@@ -12767,7 +12753,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Vipsload(filename, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12802,7 +12788,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Vipsload(filename, out var flags, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12879,7 +12865,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Webpload(filename, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Webpload(filename, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12932,7 +12918,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Webpload(filename, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.Webpload(filename, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="filename">Filename to load from.</param>
@@ -12993,7 +12979,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -13046,7 +13032,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="buffer">Buffer to load from.</param>
@@ -13107,7 +13093,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -13160,7 +13146,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -13186,7 +13172,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="source">Source to load from.</param>
@@ -13247,7 +13233,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
+        /// using Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, fail: bool);
         /// </code>
         /// </example>
         /// <param name="stream">Stream to load from.</param>
@@ -13594,10 +13580,8 @@ namespace NetVips
         /// <param name="pageHeight">Set page height for multipage save.</param>
         public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? reductionEffort = null, string profile = null, bool? strip = null, double[] background = null, int? pageHeight = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                WebpsaveTarget(target, q, lossless, preset, smartSubsample, nearLossless, alphaQ, minSize, kmin, kmax, reductionEffort, profile, strip, background, pageHeight);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            WebpsaveTarget(target, q, lossless, preset, smartSubsample, nearLossless, alphaQ, minSize, kmin, kmax, reductionEffort, profile, strip, background, pageHeight);
         }
 
         /// <summary>
@@ -13605,7 +13589,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Worley(width, height, cellSize: int);
+        /// using Image @out = NetVips.Image.Worley(width, height, cellSize: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -13629,7 +13613,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Wrap(x: int, y: int);
+        /// using Image @out = in.Wrap(x: int, y: int);
         /// </code>
         /// </example>
         /// <param name="x">Left edge of input in output.</param>
@@ -13657,7 +13641,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Xyz(width, height, csize: int, dsize: int, esize: int);
+        /// using Image @out = NetVips.Image.Xyz(width, height, csize: int, dsize: int, esize: int);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -13693,7 +13677,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.XYZ2CMYK();
+        /// using Image @out = in.XYZ2CMYK();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -13707,7 +13691,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.XYZ2Lab(temp: double[]);
+        /// using Image @out = in.XYZ2Lab(temp: double[]);
         /// </code>
         /// </example>
         /// <param name="temp">Colour temperature.</param>
@@ -13729,7 +13713,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.XYZ2scRGB();
+        /// using Image @out = in.XYZ2scRGB();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -13743,7 +13727,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.XYZ2Yxy();
+        /// using Image @out = in.XYZ2Yxy();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -13757,7 +13741,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Yxy2XYZ();
+        /// using Image @out = in.Yxy2XYZ();
         /// </code>
         /// </example>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -13771,7 +13755,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = NetVips.Image.Zone(width, height, uchar: bool);
+        /// using Image @out = NetVips.Image.Zone(width, height, uchar: bool);
         /// </code>
         /// </example>
         /// <param name="width">Image width in pixels.</param>
@@ -13795,7 +13779,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = input.Zoom(xfac, yfac);
+        /// using Image @out = input.Zoom(xfac, yfac);
         /// </code>
         /// </example>
         /// <param name="xfac">Horizontal zoom factor.</param>

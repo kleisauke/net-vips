@@ -355,10 +355,10 @@ namespace NetVips.Samples
             return stringBuilder.ToString();
         }
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             File.WriteAllText("Image.Operators.cs", GenerateOperators());
-            return "See Image.Operators.cs";
+            Console.WriteLine("See Image.Operators.cs");
         }
     }
 }

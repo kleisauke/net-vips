@@ -1,5 +1,7 @@
 namespace NetVips.Samples
 {
+    using System;
+
     public class Emboss : ISample
     {
         public string Name => "Emboss";
@@ -7,42 +9,48 @@ namespace NetVips.Samples
 
         public const string Filename = "images/lichtenstein.jpg";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
-            var im = Image.NewFromFile(Filename);
+            using var im = Image.NewFromFile(Filename);
 
             // Optionally, Convert the image to greyscale
-            // im = im.Colourspace(Enums.Interpretation.Bw);
+            //using var mono = im.Colourspace(Enums.Interpretation.Bw);
 
             // The four primary emboss kernels.
             // Offset the pixel values by 128 to achieve the emboss effect.
-            var kernel1 = Image.NewFromArray(new[,]
+            using var kernel1 = Image.NewFromArray(new[,]
             {
                 {0, 1, 0},
                 {0, 0, 0},
                 {0, -1, 0}
             }, offset: 128);
-            var kernel2 = Image.NewFromArray(new[,]
+            using var kernel2 = Image.NewFromArray(new[,]
             {
                 {1, 0, 0},
                 {0, 0, 0},
                 {0, 0, -1}
             }, offset: 128);
-            var kernel3 = kernel1.Rot270();
-            var kernel4 = kernel2.Rot90();
+            using var kernel3 = kernel1.Rot270();
+            using var kernel4 = kernel2.Rot90();
+
+            // Apply the emboss kernels
+            using var conv1 = /*mono*/im.Conv(kernel1, precision: Enums.Precision.Float);
+            using var conv2 = /*mono*/im.Conv(kernel2, precision: Enums.Precision.Float);
+            using var conv3 = /*mono*/im.Conv(kernel3, precision: Enums.Precision.Float);
+            using var conv4 = /*mono*/im.Conv(kernel4, precision: Enums.Precision.Float);
 
             var images = new[]
             {
-                // Apply the emboss kernels
-                im.Conv(kernel1, precision: Enums.Precision.Float),
-                im.Conv(kernel2, precision: Enums.Precision.Float),
-                im.Conv(kernel3, precision: Enums.Precision.Float),
-                im.Conv(kernel4, precision: Enums.Precision.Float)
+                conv1,
+                conv2,
+                conv3,
+                conv4
             };
 
-            Image.Arrayjoin(images, across: 2).WriteToFile("emboss.jpg");
+            using var joined = Image.Arrayjoin(images, across: 2);
+            joined.WriteToFile("emboss.jpg");
 
-            return "See emboss.jpg";
+            Console.WriteLine("See emboss.jpg");
         }
     }
 }

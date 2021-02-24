@@ -1,5 +1,7 @@
 namespace NetVips.Samples
 {
+    using System;
+
     public class Thumbnail : ISample
     {
         public string Name => "Thumbnail";
@@ -7,12 +9,12 @@ namespace NetVips.Samples
 
         public const string Filename = "images/lichtenstein.jpg";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
-            var image = Image.Thumbnail(Filename, 300, height: 300);
+            using var image = Image.Thumbnail(Filename, 300, height: 300);
             image.WriteToFile("thumbnail.jpg");
 
-            return "See thumbnail.jpg";
+            Console.WriteLine("See thumbnail.jpg");
         }
     }
 }

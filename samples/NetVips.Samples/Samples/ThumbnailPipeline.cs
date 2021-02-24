@@ -43,7 +43,7 @@ namespace NetVips.Samples
         }
 
 #pragma warning disable CS0162 // Unreachable code detected
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             // If you set a number to zero (0), it will resize on the other specified axis.
             var width = 200;
@@ -82,7 +82,14 @@ namespace NetVips.Samples
                 stringOptions = "[n=-1]";
             }
 
-            Image image;
+            int inputWidth;
+            int inputHeight;
+            int pageHeight;
+            bool isCmyk;
+            bool isLabs;
+            bool embeddedProfile;
+
+            Image image = null;
             try
             {
                 image = (Image)Operation.Call(loader, loadOptions, buffer);
@@ -90,27 +97,32 @@ namespace NetVips.Samples
                 // Or:
                 // image = Image.NewFromBuffer(buffer, kwargs: loadOptions);
                 // (but the loader is already found, so the above will be a little faster).
+
+                inputWidth = image.Width;
+                inputHeight = image.Height;
+
+                // Use 64-bit unsigned type, to handle PNG decompression bombs.
+                if ((ulong)(inputWidth * inputHeight) > MaxImageSize)
+                {
+                    throw new Exception(
+                        "Image is too large for processing. Width x height should be less than 71 megapixels.");
+                }
+
+                pageHeight = image.PageHeight;
+                isCmyk = image.Interpretation == Enums.Interpretation.Cmyk;
+                isLabs = image.Interpretation == Enums.Interpretation.Labs;
+                embeddedProfile = image.Contains(VipsMetaIccName);
             }
             catch (VipsException e)
             {
                 throw new Exception("Image has a corrupt header.", e);
             }
-
-            var inputWidth = image.Width;
-            var inputHeight = image.Height;
-
-            // Use 64-bit unsigned type, to handle PNG decompression bombs.
-            if ((ulong)(inputWidth * inputHeight) > MaxImageSize)
+            finally
             {
-                throw new Exception(
-                    "Image is too large for processing. Width x height should be less than 71 megapixels.");
+                // We're done with the image; dispose early
+                image?.Dispose();
             }
 
-            var pageHeight = image.PageHeight;
-
-            var isCmyk = image.Interpretation == Enums.Interpretation.Cmyk;
-            var isLabs = image.Interpretation == Enums.Interpretation.Labs;
-            var embeddedProfile = image.Contains(VipsMetaIccName);
 
             string importProfile = null;
             string exportProfile = null;
@@ -196,21 +208,21 @@ namespace NetVips.Samples
             // Note: don't use "image.ThumbnailImage". Otherwise, none of the very fast
             // shrink-on-load tricks are possible. This can make thumbnailing of large
             // images extremely slow.
-            image = Image.ThumbnailBuffer(buffer, thumbnailWidth, stringOptions, thumbnailHeight, size,
+            using var thumb = Image.ThumbnailBuffer(buffer, thumbnailWidth, stringOptions, thumbnailHeight, size,
                 false, importProfile: importProfile, exportProfile: exportProfile, intent: intent);
 
-            image.WriteToFile("thumbnail.webp", new VOption
+            thumb.WriteToFile("thumbnail.webp", new VOption
             {
                 {"strip", true}
             });
 
             // Or:
-            /*buffer = image.WriteToBuffer(".webp", new VOption
+            /*buffer = thumb.WriteToBuffer(".webp", new VOption
             {
                 {"strip", true}
             });*/
 
-            return "See thumbnail.webp";
+            Console.WriteLine("See thumbnail.webp");
         }
     }
 #pragma warning restore CS0162 // Unreachable code detected

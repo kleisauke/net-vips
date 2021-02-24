@@ -1,5 +1,6 @@
 namespace NetVips.Samples
 {
+    using System;
     using Extensions;
     using System.Drawing.Imaging;
 
@@ -10,7 +11,7 @@ namespace NetVips.Samples
 
         public const string Filename = "images/PNG_transparency_demonstration_1.png";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             var bitmap = new System.Drawing.Bitmap(Filename);
 
@@ -20,7 +21,10 @@ namespace NetVips.Samples
             {
                 graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
             }
-            bitmap = bitmap32Argb;*/
+            using (bitmap)
+            {
+                bitmap = bitmap32Argb;
+            }*/
 
             // 24bpp -> 32bppRgb
             /*using var bitmap32Rgb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppRgb);
@@ -28,7 +32,10 @@ namespace NetVips.Samples
             {
                 graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
             }
-            bitmap = bitmap32Rgb;*/
+            using (bitmap)
+            {
+                bitmap = bitmap32Rgb;
+            }*/
 
             // 24bpp -> 48bppRgb
             /*using var bitmap48Rgb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format48bppRgb);
@@ -36,8 +43,10 @@ namespace NetVips.Samples
             {
                 graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
             }
-
-            bitmap = bitmap48Rgb;*/
+            using (bitmap)
+            {
+                bitmap = bitmap48Rgb;
+            }*/
 
             // 24bpp -> 64bppArgb
             /*using var bitmap64Argb = new System.Drawing.Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format64bppArgb);
@@ -45,23 +54,33 @@ namespace NetVips.Samples
             {
                 graphics.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
             }
-
-            bitmap = bitmap64Argb;*/
+            using (bitmap)
+            {
+                bitmap = bitmap64Argb;
+            }*/
 
             bitmap.Save("gdi-original.png", ImageFormat.Png);
 
-            var vipsImage = bitmap.ToVips();
+            using var vipsImage = bitmap.ToVips();
             vipsImage.WriteToFile("gdi-to-vips.png");
-            bitmap = vipsImage.ToBitmap();
+
+            using (bitmap)
+            {
+                bitmap = vipsImage.ToBitmap();
+            }
+
             bitmap.Save("vips-to-gdi.png", ImageFormat.Png);
 
-            /*vipsImage = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
-            bitmap = vipsImage.ToBitmap();
+            /*using var vipsImage2 = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+            using (bitmap)
+            {
+                bitmap = vipsImage.ToBitmap();
+            }
             bitmap.Save("vips-to-gdi2.png", ImageFormat.Png);
-            var image2 = bitmap.ToVips();
+            using var image2 = bitmap.ToVips();
             image2.WriteToFile("gdi-to-vips2.png");*/
 
-            return "See gdi-to-vips.png";
+            Console.WriteLine("See gdi-to-vips.png");
         }
     }
 }

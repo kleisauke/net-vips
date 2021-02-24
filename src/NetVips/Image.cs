@@ -58,24 +58,37 @@ namespace NetVips
 
                 if (image.Format != Enums.BandFormat.Float && image.Format != Enums.BandFormat.Double)
                 {
-                    image = image.Cast(Enums.BandFormat.Float);
+                    using (image)
+                    {
+                        image = image.Cast(Enums.BandFormat.Float);
+                    }
                 }
 
                 var newFormat = image.Format == Enums.BandFormat.Double
                     ? Enums.BandFormat.Dpcomplex
                     : Enums.BandFormat.Complex;
 
-                image = image.Copy(format: newFormat, bands: image.Bands / 2);
+                using (image)
+                {
+                    image = image.Copy(format: newFormat, bands: image.Bands / 2);
+                }
             }
 
-            image = func(image);
+            using (image)
+            {
+                image = func(image);
+            }
+
             if (originalFormat != Enums.BandFormat.Complex && originalFormat != Enums.BandFormat.Dpcomplex)
             {
                 var newFormat = image.Format == Enums.BandFormat.Dpcomplex
                     ? Enums.BandFormat.Double
                     : Enums.BandFormat.Float;
 
-                image = image.Copy(format: newFormat, bands: image.Bands * 2);
+                using (image)
+                {
+                    image = image.Copy(format: newFormat, bands: image.Bands * 2);
+                }
             }
 
             return image;
@@ -183,10 +196,8 @@ namespace NetVips
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
         public static string FindLoadStream(Stream stream)
         {
-            using (var source = SourceStream.NewFromStream(stream))
-            {
-                return FindLoadSource(source);
-            }
+            using var source = SourceStream.NewFromStream(stream);
+            return FindLoadSource(source);
         }
 
         #endregion
@@ -200,11 +211,11 @@ namespace NetVips
         /// This method can load images in any format supported by vips. The
         /// filename can include load options, for example:
         /// <code language="lang-csharp">
-        /// var image = Image.NewFromFile("fred.jpg[shrink=2]");
+        /// using var image = Image.NewFromFile("fred.jpg[shrink=2]");
         /// </code>
         /// You can also supply options as keyword arguments, for example:
         /// <code language="lang-csharp">
-        /// var image = Image.NewFromFile("fred.jpg", new VOption
+        /// using var image = Image.NewFromFile("fred.jpg", new VOption
         /// {
         ///     {"shrink", 2}
         /// });
@@ -454,18 +465,16 @@ namespace NetVips
                 throw new VipsException("unable to load from source");
             }
 
-            using (var blob = new VipsBlob(ptr))
+            using var blob = new VipsBlob(ptr);
+            var buf = blob.GetData(out var length);
+
+            name = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, (ulong)length));
+            if (name == null)
             {
-                var buf = blob.GetData(out var length);
-
-                name = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, (ulong)length));
-                if (name == null)
-                {
-                    throw new VipsException("unable to load from source");
-                }
-
-                return Operation.Call(name, options, blob) as Image;
+                throw new VipsException("unable to load from source");
             }
+
+            return Operation.Call(name, options, blob) as Image;
 
             #endregion
         }
@@ -643,7 +652,7 @@ namespace NetVips
         /// values 1, 2, 3, 4, you can make a one-band, 2x2 uchar image from
         /// it like this:
         /// <code language="lang-csharp">
-        /// var image = Image.NewFromMemory(data, 2, 2, 1, Enums.BandFormat.Uchar);
+        /// using var image = Image.NewFromMemory(data, 2, 2, 1, Enums.BandFormat.Uchar);
         /// </code>
         /// A reference is kept to the data object, so it will not be
         /// garbage-collected until the returned image is garbage-collected.
@@ -773,11 +782,12 @@ namespace NetVips
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image NewFromImage(Image value)
         {
-            var pixel = (Black(1, 1) + value).Cast(Format);
-            var image = pixel.Embed(0, 0, Width, Height, extend: Enums.Extend.Copy);
-            image = image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
+            using var black = Black(1, 1);
+            using var pixel = black + value;
+            using var cast = pixel.Cast(Format);
+            using var image = cast.Embed(0, 0, Width, Height, extend: Enums.Extend.Copy);
+            return image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
                 yoffset: Yoffset);
-            return image;
         }
 
         /// <summary>
@@ -793,11 +803,12 @@ namespace NetVips
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image NewFromImage(params double[] doubles)
         {
-            var pixel = (Black(1, 1) + doubles).Cast(Format);
-            var image = pixel.Embed(0, 0, Width, Height, extend: Enums.Extend.Copy);
-            image = image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
+            using var black = Black(1, 1);
+            using var pixel = black + doubles;
+            using var cast = pixel.Cast(Format);
+            using var image = cast.Embed(0, 0, Width, Height, extend: Enums.Extend.Copy);
+            return image.Copy(interpretation: Interpretation, xres: Xres, yres: Yres, xoffset: Xoffset,
                 yoffset: Yoffset);
-            return image;
         }
 
         /// <summary>
@@ -1018,10 +1029,8 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to stream.</exception>
         public void WriteToStream(Stream stream, string formatString, VOption kwargs = null)
         {
-            using (var target = TargetStream.NewFromStream(stream))
-            {
-                WriteToTarget(target, formatString, kwargs);
-            }
+            using var target = TargetStream.NewFromStream(stream);
+            WriteToTarget(target, formatString, kwargs);
         }
 
 
@@ -1172,10 +1181,8 @@ namespace NetVips
                 throw new VipsException($"unable to get {name}");
             }
 
-            using (var gv = new GValue(gvCopy))
-            {
-                return gv.Get();
-            }
+            using var gv = new GValue(gvCopy);
+            return gv.Get();
         }
 
         /// <summary>
@@ -1224,12 +1231,10 @@ namespace NetVips
         /// converted to the GType, if possible.</param>
         public override void Set(IntPtr gtype, string name, object value)
         {
-            using (var gv = new GValue())
-            {
-                gv.SetType(gtype);
-                gv.Set(value);
-                VipsImage.Set(this, name, in gv.Struct);
-            }
+            using var gv = new GValue();
+            gv.SetType(gtype);
+            gv.Set(value);
+            VipsImage.Set(this, name, in gv.Struct);
         }
 
         /// <summary>
@@ -1291,7 +1296,7 @@ namespace NetVips
         /// </remarks>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = in.Scale(exp: double, log: bool);
+        /// using Image @out = in.Scale(exp: double, log: bool);
         /// </code>
         /// </example>
         /// <param name="exp">Exponent for log scale.</param>
@@ -1319,7 +1324,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = cond.Ifthenelse(in1, in2, blend: bool);
+        /// using Image @out = cond.Ifthenelse(in1, in2, blend: bool);
         /// </code>
         /// </example>
         /// <param name="in1">Source for TRUE pixels.</param>
@@ -1342,15 +1347,8 @@ namespace NetVips
                 matchImage = this;
             }
 
-            if (!(in1 is Image))
-            {
-                in1 = Imageize(matchImage, in1);
-            }
-
-            if (!(in2 is Image))
-            {
-                in2 = Imageize(matchImage, in2);
-            }
+            using var im1 = in1 is Image ? null : Imageize(matchImage, in1);
+            using var im2 = in2 is Image ? null : Imageize(matchImage, in2);
 
             var options = new VOption();
 
@@ -1359,7 +1357,7 @@ namespace NetVips
                 options.Add(nameof(blend), blend);
             }
 
-            return this.Call("ifthenelse", options, in1, in2) as Image;
+            return this.Call("ifthenelse", options, im1 ?? in1, im2 ?? in2) as Image;
         }
 
         /// <summary>
@@ -1367,7 +1365,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = index.Case(10.5, 20.5);
+        /// using Image @out = index.Case(10.5, 20.5);
         /// </code>
         /// </example>
         /// <param name="doubles">Array of constants.</param>
@@ -1380,7 +1378,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = index.Case(10, 20);
+        /// using Image @out = index.Case(10, 20);
         /// </code>
         /// </example>
         /// <param name="ints">Array of constants.</param>
@@ -1393,7 +1391,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = index.Case(images);
+        /// using Image @out = index.Case(images);
         /// </code>
         /// </example>
         /// <param name="images">Array of case images.</param>
@@ -1406,7 +1404,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = index.Case(image, 10);
+        /// using Image @out = index.Case(image, 10);
         /// </code>
         /// </example>
         /// <param name="objects">Array of mixed images and constants.</param>
@@ -1419,7 +1417,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(127.5, 255.0);
+        /// using Image @out = image.Bandjoin(127.5, 255.0);
         /// </code>
         /// </example>
         /// <param name="doubles">Array of constants.</param>
@@ -1432,7 +1430,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(255, 128);
+        /// using Image @out = image.Bandjoin(255, 128);
         /// </code>
         /// </example>
         /// <param name="ints">Array of constants.</param>
@@ -1445,7 +1443,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(image2, image3);
+        /// using Image @out = image.Bandjoin(image2, image3);
         /// </code>
         /// </example>
         /// <param name="images">Array of images.</param>
@@ -1458,7 +1456,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandjoin(image2, 255);
+        /// using Image @out = image.Bandjoin(image2, 255);
         /// </code>
         /// </example>
         /// <param name="objects">Array of mixed images and constants.</param>
@@ -1471,7 +1469,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandrank(other, index: int);
+        /// using Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
         /// <param name="doubles">Array of constants.</param>
@@ -1494,7 +1492,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandrank(other, index: int);
+        /// using Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
         /// <param name="ints">Array of constants.</param>
@@ -1508,7 +1506,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandrank(other, index: int);
+        /// using Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
         /// <param name="images">Array of input images.</param>
@@ -1531,7 +1529,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandrank(other, index: int);
+        /// using Image @out = image.Bandrank(other, index: int);
         /// </code>
         /// </example>
         /// <param name="other">Input image.</param>
@@ -1545,7 +1543,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Bandrank(new object[] { image2, 255 }, index: int);
+        /// using Image @out = image.Bandrank(new object[] { image2, 255 }, index: int);
         /// </code>
         /// </example>
         /// <param name="objects">Array of mixed images and constants.</param>
@@ -1568,7 +1566,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: Enums.Interpretation, premultiplied: bool);
+        /// using Image @out = image.Composite(images, modes, x: int[], y: int[], compositingSpace: Enums.Interpretation, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="images">Array of input images.</param>
@@ -1611,7 +1609,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = base.Composite(overlay, mode, x: int, y: int, compositingSpace: Enums.Interpretation, premultiplied: bool);
+        /// using Image @out = base.Composite(overlay, mode, x: int, y: int, compositingSpace: Enums.Interpretation, premultiplied: bool);
         /// </code>
         /// </example>
         /// <param name="overlay">Overlay image.</param>
@@ -1630,7 +1628,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// Image @out = input.Crop(left, top, width, height);
+        /// using Image @out = input.Crop(left, top, width, height);
         /// </code>
         /// </example>
         /// <param name="left">Left edge of extract area.</param>
@@ -2099,7 +2097,7 @@ namespace NetVips
         /// You can use this function to update user-interfaces with
         /// progress feedback, for example:
         /// <code language="lang-csharp">
-        /// var image = Image.NewFromFile("huge.jpg", access: Enums.Access.Sequential);
+        /// using var image = Image.NewFromFile("huge.jpg", access: Enums.Access.Sequential);
         ///
         /// var progress = new Progress&lt;int&gt;(percent =>
         /// {
@@ -2185,7 +2183,7 @@ namespace NetVips
         /// <remarks>
         /// Use `[]` to pull out band elements from an image. For example:
         /// <code language="lang-csharp">
-        /// var green = rgbImage[1];
+        /// using var green = rgbImage[1];
         /// </code>
         /// Will make a new one-band image from band 1 (the middle band).
         /// </remarks>
@@ -2193,46 +2191,40 @@ namespace NetVips
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image this[int i]
         {
-            get => BandExists(i) ? this.Call("extract_band", i) as Image : null;
+            get => BandExists(i) ? ExtractBand(i) : null;
             set
             {
                 // number of bands to the left and right of value
                 var nLeft = SMath.Min(Bands, SMath.Max(0, i));
                 var nRight = SMath.Min(Bands, SMath.Max(0, Bands - 1 - i));
                 var offset = Bands - nRight;
-                var componentsList = new List<Image>();
-                if (nLeft > 0)
+                using var left = nLeft > 0 ? ExtractBand(0, n: nLeft) : null;
+                using var right = nRight > 0 ? ExtractBand(offset, n: nRight) : null;
+
+                var oldHandle = IntPtr.Zero;
+                try
                 {
-                    var image = this.Call("extract_band", new VOption
+                    oldHandle = DangerousGetHandle();
+                    if (left == null)
                     {
-                        {"n", nLeft}
-                    }, 0) as Image;
-                    componentsList.Add(image);
-                }
-
-                componentsList.Add(value);
-
-                if (nRight > 0)
-                {
-                    var image = this.Call("extract_band", new VOption
+                        using var bandImage = value.Bandjoin(right);
+                        SetHandle(bandImage.ObjectRef());
+                    }
+                    else if (right == null)
                     {
-                        {"n", nRight}
-                    }, offset) as Image;
-                    componentsList.Add(image);
+                        using var bandImage = left.Bandjoin(value);
+                        SetHandle(bandImage.ObjectRef());
+                    }
+                    else
+                    {
+                        using var bandImage = left.Bandjoin(value, right);
+                        SetHandle(bandImage.ObjectRef());
+                    }
                 }
-
-                var head = componentsList[0];
-
-                var components = new object[componentsList.Count - 1];
-                for (var index = 1; index < componentsList.Count; index++)
+                finally
                 {
-                    ref var component = ref components[index - 1];
-                    component = componentsList[index];
-                }
-
-                if (this.Call("bandjoin", head, components) is Image bandImage)
-                {
-                    SetHandle(bandImage.handle);
+                    if (oldHandle != IntPtr.Zero)
+                        Internal.GObject.Unref(oldHandle);
                 }
             }
         }

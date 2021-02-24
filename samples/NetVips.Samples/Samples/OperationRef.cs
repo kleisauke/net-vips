@@ -16,7 +16,7 @@ namespace NetVips.Samples
 
         public const string Filename = "images/lichtenstein.jpg";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             Cache.Max = 0;
 
@@ -55,8 +55,6 @@ namespace NetVips.Samples
 
                     Interlocked.Decrement(ref count);
                 });
-
-            return "All done!";
         }
     }
 }

@@ -11,35 +11,33 @@ namespace NetVips.Samples
         public const int TileSize = 50;
         public const string Filename = "images/sample2.v";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             // Build test image
-            var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
-            im = im.Replicate(TileSize, TileSize);
+            using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+            using var test = im.Replicate(TileSize, TileSize);
 
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
 
-            var progress = new Progress<int>(percent =>
-            {
-                Console.Write($"\r{percent}% complete");
-            });
+            var progress = new Progress<int>(percent => Console.Write($"\r{percent}% complete"));
             // Uncomment to kill the image after 5 sec
-            im.SetProgress(progress/*, cts.Token*/);
+            test.SetProgress(progress/*, cts.Token*/);
 
             try
             {
                 // Save image pyramid
-                im.Dzsave("images/image-pyramid");
+                test.Dzsave("images/image-pyramid");
             }
-            catch (VipsException exception) {
+            catch (VipsException exception)
+            {
                 // Catch and log the VipsException, 
                 // because we may block the evaluation of this image
                 Console.WriteLine("\n" + exception.Message);
             }
 
             Console.WriteLine();
-            return "See images/image-pyramid.dzi";
+            Console.WriteLine("See images/image-pyramid.dzi");
         }
     }
 }

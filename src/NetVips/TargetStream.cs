@@ -67,7 +67,6 @@ namespace NetVips
         /// </summary>
         private void Finish()
         {
-            // TODO: Should we Close() instead?
             _stream.Flush();
         }
     }

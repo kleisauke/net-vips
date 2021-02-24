@@ -1,5 +1,7 @@
 namespace NetVips.Samples
 {
+    using System;
+
     public class Smartcrop : ISample
     {
         public string Name => "Smartcrop";
@@ -7,12 +9,12 @@ namespace NetVips.Samples
 
         public const string Filename = "images/equus_quagga.jpg";
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
-            var image = Image.Thumbnail(Filename, 300, height: 300, crop: Enums.Interesting.Attention);
+            using var image = Image.Thumbnail(Filename, 300, height: 300, crop: Enums.Interesting.Attention);
             image.WriteToFile("smartcrop.jpg");
 
-            return "See smartcrop.jpg";
+            Console.WriteLine("See smartcrop.jpg");
         }
     }
 }

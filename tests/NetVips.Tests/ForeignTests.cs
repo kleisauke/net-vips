@@ -108,20 +108,18 @@ namespace NetVips.Tests
 
         internal void SaveLoadStream(string format, string options, Image im, int maxDiff = 0)
         {
-            using (var stream = new MemoryStream())
-            {
-                im.WriteToStream(stream, format + options);
+            using var stream = new MemoryStream();
+            im.WriteToStream(stream, format + options);
 
-                // Reset to start position
-                stream.Seek(0, SeekOrigin.Begin);
+            // Reset to start position
+            stream.Seek(0, SeekOrigin.Begin);
 
-                var x = Image.NewFromStream(stream);
+            var x = Image.NewFromStream(stream);
 
-                Assert.Equal(x.Width, im.Width);
-                Assert.Equal(x.Height, im.Height);
-                Assert.Equal(x.Bands, im.Bands);
-                Assert.True((im - x).Abs().Max() <= maxDiff);
-            }
+            Assert.Equal(x.Width, im.Width);
+            Assert.Equal(x.Height, im.Height);
+            Assert.Equal(x.Bands, im.Bands);
+            Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
         internal void SaveBufferTempFile(string saver, string suf, Image im, int maxDiff = 0)
@@ -409,24 +407,20 @@ namespace NetVips.Tests
         {
             Skip.IfNot(Helper.Have("jpegload_source"), "no jpeg source support, skipping test");
 
-            using (var stream = new MemoryStream())
-            {
-                // Set the beginning of the stream to an arbitrary but carefully chosen number.
-                stream.Position = 42;
+            // Set the beginning of the stream to an arbitrary but carefully chosen number.
+            using var stream = new MemoryStream { Position = 42 };
+            _colour.WriteToStream(stream, ".jpg");
 
-                _colour.WriteToStream(stream, ".jpg");
+            // Set the current position of the stream to the chosen number.
+            stream.Position = 42;
 
-                // Set the current position of the stream to the chosen number.
-                stream.Position = 42;
+            // We should be able to read from this stream, even if it starts at any position.
+            var x = Image.NewFromStream(stream, access: Enums.Access.Sequential);
 
-                // We should be able to read from this stream, even if it starts at any position.
-                var x = Image.NewFromStream(stream, access: Enums.Access.Sequential);
-
-                Assert.Equal(_colour.Width, x.Width);
-                Assert.Equal(_colour.Height, x.Height);
-                Assert.Equal(_colour.Bands, x.Bands);
-                Assert.True((_colour - x).Abs().Max() <= 80);
-            }
+            Assert.Equal(_colour.Width, x.Width);
+            Assert.Equal(_colour.Height, x.Height);
+            Assert.Equal(_colour.Bands, x.Bands);
+            Assert.True((_colour - x).Abs().Max() <= 80);
         }
 
         [SkippableFact]

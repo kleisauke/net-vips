@@ -25,18 +25,20 @@ namespace NetVips.Samples
         /// <returns>A new <see cref="Image"/>.</returns>
         public Image Wobble(Image image)
         {
-            var xy = Image.Xyz(image.Width / 20, image.Height / 20);
-            var xDistort = Image.Gaussnoise(xy.Width, xy.Height);
-            var yDistort = Image.Gaussnoise(xy.Width, xy.Height);
-            xy += xDistort.Bandjoin(yDistort) / 150;
-            xy = xy.Resize(20);
-            xy *= 20;
+            using var xy = Image.Xyz(image.Width / 20, image.Height / 20);
+            using var xDistort = Image.Gaussnoise(xy.Width, xy.Height);
+            using var yDistort = Image.Gaussnoise(xy.Width, xy.Height);
+            using var join = xDistort.Bandjoin(yDistort);
+            using var divide = join / 150;
+            using var add = xy + divide;
+            using var resize = add.Resize(20);
+            using var scale = resize * 20;
 
             // apply the warp
-            return image.Mapim(xy);
+            return image.Mapim(scale);
         }
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             var random = new Random();
 
@@ -51,54 +53,77 @@ namespace NetVips.Samples
                     continue;
                 }
 
-                var letter = Image.Text(c.ToString(), dpi: 600);
+                using var letter = Image.Text(c.ToString(), dpi: 600);
 
-                var image = letter.Gravity(Enums.CompassDirection.Centre, letter.Width + 50, letter.Height + 50);
+                using var image = letter.Gravity(Enums.CompassDirection.Centre, letter.Width + 50, letter.Height + 50);
 
                 // random scale and rotate
-                image = image.Similarity(scale: random.NextDouble(0, 0.2) + 0.8, angle: random.Next(0, 40) - 20);
+                using var similarity = image.Similarity(scale: random.NextDouble(0, 0.2) + 0.8,
+                    angle: random.Next(0, 40) - 20);
 
                 // random wobble
-                image = Wobble(image);
+                using var wobble = Wobble(similarity);
 
                 // random colour
                 var colour = Enumerable.Range(1, 3).Select(i => random.Next(0, 255)).ToArray();
-                image = image.Ifthenelse(colour, 0, blend: true);
+                using var ifthenelse = wobble.Ifthenelse(colour, 0, blend: true);
 
                 // tag as 9-bit srgb
-                image = image.Copy(interpretation: Enums.Interpretation.Srgb).Cast(Enums.BandFormat.Uchar);
+                using var srgb = ifthenelse.Copy(interpretation: Enums.Interpretation.Srgb);
+                using var cast = srgb.Cast(Enums.BandFormat.Uchar);
 
                 // position at our write position in the image
-                image = image.Embed(xPosition, 0, image.Width + xPosition, image.Height);
+                using var embed = cast.Embed(xPosition, 0, image.Width + xPosition, image.Height);
 
-                textLayer += image;
-                textLayer = textLayer.Cast(Enums.BandFormat.Uchar);
+                using (textLayer)
+                {
+                    using var add = textLayer + embed;
+                    textLayer = add.Cast(Enums.BandFormat.Uchar);
+                }
 
                 xPosition += letter.Width;
             }
 
             // remove any unused edges
             var trim = textLayer.FindTrim(background: new double[] { 0 });
-            textLayer = textLayer.Crop((int)trim[0], (int)trim[1], (int)trim[2], (int)trim[3]);
+            using (textLayer)
+            {
+                textLayer = textLayer.Crop((int)trim[0], (int)trim[1], (int)trim[2], (int)trim[3]);
+            }
 
             // make an alpha for the text layer: just a mono version of the image, but scaled
             // up so the letters themselves are not transparent
-            var alpha = (textLayer.Colourspace(Enums.Interpretation.Bw) * 3).Cast(Enums.BandFormat.Uchar);
-            textLayer = textLayer.Bandjoin(alpha);
+            using var mono = textLayer.Colourspace(Enums.Interpretation.Bw);
+            using var scale = mono * 3;
+            using var alpha = scale.Cast(Enums.BandFormat.Uchar);
+            using (textLayer)
+            {
+                textLayer = textLayer.Bandjoin(alpha);
+            }
 
             //  make a white background with random speckles
-            var speckles = Image.Gaussnoise(textLayer.Width, textLayer.Height, mean: 400, sigma: 200);
-            var background = Enumerable.Range(1, 2).Aggregate(speckles,
-                    (a, b) => a.Bandjoin(Image.Gaussnoise(textLayer.Width, textLayer.Height, mean: 400, sigma: 200)))
-                .Copy(interpretation: Enums.Interpretation.Srgb)
-                .Cast(Enums.BandFormat.Uchar);
+            using var speckles = Image.Gaussnoise(textLayer.Width, textLayer.Height, mean: 400, sigma: 200);
+            using var background = Enumerable.Range(1, 2).Aggregate(speckles,
+                (a, b) =>
+                {
+                    using (a)
+                    {
+                        using var speckles2 =
+                            Image.Gaussnoise(textLayer.Width, textLayer.Height, mean: 400, sigma: 200);
+                        using var join = a.Bandjoin(speckles2);
+                        using var srgb = join.Copy(interpretation: Enums.Interpretation.Srgb);
+                        return srgb.Cast(Enums.BandFormat.Uchar);
+                    }
+                });
 
             // composite the text over the background
-            var final = background.Composite(textLayer, Enums.BlendMode.Over);
+            using (textLayer)
+            {
+                using var final = background.Composite(textLayer, Enums.BlendMode.Over);
+                final.WriteToFile("captcha.jpg");
+            }
 
-            final.WriteToFile("captcha.jpg");
-
-            return "See captcha.jpg";
+            Console.WriteLine("See captcha.jpg");
         }
     }
 }

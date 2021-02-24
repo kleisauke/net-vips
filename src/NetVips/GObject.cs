@@ -72,7 +72,7 @@ namespace NetVips
                         return;
                     }
 
-                    var image = new Image(imagePtr);
+                    using var image = new Image(imagePtr);
                     image.ObjectRef();
 
                     var progressStruct = progressPtr.Dereference<VipsProgress>();
@@ -132,10 +132,10 @@ namespace NetVips
         /// <summary>
         /// Increases the reference count of object.
         /// </summary>
-        internal void ObjectRef()
+        internal IntPtr ObjectRef()
         {
             // logger.Debug($"Ref: GObject = {handle}");
-            Internal.GObject.Ref(handle);
+            return Internal.GObject.Ref(handle);
         }
 
         /// <summary>

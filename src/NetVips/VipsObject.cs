@@ -99,16 +99,14 @@ namespace NetVips
             }
 
             var gtype = pspec.Value.ValueType;
-            using (var gv = new GValue())
-            {
-                gv.SetType(gtype);
+            using var gv = new GValue();
+            gv.SetType(gtype);
 
-                // this will add a reference for GObject properties, that ref will be
-                // unreferenced when the GValue is finalized
-                Internal.GObject.GetProperty(this, name, ref gv.Struct);
+            // this will add a reference for GObject properties, that ref will be
+            // unreferenced when the GValue is finalized
+            Internal.GObject.GetProperty(this, name, ref gv.Struct);
 
-                return gv.Get();
-            }
+            return gv.Get();
         }
 
         /// <summary>
@@ -120,13 +118,11 @@ namespace NetVips
         public virtual void Set(IntPtr gtype, string name, object value)
         {
             // logger.Debug($"Set: gtype = {gtype}, name = {name}, value = {value}");
-            using (var gv = new GValue())
-            {
-                gv.SetType(gtype);
-                gv.Set(value);
+            using var gv = new GValue();
+            gv.SetType(gtype);
+            gv.Set(value);
 
-                Internal.GObject.SetProperty(this, name, in gv.Struct);
-            }
+            Internal.GObject.SetProperty(this, name, in gv.Struct);
         }
 
         /// <summary>

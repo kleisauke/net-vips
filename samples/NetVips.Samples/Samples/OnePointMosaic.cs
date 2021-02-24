@@ -1,7 +1,7 @@
 namespace NetVips.Samples
 {
+    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// From: https://github.com/libvips/nip2/tree/master/share/nip2/data/examples/1_point_mosaic
@@ -11,60 +11,87 @@ namespace NetVips.Samples
         public string Name => "1 Point Mosaic";
         public string Category => "Mosaicing";
 
-        public Dictionary<string, int[]> ImagesMarksDict = new Dictionary<string, int[]>
+        public struct Point
         {
-            {"images/cd1.1.jpg", new[] {489, 140}},
-            {"images/cd1.2.jpg", new[] {66, 141}},
-            {"images/cd2.1.jpg", new[] {453, 40}},
-            {"images/cd2.2.jpg", new[] {15, 43}},
-            {"images/cd3.1.jpg", new[] {500, 122}},
-            {"images/cd3.2.jpg", new[] {65, 121}},
-            {"images/cd4.1.jpg", new[] {495, 58}},
-            {"images/cd4.2.jpg", new[] {40, 57}}
+            public int X, Y;
+
+            public Point(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
+
+        public List<string> Images = new List<string>
+        {
+            "images/cd1.1.jpg",
+            "images/cd1.2.jpg",
+            "images/cd2.1.jpg",
+            "images/cd2.2.jpg",
+            "images/cd3.1.jpg",
+            "images/cd3.2.jpg",
+            "images/cd4.1.jpg",
+            "images/cd4.2.jpg"
         };
 
-        public List<int[]> VerticalMarks = new List<int[]>
+        public List<Point> HorizontalMarks = new List<Point>
         {
-            new[] {388, 44},
-            new[] {364, 346},
-            new[] {384, 17},
-            new[] {385, 629},
-            new[] {527, 42},
-            new[] {503, 959}
+            new Point(489, 140),
+            new Point(66, 141),
+            new Point(453, 40),
+            new Point(15, 43),
+            new Point(500, 122),
+            new Point(65, 121),
+            new Point(495, 58),
+            new Point(40, 57)
         };
 
-        public string Execute(string[] args)
+        public List<Point> VerticalMarks = new List<Point>
+        {
+            new Point(364, 346),
+            new Point(388, 44),
+            new Point(385, 629),
+            new Point(384, 17),
+            new Point(503, 959),
+            new Point(527, 42)
+        };
+
+        public void Execute(string[] args)
         {
             Image mosaicedImage = null;
-
-            for (var i = 0; i < ImagesMarksDict.Count; i += 2)
+            for (var i = 0; i < Images.Count; i += 2)
             {
-                var items = ImagesMarksDict.Skip(i).Take(2).ToList();
-
-                var firstItem = items[0];
-                var secondItem = items[1];
-
-                var image = Image.NewFromFile(firstItem.Key);
-                var secondaryImage = Image.NewFromFile(secondItem.Key);
-                var horizontalPart = image.Mosaic(secondaryImage, Enums.Direction.Horizontal, firstItem.Value[0],
-                    firstItem.Value[1], secondItem.Value[0], secondItem.Value[1]);
+                using var image = Image.NewFromFile(Images[i]);
+                using var secondaryImage = Image.NewFromFile(Images[i + 1]);
 
                 if (mosaicedImage == null)
                 {
-                    mosaicedImage = horizontalPart;
+                    mosaicedImage = image.Mosaic(secondaryImage, Enums.Direction.Horizontal,
+                        HorizontalMarks[i].X, HorizontalMarks[i].Y,
+                        HorizontalMarks[i + 1].X, HorizontalMarks[i + 1].Y);
                 }
                 else
                 {
-                    var verticalMarks = VerticalMarks.Skip(i - 2).Take(2).ToList();
-                    mosaicedImage = mosaicedImage.Mosaic(horizontalPart, Enums.Direction.Vertical, verticalMarks[1][0],
-                        verticalMarks[1][1], verticalMarks[0][0], verticalMarks[0][1]);
+                    using var horizontalPart = image.Mosaic(secondaryImage, Enums.Direction.Horizontal,
+                        HorizontalMarks[i].X, HorizontalMarks[i].Y,
+                        HorizontalMarks[i + 1].X, HorizontalMarks[i + 1].Y);
+
+                    using (mosaicedImage)
+                    {
+                        mosaicedImage = mosaicedImage.Mosaic(horizontalPart, Enums.Direction.Vertical,
+                            VerticalMarks[i - 2].X, VerticalMarks[i - 2].Y,
+                            VerticalMarks[i - 2 + 1].X, VerticalMarks[i - 2 + 1].Y);
+                    }
                 }
             }
 
-            mosaicedImage = mosaicedImage.Globalbalance();
-            mosaicedImage.WriteToFile("1-pt-mosaic.jpg");
+            using (mosaicedImage)
+            {
+                using var balanced = mosaicedImage.Globalbalance();
+                balanced.WriteToFile("1-pt-mosaic.jpg");
+            }
 
-            return "See 1-pt-mosaic.jpg";
+            Console.WriteLine("See 1-pt-mosaic.jpg");
         }
     }
 }

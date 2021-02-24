@@ -46,19 +46,17 @@ namespace NetVips
                     input = Console.ReadLine();
                 }
 
-                if (int.TryParse(input, out var userChoice) && TryGetSample(userChoice, out var sample))
+                if (int.TryParse(input, out var userChoice))
                 {
-                    Console.WriteLine($"Executing sample: {sample.Name}");
-                    var result = sample.Execute(sampleArgs);
-                    Console.WriteLine("Sample successfully executed!");
-                    if (result != null)
+                    if (!TryGetSample(userChoice, out var sample))
                     {
-                        Console.WriteLine($"Result: {result}");
+                        Console.WriteLine("Sample doesn't exists, try again");
+                        continue;
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Sample doesn't exists, try again");
+
+                    Console.WriteLine($"Executing sample: {sample.Name}");
+                    sample.Execute(sampleArgs);
+                    Console.WriteLine("Sample successfully executed!");
                 }
 
                 // Clear any arguments

@@ -29,15 +29,17 @@ namespace NetVips.Samples
             return image.Crop(x, y, width, height);
         }
 
-        public string Execute(string[] args)
+        public void Execute(string[] args)
         {
             using var fileStream = File.OpenRead(Filename);
             using var image = Image.NewFromStream(fileStream);
 
-            Parallel.For(0, 1000, new ParallelOptions { MaxDegreeOfParallelism = NetVips.Concurrency },
-                i => RandomCrop(image, TileSize).WriteToFile($"x_{i}.png"));
-
-            return "Done!";
+            Parallel.For(0, 1000, new ParallelOptions {MaxDegreeOfParallelism = NetVips.Concurrency},
+                i =>
+                {
+                    using var crop = RandomCrop(image, TileSize);
+                    crop.WriteToFile($"x_{i}.png");
+                });
         }
     }
 }

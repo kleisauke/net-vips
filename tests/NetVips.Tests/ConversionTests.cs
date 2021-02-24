@@ -62,10 +62,7 @@ namespace NetVips.Tests
         internal void RunUnary(IEnumerable<Image> images, Func<object, object> func,
             Enums.BandFormat[] formats = null)
         {
-            if (formats == null)
-            {
-                formats = Helper.AllFormats;
-            }
+            formats ??= Helper.AllFormats;
 
             foreach (var x in images)
             {
@@ -79,10 +76,7 @@ namespace NetVips.Tests
         internal void RunBinary(IEnumerable<Image> images, Func<object, object, object> func,
             Enums.BandFormat[] formats = null)
         {
-            if (formats == null)
-            {
-                formats = Helper.AllFormats;
-            }
+            formats ??= Helper.AllFormats;
 
             foreach (var x in images)
             {

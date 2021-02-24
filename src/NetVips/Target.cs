@@ -22,7 +22,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new target that is attached to the descriptor. For example:
         /// <code language="lang-csharp">
-        /// var target = Target.NewToDescriptor(1);
+        /// using var target = Target.NewToDescriptor(1);
         /// </code>
         /// Makes a descriptor attached to stdout.
         ///
@@ -50,7 +50,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new target that will write to the named file. For example:
         /// <code language="lang-csharp">
-        /// var target = Target.NewToFile("myfile.jpg");
+        /// using var target = Target.NewToFile("myfile.jpg");
         /// </code>
         /// You can pass this target to (for example) <see cref="Image.WriteToTarget"/>.
         /// </remarks>
@@ -77,7 +77,7 @@ namespace NetVips
         /// <remarks>
         /// Make a new target that will write to memory. For example:
         /// <code language="lang-csharp">
-        /// var target = Target.NewToMemory();
+        /// using var target = Target.NewToMemory();
         /// </code>
         /// You can pass this target to (for example) <see cref="Image.WriteToTarget"/>.
         ///
