@@ -7,12 +7,11 @@ namespace NetVips
     using System.Text;
     using System.Threading;
     using Internal;
-    using SMath = System.Math;
 
     /// <summary>
     /// Wrap a <see cref="VipsImage"/> object.
     /// </summary>
-    public sealed partial class Image : VipsObject
+    public partial class Image : VipsObject
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -552,10 +551,13 @@ namespace NetVips
                 throw new VipsException("unable to make image from matrix");
             }
 
-            var image = new Image(vi);
-            image.Set(GValue.GDoubleType, nameof(scale), scale);
-            image.Set(GValue.GDoubleType, nameof(offset), offset);
-            return image;
+            using var image = new Image(vi);
+            return image.Mutate(mutable =>
+            {
+                // be careful to set them as double
+                mutable.Set(GValue.GDoubleType, nameof(scale), scale);
+                mutable.Set(GValue.GDoubleType, nameof(offset), offset);
+            });
         }
 
         /// <summary>
@@ -597,10 +599,13 @@ namespace NetVips
                 throw new VipsException("unable to make image from matrix");
             }
 
-            var image = new Image(vi);
-            image.Set(GValue.GDoubleType, nameof(scale), scale);
-            image.Set(GValue.GDoubleType, nameof(offset), offset);
-            return image;
+            using var image = new Image(vi);
+            return image.Mutate(mutable =>
+            {
+                // be careful to set them as double
+                mutable.Set(GValue.GDoubleType, nameof(scale), scale);
+                mutable.Set(GValue.GDoubleType, nameof(offset), offset);
+            });
         }
 
         /// <summary>
@@ -637,10 +642,13 @@ namespace NetVips
                 throw new VipsException("unable to make image from matrix");
             }
 
-            var image = new Image(vi);
-            image.Set(GValue.GDoubleType, nameof(scale), scale);
-            image.Set(GValue.GDoubleType, nameof(offset), offset);
-            return image;
+            using var image = new Image(vi);
+            return image.Mutate(mutable =>
+            {
+                // be careful to set them as double
+                mutable.Set(GValue.GDoubleType, nameof(scale), scale);
+                mutable.Set(GValue.GDoubleType, nameof(offset), offset);
+            });
         }
 
         /// <summary>
@@ -1102,7 +1110,7 @@ namespace NetVips
 
         #endregion
 
-        #region get/set metadata
+        #region get metadata
 
         /// <summary>
         /// Get the GType of an item of metadata.
@@ -1114,7 +1122,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to get the type of.</param>
         /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
         /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
-        public override IntPtr GetTypeOf(string name)
+        public new IntPtr GetTypeOf(string name)
         {
             // on libvips before 8.5, property types must be fetched separately,
             // since built-in enums were reported as ints
@@ -1153,7 +1161,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to get.</param>
         /// <returns>The metadata item as a C# value.</returns>
         /// <exception cref="VipsException">If unable to get <paramref name="name"/>.</exception>
-        public override object Get(string name)
+        public new object Get(string name)
         {
             switch (name)
             {
@@ -1219,62 +1227,6 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Set the type and value of an item of metadata.
-        /// </summary>
-        /// <remarks>
-        /// Sets the type and value of an item of metadata. Any old item of the
-        /// same name is removed. See <see cref="GValue"/> for types.
-        /// </remarks>
-        /// <param name="gtype">The GType of the metadata item to create.</param>
-        /// <param name="name">The name of the piece of metadata to create.</param>
-        /// <param name="value">The value to set as a C# value. It is
-        /// converted to the GType, if possible.</param>
-        public override void Set(IntPtr gtype, string name, object value)
-        {
-            using var gv = new GValue();
-            gv.SetType(gtype);
-            gv.Set(value);
-            VipsImage.Set(this, name, in gv.Struct);
-        }
-
-        /// <summary>
-        /// Set the value of an item of metadata.
-        /// </summary>
-        /// <remarks>
-        /// Sets the value of an item of metadata. The metadata item must already
-        /// exist.
-        /// </remarks>
-        /// <param name="name">The name of the piece of metadata to set the value of.</param>
-        /// <param name="value">The value to set as a C# value. It is
-        /// converted to the type of the metadata item, if possible.</param>
-        /// <exception cref="T:System.Exception">If metadata item <paramref name="name"/> does not exist.</exception>
-        public void Set(string name, object value)
-        {
-            var gtype = GetTypeOf(name);
-            if (gtype == IntPtr.Zero)
-            {
-                throw new Exception(
-                    $"metadata item {name} does not exist - use the Set(IntPtr, string, object) overload to create and set");
-            }
-
-            Set(gtype, name, value);
-        }
-
-        /// <summary>
-        /// Remove an item of metadata.
-        /// </summary>
-        /// <remarks>
-        /// The named metadata item is removed.
-        /// </remarks>
-        /// <param name="name">The name of the piece of metadata to remove.</param>
-        /// <returns><see langword="true"/> if the metadata is successfully removed; 
-        /// otherwise, <see langword="false"/>.</returns>
-        public bool Remove(string name)
-        {
-            return VipsImage.Remove(this, name);
-        }
-
-        /// <summary>
         /// Returns a string that represents the current image.
         /// </summary>
         /// <returns>A string that represents the current image.</returns>
@@ -1286,6 +1238,32 @@ namespace NetVips
         #endregion
 
         #region handwritten functions
+
+        /// <summary>
+        /// Mutate an image with a delegate. Inside the delegate, you can call methods
+        /// which modify the image, such as setting or removing metadata, or
+        /// modifying pixels.
+        /// </summary>
+        /// <example>
+        /// <code language="lang-csharp">
+        /// using var mutated = image.Mutate(mutable =>
+        /// {
+        ///     for (var i = 0; i &lt;= 100; i++)
+        ///     {
+        ///         var j = i / 100.0;
+        ///         mutable.DrawLine(new[] { 255.0 }, (int)(mutable.Width * j), 0, 0, (int)(mutable.Height * (1 - j)));
+        ///     }
+        /// });
+        /// </code>
+        /// </example>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public virtual Image Mutate(Action<MutableImage> action)
+        {
+            // We take a copy of the regular Image to ensure we have an unshared (unique) object.
+            using var mutable = new MutableImage(Copy());
+            action.Invoke(mutable);
+            return mutable.Image;
+        }
 
         /// <summary>
         /// Scale an image to 0 - 255.
@@ -2189,45 +2167,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="i">The band element to pull out.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image this[int i]
-        {
-            get => BandExists(i) ? ExtractBand(i) : null;
-            set
-            {
-                // number of bands to the left and right of value
-                var nLeft = SMath.Min(Bands, SMath.Max(0, i));
-                var nRight = SMath.Min(Bands, SMath.Max(0, Bands - 1 - i));
-                var offset = Bands - nRight;
-                using var left = nLeft > 0 ? ExtractBand(0, n: nLeft) : null;
-                using var right = nRight > 0 ? ExtractBand(offset, n: nRight) : null;
-
-                var oldHandle = IntPtr.Zero;
-                try
-                {
-                    oldHandle = DangerousGetHandle();
-                    if (left == null)
-                    {
-                        using var bandImage = value.Bandjoin(right);
-                        SetHandle(bandImage.ObjectRef());
-                    }
-                    else if (right == null)
-                    {
-                        using var bandImage = left.Bandjoin(value);
-                        SetHandle(bandImage.ObjectRef());
-                    }
-                    else
-                    {
-                        using var bandImage = left.Bandjoin(value, right);
-                        SetHandle(bandImage.ObjectRef());
-                    }
-                }
-                finally
-                {
-                    if (oldHandle != IntPtr.Zero)
-                        Internal.GObject.Unref(oldHandle);
-                }
-            }
-        }
+        public Image this[int i] => BandExists(i) ? ExtractBand(i) : null;
 
         /// <summary>
         /// A synonym for <see cref="Getpoint"/>.

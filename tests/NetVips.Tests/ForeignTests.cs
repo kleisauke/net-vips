@@ -22,17 +22,17 @@ namespace NetVips.Tests
             _tempDir = Helper.GetTemporaryDirectory();
 
             _colour = Image.Jpegload(Helper.JpegFile);
-            _mono = _colour[0].Copy();
+            _mono = _colour[0];
 
             // we remove the ICC profile: the RGB one will no longer be appropriate
-            _mono.Remove("icc-profile-data");
+            _mono = _mono.Mutate(x => x.Remove("icc-profile-data"));
 
-            _rad = _colour.Float2rad().Copy();
-            _rad.Remove("icc-profile-data");
+            _rad = _colour.Float2rad();
+            _rad = _rad.Mutate(x => x.Remove("icc-profile-data"));
 
             _cmyk = _colour.Bandjoin(_mono);
             _cmyk = _cmyk.Copy(interpretation: Enums.Interpretation.Cmyk);
-            _cmyk.Remove("icc-profile-data");
+            _cmyk = _cmyk.Mutate(x => x.Remove("icc-profile-data"));
             var im = Image.NewFromFile(Helper.GifFile);
             _oneBit = im > 128;
         }
@@ -195,9 +195,7 @@ namespace NetVips.Tests
 
                 // can set, save and load new orientation
                 x = Image.NewFromFile(Helper.JpegFile);
-                x = x.Copy();
-
-                x.Set("orientation", 2);
+                x = x.Mutate(im => im.Set("orientation", 2));
 
                 var filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x.WriteToFile(filename);
@@ -208,8 +206,7 @@ namespace NetVips.Tests
 
                 // can remove orientation, save, load again, orientation
                 // has reset
-                x = x.Copy();
-                x.Remove("orientation");
+                x = x.Mutate(im => im.Remove("orientation"));
 
                 filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x.WriteToFile(filename);
@@ -220,8 +217,7 @@ namespace NetVips.Tests
 
                 // autorotate load works
                 x = Image.NewFromFile(Helper.JpegFile);
-                x = x.Copy();
-                x.Set("orientation", 6);
+                x = x.Mutate(im => im.Set("orientation", 6));
 
                 filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                 x.WriteToFile(filename);
@@ -238,9 +234,7 @@ namespace NetVips.Tests
                 if (NetVips.AtLeastLibvips(8, 7))
                 {
                     x = Image.NewFromFile(Helper.JpegFile);
-                    x = x.Copy();
-
-                    x.Set(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world");
+                    x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world"));
 
                     filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                     x.WriteToFile(filename);
@@ -255,9 +249,7 @@ namespace NetVips.Tests
                     // can set, save and reload UTF16 string fields ... NetVips is 
                     // utf8, but it will be coded as utf16 and back for the XP* fields
                     x = Image.NewFromFile(Helper.JpegFile);
-                    x = x.Copy();
-
-                    x.Set(GValue.GStrType, "exif-ifd0-XPComment", "йцук");
+                    x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-XPComment", "йцук"));
 
                     filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                     x.WriteToFile(filename);
@@ -273,9 +265,7 @@ namespace NetVips.Tests
                     // encoding in the first 8 bytes ... though libexif only supports
                     // ASCII for this
                     x = Image.NewFromFile(Helper.JpegFile);
-                    x = x.Copy();
-
-                    x.Set(GValue.GStrType, "exif-ifd2-UserComment", "hello world");
+                    x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd2-UserComment", "hello world"));
 
                     filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
                     x.WriteToFile(filename);
@@ -523,8 +513,7 @@ namespace NetVips.Tests
 
             var filename = Helper.GetTemporaryFile(_tempDir, ".tif");
             var x = Image.NewFromFile(Helper.TifFile);
-            x = x.Copy();
-            x.Set("orientation", 2);
+            x = x.Mutate(im => im.Set("orientation", 2));
             x.WriteToFile(filename);
             x = Image.NewFromFile(filename);
             var y = x.Get("orientation");
@@ -532,14 +521,12 @@ namespace NetVips.Tests
 
             filename = Helper.GetTemporaryFile(_tempDir, ".tif");
             x = Image.NewFromFile(Helper.TifFile);
-            x = x.Copy();
-            x.Set("orientation", 2);
+            x = x.Mutate(im => im.Set("orientation", 2));
             x.WriteToFile(filename);
             x = Image.NewFromFile(filename);
             y = x.Get("orientation");
             Assert.Equal(2, y);
-            x = x.Copy();
-            x.Remove("orientation");
+            x = x.Mutate(im => im.Remove("orientation"));
 
             filename = Helper.GetTemporaryFile(_tempDir, ".tif");
             x.WriteToFile(filename);
@@ -549,8 +536,7 @@ namespace NetVips.Tests
 
             filename = Helper.GetTemporaryFile(_tempDir, ".tif");
             x = Image.NewFromFile(Helper.TifFile);
-            x = x.Copy();
-            x.Set("orientation", 6);
+            x = x.Mutate(im => im.Set("orientation", 6));
             x.WriteToFile(filename);
             var x1 = Image.NewFromFile(filename);
             var x2 = Image.NewFromFile(filename, kwargs: new VOption
@@ -827,8 +813,7 @@ namespace NetVips.Tests
                 var z = Image.NewFromFile(Helper.JpegFile);
                 if (z.Contains("exif-ifd0-Orientation"))
                 {
-                    x = _colour.Copy();
-                    x.Set("orientation", 6);
+                    x = _colour.Mutate(im => im.Set("orientation", 6));
                     buf = x.WebpsaveBuffer();
                     var y = Image.NewFromBuffer(buf);
                     Assert.Equal(6, y.Get("orientation"));
@@ -1154,7 +1139,7 @@ namespace NetVips.Tests
             var x = Target.NewToMemory();
             _mono.CsvsaveTarget(x);
 
-            var y = Source.NewFromMemory((byte[])x.Get("blob"));
+            var y = Source.NewFromMemory(x.Blob);
             var im = Image.CsvloadSource(y);
 
             Assert.Equal(0, (im - _mono).Abs().Max());
@@ -1175,7 +1160,7 @@ namespace NetVips.Tests
             var x = Target.NewToMemory();
             _mono.MatrixsaveTarget(x);
 
-            var y = Source.NewFromMemory((byte[])x.Get("blob"));
+            var y = Source.NewFromMemory(x.Blob);
             var im = Image.MatrixloadSource(y);
 
             Assert.Equal(0, (im - _mono).Abs().Max());
@@ -1200,7 +1185,7 @@ namespace NetVips.Tests
             var x = Target.NewToMemory();
             _mono.PpmsaveTarget(x);
 
-            var y = Source.NewFromMemory((byte[])x.Get("blob"));
+            var y = Source.NewFromMemory(x.Blob);
             var im = Image.PpmloadSource(y);
 
             Assert.Equal(0, (im - _mono).Abs().Max());
@@ -1463,8 +1448,7 @@ namespace NetVips.Tests
             var z = Image.NewFromFile(Helper.AvifFile);
             if (z.Contains("exif-ifd0-Orientation"))
             {
-                x = z.Copy();
-                x.Set("exif-ifd0-Make", "banana");
+                x = z.Mutate(im => im.Set("exif-ifd0-Make", "banana"));
 
                 buf = x.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
                 var y = Image.NewFromBuffer(buf);

@@ -14,7 +14,7 @@ namespace NetVips.Tests
         public void TestCountlines()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawLine(new double[] { 255 }, 0, 50, 100, 50);
+            im = im.Mutate(x => x.DrawLine(new double[] { 255 }, 0, 50, 100, 50));
             var nLines = im.Countlines(Enums.Direction.Horizontal);
             Assert.Equal(1, nLines);
         }
@@ -23,7 +23,7 @@ namespace NetVips.Tests
         public void TestLabelregions()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true);
+            im = im.Mutate(x => x.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true));
             var mask = im.Labelregions(out var segments);
 
             Assert.Equal(3, segments);
@@ -34,7 +34,7 @@ namespace NetVips.Tests
         public void TestErode()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true);
+            im = im.Mutate(x => x.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true));
             var im2 = im.Erode(Image.NewFromArray(new[,]
             {
                 {128, 255, 128},
@@ -51,7 +51,7 @@ namespace NetVips.Tests
         public void TestDilate()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true);
+            im = im.Mutate(x => x.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true));
             var im2 = im.Dilate(Image.NewFromArray(new[,]
             {
                 {128, 255, 128},
@@ -68,7 +68,7 @@ namespace NetVips.Tests
         public void TestRank()
         {
             var im = Image.Black(100, 100);
-            im = im.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true);
+            im = im.Mutate(x=> x.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true));
             var im2 = im.Rank(3, 3, 8);
             Assert.Equal(im.Width, im2.Width);
             Assert.Equal(im.Height, im2.Height);

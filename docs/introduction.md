@@ -132,16 +132,25 @@ using var newImage = image.Copy(xres: 12, yres: 13);
 
 Now `newImage` is a private clone of `image` with `xres` and `yres` changed.
 
-Set image metadata with [`Set`](xref:NetVips.Image.Set*). Use [`Copy`](xref:NetVips.Image.Copy*) to make
-a private copy of the image first, for example:
+You can also set and remove image metadata fields. Images are immutable, so you must
+make any changes inside a [`Mutate`](xref:NetVips.Image.Mutate*) delegate. For example:
 
 ```csharp
-using var newImage = image.Copy();
-newImage.Set("icc-profile-data", newProfile);
+using var mutated = image.Mutate(mutable =>
+{
+    foreach (var field in image.GetFields())
+    {
+        if (field == "icc-profile-data") continue;
+        mutable.Remove(field);
+    }
+});
 ```
 
-Now `newImage` is a clone of `image` with a new ICC profile attached to it.
+To remove all metadata except the icc profile.
 
+You can use [`Set`](xref:NetVips.MutableImage.Set*) to change the value of an existing field,
+or to create a new field with a specified type.
+ 
 ## Calling libvips operations
 
 All libvips operations were generated automatically to a PascalCase method in NetVips.
@@ -237,7 +246,7 @@ and so on.
 
 ## Logging and warnings
 
-NetVips can log warnings and debug messages from libvips. Some warnings are important, 
+NetVips can log warnings and debug messages from libvips. Some warnings are important,
 for example truncated files, and you might want to see them.
 
 Add these lines somewhere near the start of your program:
@@ -392,7 +401,7 @@ image.WriteToTarget(target, ".png");
 
 Sources and targets can be files, descriptors (eg. pipes) and areas of memory.
 
-You can define [`SourceCustom`](xref:NetVips.SourceCustom) and [`TargetCustom`](xref:NetVips.TargetCustom) too. 
+You can define [`SourceCustom`](xref:NetVips.SourceCustom) and [`TargetCustom`](xref:NetVips.TargetCustom) too.
 
 For example:
 
@@ -434,7 +443,7 @@ from triple-slash comments in our source code.
 
 ## Generated methods
 
-The `Image.Generated.cs` file where all libvips operations are located 
+The `Image.Generated.cs` file where all libvips operations are located
 is generated automatically by [`GenerateImageClass.cs`](https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs).
 It examines libvips and writes the XML documentation and the corresponding code of each operation.
 
@@ -444,16 +453,25 @@ https://libvips.github.io/libvips/API/current
 
 ## Draw operations
 
-Paint operations like [`DrawCircle`](xref:NetVips.Image.DrawCircle*) and
-[`DrawLine`](xref:NetVips.Image.DrawLine*) modify their input image. This makes them
+Paint operations like [`DrawCircle`](xref:NetVips.MutableImage.DrawCircle*) and
+[`DrawLine`](xref:NetVips.MutableImage.DrawLine*) modify their input image. This makes them
 hard to use with the rest of libvips: you need to be very careful about
 the order in which operations execute or you can get nasty crashes.
 
-The wrapper spots operations of this type and makes a private copy of the
-image in memory before calling the operation. This stops crashes, but it does
-make it inefficient. If you draw 100 lines on an image, for example, you'll
-copy the image 100 times. The wrapper does make sure that memory is recycled
-where possible, so you won't have 100 copies in memory.
+The wrapper handles this type of operations with the [`Mutate`](xref:NetVips.Image.Mutate*)
+function. This can be used to make a [`MutableImage`](xref:NetVips.MutableImage). This is an
+image which is unshared and is only available inside the [`Mutate`](xref:NetVips.Image.Mutate*)
+delegate. Within this delegate, you can use draw operations to modify images. For example:
 
-If you want to avoid the copies, you'll need to call drawing operations
-yourself.
+```csharp
+using var mutated = image.Mutate(mutable =>
+{
+    for (var i = 0; i <= 100; i++)
+    {
+        var j = i / 100.0;
+        mutable.DrawLine(new[] { 255.0 }, (int)(mutable.Width * j), 0, 0, (int)(mutable.Height * (1 - j)));
+    }
+});
+```
+
+Now each [`DrawLine`](xref:NetVips.MutableImage.DrawLine*) will directly modify the mutable image.

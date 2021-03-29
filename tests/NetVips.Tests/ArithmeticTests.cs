@@ -640,7 +640,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestHoughCircle()
         {
-            var test = Image.Black(100, 100).DrawCircle(new double[] { 100 }, 50, 50, 40);
+            var test = Image.Black(100, 100).Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 40));
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -668,7 +668,7 @@ namespace NetVips.Tests
             // test earlier versions
             Skip.IfNot(NetVips.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
 
-            var test = Image.Black(100, 100).DrawLine(new double[] { 100 }, 10, 90, 90, 10);
+            var test = Image.Black(100, 100).Mutate(x => x.DrawLine(new double[] { 100 }, 10, 90, 90, 10));
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -911,7 +911,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestMax()
         {
-            var test = Image.Black(100, 100).DrawRect(new double[] { 100 }, 40, 50, 1, 1);
+            var test = Image.Black(100, 100).Mutate(x => x.DrawRect(new double[] { 100 }, 40, 50, 1, 1));
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -933,7 +933,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestMin()
         {
-            var test = (Image.Black(100, 100) + 100).DrawRect(new double[] { 0 }, 40, 50, 1, 1);
+            var test = (Image.Black(100, 100) + 100).Mutate(x => x.DrawRect(new double[] { 0 }, 40, 50, 1, 1));
 
             foreach (var fmt in Helper.AllFormats)
             {
@@ -1009,7 +1009,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestProfile()
         {
-            var test = Image.Black(100, 100).DrawRect(new double[] { 100 }, 40, 50, 1, 1);
+            var test = Image.Black(100, 100).Mutate(x => x.DrawRect(new double[] { 100 }, 40, 50, 1, 1));
 
             foreach (var fmt in Helper.NonComplexFormats)
             {

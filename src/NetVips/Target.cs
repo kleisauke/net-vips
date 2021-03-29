@@ -17,6 +17,11 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Get the memory object held by the target when using <see cref="NewToMemory"/>.
+        /// </summary>
+        public byte[] Blob => (byte[])Get("blob");
+
+        /// <summary>
         /// Make a new target to write to a file descriptor (a small integer).
         /// </summary>
         /// <remarks>
@@ -83,7 +88,7 @@ namespace NetVips
         ///
         /// After writing to the target, fetch the bytes from the target object with:
         /// <code language="lang-csharp">
-        /// var bytes = target.Get("blob");
+        /// var bytes = target.Blob;
         /// </code>
         /// </remarks>
         /// <returns>A new <see cref="Target"/>.</returns>

@@ -9,7 +9,7 @@
 
 namespace NetVips
 {
-    public sealed partial class Image
+    public partial class Image
     {
         #region auto-generated operator overloads
 

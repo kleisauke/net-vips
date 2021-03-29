@@ -19,8 +19,7 @@ namespace NetVips.Samples
 
             // replace band with image
             using var array = image.NewFromImage(12, 13);
-            using var test = image.Copy();
-            test[1] = array;
+            using var test = image.Mutate(x => x[1] = array);
             using var band1 = test[0];
             using var band2 = test[1];
             using var band3 = test[2];

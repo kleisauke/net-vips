@@ -119,10 +119,11 @@ namespace NetVips.Samples
         /// </remarks>
         /// <param name="operationName">Operation name.</param>
         /// <param name="indent">Indentation level.</param>
+        /// <param name="mutable">Generate <see cref="MutableImage"/>.</param>
         /// <param name="outParameters">The out parameters of this function.</param>
         /// <returns>A C#-style docstring + function declaration.</returns>
         private string GenerateFunction(string operationName, string indent = "        ",
-            IReadOnlyList<Introspect.Argument> outParameters = null)
+            bool mutable = false, IReadOnlyList<Introspect.Argument> outParameters = null)
         {
             using var op = Operation.NewFromName(operationName);
             if ((op.GetFlags() & Enums.OperationFlags.DEPRECATED) != 0)
@@ -145,6 +146,12 @@ namespace NetVips.Samples
             // these are always non-deprecated
             var requiredInput = intro.RequiredInput.ToArray();
             var requiredOutput = intro.RequiredOutput.ToArray();
+
+            if (mutable ^ intro.Mutable)
+            {
+                throw new ArgumentException(
+                    $"Cannot generate \"{operationName}\" as this is a {(intro.Mutable ? string.Empty : "non-")}mutable operation.");
+            }
 
             string[] reservedKeywords =
             {
@@ -262,10 +269,22 @@ namespace NetVips.Samples
             {
                 result.Append("var output = ");
             }
+            else if (intro.Mutable && intro.MemberX.HasValue)
+            {
+                result.Append("image.Mutate(x => ");
+            }
 
-            result.Append(intro.MemberX.HasValue ? intro.MemberX.Value.Name : "NetVips.Image")
-                .Append(
-                    $".{newOperationName}({string.Join(", ", requiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()).ToArray())}");
+            if (intro.MemberX.HasValue)
+            {
+                result.Append(intro.Mutable ? "x" : intro.MemberX.Value.Name);
+            }
+            else
+            {
+                result.Append("NetVips.Image");
+            }
+
+            result.Append(
+                $".{newOperationName}({string.Join(", ", requiredInput.Select(arg => SafeIdentifier(arg.Name).ToPascalCase().FirstLetterToLower()).ToArray())}");
 
             if (outParameters != null)
             {
@@ -294,7 +313,8 @@ namespace NetVips.Samples
                 }
             }
 
-            result.AppendLine(");");
+            result.Append(intro.Mutable ? ")" : string.Empty)
+                .AppendLine(");");
 
             result.AppendLine($"{indent}/// </code>")
                 .AppendLine($"{indent}/// </example>");
@@ -718,12 +738,12 @@ namespace NetVips.Samples
             if (optionalOutput.Length > 0 && outParameters == null)
             {
                 result.AppendLine()
-                    .Append(GenerateFunction(operationName, indent, new[] { optionalOutput[0] }));
+                    .Append(GenerateFunction(operationName, indent, mutable, new[] { optionalOutput[0] }));
             }
             else if (outParameters != null && outParameters.Count != optionalOutput.Length)
             {
                 result.AppendLine()
-                    .Append(GenerateFunction(operationName, indent,
+                    .Append(GenerateFunction(operationName, indent, mutable,
                         optionalOutput.Take(outParameters.Count + 1).ToArray()));
             }
 
@@ -773,7 +793,7 @@ namespace NetVips.Samples
                 .AppendLine("{")
                 .AppendLine("    using System.IO;")
                 .AppendLine()
-                .AppendLine("    public sealed partial class Image")
+                .AppendLine("    public partial class Image")
                 .AppendLine("    {")
                 .AppendLine($"{indent}#region auto-generated functions")
                 .AppendLine();
@@ -782,6 +802,10 @@ namespace NetVips.Samples
                 try
                 {
                     stringBuilder.AppendLine(GenerateFunction(nickname, indent));
+                }
+                catch (ArgumentException)
+                {
+                    // ignore
                 }
                 catch (Exception e)
                 {
@@ -813,11 +837,69 @@ namespace NetVips.Samples
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Generate the `MutableImage.Generated.cs` file.
+        /// </summary>
+        /// <remarks>
+        /// This is used to generate the `MutableImage.Generated.cs` file (<see cref="MutableImage"/>).
+        /// </remarks>
+        /// <param name="indent">Indentation level.</param>
+        /// <returns>The `MutableImage.Generated.cs` as string.</returns>
+        private string GenerateMutable(string indent = "        ")
+        {
+            // get the list of all nicknames we can generate docstrings for.
+            var allNickNames = NetVips.GetOperations();
+
+            const string preamble = @"//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     libvips version: {0}
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------";
+
+            var stringBuilder =
+                new StringBuilder(string.Format(preamble,
+                    $"{NetVips.Version(0)}.{NetVips.Version(1)}.{NetVips.Version(2)}"));
+            stringBuilder.AppendLine()
+                .AppendLine()
+                .AppendLine("namespace NetVips")
+                .AppendLine("{")
+                .AppendLine("    public sealed partial class MutableImage")
+                .AppendLine("    {")
+                .AppendLine($"{indent}#region auto-generated functions")
+                .AppendLine();
+            foreach (var nickname in allNickNames)
+            {
+                try
+                {
+                    stringBuilder.AppendLine(GenerateFunction(nickname, indent, true));
+                }
+                catch (ArgumentException)
+                {
+                    // ignore
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            stringBuilder.AppendLine($"{indent}#endregion")
+                .AppendLine("    }")
+                .AppendLine("}");
+
+            return stringBuilder.ToString();
+        }
+
         public void Execute(string[] args)
         {
             File.WriteAllText("Image.Generated.cs", Generate());
+            File.WriteAllText("MutableImage.Generated.cs", GenerateMutable());
 
-            Console.WriteLine("See Image.Generated.cs");
+            Console.WriteLine("See *.Generated.cs");
         }
     }
 }

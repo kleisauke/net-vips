@@ -43,12 +43,72 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Get a GObject property.
+        /// </summary>
+        /// <remarks>
+        /// The value of the property is converted to a C# value.
+        /// </remarks>
+        /// <param name="name">Arg to fetch.</param>
+        /// <returns>The GObject property.</returns>
+        internal object Get(string name)
+        {
+            // logger.Debug($"Get: name = {name}");
+            var pspec = GetPspec(name);
+            if (!pspec.HasValue)
+            {
+                throw new VipsException("Property not found.");
+            }
+
+            var gtype = pspec.Value.ValueType;
+            using var gv = new GValue();
+            gv.SetType(gtype);
+
+            // this will add a reference for GObject properties, that ref will be
+            // unreferenced when the GValue is finalized
+            Internal.GObject.GetProperty(this, name, ref gv.Struct);
+
+            return gv.Get();
+        }
+
+        /// <summary>
+        /// Set a GObject property. The value is converted to the property type, if possible.
+        /// </summary>
+        /// <param name="name">The name of the property to set.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="gtype">The GType of the property.</param>
+        internal void Set(IntPtr gtype, string name, object value)
+        {
+            // logger.Debug($"Set: gtype = {gtype}, name = {name}, value = {value}");
+            using var gv = new GValue();
+            gv.SetType(gtype);
+            gv.Set(value);
+
+            Internal.GObject.SetProperty(this, name, in gv.Struct);
+        }
+
+        /// <summary>
+        /// Set a series of properties using a string.
+        /// </summary>
+        /// <remarks>
+        /// For example:
+        /// "fred=12, tile"
+        /// "[fred=12]"
+        /// </remarks>
+        /// <param name="stringOptions">Arguments as a string.</param>
+        /// <returns><see langword="true"/> on success; otherwise, <see langword="false"/>.</returns>
+        internal bool SetString(string stringOptions)
+        {
+            var result = Internal.VipsObject.SetFromString(this, stringOptions);
+            return result == 0;
+        }
+
+        /// <summary>
         /// Get the GType of a GObject property.
         /// </summary>
         /// <param name="name">The name of the GType to get the type of.</param>
         /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
         /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
-        public virtual IntPtr GetTypeOf(string name)
+        public IntPtr GetTypeOf(string name)
         {
             // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
             var pspec = GetPspec(name);
@@ -79,66 +139,6 @@ namespace NetVips
 
             var pspecValue = pspec.Value;
             return Marshal.PtrToStringAnsi(GParamSpec.GetBlurb(in pspecValue));
-        }
-
-        /// <summary>
-        /// Get a GObject property.
-        /// </summary>
-        /// <remarks>
-        /// The value of the property is converted to a C# value.
-        /// </remarks>
-        /// <param name="name">Arg to fetch.</param>
-        /// <returns>The GObject property.</returns>
-        public virtual object Get(string name)
-        {
-            // logger.Debug($"Get: name = {name}");
-            var pspec = GetPspec(name);
-            if (!pspec.HasValue)
-            {
-                throw new VipsException("Property not found.");
-            }
-
-            var gtype = pspec.Value.ValueType;
-            using var gv = new GValue();
-            gv.SetType(gtype);
-
-            // this will add a reference for GObject properties, that ref will be
-            // unreferenced when the GValue is finalized
-            Internal.GObject.GetProperty(this, name, ref gv.Struct);
-
-            return gv.Get();
-        }
-
-        /// <summary>
-        /// Set a GObject property. The value is converted to the property type, if possible.
-        /// </summary>
-        /// <param name="name">The name of the property to set.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="gtype">The GType of the property.</param>
-        public virtual void Set(IntPtr gtype, string name, object value)
-        {
-            // logger.Debug($"Set: gtype = {gtype}, name = {name}, value = {value}");
-            using var gv = new GValue();
-            gv.SetType(gtype);
-            gv.Set(value);
-
-            Internal.GObject.SetProperty(this, name, in gv.Struct);
-        }
-
-        /// <summary>
-        /// Set a series of properties using a string.
-        /// </summary>
-        /// <remarks>
-        /// For example:
-        /// "fred=12, tile"
-        /// "[fred=12]"
-        /// </remarks>
-        /// <param name="stringOptions">Arguments as a string.</param>
-        /// <returns><see langword="true"/> on success; otherwise, <see langword="false"/>.</returns>
-        public bool SetString(string stringOptions)
-        {
-            var result = Internal.VipsObject.SetFromString(this, stringOptions);
-            return result == 0;
         }
 
         /// <summary>

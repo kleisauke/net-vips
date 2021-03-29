@@ -51,6 +51,11 @@ namespace NetVips
         public Argument? MemberX;
 
         /// <summary>
+        /// A bool indicating if this operation is mutable.
+        /// </summary>
+        public bool Mutable;
+
+        /// <summary>
         /// The required input for this operation.
         /// </summary>
         public List<Argument> RequiredInput = new List<Argument>();
@@ -114,12 +119,12 @@ namespace NetVips
                         OptionalInput[name] = details;
                     }
 
-                    // modified input arguments count as output as well
+                    // modified input arguments count as mutable.
                     if ((flag & Enums.ArgumentFlags.MODIFY) != 0 &&
                         (flag & Enums.ArgumentFlags.REQUIRED) != 0 &&
                         (flag & Enums.ArgumentFlags.DEPRECATED) == 0)
                     {
-                        RequiredOutput.Add(details);
+                        Mutable = true;
                     }
                 }
                 else if ((flag & Enums.ArgumentFlags.OUTPUT) != 0)

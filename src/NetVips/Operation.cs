@@ -41,36 +41,13 @@ namespace NetVips
         /// <summary>
         /// Set a GObject property. The value is converted to the property type, if possible.
         /// </summary>
-        /// <param name="gtype">The GType of the property.</param>
-        /// <param name="flags">See <see cref="Enums.ArgumentFlags"/>.</param>
         /// <param name="name">The name of the property to set.</param>
-        /// <param name="value">The value.</param>
-        private void Set(IntPtr gtype, Enums.ArgumentFlags flags, string name, object value)
-        {
-            // MODIFY args need to be copied before they are set
-            if ((flags & Enums.ArgumentFlags.MODIFY) != 0 && value is Image image)
-            {
-                // logger.Debug($"copying MODIFY arg {name}");
-                // make sure we have a unique copy
-                value = image.Copy().CopyMemory();
-            }
-
-            Set(gtype, name, value);
-        }
-
-        /// <summary>
-        /// Set a GObject property. The value is converted to the property type, if possible.
-        /// </summary>
-        /// <param name="name">The name of the property to set.</param>
-        /// <param name="flags">See <see cref="Enums.ArgumentFlags"/>.</param>
         /// <param name="matchImage">A <see cref="Image"/> used as guide.</param>
         /// <param name="value">The value.</param>
         /// <param name="gtype">The GType of the property.</param>
-        private void Set(IntPtr gtype, Enums.ArgumentFlags flags, Image matchImage, string name,
-            object value)
+        private void Set(IntPtr gtype, Image matchImage, string name, object value)
         {
-            // logger.Debug($"Operation.Set: name = {name}, flags = {flags}, " +
-            //             $"matchImage = {matchImage} value = {value}");
+            // logger.Debug($"Operation.Set: name = {name}, matchImage = {matchImage}, value = {value}");
 
             // if the object wants an image and we have a constant, Imageize it
             //
@@ -101,17 +78,14 @@ namespace NetVips
                 }
             }
 
-            Set(gtype, flags, name, value);
+            Set(gtype, name, value);
         }
 
         /// <summary>
         /// Lookup the set of flags for this operation.
         /// </summary>
         /// <returns>Flags for this operation.</returns>
-        public Enums.OperationFlags GetFlags()
-        {
-            return VipsOperation.GetFlags(this);
-        }
+        public Enums.OperationFlags GetFlags() => VipsOperation.GetFlags(this);
 
         /// <summary>
         /// Call a libvips operation.
@@ -180,6 +154,11 @@ namespace NetVips
                     $"unable to call {operationName}: {args.Length} arguments given, but {intro.RequiredInput.Count} required");
             }
 
+            if (!intro.Mutable && matchImage is MutableImage)
+            {
+                throw new VipsException($"unable to call {operationName}: operation must be mutable");
+            }
+
             IntPtr vop;
             using (var op = NewFromName(operationName))
             {
@@ -194,13 +173,13 @@ namespace NetVips
                 if (matchImage != null && intro.MemberX.HasValue)
                 {
                     var memberX = intro.MemberX.Value;
-                    op.Set(memberX.Type, memberX.Flags, memberX.Name, matchImage);
+                    op.Set(memberX.Type, memberX.Name, matchImage);
                 }
 
                 for (var i = 0; i < intro.RequiredInput.Count; i++)
                 {
                     var arg = intro.RequiredInput[i];
-                    op.Set(arg.Type, arg.Flags, matchImage, arg.Name, args[i]);
+                    op.Set(arg.Type, matchImage, arg.Name, args[i]);
                 }
 
                 // set all optional inputs, if any
@@ -213,7 +192,7 @@ namespace NetVips
 
                         if (intro.OptionalInput.TryGetValue(name, out var arg))
                         {
-                            op.Set(arg.Type, arg.Flags, matchImage, name, value);
+                            op.Set(arg.Type, matchImage, name, value);
                         }
                         else if (!intro.OptionalOutput.ContainsKey(name))
                         {

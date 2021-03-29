@@ -278,7 +278,7 @@ namespace NetVips
         /// How to combine pixels.
         /// </summary>
         /// <remarks>
-        /// Operations like <see cref="Image.DrawImage"/> need to be told how to
+        /// Operations like <see cref="MutableImage.DrawImage"/> need to be told how to
         /// combine images from two sources. See also <see cref="Image.Join"/>.
         /// </remarks>
         public enum CombineMode
