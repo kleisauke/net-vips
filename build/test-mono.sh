@@ -21,10 +21,10 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 # Parse arguments
-while [[ "$#" -gt 0 ]]; do
+while [ $# -gt 0 ]; do
     case $1 in
         --global-vips) USE_NUGET_BINARIES=false ;;
-        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+        *) echo "Unknown parameter passed: $1" >&2; exit 1 ;;
     esac
     shift
 done
@@ -41,5 +41,5 @@ fi
 echo "Mono version $(mono --version)"
 
 nuget install xunit.runner.console -ExcludeVersion -o packages
-msbuild $BUILD_PROJECT_FILE -t:build -restore /p:Configuration=Release /p:TestWithNuGetBinaries=${USE_NUGET_BINARIES:-true} /nodeReuse:false
+msbuild $BUILD_PROJECT_FILE -t:build -restore -p:TargetFramework="net472" -p:Configuration=Release -p:TestWithNuGetBinaries=${USE_NUGET_BINARIES:-true} -nodeReuse:false
 mono $XUNIT_RUNNER $DLL_FILE

@@ -4,7 +4,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <TargetFramework Condition="'$(MSBuildRuntimeType)' == 'Mono'">net472</TargetFramework>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <Platforms>AnyCPU;x64;x86</Platforms>

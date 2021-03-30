@@ -82,6 +82,9 @@ partial class Build : NukeBuild
             DotNetTest(c => c
                 .SetProjectFile(Parameters.TestSolution)
                 .SetConfiguration(Parameters.Configuration)
+#if NET6_0
+                .AddProperty("TargetFramework", "net6.0")
+#endif
                 .AddProperty("TestWithNuGetBinaries", Parameters.TestWithNuGetBinaries));
         });
 
