@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Operation
    ">
-    <meta name="generator" content="docfx 2.56.6.0">
+    <meta name="generator" content="docfx 2.56.7.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -98,15 +98,6 @@
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetBlurb_System_String_">VipsObject.GetBlurb(String)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_Get_System_String_">VipsObject.Get(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_Set_System_IntPtr_System_String_System_Object_">VipsObject.Set(IntPtr, String, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_SetString_System_String_">VipsObject.SetString(String)</a>
-    </div>
-    <div>
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetDescription">VipsObject.GetDescription()</a>
     </div>
     <div>
@@ -186,7 +177,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CNetVips.VOption%2CNetVips.Image%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L164">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L138">View Source</a>
   </span>
   <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
   <h4 id="NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object___" data-uid="NetVips.Operation.Call(System.String,NetVips.VOption,NetVips.Image,System.Object[])">Call(String, VOption, Image, Object[])</h4>
@@ -251,7 +242,7 @@
   </table>
   <h5 id="NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
-<pre><code class="lang-lang-csharp">var blackImage = Operation.Call(&quot;black&quot;, 10, 10);</code></pre>
+<pre><code class="lang-lang-csharp">using Image blackImage = Operation.Call(&quot;black&quot;, 10, 10) as Image;</code></pre>
 <p>See the Introduction for notes on how this works.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -259,7 +250,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_NetVips_VOption_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CNetVips.VOption%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L146">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L120">View Source</a>
   </span>
   <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
   <h4 id="NetVips_Operation_Call_System_String_NetVips_VOption_System_Object___" data-uid="NetVips.Operation.Call(System.String,NetVips.VOption,System.Object[])">Call(String, VOption, Object[])</h4>
@@ -318,7 +309,7 @@
   </table>
   <h5 id="NetVips_Operation_Call_System_String_NetVips_VOption_System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
-<pre><code class="lang-lang-csharp">var blackImage = Operation.Call(&quot;black&quot;, 10, 10);</code></pre>
+<pre><code class="lang-lang-csharp">using Image blackImage = Operation.Call(&quot;black&quot;, 10, 10) as Image;</code></pre>
 <p>See the Introduction for notes on how this works.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -326,7 +317,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L129">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L103">View Source</a>
   </span>
   <a id="NetVips_Operation_Call_" data-uid="NetVips.Operation.Call*"></a>
   <h4 id="NetVips_Operation_Call_System_String_System_Object___" data-uid="NetVips.Operation.Call(System.String,System.Object[])">Call(String, Object[])</h4>
@@ -379,7 +370,7 @@
   </table>
   <h5 id="NetVips_Operation_Call_System_String_System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Use this method to call any libvips operation. For example:</p>
-<pre><code class="lang-lang-csharp">var blackImage = Operation.Call(&quot;black&quot;, 10, 10);</code></pre>
+<pre><code class="lang-lang-csharp">using Image blackImage = Operation.Call(&quot;black&quot;, 10, 10) as Image;</code></pre>
 <p>See the Introduction for notes on how this works.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -387,7 +378,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_GetFlags.md&amp;value=---%0Auid%3A%20NetVips.Operation.GetFlags%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L111">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L88">View Source</a>
   </span>
   <a id="NetVips_Operation_GetFlags_" data-uid="NetVips.Operation.GetFlags*"></a>
   <h4 id="NetVips_Operation_GetFlags" data-uid="NetVips.Operation.GetFlags">GetFlags()</h4>

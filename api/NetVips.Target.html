@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Target
    ">
-    <meta name="generator" content="docfx 2.56.6.0">
+    <meta name="generator" content="docfx 2.56.7.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -106,15 +106,6 @@
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetBlurb_System_String_">VipsObject.GetBlurb(String)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_Get_System_String_">VipsObject.Get(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_Set_System_IntPtr_System_String_System_Object_">VipsObject.Set(IntPtr, String, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_SetString_System_String_">VipsObject.SetString(String)</a>
-    </div>
-    <div>
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetDescription">VipsObject.GetDescription()</a>
     </div>
     <div>
@@ -187,6 +178,39 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class Target : Connection, IDisposable</code></pre>
   </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Target_Blob.md&amp;value=---%0Auid%3A%20NetVips.Target.Blob%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L22">View Source</a>
+  </span>
+  <a id="NetVips_Target_Blob_" data-uid="NetVips.Target.Blob*"></a>
+  <h4 id="NetVips_Target_Blob" data-uid="NetVips.Target.Blob">Blob</h4>
+  <div class="markdown level1 summary"><p>Get the memory object held by the target when using <a class="xref" href="NetVips.Target.html#NetVips_Target_NewToMemory">NewToMemory()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] Blob { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   <span class="small pull-right mobile-hide">
@@ -194,7 +218,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Target_NewToDescriptor_System_Int32_.md&amp;value=---%0Auid%3A%20NetVips.Target.NewToDescriptor(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L34">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L39">View Source</a>
   </span>
   <a id="NetVips_Target_NewToDescriptor_" data-uid="NetVips.Target.NewToDescriptor*"></a>
   <h4 id="NetVips_Target_NewToDescriptor_System_Int32_" data-uid="NetVips.Target.NewToDescriptor(System.Int32)">NewToDescriptor(Int32)</h4>
@@ -241,7 +265,7 @@
   </table>
   <h5 id="NetVips_Target_NewToDescriptor_System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new target that is attached to the descriptor. For example:</p>
-<pre><code class="lang-lang-csharp">var target = Target.NewToDescriptor(1);</code></pre>
+<pre><code class="lang-lang-csharp">using var target = Target.NewToDescriptor(1);</code></pre>
 <p>Makes a descriptor attached to stdout.</p>
 <p>You can pass this target to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_WriteToTarget_NetVips_Target_System_String_NetVips_VOption_">WriteToTarget(Target, String, VOption)</a>.</p>
 </div>
@@ -266,7 +290,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Target_NewToFile_System_String_.md&amp;value=---%0Auid%3A%20NetVips.Target.NewToFile(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L60">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L65">View Source</a>
   </span>
   <a id="NetVips_Target_NewToFile_" data-uid="NetVips.Target.NewToFile*"></a>
   <h4 id="NetVips_Target_NewToFile_System_String_" data-uid="NetVips.Target.NewToFile(System.String)">NewToFile(String)</h4>
@@ -313,7 +337,7 @@
   </table>
   <h5 id="NetVips_Target_NewToFile_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new target that will write to the named file. For example:</p>
-<pre><code class="lang-lang-csharp">var target = Target.NewToFile(&quot;myfile.jpg&quot;);</code></pre>
+<pre><code class="lang-lang-csharp">using var target = Target.NewToFile(&quot;myfile.jpg&quot;);</code></pre>
 <p>You can pass this target to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_WriteToTarget_NetVips_Target_System_String_NetVips_VOption_">WriteToTarget(Target, String, VOption)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -337,7 +361,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Target_NewToMemory.md&amp;value=---%0Auid%3A%20NetVips.Target.NewToMemory%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L91">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Target.cs/#L96">View Source</a>
   </span>
   <a id="NetVips_Target_NewToMemory_" data-uid="NetVips.Target.NewToMemory*"></a>
   <h4 id="NetVips_Target_NewToMemory" data-uid="NetVips.Target.NewToMemory">NewToMemory()</h4>
@@ -366,10 +390,10 @@
   </table>
   <h5 id="NetVips_Target_NewToMemory_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new target that will write to memory. For example:</p>
-<pre><code class="lang-lang-csharp">var target = Target.NewToMemory();</code></pre>
+<pre><code class="lang-lang-csharp">using var target = Target.NewToMemory();</code></pre>
 <p>You can pass this target to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_WriteToTarget_NetVips_Target_System_String_NetVips_VOption_">WriteToTarget(Target, String, VOption)</a>.</p>
 <p>After writing to the target, fetch the bytes from the target object with:</p>
-<pre><code class="lang-lang-csharp">var bytes = target.Get(&quot;blob&quot;);</code></pre>
+<pre><code class="lang-lang-csharp">var bytes = target.Blob;</code></pre>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">

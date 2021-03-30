@@ -8,7 +8,7 @@
     <title>Introduction </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Introduction ">
-    <meta name="generator" content="docfx 2.56.6.0">
+    <meta name="generator" content="docfx 2.56.7.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -70,22 +70,22 @@ notes introduce the .NET binding.</p>
 and saves it back to disc again:</p>
 <pre><code class="lang-csharp">using NetVips;
 
-var image = Image.NewFromFile(&quot;some-image.jpg&quot;, access: Enums.Access.Sequential);
+using var image = Image.NewFromFile(&quot;some-image.jpg&quot;, access: Enums.Access.Sequential);
 
-image *= new[] {1, 2, 1};
+using var multiply = image * new[] { 1, 2, 1 };
 
-var mask = Image.NewFromArray(new[,]
+using var mask = Image.NewFromArray(new[,]
 {
     {-1, -1, -1},
     {-1, 16, -1},
     {-1, -1, -1}
 }, scale: 8);
-image = image.Conv(mask, precision: Enums.Precision.Integer);
+using var convolve = multiply.Conv(mask, precision: Enums.Precision.Integer);
 
-image.WriteToFile(&quot;x.jpg&quot;);
+convolve.WriteToFile(&quot;x.jpg&quot;);
 </code></pre>
 <p>Reading this example line by line, we have:</p>
-<pre><code class="lang-csharp">var image = Image.NewFromFile(&quot;some-image.jpg&quot;, access: Enums.Access.Sequential);
+<pre><code class="lang-csharp">using var image = Image.NewFromFile(&quot;some-image.jpg&quot;, access: Enums.Access.Sequential);
 </code></pre>
 <p><a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromFile_"><code>NewFromFile</code></a> can load any image file supported by libvips.
 When you load an image, only the header is fetched from the file. Pixels will
@@ -104,7 +104,7 @@ from constants with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_N
 sources and targets that link image processing pipelines to your own code,
 see <a href="introduction.html#custom-sources-and-targets">Custom sources and targets</a>.</p>
 <p>The next line:</p>
-<pre><code class="lang-csharp">image *= new[] {1, 2, 1};
+<pre><code class="lang-csharp">using var multiply = image * new[] { 1, 2, 1 };
 </code></pre>
 <p>Multiplies the image by an array constant using one array element for each
 image band. This line assumes that the input image has three bands and will
@@ -112,13 +112,13 @@ double the middle band. For RGB images, that's doubling green.</p>
 <p>There is <a href="introduction.html#overloads">a full set arithmetic operator overloads</a>, so you can compute with
 entire images just as you would with single numbers.</p>
 <p>Next we have:</p>
-<pre><code class="lang-csharp">var mask = Image.NewFromArray(new[,]
+<pre><code class="lang-csharp">using var mask = Image.NewFromArray(new[,]
 {
     {-1, -1, -1},
     {-1, 16, -1},
     {-1, -1, -1}
 }, scale: 8);
-image = image.Conv(mask, precision: Enums.Precision.Integer);
+using var convolve = multiply.Conv(mask, precision: Enums.Precision.Integer);
 </code></pre>
 <p><a class="xref" href="api/NetVips.Image.html#NetVips_Image_NewFromArray_"><code>NewFromArray</code></a> creates an image from an array constant. The
 scale is the amount to divide the image by after integer convolution.</p>
@@ -127,7 +127,7 @@ scale is the amount to divide the image by after integer convolution.</p>
 default, it computes with a float mask, but <code>integer</code> is fine for this case,
 and is much faster.</p>
 <p>Finally:</p>
-<pre><code class="lang-csharp">image.WriteToFile(&quot;x.jpg&quot;);
+<pre><code class="lang-csharp">convolve.WriteToFile(&quot;x.jpg&quot;);
 </code></pre>
 <p><a class="xref" href="api/NetVips.Image.html#NetVips_Image_WriteToFile_"><code>WriteToFile</code></a> writes an image back to the filesystem. It can
 write any format supported by vips: the file type is set from the filename
@@ -140,7 +140,7 @@ see <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Width_"><code>.Wi
 <p>As well as the core properties, you can read and write the metadata
 that libvips keeps for images with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Get_"><code>Get</code></a> and
 friends. For example:</p>
-<pre><code class="lang-csharp">var image = Image.NewFromFile(&quot;some-image.jpg&quot;);
+<pre><code class="lang-csharp">using var image = Image.NewFromFile(&quot;some-image.jpg&quot;);
 var iptcString = image.Get(&quot;iptc-data&quot;);
 var exifDateString = image.Get(&quot;exif-ifd0-DateTime&quot;);
 </code></pre>
@@ -150,15 +150,23 @@ var exifDateString = image.Get(&quot;exif-ifd0-DateTime&quot;);
 means that you can't modify an image unless you are certain that you have
 the only reference to it. You can make a private copy of an image with
 <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a>, for example:</p>
-<pre><code class="lang-csharp">var newImage = image.Copy(xres: 12, yres: 13);
+<pre><code class="lang-csharp">using var newImage = image.Copy(xres: 12, yres: 13);
 </code></pre>
 <p>Now <code>newImage</code> is a private clone of <code>image</code> with <code>xres</code> and <code>yres</code> changed.</p>
-<p>Set image metadata with <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Set_"><code>Set</code></a>. Use <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Copy_"><code>Copy</code></a> to make
-a private copy of the image first, for example:</p>
-<pre><code class="lang-csharp">var newImage = image.Copy();
-newImage.Set(&quot;icc-profile-data&quot;, newProfile);
+<p>You can also set and remove image metadata fields. Images are immutable, so you must
+make any changes inside a <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Mutate_"><code>Mutate</code></a> delegate. For example:</p>
+<pre><code class="lang-csharp">using var mutated = image.Mutate(mutable =&gt;
+{
+    foreach (var field in image.GetFields())
+    {
+        if (field == &quot;icc-profile-data&quot;) continue;
+        mutable.Remove(field);
+    }
+});
 </code></pre>
-<p>Now <code>newImage</code> is a clone of <code>image</code> with a new ICC profile attached to it.</p>
+<p>To remove all metadata except the icc profile.</p>
+<p>You can use <a class="xref" href="api/NetVips.MutableImage.html#NetVips_MutableImage_Set_"><code>Set</code></a> to change the value of an existing field,
+or to create a new field with a specified type.</p>
 <h2 id="calling-libvips-operations">Calling libvips operations</h2>
 <p>All libvips operations were generated automatically to a PascalCase method in NetVips.
 For example, the libvips operation <code>add</code>, which appears in C as
@@ -184,31 +192,40 @@ var minValue = image.Max(out _, out _, out _, out var xPos, out var yPos);
 <p>Now <code>xPos</code> and <code>yPos</code> will be 10-element arrays.</p>
 <p>Because operations are member functions and return the result image, you can
 chain them. For example, you can write:</p>
-<pre><code class="lang-csharp">var resultImage = image.Real().Cos();
+<pre><code class="lang-csharp">using var resultImage = image.Real().Cos();
 </code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Chaining does not automatically dispose the temporary images.
+To ensure that these images are disposed early, you should use:</p>
+<pre><code class="lang-csharp">using var real = image.Real();
+using var resultImage = real.Cos();
+</code></pre>
+<p>Otherwise, these images will not be disposed until the next GC cycle runs.</p>
+</div>
 <p>to calculate the cosine of the real part of a complex image. There is
 also <a href="introduction.html#overloads">a full set of arithmetic operator overloads</a>.</p>
 <p>If an operation takes several input images, you can use a constant for all but
 one of them and the wrapper will expand the constant to an image for you. For
 example, <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Ifthenelse_"><code>Ifthenelse</code></a> uses a condition image to pick
 pixels between a then and an else image:</p>
-<pre><code class="lang-csharp">var resultImage = conditionImage.Ifthenelse(thenImage, elseImage);
+<pre><code class="lang-csharp">using var resultImage = conditionImage.Ifthenelse(thenImage, elseImage);
 </code></pre>
 <p>You can use a constant instead of either the then or the else parts and it
 will be expanded to an image for you. If you use a constant for both then and
 else, it will be expanded to match the condition image. For example:</p>
-<pre><code class="lang-csharp">var resultImage = conditionImage.Ifthenelse(new[] {0, 255, 0}, new[] {255, 0, 0});
+<pre><code class="lang-csharp">using var resultImage = conditionImage.Ifthenelse(new[] { 0, 255, 0 }, new[] { 255, 0, 0 });
 </code></pre>
 <p>Will make an image where true pixels are green and false pixels are red.</p>
 <p>This is useful for <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Bandjoin_"><code>Bandjoin</code></a>, the thing to join two or more
 images up bandwise. You can write:</p>
-<pre><code class="lang-csharp">var rgba = rgb.Bandjoin(255);
+<pre><code class="lang-csharp">using var rgba = rgb.Bandjoin(255);
 </code></pre>
 <p>to append a constant 255 band to an image, perhaps to add an alpha channel. Of
 course you can also write:</p>
-<pre><code class="lang-csharp">var resultImage = image1.Bandjoin(image2);
-resultImage = image1.Bandjoin(image2, image3);
-resultImage = image1.Bandjoin(image2, 255);
+<pre><code class="lang-csharp">using var bandjoin = image1.Bandjoin(image2);
+using var bandjoin2 = image1.Bandjoin(image2, image3);
+using var bandjoin3 = image1.Bandjoin(image2, 255);
 </code></pre>
 <p>and so on.</p>
 <h2 id="logging-and-warnings">Logging and warnings</h2>
@@ -228,24 +245,35 @@ for example truncated files, and you might want to see them.</p>
 <p>The wrapper spots errors from vips operations and raises the <a class="xref" href="api/NetVips.VipsException.html"><code>VipsException</code></a>.
 You can catch it in the usual way.</p>
 <h2 id="enums">Enums</h2>
-<p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as strings constants
-like <code>&quot;uchar&quot;</code>. They are documented as a set of classes for convenience, see
-<a class="xref" href="api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>, for example.</p>
+<p>The libvips enums, such as <code>VipsBandFormat</code>, appear in NetVips as C# enums
+like <code>Enums.BandFormat.Uchar</code>. They are documented for convenience,
+see <a class="xref" href="api/NetVips.Enums.Access.html"><code>Enums.Access</code></a>, for example.</p>
 <h2 id="overloads">Overloads</h2>
 <p>The wrapper defines the usual set of arithmetic, boolean and relational
 overloads on image. You can mix images, constants and lists of constants
 freely. For example, you can write:</p>
-<pre><code class="lang-csharp">var resultImage = ((image * new[] {1, 2, 3}).Abs() &lt; 128) | 4;
+<pre><code class="lang-csharp">using var resultImage = ((image * new[] { 1, 2, 3 }).Abs() &lt; 128) | 4;
 </code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Chaining does not automatically dispose the temporary images.
+To ensure that these images are disposed early, you should use:</p>
+<pre><code class="lang-csharp">using var multiply = image * new[] { 1, 2, 3 };
+using var absolute = multiply.Abs();
+using var threshold = absolute &lt; 128;
+using var resultImage = threshold | 4;
+</code></pre>
+<p>Otherwise, these images will not be disposed until the next GC cycle runs.</p>
+</div>
 <h2 id="expansions">Expansions</h2>
 <p>Some vips operators take an enum to select an action, for example
 <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Math_"><code>Math</code></a> can be used to calculate sine of every pixel
 like this:</p>
-<pre><code class="lang-csharp">var resultImage = image.Math(&quot;sin&quot;);
+<pre><code class="lang-csharp">using var resultImage = image.Math(Enums.OperationMath.Sin);
 </code></pre>
 <p>This is annoying, so the wrapper expands all these enums into separate members
 named after the enum value. So you can also write:</p>
-<pre><code class="lang-csharp">var resultImage = image.Sin();
+<pre><code class="lang-csharp">using var resultImage = image.Sin();
 </code></pre>
 <h2 id="convenience-functions">Convenience functions</h2>
 <p>The wrapper defines a few extra useful utility functions:
@@ -257,7 +285,7 @@ and <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Median_"><code>Me
 <p>You can attach progress handlers to images to watch the progress of
 computation.</p>
 <p>For example:</p>
-<pre><code class="lang-csharp">var image = Image.Black(1, 500);
+<pre><code class="lang-csharp">using var image = Image.Black(1, 500);
 
 var progress = new Progress&lt;int&gt;(percent =&gt;
 {
@@ -273,11 +301,11 @@ image.SetProgress(progress/*, cts.Token*/);
 var avg = image.Avg();
 </code></pre>
 <p>Or:</p>
-<pre><code class="lang-csharp">var image = Image.Black(1, 500);
+<pre><code class="lang-csharp">using var image = Image.Black(1, 500);
 image.SetProgress(true);
-image.SignalConnect(Enums.Signals.PreEval, (Image.EvalDelegate)PreEvalHandler);
-image.SignalConnect(Enums.Signals.Eval, (Image.EvalDelegate)EvalHandler);
-image.SignalConnect(Enums.Signals.PostEval, (Image.EvalDelegate)PostEvalHandler);
+image.SignalConnect(Enums.Signals.PreEval, PreEvalHandler);
+image.SignalConnect(Enums.Signals.Eval, EvalHandler);
+image.SignalConnect(Enums.Signals.PostEval, PostEvalHandler);
 
 var avg = image.Avg();
 </code></pre>
@@ -306,23 +334,23 @@ of useful fields. For example:</p>
 <p>You can load and save images to and from <a class="xref" href="api/NetVips.Source.html"><code>Source</code></a> and
 <a class="xref" href="api/NetVips.Target.html"><code>Target</code></a>.</p>
 <p>For example:</p>
-<pre><code class="lang-csharp">var source = Source.NewFromFile(&quot;example.jpg&quot;);
-var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
-var target = Target.NewToFile(&quot;example.png&quot;);
+<pre><code class="lang-csharp">using var source = Source.NewFromFile(&quot;example.jpg&quot;);
+using var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+using var target = Target.NewToFile(&quot;example.png&quot;);
 image.WriteToTarget(target, &quot;.png&quot;);
 </code></pre>
 <p>Sources and targets can be files, descriptors (eg. pipes) and areas of memory.</p>
 <p>You can define <a class="xref" href="api/NetVips.SourceCustom.html"><code>SourceCustom</code></a> and <a class="xref" href="api/NetVips.TargetCustom.html"><code>TargetCustom</code></a> too.</p>
 <p>For example:</p>
-<pre><code class="lang-csharp">var input = File.OpenRead(&quot;example.jpg&quot;);
+<pre><code class="lang-csharp">using var input = File.OpenRead(&quot;example.jpg&quot;);
 
-var source = new SourceCustom();
+using var source = new SourceCustom();
 source.OnRead += (buffer, length) =&gt; input.Read(buffer, 0, length);
 source.OnSeek += (offset, origin) =&gt; input.Seek(offset, origin);
 
-var output = File.OpenWrite(&quot;example.png&quot;);
+using var output = File.OpenWrite(&quot;example.png&quot;);
 
-var target = new TargetCustom();
+using var target = new TargetCustom();
 target.OnWrite += (buffer, length) =&gt;
 {
     output.Write(buffer, 0, length);
@@ -330,17 +358,15 @@ target.OnWrite += (buffer, length) =&gt;
 };
 target.OnFinish += () =&gt; output.Close();
 
-var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+using var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
 image.WriteToTarget(target, &quot;.png&quot;);
 </code></pre>
 <p>The wrapper also defines a few extra useful stream functions. For example, the above can be written as:</p>
-<pre><code class="lang-csharp">using (var input = File.OpenRead(&quot;example.jpg&quot;))
-{
-    var image = Image.NewFromStream(input, access: Enums.Access.Sequential);
+<pre><code class="lang-csharp">using var input = File.OpenRead(&quot;example.jpg&quot;)
+using var image = Image.NewFromStream(input, access: Enums.Access.Sequential);
 
-    using var output = File.OpenWrite(&quot;example.png&quot;);
-    image.WriteToStream(output, &quot;.png&quot;);
-}
+using var output = File.OpenWrite(&quot;example.png&quot;);
+image.WriteToStream(output, &quot;.png&quot;);
 </code></pre>
 <h2 id="automatic-documentation">Automatic documentation</h2>
 <p>These API docs are generated automatically by DocFX. It generates API reference documentation
@@ -352,17 +378,24 @@ It examines libvips and writes the XML documentation and the corresponding code 
 <p>Use the C API docs for more detail:</p>
 <p><a href="https://libvips.github.io/libvips/API/current">https://libvips.github.io/libvips/API/current</a></p>
 <h2 id="draw-operations">Draw operations</h2>
-<p>Paint operations like <a class="xref" href="api/NetVips.Image.html#NetVips_Image_DrawCircle_"><code>DrawCircle</code></a> and
-<a class="xref" href="api/NetVips.Image.html#NetVips_Image_DrawLine_"><code>DrawLine</code></a> modify their input image. This makes them
+<p>Paint operations like <a class="xref" href="api/NetVips.MutableImage.html#NetVips_MutableImage_DrawCircle_"><code>DrawCircle</code></a> and
+<a class="xref" href="api/NetVips.MutableImage.html#NetVips_MutableImage_DrawLine_"><code>DrawLine</code></a> modify their input image. This makes them
 hard to use with the rest of libvips: you need to be very careful about
 the order in which operations execute or you can get nasty crashes.</p>
-<p>The wrapper spots operations of this type and makes a private copy of the
-image in memory before calling the operation. This stops crashes, but it does
-make it inefficient. If you draw 100 lines on an image, for example, you'll
-copy the image 100 times. The wrapper does make sure that memory is recycled
-where possible, so you won't have 100 copies in memory.</p>
-<p>If you want to avoid the copies, you'll need to call drawing operations
-yourself.</p>
+<p>The wrapper handles this type of operations with the <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Mutate_"><code>Mutate</code></a>
+function. This can be used to make a <a class="xref" href="api/NetVips.MutableImage.html"><code>MutableImage</code></a>. This is an
+image which is unshared and is only available inside the <a class="xref" href="api/NetVips.Image.html#NetVips_Image_Mutate_"><code>Mutate</code></a>
+delegate. Within this delegate, you can use draw operations to modify images. For example:</p>
+<pre><code class="lang-csharp">using var mutated = image.Mutate(mutable =&gt;
+{
+    for (var i = 0; i &lt;= 100; i++)
+    {
+        var j = i / 100.0;
+        mutable.DrawLine(new[] { 255.0 }, (int)(mutable.Width * j), 0, 0, (int)(mutable.Height * (1 - j)));
+    }
+});
+</code></pre>
+<p>Now each <a class="xref" href="api/NetVips.MutableImage.html#NetVips_MutableImage_DrawLine_"><code>DrawLine</code></a> will directly modify the mutable image.</p>
 </article>
           </div>
           

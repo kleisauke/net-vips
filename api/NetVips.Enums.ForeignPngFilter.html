@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Enum Enums.Align
+    <title>Enum Enums.ForeignPngFilter
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Enum Enums.Align
+    <meta name="title" content="Enum Enums.ForeignPngFilter
    ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -68,23 +68,21 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.Align">
+            <article class="content wrap" id="_content" data-uid="NetVips.Enums.ForeignPngFilter">
   
   
-  <h1 id="NetVips_Enums_Align" data-uid="NetVips.Enums.Align" class="text-break">Enum Enums.Align
+  <h1 id="NetVips_Enums_ForeignPngFilter" data-uid="NetVips.Enums.ForeignPngFilter" class="text-break">Enum Enums.ForeignPngFilter
   </h1>
-  <div class="markdown level0 summary"><p>Various types of alignment.</p>
+  <div class="markdown level0 summary"><p>The PNG filter to use.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_Align_syntax">Syntax</h5>
+  <h5 id="NetVips_Enums_ForeignPngFilter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum Align</code></pre>
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum ForeignPngFilter</code></pre>
   </div>
-  <h5 id="NetVips_Enums_Align_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>See for example <a class="xref" href="NetVips.Image.html#NetVips_Image_Join_NetVips_Image_NetVips_Enums_Direction_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Double___System_Nullable_NetVips_Enums_Align__">Join(Image, Enums.Direction, Nullable&lt;Boolean&gt;, Nullable&lt;Int32&gt;, Double[], Nullable&lt;Enums.Align&gt;)</a>.</p>
-</div>
   <h3 id="fields">Fields
   </h3>
   <table class="table table-bordered table-striped table-condensed">
@@ -96,18 +94,33 @@
     <thead>
     <tbody>
       <tr>
-        <td id="NetVips_Enums_Align_Centre">Centre</td>
-        <td><p>Align on the centre.</p>
+        <td id="NetVips_Enums_ForeignPngFilter_All">All</td>
+        <td><p>Adaptive.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_Align_High">High</td>
-        <td><p>Align on the high coordinate edge.</p>
+        <td id="NetVips_Enums_ForeignPngFilter_Avg">Avg</td>
+        <td><p>Average of left and up.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_Align_Low">Low</td>
-        <td><p>Align on the low coordinate edge.</p>
+        <td id="NetVips_Enums_ForeignPngFilter_None">None</td>
+        <td><p>No filtering.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignPngFilter_Paeth">Paeth</td>
+        <td><p>Pick best neighbor predictor automatically.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignPngFilter_Sub">Sub</td>
+        <td><p>Difference to the left.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignPngFilter_Up">Up</td>
+        <td><p>Difference up.</p>
 </td>
       </tr>
     </tbody>
@@ -120,10 +133,10 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_Align.md&amp;value=---%0Auid%3A%20NetVips.Enums.Align%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_ForeignPngFilter.md&amp;value=---%0Auid%3A%20NetVips.Enums.ForeignPngFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L40" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L464" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
