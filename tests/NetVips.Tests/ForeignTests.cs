@@ -822,25 +822,38 @@ namespace NetVips.Tests
 
             // try converting an animated gif to webp ... can't do back to gif
             // again without IM support
-            // added in 8.8
-            if (Helper.Have("gifload") && NetVips.AtLeastLibvips(8, 8))
+            // added in 8.8, delay metadata changed in 8.9
+            if (Helper.Have("gifload") && NetVips.AtLeastLibvips(8, 9))
             {
                 var x1 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
                 {
                     {"n", -1}
                 });
                 var w1 = x1.WebpsaveBuffer(q: 10);
+
+                var expectedDelay = (int[])x1.Get("delay");
+
+                // our test gif has delay 0 for the first frame set in error,
+                // when converting to WebP this should result in a 100ms delay.
+                // see: https://github.com/libvips/libvips/pull/2145
+                if (NetVips.AtLeastLibvips(8, 10, 6))
+                {
+                    for (var i = 0; i < expectedDelay.Length; i++)
+                    {
+                        expectedDelay[i] = expectedDelay[i] <= 10 ? 100 : expectedDelay[i];
+                    }
+                }
+
                 var x2 = Image.NewFromBuffer(w1, kwargs: new VOption
                 {
                     {"n", -1}
                 });
-                Assert.Equal(x2.Width, x1.Width);
-                Assert.Equal(x2.Height, x1.Height);
+                Assert.Equal(x1.Width, x2.Width);
+                Assert.Equal(x1.Height, x2.Height);
 
-                var delayName = NetVips.AtLeastLibvips(8, 9) ? "delay" : "gif-delay";
-                Assert.Equal(x2.Get(delayName), x1.Get(delayName));
-                Assert.Equal(x2.Get("page-height"), x1.Get("page-height"));
-                Assert.Equal(x2.Get("gif-loop"), x1.Get("gif-loop"));
+                Assert.Equal(expectedDelay, (int[])x2.Get("delay"));
+                Assert.Equal(x1.Get("page-height"), x2.Get("page-height"));
+                Assert.Equal(x1.Get("gif-loop"), x2.Get("gif-loop"));
             }
         }
 
@@ -1268,7 +1281,8 @@ namespace NetVips.Tests
             // tiles, though in fact the bottom and right edges will be white
             filename = Helper.GetTemporaryFile(_tempDir);
 
-            _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1, depth: Enums.ForeignDzDepth.One);
+            _colour.ExtractArea(0, 0, 510, 510).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1,
+                depth: Enums.ForeignDzDepth.One);
 
             x = Image.NewFromFile(filename + "/0/1/1.jpg");
             Assert.Equal(256, x.Width);
@@ -1281,7 +1295,8 @@ namespace NetVips.Tests
             if (NetVips.AtLeastLibvips(8, 6))
             {
                 filename = Helper.GetTemporaryFile(_tempDir);
-                _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1, depth: Enums.ForeignDzDepth.One);
+                _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1,
+                    depth: Enums.ForeignDzDepth.One);
 
                 x = Image.NewFromFile(filename + "/0/2/2.jpg");
                 Assert.Equal(256, x.Width);

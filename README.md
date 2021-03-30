@@ -47,20 +47,44 @@ later. There are separate NuGet packages that will contain the pre-compiled
 libvips binaries for the most common platforms (see
 [this repo](https://github.com/kleisauke/libvips-packaging) for details):
 
-|                    |NuGet Package¹|
-|--------------------|:------------:|
-|**Windows 64-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x64.svg)](https://www.nuget.org/packages/NetVips.Native.win-x64)|
-|**Windows 32-bit**  |[![NetVips.Native.win-x64](https://img.shields.io/nuget/v/NetVips.Native.win-x86.svg)](https://www.nuget.org/packages/NetVips.Native.win-x86)|
-|**Windows ARM64**   |[![NetVips.Native.win-arm64](https://img.shields.io/nuget/v/NetVips.Native.win-arm64.svg)](https://www.nuget.org/packages/NetVips.Native.win-arm64)|
-|**Linux x64 glibc²**|[![NetVips.Native.linux-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-x64)|
-|**Linux x64 musl³** |[![NetVips.Native.linux-musl-x64](https://img.shields.io/nuget/v/NetVips.Native.linux-musl-x64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-musl-x64)|
-|**Linux ARM64v8**   |[![NetVips.Native.linux-arm64](https://img.shields.io/nuget/v/NetVips.Native.linux-arm64.svg)](https://www.nuget.org/packages/NetVips.Native.linux-arm64)|
-|**Linux ARMv7**     |[![NetVips.Native.linux-arm](https://img.shields.io/nuget/v/NetVips.Native.linux-arm.svg)](https://www.nuget.org/packages/NetVips.Native.linux-arm)|
-|**macOS x64**       |[![NetVips.Native.osx-x64](https://img.shields.io/nuget/v/NetVips.Native.osx-x64.svg)](https://www.nuget.org/packages/NetVips.Native.osx-x64)|
+|                                     | NuGet Package<sup>1</sup>                                                         |
+|-------------------------------------|:---------------------------------------------------------------------------------:|
+| **Windows 64-bit**                  | [![NetVips.Native.win-x64-badge]][NetVips.Native.win-x64-nuget]                   |
+| **Windows 32-bit**                  | [![NetVips.Native.win-x86-badge]][NetVips.Native.win-x86-nuget]                   |
+| **Windows ARM64**                   | [![NetVips.Native.win-arm64-badge]][NetVips.Native.win-arm64-nuget]               |
+| **Linux x64 glibc**<sup>2</sup>     | [![NetVips.Native.linux-x64-badge]][NetVips.Native.linux-x64-nuget]               |
+| **Linux x64 musl**<sup>3</sup>      | [![NetVips.Native.linux-musl-x64-badge]][NetVips.Native.linux-musl-x64-nuget]     |
+| **Linux ARM64v8 glibc**<sup>2</sup> | [![NetVips.Native.linux-arm64-badge]][NetVips.Native.linux-arm64-nuget]           |
+| **Linux ARM64v8 musl**<sup>3</sup>  | [![NetVips.Native.linux-musl-arm64-badge]][NetVips.Native.linux-musl-arm64-nuget] |
+| **Linux ARMv7**                     | [![NetVips.Native.linux-arm-badge]][NetVips.Native.linux-arm-nuget]               |
+| **macOS x64**                       | [![NetVips.Native.osx-x64-badge]][NetVips.Native.osx-x64-nuget]                   |
+| **macOS ARM64**<sup>4</sup>         | [![NetVips.Native.osx-arm64-badge]][NetVips.Native.osx-arm64-nuget]               |
 
-¹ The version number of these NuGet packages is in sync with libvips' version number.  
-² Uses glibc as the standard C library (Ubuntu, Debian, etc).  
-³ Uses musl as the standard C library (Alpine, Gentoo Linux, etc).
+[NetVips.Native.win-x64-badge]: https://img.shields.io/nuget/v/NetVips.Native.win-x64.svg
+[NetVips.Native.win-x64-nuget]: https://www.nuget.org/packages/NetVips.Native.win-x64
+[NetVips.Native.win-x86-badge]: https://img.shields.io/nuget/v/NetVips.Native.win-x86.svg
+[NetVips.Native.win-x86-nuget]: https://www.nuget.org/packages/NetVips.Native.win-x86
+[NetVips.Native.win-arm64-badge]: https://img.shields.io/nuget/v/NetVips.Native.win-arm64.svg
+[NetVips.Native.win-arm64-nuget]: https://www.nuget.org/packages/NetVips.Native.win-arm64
+[NetVips.Native.linux-x64-badge]: https://img.shields.io/nuget/v/NetVips.Native.linux-x64.svg
+[NetVips.Native.linux-x64-nuget]: https://www.nuget.org/packages/NetVips.Native.linux-x64
+[NetVips.Native.linux-musl-x64-badge]: https://img.shields.io/nuget/v/NetVips.Native.linux-musl-x64.svg
+[NetVips.Native.linux-musl-x64-nuget]: https://www.nuget.org/packages/NetVips.Native.linux-musl-x64
+[NetVips.Native.linux-arm64-badge]: https://img.shields.io/nuget/v/NetVips.Native.linux-arm64.svg
+[NetVips.Native.linux-arm64-nuget]: https://www.nuget.org/packages/NetVips.Native.linux-arm64
+[NetVips.Native.linux-musl-arm64-badge]: https://img.shields.io/nuget/v/NetVips.Native.linux-musl-arm64.svg
+[NetVips.Native.linux-musl-arm64-nuget]: https://www.nuget.org/packages/NetVips.Native.linux-musl-arm64
+[NetVips.Native.linux-arm-badge]: https://img.shields.io/nuget/v/NetVips.Native.linux-arm.svg
+[NetVips.Native.linux-arm-nuget]: https://www.nuget.org/packages/NetVips.Native.linux-arm
+[NetVips.Native.osx-x64-badge]: https://img.shields.io/nuget/v/NetVips.Native.osx-x64.svg
+[NetVips.Native.osx-x64-nuget]: https://www.nuget.org/packages/NetVips.Native.osx-x64
+[NetVips.Native.osx-arm64-badge]: https://img.shields.io/nuget/v/NetVips.Native.osx-arm64.svg
+[NetVips.Native.osx-arm64-nuget]: https://www.nuget.org/packages/NetVips.Native.osx-arm64
+
+<sup>1</sup> The version number of these NuGet packages is in sync with libvips' version number.  
+<sup>2</sup> Uses glibc as the standard C library (Ubuntu, Debian, etc).  
+<sup>3</sup> Uses musl as the standard C library (Alpine, Gentoo Linux, etc).  
+<sup>4</sup> Requires .NET 6.0 Preview.
 
 Then just install this package, perhaps:
 

@@ -21,10 +21,26 @@
 
     <!-- dependencies -->
     <dependencies>
-      <group targetFramework="netstandard2.1">
-        <!-- In-sync with netstandard2.0 below except for NetVips.Native.win-arm64 -->
+	  <!-- In-sync with netstandard2.1 below except for NetVips.Native.osx-arm64 -->
+      <group targetFramework="net6.0">
         <dependency id="NetVips.Native.linux-x64" version="$version$" include="native" />
         <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-musl-arm64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-arm" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-arm64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.osx-x64" version="$version$" include="native" />
+        <!-- macOS ARM64 (Apple Silicon) will be supported with .NET 6.0 -->
+        <dependency id="NetVips.Native.osx-arm64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.win-x64" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-arm64" version="$version$" include="native" />
+      </group>
+	  <!-- In-sync with netstandard2.0 below except for NetVips.Native.win-arm64 and NetVips.Native.linux-musl-arm64 -->
+      <group targetFramework="netstandard2.1">
+        <dependency id="NetVips.Native.linux-x64" version="$version$" include="native" />
+        <dependency id="NetVips.Native.linux-musl-x64" version="$version$" include="native" />
+        <!-- Linux musl ARM64v8 is supported since .NET Core 3.0 (.NET Standard 2.1) -->
+        <dependency id="NetVips.Native.linux-musl-arm64" version="$version$" include="native" />
         <dependency id="NetVips.Native.linux-arm" version="$version$" include="native" />
         <dependency id="NetVips.Native.linux-arm64" version="$version$" include="native" />
         <dependency id="NetVips.Native.osx-x64" version="$version$" include="native" />

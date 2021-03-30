@@ -4,6 +4,24 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.10.6] - 2021-03-30
+### Note
+If you would like to see what's changed, please visit the the release notes of libvips:
+https://github.com/libvips/libvips/releases/tag/v8.10.6
+
+### Added
+- Provide prebuilt binaries for macOS ARM64 ([lovell/sharp-libvips#74](https://github.com/lovell/sharp-libvips/pull/74)).
+- Provide prebuilt binaries for Linux musl ARM64 ([lovell/sharp-libvips#90](https://github.com/lovell/sharp-libvips/pull/90)).
+- Include libimagequant as dependency ([lovell/sharp-libvips#91](https://github.com/lovell/sharp-libvips/pull/91)).
+
+### Changed
+- Switch from zlib to zlib-ng ([lovell/sharp-libvips#25](https://github.com/lovell/sharp-libvips/issues/25)).
+- Allow linker to remove unused sections ([lovell/sharp-libvips#88](https://github.com/lovell/sharp-libvips/pull/88)).
+- Switch from libjpeg-turbo to MozJPEG ([lovell/sharp-libvips#89](https://github.com/lovell/sharp-libvips/pull/89)).
+- Build a more minimal libxml2 ([lovell/sharp-libvips#92](https://github.com/lovell/sharp-libvips/pull/92)).
+- Build aom without HBR/WebM support ([lovell/sharp-libvips#94](https://github.com/lovell/sharp-libvips/pull/94)).
+- Windows binaries are being built with LLVM 11.1 (was GCC 10.2).
+
 ## [8.10.5.1] - 2020-12-27
 ### Fixed
 - AVIF decode/encode on Windows with CPUs lacking support for the AVX2 instruction set ([#104](https://github.com/kleisauke/net-vips/issues/104)).
@@ -116,6 +134,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.10.6]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.5-build2...v8.10.6
 [8.10.5.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.5...v8.10.5-build2
 [8.10.5]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.1...v8.10.5
 [8.10.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.0-build2...v8.10.1

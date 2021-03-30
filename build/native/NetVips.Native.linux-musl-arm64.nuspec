@@ -3,11 +3,11 @@
   <metadata>
 
     <!-- package -->
-    <id>NetVips.Native.osx-x64</id>
-    <title>NetVips - Native binaries for macOS x64</title>
+    <id>NetVips.Native.linux-musl-arm64</id>
+    <title>NetVips - Native binaries for Linux musl ARM64v8</title>
     <version>$version$</version>
-    <description>This package complements the NetVips package and contains native binaries of libvips for macOS (x64)</description>
-    <summary>Native binaries of libvips for macOS (x64)</summary>
+    <description>This package complements the NetVips package and contains native binaries of libvips for Linux musl (ARM64v8)</description>
+    <summary>Native binaries of libvips for Linux musl (ARM64v8)</summary>
     <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
     <repository type="git" url="https://github.com/kleisauke/net-vips" />
     <tags>libvips binaries image-processing</tags>
@@ -22,20 +22,18 @@
   </metadata>
   <files>
 
-    <!-- The .NET Framework >= 4.6.1 build bits for Mono runtime -->
-    <file src="targets\NetVips.Native.osx-x64.targets" target="build/net461" />
-
-    <!-- Include libvips macOS x64 binaries -->
-    <file src="pack\osx-x64\*.dylib" target="runtimes/osx-x64/native" />
+    <!-- Include libvips Linux musl ARM64v8 binaries -->
+    <file src="pack\linux-musl-arm64\*.so.*" target="runtimes/linux-musl-arm64/native" />
 
     <!-- Include the latest third-party notices -->
-    <file src="pack\osx-x64\THIRD-PARTY-NOTICES.md" />
+    <file src="pack\linux-musl-arm64\THIRD-PARTY-NOTICES.md" />
 
     <!-- Include the version numbers of libvips and its dependencies -->
-    <file src="pack\osx-x64\versions.json" />
+    <file src="pack\linux-musl-arm64\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <file src="_._" target="lib/netstandard1.0" />
+    <!-- Note: Linux musl ARM64v8 is supported since .NET Core 3.0 (.NET Standard 2.1) -->
+    <file src="_._" target="lib/netstandard2.1" />
 
   </files>
 </package>
