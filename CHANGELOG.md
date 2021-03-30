@@ -3,6 +3,21 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2021-03-30
+### Added
+- Expose "speed" parameter in heifsave to control the CPU effort spent on improving compression (applies to AV1 compression only, see [libvips/libvips#1819](https://github.com/libvips/libvips/pull/1819)).
+- Add missing `ForeignPngFilter` enum ([#106](https://github.com/kleisauke/net-vips/pull/106)).
+- Add missing `image.AddAlpha()` operation ([#116](https://github.com/kleisauke/net-vips/issues/116)).
+- Add `image.Mutate` function for creating an `MutableImage` ([#119](https://github.com/kleisauke/net-vips/issues/119)).
+
+### Fixed
+- Ensure images are disposed early throughout the codebase ([#114](https://github.com/kleisauke/net-vips/issues/114)).
+
+### Changed
+- Move cache/statistics helpers to dedicated classes ([#98](https://github.com/kleisauke/net-vips/issues/98)).
+- Use enumerations where possible ([#112](https://github.com/kleisauke/net-vips/issues/112)).
+- Methods which modify the image, such as setting or removing metadata requires an `MutableImage` (see `image.Mutate`).
+
 ## [1.2.4] - 2020-07-13
 ### Changed
 - Update methods/enums for libvips 8.10.
@@ -29,7 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [1.2.0] - 2020-01-30
 ### Added
 - Add support for true streaming ([#33](https://github.com/kleisauke/net-vips/issues/33)).
-  - See the [blogpost](https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/tutorial/getting_started.html#custom-sources-and-targets) for more information.
+  - See the [blogpost](https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/introduction.html#custom-sources-and-targets) for more information.
 - A new [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package containing useful helpers ([#41](https://github.com/kleisauke/net-vips/issues/41)).
 - Add `Image.Switch()`, `image.Case()` and `image.NewFromMemoryCopy()` operations.
 - Add support for the short-circuit operators (`&&` / `||`).
@@ -142,6 +157,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[2.0.0]: https://github.com/kleisauke/net-vips/compare/v1.2.4...v2.0.0
 [1.2.4]: https://github.com/kleisauke/net-vips/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/kleisauke/net-vips/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/kleisauke/net-vips/compare/v1.2.1...v1.2.2

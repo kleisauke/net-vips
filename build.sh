@@ -10,7 +10,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/NetVips.Build.csproj"
 
 # Default arguments
-TARGET_FRAMEWORK=".net5.0"
+TARGET_FRAMEWORK="net5.0"
 
 # Parse arguments
 POSITIONAL=()

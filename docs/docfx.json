@@ -36,7 +36,6 @@
       },
       {
         "files": [
-          "tutorial/**/*.{md,yml}",
           "*.{md,yml}"
         ],
         "exclude": [
