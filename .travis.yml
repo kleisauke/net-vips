@@ -10,3 +10,15 @@ jobs:
         - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm64v8
         - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fonts-dejavu"
       script: sudo docker exec netvips bash -c "./build.sh"
+    - name: "Linux ARM64v8 (Alpine 3.13, musl 1.2) - .NET 6.0"
+      arch: arm64
+      os: linux
+      dist: focal
+      language: shell
+      install:
+        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-alpine-arm64v8
+        # TODO(kleisauke): Remove the need of curl and libintl.so hack, see:
+        # https://github.com/lovell/sharp-libvips/pull/90#issuecomment-810414671
+        - sudo docker exec netvips sh -c "apk add bash ttf-dejavu curl --update-cache"
+        - sudo docker exec netvips sh -c "curl -sL https://github.com/kleisauke/libvips-packaging/releases/download/v8.10.6/libvips-8.10.6-linux-musl-arm64.tar.gz | tar xzC /usr lib/libintl.so"
+      script: sudo docker exec netvips bash -c "VIPS_MIN_STACK_SIZE=2m ./build.sh -f net6.0"

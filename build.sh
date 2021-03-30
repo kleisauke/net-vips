@@ -37,5 +37,5 @@ fi
 
 echo "Microsoft (R) .NET Core SDK version $(dotnet --version)"
 
-dotnet build "$BUILD_PROJECT_FILE" -p:TargetFramework="$TARGET_FRAMEWORK" -nodeReuse:false 
+dotnet build "$BUILD_PROJECT_FILE" -p:TargetFramework="$TARGET_FRAMEWORK" -nodeReuse:false
 dotnet run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"
