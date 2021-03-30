@@ -35,7 +35,7 @@ _disableFooter: true
         <section>
           <h2>Runs quickly and uses little memory</h2>
           <p class="lead">NetVips is fast and needs little memory. The <a href="https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks">NetVips.Benchmarks</a> project tests NetVips against Magick.NET and ImageSharp.
-          NetVips is around 14 times faster than Magick.NET and 5 times faster than ImageSharp.</p>
+          NetVips is around 16 times faster than Magick.NET and 3 times faster than ImageSharp.</p>
         </section>
       </div>
     </div>

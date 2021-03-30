@@ -7,16 +7,21 @@
     <OutputType>Exe</OutputType>
     <Optimize>true</Optimize>
     <Platforms>AnyCPU;x64;x86</Platforms>
-    <BenchmarkWithNuGetBinaries>true</BenchmarkWithNuGetBinaries>
+    <DefineConstants Condition="'$(UseGlobalLibvips)' == 'true'">$(DefineConstants);GLOBAL_VIPS</DefineConstants>
+  </PropertyGroup>
+
+  <!-- By default we benchmark with the released NuGet binaries. -->
+  <PropertyGroup Condition="'$(UseGlobalLibvips)' == ''">
+    <UseGlobalLibvips>false</UseGlobalLibvips>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.22.2" />
-    <PackageReference Include="NetVips.Native" Version="8.10.1" Condition="'$(BenchmarkWithNuGetBinaries)' == 'true'" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.23.3" />
+    <PackageReference Include="NetVips.Native" Version="8.10.6" Condition="'$(UseGlobalLibvips)' == 'false'" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     <PackageReference Include="SkiaSharp" Version="2.80.2" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>

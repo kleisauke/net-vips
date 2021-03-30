@@ -20,6 +20,14 @@ namespace NetVips.Benchmarks
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp50)
                     .WithId(".Net 5.0 CLI")
 #endif
+                    .WithArguments(new Argument[]
+                    {
+                        // See https://github.com/dotnet/roslyn/issues/42393
+                        new MsBuildArgument("/p:DebugType=portable"),
+#if GLOBAL_VIPS
+                        new MsBuildArgument("/p:UseGlobalLibvips=true")
+#endif
+                    })
             );
         }
     }
