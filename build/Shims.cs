@@ -1,8 +1,15 @@
+using System;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
 using Nuke.Common;
+using Nuke.Common.CI;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.TravisCI;
 
 public partial class Build
 {
@@ -14,6 +21,37 @@ public partial class Build
     static void Information(string info, params object[] args)
     {
         Logger.Info(info, args);
+    }
+
+    public static string GetVersion()
+    {
+        var xdoc = XDocument.Load(RootDirectory / "build/common.props");
+        var major = xdoc.Descendants().First(x => x.Name.LocalName == "Major").Value;
+        var minor = xdoc.Descendants().First(x => x.Name.LocalName == "Minor").Value;
+        var revision = xdoc.Descendants().First(x => x.Name.LocalName == "Revision").Value;
+
+        long buildNumber;
+        switch (Host.Instance)
+        {
+            case GitHubActions gitHubActions:
+                buildNumber = Convert.ToInt64(gitHubActions.GitHubRunNumber);
+                break;
+            case TravisCI travis:
+                buildNumber = travis.BuildNumber;
+                break;
+            case AppVeyor appVeyor:
+                buildNumber = appVeyor.BuildNumber;
+                break;
+            case IBuildServer ci:
+                throw new NotImplementedException(
+                    $"Could not extract build number; CI provider '{ci}' not implemented.");
+            default /*IsLocalBuild*/:
+                var prerelease = xdoc.Descendants().FirstOrDefault(x => x.Name.LocalName == "PrereleaseLabel" &&
+                                                                        !x.HasAttributes)?.Value ?? string.Empty;
+                return major + "." + minor + "." + revision + prerelease;
+        }
+
+        return major + "." + minor + "." + revision + "." + buildNumber + "-develop";
     }
 
     public void ExtractTarball(string gzArchiveName, string destFolder)

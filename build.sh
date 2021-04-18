@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 ###########################################################################
 # CONFIGURATION
 ###########################################################################
 
-SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/NetVips.Build.csproj"
 
 # Default arguments
@@ -26,6 +26,10 @@ done
 # Restore positional parameters
 set -- "${POSITIONAL[@]}"
 
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+export DOTNET_MULTILEVEL_LOOKUP=0
+
 ###########################################################################
 # EXECUTION
 ###########################################################################
@@ -37,5 +41,5 @@ fi
 
 echo "Microsoft (R) .NET Core SDK version $(dotnet --version)"
 
-dotnet build "$BUILD_PROJECT_FILE" -p:TargetFramework="$TARGET_FRAMEWORK" -nodeReuse:false
+dotnet build "$BUILD_PROJECT_FILE" -p:TargetFramework="$TARGET_FRAMEWORK" -nodeReuse:false -p:UseSharedCompilation=false -nologo -clp:NoSummary --verbosity quiet
 dotnet run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"

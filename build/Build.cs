@@ -1,11 +1,12 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Utilities.Collections;
@@ -16,14 +17,45 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [UnsetVisualStudioEnvironmentVariables]
 partial class Build : NukeBuild
 {
-    BuildParameters Parameters { get; set; }
+    public static int Main() => Execute<Build>(x => x.All);
+
+    [Solution(GenerateProjects = true)] readonly Solution Solution;
+
+    [Parameter("Configuration to build - Default is 'Release'")]
+    public Configuration Configuration { get; } = Configuration.Release;
+
+    [Parameter("Skip unit tests")] public bool SkipTests { get; }
+
+    [Parameter("Build and create NuGet packages")] public bool Package { get; }
+
+    [Parameter("Test with a globally installed libvips")] public bool GlobalVips { get; }
+
+    AbsolutePath SourceDirectory => RootDirectory / "src";
+    AbsolutePath TestsDirectory => RootDirectory / "tests";
+
+    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+    AbsolutePath PackingDirectory => RootDirectory / "build/native/pack";
+    AbsolutePath DownloadDirectory => RootDirectory / "download";
+
+    string VipsVersion => Environment.GetEnvironmentVariable("VIPS_VERSION");
+
+    string[] NuGetArchitectures => new[]
+    {
+        "win-x64",
+        "win-x86",
+        "win-arm64",
+        "linux-x64",
+        "linux-musl-x64",
+        "linux-musl-arm64",
+        "linux-arm",
+        "linux-arm64",
+        "osx-x64",
+        "osx-arm64"
+    };
 
     protected override void OnBuildInitialized()
     {
-        Parameters = new BuildParameters(this);
-        Information("Building version {0} of NetVips ({1}).",
-            Parameters.Version,
-            Parameters.Configuration);
+        Information("Building version {0} of NetVips ({1}).", GetVersion(), Configuration);
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             Information("OS: Windows");
@@ -38,92 +70,90 @@ partial class Build : NukeBuild
         }
 
         Information("Bitness: " + (Environment.Is64BitProcess ? "64 bit" : "32 bit"));
-        Information("Host type: " + Host);
-        if (!string.IsNullOrWhiteSpace(Parameters.VipsVersion))
+        Information("Host type: " + (IsServerBuild ? "Server" : "Local"));
+        if (!string.IsNullOrWhiteSpace(VipsVersion))
         {
-            Information("Version of libvips: " + Parameters.VipsVersion);
+            Information("Version of libvips: " + VipsVersion);
         }
-        Information("Configuration: " + Parameters.Configuration);
-
-        void ExecWait(string preamble, string command, string args)
-        {
-            Console.WriteLine(preamble);
-            Process.Start(new ProcessStartInfo(command, args) { UseShellExecute = false })?.WaitForExit();
-        }
-
-        ExecWait("dotnet version:", "dotnet", "--version");
     }
 
     Target Clean => _ => _
         .Executes(() =>
         {
-            EnsureCleanDirectory(RootDirectory / "src/NetVips/bin" / Parameters.Configuration);
-            EnsureCleanDirectory(RootDirectory / "src/NetVips.Extensions/bin" / Parameters.Configuration);
-            EnsureCleanDirectory(RootDirectory / "tests/NetVips.Tests/bin" / Parameters.Configuration);
-            EnsureCleanDirectory(Parameters.ArtifactsDir);
-            EnsureCleanDirectory(Parameters.PackDir);
+            SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
+            TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
+            EnsureCleanDirectory(PackingDirectory);
+            EnsureCleanDirectory(ArtifactsDirectory);
         });
 
-    Target Compile => _ => _
+    Target Restore => _ => _
         .DependsOn(Clean)
         .Executes(() =>
         {
+            DotNetRestore(c => c
+                .SetProjectFile(Solution.NetVips)
+                .EnableNoCache());
+        });
+
+    Target Compile => _ => _
+        .DependsOn(Restore)
+        .Executes(() =>
+        {
             DotNetBuild(c => c
-                .SetProjectFile(Parameters.BuildSolution)
-                .SetConfiguration(Parameters.Configuration)
-            );
+                .SetProjectFile(Solution.NetVips)
+                .SetConfiguration(Configuration));
         });
 
     Target RunTests => _ => _
-        .OnlyWhenStatic(() => !Parameters.SkipTests)
+        .OnlyWhenStatic(() => !SkipTests)
         .DependsOn(Compile)
         .Executes(() =>
         {
             DotNetTest(c => c
-                .SetProjectFile(Parameters.TestSolution)
-                .SetConfiguration(Parameters.Configuration)
+                .SetProjectFile(Solution.NetVips_Tests)
+                .SetConfiguration(Configuration)
 #if NET6_0
                 .AddProperty("TargetFramework", "net6.0")
 #endif
-                .AddProperty("TestWithNuGetBinaries", Parameters.TestWithNuGetBinaries));
+                .AddProperty("TestWithNuGetBinaries", !GlobalVips));
         });
 
     Target DownloadBinaries => _ => _
-        .OnlyWhenStatic(() => Parameters.Package)
+        .OnlyWhenStatic(() => Package)
         .After(RunTests)
         .Executes(async () =>
         {
             var client = new HttpClient();
 
-            foreach (var architecture in Parameters.NuGetArchitectures)
+            foreach (var architecture in NuGetArchitectures)
             {
-                var fileName = $"libvips-{Parameters.VipsTagVersion}-{architecture}.tar.gz";
+                var fileName = $"libvips-{VipsVersion}-{architecture}.tar.gz";
                 var tarball =
                     new Uri(
-                        $"https://github.com/kleisauke/libvips-packaging/releases/download/v{Parameters.VipsTagVersion}/{fileName}");
+                        $"https://github.com/kleisauke/libvips-packaging/releases/download/v{VipsVersion}/{fileName}");
 
-                var filePath = Parameters.DownloadDir / fileName;
+                var filePath = DownloadDirectory / fileName;
                 if (!File.Exists(filePath))
                 {
                     Information(filePath + " not in download directory. Downloading now ...");
-                    EnsureExistingDirectory(Parameters.DownloadDir);
+                    EnsureExistingDirectory(DownloadDirectory);
                     var response = await client.GetAsync(tarball);
                     await using var fs = new FileStream(filePath, FileMode.CreateNew);
                     await response.Content.CopyToAsync(fs);
                 }
 
-                var tempDir = Parameters.PackDir / "temp";
+                var tempDir = PackingDirectory / "temp";
 
                 Information($"Uncompressing {fileName} ...");
                 ExtractTarball(filePath, tempDir);
 
-                var dllPackDir = Parameters.PackDir / architecture;
+                var dllPackDir = PackingDirectory / architecture;
                 EnsureExistingDirectory(dllPackDir);
 
                 // The C++ binding isn't needed.
                 tempDir.GlobFiles("lib/libvips-cpp*").ForEach(DeleteFile);
 
-                tempDir.GlobFiles("lib/*.dll", "lib/*.so.*", "lib/*.dylib", "THIRD-PARTY-NOTICES.md", "versions.json")
+                tempDir.GlobFiles("lib/*.dll", "lib/*.so*", "lib/*.dylib", "THIRD-PARTY-NOTICES.md", "versions.json")
                     .ForEach(f => CopyFileToDirectory(f, dllPackDir));
 
                 DeleteDirectory(tempDir);
@@ -131,67 +161,60 @@ partial class Build : NukeBuild
         });
 
     Target CreateNetVipsNugetPackage => _ => _
-        .OnlyWhenStatic(() => Parameters.Package)
+        .OnlyWhenStatic(() => Package)
         .After(RunTests)
+        .DependsOn(Compile)
         .Executes(() =>
         {
             // Need to build the OSX and Linux DLL first.
             DotNetBuild(c => c
-                .SetProjectFile(Parameters.BuildSolution)
-                .SetConfiguration(Parameters.Configuration)
+                .SetProjectFile(Solution.NetVips)
+                .SetConfiguration(Configuration)
                 .SetFramework("netstandard2.0")
                 .AddProperty("Platform", "AnyCPU")
-                .AddProperty("TargetOS", "OSX")
-            );
-
-            DotNetBuild(c => c
-                .SetProjectFile(Parameters.BuildSolution)
-                .SetConfiguration(Parameters.Configuration)
-                .SetFramework("netstandard2.0")
-                .AddProperty("Platform", "AnyCPU")
-                .AddProperty("TargetOS", "Linux")
-            );
+                .CombineWith(
+                    new[] { "OSX", "Linux" },
+                    (_, os) => _.AddProperty("TargetOS", os)));
 
             DotNetPack(c => c
-                .SetProject(Parameters.BuildSolution)
-                .SetConfiguration(Parameters.Configuration)
-                .SetOutputDirectory(Parameters.ArtifactsDir)
+                .SetProject(Solution.NetVips)
+                .SetConfiguration(Configuration)
+                .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("TargetOS", "Windows")
             );
         });
 
     Target CreateNetVipsExtensionsNugetPackage => _ => _
-        .OnlyWhenStatic(() => Parameters.Package)
+        .OnlyWhenStatic(() => Package)
         .After(RunTests)
         .Executes(() =>
         {
             DotNetPack(c => c
-                .SetProject(Parameters.BuildSolutionExtensions)
-                .SetConfiguration(Parameters.Configuration)
-                .SetOutputDirectory(Parameters.ArtifactsDir)
+                .SetProject(Solution.NetVips_Extensions)
+                .SetConfiguration(Configuration)
+                .SetOutputDirectory(ArtifactsDirectory)
             );
         });
 
     Target CreateNativeNuGetPackages => _ => _
-        .OnlyWhenStatic(() => Parameters.Package)
+        .OnlyWhenStatic(() => Package)
         .DependsOn(DownloadBinaries)
         .Executes(() =>
         {
-            // Build the architecture specific packages.
-            foreach (var architecture in Parameters.NuGetArchitectures)
-            {
-                NuGetPack(c => c
-                    .SetTargetPath(RootDirectory / "build/native/NetVips.Native." + architecture + ".nuspec")
-                    .SetVersion(Parameters.VipsTagVersion)
-                    .SetOutputDirectory(Parameters.ArtifactsDir)
-                    .AddProperty("NoWarn", "NU5128"));
-            }
+            // Build the architecture specific packages
+            NuGetPack(c => c
+                .SetVersion(VipsVersion)
+                .SetOutputDirectory(ArtifactsDirectory)
+                .AddProperty("NoWarn", "NU5128")
+                .CombineWith(NuGetArchitectures,
+                    (_, architecture) =>
+                        _.SetTargetPath(RootDirectory / "build/native/NetVips.Native." + architecture + ".nuspec")));
 
             // Build the all-in-one package, which depends on the previous packages.
             NuGetPack(c => c
                 .SetTargetPath(RootDirectory / "build/native/NetVips.Native.nuspec")
-                .SetVersion(Parameters.VipsTagVersion)
-                .SetOutputDirectory(Parameters.ArtifactsDir)
+                .SetVersion(VipsVersion)
+                .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128"));
         });
 
@@ -200,6 +223,4 @@ partial class Build : NukeBuild
         .DependsOn(CreateNetVipsNugetPackage)
         .DependsOn(CreateNetVipsExtensionsNugetPackage)
         .DependsOn(CreateNativeNuGetPackages);
-
-    public static int Main() => Execute<Build>(x => x.All);
 }
