@@ -86,27 +86,9 @@ partial class Build : NukeBuild
             EnsureCleanDirectory(ArtifactsDirectory);
         });
 
-    Target Restore => _ => _
-        .DependsOn(Clean)
-        .Executes(() =>
-        {
-            DotNetRestore(c => c
-                .SetProjectFile(Solution.NetVips)
-                .EnableNoCache());
-        });
-
-    Target Compile => _ => _
-        .DependsOn(Restore)
-        .Executes(() =>
-        {
-            DotNetBuild(c => c
-                .SetProjectFile(Solution.NetVips)
-                .SetConfiguration(Configuration));
-        });
-
     Target RunTests => _ => _
         .OnlyWhenStatic(() => !SkipTests)
-        .DependsOn(Compile)
+        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetTest(c => c
@@ -163,7 +145,7 @@ partial class Build : NukeBuild
     Target CreateNetVipsNugetPackage => _ => _
         .OnlyWhenStatic(() => Package)
         .After(RunTests)
-        .DependsOn(Compile)
+        .DependsOn(Clean)
         .Executes(() =>
         {
             // Need to build the OSX and Linux DLL first.
