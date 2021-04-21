@@ -94,9 +94,6 @@ partial class Build : NukeBuild
             DotNetTest(c => c
                 .SetProjectFile(Solution.NetVips_Tests)
                 .SetConfiguration(Configuration)
-#if NET6_0
-                .AddProperty("TargetFramework", "net6.0")
-#endif
                 .AddProperty("TestWithNuGetBinaries", !GlobalVips));
         });
 

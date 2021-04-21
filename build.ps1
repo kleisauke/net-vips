@@ -1,8 +1,5 @@
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory=$false)]
-    [Alias('f')]
-    [string]$TargetFramework = 'net5.0',
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$BuildArguments
 )
@@ -38,5 +35,5 @@ if ((Get-Command "dotnet" -ErrorAction SilentlyContinue) -eq $null) {
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& dotnet --version)"
 
-ExecSafe { & dotnet build $BuildProjectFile /p:TargetFramework=$TargetFramework /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary --verbosity quiet }
+ExecSafe { & dotnet build $BuildProjectFile /nodeReuse:false /p:UseSharedCompilation=false /nologo /clp:NoSummary --verbosity quiet }
 ExecSafe { & dotnet run --project $BuildProjectFile --no-build -- $BuildArguments }

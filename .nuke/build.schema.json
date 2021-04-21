@@ -74,12 +74,10 @@
             "enum": [
               "All",
               "Clean",
-              "Compile",
               "CreateNativeNuGetPackages",
               "CreateNetVipsExtensionsNugetPackage",
               "CreateNetVipsNugetPackage",
               "DownloadBinaries",
-              "Restore",
               "RunTests"
             ]
           }
@@ -100,12 +98,10 @@
             "enum": [
               "All",
               "Clean",
-              "Compile",
               "CreateNativeNuGetPackages",
               "CreateNetVipsExtensionsNugetPackage",
               "CreateNetVipsNugetPackage",
               "DownloadBinaries",
-              "Restore",
               "RunTests"
             ]
           }
