@@ -36,10 +36,8 @@ jobs:
         if: contains(matrix.container, 'centos')
         run: |
           yum install -y \
-            https://repo.ius.io/ius-release-el7.rpm \
-            https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
             https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-          yum install -y dotnet-sdk-5.0 dejavu-sans-fonts which git224
+          yum install -y dotnet-sdk-5.0 dejavu-sans-fonts which
       - name: Dependencies (Linux musl)
         if: contains(matrix.container, 'alpine')
         run: apk add bash ttf-dejavu --update-cache
