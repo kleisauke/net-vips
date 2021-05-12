@@ -58,8 +58,7 @@ namespace NetVips.Samples
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzDepth"), "Enums.ForeignDzDepth");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzLayout"), "Enums.ForeignDzLayout");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifCompression"), "Enums.ForeignHeifCompression");
-            //_gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignSubsample"), "Enums.ForeignSubsample"); // Uncomment when libvips >= 8.11
-            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignJpegSubsample"), "Enums.ForeignSubsample");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignSubsample"), "Enums.ForeignSubsample");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffCompression"), "Enums.ForeignTiffCompression");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffPredictor"), "Enums.ForeignTiffPredictor");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffResunit"), "Enums.ForeignTiffResunit");

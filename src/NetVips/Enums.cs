@@ -525,7 +525,10 @@ namespace NetVips
             Webp = 6, // "webp"
 
             /// <summary>ZSTD compression.</summary>
-            Zstd = 7 // "zstd"
+            Zstd = 7, // "zstd"
+
+            /// <summary>JP2K compression.</summary>
+            Jp2k = 8 // "jp2k"
         }
 
         /// <summary>
