@@ -67,7 +67,7 @@ namespace NetVips
         {
             // logger.Debug($"Source.NewFromFile: filename = {filename}");
 
-            var bytes = Encoding.UTF8.GetBytes(filename);
+            var bytes = Encoding.UTF8.GetBytes(filename + char.MinValue); // Ensure null-terminated string
             var pointer = Internal.VipsSource.NewFromFile(bytes);
             if (pointer == IntPtr.Zero)
             {

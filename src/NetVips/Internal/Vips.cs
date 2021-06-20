@@ -193,13 +193,13 @@ namespace NetVips.Internal
 
         internal static string PathFilename7(string path)
         {
-            var bytes = Encoding.UTF8.GetBytes(path);
+            var bytes = Encoding.UTF8.GetBytes(path + char.MinValue); // Ensure null-terminated string
             return PathFilename7(bytes).ToUtf8String();
         }
 
         internal static string PathMode7(string path)
         {
-            var bytes = Encoding.UTF8.GetBytes(path);
+            var bytes = Encoding.UTF8.GetBytes(path + char.MinValue); // Ensure null-terminated string
             return PathMode7(bytes).ToUtf8String();
         }
     }

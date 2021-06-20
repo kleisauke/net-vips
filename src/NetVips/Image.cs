@@ -249,7 +249,7 @@ namespace NetVips
             bool? fail = null,
             VOption kwargs = null)
         {
-            var bytes = Encoding.UTF8.GetBytes(vipsFilename);
+            var bytes = Encoding.UTF8.GetBytes(vipsFilename + char.MinValue); // Ensure null-terminated string
             var filename = Vips.GetFilename(bytes);
             var fileOptions = Vips.GetOptions(bytes).ToUtf8String(true);
 
@@ -888,7 +888,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to <paramref name="vipsFilename"/>.</exception>
         public void WriteToFile(string vipsFilename, VOption kwargs = null)
         {
-            var bytes = Encoding.UTF8.GetBytes(vipsFilename);
+            var bytes = Encoding.UTF8.GetBytes(vipsFilename + char.MinValue); // Ensure null-terminated string
             var filename = Vips.GetFilename(bytes);
             var fileOptions = Vips.GetOptions(bytes).ToUtf8String(true);
             var name = Marshal.PtrToStringAnsi(VipsForeign.FindSave(filename));
@@ -948,7 +948,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to buffer.</exception>
         public byte[] WriteToBuffer(string formatString, VOption kwargs = null)
         {
-            var bytes = Encoding.UTF8.GetBytes(formatString);
+            var bytes = Encoding.UTF8.GetBytes(formatString + char.MinValue); // Ensure null-terminated string
             var bufferOptions = Vips.GetOptions(bytes).ToUtf8String(true);
             var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveBuffer(bytes));
 
@@ -988,7 +988,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to write to target.</exception>
         public void WriteToTarget(Target target, string formatString, VOption kwargs = null)
         {
-            var bytes = Encoding.UTF8.GetBytes(formatString);
+            var bytes = Encoding.UTF8.GetBytes(formatString + char.MinValue); // Ensure null-terminated string
             var bufferOptions = Vips.GetOptions(bytes).ToUtf8String(true);
             var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(bytes));
 

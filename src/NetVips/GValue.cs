@@ -243,12 +243,12 @@ namespace NetVips
             }
             else if (gtype == GStrType)
             {
-                var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value));
+                var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value) + char.MinValue); // Ensure null-terminated string
                 Internal.GValue.SetString(ref Struct, bytes);
             }
             else if (gtype == RefStrType)
             {
-                var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value));
+                var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value) + char.MinValue); // Ensure null-terminated string
                 VipsValue.SetRefString(ref Struct, bytes);
             }
             else if (fundamental == GObjectType && value is GObject gObject)
