@@ -34,7 +34,7 @@ public partial class Build
         switch (Host.Instance)
         {
             case GitHubActions gitHubActions:
-                buildNumber = Convert.ToInt64(gitHubActions.GitHubRunNumber);
+                buildNumber = gitHubActions.GitHubRunNumber;
                 break;
             case TravisCI travis:
                 buildNumber = travis.BuildNumber;
