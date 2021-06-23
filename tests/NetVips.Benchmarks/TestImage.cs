@@ -1,27 +1,39 @@
 namespace NetVips.Benchmarks
 {
+    using System;
     using System.IO;
 
     public class TestImage
     {
-        // much larger than this and im falls over with cache resources exhausted
-        public const int TileSize = 5;
+        // Much larger than this and im falls over with cache resources exhausted
+        public const int TargetDimension = 5000;
 
         public static void BuildTestImages(string outputDir)
         {
+            var targetTiff = Path.Combine(outputDir, "t.tif");
+            var targetJpeg = Path.Combine(outputDir, "t.jpg");
+
+            // Do not build test images if they are already present
+            if (File.Exists(targetTiff) && File.Exists(targetJpeg))
+            {
+                return;
+            }
+
             var outputFile = Path.Combine(outputDir, "t.v");
 
-            // building test image
+            // Build test image
             var im = Image.NewFromFile(Path.Combine(outputDir, "sample2.v"));
-            im = im.Replicate(TileSize, TileSize);
+            im = im.Replicate((int)Math.Ceiling((double)TargetDimension / im.Width),
+                (int)Math.Ceiling((double)TargetDimension / im.Height));
+            im = im.ExtractArea(0, 0, TargetDimension, TargetDimension);
             im.WriteToFile(outputFile);
 
-            // making tiff and jpeg derivatives
+            // Make tiff and jpeg derivatives
             im = Image.NewFromFile(outputFile);
-            im.WriteToFile(Path.Combine(outputDir, "t.tif"));
+            im.Tiffsave(targetTiff, tile: true);
 
             im = Image.NewFromFile(outputFile);
-            im.WriteToFile(Path.Combine(outputDir, "t.jpg"));
+            im.Jpegsave(targetJpeg);
         }
     }
 }

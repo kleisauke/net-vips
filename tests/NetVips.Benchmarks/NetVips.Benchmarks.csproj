@@ -16,11 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.23.3" />
-    <PackageReference Include="NetVips.Native" Version="8.10.6" Condition="'$(UseGlobalLibvips)' == 'false'" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.0" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.24.1" />
+    <PackageReference Include="NetVips.Native" Version="8.11.0" Condition="'$(UseGlobalLibvips)' == 'false'" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.80.2" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
@@ -33,15 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContentWithTargetPath Include="Images\t.jpg">
+    <ContentWithTargetPath Include="Images\sample2.v">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>t.jpg</TargetPath>
+      <TargetPath>sample2.v</TargetPath>
     </ContentWithTargetPath>
 
-    <ContentWithTargetPath Include="Images\t.tif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>t.tif</TargetPath>
-    </ContentWithTargetPath>
+	<None Include="$(OutDir)\t.*">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Link>%(Filename)%(Extension)</Link>
+	  <Visible>False</Visible>
+	</None>
   </ItemGroup>
 
 </Project>
