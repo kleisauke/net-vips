@@ -4,9 +4,17 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.11.0] - 2021-06-23
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:
+https://libvips.github.io/libvips/2021/06/04/What's-new-in-8.11.html
+
+### Changed
+- Build Linux ARM64v8 and ARMv7 binaries with GCC 11.1.
+
 ## [8.10.6] - 2021-03-30
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.10.6
 
 ### Added
@@ -29,7 +37,7 @@ https://github.com/libvips/libvips/releases/tag/v8.10.6
 
 ## [8.10.5] - 2020-12-24
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.10.5
 
 ### Added
@@ -38,12 +46,12 @@ https://github.com/libvips/libvips/releases/tag/v8.10.5
 
 ## [8.10.1] - 2020-09-12
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.10.1
 
 ## [8.10.0] - 2020-08-26
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://libvips.github.io/libvips/2020/06/18/What's-new-in-8.10.html
 
 ### Fixed
@@ -67,7 +75,7 @@ Requires NetVips v1.2.3.
 
 ## [8.9.2] - 2020-04-28
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.9.2
 
 ### Fixed
@@ -76,12 +84,12 @@ https://github.com/libvips/libvips/releases/tag/v8.9.2
 
 ## [8.9.1] - 2020-01-30
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.9.1
 
 ## [8.9.0] - 2020-01-30
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://libvips.github.io/libvips/2019/12/11/What's-new-in-8.9.html
 
 ### Changed
@@ -92,27 +100,27 @@ https://libvips.github.io/libvips/2019/12/11/What's-new-in-8.9.html
 
 ## [8.8.4] - 2019-12-30
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.8.4
 
 ## [8.8.3] - 2019-10-14
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.8.3
 
 ## [8.8.2] - 2019-09-05
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.8.2
 
 ## [8.8.1] - 2019-07-29
 ### Note
-If you would like to see what's changed, please visit the the release notes of libvips:
+If you would like to see what's changed, please visit the release notes of libvips:
 https://github.com/libvips/libvips/releases/tag/v8.8.1
 
 ## [8.8.0] - 2019-06-22
 ### Note
-If you would like to see what's new, please visit the the release notes of libvips:
+If you would like to see what's new, please visit the release notes of libvips:
 https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 
 ## [8.7.4] - 2019-04-10
@@ -134,6 +142,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.11.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.6...v8.11.0
 [8.10.6]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.5-build2...v8.10.6
 [8.10.5.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.5...v8.10.5-build2
 [8.10.5]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.1...v8.10.5

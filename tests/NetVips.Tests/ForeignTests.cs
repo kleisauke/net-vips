@@ -1032,10 +1032,11 @@ namespace NetVips.Tests
             {
                 var a = im[10, 10];
 
-                Assert.Equal(new double[] { 33 }, a);
+                // libnsgif (vendored with libvips >= 8.11) is always RGB or RGBA
+                Assert.Equal(33, a[0]);
                 Assert.Equal(159, im.Width);
                 Assert.Equal(203, im.Height);
-                Assert.Equal(1, im.Bands);
+                Assert.Equal(NetVips.AtLeastLibvips(8, 11) ? 3 : 1, im.Bands);
             }
 
             FileLoader("gifload", Helper.GifFile, GifValid);
