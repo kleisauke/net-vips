@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         VerifyAssembly="true" 
-         VerifyIgnoreCodes="0x80131869"
-         GenerateXsd="false">
-  <!-- ignore 0x80131869 since it throws on netstandard -->
-  <ModuleInit />
-</Weavers>

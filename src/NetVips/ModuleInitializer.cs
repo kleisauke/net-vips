@@ -3,7 +3,7 @@ namespace NetVips
     using System;
 
     /// <summary>
-    /// Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.
+    /// All code inside the <see cref="Initialize"/> method is ran as soon as the assembly is loaded.
     /// </summary>
     public static class ModuleInitializer
     {
@@ -25,6 +25,7 @@ namespace NetVips
         /// <summary>
         /// Initializes the module.
         /// </summary>
+        [System.Runtime.CompilerServices.ModuleInitializer]
         public static void Initialize()
         {
             try

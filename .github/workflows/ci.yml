@@ -19,9 +19,10 @@ jobs:
           - os: ubuntu-20.04
             container: mcr.microsoft.com/dotnet/sdk:5.0-alpine3.12
             script: ./build.sh
-          - os: ubuntu-20.04
-            script: ./build/test-mono.sh
-            allow_failures: true
+          # TODO(kleisauke): Re-enable Mono CI when C# 9 features are supported.
+          # - os: ubuntu-20.04
+          #   script: ./build/test-mono.sh
+          #   allow_failures: true
           - os: macos-10.15
             script: ./build.sh
           - os: windows-2019
