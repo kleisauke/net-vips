@@ -1422,14 +1422,22 @@ namespace NetVips.Tests
         {
             Skip.IfNot(Helper.Have("heifsave"), "no HEIF support, skipping test");
 
-            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 85, new VOption
+            // TODO(kleisauke): Reduce the threshold once https://github.com/strukturag/libheif/issues/533 is resolved.
+            SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 80, new VOption
             {
+                {"lossless", true},
                 {"compression", Enums.ForeignHeifCompression.Av1}
             });
-            // TODO: perhaps we should automatically set the compression to
-            // av1 when we save to *.avif?
-            // SaveLoad("%s.avif", _colour);
-            SaveLoadFile(".avif", "[compression=av1]", _colour, 85);
+
+            // heifsave defaults to AV1 for .avif suffix since libvips 8.11
+            if (NetVips.AtLeastLibvips(8, 11))
+            {
+                SaveLoad("%s.avif", _colour);
+            }
+            else
+            {
+                SaveLoadFile(".avif", "[compression=av1]", _colour, 90);
+            }
 
             // uncomment to test lossless mode, will take a while
             //var x = Image.NewFromFile(Helper.AvifFile);
