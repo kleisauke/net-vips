@@ -109,7 +109,7 @@ partial class Build : NukeBuild
                 var fileName = $"libvips-{VipsVersion}-{architecture}.tar.gz";
                 var tarball =
                     new Uri(
-                        $"https://github.com/kleisauke/libvips-packaging/releases/download/v{VipsVersion}/{fileName}");
+                        $"https://github.com/kleisauke/libvips-packaging/releases/download/v{VipsVersion}-build2/{fileName}");
 
                 var filePath = DownloadDirectory / fileName;
                 if (!File.Exists(filePath))
@@ -182,7 +182,7 @@ partial class Build : NukeBuild
         {
             // Build the architecture specific packages
             NuGetPack(c => c
-                .SetVersion(VipsVersion)
+                .SetVersion(VipsVersion + ".1")
                 .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128")
                 .CombineWith(NuGetArchitectures,
@@ -192,7 +192,7 @@ partial class Build : NukeBuild
             // Build the all-in-one package, which depends on the previous packages.
             NuGetPack(c => c
                 .SetTargetPath(RootDirectory / "build/native/NetVips.Native.nuspec")
-                .SetVersion(VipsVersion)
+                .SetVersion(VipsVersion + ".1")
                 .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128"));
         });
