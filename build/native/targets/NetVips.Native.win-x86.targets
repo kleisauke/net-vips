@@ -11,7 +11,7 @@
     <ItemGroup Condition="'$(MSBuildRuntimeType)' != 'Core' AND ('$(Platform)' == 'x86' OR '$(Platform)|$(Prefer32Bit)' == 'AnyCPU|true')">
         <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\*">
             <Link>$(LibvipsOutputBase)%(Filename)%(Extension)</Link>
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

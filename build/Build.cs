@@ -182,7 +182,7 @@ partial class Build : NukeBuild
         {
             // Build the architecture specific packages
             NuGetPack(c => c
-                .SetVersion(VipsVersion + ".1")
+                .SetVersion(VipsVersion + ".2")
                 .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128")
                 .CombineWith(NuGetArchitectures,
@@ -192,7 +192,7 @@ partial class Build : NukeBuild
             // Build the all-in-one package, which depends on the previous packages.
             NuGetPack(c => c
                 .SetTargetPath(RootDirectory / "build/native/NetVips.Native.nuspec")
-                .SetVersion(VipsVersion + ".1")
+                .SetVersion(VipsVersion + ".2")
                 .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128"));
         });

@@ -11,7 +11,7 @@
     <ItemGroup Condition="'$(MSBuildRuntimeType)' == 'Mono'">
         <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\osx-x64\native\*">
             <Link>$(LibvipsOutputBase)%(Filename)%(Extension)</Link>
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
