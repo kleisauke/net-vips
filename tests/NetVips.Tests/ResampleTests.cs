@@ -259,14 +259,13 @@ namespace NetVips.Tests
                 Assert.Equal(38, im.Height);
 
                 // should be able to thumbnail individual pages from many-page tiff
-                // should be able to thumbnail individual pages from many-page tiff
                 im = Image.Thumbnail(Helper.OmeFile + "[page=0]", 100);
                 Assert.Equal(100, im.Width);
                 Assert.Equal(38, im.Height);
                 im2 = Image.Thumbnail(Helper.OmeFile + "[page=1]", 100);
                 Assert.Equal(100, im2.Width);
                 Assert.Equal(38, im2.Height);
-                Assert.True((im1 - im2).Abs().Max() != 0);
+                Assert.True((im - im2).Abs().Max() != 0);
 
                 // should be able to thumbnail entire many-page tiff as a toilet-roll
                 // image
