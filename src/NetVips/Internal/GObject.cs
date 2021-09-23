@@ -7,6 +7,9 @@ namespace NetVips.Internal
     using GObjectManaged = global::NetVips.GObject;
     using VipsBlobManaged = global::NetVips.VipsBlob;
 
+    [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void GWeakNotify(IntPtr data, IntPtr objectPointer);
+
     internal static class GObject
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -40,6 +43,11 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_object_unref")]
         internal static extern void Unref(IntPtr @object);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_object_weak_ref")]
+        internal static extern void WeakRef(GObjectManaged @object, GWeakNotify notify, IntPtr data);
     }
 
     [StructLayout(LayoutKind.Sequential)]

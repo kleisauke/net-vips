@@ -502,8 +502,8 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = NewFromSource(source, strOptions, access, fail, kwargs);
 
-            // Need to dispose the SourceStream when the image is unreferenced.
-            image.OnUnref += () => source.Dispose();
+            // Need to dispose the SourceStream when the image is closed.
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -699,8 +699,8 @@ namespace NetVips
 
             var image = new Image(vi);
 
-            // Need to release the pinned GCHandle when the image is unreferenced.
-            image.OnUnref += () =>
+            // Need to release the pinned GCHandle when the image is closed.
+            image.OnPostClose += () =>
             {
                 if (handle.IsAllocated)
                 {

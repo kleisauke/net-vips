@@ -16,17 +16,15 @@ namespace NetVips
         /// We have to record all of the <see cref="SignalConnect"/> delegates to
         /// prevent them from being re-located or disposed of by the garbage collector.
         /// </summary>
+        /// <remarks>
+        /// All recorded delegates are freed in <see cref="ReleaseDelegates"/>.
+        /// </remarks>
         private readonly ICollection<GCHandle> _handles = new List<GCHandle>();
 
         /// <summary>
         /// Hint of how much native memory is actually occupied by the object.
         /// </summary>
         internal long MemoryPressure;
-
-        /// <summary>
-        /// A delegate that is called when the object's reference count is decreased.
-        /// </summary>
-        internal event Action OnUnref;
 
         // Handy for debugging
         // public static int NObjects;
@@ -83,6 +81,15 @@ namespace NetVips
                 callback = (VipsImage.EvalSignal)EvalMarshal;
             }
 
+            // add a weak reference callback to ensure all handles are released on finalization
+            if (_handles.Count == 0)
+            {
+                GWeakNotify notify = ReleaseDelegates;
+                var notifyHandle = GCHandle.Alloc(notify);
+
+                Internal.GObject.WeakRef(this, notify, GCHandle.ToIntPtr(notifyHandle));
+            }
+
             // prevent the delegate from being re-located or disposed of by the garbage collector
             var delegateHandle = GCHandle.Alloc(callback);
             _handles.Add(delegateHandle);
@@ -125,23 +132,40 @@ namespace NetVips
             // logger.Debug($"Unref: GObject = {handle}");
             if (!IsInvalid)
             {
-                OnUnref?.Invoke();
                 Internal.GObject.Unref(handle);
-
-                // release all handles recorded by this object
-                foreach (var gcHandle in _handles)
-                {
-                    if (gcHandle.IsAllocated)
-                    {
-                        gcHandle.Free();
-                    }
-                }
-
-                _handles.Clear();
             }
             // NObjects--;
 
             return true;
+        }
+
+        /// <summary>
+        /// Release all the <see cref="SignalConnect"/> delegates by this object on finalization.
+        /// </summary>
+        /// <remarks>
+        /// This function is only called when <see cref="SignalConnect"/> was used on this object.
+        /// </remarks>
+        /// <param name="data">Data that was provided when the weak reference was established.</param>
+        /// <param name="objectPointer">The object being disposed.</param>
+        internal void ReleaseDelegates(IntPtr data, IntPtr objectPointer)
+        {
+            foreach (var gcHandle in _handles)
+            {
+                if (gcHandle.IsAllocated)
+                {
+                    gcHandle.Free();
+                }
+            }
+
+            // All GCHandles are free'd. Clear the list to prevent inadvertent use.
+            _handles.Clear();
+
+            // Free the GCHandle used by this GWeakNotify
+            var notifyHandle = GCHandle.FromIntPtr(data);
+            if (notifyHandle.IsAllocated)
+            {
+                notifyHandle.Free();
+            }
         }
 
         /// <summary>

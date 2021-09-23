@@ -1248,7 +1248,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = CsvloadSource(source, skip, lines, whitespace, separator, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -1343,7 +1343,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = CsvloadSource(source, out flags, skip, lines, whitespace, separator, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -2099,7 +2099,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = FitsloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -2166,7 +2166,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = FitsloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -2712,7 +2712,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = GifloadSource(source, n, page, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -2793,7 +2793,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = GifloadSource(source, out flags, n, page, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -3200,7 +3200,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = HeifloadSource(source, page, n, thumbnail, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -3288,7 +3288,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = HeifloadSource(source, out flags, page, n, thumbnail, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -4332,7 +4332,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = Jp2kloadSource(source, page, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -4406,7 +4406,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = Jp2kloadSource(source, out flags, page, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -4897,7 +4897,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = JpegloadSource(source, shrink, autorotate, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -4978,7 +4978,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = JpegloadSource(source, out flags, shrink, autorotate, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -5570,7 +5570,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = JxlloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -5637,7 +5637,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = JxlloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -7309,7 +7309,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = MatrixloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -7376,7 +7376,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = MatrixloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -8633,7 +8633,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = NiftiloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -8700,7 +8700,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = NiftiloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -9024,7 +9024,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = OpenslideloadSource(source, attachAssociated, level, autocrop, associated, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -9119,7 +9119,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = OpenslideloadSource(source, out flags, attachAssociated, level, autocrop, associated, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -9488,7 +9488,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = PdfloadSource(source, page, n, dpi, scale, background, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -9590,7 +9590,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = PdfloadSource(source, out flags, page, n, dpi, scale, background, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -9870,7 +9870,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = PngloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -9937,7 +9937,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = PngloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -10345,7 +10345,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = PpmloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -10412,7 +10412,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = PpmloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -10840,7 +10840,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = RadloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -10907,7 +10907,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = RadloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -12333,7 +12333,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = SvgloadSource(source, dpi, scale, unlimited, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -12421,7 +12421,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = SvgloadSource(source, out flags, dpi, scale, unlimited, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -13008,7 +13008,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = ThumbnailSource(source, width, optionString, height, size, noRotate, crop, linear, importProfile, exportProfile, intent);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -13346,7 +13346,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = TiffloadSource(source, page, subifd, n, autorotate, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -13441,7 +13441,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = TiffloadSource(source, out flags, page, subifd, n, autorotate, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -14075,7 +14075,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = VipsloadSource(source, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -14142,7 +14142,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = VipsloadSource(source, out flags, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -14535,7 +14535,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = WebploadSource(source, page, n, scale, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }
@@ -14623,7 +14623,7 @@ namespace NetVips
             var source = SourceStream.NewFromStream(stream);
             var image = WebploadSource(source, out flags, page, n, scale, memory, access, fail);
 
-            image.OnUnref += () => source.Dispose();
+            image.OnPostClose += () => source.Dispose();
 
             return image;
         }

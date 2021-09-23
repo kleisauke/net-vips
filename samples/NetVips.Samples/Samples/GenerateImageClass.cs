@@ -724,7 +724,7 @@ namespace NetVips.Samples
                 if (firstArgType == GValue.SourceType)
                 {
                     result.AppendLine()
-                        .AppendLine($"{indent}    image.OnUnref += () => source.Dispose();")
+                        .AppendLine($"{indent}    image.OnPostClose += () => source.Dispose();")
                         .AppendLine()
                         .AppendLine($"{indent}    return image;");
                 }

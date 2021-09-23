@@ -11,6 +11,18 @@ namespace NetVips
     {
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Attach a post-close delegate. This is called on finalization.
+        /// </summary>
+        /// <remarks>
+        /// Useful for e.g. deleting the file associated with a temp image.
+        /// </remarks>
+        public event Action OnPostClose
+        {
+            add => SignalConnect("postclose", value);
+            remove => throw new NotImplementedException();
+        }
+
         /// <inheritdoc cref="GObject"/>
         internal VipsObject(IntPtr pointer)
             : base(pointer)
