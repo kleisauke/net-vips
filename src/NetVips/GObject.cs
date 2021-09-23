@@ -100,6 +100,21 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Disconnects a handler from this object.
+        /// </summary>
+        /// <remarks>
+        /// If the <paramref name="handlerId"/> is 0 then this function does nothing.
+        /// </remarks>
+        /// <param name="handlerId">Handler id of the handler to be disconnected.</param>
+        public void SignalHandlerDisconnect(uint handlerId)
+        {
+            if (handlerId != 0)
+            {
+                GSignal.HandlerDisconnect(this, handlerId);
+            }
+        }
+
+        /// <summary>
         /// Decreases the reference count of object.
         /// When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
         /// </summary>

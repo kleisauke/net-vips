@@ -23,8 +23,8 @@ namespace NetVips.Internal
 
         internal enum GConnectFlags
         {
-            G_CONNECT_AFTER = 1,
-            G_CONNECT_SWAPPED = 2
+            G_CONNECT_AFTER = 1 << 0,
+            G_CONNECT_SWAPPED = 1 << 1
         }
     }
 }
