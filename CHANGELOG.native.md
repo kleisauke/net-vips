@@ -4,6 +4,14 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.11.4] - 2021-09-25
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://github.com/libvips/libvips/releases/tag/v8.11.4
+
+### Fixed
+- Copy binaries to the output directory only when needed ([#140](https://github.com/kleisauke/net-vips/issues/140)).
+
 ## [8.11.3.1] - 2021-09-08
 ### Fixed
 - `System.DllNotFoundException` on .NET Framework ([#136](https://github.com/kleisauke/net-vips/issues/136)).
@@ -154,6 +162,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.11.4]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3-build2...v8.11.4
 [8.11.3.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3...v8.11.3-build2
 [8.11.3]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.0...v8.11.3
 [8.11.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.10.6...v8.11.0
