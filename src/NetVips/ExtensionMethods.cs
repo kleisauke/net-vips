@@ -247,5 +247,30 @@ namespace NetVips
 
             return doubles;
         }
+
+        /// <summary>
+        /// Compatibility method to call loaders with the <see cref="Enums.FailOn"/> enum.
+        /// </summary>
+        /// <param name="options">The optional arguments for the loader.</param>
+        /// <param name="failOn">The optional <see cref="Enums.FailOn"/> parameter.</param>
+        internal static void AddFailOn(this VOption options, Enums.FailOn? failOn = null)
+        {
+            if (!failOn.HasValue)
+            {
+                return;
+            }
+
+            if (NetVips.AtLeastLibvips(8, 12))
+            {
+                options.Add("fail_on", failOn);
+            }
+            else
+            {
+                // The deprecated "fail" param was at the highest sensitivity (>= warning),
+                // but for compat it would be more correct to set this to true only when
+                // a non-permissive enum is given (> none).
+                options.Add("fail", failOn > Enums.FailOn.None);
+            }
+        }
     }
 }

@@ -18,11 +18,11 @@ namespace NetVips.Samples
         private const int MaxImageSize = 71000000;
 
         // Halt processing and raise an error when loading invalid images.
-        // Set this flag to `false` if you'd rather apply a "best effort" to decode
+        // Set this flag to Enums.FailOn.None if you'd rather apply a "best effort" to decode
         // images, even if the data is corrupt or invalid.
         // See: CVE-2019-6976
         // https://blog.silentsignal.eu/2019/04/18/drop-by-drop-bleeding-through-libvips/
-        private const bool FailOnError = true;
+        private const Enums.FailOn FailOn = Enums.FailOn.Error;
 
         // The name libvips uses to attach an ICC profile.
         private const string VipsMetaIccName = "icc-profile-data";
@@ -71,7 +71,7 @@ namespace NetVips.Samples
             var loadOptions = new VOption
             {
                 {"access", Enums.Access.Sequential},
-                {"fail", FailOnError}
+                {"failOn", FailOn}
             };
             var stringOptions = "";
 

@@ -42,8 +42,8 @@ namespace NetVips.Samples
         {
             try
             {
-                // The fail option makes NetVips throw an exception on a file format error
-                using var image = Image.NewFromBuffer(buffer, fail: true, access: Enums.Access.Sequential);
+                // The failOn option makes NetVips throw an exception on a file format error
+                using var image = Image.NewFromBuffer(buffer, failOn: Enums.FailOn.Error, access: Enums.Access.Sequential);
 
                 // Calculate the average pixel value. That way you are guaranteed to read every pixel
                 // and the operation is cheap.

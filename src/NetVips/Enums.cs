@@ -387,6 +387,28 @@ namespace NetVips
         }
 
         /// <summary>
+        /// How sensitive loaders are to errors, from never stop (very insensitive), to
+        /// stop on the smallest warning (very sensitive).
+        ///
+        /// Each one implies the ones before it, so <see cref="Error"/> implies
+        /// <see cref="Truncated"/>.
+        /// </summary>
+        public enum FailOn
+        {
+            /// <summary>Never stop,</summary>
+            None = 0, // "none"
+
+            /// <summary>Stop on image truncated, nothing else.</summary>
+            Truncated = 1, // "truncated"
+
+            /// <summary>Stop on serious error or truncation.</summary>
+            Error = 2, // "error"
+
+            /// <summary>Stop on anything, even warnings.</summary>
+            Warning = 3 // "warning"
+        }
+
+        /// <summary>
         /// The container type of the pyramid.
         /// </summary>
         /// <remarks>
@@ -436,8 +458,11 @@ namespace NetVips
             /// <summary>Use Google maps directory layout.</summary>
             Google = 2, // "google"
 
-            /// <summary>Use IIIF directory layout.</summary>
-            Iiif = 3 // "iiif"
+            /// <summary>Use IIIF v2 directory layout.</summary>
+            Iiif = 3, // "iiif"
+
+            /// <summary>Use IIIF v3 directory layout</summary>
+            Iiif3 = 4 // "iiif3"
         }
 
         /// <summary>
@@ -481,6 +506,24 @@ namespace NetVips
 
             /// <summary>Adaptive.</summary>
             All = None | Sub | Up | Avg | Paeth // "all"
+        }
+
+        /// <summary>
+        /// The netpbm file format to save as.
+        /// </summary>
+        public enum ForeignPpmFormat
+        {
+            /// <summary>Images are single bit.</summary>
+            Pbm = 0, // "pbm"
+
+            /// <summary>Images are 8, 16, or 32-bits, one band.</summary>
+            Pgm = 1, // "pgm"
+
+            /// <summary>Images are 8, 16, or 32-bits, three bands.</summary>
+            Ppm = 2, // "ppm"
+
+            /// <summary>Images are 32-bit float pixels.</summary>
+            Pfm = 3 // "pfm"
         }
 
         /// <summary>
@@ -662,7 +705,7 @@ namespace NetVips
             /// <summary>The first four bands are in CMYK space.</summary>
             Cmyk = 15, // "cmyk"
 
-            /// <summary>Implies #VIPS_CODING_LABQ.</summary>
+            /// <summary>Implies <see cref="Coding.Labq"/>.</summary>
             Labq = 16, // "labq"
 
             /// <summary>Generic RGB space.</summary>
@@ -832,14 +875,32 @@ namespace NetVips
             Exp = 8, // "exp"
 
             /// <summary>10 to the something.</summary>
-            Exp10 = 9 // "exp10"
+            Exp10 = 9, // "exp10"
+
+            /// <summary>sinh(), angles in radians.</summary>
+            Sinh = 10, // "sinh"
+
+            /// <summary>cosh(), angles in radians.</summary>
+            Cosh = 11, // "cosh"
+
+            /// <summary>tanh(), angles in radians.</summary>
+            Tanh = 12, // "tanh"
+
+            /// <summary>asinh(), angles in radians.</summary>
+            Asinh = 13, // "asinh"
+
+            /// <summary>acosh(), angles in radians.</summary>
+            Acosh = 14, // "acosh"
+
+            /// <summary>atanh(), angles in radians.</summary>
+            Atanh = 15 // "atanh"
         }
 
         /// <summary>
         /// Various math functions on images.
         /// </summary>
         /// <remarks>
-        /// See <see cref="Image.Math"/>.
+        /// See <see cref="Image.Math2"/>.
         /// </remarks>
         public enum OperationMath2
         {
@@ -847,7 +908,10 @@ namespace NetVips
             Pow = 0, // "pow"
 
             /// <summary>pow( right, left ).</summary>
-            Wop = 1 // "wop"
+            Wop = 1, // "wop"
+
+            /// <summary>atan2( left, right )</summary>
+            Atan2 = 2 // "atan2"
         }
 
         /// <summary>

@@ -487,7 +487,7 @@ namespace NetVips.Tests
             SaveLoadFile(".tif", vips810 ? "[bitdepth=1]" : "[squash]",
                 _oneBit);
             SaveLoadFile(".tif", "[miniswhite]", _oneBit);
-            SaveLoadFile(".tif", (vips810 ? "[bitdepth=1" : "[squash,") + "miniswhite]",
+            SaveLoadFile(".tif", (vips810 ? "[bitdepth=1" : "[squash") + ",miniswhite]",
                 _oneBit);
 
             SaveLoadFile(".tif", $"[profile={Helper.SrgbFile}]", _colour);

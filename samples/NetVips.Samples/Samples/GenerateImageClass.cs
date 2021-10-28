@@ -6,7 +6,7 @@ namespace NetVips.Samples
     using System.Text;
     using System.IO;
 
-    // TODO: Refactor this class (it's a mess).
+    // TODO(kleisauke): This class should probably be refactored, although it does its job.
     public class GenerateImageClass : ISample
     {
         public string Name => "Generate image class";
@@ -32,13 +32,16 @@ namespace NetVips.Samples
 
         private readonly List<string> _allNickNames = NetVips.GetOperations();
 
+        /// <summary>
+        /// The fundamental type for VipsFailOn. See <see cref="FailOn"/>.
+        /// </summary>
+        public static readonly IntPtr FailOnType = NetVips.TypeFromName("VipsFailOn");
+
         public GenerateImageClass()
         {
-            if (NetVips.AtLeastLibvips(8, 9))
-            {
-                _gTypeToCSharpDict.Add(GValue.SourceType, "Source");
-                _gTypeToCSharpDict.Add(GValue.TargetType, "Target");
-            }
+            // Classes
+            _gTypeToCSharpDict.Add(GValue.SourceType, "Source");
+            _gTypeToCSharpDict.Add(GValue.TargetType, "Target");
 
             // Enums
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsAccess"), "Enums.Access");
@@ -54,10 +57,12 @@ namespace NetVips.Samples
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDemandStyle"), "Enums.DemandStyle");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDirection"), "Enums.Direction");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsExtend"), "Enums.Extend");
+            _gTypeToCSharpDict.Add(FailOnType, "Enums.FailOn");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzContainer"), "Enums.ForeignDzContainer");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzDepth"), "Enums.ForeignDzDepth");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzLayout"), "Enums.ForeignDzLayout");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifCompression"), "Enums.ForeignHeifCompression");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPpmFormat"), "Enums.ForeignPpmFormat");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignSubsample"), "Enums.ForeignSubsample");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffCompression"), "Enums.ForeignTiffCompression");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignTiffPredictor"), "Enums.ForeignTiffPredictor");
@@ -127,7 +132,7 @@ namespace NetVips.Samples
             using var op = Operation.NewFromName(operationName);
             if ((op.GetFlags() & Enums.OperationFlags.DEPRECATED) != 0)
             {
-                throw new Exception($"No such operator. Operator \"{operationName}\" is deprecated");
+                throw new ArgumentException($"No such operator. Operator \"{operationName}\" is deprecated");
             }
 
             var intro = Introspect.Get(operationName);
@@ -423,13 +428,21 @@ namespace NetVips.Samples
                         ? $"nameof({arg.Name})"
                         : $"\"{arg.Name}\"";
 
-                    result.Append($"{indent}    if (")
-                        .Append(CheckNullable(GTypeToCSharp(arg.Name, arg.Type), safeIdentifier))
-                        .AppendLine(")")
-                        .AppendLine($"{indent}    {{")
-                        .AppendLine($"{indent}        options.Add({optionsName}, {safeIdentifier});")
-                        .AppendLine($"{indent}    }}")
-                        .AppendLine();
+                    if (arg.Type == FailOnType)
+                    {
+                        result.AppendLine($"{indent}    options.AddFailOn({safeIdentifier});")
+                            .AppendLine();
+                    }
+                    else
+                    {
+                        result.Append($"{indent}    if (")
+                            .Append(CheckNullable(GTypeToCSharp(arg.Name, arg.Type), safeIdentifier))
+                            .AppendLine(")")
+                            .AppendLine($"{indent}    {{")
+                            .AppendLine($"{indent}        options.Add({optionsName}, {safeIdentifier});")
+                            .AppendLine($"{indent}    }}")
+                            .AppendLine();
+                    }
                 }
             }
 

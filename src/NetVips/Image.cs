@@ -236,9 +236,8 @@ namespace NetVips
         /// for notes on where temporary files are created. Small images are loaded via memory
         /// by default, use `VIPS_DISC_THRESHOLD` to set the definition of small.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set to <see langword="true"/>, the loader will fail
-        /// with an error on the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="failOn">The type of error that will cause load to fail. By
+        /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename"/>.</exception>
@@ -246,15 +245,15 @@ namespace NetVips
             string vipsFilename,
             bool? memory = null,
             Enums.Access? access = null,
-            bool? fail = null,
+            Enums.FailOn? failOn = null,
             VOption kwargs = null)
         {
             var bytes = Encoding.UTF8.GetBytes(vipsFilename + char.MinValue); // Ensure null-terminated string
             var filename = Vips.GetFilename(bytes);
             var fileOptions = Vips.GetOptions(bytes).ToUtf8String(true);
 
-            var name = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
-            if (name == null)
+            var operationName = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
+            if (operationName == null)
             {
                 throw new VipsException($"unable to load from file {vipsFilename}");
             }
@@ -275,14 +274,11 @@ namespace NetVips
                 options.Add(nameof(access), access);
             }
 
-            if (fail.HasValue)
-            {
-                options.Add(nameof(fail), fail);
-            }
+            options.AddFailOn(failOn);
 
             options.Add("string_options", fileOptions);
 
-            return Operation.Call(name, options, filename.ToUtf8String(true)) as Image;
+            return Operation.Call(operationName, options, filename.ToUtf8String(true)) as Image;
         }
 
         /// <summary>
@@ -296,9 +292,8 @@ namespace NetVips
         /// <param name="data">The memory object to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set True, the loader will fail with an error on
-        /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="failOn">The type of error that will cause load to fail. By
+        /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data"/>.</exception>
@@ -306,11 +301,11 @@ namespace NetVips
             byte[] data,
             string strOptions = "",
             Enums.Access? access = null,
-            bool? fail = null,
+            Enums.FailOn? failOn = null,
             VOption kwargs = null)
         {
-            var name = FindLoadBuffer(data);
-            if (name == null)
+            var operationName = FindLoadBuffer(data);
+            if (operationName == null)
             {
                 throw new VipsException("unable to load from buffer");
             }
@@ -326,14 +321,11 @@ namespace NetVips
                 options.Add(nameof(access), access);
             }
 
-            if (fail.HasValue)
-            {
-                options.Add(nameof(fail), fail);
-            }
+            options.AddFailOn(failOn);
 
             options.Add("string_options", strOptions);
 
-            return Operation.Call(name, options, data) as Image;
+            return Operation.Call(operationName, options, data) as Image;
         }
 
         /// <summary>
@@ -347,9 +339,8 @@ namespace NetVips
         /// <param name="data">The memory object to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set True, the loader will fail with an error on
-        /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="failOn">The type of error that will cause load to fail. By
+        /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data"/>.</exception>
@@ -357,8 +348,8 @@ namespace NetVips
             string data,
             string strOptions = "",
             Enums.Access? access = null,
-            bool? fail = null,
-            VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
+            Enums.FailOn? failOn = null,
+            VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, failOn, kwargs);
 
         /// <summary>
         /// Load a formatted image from memory.
@@ -371,9 +362,8 @@ namespace NetVips
         /// <param name="data">The memory object to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set True, the loader will fail with an error on
-        /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="failOn">The type of error that will cause load to fail. By
+        /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="data"/>.</exception>
@@ -381,8 +371,8 @@ namespace NetVips
             char[] data,
             string strOptions = "",
             Enums.Access? access = null,
-            bool? fail = null,
-            VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, fail, kwargs);
+            Enums.FailOn? failOn = null,
+            VOption kwargs = null) => NewFromBuffer(Encoding.UTF8.GetBytes(data), strOptions, access, failOn, kwargs);
 
         /// <summary>
         /// Load a formatted image from a source.
@@ -395,9 +385,8 @@ namespace NetVips
         /// <param name="source">The source to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set True, the loader will fail with an error on
-        /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="failOn">The type of error that will cause load to fail. By
+        /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="source"/>.</exception>
@@ -405,10 +394,15 @@ namespace NetVips
             Source source,
             string strOptions = "",
             Enums.Access? access = null,
-            bool? fail = null,
+            Enums.FailOn? failOn = null,
             VOption kwargs = null)
         {
-            var name = FindLoadSource(source);
+            // Load with the new source API if we can. Fall back to the older
+            // mechanism in case the loader we need has not been converted yet.
+            // We need to hide any errors from this first phase.
+            Vips.ErrorFreeze();
+            var operationName = FindLoadSource(source);
+            Vips.ErrorThaw();
 
             var options = new VOption();
             if (kwargs != null)
@@ -421,31 +415,28 @@ namespace NetVips
                 options.Add(nameof(access), access);
             }
 
-            if (fail.HasValue)
-            {
-                options.Add(nameof(fail), fail);
-            }
+            options.AddFailOn(failOn);
 
             options.Add("string_options", strOptions);
 
-            if (name != null)
+            if (operationName != null)
             {
-                return Operation.Call(name, options, source) as Image;
+                return Operation.Call(operationName, options, source) as Image;
             }
 
-            #region fallback mechanism; remove when all loaders are streaming based
+            #region fallback mechanism
 
             var filename = source.GetFileName();
             if (filename != null)
             {
                 // Try with the old file-based loaders.
-                name = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
-                if (name == null)
+                operationName = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
+                if (operationName == null)
                 {
                     throw new VipsException("unable to load from source");
                 }
 
-                return Operation.Call(name, options, filename) as Image;
+                return Operation.Call(operationName, options, filename) as Image;
             }
 
             // Try with the old buffer-based loaders.
@@ -464,13 +455,13 @@ namespace NetVips
             using var blob = new VipsBlob(ptr);
             var buf = blob.GetData(out var length);
 
-            name = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, (ulong)length));
-            if (name == null)
+            operationName = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, (ulong)length));
+            if (operationName == null)
             {
                 throw new VipsException("unable to load from source");
             }
 
-            return Operation.Call(name, options, blob) as Image;
+            return Operation.Call(operationName, options, blob) as Image;
 
             #endregion
         }
@@ -486,9 +477,8 @@ namespace NetVips
         /// <param name="stream">The stream to load the image from.</param>
         /// <param name="strOptions">Load options as a string. Use <see cref="string.Empty"/> for no options.</param>
         /// <param name="access">Hint the expected access pattern for the image.</param>
-        /// <param name="fail">If set True, the loader will fail with an error on
-        /// the first serious error in the file. By default, libvips
-        /// will attempt to read everything it can from a damaged image.</param>
+        /// <param name="failOn">The type of error that will cause load to fail. By
+        /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
         /// <param name="kwargs">Optional options that depend on the load operation.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
         /// <exception cref="VipsException">If unable to load from <paramref name="stream"/>.</exception>
@@ -496,11 +486,11 @@ namespace NetVips
             Stream stream,
             string strOptions = "",
             Enums.Access? access = null,
-            bool? fail = null,
+            Enums.FailOn? failOn = null,
             VOption kwargs = null)
         {
             var source = SourceStream.NewFromStream(stream);
-            var image = NewFromSource(source, strOptions, access, fail, kwargs);
+            var image = NewFromSource(source, strOptions, access, failOn, kwargs);
 
             // Need to dispose the SourceStream when the image is closed.
             image.OnPostClose += () => source.Dispose();
@@ -891,9 +881,9 @@ namespace NetVips
             var bytes = Encoding.UTF8.GetBytes(vipsFilename + char.MinValue); // Ensure null-terminated string
             var filename = Vips.GetFilename(bytes);
             var fileOptions = Vips.GetOptions(bytes).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSave(filename));
+            var operationName = Marshal.PtrToStringAnsi(VipsForeign.FindSave(filename));
 
-            if (name == null)
+            if (operationName == null)
             {
                 throw new VipsException($"unable to write to file {vipsFilename}");
             }
@@ -912,7 +902,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            this.Call(name, kwargs, filename.ToUtf8String(true));
+            this.Call(operationName, kwargs, filename.ToUtf8String(true));
         }
 
         /// <summary>
@@ -950,11 +940,16 @@ namespace NetVips
         {
             var bytes = Encoding.UTF8.GetBytes(formatString + char.MinValue); // Ensure null-terminated string
             var bufferOptions = Vips.GetOptions(bytes).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveBuffer(bytes));
+            string operationName = null;
 
-            if (name == null)
+            // Save with the new target API if we can. Fall back to the older
+            // mechanism in case the saver we need has not been converted yet.
+            // We need to hide any errors from this first phase.
+            if (NetVips.AtLeastLibvips(8, 9))
             {
-                throw new VipsException("unable to write to buffer");
+                Vips.ErrorFreeze();
+                operationName = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(bytes));
+                Vips.ErrorThaw();
             }
 
             var stringOptions = new VOption
@@ -971,7 +966,24 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            return this.Call(name, kwargs) as byte[];
+            if (operationName != null)
+            {
+                using var target = Target.NewToMemory();
+                this.Call(operationName, kwargs, target);
+                return target.Blob;
+            }
+
+            #region fallback mechanism
+
+            operationName = Marshal.PtrToStringAnsi(VipsForeign.FindSaveBuffer(bytes));
+            if (operationName == null)
+            {
+                throw new VipsException($"unable to write to buffer");
+            }
+
+            return this.Call(operationName, kwargs) as byte[];
+
+            #endregion
         }
 
         /// <summary>
@@ -990,9 +1002,9 @@ namespace NetVips
         {
             var bytes = Encoding.UTF8.GetBytes(formatString + char.MinValue); // Ensure null-terminated string
             var bufferOptions = Vips.GetOptions(bytes).ToUtf8String(true);
-            var name = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(bytes));
+            var operationName = Marshal.PtrToStringAnsi(VipsForeign.FindSaveTarget(bytes));
 
-            if (name == null)
+            if (operationName == null)
             {
                 throw new VipsException("unable to write to target");
             }
@@ -1011,7 +1023,7 @@ namespace NetVips
                 kwargs = stringOptions;
             }
 
-            this.Call(name, kwargs, target);
+            this.Call(operationName, kwargs, target);
         }
 
         /// <summary>
@@ -1695,6 +1707,42 @@ namespace NetVips
         public Image Atan() => Math(Enums.OperationMath.Atan);
 
         /// <summary>
+        /// Return the hyperbolic sine of an image in radians.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Sinh() => Math(Enums.OperationMath.Sinh);
+
+        /// <summary>
+        /// Return the hyperbolic cosine of an image in radians.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Cosh() => Math(Enums.OperationMath.Cosh);
+
+        /// <summary>
+        /// Return the hyperbolic tangent of an image in radians.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Tanh() => Math(Enums.OperationMath.Tanh);
+
+        /// <summary>
+        /// Return the inverse hyperbolic sine of an image in radians.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Asinh() => Math(Enums.OperationMath.Asinh);
+
+        /// <summary>
+        /// Return the inverse hyperbolic cosine of an image in radians.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Acosh() => Math(Enums.OperationMath.Acosh);
+
+        /// <summary>
+        /// Return the inverse hyperbolic tangent of an image in radians.
+        /// </summary>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Atanh() => Math(Enums.OperationMath.Atanh);
+
+        /// <summary>
         /// Return the natural log of an image.
         /// </summary>
         /// <returns>A new <see cref="Image"/>.</returns>
@@ -1721,60 +1769,89 @@ namespace NetVips
         /// <summary>
         /// Raise to power of an image.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="exp">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(Image other) => Math2(other, Enums.OperationMath2.Pow);
+        public Image Pow(Image exp) => Math2(exp, Enums.OperationMath2.Pow);
 
         /// <summary>
         /// Raise to power of an constant.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="exp">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(double other) => Math2Const(Enums.OperationMath2.Pow, new[] { other });
+        public Image Pow(double exp) => Math2Const(Enums.OperationMath2.Pow, new[] { exp });
 
         /// <summary>
         /// Raise to power of an array.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="exp">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(double[] other) => Math2Const(Enums.OperationMath2.Pow, other);
+        public Image Pow(double[] exp) => Math2Const(Enums.OperationMath2.Pow, exp);
 
         /// <summary>
         /// Raise to power of an array.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="exp">To the power of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Pow(int[] other) =>
-            Math2Const(Enums.OperationMath2.Pow, Array.ConvertAll(other, Convert.ToDouble));
+        public Image Pow(int[] exp) =>
+            Math2Const(Enums.OperationMath2.Pow, Array.ConvertAll(exp, Convert.ToDouble));
 
         /// <summary>
         /// Raise to power of an image, but with the arguments reversed.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="base">To the base of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(Image other) => Math2(other, Enums.OperationMath2.Wop);
+        public Image Wop(Image @base) => Math2(@base, Enums.OperationMath2.Wop);
 
         /// <summary>
         /// Raise to power of an constant, but with the arguments reversed.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="base">To the base of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(double other) => Math2Const(Enums.OperationMath2.Wop, new[] { other });
+        public Image Wop(double @base) => Math2Const(Enums.OperationMath2.Wop, new[] { @base });
 
         /// <summary>
         /// Raise to power of an array, but with the arguments reversed.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="base">To the base of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(double[] other) => Math2Const(Enums.OperationMath2.Wop, other);
+        public Image Wop(double[] @base) => Math2Const(Enums.OperationMath2.Wop, @base);
 
         /// <summary>
         /// Raise to power of an array, but with the arguments reversed.
         /// </summary>
-        /// <param name="other">To the power of this.</param>
+        /// <param name="base">To the base of this.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        public Image Wop(int[] other) =>
-            Math2Const(Enums.OperationMath2.Wop, Array.ConvertAll(other, Convert.ToDouble));
+        public Image Wop(int[] @base) =>
+            Math2Const(Enums.OperationMath2.Wop, Array.ConvertAll(@base, Convert.ToDouble));
+
+        /// <summary>
+        /// Arc tangent of an image in degrees.
+        /// </summary>
+        /// <param name="x">Arc tangent of y / <paramref name="x"/>.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Atan2(Image x) => Math2(x, Enums.OperationMath2.Atan2);
+
+        /// <summary>
+        /// Arc tangent of an constant in degrees.
+        /// </summary>
+        /// <param name="x">Arc tangent of y / <paramref name="x"/>.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Atan2(double x) => Math2Const(Enums.OperationMath2.Atan2, new[] { x });
+
+        /// <summary>
+        /// Arc tangent of an array in degrees.
+        /// </summary>
+        /// <param name="x">Arc tangent of y / <paramref name="x"/>.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Atan2(double[] x) => Math2Const(Enums.OperationMath2.Atan2, x);
+
+        /// <summary>
+        /// Arc tangent of an array in degrees.
+        /// </summary>
+        /// <param name="x">Arc tangent of y / <paramref name="x"/>.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        public Image Atan2(int[] x) =>
+            Math2Const(Enums.OperationMath2.Atan2, Array.ConvertAll(x, Convert.ToDouble));
 
         /// <summary>
         /// Erode with a structuring element.

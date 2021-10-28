@@ -89,6 +89,37 @@ namespace NetVips.Tests
             }
         }
 
+        /// <summary>
+        /// run a function on a pair of images
+        /// 50,50 and 10,10 should have different values on the test image
+        /// don't loop over band elements
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="func"></param>
+        internal void RunImageBinary(Image left, Image right, Func<object, object, object> func)
+        {
+            Helper.RunCmp2(left, right, 50, 50, func);
+            Helper.RunCmp2(left, right, 10, 10, func);
+        }
+
+        internal void RunBinary(IEnumerable<Image> images, Func<object, object, object> func,
+            Enums.BandFormat[] formats = null)
+        {
+            formats ??= Helper.AllFormats;
+
+            foreach (var x in images)
+            {
+                foreach (var y in formats)
+                {
+                    foreach (var z in formats)
+                    {
+                        RunImageBinary(x.Cast(y), x.Cast(z), func);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region test overloadable operators
@@ -736,9 +767,9 @@ namespace NetVips.Tests
         }
 
         [Fact]
-        public void TestASin()
+        public void TestAsin()
         {
-            dynamic ASin(dynamic x)
+            dynamic Asin(dynamic x)
             {
                 if (x is Image image)
                 {
@@ -749,13 +780,13 @@ namespace NetVips.Tests
             }
 
             var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
-            RunUnary(new[] { im }, ASin, Helper.NonComplexFormats);
+            RunUnary(new[] { im }, Asin, Helper.NonComplexFormats);
         }
 
         [Fact]
-        public void TestACos()
+        public void TestAcos()
         {
-            dynamic ACos(dynamic x)
+            dynamic Acos(dynamic x)
             {
                 if (x is Image image)
                 {
@@ -766,13 +797,13 @@ namespace NetVips.Tests
             }
 
             var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
-            RunUnary(new[] { im }, ACos, Helper.NonComplexFormats);
+            RunUnary(new[] { im }, Acos, Helper.NonComplexFormats);
         }
 
         [Fact]
-        public void TestATan()
+        public void TestAtan()
         {
-            dynamic ATan(dynamic x)
+            dynamic Atan(dynamic x)
             {
                 if (x is Image image)
                 {
@@ -783,7 +814,139 @@ namespace NetVips.Tests
             }
 
             var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
-            RunUnary(new[] { im }, ATan, Helper.NonComplexFormats);
+            RunUnary(new[] { im }, Atan, Helper.NonComplexFormats);
+        }
+
+        [SkippableFact]
+        public void TestSinh()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Sinh(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Sinh();
+                }
+
+                return Math.Sinh(x);
+            }
+
+            RunUnary(_allImages, Sinh, Helper.NonComplexFormats);
+        }
+
+        [SkippableFact]
+        public void TestCosh()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Cosh(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Cosh();
+                }
+
+                return Math.Cosh(x);
+            }
+
+            RunUnary(_allImages, Cosh, Helper.NonComplexFormats);
+        }
+
+        [SkippableFact]
+        public void TestTanh()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Tanh(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Tanh();
+                }
+
+                return Math.Tanh(x);
+            }
+
+            RunUnary(_allImages, Tanh, Helper.NonComplexFormats);
+        }
+
+#if NET5_0_OR_GREATER // Inverse hyperbolic functions are not available on Mono
+        [SkippableFact]
+        public void TestAsinh()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Asinh(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Asinh();
+                }
+
+                return Math.Asinh(x);
+            }
+
+            var im = (Image.Black(100, 100) + new[] { 4, 5, 6 }) / 3.0;
+            RunUnary(new[] { im }, Asinh, Helper.NonComplexFormats);
+        }
+
+        [SkippableFact]
+        public void TestAcosh()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Acosh(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Acosh();
+                }
+
+                return Math.Acosh(x);
+            }
+
+            var im = (Image.Black(100, 100) + new[] { 4, 5, 6 }) / 3.0;
+            RunUnary(new[] { im }, Acosh, Helper.NonComplexFormats);
+        }
+
+        [SkippableFact]
+        public void TestAtanh()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Atanh(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Atanh();
+                }
+
+                return Math.Atanh(x);
+            }
+
+            var im = (Image.Black(100, 100) + new[] { 0, 1, 2 }) / 3.0;
+            RunUnary(new[] { im }, Atanh, Helper.NonComplexFormats);
+        }
+#endif
+
+        [SkippableFact]
+        public void TestAtan2()
+        {
+            Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
+
+            dynamic Atan2(dynamic x, dynamic y)
+            {
+                if (x is Image left)
+                {
+                    return left.Atan2(y);
+                }
+
+                return Math.Atan2(x[0], y[0]) * (180.0 / Math.PI);
+            }
+
+            var im = (Image.Black(100, 100) + new[] { 0, 1, 2 }) / 3.0;
+            RunBinary(im.Bandsplit(), Atan2, Helper.NonComplexFormats);
         }
 
         [Fact]
@@ -800,6 +963,22 @@ namespace NetVips.Tests
             }
 
             RunUnary(_allImages, Log, Helper.NonComplexFormats);
+        }
+
+        [Fact]
+        public void TestLog10()
+        {
+            dynamic Log10(dynamic x)
+            {
+                if (x is Image image)
+                {
+                    return image.Log10();
+                }
+
+                return Math.Log10(x);
+            }
+
+            RunUnary(_allImages, Log10, Helper.NonComplexFormats);
         }
 
         [Fact]

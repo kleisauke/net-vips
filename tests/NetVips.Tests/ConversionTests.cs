@@ -145,9 +145,9 @@ namespace NetVips.Tests
         {
             dynamic BandJoin(dynamic x, dynamic y)
             {
-                if (x is Image left && y is Image right)
+                if (x is Image left)
                 {
-                    return left.Bandjoin(right);
+                    return left.Bandjoin(y);
                 }
 
                 return ((IEnumerable<double>)x).Concat((IEnumerable<double>)y);
@@ -209,9 +209,9 @@ namespace NetVips.Tests
 
             dynamic BandRank(dynamic x, dynamic y)
             {
-                if (x is Image left && y is Image right)
+                if (x is Image left)
                 {
-                    return left.Bandrank(right);
+                    return left.Bandrank(y);
                 }
 
                 return Median(x, y);
