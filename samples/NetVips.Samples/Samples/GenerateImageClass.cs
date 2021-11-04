@@ -227,31 +227,6 @@ namespace NetVips.Samples
                 }
             }
 
-            string CheckNullable(string type, string name)
-            {
-                switch (type)
-                {
-                    case "Image[]":
-                    case "object[]":
-                    case "int[]":
-                    case "double[]":
-                    case "byte[]":
-                        return $"{name} != null && {name}.Length > 0";
-                    case "GObject":
-                    case "Image":
-                    case "string":
-                        return $"{name} != null";
-                    case "bool":
-                    case "int":
-                    case "ulong":
-                    case "double":
-                    case { } enumString when enumString.StartsWith("Enums."):
-                        return $"{name}.HasValue";
-                    default:
-                        throw new Exception($"Unsupported type: {type}");
-                }
-            }
-
             var result = new StringBuilder($"{indent}/// <summary>\n");
 
             var newOperationName = operationName.ToPascalCase();
@@ -428,22 +403,12 @@ namespace NetVips.Samples
                         ? $"nameof({arg.Name})"
                         : $"\"{arg.Name}\"";
 
-                    if (arg.Type == FailOnType)
-                    {
-                        result.AppendLine($"{indent}    options.AddFailOn({safeIdentifier});")
-                            .AppendLine();
-                    }
-                    else
-                    {
-                        result.Append($"{indent}    if (")
-                            .Append(CheckNullable(GTypeToCSharp(arg.Name, arg.Type), safeIdentifier))
-                            .AppendLine(")")
-                            .AppendLine($"{indent}    {{")
-                            .AppendLine($"{indent}        options.Add({optionsName}, {safeIdentifier});")
-                            .AppendLine($"{indent}    }}")
-                            .AppendLine();
-                    }
+                    result.AppendLine(arg.Type == FailOnType
+                        ? $"{indent}    options.AddFailOn({safeIdentifier});"
+                        : $"{indent}    options.AddIfPresent({optionsName}, {safeIdentifier});");
                 }
+
+                result.AppendLine();
             }
 
             if (outParameters != null)

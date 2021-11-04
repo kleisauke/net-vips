@@ -142,7 +142,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromBuffer(byte[], string, Enums.Access?, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromBuffer(byte[], string, Enums.Access?, Enums.FailOn?, VOption)"/>.
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -154,7 +154,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromBuffer(string, string, Enums.Access?, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromBuffer(string, string, Enums.Access?, Enums.FailOn?, VOption)"/>.
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -165,7 +165,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegBuffer". You can use this to work out what
-        /// options to pass to <see cref="NewFromBuffer(char[], string, Enums.Access?, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromBuffer(char[], string, Enums.Access?, Enums.FailOn?, VOption)"/>.
         /// </remarks>
         /// <param name="data">The buffer to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -176,7 +176,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegSource". You can use this to work out what
-        /// options to pass to <see cref="NewFromSource(Source, string, Enums.Access?, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromSource(Source, string, Enums.Access?, Enums.FailOn?, VOption)"/>.
         /// </remarks>
         /// <param name="source">The source to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -188,7 +188,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// For example "VipsForeignLoadJpegSource". You can use this to work out what
-        /// options to pass to <see cref="NewFromStream(Stream, string, Enums.Access?, bool?, VOption)"/>.
+        /// options to pass to <see cref="NewFromStream(Stream, string, Enums.Access?, Enums.FailOn?, VOption)"/>.
         /// </remarks>
         /// <param name="stream">The stream to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
@@ -264,16 +264,8 @@ namespace NetVips
                 options.Merge(kwargs);
             }
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("string_options", fileOptions);
@@ -316,11 +308,7 @@ namespace NetVips
                 options.Merge(kwargs);
             }
 
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("string_options", strOptions);
@@ -410,11 +398,7 @@ namespace NetVips
                 options.Merge(kwargs);
             }
 
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("string_options", strOptions);
@@ -1287,15 +1271,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (exp.HasValue)
-            {
-                options.Add(nameof(exp), exp);
-            }
-
-            if (log.HasValue)
-            {
-                options.Add(nameof(log), log);
-            }
+            options.AddIfPresent(nameof(exp), exp);
+            options.AddIfPresent(nameof(log), log);
 
             return this.Call("scale", options) as Image;
         }
@@ -1333,10 +1310,7 @@ namespace NetVips
 
             var options = new VOption();
 
-            if (blend.HasValue)
-            {
-                options.Add(nameof(blend), blend);
-            }
+            options.AddIfPresent(nameof(blend), blend);
 
             return this.Call("ifthenelse", options, im1 ?? in1, im2 ?? in2) as Image;
         }
@@ -1460,10 +1434,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (index.HasValue)
-            {
-                options.Add(nameof(index), index);
-            }
+            options.AddIfPresent(nameof(index), index);
 
             return this.Call("bandrank", options, doubles) as Image;
         }
@@ -1497,10 +1468,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (index.HasValue)
-            {
-                options.Add(nameof(index), index);
-            }
+            options.AddIfPresent(nameof(index), index);
 
             return this.Call("bandrank", options, new object[] { images.PrependImage(this) }) as Image;
         }
@@ -1534,10 +1502,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (index.HasValue)
-            {
-                options.Add(nameof(index), index);
-            }
+            options.AddIfPresent(nameof(index), index);
 
             return this.Call("bandrank", options, new object[] { objects.PrependImage(this) }) as Image;
         }
@@ -1562,25 +1527,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (x != null && x.Length > 0)
-            {
-                options.Add(nameof(x), x);
-            }
-
-            if (y != null && y.Length > 0)
-            {
-                options.Add(nameof(y), y);
-            }
-
-            if (compositingSpace.HasValue)
-            {
-                options.Add("compositing_space", compositingSpace);
-            }
-
-            if (premultiplied.HasValue)
-            {
-                options.Add(nameof(premultiplied), premultiplied);
-            }
+            options.AddIfPresent(nameof(x), x);
+            options.AddIfPresent(nameof(y), y);
+            options.AddIfPresent("compositing_space", compositingSpace);
+            options.AddIfPresent(nameof(premultiplied), premultiplied);
 
             return this.Call("composite", options, images.PrependImage(this), modes) as Image;
         }

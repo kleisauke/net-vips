@@ -2,6 +2,7 @@ namespace NetVips
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
     /// This class wraps a <see cref="Dictionary{TKey,TValue}"/>.
@@ -48,6 +49,48 @@ namespace NetVips
         /// <param name="key">The key of the element to add.</param>
         /// <param name="value">The value of the element to add. The value can be null for reference types.</param>
         public void Add(string key, object value) => _internalDictionary.Add(key, value);
+
+        /// <summary>
+        /// Adds the specified key and value to the <see cref="_internalDictionary"/>, if value is present.
+        /// </summary>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="value">The value of the element to add.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddIfPresent<T>(string key, T? value) where T : struct
+        {
+            if (value.HasValue)
+            {
+                _internalDictionary.Add(key, value);
+            }
+        }
+
+        /// <summary>
+        /// Adds the specified key and class to the <see cref="_internalDictionary"/>, if class is present.
+        /// </summary>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="cls">The value of the element to add.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddIfPresent<T>(string key, T cls) where T : class
+        {
+            if (cls != null)
+            {
+                _internalDictionary.Add(key, cls);
+            }
+        }
+
+        /// <summary>
+        /// Adds the specified key and array to the <see cref="_internalDictionary"/>, if array is present.
+        /// </summary>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="array">The value of the element to add.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddIfPresent<T>(string key, T[] array) where T : struct
+        {
+            if (array != null && array.Length > 0)
+            {
+                _internalDictionary.Add(key, array);
+            }
+        }
 
         /// <summary>
         /// Determines whether the <see cref="_internalDictionary"/> contains the specified key.

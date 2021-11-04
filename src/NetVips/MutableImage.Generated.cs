@@ -31,10 +31,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (fill.HasValue)
-            {
-                options.Add(nameof(fill), fill);
-            }
+            options.AddIfPresent(nameof(fill), fill);
 
             this.Call("draw_circle", options, ink, cx, cy, radius);
         }
@@ -56,15 +53,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (test != null)
-            {
-                options.Add(nameof(test), test);
-            }
-
-            if (equal.HasValue)
-            {
-                options.Add(nameof(equal), equal);
-            }
+            options.AddIfPresent(nameof(test), test);
+            options.AddIfPresent(nameof(equal), equal);
 
             this.Call("draw_flood", options, ink, x, y);
         }
@@ -87,15 +77,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (test != null)
-            {
-                options.Add(nameof(test), test);
-            }
-
-            if (equal.HasValue)
-            {
-                options.Add(nameof(equal), equal);
-            }
+            options.AddIfPresent(nameof(test), test);
+            options.AddIfPresent(nameof(equal), equal);
 
             options.Add("left", true);
 
@@ -124,15 +107,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (test != null)
-            {
-                options.Add(nameof(test), test);
-            }
-
-            if (equal.HasValue)
-            {
-                options.Add(nameof(equal), equal);
-            }
+            options.AddIfPresent(nameof(test), test);
+            options.AddIfPresent(nameof(equal), equal);
 
             options.Add("left", true);
             options.Add("top", true);
@@ -164,15 +140,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (test != null)
-            {
-                options.Add(nameof(test), test);
-            }
-
-            if (equal.HasValue)
-            {
-                options.Add(nameof(equal), equal);
-            }
+            options.AddIfPresent(nameof(test), test);
+            options.AddIfPresent(nameof(equal), equal);
 
             options.Add("left", true);
             options.Add("top", true);
@@ -207,15 +176,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (test != null)
-            {
-                options.Add(nameof(test), test);
-            }
-
-            if (equal.HasValue)
-            {
-                options.Add(nameof(equal), equal);
-            }
+            options.AddIfPresent(nameof(test), test);
+            options.AddIfPresent(nameof(equal), equal);
 
             options.Add("left", true);
             options.Add("top", true);
@@ -247,10 +209,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (mode.HasValue)
-            {
-                options.Add(nameof(mode), mode);
-            }
+            options.AddIfPresent(nameof(mode), mode);
 
             this.Call("draw_image", options, sub, x, y);
         }
@@ -308,10 +267,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (fill.HasValue)
-            {
-                options.Add(nameof(fill), fill);
-            }
+            options.AddIfPresent(nameof(fill), fill);
 
             this.Call("draw_rect", options, ink, left, top, width, height);
         }

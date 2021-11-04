@@ -68,50 +68,15 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
-
-            if (oarea != null && oarea.Length > 0)
-            {
-                options.Add(nameof(oarea), oarea);
-            }
-
-            if (odx.HasValue)
-            {
-                options.Add(nameof(odx), odx);
-            }
-
-            if (ody.HasValue)
-            {
-                options.Add(nameof(ody), ody);
-            }
-
-            if (idx.HasValue)
-            {
-                options.Add(nameof(idx), idx);
-            }
-
-            if (idy.HasValue)
-            {
-                options.Add(nameof(idy), idy);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (premultiplied.HasValue)
-            {
-                options.Add(nameof(premultiplied), premultiplied);
-            }
-
-            if (extend.HasValue)
-            {
-                options.Add(nameof(extend), extend);
-            }
+            options.AddIfPresent(nameof(interpolate), interpolate);
+            options.AddIfPresent(nameof(oarea), oarea);
+            options.AddIfPresent(nameof(odx), odx);
+            options.AddIfPresent(nameof(ody), ody);
+            options.AddIfPresent(nameof(idx), idx);
+            options.AddIfPresent(nameof(idy), idy);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(premultiplied), premultiplied);
+            options.AddIfPresent(nameof(extend), extend);
 
             return this.Call("affine", options, matrix) as Image;
         }
@@ -133,16 +98,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("analyzeload", options, filename) as Image;
@@ -166,16 +123,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -209,40 +158,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (across.HasValue)
-            {
-                options.Add(nameof(across), across);
-            }
-
-            if (shim.HasValue)
-            {
-                options.Add(nameof(shim), shim);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (halign.HasValue)
-            {
-                options.Add(nameof(halign), halign);
-            }
-
-            if (valign.HasValue)
-            {
-                options.Add(nameof(valign), valign);
-            }
-
-            if (hspacing.HasValue)
-            {
-                options.Add(nameof(hspacing), hspacing);
-            }
-
-            if (vspacing.HasValue)
-            {
-                options.Add(nameof(vspacing), vspacing);
-            }
+            options.AddIfPresent(nameof(across), across);
+            options.AddIfPresent(nameof(shim), shim);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(halign), halign);
+            options.AddIfPresent(nameof(valign), valign);
+            options.AddIfPresent(nameof(hspacing), hspacing);
+            options.AddIfPresent(nameof(vspacing), vspacing);
 
             return Operation.Call("arrayjoin", options, new object[] { @in }) as Image;
         }
@@ -357,10 +279,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (factor.HasValue)
-            {
-                options.Add(nameof(factor), factor);
-            }
+            options.AddIfPresent(nameof(factor), factor);
 
             return this.Call("bandfold", options) as Image;
         }
@@ -408,10 +327,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (factor.HasValue)
-            {
-                options.Add(nameof(factor), factor);
-            }
+            options.AddIfPresent(nameof(factor), factor);
 
             return this.Call("bandunfold", options) as Image;
         }
@@ -432,10 +348,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (bands.HasValue)
-            {
-                options.Add(nameof(bands), bands);
-            }
+            options.AddIfPresent(nameof(bands), bands);
 
             return Operation.Call("black", options, width, height) as Image;
         }
@@ -516,20 +429,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (maxTiles.HasValue)
-            {
-                options.Add("max_tiles", maxTiles);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
+            options.AddIfPresent("max_tiles", maxTiles);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent("tile_width", tileWidth);
 
             return this.Call("cache", options) as Image;
         }
@@ -549,15 +451,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (sigma.HasValue)
-            {
-                options.Add(nameof(sigma), sigma);
-            }
-
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
+            options.AddIfPresent(nameof(sigma), sigma);
+            options.AddIfPresent(nameof(precision), precision);
 
             return this.Call("canny", options) as Image;
         }
@@ -577,10 +472,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shift.HasValue)
-            {
-                options.Add(nameof(shift), shift);
-            }
+            options.AddIfPresent(nameof(shift), shift);
 
             return this.Call("cast", options, format) as Image;
         }
@@ -628,10 +520,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (sourceSpace.HasValue)
-            {
-                options.Add("source_space", sourceSpace);
-            }
+            options.AddIfPresent("source_space", sourceSpace);
 
             return this.Call("colourspace", options, space) as Image;
         }
@@ -656,35 +545,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (times.HasValue)
-            {
-                options.Add(nameof(times), times);
-            }
-
-            if (angle.HasValue)
-            {
-                options.Add(nameof(angle), angle);
-            }
-
-            if (combine.HasValue)
-            {
-                options.Add(nameof(combine), combine);
-            }
-
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
-
-            if (layers.HasValue)
-            {
-                options.Add(nameof(layers), layers);
-            }
-
-            if (cluster.HasValue)
-            {
-                options.Add(nameof(cluster), cluster);
-            }
+            options.AddIfPresent(nameof(times), times);
+            options.AddIfPresent(nameof(angle), angle);
+            options.AddIfPresent(nameof(combine), combine);
+            options.AddIfPresent(nameof(precision), precision);
+            options.AddIfPresent(nameof(layers), layers);
+            options.AddIfPresent(nameof(cluster), cluster);
 
             return this.Call("compass", options, mask) as Image;
         }
@@ -769,25 +635,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (x.HasValue)
-            {
-                options.Add(nameof(x), x);
-            }
-
-            if (y.HasValue)
-            {
-                options.Add(nameof(y), y);
-            }
-
-            if (compositingSpace.HasValue)
-            {
-                options.Add("compositing_space", compositingSpace);
-            }
-
-            if (premultiplied.HasValue)
-            {
-                options.Add(nameof(premultiplied), premultiplied);
-            }
+            options.AddIfPresent(nameof(x), x);
+            options.AddIfPresent(nameof(y), y);
+            options.AddIfPresent("compositing_space", compositingSpace);
+            options.AddIfPresent(nameof(premultiplied), premultiplied);
 
             return this.Call("composite2", options, overlay, mode) as Image;
         }
@@ -809,20 +660,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
-
-            if (layers.HasValue)
-            {
-                options.Add(nameof(layers), layers);
-            }
-
-            if (cluster.HasValue)
-            {
-                options.Add(nameof(cluster), cluster);
-            }
+            options.AddIfPresent(nameof(precision), precision);
+            options.AddIfPresent(nameof(layers), layers);
+            options.AddIfPresent(nameof(cluster), cluster);
 
             return this.Call("conv", options, mask) as Image;
         }
@@ -843,15 +683,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (layers.HasValue)
-            {
-                options.Add(nameof(layers), layers);
-            }
-
-            if (cluster.HasValue)
-            {
-                options.Add(nameof(cluster), cluster);
-            }
+            options.AddIfPresent(nameof(layers), layers);
+            options.AddIfPresent(nameof(cluster), cluster);
 
             return this.Call("conva", options, mask) as Image;
         }
@@ -871,10 +704,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (layers.HasValue)
-            {
-                options.Add(nameof(layers), layers);
-            }
+            options.AddIfPresent(nameof(layers), layers);
 
             return this.Call("convasep", options, mask) as Image;
         }
@@ -926,20 +756,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
-
-            if (layers.HasValue)
-            {
-                options.Add(nameof(layers), layers);
-            }
-
-            if (cluster.HasValue)
-            {
-                options.Add(nameof(cluster), cluster);
-            }
+            options.AddIfPresent(nameof(precision), precision);
+            options.AddIfPresent(nameof(layers), layers);
+            options.AddIfPresent(nameof(cluster), cluster);
 
             return this.Call("convsep", options, mask) as Image;
         }
@@ -967,55 +786,16 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (width.HasValue)
-            {
-                options.Add(nameof(width), width);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (bands.HasValue)
-            {
-                options.Add(nameof(bands), bands);
-            }
-
-            if (format.HasValue)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (coding.HasValue)
-            {
-                options.Add(nameof(coding), coding);
-            }
-
-            if (interpretation.HasValue)
-            {
-                options.Add(nameof(interpretation), interpretation);
-            }
-
-            if (xres.HasValue)
-            {
-                options.Add(nameof(xres), xres);
-            }
-
-            if (yres.HasValue)
-            {
-                options.Add(nameof(yres), yres);
-            }
-
-            if (xoffset.HasValue)
-            {
-                options.Add(nameof(xoffset), xoffset);
-            }
-
-            if (yoffset.HasValue)
-            {
-                options.Add(nameof(yoffset), yoffset);
-            }
+            options.AddIfPresent(nameof(width), width);
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(bands), bands);
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(coding), coding);
+            options.AddIfPresent(nameof(interpretation), interpretation);
+            options.AddIfPresent(nameof(xres), xres);
+            options.AddIfPresent(nameof(yres), yres);
+            options.AddIfPresent(nameof(xoffset), xoffset);
+            options.AddIfPresent(nameof(yoffset), yoffset);
 
             return this.Call("copy", options) as Image;
         }
@@ -1056,36 +836,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (skip.HasValue)
-            {
-                options.Add(nameof(skip), skip);
-            }
-
-            if (lines.HasValue)
-            {
-                options.Add(nameof(lines), lines);
-            }
-
-            if (whitespace != null)
-            {
-                options.Add(nameof(whitespace), whitespace);
-            }
-
-            if (separator != null)
-            {
-                options.Add(nameof(separator), separator);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(skip), skip);
+            options.AddIfPresent(nameof(lines), lines);
+            options.AddIfPresent(nameof(whitespace), whitespace);
+            options.AddIfPresent(nameof(separator), separator);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("csvload", options, filename) as Image;
@@ -1113,36 +869,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (skip.HasValue)
-            {
-                options.Add(nameof(skip), skip);
-            }
-
-            if (lines.HasValue)
-            {
-                options.Add(nameof(lines), lines);
-            }
-
-            if (whitespace != null)
-            {
-                options.Add(nameof(whitespace), whitespace);
-            }
-
-            if (separator != null)
-            {
-                options.Add(nameof(separator), separator);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(skip), skip);
+            options.AddIfPresent(nameof(lines), lines);
+            options.AddIfPresent(nameof(whitespace), whitespace);
+            options.AddIfPresent(nameof(separator), separator);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -1176,36 +908,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (skip.HasValue)
-            {
-                options.Add(nameof(skip), skip);
-            }
-
-            if (lines.HasValue)
-            {
-                options.Add(nameof(lines), lines);
-            }
-
-            if (whitespace != null)
-            {
-                options.Add(nameof(whitespace), whitespace);
-            }
-
-            if (separator != null)
-            {
-                options.Add(nameof(separator), separator);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(skip), skip);
+            options.AddIfPresent(nameof(lines), lines);
+            options.AddIfPresent(nameof(whitespace), whitespace);
+            options.AddIfPresent(nameof(separator), separator);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("csvload_source", options, source) as Image;
@@ -1260,36 +968,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (skip.HasValue)
-            {
-                options.Add(nameof(skip), skip);
-            }
-
-            if (lines.HasValue)
-            {
-                options.Add(nameof(lines), lines);
-            }
-
-            if (whitespace != null)
-            {
-                options.Add(nameof(whitespace), whitespace);
-            }
-
-            if (separator != null)
-            {
-                options.Add(nameof(separator), separator);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(skip), skip);
+            options.AddIfPresent(nameof(lines), lines);
+            options.AddIfPresent(nameof(whitespace), whitespace);
+            options.AddIfPresent(nameof(separator), separator);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -1347,25 +1031,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (separator != null)
-            {
-                options.Add(nameof(separator), separator);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(separator), separator);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("csvsave", options, filename);
         }
@@ -1387,25 +1056,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (separator != null)
-            {
-                options.Add(nameof(separator), separator);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(separator), separator);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("csvsave_target", options, target);
         }
@@ -1534,95 +1188,24 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (basename != null)
-            {
-                options.Add(nameof(basename), basename);
-            }
-
-            if (layout.HasValue)
-            {
-                options.Add(nameof(layout), layout);
-            }
-
-            if (suffix != null)
-            {
-                options.Add(nameof(suffix), suffix);
-            }
-
-            if (overlap.HasValue)
-            {
-                options.Add(nameof(overlap), overlap);
-            }
-
-            if (tileSize.HasValue)
-            {
-                options.Add("tile_size", tileSize);
-            }
-
-            if (centre.HasValue)
-            {
-                options.Add(nameof(centre), centre);
-            }
-
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
-
-            if (angle.HasValue)
-            {
-                options.Add(nameof(angle), angle);
-            }
-
-            if (container.HasValue)
-            {
-                options.Add(nameof(container), container);
-            }
-
-            if (properties.HasValue)
-            {
-                options.Add(nameof(properties), properties);
-            }
-
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (regionShrink.HasValue)
-            {
-                options.Add("region_shrink", regionShrink);
-            }
-
-            if (skipBlanks.HasValue)
-            {
-                options.Add("skip_blanks", skipBlanks);
-            }
-
-            if (noStrip.HasValue)
-            {
-                options.Add("no_strip", noStrip);
-            }
-
-            if (id != null)
-            {
-                options.Add(nameof(id), id);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(basename), basename);
+            options.AddIfPresent(nameof(layout), layout);
+            options.AddIfPresent(nameof(suffix), suffix);
+            options.AddIfPresent(nameof(overlap), overlap);
+            options.AddIfPresent("tile_size", tileSize);
+            options.AddIfPresent(nameof(centre), centre);
+            options.AddIfPresent(nameof(depth), depth);
+            options.AddIfPresent(nameof(angle), angle);
+            options.AddIfPresent(nameof(container), container);
+            options.AddIfPresent(nameof(properties), properties);
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent("region_shrink", regionShrink);
+            options.AddIfPresent("skip_blanks", skipBlanks);
+            options.AddIfPresent("no_strip", noStrip);
+            options.AddIfPresent(nameof(id), id);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("dzsave", options, filename);
         }
@@ -1658,95 +1241,24 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (basename != null)
-            {
-                options.Add(nameof(basename), basename);
-            }
-
-            if (layout.HasValue)
-            {
-                options.Add(nameof(layout), layout);
-            }
-
-            if (suffix != null)
-            {
-                options.Add(nameof(suffix), suffix);
-            }
-
-            if (overlap.HasValue)
-            {
-                options.Add(nameof(overlap), overlap);
-            }
-
-            if (tileSize.HasValue)
-            {
-                options.Add("tile_size", tileSize);
-            }
-
-            if (centre.HasValue)
-            {
-                options.Add(nameof(centre), centre);
-            }
-
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
-
-            if (angle.HasValue)
-            {
-                options.Add(nameof(angle), angle);
-            }
-
-            if (container.HasValue)
-            {
-                options.Add(nameof(container), container);
-            }
-
-            if (properties.HasValue)
-            {
-                options.Add(nameof(properties), properties);
-            }
-
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (regionShrink.HasValue)
-            {
-                options.Add("region_shrink", regionShrink);
-            }
-
-            if (skipBlanks.HasValue)
-            {
-                options.Add("skip_blanks", skipBlanks);
-            }
-
-            if (noStrip.HasValue)
-            {
-                options.Add("no_strip", noStrip);
-            }
-
-            if (id != null)
-            {
-                options.Add(nameof(id), id);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(basename), basename);
+            options.AddIfPresent(nameof(layout), layout);
+            options.AddIfPresent(nameof(suffix), suffix);
+            options.AddIfPresent(nameof(overlap), overlap);
+            options.AddIfPresent("tile_size", tileSize);
+            options.AddIfPresent(nameof(centre), centre);
+            options.AddIfPresent(nameof(depth), depth);
+            options.AddIfPresent(nameof(angle), angle);
+            options.AddIfPresent(nameof(container), container);
+            options.AddIfPresent(nameof(properties), properties);
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent("region_shrink", regionShrink);
+            options.AddIfPresent("skip_blanks", skipBlanks);
+            options.AddIfPresent("no_strip", noStrip);
+            options.AddIfPresent(nameof(id), id);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("dzsave_buffer", options) as byte[];
         }
@@ -1770,15 +1282,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (extend.HasValue)
-            {
-                options.Add(nameof(extend), extend);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
+            options.AddIfPresent(nameof(extend), extend);
+            options.AddIfPresent(nameof(background), background);
 
             return this.Call("embed", options, x, y, width, height) as Image;
         }
@@ -1816,10 +1321,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
+            options.AddIfPresent(nameof(n), n);
 
             return this.Call("extract_band", options, band) as Image;
         }
@@ -1841,15 +1343,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (factor.HasValue)
-            {
-                options.Add(nameof(factor), factor);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(factor), factor);
 
             return Operation.Call("eye", options, width, height) as Image;
         }
@@ -1937,15 +1432,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (threshold.HasValue)
-            {
-                options.Add(nameof(threshold), threshold);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
+            options.AddIfPresent(nameof(threshold), threshold);
+            options.AddIfPresent(nameof(background), background);
 
             return this.Call("find_trim", options) as object[];
         }
@@ -1967,16 +1455,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("fitsload", options, filename) as Image;
@@ -2000,16 +1480,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -2039,16 +1511,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("fitsload_source", options, source) as Image;
@@ -2095,16 +1559,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -2157,20 +1613,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("fitssave", options, filename);
         }
@@ -2190,15 +1635,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (maxAlpha.HasValue)
-            {
-                options.Add("max_alpha", maxAlpha);
-            }
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("max_alpha", maxAlpha);
 
             return this.Call("flatten", options) as Image;
         }
@@ -2292,10 +1730,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (exponent.HasValue)
-            {
-                options.Add(nameof(exponent), exponent);
-            }
+            options.AddIfPresent(nameof(exponent), exponent);
 
             return this.Call("gamma", options) as Image;
         }
@@ -2316,15 +1751,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (minAmpl.HasValue)
-            {
-                options.Add("min_ampl", minAmpl);
-            }
-
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
+            options.AddIfPresent("min_ampl", minAmpl);
+            options.AddIfPresent(nameof(precision), precision);
 
             return this.Call("gaussblur", options, sigma) as Image;
         }
@@ -2346,15 +1774,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (separable.HasValue)
-            {
-                options.Add(nameof(separable), separable);
-            }
-
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
+            options.AddIfPresent(nameof(separable), separable);
+            options.AddIfPresent(nameof(precision), precision);
 
             return Operation.Call("gaussmat", options, sigma, minAmpl) as Image;
         }
@@ -2377,20 +1798,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (sigma.HasValue)
-            {
-                options.Add(nameof(sigma), sigma);
-            }
-
-            if (mean.HasValue)
-            {
-                options.Add(nameof(mean), mean);
-            }
-
-            if (seed.HasValue)
-            {
-                options.Add(nameof(seed), seed);
-            }
+            options.AddIfPresent(nameof(sigma), sigma);
+            options.AddIfPresent(nameof(mean), mean);
+            options.AddIfPresent(nameof(seed), seed);
 
             return Operation.Call("gaussnoise", options, width, height) as Image;
         }
@@ -2430,26 +1840,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("gifload", options, filename) as Image;
@@ -2475,26 +1869,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -2526,26 +1904,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("gifload_buffer", options, buffer) as Image;
@@ -2571,26 +1933,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -2622,26 +1968,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("gifload_source", options, source) as Image;
@@ -2692,26 +2022,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -2769,35 +2083,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dither.HasValue)
-            {
-                options.Add(nameof(dither), dither);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(dither), dither);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("gifsave", options, filename);
         }
@@ -2821,35 +2112,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dither.HasValue)
-            {
-                options.Add(nameof(dither), dither);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(dither), dither);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("gifsave_buffer", options) as byte[];
         }
@@ -2873,35 +2141,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dither.HasValue)
-            {
-                options.Add(nameof(dither), dither);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(dither), dither);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("gifsave_target", options, target);
         }
@@ -2942,15 +2187,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (gamma.HasValue)
-            {
-                options.Add(nameof(gamma), gamma);
-            }
-
-            if (intOutput.HasValue)
-            {
-                options.Add("int_output", intOutput);
-            }
+            options.AddIfPresent(nameof(gamma), gamma);
+            options.AddIfPresent("int_output", intOutput);
 
             return this.Call("globalbalance", options) as Image;
         }
@@ -2973,15 +2211,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (extend.HasValue)
-            {
-                options.Add(nameof(extend), extend);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
+            options.AddIfPresent(nameof(extend), extend);
+            options.AddIfPresent(nameof(background), background);
 
             return this.Call("gravity", options, direction, width, height) as Image;
         }
@@ -3002,10 +2233,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
 
             return Operation.Call("grey", options, width, height) as Image;
         }
@@ -3047,31 +2275,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (thumbnail.HasValue)
-            {
-                options.Add(nameof(thumbnail), thumbnail);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(thumbnail), thumbnail);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("heifload", options, filename) as Image;
@@ -3098,31 +2306,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (thumbnail.HasValue)
-            {
-                options.Add(nameof(thumbnail), thumbnail);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(thumbnail), thumbnail);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -3155,31 +2343,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (thumbnail.HasValue)
-            {
-                options.Add(nameof(thumbnail), thumbnail);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(thumbnail), thumbnail);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("heifload_buffer", options, buffer) as Image;
@@ -3206,31 +2374,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (thumbnail.HasValue)
-            {
-                options.Add(nameof(thumbnail), thumbnail);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(thumbnail), thumbnail);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -3263,31 +2411,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (thumbnail.HasValue)
-            {
-                options.Add(nameof(thumbnail), thumbnail);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(thumbnail), thumbnail);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("heifload_source", options, source) as Image;
@@ -3340,31 +2468,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (thumbnail.HasValue)
-            {
-                options.Add(nameof(thumbnail), thumbnail);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(thumbnail), thumbnail);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -3425,45 +2533,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("heifsave", options, filename);
         }
@@ -3489,45 +2566,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("heifsave_buffer", options) as byte[];
         }
@@ -3553,45 +2599,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("heifsave_target", options, target);
         }
@@ -3661,10 +2676,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (band.HasValue)
-            {
-                options.Add(nameof(band), band);
-            }
+            options.AddIfPresent(nameof(band), band);
 
             return this.Call("hist_equal", options) as Image;
         }
@@ -3683,10 +2695,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (band.HasValue)
-            {
-                options.Add(nameof(band), band);
-            }
+            options.AddIfPresent(nameof(band), band);
 
             return this.Call("hist_find", options) as Image;
         }
@@ -3706,10 +2715,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (combine.HasValue)
-            {
-                options.Add(nameof(combine), combine);
-            }
+            options.AddIfPresent(nameof(combine), combine);
 
             return this.Call("hist_find_indexed", options, index) as Image;
         }
@@ -3728,10 +2734,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (bins.HasValue)
-            {
-                options.Add(nameof(bins), bins);
-            }
+            options.AddIfPresent(nameof(bins), bins);
 
             return this.Call("hist_find_ndim", options) as Image;
         }
@@ -3766,10 +2769,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (maxSlope.HasValue)
-            {
-                options.Add("max_slope", maxSlope);
-            }
+            options.AddIfPresent("max_slope", maxSlope);
 
             return this.Call("hist_local", options, width, height) as Image;
         }
@@ -3833,20 +2833,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (minRadius.HasValue)
-            {
-                options.Add("min_radius", minRadius);
-            }
-
-            if (maxRadius.HasValue)
-            {
-                options.Add("max_radius", maxRadius);
-            }
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent("min_radius", minRadius);
+            options.AddIfPresent("max_radius", maxRadius);
 
             return this.Call("hough_circle", options) as Image;
         }
@@ -3866,15 +2855,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (width.HasValue)
-            {
-                options.Add(nameof(width), width);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
+            options.AddIfPresent(nameof(width), width);
+            options.AddIfPresent(nameof(height), height);
 
             return this.Call("hough_line", options) as Image;
         }
@@ -3911,30 +2893,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (pcs.HasValue)
-            {
-                options.Add(nameof(pcs), pcs);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
-
-            if (blackPointCompensation.HasValue)
-            {
-                options.Add("black_point_compensation", blackPointCompensation);
-            }
-
-            if (outputProfile != null)
-            {
-                options.Add("output_profile", outputProfile);
-            }
-
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
+            options.AddIfPresent(nameof(pcs), pcs);
+            options.AddIfPresent(nameof(intent), intent);
+            options.AddIfPresent("black_point_compensation", blackPointCompensation);
+            options.AddIfPresent("output_profile", outputProfile);
+            options.AddIfPresent(nameof(depth), depth);
 
             return this.Call("icc_export", options) as Image;
         }
@@ -3957,30 +2920,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (pcs.HasValue)
-            {
-                options.Add(nameof(pcs), pcs);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
-
-            if (blackPointCompensation.HasValue)
-            {
-                options.Add("black_point_compensation", blackPointCompensation);
-            }
-
-            if (embedded.HasValue)
-            {
-                options.Add(nameof(embedded), embedded);
-            }
-
-            if (inputProfile != null)
-            {
-                options.Add("input_profile", inputProfile);
-            }
+            options.AddIfPresent(nameof(pcs), pcs);
+            options.AddIfPresent(nameof(intent), intent);
+            options.AddIfPresent("black_point_compensation", blackPointCompensation);
+            options.AddIfPresent(nameof(embedded), embedded);
+            options.AddIfPresent("input_profile", inputProfile);
 
             return this.Call("icc_import", options) as Image;
         }
@@ -4005,35 +2949,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (pcs.HasValue)
-            {
-                options.Add(nameof(pcs), pcs);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
-
-            if (blackPointCompensation.HasValue)
-            {
-                options.Add("black_point_compensation", blackPointCompensation);
-            }
-
-            if (embedded.HasValue)
-            {
-                options.Add(nameof(embedded), embedded);
-            }
-
-            if (inputProfile != null)
-            {
-                options.Add("input_profile", inputProfile);
-            }
-
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
+            options.AddIfPresent(nameof(pcs), pcs);
+            options.AddIfPresent(nameof(intent), intent);
+            options.AddIfPresent("black_point_compensation", blackPointCompensation);
+            options.AddIfPresent(nameof(embedded), embedded);
+            options.AddIfPresent("input_profile", inputProfile);
+            options.AddIfPresent(nameof(depth), depth);
 
             return this.Call("icc_transform", options, outputProfile) as Image;
         }
@@ -4054,20 +2975,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (bands.HasValue)
-            {
-                options.Add(nameof(bands), bands);
-            }
-
-            if (@ushort.HasValue)
-            {
-                options.Add("ushort", @ushort);
-            }
-
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(bands), bands);
+            options.AddIfPresent("ushort", @ushort);
+            options.AddIfPresent(nameof(size), size);
 
             return Operation.Call("identity", options) as Image;
         }
@@ -4090,15 +3000,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (expand.HasValue)
-            {
-                options.Add(nameof(expand), expand);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
+            options.AddIfPresent(nameof(expand), expand);
+            options.AddIfPresent(nameof(background), background);
 
             return this.Call("insert", options, sub, x, y) as Image;
         }
@@ -4131,10 +3034,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             return this.Call("invertlut", options) as Image;
         }
@@ -4153,10 +3053,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (real.HasValue)
-            {
-                options.Add(nameof(real), real);
-            }
+            options.AddIfPresent(nameof(real), real);
 
             return this.Call("invfft", options) as Image;
         }
@@ -4180,25 +3077,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (expand.HasValue)
-            {
-                options.Add(nameof(expand), expand);
-            }
-
-            if (shim.HasValue)
-            {
-                options.Add(nameof(shim), shim);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (align.HasValue)
-            {
-                options.Add(nameof(align), align);
-            }
+            options.AddIfPresent(nameof(expand), expand);
+            options.AddIfPresent(nameof(shim), shim);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(align), align);
 
             return this.Call("join", options, in2, direction) as Image;
         }
@@ -4221,21 +3103,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jp2kload", options, filename) as Image;
@@ -4260,21 +3130,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -4305,21 +3163,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jp2kload_buffer", options, buffer) as Image;
@@ -4344,21 +3190,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -4389,21 +3223,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jp2kload_source", options, source) as Image;
@@ -4452,21 +3274,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -4525,45 +3335,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("tile_width", tileWidth);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jp2ksave", options, filename);
         }
@@ -4589,45 +3368,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("tile_width", tileWidth);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("jp2ksave_buffer", options) as byte[];
         }
@@ -4653,45 +3401,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("tile_width", tileWidth);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jp2ksave_target", options, target);
         }
@@ -4738,26 +3455,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shrink.HasValue)
-            {
-                options.Add(nameof(shrink), shrink);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(shrink), shrink);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jpegload", options, filename) as Image;
@@ -4783,26 +3484,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shrink.HasValue)
-            {
-                options.Add(nameof(shrink), shrink);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(shrink), shrink);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -4834,26 +3519,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shrink.HasValue)
-            {
-                options.Add(nameof(shrink), shrink);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(shrink), shrink);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jpegload_buffer", options, buffer) as Image;
@@ -4879,26 +3548,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shrink.HasValue)
-            {
-                options.Add(nameof(shrink), shrink);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(shrink), shrink);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -4930,26 +3583,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shrink.HasValue)
-            {
-                options.Add(nameof(shrink), shrink);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(shrink), shrink);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jpegload_source", options, source) as Image;
@@ -5000,26 +3637,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (shrink.HasValue)
-            {
-                options.Add(nameof(shrink), shrink);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(shrink), shrink);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -5084,70 +3705,19 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (optimizeCoding.HasValue)
-            {
-                options.Add("optimize_coding", optimizeCoding);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (trellisQuant.HasValue)
-            {
-                options.Add("trellis_quant", trellisQuant);
-            }
-
-            if (overshootDeringing.HasValue)
-            {
-                options.Add("overshoot_deringing", overshootDeringing);
-            }
-
-            if (optimizeScans.HasValue)
-            {
-                options.Add("optimize_scans", optimizeScans);
-            }
-
-            if (quantTable.HasValue)
-            {
-                options.Add("quant_table", quantTable);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (restartInterval.HasValue)
-            {
-                options.Add("restart_interval", restartInterval);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent("optimize_coding", optimizeCoding);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent("trellis_quant", trellisQuant);
+            options.AddIfPresent("overshoot_deringing", overshootDeringing);
+            options.AddIfPresent("optimize_scans", optimizeScans);
+            options.AddIfPresent("quant_table", quantTable);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent("restart_interval", restartInterval);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jpegsave", options, filename);
         }
@@ -5178,70 +3748,19 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (optimizeCoding.HasValue)
-            {
-                options.Add("optimize_coding", optimizeCoding);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (trellisQuant.HasValue)
-            {
-                options.Add("trellis_quant", trellisQuant);
-            }
-
-            if (overshootDeringing.HasValue)
-            {
-                options.Add("overshoot_deringing", overshootDeringing);
-            }
-
-            if (optimizeScans.HasValue)
-            {
-                options.Add("optimize_scans", optimizeScans);
-            }
-
-            if (quantTable.HasValue)
-            {
-                options.Add("quant_table", quantTable);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (restartInterval.HasValue)
-            {
-                options.Add("restart_interval", restartInterval);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent("optimize_coding", optimizeCoding);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent("trellis_quant", trellisQuant);
+            options.AddIfPresent("overshoot_deringing", overshootDeringing);
+            options.AddIfPresent("optimize_scans", optimizeScans);
+            options.AddIfPresent("quant_table", quantTable);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent("restart_interval", restartInterval);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("jpegsave_buffer", options) as byte[];
         }
@@ -5271,70 +3790,19 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (optimizeCoding.HasValue)
-            {
-                options.Add("optimize_coding", optimizeCoding);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (trellisQuant.HasValue)
-            {
-                options.Add("trellis_quant", trellisQuant);
-            }
-
-            if (overshootDeringing.HasValue)
-            {
-                options.Add("overshoot_deringing", overshootDeringing);
-            }
-
-            if (optimizeScans.HasValue)
-            {
-                options.Add("optimize_scans", optimizeScans);
-            }
-
-            if (quantTable.HasValue)
-            {
-                options.Add("quant_table", quantTable);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (restartInterval.HasValue)
-            {
-                options.Add("restart_interval", restartInterval);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent("optimize_coding", optimizeCoding);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent("trellis_quant", trellisQuant);
+            options.AddIfPresent("overshoot_deringing", overshootDeringing);
+            options.AddIfPresent("optimize_scans", optimizeScans);
+            options.AddIfPresent("quant_table", quantTable);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent("restart_interval", restartInterval);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jpegsave_mime", options);
         }
@@ -5365,70 +3833,19 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (optimizeCoding.HasValue)
-            {
-                options.Add("optimize_coding", optimizeCoding);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (trellisQuant.HasValue)
-            {
-                options.Add("trellis_quant", trellisQuant);
-            }
-
-            if (overshootDeringing.HasValue)
-            {
-                options.Add("overshoot_deringing", overshootDeringing);
-            }
-
-            if (optimizeScans.HasValue)
-            {
-                options.Add("optimize_scans", optimizeScans);
-            }
-
-            if (quantTable.HasValue)
-            {
-                options.Add("quant_table", quantTable);
-            }
-
-            if (subsampleMode.HasValue)
-            {
-                options.Add("subsample_mode", subsampleMode);
-            }
-
-            if (restartInterval.HasValue)
-            {
-                options.Add("restart_interval", restartInterval);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent("optimize_coding", optimizeCoding);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent("trellis_quant", trellisQuant);
+            options.AddIfPresent("overshoot_deringing", overshootDeringing);
+            options.AddIfPresent("optimize_scans", optimizeScans);
+            options.AddIfPresent("quant_table", quantTable);
+            options.AddIfPresent("subsample_mode", subsampleMode);
+            options.AddIfPresent("restart_interval", restartInterval);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jpegsave_target", options, target);
         }
@@ -5478,16 +3895,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jxlload", options, filename) as Image;
@@ -5511,16 +3920,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -5550,16 +3951,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jxlload_buffer", options, buffer) as Image;
@@ -5583,16 +3976,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -5622,16 +4007,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("jxlload_source", options, source) as Image;
@@ -5678,16 +4055,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -5745,45 +4114,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tier.HasValue)
-            {
-                options.Add(nameof(tier), tier);
-            }
-
-            if (distance.HasValue)
-            {
-                options.Add(nameof(distance), distance);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(tier), tier);
+            options.AddIfPresent(nameof(distance), distance);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jxlsave", options, filename);
         }
@@ -5809,45 +4147,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tier.HasValue)
-            {
-                options.Add(nameof(tier), tier);
-            }
-
-            if (distance.HasValue)
-            {
-                options.Add(nameof(distance), distance);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(tier), tier);
+            options.AddIfPresent(nameof(distance), distance);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("jxlsave_buffer", options) as byte[];
         }
@@ -5873,45 +4180,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tier.HasValue)
-            {
-                options.Add(nameof(tier), tier);
-            }
-
-            if (distance.HasValue)
-            {
-                options.Add(nameof(distance), distance);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(tier), tier);
+            options.AddIfPresent(nameof(distance), distance);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("jxlsave_target", options, target);
         }
@@ -5995,10 +4271,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (temp != null && temp.Length > 0)
-            {
-                options.Add(nameof(temp), temp);
-            }
+            options.AddIfPresent(nameof(temp), temp);
 
             return this.Call("Lab2XYZ", options) as Image;
         }
@@ -6156,10 +4429,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
 
             return this.Call("linear", options, a, b) as Image;
         }
@@ -6181,25 +4451,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
-            if (threaded.HasValue)
-            {
-                options.Add(nameof(threaded), threaded);
-            }
-
-            if (persistent.HasValue)
-            {
-                options.Add(nameof(persistent), persistent);
-            }
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent(nameof(access), access);
+            options.AddIfPresent(nameof(threaded), threaded);
+            options.AddIfPresent(nameof(persistent), persistent);
 
             return this.Call("linecache", options) as Image;
         }
@@ -6221,15 +4476,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (separable.HasValue)
-            {
-                options.Add(nameof(separable), separable);
-            }
-
-            if (precision.HasValue)
-            {
-                options.Add(nameof(precision), precision);
-            }
+            options.AddIfPresent(nameof(separable), separable);
+            options.AddIfPresent(nameof(precision), precision);
 
             return Operation.Call("logmat", options, sigma, minAmpl) as Image;
         }
@@ -6254,31 +4502,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (density != null)
-            {
-                options.Add(nameof(density), density);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(density), density);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("magickload", options, filename) as Image;
@@ -6305,31 +4533,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (density != null)
-            {
-                options.Add(nameof(density), density);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(density), density);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -6362,31 +4570,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (density != null)
-            {
-                options.Add(nameof(density), density);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(density), density);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("magickload_buffer", options, buffer) as Image;
@@ -6413,31 +4601,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (density != null)
-            {
-                options.Add(nameof(density), density);
-            }
-
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(density), density);
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -6470,40 +4638,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (format != null)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (quality.HasValue)
-            {
-                options.Add(nameof(quality), quality);
-            }
-
-            if (optimizeGifFrames.HasValue)
-            {
-                options.Add("optimize_gif_frames", optimizeGifFrames);
-            }
-
-            if (optimizeGifTransparency.HasValue)
-            {
-                options.Add("optimize_gif_transparency", optimizeGifTransparency);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(quality), quality);
+            options.AddIfPresent("optimize_gif_frames", optimizeGifFrames);
+            options.AddIfPresent("optimize_gif_transparency", optimizeGifTransparency);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("magicksave", options, filename);
         }
@@ -6528,40 +4669,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (format != null)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (quality.HasValue)
-            {
-                options.Add(nameof(quality), quality);
-            }
-
-            if (optimizeGifFrames.HasValue)
-            {
-                options.Add("optimize_gif_frames", optimizeGifFrames);
-            }
-
-            if (optimizeGifTransparency.HasValue)
-            {
-                options.Add("optimize_gif_transparency", optimizeGifTransparency);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(quality), quality);
+            options.AddIfPresent("optimize_gif_frames", optimizeGifFrames);
+            options.AddIfPresent("optimize_gif_transparency", optimizeGifTransparency);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("magicksave_buffer", options) as byte[];
         }
@@ -6581,10 +4695,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
+            options.AddIfPresent(nameof(interpolate), interpolate);
 
             return this.Call("mapim", options, index) as Image;
         }
@@ -6604,10 +4715,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (band.HasValue)
-            {
-                options.Add(nameof(band), band);
-            }
+            options.AddIfPresent(nameof(band), band);
 
             return this.Call("maplut", options, lut) as Image;
         }
@@ -6634,25 +4742,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_butterworth", options, width, height, order, frequencyCutoff, amplitudeCutoff) as Image;
         }
@@ -6681,25 +4774,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_butterworth_band", options, width, height, order, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff) as Image;
         }
@@ -6727,25 +4805,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_butterworth_ring", options, width, height, order, frequencyCutoff, amplitudeCutoff, ringwidth) as Image;
         }
@@ -6770,25 +4833,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_fractal", options, width, height, fractalDimension) as Image;
         }
@@ -6814,25 +4862,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_gaussian", options, width, height, frequencyCutoff, amplitudeCutoff) as Image;
         }
@@ -6860,25 +4893,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_gaussian_band", options, width, height, frequencyCutoffX, frequencyCutoffY, radius, amplitudeCutoff) as Image;
         }
@@ -6905,25 +4923,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_gaussian_ring", options, width, height, frequencyCutoff, amplitudeCutoff, ringwidth) as Image;
         }
@@ -6948,25 +4951,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_ideal", options, width, height, frequencyCutoff) as Image;
         }
@@ -6993,25 +4981,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_ideal_band", options, width, height, frequencyCutoffX, frequencyCutoffY, radius) as Image;
         }
@@ -7037,25 +5010,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (nodc.HasValue)
-            {
-                options.Add(nameof(nodc), nodc);
-            }
-
-            if (reject.HasValue)
-            {
-                options.Add(nameof(reject), reject);
-            }
-
-            if (optical.HasValue)
-            {
-                options.Add(nameof(optical), optical);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(nodc), nodc);
+            options.AddIfPresent(nameof(reject), reject);
+            options.AddIfPresent(nameof(optical), optical);
 
             return Operation.Call("mask_ideal_ring", options, width, height, frequencyCutoff, ringwidth) as Image;
         }
@@ -7086,25 +5044,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (search.HasValue)
-            {
-                options.Add(nameof(search), search);
-            }
-
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(search), search);
+            options.AddIfPresent(nameof(interpolate), interpolate);
 
             return this.Call("match", options, sec, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) as Image;
         }
@@ -7173,16 +5116,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("matload", options, filename) as Image;
@@ -7206,16 +5141,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -7259,16 +5186,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("matrixload", options, filename) as Image;
@@ -7292,16 +5211,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -7331,16 +5242,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("matrixload_source", options, source) as Image;
@@ -7387,16 +5290,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -7448,20 +5343,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("matrixprint", options);
         }
@@ -7482,20 +5366,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("matrixsave", options, filename);
         }
@@ -7516,20 +5389,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("matrixsave_target", options, target);
         }
@@ -7566,10 +5428,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             return this.Call("max", options) is double result ? result : 0d;
         }
@@ -7589,10 +5448,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
 
@@ -7620,10 +5476,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -7654,10 +5507,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -7691,10 +5541,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -7731,10 +5578,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -7773,25 +5617,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (left.HasValue)
-            {
-                options.Add(nameof(left), left);
-            }
-
-            if (top.HasValue)
-            {
-                options.Add(nameof(top), top);
-            }
-
-            if (width.HasValue)
-            {
-                options.Add(nameof(width), width);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
+            options.AddIfPresent(nameof(left), left);
+            options.AddIfPresent(nameof(top), top);
+            options.AddIfPresent(nameof(width), width);
+            options.AddIfPresent(nameof(height), height);
 
             return this.Call("measure", options, h, v) as Image;
         }
@@ -7814,10 +5643,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
+            options.AddIfPresent(nameof(mblend), mblend);
 
             return this.Call("merge", options, sec, direction, dx, dy) as Image;
         }
@@ -7836,10 +5662,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             return this.Call("min", options) is double result ? result : 0d;
         }
@@ -7859,10 +5682,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
 
@@ -7890,10 +5710,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -7924,10 +5741,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -7961,10 +5775,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -8001,10 +5812,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
+            options.AddIfPresent(nameof(size), size);
 
             options.Add("x", true);
             options.Add("y", true);
@@ -8063,25 +5871,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             return this.Call("mosaic", options, sec, direction, xref, yref, xsec, ysec) as Image;
         }
@@ -8110,25 +5903,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             options.Add("dx0", true);
 
@@ -8165,25 +5943,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             options.Add("dx0", true);
             options.Add("dy0", true);
@@ -8223,25 +5986,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             options.Add("dx0", true);
             options.Add("dy0", true);
@@ -8284,25 +6032,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             options.Add("dx0", true);
             options.Add("dy0", true);
@@ -8348,25 +6081,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             options.Add("dx0", true);
             options.Add("dy0", true);
@@ -8415,25 +6133,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             options.Add("dx0", true);
             options.Add("dy0", true);
@@ -8484,35 +6187,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (hwindow.HasValue)
-            {
-                options.Add(nameof(hwindow), hwindow);
-            }
-
-            if (harea.HasValue)
-            {
-                options.Add(nameof(harea), harea);
-            }
-
-            if (search.HasValue)
-            {
-                options.Add(nameof(search), search);
-            }
-
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
-
-            if (mblend.HasValue)
-            {
-                options.Add(nameof(mblend), mblend);
-            }
-
-            if (bandno.HasValue)
-            {
-                options.Add(nameof(bandno), bandno);
-            }
+            options.AddIfPresent(nameof(hwindow), hwindow);
+            options.AddIfPresent(nameof(harea), harea);
+            options.AddIfPresent(nameof(search), search);
+            options.AddIfPresent(nameof(interpolate), interpolate);
+            options.AddIfPresent(nameof(mblend), mblend);
+            options.AddIfPresent(nameof(bandno), bandno);
 
             return this.Call("mosaic1", options, sec, direction, xr1, yr1, xs1, ys1, xr2, yr2, xs2, ys2) as Image;
         }
@@ -8531,10 +6211,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (band.HasValue)
-            {
-                options.Add(nameof(band), band);
-            }
+            options.AddIfPresent(nameof(band), band);
 
             return this.Call("msb", options) as Image;
         }
@@ -8571,16 +6248,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("niftiload", options, filename) as Image;
@@ -8604,16 +6273,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -8643,16 +6304,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("niftiload_source", options, source) as Image;
@@ -8699,16 +6352,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -8761,20 +6406,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("niftisave", options, filename);
         }
@@ -8796,16 +6430,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("openexrload", options, filename) as Image;
@@ -8829,16 +6455,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -8872,36 +6490,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (attachAssociated.HasValue)
-            {
-                options.Add("attach_associated", attachAssociated);
-            }
-
-            if (level.HasValue)
-            {
-                options.Add(nameof(level), level);
-            }
-
-            if (autocrop.HasValue)
-            {
-                options.Add(nameof(autocrop), autocrop);
-            }
-
-            if (associated != null)
-            {
-                options.Add(nameof(associated), associated);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent("attach_associated", attachAssociated);
+            options.AddIfPresent(nameof(level), level);
+            options.AddIfPresent(nameof(autocrop), autocrop);
+            options.AddIfPresent(nameof(associated), associated);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("openslideload", options, filename) as Image;
@@ -8929,36 +6523,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (attachAssociated.HasValue)
-            {
-                options.Add("attach_associated", attachAssociated);
-            }
-
-            if (level.HasValue)
-            {
-                options.Add(nameof(level), level);
-            }
-
-            if (autocrop.HasValue)
-            {
-                options.Add(nameof(autocrop), autocrop);
-            }
-
-            if (associated != null)
-            {
-                options.Add(nameof(associated), associated);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent("attach_associated", attachAssociated);
+            options.AddIfPresent(nameof(level), level);
+            options.AddIfPresent(nameof(autocrop), autocrop);
+            options.AddIfPresent(nameof(associated), associated);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -8992,36 +6562,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (attachAssociated.HasValue)
-            {
-                options.Add("attach_associated", attachAssociated);
-            }
-
-            if (level.HasValue)
-            {
-                options.Add(nameof(level), level);
-            }
-
-            if (autocrop.HasValue)
-            {
-                options.Add(nameof(autocrop), autocrop);
-            }
-
-            if (associated != null)
-            {
-                options.Add(nameof(associated), associated);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent("attach_associated", attachAssociated);
+            options.AddIfPresent(nameof(level), level);
+            options.AddIfPresent(nameof(autocrop), autocrop);
+            options.AddIfPresent(nameof(associated), associated);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("openslideload_source", options, source) as Image;
@@ -9076,36 +6622,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (attachAssociated.HasValue)
-            {
-                options.Add("attach_associated", attachAssociated);
-            }
-
-            if (level.HasValue)
-            {
-                options.Add(nameof(level), level);
-            }
-
-            if (autocrop.HasValue)
-            {
-                options.Add(nameof(autocrop), autocrop);
-            }
-
-            if (associated != null)
-            {
-                options.Add(nameof(associated), associated);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent("attach_associated", attachAssociated);
+            options.AddIfPresent(nameof(level), level);
+            options.AddIfPresent(nameof(autocrop), autocrop);
+            options.AddIfPresent(nameof(associated), associated);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9168,41 +6690,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("pdfload", options, filename) as Image;
@@ -9231,41 +6725,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9300,41 +6766,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("pdfload_buffer", options, buffer) as Image;
@@ -9363,41 +6801,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9432,41 +6842,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("pdfload_source", options, source) as Image;
@@ -9523,41 +6905,13 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9632,20 +6986,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (cellSize.HasValue)
-            {
-                options.Add("cell_size", cellSize);
-            }
-
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (seed.HasValue)
-            {
-                options.Add(nameof(seed), seed);
-            }
+            options.AddIfPresent("cell_size", cellSize);
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(seed), seed);
 
             return Operation.Call("perlin", options, width, height) as Image;
         }
@@ -9683,21 +7026,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("pngload", options, filename) as Image;
@@ -9722,21 +7053,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9767,21 +7086,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("pngload_buffer", options, buffer) as Image;
@@ -9806,21 +7113,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9851,21 +7146,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("pngload_source", options, source) as Image;
@@ -9914,21 +7197,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -9991,65 +7262,18 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (filter.HasValue)
-            {
-                options.Add(nameof(filter), filter);
-            }
-
-            if (palette.HasValue)
-            {
-                options.Add(nameof(palette), palette);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (dither.HasValue)
-            {
-                options.Add(nameof(dither), dither);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(filter), filter);
+            options.AddIfPresent(nameof(palette), palette);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(dither), dither);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("pngsave", options, filename);
         }
@@ -10079,65 +7303,18 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (filter.HasValue)
-            {
-                options.Add(nameof(filter), filter);
-            }
-
-            if (palette.HasValue)
-            {
-                options.Add(nameof(palette), palette);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (dither.HasValue)
-            {
-                options.Add(nameof(dither), dither);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(filter), filter);
+            options.AddIfPresent(nameof(palette), palette);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(dither), dither);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("pngsave_buffer", options) as byte[];
         }
@@ -10167,65 +7344,18 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (interlace.HasValue)
-            {
-                options.Add(nameof(interlace), interlace);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (filter.HasValue)
-            {
-                options.Add(nameof(filter), filter);
-            }
-
-            if (palette.HasValue)
-            {
-                options.Add(nameof(palette), palette);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (dither.HasValue)
-            {
-                options.Add(nameof(dither), dither);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent(nameof(interlace), interlace);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(filter), filter);
+            options.AddIfPresent(nameof(palette), palette);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(dither), dither);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("pngsave_target", options, target);
         }
@@ -10274,16 +7404,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("ppmload", options, filename) as Image;
@@ -10307,16 +7429,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -10346,16 +7460,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("ppmload_source", options, source) as Image;
@@ -10402,16 +7508,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -10467,35 +7565,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (format.HasValue)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (ascii.HasValue)
-            {
-                options.Add(nameof(ascii), ascii);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(ascii), ascii);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("ppmsave", options, filename);
         }
@@ -10519,35 +7594,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (format.HasValue)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (ascii.HasValue)
-            {
-                options.Add(nameof(ascii), ascii);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(ascii), ascii);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("ppmsave_target", options, target);
         }
@@ -10587,10 +7639,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (maxAlpha.HasValue)
-            {
-                options.Add("max_alpha", maxAlpha);
-            }
+            options.AddIfPresent("max_alpha", maxAlpha);
 
             return this.Call("premultiply", options) as Image;
         }
@@ -10653,10 +7702,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
+            options.AddIfPresent(nameof(interpolate), interpolate);
 
             return this.Call("quadratic", options, coeff) as Image;
         }
@@ -10692,16 +7738,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("radload", options, filename) as Image;
@@ -10725,16 +7763,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -10764,16 +7794,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("radload_buffer", options, buffer) as Image;
@@ -10797,16 +7819,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -10836,16 +7850,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("radload_source", options, source) as Image;
@@ -10892,16 +7898,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -10954,20 +7952,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("radsave", options, filename);
         }
@@ -10988,20 +7975,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("radsave_buffer", options) as byte[];
         }
@@ -11022,20 +7998,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("radsave_target", options, target);
         }
@@ -11098,31 +8063,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (offset.HasValue)
-            {
-                options.Add(nameof(offset), offset);
-            }
-
-            if (format.HasValue)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (interpretation.HasValue)
-            {
-                options.Add(nameof(interpretation), interpretation);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(offset), offset);
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(interpretation), interpretation);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("rawload", options, filename, width, height, bands) as Image;
@@ -11152,31 +8097,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (offset.HasValue)
-            {
-                options.Add(nameof(offset), offset);
-            }
-
-            if (format.HasValue)
-            {
-                options.Add(nameof(format), format);
-            }
-
-            if (interpretation.HasValue)
-            {
-                options.Add(nameof(interpretation), interpretation);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(offset), offset);
+            options.AddIfPresent(nameof(format), format);
+            options.AddIfPresent(nameof(interpretation), interpretation);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -11205,20 +8130,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("rawsave", options, filename);
         }
@@ -11239,20 +8153,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("rawsave_fd", options, fd);
         }
@@ -11288,10 +8191,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (kernel.HasValue)
-            {
-                options.Add(nameof(kernel), kernel);
-            }
+            options.AddIfPresent(nameof(kernel), kernel);
 
             return this.Call("reduce", options, hshrink, vshrink) as Image;
         }
@@ -11311,10 +8211,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (kernel.HasValue)
-            {
-                options.Add(nameof(kernel), kernel);
-            }
+            options.AddIfPresent(nameof(kernel), kernel);
 
             return this.Call("reduceh", options, hshrink) as Image;
         }
@@ -11334,10 +8231,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (kernel.HasValue)
-            {
-                options.Add(nameof(kernel), kernel);
-            }
+            options.AddIfPresent(nameof(kernel), kernel);
 
             return this.Call("reducev", options, vshrink) as Image;
         }
@@ -11436,15 +8330,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (kernel.HasValue)
-            {
-                options.Add(nameof(kernel), kernel);
-            }
-
-            if (vscale.HasValue)
-            {
-                options.Add(nameof(vscale), vscale);
-            }
+            options.AddIfPresent(nameof(kernel), kernel);
+            options.AddIfPresent(nameof(vscale), vscale);
 
             return this.Call("resize", options, scale) as Image;
         }
@@ -11478,10 +8365,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (angle.HasValue)
-            {
-                options.Add(nameof(angle), angle);
-            }
+            options.AddIfPresent(nameof(angle), angle);
 
             return this.Call("rot45", options) as Image;
         }
@@ -11506,35 +8390,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (odx.HasValue)
-            {
-                options.Add(nameof(odx), odx);
-            }
-
-            if (ody.HasValue)
-            {
-                options.Add(nameof(ody), ody);
-            }
-
-            if (idx.HasValue)
-            {
-                options.Add(nameof(idx), idx);
-            }
-
-            if (idy.HasValue)
-            {
-                options.Add(nameof(idy), idy);
-            }
+            options.AddIfPresent(nameof(interpolate), interpolate);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(odx), odx);
+            options.AddIfPresent(nameof(ody), ody);
+            options.AddIfPresent(nameof(idx), idx);
+            options.AddIfPresent(nameof(idy), idy);
 
             return this.Call("rotate", options, angle) as Image;
         }
@@ -11568,10 +8429,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
+            options.AddIfPresent(nameof(depth), depth);
 
             return this.Call("scRGB2BW", options) as Image;
         }
@@ -11590,10 +8448,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
+            options.AddIfPresent(nameof(depth), depth);
 
             return this.Call("scRGB2sRGB", options) as Image;
         }
@@ -11626,10 +8481,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
+            options.AddIfPresent("tile_height", tileHeight);
 
             return this.Call("sequential", options) as Image;
         }
@@ -11653,35 +8505,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (sigma.HasValue)
-            {
-                options.Add(nameof(sigma), sigma);
-            }
-
-            if (x1.HasValue)
-            {
-                options.Add(nameof(x1), x1);
-            }
-
-            if (y2.HasValue)
-            {
-                options.Add(nameof(y2), y2);
-            }
-
-            if (y3.HasValue)
-            {
-                options.Add(nameof(y3), y3);
-            }
-
-            if (m1.HasValue)
-            {
-                options.Add(nameof(m1), m1);
-            }
-
-            if (m2.HasValue)
-            {
-                options.Add(nameof(m2), m2);
-            }
+            options.AddIfPresent(nameof(sigma), sigma);
+            options.AddIfPresent(nameof(x1), x1);
+            options.AddIfPresent(nameof(y2), y2);
+            options.AddIfPresent(nameof(y3), y3);
+            options.AddIfPresent(nameof(m1), m1);
+            options.AddIfPresent(nameof(m2), m2);
 
             return this.Call("sharpen", options) as Image;
         }
@@ -11767,45 +8596,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (angle.HasValue)
-            {
-                options.Add(nameof(angle), angle);
-            }
-
-            if (interpolate != null)
-            {
-                options.Add(nameof(interpolate), interpolate);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (odx.HasValue)
-            {
-                options.Add(nameof(odx), odx);
-            }
-
-            if (ody.HasValue)
-            {
-                options.Add(nameof(ody), ody);
-            }
-
-            if (idx.HasValue)
-            {
-                options.Add(nameof(idx), idx);
-            }
-
-            if (idy.HasValue)
-            {
-                options.Add(nameof(idy), idy);
-            }
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(angle), angle);
+            options.AddIfPresent(nameof(interpolate), interpolate);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent(nameof(odx), odx);
+            options.AddIfPresent(nameof(ody), ody);
+            options.AddIfPresent(nameof(idx), idx);
+            options.AddIfPresent(nameof(idy), idy);
 
             return this.Call("similarity", options) as Image;
         }
@@ -11828,20 +8626,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
-
-            if (hfreq.HasValue)
-            {
-                options.Add(nameof(hfreq), hfreq);
-            }
-
-            if (vfreq.HasValue)
-            {
-                options.Add(nameof(vfreq), vfreq);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
+            options.AddIfPresent(nameof(hfreq), hfreq);
+            options.AddIfPresent(nameof(vfreq), vfreq);
 
             return Operation.Call("sines", options, width, height) as Image;
         }
@@ -11862,10 +8649,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (interesting.HasValue)
-            {
-                options.Add(nameof(interesting), interesting);
-            }
+            options.AddIfPresent(nameof(interesting), interesting);
 
             return this.Call("smartcrop", options, width, height) as Image;
         }
@@ -11974,25 +8758,10 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (s0.HasValue)
-            {
-                options.Add(nameof(s0), s0);
-            }
-
-            if (b.HasValue)
-            {
-                options.Add(nameof(b), b);
-            }
-
-            if (m0.HasValue)
-            {
-                options.Add(nameof(m0), m0);
-            }
-
-            if (a.HasValue)
-            {
-                options.Add(nameof(a), a);
-            }
+            options.AddIfPresent(nameof(s0), s0);
+            options.AddIfPresent(nameof(b), b);
+            options.AddIfPresent(nameof(m0), m0);
+            options.AddIfPresent(nameof(a), a);
 
             return this.Call("stdif", options, width, height) as Image;
         }
@@ -12013,10 +8782,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (point.HasValue)
-            {
-                options.Add(nameof(point), point);
-            }
+            options.AddIfPresent(nameof(point), point);
 
             return this.Call("subsample", options, xfac, yfac) as Image;
         }
@@ -12071,31 +8837,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("svgload", options, filename) as Image;
@@ -12122,31 +8868,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -12179,31 +8905,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("svgload_buffer", options, buffer) as Image;
@@ -12230,31 +8936,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -12287,31 +8973,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("svgload_source", options, source) as Image;
@@ -12364,31 +9030,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (unlimited.HasValue)
-            {
-                options.Add(nameof(unlimited), unlimited);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(unlimited), unlimited);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -12459,20 +9105,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (@in != null && @in.Length > 0)
-            {
-                options.Add("in", @in);
-            }
-
-            if (outFormat != null)
-            {
-                options.Add("out_format", outFormat);
-            }
-
-            if (inFormat != null)
-            {
-                options.Add("in_format", inFormat);
-            }
+            options.AddIfPresent("in", @in);
+            options.AddIfPresent("out_format", outFormat);
+            options.AddIfPresent("in_format", inFormat);
 
             Operation.Call("system", options, cmdFormat);
         }
@@ -12494,20 +9129,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (@in != null && @in.Length > 0)
-            {
-                options.Add("in", @in);
-            }
-
-            if (outFormat != null)
-            {
-                options.Add("out_format", outFormat);
-            }
-
-            if (inFormat != null)
-            {
-                options.Add("in_format", inFormat);
-            }
+            options.AddIfPresent("in", @in);
+            options.AddIfPresent("out_format", outFormat);
+            options.AddIfPresent("in_format", inFormat);
 
             options.Add("out", true);
 
@@ -12535,20 +9159,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (@in != null && @in.Length > 0)
-            {
-                options.Add("in", @in);
-            }
-
-            if (outFormat != null)
-            {
-                options.Add("out_format", outFormat);
-            }
-
-            if (inFormat != null)
-            {
-                options.Add("in_format", inFormat);
-            }
+            options.AddIfPresent("in", @in);
+            options.AddIfPresent("out_format", outFormat);
+            options.AddIfPresent("in_format", inFormat);
 
             options.Add("out", true);
             options.Add("log", true);
@@ -12583,50 +9196,15 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (font != null)
-            {
-                options.Add(nameof(font), font);
-            }
-
-            if (width.HasValue)
-            {
-                options.Add(nameof(width), width);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (align.HasValue)
-            {
-                options.Add(nameof(align), align);
-            }
-
-            if (rgba.HasValue)
-            {
-                options.Add(nameof(rgba), rgba);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (justify.HasValue)
-            {
-                options.Add(nameof(justify), justify);
-            }
-
-            if (spacing.HasValue)
-            {
-                options.Add(nameof(spacing), spacing);
-            }
-
-            if (fontfile != null)
-            {
-                options.Add(nameof(fontfile), fontfile);
-            }
+            options.AddIfPresent(nameof(font), font);
+            options.AddIfPresent(nameof(width), width);
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(align), align);
+            options.AddIfPresent(nameof(rgba), rgba);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(justify), justify);
+            options.AddIfPresent(nameof(spacing), spacing);
+            options.AddIfPresent(nameof(fontfile), fontfile);
 
             return Operation.Call("text", options, text) as Image;
         }
@@ -12655,50 +9233,15 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (font != null)
-            {
-                options.Add(nameof(font), font);
-            }
-
-            if (width.HasValue)
-            {
-                options.Add(nameof(width), width);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (align.HasValue)
-            {
-                options.Add(nameof(align), align);
-            }
-
-            if (rgba.HasValue)
-            {
-                options.Add(nameof(rgba), rgba);
-            }
-
-            if (dpi.HasValue)
-            {
-                options.Add(nameof(dpi), dpi);
-            }
-
-            if (justify.HasValue)
-            {
-                options.Add(nameof(justify), justify);
-            }
-
-            if (spacing.HasValue)
-            {
-                options.Add(nameof(spacing), spacing);
-            }
-
-            if (fontfile != null)
-            {
-                options.Add(nameof(fontfile), fontfile);
-            }
+            options.AddIfPresent(nameof(font), font);
+            options.AddIfPresent(nameof(width), width);
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(align), align);
+            options.AddIfPresent(nameof(rgba), rgba);
+            options.AddIfPresent(nameof(dpi), dpi);
+            options.AddIfPresent(nameof(justify), justify);
+            options.AddIfPresent(nameof(spacing), spacing);
+            options.AddIfPresent(nameof(fontfile), fontfile);
 
             options.Add("autofit_dpi", true);
 
@@ -12733,45 +9276,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
-
-            if (noRotate.HasValue)
-            {
-                options.Add("no_rotate", noRotate);
-            }
-
-            if (crop.HasValue)
-            {
-                options.Add(nameof(crop), crop);
-            }
-
-            if (linear.HasValue)
-            {
-                options.Add(nameof(linear), linear);
-            }
-
-            if (importProfile != null)
-            {
-                options.Add("import_profile", importProfile);
-            }
-
-            if (exportProfile != null)
-            {
-                options.Add("export_profile", exportProfile);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(size), size);
+            options.AddIfPresent("no_rotate", noRotate);
+            options.AddIfPresent(nameof(crop), crop);
+            options.AddIfPresent(nameof(linear), linear);
+            options.AddIfPresent("import_profile", importProfile);
+            options.AddIfPresent("export_profile", exportProfile);
+            options.AddIfPresent(nameof(intent), intent);
 
             return Operation.Call("thumbnail", options, filename, width) as Image;
         }
@@ -12800,50 +9312,15 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (optionString != null)
-            {
-                options.Add("option_string", optionString);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
-
-            if (noRotate.HasValue)
-            {
-                options.Add("no_rotate", noRotate);
-            }
-
-            if (crop.HasValue)
-            {
-                options.Add(nameof(crop), crop);
-            }
-
-            if (linear.HasValue)
-            {
-                options.Add(nameof(linear), linear);
-            }
-
-            if (importProfile != null)
-            {
-                options.Add("import_profile", importProfile);
-            }
-
-            if (exportProfile != null)
-            {
-                options.Add("export_profile", exportProfile);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
+            options.AddIfPresent("option_string", optionString);
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(size), size);
+            options.AddIfPresent("no_rotate", noRotate);
+            options.AddIfPresent(nameof(crop), crop);
+            options.AddIfPresent(nameof(linear), linear);
+            options.AddIfPresent("import_profile", importProfile);
+            options.AddIfPresent("export_profile", exportProfile);
+            options.AddIfPresent(nameof(intent), intent);
 
             return Operation.Call("thumbnail_buffer", options, buffer, width) as Image;
         }
@@ -12870,45 +9347,14 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
-
-            if (noRotate.HasValue)
-            {
-                options.Add("no_rotate", noRotate);
-            }
-
-            if (crop.HasValue)
-            {
-                options.Add(nameof(crop), crop);
-            }
-
-            if (linear.HasValue)
-            {
-                options.Add(nameof(linear), linear);
-            }
-
-            if (importProfile != null)
-            {
-                options.Add("import_profile", importProfile);
-            }
-
-            if (exportProfile != null)
-            {
-                options.Add("export_profile", exportProfile);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(size), size);
+            options.AddIfPresent("no_rotate", noRotate);
+            options.AddIfPresent(nameof(crop), crop);
+            options.AddIfPresent(nameof(linear), linear);
+            options.AddIfPresent("import_profile", importProfile);
+            options.AddIfPresent("export_profile", exportProfile);
+            options.AddIfPresent(nameof(intent), intent);
 
             return this.Call("thumbnail_image", options, width) as Image;
         }
@@ -12937,50 +9383,15 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (optionString != null)
-            {
-                options.Add("option_string", optionString);
-            }
-
-            if (height.HasValue)
-            {
-                options.Add(nameof(height), height);
-            }
-
-            if (size.HasValue)
-            {
-                options.Add(nameof(size), size);
-            }
-
-            if (noRotate.HasValue)
-            {
-                options.Add("no_rotate", noRotate);
-            }
-
-            if (crop.HasValue)
-            {
-                options.Add(nameof(crop), crop);
-            }
-
-            if (linear.HasValue)
-            {
-                options.Add(nameof(linear), linear);
-            }
-
-            if (importProfile != null)
-            {
-                options.Add("import_profile", importProfile);
-            }
-
-            if (exportProfile != null)
-            {
-                options.Add("export_profile", exportProfile);
-            }
-
-            if (intent.HasValue)
-            {
-                options.Add(nameof(intent), intent);
-            }
+            options.AddIfPresent("option_string", optionString);
+            options.AddIfPresent(nameof(height), height);
+            options.AddIfPresent(nameof(size), size);
+            options.AddIfPresent("no_rotate", noRotate);
+            options.AddIfPresent(nameof(crop), crop);
+            options.AddIfPresent(nameof(linear), linear);
+            options.AddIfPresent("import_profile", importProfile);
+            options.AddIfPresent("export_profile", exportProfile);
+            options.AddIfPresent(nameof(intent), intent);
 
             return Operation.Call("thumbnail_source", options, source, width) as Image;
         }
@@ -13036,36 +9447,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("tiffload", options, filename) as Image;
@@ -13093,36 +9480,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -13156,36 +9519,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("tiffload_buffer", options, buffer) as Image;
@@ -13213,36 +9552,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -13276,36 +9591,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("tiffload_source", options, source) as Image;
@@ -13360,36 +9651,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (autorotate.HasValue)
-            {
-                options.Add(nameof(autorotate), autorotate);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(autorotate), autorotate);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -13467,125 +9734,30 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (predictor.HasValue)
-            {
-                options.Add(nameof(predictor), predictor);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (tile.HasValue)
-            {
-                options.Add(nameof(tile), tile);
-            }
-
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (pyramid.HasValue)
-            {
-                options.Add(nameof(pyramid), pyramid);
-            }
-
-            if (miniswhite.HasValue)
-            {
-                options.Add(nameof(miniswhite), miniswhite);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (resunit.HasValue)
-            {
-                options.Add(nameof(resunit), resunit);
-            }
-
-            if (xres.HasValue)
-            {
-                options.Add(nameof(xres), xres);
-            }
-
-            if (yres.HasValue)
-            {
-                options.Add(nameof(yres), yres);
-            }
-
-            if (bigtiff.HasValue)
-            {
-                options.Add(nameof(bigtiff), bigtiff);
-            }
-
-            if (properties.HasValue)
-            {
-                options.Add(nameof(properties), properties);
-            }
-
-            if (regionShrink.HasValue)
-            {
-                options.Add("region_shrink", regionShrink);
-            }
-
-            if (level.HasValue)
-            {
-                options.Add(nameof(level), level);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (premultiply.HasValue)
-            {
-                options.Add(nameof(premultiply), premultiply);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(predictor), predictor);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(tile), tile);
+            options.AddIfPresent("tile_width", tileWidth);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent(nameof(pyramid), pyramid);
+            options.AddIfPresent(nameof(miniswhite), miniswhite);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(resunit), resunit);
+            options.AddIfPresent(nameof(xres), xres);
+            options.AddIfPresent(nameof(yres), yres);
+            options.AddIfPresent(nameof(bigtiff), bigtiff);
+            options.AddIfPresent(nameof(properties), properties);
+            options.AddIfPresent("region_shrink", regionShrink);
+            options.AddIfPresent(nameof(level), level);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(depth), depth);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(premultiply), premultiply);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("tiffsave", options, filename);
         }
@@ -13627,125 +9799,30 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (compression.HasValue)
-            {
-                options.Add(nameof(compression), compression);
-            }
-
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (predictor.HasValue)
-            {
-                options.Add(nameof(predictor), predictor);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (tile.HasValue)
-            {
-                options.Add(nameof(tile), tile);
-            }
-
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (pyramid.HasValue)
-            {
-                options.Add(nameof(pyramid), pyramid);
-            }
-
-            if (miniswhite.HasValue)
-            {
-                options.Add(nameof(miniswhite), miniswhite);
-            }
-
-            if (bitdepth.HasValue)
-            {
-                options.Add(nameof(bitdepth), bitdepth);
-            }
-
-            if (resunit.HasValue)
-            {
-                options.Add(nameof(resunit), resunit);
-            }
-
-            if (xres.HasValue)
-            {
-                options.Add(nameof(xres), xres);
-            }
-
-            if (yres.HasValue)
-            {
-                options.Add(nameof(yres), yres);
-            }
-
-            if (bigtiff.HasValue)
-            {
-                options.Add(nameof(bigtiff), bigtiff);
-            }
-
-            if (properties.HasValue)
-            {
-                options.Add(nameof(properties), properties);
-            }
-
-            if (regionShrink.HasValue)
-            {
-                options.Add("region_shrink", regionShrink);
-            }
-
-            if (level.HasValue)
-            {
-                options.Add(nameof(level), level);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (depth.HasValue)
-            {
-                options.Add(nameof(depth), depth);
-            }
-
-            if (subifd.HasValue)
-            {
-                options.Add(nameof(subifd), subifd);
-            }
-
-            if (premultiply.HasValue)
-            {
-                options.Add(nameof(premultiply), premultiply);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(compression), compression);
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(predictor), predictor);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(tile), tile);
+            options.AddIfPresent("tile_width", tileWidth);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent(nameof(pyramid), pyramid);
+            options.AddIfPresent(nameof(miniswhite), miniswhite);
+            options.AddIfPresent(nameof(bitdepth), bitdepth);
+            options.AddIfPresent(nameof(resunit), resunit);
+            options.AddIfPresent(nameof(xres), xres);
+            options.AddIfPresent(nameof(yres), yres);
+            options.AddIfPresent(nameof(bigtiff), bigtiff);
+            options.AddIfPresent(nameof(properties), properties);
+            options.AddIfPresent("region_shrink", regionShrink);
+            options.AddIfPresent(nameof(level), level);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(depth), depth);
+            options.AddIfPresent(nameof(subifd), subifd);
+            options.AddIfPresent(nameof(premultiply), premultiply);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("tiffsave_buffer", options) as byte[];
         }
@@ -13769,35 +9846,12 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (tileWidth.HasValue)
-            {
-                options.Add("tile_width", tileWidth);
-            }
-
-            if (tileHeight.HasValue)
-            {
-                options.Add("tile_height", tileHeight);
-            }
-
-            if (maxTiles.HasValue)
-            {
-                options.Add("max_tiles", maxTiles);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
-            if (threaded.HasValue)
-            {
-                options.Add(nameof(threaded), threaded);
-            }
-
-            if (persistent.HasValue)
-            {
-                options.Add(nameof(persistent), persistent);
-            }
+            options.AddIfPresent("tile_width", tileWidth);
+            options.AddIfPresent("tile_height", tileHeight);
+            options.AddIfPresent("max_tiles", maxTiles);
+            options.AddIfPresent(nameof(access), access);
+            options.AddIfPresent(nameof(threaded), threaded);
+            options.AddIfPresent(nameof(persistent), persistent);
 
             return this.Call("tilecache", options) as Image;
         }
@@ -13825,55 +9879,16 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (inMax.HasValue)
-            {
-                options.Add("in_max", inMax);
-            }
-
-            if (outMax.HasValue)
-            {
-                options.Add("out_max", outMax);
-            }
-
-            if (lb.HasValue)
-            {
-                options.Add("Lb", lb);
-            }
-
-            if (lw.HasValue)
-            {
-                options.Add("Lw", lw);
-            }
-
-            if (ps.HasValue)
-            {
-                options.Add("Ps", ps);
-            }
-
-            if (pm.HasValue)
-            {
-                options.Add("Pm", pm);
-            }
-
-            if (ph.HasValue)
-            {
-                options.Add("Ph", ph);
-            }
-
-            if (s.HasValue)
-            {
-                options.Add("S", s);
-            }
-
-            if (m.HasValue)
-            {
-                options.Add("M", m);
-            }
-
-            if (h.HasValue)
-            {
-                options.Add("H", h);
-            }
+            options.AddIfPresent("in_max", inMax);
+            options.AddIfPresent("out_max", outMax);
+            options.AddIfPresent("Lb", lb);
+            options.AddIfPresent("Lw", lw);
+            options.AddIfPresent("Ps", ps);
+            options.AddIfPresent("Pm", pm);
+            options.AddIfPresent("Ph", ph);
+            options.AddIfPresent("S", s);
+            options.AddIfPresent("M", m);
+            options.AddIfPresent("H", h);
 
             return Operation.Call("tonelut", options) as Image;
         }
@@ -13892,10 +9907,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("transpose3d", options) as Image;
         }
@@ -13915,15 +9927,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (maxAlpha.HasValue)
-            {
-                options.Add("max_alpha", maxAlpha);
-            }
-
-            if (alphaBand.HasValue)
-            {
-                options.Add("alpha_band", alphaBand);
-            }
+            options.AddIfPresent("max_alpha", maxAlpha);
+            options.AddIfPresent("alpha_band", alphaBand);
 
             return this.Call("unpremultiply", options) as Image;
         }
@@ -13945,16 +9950,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("vipsload", options, filename) as Image;
@@ -13978,16 +9975,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -14017,16 +10006,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("vipsload_source", options, source) as Image;
@@ -14073,16 +10054,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -14135,20 +10108,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("vipssave", options, filename);
         }
@@ -14169,20 +10131,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("vipssave_target", options, target);
         }
@@ -14225,31 +10176,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("webpload", options, filename) as Image;
@@ -14276,31 +10207,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -14333,31 +10244,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("webpload_buffer", options, buffer) as Image;
@@ -14384,31 +10275,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -14441,31 +10312,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             return Operation.Call("webpload_source", options, source) as Image;
@@ -14518,31 +10369,11 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (page.HasValue)
-            {
-                options.Add(nameof(page), page);
-            }
-
-            if (n.HasValue)
-            {
-                options.Add(nameof(n), n);
-            }
-
-            if (scale.HasValue)
-            {
-                options.Add(nameof(scale), scale);
-            }
-
-            if (memory.HasValue)
-            {
-                options.Add(nameof(memory), memory);
-            }
-
-            if (access.HasValue)
-            {
-                options.Add(nameof(access), access);
-            }
-
+            options.AddIfPresent(nameof(page), page);
+            options.AddIfPresent(nameof(n), n);
+            options.AddIfPresent(nameof(scale), scale);
+            options.AddIfPresent(nameof(memory), memory);
+            options.AddIfPresent(nameof(access), access);
             options.AddFailOn(failOn);
 
             options.Add("flags", true);
@@ -14609,75 +10440,20 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (preset.HasValue)
-            {
-                options.Add(nameof(preset), preset);
-            }
-
-            if (smartSubsample.HasValue)
-            {
-                options.Add("smart_subsample", smartSubsample);
-            }
-
-            if (nearLossless.HasValue)
-            {
-                options.Add("near_lossless", nearLossless);
-            }
-
-            if (alphaQ.HasValue)
-            {
-                options.Add("alpha_q", alphaQ);
-            }
-
-            if (minSize.HasValue)
-            {
-                options.Add("min_size", minSize);
-            }
-
-            if (kmin.HasValue)
-            {
-                options.Add(nameof(kmin), kmin);
-            }
-
-            if (kmax.HasValue)
-            {
-                options.Add(nameof(kmax), kmax);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(preset), preset);
+            options.AddIfPresent("smart_subsample", smartSubsample);
+            options.AddIfPresent("near_lossless", nearLossless);
+            options.AddIfPresent("alpha_q", alphaQ);
+            options.AddIfPresent("min_size", minSize);
+            options.AddIfPresent(nameof(kmin), kmin);
+            options.AddIfPresent(nameof(kmax), kmax);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("webpsave", options, filename);
         }
@@ -14709,75 +10485,20 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (preset.HasValue)
-            {
-                options.Add(nameof(preset), preset);
-            }
-
-            if (smartSubsample.HasValue)
-            {
-                options.Add("smart_subsample", smartSubsample);
-            }
-
-            if (nearLossless.HasValue)
-            {
-                options.Add("near_lossless", nearLossless);
-            }
-
-            if (alphaQ.HasValue)
-            {
-                options.Add("alpha_q", alphaQ);
-            }
-
-            if (minSize.HasValue)
-            {
-                options.Add("min_size", minSize);
-            }
-
-            if (kmin.HasValue)
-            {
-                options.Add(nameof(kmin), kmin);
-            }
-
-            if (kmax.HasValue)
-            {
-                options.Add(nameof(kmax), kmax);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(preset), preset);
+            options.AddIfPresent("smart_subsample", smartSubsample);
+            options.AddIfPresent("near_lossless", nearLossless);
+            options.AddIfPresent("alpha_q", alphaQ);
+            options.AddIfPresent("min_size", minSize);
+            options.AddIfPresent(nameof(kmin), kmin);
+            options.AddIfPresent(nameof(kmax), kmax);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             return this.Call("webpsave_buffer", options) as byte[];
         }
@@ -14809,75 +10530,20 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (q.HasValue)
-            {
-                options.Add("Q", q);
-            }
-
-            if (lossless.HasValue)
-            {
-                options.Add(nameof(lossless), lossless);
-            }
-
-            if (preset.HasValue)
-            {
-                options.Add(nameof(preset), preset);
-            }
-
-            if (smartSubsample.HasValue)
-            {
-                options.Add("smart_subsample", smartSubsample);
-            }
-
-            if (nearLossless.HasValue)
-            {
-                options.Add("near_lossless", nearLossless);
-            }
-
-            if (alphaQ.HasValue)
-            {
-                options.Add("alpha_q", alphaQ);
-            }
-
-            if (minSize.HasValue)
-            {
-                options.Add("min_size", minSize);
-            }
-
-            if (kmin.HasValue)
-            {
-                options.Add(nameof(kmin), kmin);
-            }
-
-            if (kmax.HasValue)
-            {
-                options.Add(nameof(kmax), kmax);
-            }
-
-            if (effort.HasValue)
-            {
-                options.Add(nameof(effort), effort);
-            }
-
-            if (profile != null)
-            {
-                options.Add(nameof(profile), profile);
-            }
-
-            if (strip.HasValue)
-            {
-                options.Add(nameof(strip), strip);
-            }
-
-            if (background != null && background.Length > 0)
-            {
-                options.Add(nameof(background), background);
-            }
-
-            if (pageHeight.HasValue)
-            {
-                options.Add("page_height", pageHeight);
-            }
+            options.AddIfPresent("Q", q);
+            options.AddIfPresent(nameof(lossless), lossless);
+            options.AddIfPresent(nameof(preset), preset);
+            options.AddIfPresent("smart_subsample", smartSubsample);
+            options.AddIfPresent("near_lossless", nearLossless);
+            options.AddIfPresent("alpha_q", alphaQ);
+            options.AddIfPresent("min_size", minSize);
+            options.AddIfPresent(nameof(kmin), kmin);
+            options.AddIfPresent(nameof(kmax), kmax);
+            options.AddIfPresent(nameof(effort), effort);
+            options.AddIfPresent(nameof(profile), profile);
+            options.AddIfPresent(nameof(strip), strip);
+            options.AddIfPresent(nameof(background), background);
+            options.AddIfPresent("page_height", pageHeight);
 
             this.Call("webpsave_target", options, target);
         }
@@ -14928,15 +10594,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (cellSize.HasValue)
-            {
-                options.Add("cell_size", cellSize);
-            }
-
-            if (seed.HasValue)
-            {
-                options.Add(nameof(seed), seed);
-            }
+            options.AddIfPresent("cell_size", cellSize);
+            options.AddIfPresent(nameof(seed), seed);
 
             return Operation.Call("worley", options, width, height) as Image;
         }
@@ -14956,15 +10615,8 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (x.HasValue)
-            {
-                options.Add(nameof(x), x);
-            }
-
-            if (y.HasValue)
-            {
-                options.Add(nameof(y), y);
-            }
+            options.AddIfPresent(nameof(x), x);
+            options.AddIfPresent(nameof(y), y);
 
             return this.Call("wrap", options) as Image;
         }
@@ -14987,20 +10639,9 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (csize.HasValue)
-            {
-                options.Add(nameof(csize), csize);
-            }
-
-            if (dsize.HasValue)
-            {
-                options.Add(nameof(dsize), dsize);
-            }
-
-            if (esize.HasValue)
-            {
-                options.Add(nameof(esize), esize);
-            }
+            options.AddIfPresent(nameof(csize), csize);
+            options.AddIfPresent(nameof(dsize), dsize);
+            options.AddIfPresent(nameof(esize), esize);
 
             return Operation.Call("xyz", options, width, height) as Image;
         }
@@ -15033,10 +10674,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (temp != null && temp.Length > 0)
-            {
-                options.Add(nameof(temp), temp);
-            }
+            options.AddIfPresent(nameof(temp), temp);
 
             return this.Call("XYZ2Lab", options) as Image;
         }
@@ -15099,10 +10737,7 @@ namespace NetVips
         {
             var options = new VOption();
 
-            if (uchar.HasValue)
-            {
-                options.Add(nameof(uchar), uchar);
-            }
+            options.AddIfPresent(nameof(uchar), uchar);
 
             return Operation.Call("zone", options, width, height) as Image;
         }
