@@ -18,7 +18,11 @@ export NUKE_TELEMETRY_OPTOUT=1
 # EXECUTION
 ###########################################################################
 
-if ! [ -x "$(command -v dotnet)" ]; then
+# Do not use -x to check for the presence of dotnet,
+# because that might fail on bash under Alpine 3.14, see:
+# https://github.com/alpinelinux/docker-alpine/issues/156
+# https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.14.0#faccessat2
+if ! [ -e "$(command -v dotnet)" ]; then
     echo 'Error: dotnet is not installed.' >&2
     exit 1
 fi

@@ -1,8 +1,10 @@
 namespace NetVips.Benchmarks
 {
     using BenchmarkDotNet.Configs;
+    using BenchmarkDotNet.Exporters;
     using BenchmarkDotNet.Jobs;
     using BenchmarkDotNet.Toolchains.CsProj;
+    using System.Reflection;
 
     public class Config : ManualConfig
     {
@@ -19,6 +21,9 @@ namespace NetVips.Benchmarks
 #elif NET5_0
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp50)
                     .WithId(".Net 5.0 CLI")
+#elif NET6_0
+                    .WithToolchain(CsProjCoreToolchain.NetCoreApp60)
+                    .WithId(".Net 6.0 CLI")
 #endif
                     .WithArguments(new Argument[]
                     {
@@ -29,6 +34,12 @@ namespace NetVips.Benchmarks
 #endif
                     })
             );
+
+            // Don't escape HTML within the GitHub Markdown exporter,
+            // to support <pre>-tags within the "Method" column.
+            // Ouch, this is quite hackish.
+            var githubExporter = MarkdownExporter.GitHub;
+            githubExporter.GetType().GetField("EscapeHtml", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(githubExporter, false);
         }
     }
 }

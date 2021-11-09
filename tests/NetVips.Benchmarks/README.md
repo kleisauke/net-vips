@@ -23,20 +23,21 @@ Intel Core i5-8600K CPU 3.60GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical c
 Job=.Net 5.0 CLI  Arguments=/p:DebugType=portable  Toolchain=.NET 5.0  
 
 ```
-|         Method | input | output |        Mean |     Error |    StdDev | Ratio | RatioSD |
-|--------------- |------ |------- |------------:|----------:|----------:|------:|--------:|
-|        **NetVips** | **t.jpg** | **t2.jpg** |   **169.56 ms** |  **3.275 ms** |  **3.217 ms** |  **1.00** |    **0.00** |
-|     Magick.NET | t.jpg | t2.jpg | 3,036.39 ms |  6.992 ms |  6.540 ms | 17.89 |    0.34 |
-|     ImageSharp¹ | t.jpg | t2.jpg |   775.82 ms |  9.826 ms |  9.191 ms |  4.57 |    0.09 |
-|      SkiaSharp¹ | t.jpg | t2.jpg | 1,943.25 ms | 17.594 ms | 16.458 ms | 11.45 |    0.23 |
-| System.Drawing² | t.jpg | t2.jpg | 2,363.23 ms |  5.788 ms |  5.414 ms | 13.93 |    0.27 |
-|                |       |        |             |           |           |       |         |
-|        **NetVips** | **t.tif** | **t2.tif** |    **83.88 ms** |  **0.829 ms** |  **0.775 ms** |  **1.00** |    **0.00** |
-|     Magick.NET | t.tif | t2.tif | 2,886.12 ms |  6.449 ms |  6.033 ms | 34.41 |    0.34 |
-| System.Drawing² | t.tif | t2.tif | 2,023.22 ms |  4.330 ms |  3.838 ms | 24.13 |    0.25 |
+|                     Method | input | output |        Mean |     Error |    StdDev | Ratio | RatioSD |
+|--------------------------- |------ |------- |------------:|----------:|----------:|------:|--------:|
+|                    **NetVips** | **t.jpg** | **t2.jpg** |   **169.56 ms** |  **3.275 ms** |  **3.217 ms** |  **1.00** |    **0.00** |
+|                 Magick.NET | t.jpg | t2.jpg | 3,036.39 ms |  6.992 ms |  6.540 ms | 17.89 |    0.34 |
+|     ImageSharp<sup>1</sup> | t.jpg | t2.jpg |   775.82 ms |  9.826 ms |  9.191 ms |  4.57 |    0.09 |
+|      SkiaSharp<sup>2</sup> | t.jpg | t2.jpg | 1,943.25 ms | 17.594 ms | 16.458 ms | 11.45 |    0.23 |
+| System.Drawing<sup>3</sup> | t.jpg | t2.jpg | 2,363.23 ms |  5.788 ms |  5.414 ms | 13.93 |    0.27 |
+|                            |       |        |             |           |           |       |         |
+|                    **NetVips** | **t.tif** | **t2.tif** |    **83.88 ms** |  **0.829 ms** |  **0.775 ms** |  **1.00** |    **0.00** |
+|                 Magick.NET | t.tif | t2.tif | 2,886.12 ms |  6.449 ms |  6.033 ms | 34.41 |    0.34 |
+| System.Drawing<sup>3</sup> | t.tif | t2.tif | 2,023.22 ms |  4.330 ms |  3.838 ms | 24.13 |    0.25 |
 
-¹ ImageSharp and SkiaSharp does not have TIFF support, so I only tested with JPEG files.  
-² System.Drawing does not have a sharpening or convolution operation, so I skipped that part of the benchmark.
+<sup>1</sup> ImageSharp does not support tiled TIFF images, so I only tested with JPEG files.  
+<sup>2</sup> SkiaSharp does not have TIFF support, so I only tested with JPEG files.  
+<sup>3</sup> System.Drawing does not have a sharpening or convolution operation, so I skipped that part of the benchmark.
 
 ## Performance test design
 

@@ -1,7 +1,5 @@
 name: CI
-on:
-  - push
-  - pull_request
+on: [ push, pull_request ]
 jobs:
   CI:
     runs-on: ${{ matrix.os }}
@@ -11,13 +9,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-20.04
-            container: mcr.microsoft.com/dotnet/sdk:5.0-buster-slim
+            container: mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim
             script: ./build.sh
           - os: ubuntu-20.04
             container: centos:7
             script: ./build.sh
           - os: ubuntu-20.04
-            container: mcr.microsoft.com/dotnet/sdk:5.0-alpine3.12
+            container: mcr.microsoft.com/dotnet/sdk:6.0-alpine3.14
             script: ./build.sh
           # TODO(kleisauke): Re-enable Mono CI when C# 9 features are supported.
           # - os: ubuntu-20.04
@@ -25,24 +23,29 @@ jobs:
           #   allow_failures: true
           - os: macos-10.15
             script: ./build.sh
-          - os: windows-2019
+          - os: windows-2022
             script: .\build.ps1
     steps:
-      - name: Dependencies (Linux glibc)
-        if: contains(matrix.container, 'buster')
+      - name: Dependencies (Debian 11)
+        if: contains(matrix.container, 'bullseye')
         run: |
           apt-get update
           apt-get install -y fonts-dejavu
-      - name: Dependencies (Linux glibc)
+      - name: Dependencies (CentOS 7)
         if: contains(matrix.container, 'centos')
         run: |
           yum install -y \
             https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-          yum install -y dotnet-sdk-5.0 dejavu-sans-fonts which
-      - name: Dependencies (Linux musl)
+          yum install -y dotnet-sdk-6.0 dejavu-sans-fonts which
+      - name: Dependencies (Alpine 3.14)
         if: contains(matrix.container, 'alpine')
         run: apk add bash ttf-dejavu --update-cache
-      - name: Prepare environment (Linux musl)
+      - name: Setup dotnet (macOS 10.15)
+        if: runner.os == 'macOS'
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0'
+      - name: Prepare environment (Alpine)
         if: contains(matrix.container, 'alpine')
         run: echo "VIPS_MIN_STACK_SIZE=2m" >> $GITHUB_ENV
       - name: Checkout

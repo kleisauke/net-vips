@@ -36,7 +36,7 @@ which gives some more background.
 
 ## Supported platforms
 
-- .NET Framework (4.5 and higher)
+- .NET Framework (4.5.2 and higher)
 - .NET Core (.NETStandard 2.0 and higher on Windows, Linux and macOS)
 - Mono
 

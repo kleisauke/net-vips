@@ -88,8 +88,8 @@ namespace NetVips.Benchmarks
             im.Write(output);
         }
 
-        [Benchmark(Description = "ImageSharp")]
-        [Arguments("t.jpg", "t2.jpg")] // ImageSharp doesn't have TIFF support
+        [Benchmark(Description = "ImageSharp<sup>1</sup>")]
+        [Arguments("t.jpg", "t2.jpg")] // ImageSharp doesn't support tiled TIFF images
         public void ImageSharp(string input, string output)
         {
             using var image = ImageSharpImage.Load(input);
@@ -103,7 +103,7 @@ namespace NetVips.Benchmarks
             image.Save(output);
         }
 
-        [Benchmark(Description = "SkiaSharp")]
+        [Benchmark(Description = "SkiaSharp<sup>2</sup>")]
         [Arguments("t.jpg", "t2.jpg")] // SkiaSharp doesn't have TIFF support
         public void SkiaSharp(string input, string output)
         {
@@ -142,7 +142,8 @@ namespace NetVips.Benchmarks
                 .SaveTo(fileStream);
         }
 
-        [Benchmark(Description = "System.Drawing")]
+#if Windows_NT
+        [Benchmark(Description = "System.Drawing<sup>3</sup>")]
         [Arguments("t.jpg", "t2.jpg")]
         [Arguments("t.tif", "t2.tif")]
         public void SystemDrawing(string input, string output)
@@ -184,5 +185,6 @@ namespace NetVips.Benchmarks
             // https://stackoverflow.com/a/3959115/10952119
             resized.Save(output);
         }
+#endif
     }
 }

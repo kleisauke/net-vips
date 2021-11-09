@@ -3,22 +3,21 @@ jobs:
     - arch: arm64
   fast_finish: true
   include:
-    - name: "Linux ARM64v8 (Debian 10.6, glibc 2.28) - .NET 5.0"
+    - name: "Linux ARM64v8 (Debian 11, glibc 2.31) - .NET 6.0"
       arch: arm64
       os: linux
-      dist: bionic
+      dist: focal
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm64v8
+        - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-arm64v8
         - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fonts-dejavu"
       script: sudo docker exec netvips bash -c "./build.sh"
-    # TODO(kleisauke): Uncomment when targeting .NET 6.0
-    #- name: "Linux ARM64v8 (Alpine 3.13, musl 1.2) - .NET 6.0"
-    #  arch: arm64
-    #  os: linux
-    #  dist: focal
-    #  language: shell
-    #  install:
-    #    - sudo docker run -dit --name netvips -e TRAVIS -v "${PWD}:/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-alpine-arm64v8
-    #    - sudo docker exec netvips sh -c "apk add bash ttf-dejavu --update-cache"
-    #  script: sudo docker exec netvips bash -c "VIPS_MIN_STACK_SIZE=2m ./build.sh"
+    - name: "Linux ARM64v8 (Alpine 3.14, musl 1.2.2) - .NET 6.0"
+      arch: arm64
+      os: linux
+      dist: focal
+      language: shell
+      install:
+        - sudo docker run -dit --name netvips -e TRAVIS -e VIPS_MIN_STACK_SIZE=2m -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-alpine3.14-arm64v8
+        - sudo docker exec netvips sh -c "apk add bash ttf-dejavu --update-cache"
+      script: sudo docker exec netvips bash -c "./build.sh"

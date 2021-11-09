@@ -2,7 +2,8 @@ namespace NetVips.Samples
 {
     using System;
     using System.IO;
-    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
     public class NetworkStream : ISample
     {
@@ -20,10 +21,10 @@ namespace NetVips.Samples
         // -1 to test https://github.com/kleisauke/net-vips/issues/101
         public const int BufferSize = 4096 - 1;
 
-        public void Execute(string[] args)
+        public async void Execute(string[] args)
         {
-            using var web = new WebClient();
-            using var stream = web.OpenRead(Uri);
+            using var client = new HttpClient();
+            using var stream = await client.GetStreamAsync(Uri);
 
             using var source = new SourceCustom();
             source.OnRead += (buffer, length) =>
