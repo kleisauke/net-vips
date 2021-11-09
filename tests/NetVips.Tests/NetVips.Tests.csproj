@@ -45,6 +45,11 @@
     <ProjectReference Include="..\..\src\NetVips.Extensions\NetVips.Extensions.csproj" />
   </ItemGroup>
 
+  <!-- System.Drawing.Common 6.0.0 is only supported on Windows -->
+  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+    <Compile Remove="ExtensionsTests.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <Content Include="TestData\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

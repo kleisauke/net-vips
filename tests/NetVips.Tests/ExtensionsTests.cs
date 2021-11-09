@@ -5,10 +5,12 @@ namespace NetVips.Tests
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Runtime.Versioning;
     using System.Runtime.InteropServices;
     using Extensions;
     using Image = Image;
 
+    [SupportedOSPlatform("windows")]
     public class ExtensionsTests : IClassFixture<TestsFixture>
     {
         public ExtensionsTests(TestsFixture testsFixture, ITestOutputHelper output)
@@ -16,18 +18,9 @@ namespace NetVips.Tests
             testsFixture.SetUpLogging(output);
         }
 
-        /// <summary>
-        /// Disable the extensions tests, if we're running inside virtual environments.
-        /// Saves us the installation of libgdiplus.
-        /// </summary>
-        private static bool InVirtualEnv => Helper.GetEnvironmentVariableAsBool("CI") ||
-                                            Helper.GetEnvironmentVariableAsBool("DOTNET_RUNNING_IN_CONTAINER");
-
-        [SkippableFact]
+        [Fact]
         public void ToBitmap1Band()
         {
-            Skip.If(InVirtualEnv, "running in virtual environment, skipping test");
-
             var black = Image.Black(1, 1).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + 255).Cast(Enums.BandFormat.Uchar);
 
@@ -35,12 +28,9 @@ namespace NetVips.Tests
             AssertPixelValue(white.WriteToMemory(), white.ToBitmap());
         }
 
-        [SkippableFact]
+        [Fact]
         public void ToBitmap2Bands()
         {
-            Skip.If(InVirtualEnv || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows),
-                "running in virtual environment or not on Windows, skipping test");
-
             var black = Image.Black(1, 1, bands: 2).Cast(Enums.BandFormat.Uchar);
             var white = (Image.Black(1, 1) + new[] { 255, 255 }).Cast(Enums.BandFormat.Uchar);
             var grey = (Image.Black(1, 1) + new[] { 128, 255 }).Cast(Enums.BandFormat.Uchar);
@@ -50,11 +40,9 @@ namespace NetVips.Tests
             AssertPixelValue(grey.WriteToMemory(), grey.ToBitmap());
         }
 
-        [SkippableFact]
+        [Fact]
         public void ToBitmap3Bands()
         {
-            Skip.If(InVirtualEnv, "running in virtual environment, skipping test");
-
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
             var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0 }).Cast(Enums.BandFormat.Uchar);
@@ -64,11 +52,9 @@ namespace NetVips.Tests
             AssertPixelValue(greenColor.WriteToMemory(), greenColor.ToBitmap());
         }
 
-        [SkippableFact]
+        [Fact]
         public void ToBitmap4Bands()
         {
-            Skip.If(InVirtualEnv, "running in virtual environment, skipping test");
-
             var redColor = (Image.Black(1, 1) + new[] { 255, 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
             var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255, 255 }).Cast(Enums.BandFormat.Uchar);
             var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0, 255 }).Cast(Enums.BandFormat.Uchar);

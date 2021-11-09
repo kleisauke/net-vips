@@ -3,7 +3,9 @@ namespace NetVips.Samples
     using System;
     using Extensions;
     using System.Drawing.Imaging;
+    using System.Runtime.Versioning;
 
+    [SupportedOSPlatform("windows")]
     public class GdiConvert : ISample
     {
         public string Name => "GDI Convert";

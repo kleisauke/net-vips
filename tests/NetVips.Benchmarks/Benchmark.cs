@@ -2,6 +2,7 @@ namespace NetVips.Benchmarks
 {
     using System;
     using System.IO;
+    using System.Runtime.Versioning;
     using BenchmarkDotNet.Attributes;
 
     using ImageMagick;
@@ -146,6 +147,7 @@ namespace NetVips.Benchmarks
         [Benchmark(Description = "System.Drawing<sup>3</sup>")]
         [Arguments("t.jpg", "t2.jpg")]
         [Arguments("t.tif", "t2.tif")]
+        [SupportedOSPlatform("windows")]
         public void SystemDrawing(string input, string output)
         {
             using var image = SystemDrawingImage.FromFile(input, true);
