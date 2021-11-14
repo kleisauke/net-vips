@@ -32,8 +32,8 @@
     <file src="pack\osx-arm64\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <!-- Note: macOS ARM64 (Apple Silicon) will be supported with .NET 6.0 -->
-    <file src="_._" target="lib/net6.0" />
+    <!-- Note: macOS ARM64 (Apple Silicon) is supported on .NET 6.0, but Mono has back-ported this to .NET Standard 2.1 -->
+    <file src="_._" target="lib/netstandard2.1" />
 
   </files>
 </package>
