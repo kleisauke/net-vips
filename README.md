@@ -84,7 +84,7 @@ libvips binaries for the most common platforms (see
 <sup>1</sup> The version number of these NuGet packages is in sync with libvips' version number.  
 <sup>2</sup> Uses glibc as the standard C library (Ubuntu, Debian, etc).  
 <sup>3</sup> Uses musl as the standard C library (Alpine, Gentoo Linux, etc).  
-<sup>4</sup> Requires .NET 6.0 Preview.
+<sup>4</sup> Requires .NET 6.0.
 
 Then just install this package, perhaps:
 

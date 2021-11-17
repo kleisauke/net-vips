@@ -4,6 +4,18 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.12.0-rc1] - 2021-11-17
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://libvips.org/2021/11/14/What's-new-in-8.12.html
+
+### Added
+- Include cgif as dependency.
+
+### Changed
+- Build Linux ARM64v8 binaries on CircleCI ([lovell/sharp-libvips#114](https://github.com/lovell/sharp-libvips/issues/114)).
+- Move macOS ARM64 NuGet package to `netstandard2.1` group ([#151](https://github.com/kleisauke/net-vips/issues/151)).
+
 ## [8.11.4] - 2021-09-25
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -27,7 +39,7 @@ https://github.com/libvips/libvips/releases/tag/v8.11.3
 ## [8.11.0] - 2021-06-23
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
-https://libvips.github.io/libvips/2021/06/04/What's-new-in-8.11.html
+https://libvips.org/2021/06/04/What's-new-in-8.11.html
 
 ### Changed
 - Build Linux ARM64v8 and ARMv7 binaries with GCC 11.1.
@@ -72,7 +84,7 @@ https://github.com/libvips/libvips/releases/tag/v8.10.1
 ## [8.10.0] - 2020-08-26
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
-https://libvips.github.io/libvips/2020/06/18/What's-new-in-8.10.html
+https://libvips.org/2020/06/18/What's-new-in-8.10.html
 
 ### Fixed
 - Compatibility with Unity on Linux ([#90](https://github.com/kleisauke/net-vips/issues/90)).
@@ -110,7 +122,7 @@ https://github.com/libvips/libvips/releases/tag/v8.9.1
 ## [8.9.0] - 2020-01-30
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
-https://libvips.github.io/libvips/2019/12/11/What's-new-in-8.9.html
+https://libvips.org/2019/12/11/What's-new-in-8.9.html
 
 ### Changed
 - A statically linked libvips binary is build for Linux ([#51](https://github.com/kleisauke/net-vips/issues/51)).
@@ -141,7 +153,7 @@ https://github.com/libvips/libvips/releases/tag/v8.8.1
 ## [8.8.0] - 2019-06-22
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
-https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
+https://libvips.org/2019/04/22/What's-new-in-8.8.html
 
 ## [8.7.4] - 2019-04-10
 ### Added
@@ -162,6 +174,7 @@ https://libvips.github.io/libvips/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.12.0-rc1]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.4...v8.12.0-rc1
 [8.11.4]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3-build2...v8.11.4
 [8.11.3.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3...v8.11.3-build2
 [8.11.3]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.0...v8.11.3
