@@ -6,7 +6,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <Optimize>true</Optimize>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{9A19103F-16F7-4668-BE54-9A1E7A4F7556}</ProjectTypeGuids>
     <TestProjectType>UnitTest</TestProjectType>

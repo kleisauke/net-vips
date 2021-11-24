@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <RootNamespace>Generator</RootNamespace>
   </PropertyGroup>
 

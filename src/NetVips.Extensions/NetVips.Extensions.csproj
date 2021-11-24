@@ -13,6 +13,7 @@
     <OutputType>Library</OutputType>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>x64;x86;ARM64;ARM32</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

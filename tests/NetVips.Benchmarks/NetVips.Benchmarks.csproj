@@ -6,7 +6,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <Optimize>true</Optimize>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <DefineConstants>$(DefineConstants);$(OS)</DefineConstants>
     <DefineConstants Condition="'$(UseGlobalLibvips)' == 'true'">$(DefineConstants);GLOBAL_VIPS</DefineConstants>
   </PropertyGroup>
