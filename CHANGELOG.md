@@ -5,13 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [2.1.0] - 2021-12-02
 ### Added
-- Update methods/enums for libvips 8.12.
 - Add `image.SignalHandlerDisconnect()` for disconnecting a signal handler.
 
 ### Fixed
 - Ensure recorded delegates are not released too early ([#141](https://github.com/kleisauke/net-vips/issues/141)).
 
 ### Changed
+- Update methods/enums for libvips 8.12.
 - Drop internal `ModuleInit.Fody` dependency in favor of the `[ModuleInitializer]` attribute.
 - `image.WriteToBuffer` tries to use the new target API first.
 - Bump minimum required .NET Framework version to v4.5.2.
