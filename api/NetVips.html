@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace NetVips
    ">
-    <meta name="generator" content="docfx 2.58.0.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -105,7 +105,7 @@
       <section><p>Wrapper for message logging functions.</p>
 </section>
       <h4><a class="xref" href="NetVips.ModuleInitializer.html">ModuleInitializer</a></h4>
-      <section><p>Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.</p>
+      <section><p>All code inside the <a class="xref" href="NetVips.ModuleInitializer.html#NetVips_ModuleInitializer_Initialize">Initialize()</a> method is ran as soon as the assembly is loaded.</p>
 </section>
       <h4><a class="xref" href="NetVips.MutableImage.html">MutableImage</a></h4>
       <section><p>This class represents a libvips image which can be modified. See
@@ -202,6 +202,12 @@ it can assess progress.</p>
       <h4><a class="xref" href="NetVips.Enums.Extend.html">Enums.Extend</a></h4>
       <section><p>How to extend image edges.</p>
 </section>
+      <h4><a class="xref" href="NetVips.Enums.FailOn.html">Enums.FailOn</a></h4>
+      <section><p>How sensitive loaders are to errors, from never stop (very insensitive), to
+stop on the smallest warning (very sensitive).</p>
+<p>Each one implies the ones before it, so <a class="xref" href="NetVips.Enums.FailOn.html#NetVips_Enums_FailOn_Error">Error</a> implies
+<a class="xref" href="NetVips.Enums.FailOn.html#NetVips_Enums_FailOn_Truncated">Truncated</a>.</p>
+</section>
       <h4><a class="xref" href="NetVips.Enums.ForeignDzContainer.html">Enums.ForeignDzContainer</a></h4>
       <section><p>The container type of the pyramid.</p>
 </section>
@@ -219,6 +225,9 @@ it can assess progress.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.ForeignPngFilter.html">Enums.ForeignPngFilter</a></h4>
       <section><p>The PNG filter to use.</p>
+</section>
+      <h4><a class="xref" href="NetVips.Enums.ForeignPpmFormat.html">Enums.ForeignPpmFormat</a></h4>
+      <section><p>The netpbm file format to save as.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.ForeignSubsample.html">Enums.ForeignSubsample</a></h4>
       <section><p>Set JPEG/HEIF subsampling mode.</p>

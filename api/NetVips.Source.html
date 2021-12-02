@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Source
    ">
-    <meta name="generator" content="docfx 2.58.0.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -100,6 +100,9 @@
       <a class="xref" href="NetVips.Connection.html#NetVips_Connection_GetNick">Connection.GetNick()</a>
     </div>
     <div>
+      <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_OnPostClose">VipsObject.OnPostClose</a>
+    </div>
+    <div>
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetTypeOf_System_String_">VipsObject.GetTypeOf(String)</a>
     </div>
     <div>
@@ -110,6 +113,9 @@
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_">GObject.SignalConnect(String, Delegate, IntPtr)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt32_">GObject.SignalHandlerDisconnect(UInt32)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
@@ -266,7 +272,7 @@
   <div class="markdown level1 remarks"><p>Make a new source that is attached to the descriptor. For example:</p>
 <pre><code class="lang-lang-csharp">using var source = Source.NewFromDescriptor(0);</code></pre>
 <p>Makes a descriptor attached to stdin.</p>
-<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_System_Boolean__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Boolean&gt;, VOption)</a>.</p>
+<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Enums.FailOn&gt;, VOption)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -337,7 +343,7 @@
   <h5 id="NetVips_Source_NewFromFile_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new source that is attached to the named file. For example:</p>
 <pre><code class="lang-lang-csharp">using var source = Source.NewFromFile(&quot;myfile.jpg&quot;);</code></pre>
-<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_System_Boolean__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Boolean&gt;, VOption)</a>.</p>
+<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Enums.FailOn&gt;, VOption)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -408,7 +414,7 @@
   <h5 id="NetVips_Source_NewFromMemory_System_Byte____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new source that is attached to the memory object. For example:</p>
 <pre><code class="lang-lang-csharp">using var source = Source.NewFromMemory(data);</code></pre>
-<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_System_Boolean__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Boolean&gt;, VOption)</a>.</p>
+<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Enums.FailOn&gt;, VOption)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -479,7 +485,7 @@
   <h5 id="NetVips_Source_NewFromMemory_System_Char____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new source that is attached to the memory object. For example:</p>
 <pre><code class="lang-lang-csharp">using var source = Source.NewFromMemory(data);</code></pre>
-<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_System_Boolean__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Boolean&gt;, VOption)</a>.</p>
+<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Enums.FailOn&gt;, VOption)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -550,7 +556,7 @@
   <h5 id="NetVips_Source_NewFromMemory_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new source that is attached to the memory object. For example:</p>
 <pre><code class="lang-lang-csharp">using var source = Source.NewFromMemory(data);</code></pre>
-<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_System_Boolean__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Boolean&gt;, VOption)</a>.</p>
+<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, String, Nullable&lt;Enums.Access&gt;, Nullable&lt;Enums.FailOn&gt;, VOption)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
