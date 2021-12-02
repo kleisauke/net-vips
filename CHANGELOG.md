@@ -3,6 +3,20 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2021-12-02
+### Added
+- Update methods/enums for libvips 8.12.
+- Add `image.SignalHandlerDisconnect()` for disconnecting a signal handler.
+
+### Fixed
+- Ensure recorded delegates are not released too early ([#141](https://github.com/kleisauke/net-vips/issues/141)).
+
+### Changed
+- Drop internal `ModuleInit.Fody` dependency in favor of the `[ModuleInitializer]` attribute.
+- `image.WriteToBuffer` tries to use the new target API first.
+- Bump minimum required .NET Framework version to v4.5.2.
+- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library for .NET 6.0. See https://aka.ms/systemdrawingnonwindows for more information.
+
 ## [2.0.1] - 2021-06-23
 ### Changed
 - Update methods/enums for libvips 8.11.
@@ -165,6 +179,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[2.1.0]: https://github.com/kleisauke/net-vips/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/kleisauke/net-vips/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/kleisauke/net-vips/compare/v1.2.4...v2.0.0
 [1.2.4]: https://github.com/kleisauke/net-vips/compare/v1.2.3...v1.2.4
