@@ -84,7 +84,6 @@ namespace NetVips.Samples
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsPCS"), "Enums.PCS");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsPrecision"), "Enums.Precision");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsRegionShrink"), "Enums.RegionShrink");
-            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSaveable"), "Enums.Saveable");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSize"), "Enums.Size");
 
             // Flags

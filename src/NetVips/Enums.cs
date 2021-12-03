@@ -1029,30 +1029,6 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Some hints about the image saver.
-        /// </summary>
-        public enum Saveable
-        {
-            /// <summary>1 band (eg. CSV)</summary>
-            Mono = 0, // "mono"
-
-            /// <summary>1 or 3 bands (eg. PPM)</summary>
-            Rgb = 1, // "rgb"
-
-            /// <summary>1, 2, 3 or 4 bands (eg. PNG)</summary>
-            Rgba = 2, // "rgba"
-
-            /// <summary>3 or 4 bands (eg. WEBP)</summary>
-            RgbaOnly = 3, // "rgba-only"
-
-            /// <summary>1, 3 or 4 bands (eg.JPEG)</summary>
-            RgbCmyk = 4, // "rgb-cmyk"
-
-            /// <summary>Any number of bands (eg. TIFF)</summary>
-            Any = 5 // "any"
-        }
-
-        /// <summary>
         /// Controls whether an operation should upsize, downsize, both up and downsize, or force a size.
         /// </summary>
         /// <remarks>

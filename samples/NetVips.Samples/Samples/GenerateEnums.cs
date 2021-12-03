@@ -4,18 +4,11 @@ namespace NetVips.Samples
     using System.Text;
     using System.Linq;
     using System.IO;
-    using System.Security;
-    using System.Runtime.InteropServices;
 
     public class GenerateEnums : ISample
     {
         public string Name => "Generate enums";
         public string Category => "Internal";
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("libvips-42.dll" /*"libvips.so.42"*/, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_saveable_get_type")]
-        internal static extern IntPtr SaveableGetType();
 
         private string RemovePrefix(string enumStr)
         {
@@ -33,10 +26,6 @@ namespace NetVips.Samples
         /// <returns>The `Enums.Generated.cs` as string.</returns>
         private string Generate()
         {
-            // otherwise we're missing some enums
-            SaveableGetType();
-            using var _ = Image.Black(1, 1);
-
             var allEnums = NetVips.GetEnums();
 
             const string preamble = @"//------------------------------------------------------------------------------
@@ -102,12 +91,6 @@ namespace NetVips.Samples
 
         public void Execute(string[] args)
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                Console.WriteLine("This example can only be run on Windows");
-                return;
-            }
-
             File.WriteAllText("Enums.Generated.cs", Generate());
 
             Console.WriteLine("See Enums.Generated.cs");
