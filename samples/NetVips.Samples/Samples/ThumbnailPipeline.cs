@@ -71,7 +71,7 @@ namespace NetVips.Samples
             var loadOptions = new VOption
             {
                 {"access", Enums.Access.Sequential},
-                {"failOn", FailOn}
+                {"fail_on", FailOn}
             };
             var stringOptions = "";
 

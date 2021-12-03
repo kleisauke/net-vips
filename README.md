@@ -122,7 +122,7 @@ was not able to find libvips or due to x86/x64 architecture problems:
 ```csharp
 using NetVips;
 
-using var im = Image.NewFromFile("image.jpg", access: Enums.Access.Sequential);
+using var im = Image.NewFromFile("image.jpg");
 
 // put im at position (100, 100) in a 3000 x 3000 pixel image, 
 // make the other pixels in the image by mirroring im up / down / 
