@@ -15,12 +15,12 @@ public partial class Build
 {
     static void Information(string info)
     {
-        Logger.Info(info);
+        Serilog.Log.Information(info);
     }
 
     static void Information(string info, params object[] args)
     {
-        Logger.Info(info, args);
+        Serilog.Log.Information(info, args);
     }
 
     public static string GetVersion()
@@ -31,10 +31,10 @@ public partial class Build
         var revision = xdoc.Descendants().First(x => x.Name.LocalName == "Revision").Value;
 
         long buildNumber;
-        switch (Host.Instance)
+        switch (Host)
         {
             case GitHubActions gitHubActions:
-                buildNumber = gitHubActions.GitHubRunNumber;
+                buildNumber = gitHubActions.RunNumber;
                 break;
             case TravisCI travis:
                 buildNumber = travis.BuildNumber;
