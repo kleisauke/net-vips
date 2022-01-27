@@ -4,6 +4,14 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.12.2] - 2022-01-27
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://github.com/libvips/libvips/releases/tag/v8.12.2
+
+### Changed
+- Build macOS binaries with Clang 13.
+
 ## [8.12.1] - 2021-12-02
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -60,7 +68,7 @@ https://github.com/libvips/libvips/releases/tag/v8.10.6
 - Switch from libjpeg-turbo to MozJPEG ([lovell/sharp-libvips#89](https://github.com/lovell/sharp-libvips/pull/89)).
 - Build a more minimal libxml2 ([lovell/sharp-libvips#92](https://github.com/lovell/sharp-libvips/pull/92)).
 - Build aom without HBR/WebM support ([lovell/sharp-libvips#94](https://github.com/lovell/sharp-libvips/pull/94)).
-- Windows binaries are being built with LLVM 11.1 (was GCC 10.2).
+- Windows binaries are being built with Clang 11.1 (was GCC 10.2).
 
 ## [8.10.5.1] - 2020-12-27
 ### Fixed
@@ -174,6 +182,7 @@ https://libvips.org/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.12.2]: https://github.com/kleisauke/libvips-packaging/compare/v8.12.1...v8.12.2
 [8.12.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.4...v8.12.1
 [8.11.4]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3-build2...v8.11.4
 [8.11.3.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3...v8.11.3-build2
