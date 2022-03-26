@@ -24,7 +24,7 @@ namespace NetVips.Samples
         public async void Execute(string[] args)
         {
             using var client = new HttpClient();
-            using var stream = await client.GetStreamAsync(Uri);
+            await using var stream = await client.GetStreamAsync(Uri);
 
             using var source = new SourceCustom();
             source.OnRead += (buffer, length) =>

@@ -54,7 +54,7 @@ namespace NetVips.Samples
                 var vipsLoader = (string)image.Get("vips-loader");
                 var suffixLength = vipsLoader.EndsWith("load_buffer") || vipsLoader.EndsWith("load_source") ? 11 : 4;
 
-                return vipsLoader.Substring(0, vipsLoader.Length - suffixLength);
+                return vipsLoader[..^suffixLength];
             }
             catch (VipsException e)
             {
