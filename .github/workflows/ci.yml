@@ -42,7 +42,7 @@ jobs:
         run: apk add bash ttf-dejavu --update-cache
       - name: Setup dotnet (macOS 11)
         if: runner.os == 'macOS'
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0'
       - name: Prepare environment (Alpine)
