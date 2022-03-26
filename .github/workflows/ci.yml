@@ -49,7 +49,7 @@ jobs:
         if: contains(matrix.container, 'alpine')
         run: echo "VIPS_MIN_STACK_SIZE=2m" >> $GITHUB_ENV
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Test
         continue-on-error: ${{ matrix.allow_failures == true }}
         run: ${{ matrix.script }}
