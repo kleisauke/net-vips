@@ -38,7 +38,7 @@ namespace NetVips
             }
         }
 
-        private static ConcurrentDictionary<uint, GCHandle> _handlers = new ConcurrentDictionary<uint, GCHandle>();
+        private static readonly ConcurrentDictionary<uint, GCHandle> _handlers = new ConcurrentDictionary<uint, GCHandle>();
 
         /// <summary>
         /// Sets the log handler for a domain and a set of log levels.
