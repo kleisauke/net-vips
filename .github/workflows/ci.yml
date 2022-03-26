@@ -21,7 +21,7 @@ jobs:
           # - os: ubuntu-20.04
           #   script: ./build/test-mono.sh
           #   allow_failures: true
-          - os: macos-10.15
+          - os: macos-11
             script: ./build.sh
           - os: windows-2022
             script: .\build.ps1
@@ -40,7 +40,7 @@ jobs:
       - name: Dependencies (Alpine 3.14)
         if: contains(matrix.container, 'alpine')
         run: apk add bash ttf-dejavu --update-cache
-      - name: Setup dotnet (macOS 10.15)
+      - name: Setup dotnet (macOS 11)
         if: runner.os == 'macOS'
         uses: actions/setup-dotnet@v1
         with:
