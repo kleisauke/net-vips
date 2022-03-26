@@ -319,7 +319,7 @@ namespace NetVips
         /// </summary>
         /// <param name="path">Path to split.</param>
         /// <returns>The filename part of a vips7 path.</returns>
-        public static string PathFilename7(string path)
+        internal static string PathFilename7(string path)
         {
             return Vips.PathFilename7(path);
         }
@@ -329,7 +329,7 @@ namespace NetVips
         /// </summary>
         /// <param name="path">Path to split.</param>
         /// <returns>The mode part of a vips7 path.</returns>
-        public static string PathMode7(string path)
+        internal static string PathMode7(string path)
         {
             return Vips.PathMode7(path);
         }
@@ -337,7 +337,7 @@ namespace NetVips
         /// <summary>
         /// For testing only.
         /// </summary>
-        public static void VipsInterpretationGetType()
+        internal static void VipsInterpretationGetType()
         {
             Vips.InterpretationGetType();
         }
@@ -345,7 +345,7 @@ namespace NetVips
         /// <summary>
         /// For testing only.
         /// </summary>
-        public static void VipsOperationFlagsGetType()
+        internal static void VipsOperationFlagsGetType()
         {
             VipsOperation.FlagsGetType();
         }

@@ -33,6 +33,8 @@
     <Compile Include="Interop\Libraries.$(TargetOS).cs">
         <Link>Interop\Libraries.cs</Link>
     </Compile>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    <InternalsVisibleTo Include="$(AssemblyName).Samples" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,11 +43,11 @@
 
   <!-- Include .NET Standard packages on Linux and macOS -->
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\Linux\NetVips.dll">
+    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\Linux\$(AssemblyName).dll">
       <Pack>true</Pack>
       <PackagePath>runtimes\linux\lib\netstandard2.0</PackagePath>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\OSX\NetVips.dll">
+    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\OSX\$(AssemblyName).dll">
       <Pack>true</Pack>
       <PackagePath>runtimes\osx\lib\netstandard2.0</PackagePath>
     </None>
