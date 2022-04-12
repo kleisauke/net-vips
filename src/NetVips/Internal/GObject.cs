@@ -149,6 +149,16 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_set_int64")]
+        internal static extern void SetInt64(ref Struct value, long vInt64);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_value_get_int64")]
+        internal static extern long GetInt64(in Struct value);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_value_set_uint64")]
         internal static extern void SetUint64(ref Struct value, ulong vUint64);
 
