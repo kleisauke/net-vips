@@ -648,7 +648,7 @@ namespace NetVips
         /// </summary>
         /// <example>
         /// <code language="lang-csharp">
-        /// NetVips.Image.Configure(untrustedBlock: bool, operationBlock: string, operationUnblock: string, concurrency: int, pipeReadLimit: long, cacheMax: int, cacheMaxMem: long, cacheMaxFiles: int);
+        /// NetVips.Image.Configure(untrustedBlock: bool, operationBlock: string, operationUnblock: string, concurrency: int, pipeReadLimit: ulong, cacheMax: int, cacheMaxMem: ulong, cacheMaxFiles: int);
         /// </code>
         /// </example>
         /// <param name="untrustedBlock">Block all untrusted operations from running.</param>
@@ -657,9 +657,9 @@ namespace NetVips
         /// <param name="concurrency">Set threadpool size.</param>
         /// <param name="pipeReadLimit">Maximum number of bytes to buffer for pipe read.</param>
         /// <param name="cacheMax">Maximum number of operations to cache.</param>
-        /// <param name="cacheMaxMem">Maximum number of tracked memory to cache.</param>
-        /// <param name="cacheMaxFiles">Maximum number of open files to cache.</param>
-        public static void Configure(bool? untrustedBlock = null, string operationBlock = null, string operationUnblock = null, int? concurrency = null, long? pipeReadLimit = null, int? cacheMax = null, long? cacheMaxMem = null, int? cacheMaxFiles = null)
+        /// <param name="cacheMaxMem">Maximum amount of memory for the operation cache.</param>
+        /// <param name="cacheMaxFiles">Maximum number of open files in operation cache.</param>
+        public static void Configure(bool? untrustedBlock = null, string operationBlock = null, string operationUnblock = null, int? concurrency = null, ulong? pipeReadLimit = null, int? cacheMax = null, ulong? cacheMaxMem = null, int? cacheMaxFiles = null)
         {
             var options = new VOption();
 

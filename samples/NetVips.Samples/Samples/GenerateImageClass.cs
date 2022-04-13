@@ -16,7 +16,6 @@ namespace NetVips.Samples
         {
             {GValue.GBoolType, "bool"},
             {GValue.GIntType, "int"},
-            {GValue.GInt64Type, "long"},
             {GValue.GUint64Type, "ulong"},
             //{GValue.GEnumType, "string"}, // Checked below
             //{GValue.GFlagsType, "int"}, // Checked below
@@ -183,8 +182,6 @@ namespace NetVips.Samples
                         return $" is {type} {name} && {name};";
                     case "int":
                         return $" is {type} {name} ? {name} : 0;";
-                    case "long":
-                        return $" is {type} {name} ? {name} : 0l;";
                     case "ulong":
                         return $" is {type} {name} ? {name} : 0ul;";
                     case "double":
@@ -220,7 +217,6 @@ namespace NetVips.Samples
                         return $"{type} {name} = null";
                     case "bool":
                     case "int":
-                    case "long":
                     case "ulong":
                     case "double":
                     case { } enumString when enumString.StartsWith("Enums."):

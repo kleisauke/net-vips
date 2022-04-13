@@ -51,11 +51,6 @@ namespace NetVips
         public static readonly IntPtr GIntType = new IntPtr(6 << FundamentalShift);
 
         /// <summary>
-        /// The fundamental type corresponding to gint64.
-        /// </summary>
-        public static readonly IntPtr GInt64Type = new IntPtr(10 << FundamentalShift);
-
-        /// <summary>
         /// The fundamental type corresponding to guint64.
         /// </summary>
         public static readonly IntPtr GUint64Type = new IntPtr(11 << FundamentalShift);
@@ -229,10 +224,6 @@ namespace NetVips
             else if (gtype == GIntType)
             {
                 Internal.GValue.SetInt(ref Struct, Convert.ToInt32(value));
-            }
-            else if (gtype == GInt64Type)
-            {
-                Internal.GValue.SetInt64(ref Struct, Convert.ToInt64(value));
             }
             else if (gtype == GUint64Type)
             {
@@ -409,10 +400,6 @@ namespace NetVips
             else if (gtype == GIntType)
             {
                 result = Internal.GValue.GetInt(in Struct);
-            }
-            else if (gtype == GInt64Type)
-            {
-                result = Internal.GValue.GetInt64(in Struct);
             }
             else if (gtype == GUint64Type)
             {
