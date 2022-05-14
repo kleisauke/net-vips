@@ -247,7 +247,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_signal_connect_data")]
-        internal static extern uint ConnectData(GObjectManaged instance,
+        internal static extern ulong ConnectData(GObjectManaged instance,
             [MarshalAs(UnmanagedType.LPStr)] string detailedSignal,
             [MarshalAs(UnmanagedType.FunctionPtr)] Delegate cHandler, IntPtr data,
             GClosureNotify destroyData, Enums.GConnectFlags connectFlags);
@@ -255,6 +255,6 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_signal_handler_disconnect")]
-        internal static extern void HandlerDisconnect(GObjectManaged instance, uint handlerId);
+        internal static extern void HandlerDisconnect(GObjectManaged instance, ulong handlerId);
     }
 }

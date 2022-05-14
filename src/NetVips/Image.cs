@@ -2055,7 +2055,7 @@ namespace NetVips
         /// <param name="data">Data to pass to handler calls.</param>
         /// <returns>The handler id.</returns>
         /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
-        public uint SignalConnect(Enums.Signals signal, EvalDelegate callback, IntPtr data = default)
+        public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, IntPtr data = default)
         {
             switch (signal)
             {

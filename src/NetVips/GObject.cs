@@ -59,7 +59,7 @@ namespace NetVips
         /// <param name="data">Data to pass to handler calls.</param>
         /// <returns>The handler id.</returns>
         /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
-        public uint SignalConnect(string detailedSignal, Delegate callback, IntPtr data = default)
+        public ulong SignalConnect(string detailedSignal, Delegate callback, IntPtr data = default)
         {
             if (callback is Image.EvalDelegate evalDelegate)
             {
@@ -110,7 +110,7 @@ namespace NetVips
         /// If the <paramref name="handlerId"/> is 0 then this function does nothing.
         /// </remarks>
         /// <param name="handlerId">Handler id of the handler to be disconnected.</param>
-        public void SignalHandlerDisconnect(uint handlerId)
+        public void SignalHandlerDisconnect(ulong handlerId)
         {
             if (handlerId != 0)
             {
