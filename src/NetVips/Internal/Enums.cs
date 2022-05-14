@@ -21,6 +21,7 @@ namespace NetVips.Internal
             G_PARAM_DEPRECATED = 1 << 31
         }
 
+        [Flags]
         internal enum GConnectFlags
         {
             G_CONNECT_AFTER = 1 << 0,
