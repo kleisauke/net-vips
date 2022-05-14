@@ -94,10 +94,7 @@ namespace NetVips
             var delegateHandle = GCHandle.Alloc(callback);
             _handles.Add(delegateHandle);
 
-            // get the pointer for the delegate which can be passed to the native code
-            var callbackPtr = Marshal.GetFunctionPointerForDelegate(callback);
-            var ret = GSignal.ConnectData(this, detailedSignal, callbackPtr, data, null, default);
-
+            var ret = GSignal.ConnectData(this, detailedSignal, callback, data, null, default);
             if (ret == 0)
             {
                 throw new Exception("Failed to connect signal.");

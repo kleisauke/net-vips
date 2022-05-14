@@ -248,7 +248,8 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_signal_connect_data")]
         internal static extern uint ConnectData(GObjectManaged instance,
-            [MarshalAs(UnmanagedType.LPStr)] string detailedSignal, IntPtr cHandler, IntPtr data,
+            [MarshalAs(UnmanagedType.LPStr)] string detailedSignal,
+            [MarshalAs(UnmanagedType.FunctionPtr)] Delegate cHandler, IntPtr data,
             GClosureNotify destroyData, Enums.GConnectFlags connectFlags);
 
         [SuppressUnmanagedCodeSecurity]
