@@ -134,6 +134,18 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Disconnects all handlers from this object that match <paramref name="data"/>.
+        /// </summary>
+        /// <param name="data">The data of the handlers.</param>
+        /// <returns>The number of handlers that matched.</returns>
+        public uint SignalHandlersDisconnectByData(IntPtr data)
+        {
+            return GSignal.HandlersDisconnectMatched(this,
+                GSignalMatchType.G_SIGNAL_MATCH_DATA,
+                0, 0, IntPtr.Zero, null, data);
+        }
+
+        /// <summary>
         /// Decreases the reference count of object.
         /// When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
         /// </summary>
