@@ -488,7 +488,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
-        /// created from the array. These image are useful with the libvips
+        /// created from the array. These images are useful with the libvips
         /// convolution operator <see cref="Conv"/>.
         /// </remarks>
         /// <param name="array">Create the image from these values.</param>
@@ -536,7 +536,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
-        /// created from the array. These image are useful with the libvips
+        /// created from the array. These images are useful with the libvips
         /// convolution operator <see cref="Conv"/>.
         /// </remarks>
         /// <param name="array">Create the image from these values.</param>
@@ -584,7 +584,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// A new one-band image with <see cref="Enums.BandFormat.Double"/> pixels is
-        /// created from the array. These image are useful with the libvips
+        /// created from the array. These images are useful with the libvips
         /// convolution operator <see cref="Conv"/>.
         /// </remarks>
         /// <param name="array">Create the image from these values.
