@@ -58,7 +58,7 @@ namespace NetVips
         /// <param name="callback">The callback to connect.</param>
         /// <param name="data">Data to pass to handler calls.</param>
         /// <returns>The handler id.</returns>
-        /// <exception cref="T:System.Exception">If it failed to connect the signal.</exception>
+        /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
         public ulong SignalConnect(string detailedSignal, Delegate callback, IntPtr data = default)
         {
             if (callback is Image.EvalDelegate evalDelegate)
@@ -97,7 +97,7 @@ namespace NetVips
             var ret = GSignal.ConnectData(this, detailedSignal, callback, data, null, default);
             if (ret == 0)
             {
-                throw new Exception("Failed to connect signal.");
+                throw new ArgumentException("Failed to connect signal " + detailedSignal);
             }
 
             return ret;
