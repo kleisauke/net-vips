@@ -20,7 +20,7 @@ namespace NetVips
         public event Action OnPostClose
         {
             add => SignalConnect("postclose", value);
-            remove => throw new NotImplementedException();
+            remove => SignalHandlersDisconnectByFunc(value);
         }
 
         /// <inheritdoc cref="GObject"/>
