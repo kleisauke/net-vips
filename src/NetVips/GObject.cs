@@ -4,6 +4,7 @@ namespace NetVips
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using Internal;
+    using GSignalMatchType = Internal.Enums.GSignalMatchType;
 
     /// <summary>
     /// Manage <see cref="Internal.GObject"/> lifetime.
@@ -116,6 +117,20 @@ namespace NetVips
             {
                 GSignal.HandlerDisconnect(this, handlerId);
             }
+        }
+
+        /// <summary>
+        /// Disconnects all handlers from this object that match <paramref name="func"/> and
+        /// <paramref name="data"/>.
+        /// </summary>
+        /// <param name="func">The func of the handlers.</param>
+        /// <param name="data">The data of the handlers.</param>
+        /// <returns>The number of handlers that matched.</returns>
+        public uint SignalHandlersDisconnectByFunc(Delegate func, IntPtr data = default)
+        {
+            return GSignal.HandlersDisconnectMatched(this,
+                GSignalMatchType.G_SIGNAL_MATCH_FUNC | GSignalMatchType.G_SIGNAL_MATCH_DATA,
+                0, 0, IntPtr.Zero, func, data);
         }
 
         /// <summary>

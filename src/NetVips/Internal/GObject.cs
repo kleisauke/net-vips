@@ -256,5 +256,12 @@ namespace NetVips.Internal
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_signal_handler_disconnect")]
         internal static extern void HandlerDisconnect(GObjectManaged instance, ulong handlerId);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "g_signal_handlers_disconnect_matched")]
+        internal static extern uint HandlersDisconnectMatched(GObjectManaged instance,
+            Enums.GSignalMatchType mask, uint signalId, uint detail, IntPtr closure,
+            [MarshalAs(UnmanagedType.FunctionPtr)] Delegate func, IntPtr data);
     }
 }
