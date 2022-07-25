@@ -45,9 +45,6 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0'
-      - name: Prepare environment (Alpine)
-        if: contains(matrix.container, 'alpine')
-        run: echo "VIPS_MIN_STACK_SIZE=2m" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v3
       - name: Test

@@ -4,6 +4,20 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.13.0] - 2022-07-25
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://libvips.org/2022/05/28/What's-new-in-8.13.html
+
+### Added
+- Enable Arm Neon support in libwebp, if available ([lovell/sharp-libvips#135](https://github.com/lovell/sharp-libvips/pull/135)).
+- Enable WebP support in libtiff ([lovell/sharp-libvips#135](https://github.com/lovell/sharp-libvips/pull/135)).
+
+### Changed
+- Build Linux x64 glibc binaires with GCC 11.
+- Build Linux musl binaires on Alpine 3.12.
+- Switch libvips build to Meson ([lovell/sharp-libvips#144](https://github.com/lovell/sharp-libvips/pull/144)).
+
 ## [8.12.2] - 2022-01-27
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -182,6 +196,7 @@ https://libvips.org/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.13.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.12.2...v8.13.0
 [8.12.2]: https://github.com/kleisauke/libvips-packaging/compare/v8.12.1...v8.12.2
 [8.12.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.4...v8.12.1
 [8.11.4]: https://github.com/kleisauke/libvips-packaging/compare/v8.11.3-build2...v8.11.4
