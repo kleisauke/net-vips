@@ -101,6 +101,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_block_untrusted_set")]
+        internal static extern void BlockUntrustedSet([MarshalAs(UnmanagedType.Bool)] bool state);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_tracked_get_allocs")]
         internal static extern int TrackedGetAllocs();
 
@@ -537,6 +542,12 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_operation_flags_get_type")]
         internal static extern IntPtr FlagsGetType();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_operation_block_set")]
+        internal static extern void BlockSet([MarshalAs(UnmanagedType.LPStr)] string name,
+            [MarshalAs(UnmanagedType.Bool)] bool state);
     }
 
     internal static class VipsForeign

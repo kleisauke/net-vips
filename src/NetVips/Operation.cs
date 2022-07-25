@@ -252,5 +252,33 @@ namespace NetVips
 
             return results.Length == 1 ? results[0] : results;
         }
+
+        /// <summary>
+        /// Set the block state on all operations in the libvips class hierarchy at
+        /// <paramref name="name"/> and below.
+        /// </summary>
+        /// <remarks>
+        /// For example:
+        /// <code language="lang-csharp">
+        /// Operation.Block("VipsForeignLoad", true);
+        /// Operation.Block("VipsForeignLoadJpeg", false);
+        /// </code>
+        /// Will block all load operations, except JPEG. Use:
+        /// <code language="lang-shell">
+        /// $ vips -l
+        /// </code>
+        /// at the command-line to see the class hierarchy.
+        /// Use <see cref="NetVips.BlockUntrusted"/> to set the
+        /// block state on all untrusted operations.
+        ///
+        /// This call does nothing if the named operation is not found.
+        /// At least libvips 8.13 is needed.
+        /// </remarks>
+        /// <param name="name">Set block state at this point and below.</param>
+        /// <param name="state">The block state to set.</param>
+        public static void Block(string name, bool state)
+        {
+            VipsOperation.BlockSet(name, state);
+        }
     }
 }

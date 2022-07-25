@@ -176,6 +176,30 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Set the block state on all untrusted operations. 
+        /// </summary>
+        /// <remarks>
+        /// For example:
+        /// <code language="lang-csharp">
+        /// NetVips.BlockUntrusted = true;
+        /// </code>
+        /// Will block all untrusted operations from running. Use:
+        /// <code language="lang-shell">
+        /// $ vips -l
+        /// </code>
+        /// at the command-line to see the class hierarchy and which
+        /// operations are marked as untrusted. Use
+        /// <see cref="Operation.Block"/> to set the block state on
+        /// specific operations in the libvips class hierarchy.
+        ///
+        /// At least libvips 8.13 is needed.
+        /// </remarks>
+        public static bool BlockUntrusted
+        {
+            set => Vips.BlockUntrustedSet(value);
+        }
+
+        /// <summary>
         /// Returns an array with:
         /// - the number of active allocations.
         /// - the number of bytes currently allocated via `vips_malloc()` and friends.
