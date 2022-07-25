@@ -3,6 +3,21 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2022-07-25
+### Added
+- Add `NetVips.BlockUntrusted` and `Operation.Block` for blocking operations at runtime.
+- Add `image.SignalHandlersDisconnectByFunc()` and `image.SignalHandlersDisconnectByData` for disconnecting signal handlers that match.
+- Implement `image.OnPostClose` remove event accessor.
+
+### Changed
+- Update methods/enums for libvips 8.13.
+- Remove internal `VipsSaveable` enum.
+- Avoid throwing general exceptions.
+- Ensure debug and unit tests functions are internal.
+
+### Fixed
+- Use the correct type for signal handler IDs.
+
 ## [2.1.0] - 2021-12-02
 ### Added
 - Add `image.SignalHandlerDisconnect()` for disconnecting a signal handler.
@@ -50,10 +65,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [1.2.2] - 2020-06-16
 ### Fixed
-- Fix the buffer-based fallback mechanism for `NewFromStream` / `NewFromSource` on Windows 32-bit.
+- Fix the buffer-based fallback mechanism for `NewFromStream` and `NewFromSource` on Windows 32-bit.
 
 ### Changed
-- Free the associated streams within `*loadStream` / `*saveStream` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
+- Free the associated streams within `*loadStream` and `*saveStream` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
 - Speed-up UTF8 string marshalling by using `System.Buffers.ArrayPool`.
 
 ## [1.2.1] - 2020-03-16
@@ -69,7 +84,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   - See the [blogpost](https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/introduction.html#custom-sources-and-targets) for more information.
 - A new [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package containing useful helpers ([#41](https://github.com/kleisauke/net-vips/issues/41)).
 - Add `Image.Switch()`, `image.Case()` and `image.NewFromMemoryCopy()` operations.
-- Add support for the short-circuit operators (`&&` / `||`).
+- Add support for the short-circuit operators (`&&` and `||`).
 - Add `Enums.Signals` and `Image.EvalDelegate` that can be used with `image.SignalConnect()`.
 - Add `image.RefCount()` to get the reference count of an image.
 - Add `NetVips.GetOperations()` to get a list of operations available within the libvips library.
@@ -93,7 +108,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add support for progress feedback (`image.SetProgress()`) and signal handling (`image.SignalConnect()`) ([#31](https://github.com/kleisauke/net-vips/issues/31)).
 - Add `image.SetKill()` and `image.IsKilled()` ([#31](https://github.com/kleisauke/net-vips/issues/31), [libvips/libvips@91d0e7e](https://github.com/libvips/libvips/commit/91d0e7e3d06fe6293f8e7513f30fd21585ea4305)).
 - Add `NetVips.ProfileSet()`, `NetVips.VectorSet()`, `NetVips.ConcurrencySet()` and `NetVips.ConcurrencyGet()` utilities.
-- Add support for loading and saving from and to streams (`Image.NewFromStream()` / `image.WriteToStream()`) ([#33](https://github.com/kleisauke/net-vips/issues/33)).
+- Add support for loading and saving from and to streams (`Image.NewFromStream()` and `image.WriteToStream()`) ([#33](https://github.com/kleisauke/net-vips/issues/33)).
 - Add `Region` class to read pixels from images without storing the entire image in memory.
 - Add `image[x, y]` overload as a synonym for `image.Getpoint(x, y)`.
 - Add missing arithmetic operators (`1 - image`, `1 / image`, etc.).
@@ -179,6 +194,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[2.2.0]: https://github.com/kleisauke/net-vips/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/kleisauke/net-vips/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/kleisauke/net-vips/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/kleisauke/net-vips/compare/v1.2.4...v2.0.0
