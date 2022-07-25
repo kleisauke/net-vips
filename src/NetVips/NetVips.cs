@@ -235,7 +235,7 @@ namespace NetVips
         /// <param name="fromModule"><see langword="true"/> to get this value from the pre-initialized
         /// <see cref="ModuleInitializer.Version"/> variable.</param>
         /// <returns>The version number.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="flag"/> is not in range.</exception>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="flag"/> is not in range.</exception>
         public static int Version(int flag, bool fromModule = true)
         {
             if (fromModule && ModuleInitializer.Version.HasValue)

@@ -41,7 +41,7 @@ namespace NetVips
         /// </summary>
         /// <param name="stream">Read from this stream.</param>
         /// <returns>A new <see cref="SourceStream"/>.</returns>
-        /// <exception cref="ArgumentException">If <paramref name="stream"/> is not readable.</exception>
+        /// <exception cref="T:System.ArgumentException">If <paramref name="stream"/> is not readable.</exception>
         internal static SourceStream NewFromStream(Stream stream)
         {
             // logger.Debug($"SourceStream.NewFromStream: stream = {stream}");

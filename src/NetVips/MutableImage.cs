@@ -59,13 +59,13 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to set the value of.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the type of the metadata item, if possible.</param>
-        /// <exception cref="T:System.Exception">If metadata item <paramref name="name"/> does not exist.</exception>
+        /// <exception cref="T:System.ArgumentException">If metadata item <paramref name="name"/> does not exist.</exception>
         public void Set(string name, object value)
         {
             var gtype = GetTypeOf(name);
             if (gtype == IntPtr.Zero)
             {
-                throw new Exception(
+                throw new ArgumentException(
                     $"metadata item {name} does not exist - use the Set(IntPtr, string, object) overload to create and set");
             }
 

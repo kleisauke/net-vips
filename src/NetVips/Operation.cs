@@ -63,7 +63,7 @@ namespace NetVips
                 {
                     if (!(value is Array values) || values.Rank != 1)
                     {
-                        throw new Exception(
+                        throw new ArgumentException(
                             $"unsupported value type {value.GetType()} for VipsArrayImage");
                     }
 
@@ -196,7 +196,7 @@ namespace NetVips
                         }
                         else if (!intro.OptionalOutput.ContainsKey(name))
                         {
-                            throw new Exception($"{operationName} does not support optional argument: {name}");
+                            throw new ArgumentException($"{operationName} does not support optional argument: {name}");
                         }
                     }
                 }

@@ -276,7 +276,7 @@ namespace NetVips
                         integers = Array.ConvertAll(objects, Convert.ToInt32);
                         break;
                     default:
-                        throw new Exception(
+                        throw new ArgumentException(
                             $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
@@ -302,7 +302,7 @@ namespace NetVips
                         doubles = Array.ConvertAll(objects, Convert.ToDouble);
                         break;
                     default:
-                        throw new Exception(
+                        throw new ArgumentException(
                             $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
@@ -346,7 +346,7 @@ namespace NetVips
                         memory = byteArrValue;
                         break;
                     default:
-                        throw new Exception(
+                        throw new ArgumentException(
                             $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
                 }
 
@@ -374,7 +374,7 @@ namespace NetVips
             }
             else
             {
-                throw new Exception(
+                throw new ArgumentException(
                     $"unsupported gtype for set {NetVips.TypeName(gtype)}, fundamental {NetVips.TypeName(fundamental)}, value type {value.GetType()}");
             }
         }
@@ -481,7 +481,7 @@ namespace NetVips
             }
             else
             {
-                throw new Exception($"unsupported gtype for get {NetVips.TypeName(gtype)}");
+                throw new ArgumentException($"unsupported gtype for get {NetVips.TypeName(gtype)}");
             }
 
             return result;

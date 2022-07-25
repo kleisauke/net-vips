@@ -47,7 +47,7 @@ namespace NetVips
         /// </summary>
         /// <param name="stream">Write to this stream.</param>
         /// <returns>A new <see cref="TargetStream"/>.</returns>
-        /// <exception cref="ArgumentException">If <paramref name="stream"/> is not writable.</exception>
+        /// <exception cref="T:System.ArgumentException">If <paramref name="stream"/> is not writable.</exception>
         internal static TargetStream NewFromStream(Stream stream)
         {
             // logger.Debug($"TargetStream.NewFromStream: stream = {stream}");

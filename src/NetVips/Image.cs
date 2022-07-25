@@ -44,7 +44,7 @@ namespace NetVips
         /// <param name="func">A complex function.</param>
         /// <param name="image">A non-complex image.</param>
         /// <returns>A new <see cref="Image"/>.</returns>
-        /// <exception cref="T:System.Exception">If image doesn't have an even number of bands.</exception>
+        /// <exception cref="T:System.ArgumentException">If image doesn't have an even number of bands.</exception>
         private static Image RunCmplx(Func<Image, Image> func, Image image)
         {
             var originalFormat = image.Format;
@@ -52,7 +52,7 @@ namespace NetVips
             {
                 if (image.Bands % 2 != 0)
                 {
-                    throw new Exception("not an even number of bands");
+                    throw new ArgumentException("not an even number of bands");
                 }
 
                 if (image.Format != Enums.BandFormat.Float && image.Format != Enums.BandFormat.Double)
@@ -2015,7 +2015,7 @@ namespace NetVips
         /// At least libvips 8.8 is needed. If this version requirement is not met,
         /// it will always return <see langword="false"/>.
         /// </remarks>
-        /// <returns><see langword="true"/> if image has been killed; 
+        /// <returns><see langword="true"/> if image has been killed;
         /// otherwise, <see langword="false"/>.</returns>
         public bool IsKilled()
         {
