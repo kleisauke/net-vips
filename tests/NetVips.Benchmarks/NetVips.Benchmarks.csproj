@@ -18,11 +18,11 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="8.4.0" />
-    <PackageReference Include="NetVips.Native" Version="8.12.1" Condition="'$(UseGlobalLibvips)' == 'false'" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
-    <PackageReference Include="SkiaSharp" Version="2.80.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.80.3" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="11.3.0" />
+    <PackageReference Include="NetVips.Native" Version="8.13.0" Condition="'$(UseGlobalLibvips)' == 'false'" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
+    <PackageReference Include="SkiaSharp" Version="2.88.0" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.0" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
   </ItemGroup>
 
