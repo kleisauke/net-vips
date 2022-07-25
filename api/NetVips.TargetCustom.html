@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TargetCustom
    ">
-    <meta name="generator" content="docfx 2.58.9.0">
+    <meta name="generator" content="docfx 2.59.3.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -87,7 +87,7 @@
     <div class="level6"><a class="xref" href="NetVips.Target.html">Target</a></div>
     <div class="level7"><span class="xref">TargetCustom</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IDisposable</span></div>
   </div>
@@ -127,16 +127,19 @@
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_">GObject.SignalConnect(String, Delegate, IntPtr)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt32_">GObject.SignalHandlerDisconnect(UInt32)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt64_">GObject.SignalHandlerDisconnect(UInt64)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc_System_Delegate_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc(Delegate, IntPtr)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(IntPtr)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_IsInvalid">GObject.IsInvalid</a>
-    </div>
-    <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_RefCount">GObject.RefCount</a>
     </div>
     <div>
       <span class="xref">System.Runtime.InteropServices.SafeHandle.handle</span>
@@ -203,7 +206,7 @@
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom__ctor.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L46">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L89">View Source</a>
   </span>
   <a id="NetVips_TargetCustom__ctor_" data-uid="NetVips.TargetCustom.#ctor*"></a>
   <h4 id="NetVips_TargetCustom__ctor" data-uid="NetVips.TargetCustom.#ctor">TargetCustom()</h4>
@@ -217,18 +220,18 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom_OnFinish.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom.OnFinish%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom_OnEnd.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom.OnEnd%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L43">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L86">View Source</a>
   </span>
-  <h4 id="NetVips_TargetCustom_OnFinish" data-uid="NetVips.TargetCustom.OnFinish">OnFinish</h4>
-  <div class="markdown level1 summary"><p>Attach a finish delegate.</p>
+  <h4 id="NetVips_TargetCustom_OnEnd" data-uid="NetVips.TargetCustom.OnEnd">OnEnd</h4>
+  <div class="markdown level1 summary"><p>Attach a end delegate.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event TargetCustom.FinishDelegate OnFinish</code></pre>
+    <pre><code class="lang-csharp hljs">public event TargetCustom.EndDelegate OnEnd</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -240,17 +243,83 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="NetVips.TargetCustom.FinishDelegate.html">TargetCustom.FinishDelegate</a></td>
+        <td><a class="xref" href="NetVips.TargetCustom.EndDelegate.html">TargetCustom.EndDelegate</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom_OnRead.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom.OnRead%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L73">View Source</a>
+  </span>
+  <h4 id="NetVips_TargetCustom_OnRead" data-uid="NetVips.TargetCustom.OnRead">OnRead</h4>
+  <div class="markdown level1 summary"><p>Attach a read delegate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event TargetCustom.ReadDelegate OnRead</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.TargetCustom.ReadDelegate.html">TargetCustom.ReadDelegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_TargetCustom_OnRead_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is not called prior libvips 8.13.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom_OnSeek.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom.OnSeek%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L81">View Source</a>
+  </span>
+  <h4 id="NetVips_TargetCustom_OnSeek" data-uid="NetVips.TargetCustom.OnSeek">OnSeek</h4>
+  <div class="markdown level1 summary"><p>Attach a seek delegate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event TargetCustom.SeekDelegate OnSeek</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.TargetCustom.SeekDelegate.html">TargetCustom.SeekDelegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_TargetCustom_OnSeek_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is not called prior libvips 8.13.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom_OnWrite.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom.OnWrite%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L38">View Source</a>
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L65">View Source</a>
   </span>
   <h4 id="NetVips_TargetCustom_OnWrite" data-uid="NetVips.TargetCustom.OnWrite">OnWrite</h4>
   <div class="markdown level1 summary"><p>Attach a write delegate.</p>
@@ -290,7 +359,7 @@
                     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_TargetCustom.md&amp;value=---%0Auid%3A%20NetVips.TargetCustom%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/TargetCustom.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

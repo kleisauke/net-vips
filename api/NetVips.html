@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace NetVips
    ">
-    <meta name="generator" content="docfx 2.58.9.0">
+    <meta name="generator" content="docfx 2.59.3.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -257,7 +257,7 @@ This is used by <a class="xref" href="NetVips.Image.html#NetVips_Image_Smartcrop
 </section>
       <h4><a class="xref" href="NetVips.Enums.Kernel.html">Enums.Kernel</a></h4>
       <section><p>A resizing kernel. One of these can be given to operations like
-<a class="xref" href="NetVips.Image.html#NetVips_Image_Reduce_System_Double_System_Double_System_Nullable_NetVips_Enums_Kernel__">Reduce(Double, Double, Nullable&lt;Enums.Kernel&gt;)</a> or <a class="xref" href="NetVips.Image.html#NetVips_Image_Resize_System_Double_System_Nullable_NetVips_Enums_Kernel__System_Nullable_System_Double__">Resize(Double, Nullable&lt;Enums.Kernel&gt;, Nullable&lt;Double&gt;)</a> to select the resizing kernel to use.</p>
+<a class="xref" href="NetVips.Image.html#NetVips_Image_Reduce_System_Double_System_Double_System_Nullable_NetVips_Enums_Kernel__System_Nullable_System_Double__">Reduce(Double, Double, Nullable&lt;Enums.Kernel&gt;, Nullable&lt;Double&gt;)</a> or <a class="xref" href="NetVips.Image.html#NetVips_Image_Resize_System_Double_System_Nullable_NetVips_Enums_Kernel__System_Nullable_System_Double__System_Nullable_System_Double__">Resize(Double, Nullable&lt;Enums.Kernel&gt;, Nullable&lt;Double&gt;, Nullable&lt;Double&gt;)</a> to select the resizing kernel to use.</p>
 </section>
       <h4><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></h4>
       <section><p>Flags specifying the level of log messages.</p>
@@ -301,9 +301,6 @@ This is used by <a class="xref" href="NetVips.Image.html#NetVips_Image_Smartcrop
       <h4><a class="xref" href="NetVips.Enums.RegionShrink.html">Enums.RegionShrink</a></h4>
       <section><p>How to calculate the output pixels when shrinking a 2x2 region.</p>
 </section>
-      <h4><a class="xref" href="NetVips.Enums.Saveable.html">Enums.Saveable</a></h4>
-      <section><p>Some hints about the image saver.</p>
-</section>
       <h4><a class="xref" href="NetVips.Enums.Signals.html">Enums.Signals</a></h4>
       <section><p>Signals that can be used on an <a class="xref" href="NetVips.Image.html">Image</a>. See <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_">SignalConnect(String, Delegate, IntPtr)</a>.</p>
 </section>
@@ -326,8 +323,14 @@ This is used by <a class="xref" href="NetVips.Image.html#NetVips_Image_Smartcrop
       <h4><a class="xref" href="NetVips.SourceCustom.SeekDelegate.html">SourceCustom.SeekDelegate</a></h4>
       <section><p>A seek delegate.</p>
 </section>
-      <h4><a class="xref" href="NetVips.TargetCustom.FinishDelegate.html">TargetCustom.FinishDelegate</a></h4>
-      <section><p>A finish delegate.</p>
+      <h4><a class="xref" href="NetVips.TargetCustom.EndDelegate.html">TargetCustom.EndDelegate</a></h4>
+      <section><p>A end delegate.</p>
+</section>
+      <h4><a class="xref" href="NetVips.TargetCustom.ReadDelegate.html">TargetCustom.ReadDelegate</a></h4>
+      <section><p>A read delegate.</p>
+</section>
+      <h4><a class="xref" href="NetVips.TargetCustom.SeekDelegate.html">TargetCustom.SeekDelegate</a></h4>
+      <section><p>A seek delegate.</p>
 </section>
       <h4><a class="xref" href="NetVips.TargetCustom.WriteDelegate.html">TargetCustom.WriteDelegate</a></h4>
       <section><p>A write delegate.</p>

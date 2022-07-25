@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Operation
    ">
-    <meta name="generator" content="docfx 2.58.9.0">
+    <meta name="generator" content="docfx 2.59.3.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -85,7 +85,7 @@
     <div class="level4"><a class="xref" href="NetVips.VipsObject.html">VipsObject</a></div>
     <div class="level5"><span class="xref">Operation</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IDisposable</span></div>
   </div>
@@ -107,16 +107,19 @@
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect_System_String_System_Delegate_System_IntPtr_">GObject.SignalConnect(String, Delegate, IntPtr)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt32_">GObject.SignalHandlerDisconnect(UInt32)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt64_">GObject.SignalHandlerDisconnect(UInt64)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc_System_Delegate_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc(Delegate, IntPtr)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(IntPtr)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_IsInvalid">GObject.IsInvalid</a>
-    </div>
-    <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_RefCount">GObject.RefCount</a>
     </div>
     <div>
       <span class="xref">System.Runtime.InteropServices.SafeHandle.handle</span>
@@ -178,6 +181,59 @@
   </div>
   <h3 id="methods">Methods
   </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Block_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20NetVips.Operation.Block(System.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Operation.cs/#L279">View Source</a>
+  </span>
+  <a id="NetVips_Operation_Block_" data-uid="NetVips.Operation.Block*"></a>
+  <h4 id="NetVips_Operation_Block_System_String_System_Boolean_" data-uid="NetVips.Operation.Block(System.String,System.Boolean)">Block(String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Set the block state on all operations in the libvips class hierarchy at
+<code data-dev-comment-type="paramref" class="paramref">name</code> and below.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Block(string name, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Set block state at this point and below.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>The block state to set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Operation_Block_System_String_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For example:</p>
+<pre><code class="lang-lang-csharp">Operation.Block(&quot;VipsForeignLoad&quot;, true);
+Operation.Block(&quot;VipsForeignLoadJpeg&quot;, false);</code></pre>
+<p>Will block all load operations, except JPEG. Use:</p>
+<pre><code class="lang-lang-shell">$ vips -l</code></pre>
+<p>at the command-line to see the class hierarchy.
+Use <a class="xref" href="NetVips.NetVips.html#NetVips_NetVips_BlockUntrusted">BlockUntrusted</a> to set the
+block state on all untrusted operations.</p>
+<p>This call does nothing if the named operation is not found.
+At least libvips 8.13 is needed.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Operation_Call_System_String_NetVips_VOption_NetVips_Image_System_Object___.md&amp;value=---%0Auid%3A%20NetVips.Operation.Call(System.String%2CNetVips.VOption%2CNetVips.Image%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
