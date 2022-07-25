@@ -102,7 +102,11 @@ namespace NetVips.Tests
                 output.Write(buffer, 0, length);
                 return length;
             };
-            target.OnFinish += () => output.Close();
+            target.OnEnd += () =>
+            {
+                output.Close();
+                return 0;
+            };
 
             Assert.Null(target.GetFileName());
             Assert.Equal("target_custom", target.GetNick());

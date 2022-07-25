@@ -73,9 +73,9 @@ namespace NetVips.Tests
             var x = Image.NewTempFile(format);
             im.Write(x);
 
-            Assert.Equal(x.Width, im.Width);
-            Assert.Equal(x.Height, im.Height);
-            Assert.Equal(x.Bands, im.Bands);
+            Assert.Equal(im.Width, x.Width);
+            Assert.Equal(im.Height, x.Height);
+            Assert.Equal(im.Bands, x.Bands);
             var maxDiff = (im - x).Abs().Max();
             Assert.Equal(0, maxDiff);
         }
@@ -89,9 +89,9 @@ namespace NetVips.Tests
             im.WriteToFile(filename + options);
             var x = Image.NewFromFile(filename);
 
-            Assert.Equal(x.Width, im.Width);
-            Assert.Equal(x.Height, im.Height);
-            Assert.Equal(x.Bands, im.Bands);
+            Assert.Equal(im.Width, x.Width);
+            Assert.Equal(im.Height, x.Height);
+            Assert.Equal(im.Bands, x.Bands);
             Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
@@ -100,9 +100,9 @@ namespace NetVips.Tests
             var buf = (byte[])Operation.Call(saver, kwargs, im);
             var x = (Image)Operation.Call(loader, buf);
 
-            Assert.Equal(x.Width, im.Width);
-            Assert.Equal(x.Height, im.Height);
-            Assert.Equal(x.Bands, im.Bands);
+            Assert.Equal(im.Width, x.Width);
+            Assert.Equal(im.Height, x.Height);
+            Assert.Equal(im.Bands, x.Bands);
             Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
@@ -116,9 +116,9 @@ namespace NetVips.Tests
 
             var x = Image.NewFromStream(stream);
 
-            Assert.Equal(x.Width, im.Width);
-            Assert.Equal(x.Height, im.Height);
-            Assert.Equal(x.Bands, im.Bands);
+            Assert.Equal(im.Width, x.Width);
+            Assert.Equal(im.Height, x.Height);
+            Assert.Equal(im.Bands, x.Bands);
             Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
@@ -131,9 +131,9 @@ namespace NetVips.Tests
 
             var x = Image.NewFromFile(filename);
 
-            Assert.Equal(x.Width, im.Width);
-            Assert.Equal(x.Height, im.Height);
-            Assert.Equal(x.Bands, im.Bands);
+            Assert.Equal(im.Width, x.Width);
+            Assert.Equal(im.Height, x.Height);
+            Assert.Equal(im.Bands, x.Bands);
             Assert.True((im - x).Abs().Max() <= maxDiff);
         }
 
@@ -386,9 +386,9 @@ namespace NetVips.Tests
             var buf = _colour.WriteToBuffer(".png");
             var x = Image.NewFromBuffer(buf);
 
-            Assert.Equal(x.Width, _colour.Width);
-            Assert.Equal(x.Height, _colour.Height);
-            Assert.Equal(x.Bands, _colour.Bands);
+            Assert.Equal(_colour.Width, x.Width);
+            Assert.Equal(_colour.Height, x.Height);
+            Assert.Equal(_colour.Bands, x.Bands);
             Assert.True((_colour - x).Abs().Max() <= 0);
         }
 
@@ -509,6 +509,33 @@ namespace NetVips.Tests
                 SaveLoadFile(".tif", "[bitdepth=2]", im);
                 im = Image.NewFromFile(Helper.Tif4File);
                 SaveLoadFile(".tif", "[bitdepth=4]", im);
+            }
+
+            if (Helper.Have("tiffsave_target"))
+            {
+                // Support for tiffsave_target was added in libvips 8.13
+                SaveLoadStream(".tif", "", _colour);
+
+                // Test Read/Seek in TargetCustom
+                using var input = File.OpenRead(Helper.GifAnimFile);
+                using var im = Image.NewFromStream(input, kwargs: new VOption
+                {
+                    {"n", -1}
+                });
+
+                var tmpFile = Helper.GetTemporaryFile(_tempDir, ".tif");
+                using var output = File.Open(tmpFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+                im.TiffsaveStream(output);
+
+                using var im2 = Image.NewFromFile(tmpFile, kwargs: new VOption
+                {
+                    {"n", -1}
+                });
+                Assert.Equal(im.Width, im2.Width);
+                Assert.Equal(im.Height, im2.Height);
+                Assert.Equal(im.Bands, im2.Bands);
+                var maxDiff = (im - im2).Abs().Max();
+                Assert.Equal(0, maxDiff);
             }
 
             var filename = Helper.GetTemporaryFile(_tempDir, ".tif");

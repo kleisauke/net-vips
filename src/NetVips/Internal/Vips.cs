@@ -682,6 +682,12 @@ namespace NetVips.Internal
             byte[] buffer, int length, IntPtr userDataPtr);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void FinishSignal(IntPtr targetPtr, IntPtr userDataPtr);
+        internal delegate long ReadSignal(IntPtr targetPtr, IntPtr buffer, long length, IntPtr userDataPtr);
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate long SeekSignal(IntPtr targetPtr, long offset, int whence, IntPtr userDataPtr);
+
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int EndSignal(IntPtr targetPtr, IntPtr userDataPtr);
     }
 }

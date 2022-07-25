@@ -4,7 +4,7 @@ namespace NetVips
     using System.IO;
 
     /// <summary>
-    /// An source connected to a writable <see cref="Stream"/>.
+    /// An target connected to a writable <see cref="Stream"/>.
     /// </summary>
     internal class TargetStream : TargetCustom
     {
@@ -15,14 +15,31 @@ namespace NetVips
         /// </summary>
         private readonly Stream _stream;
 
+        /// <summary>
+        /// The start position within the stream.
+        /// </summary>
+        private readonly long _startPosition;
+
         /// <inheritdoc cref="GObject"/>
         internal TargetStream(Stream stream)
         {
             // logger.Debug($"TargetStream: stream = {stream}");
+            var readable = stream.CanRead;
+            var seekable = stream.CanSeek;
+
             _stream = stream;
+            _startPosition = seekable ? _stream.Position : 0;
 
             OnWrite += Write;
-            OnFinish += Finish;
+            if (readable)
+            {
+                OnRead += Read;
+            }
+            if (seekable)
+            {
+                OnSeek += Seek;
+            }
+            OnEnd += End;
         }
 
         /// <summary>
@@ -63,11 +80,62 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Attach a finish handler.
+        /// Attach a read handler.
         /// </summary>
-        private void Finish()
+        /// <param name="buffer">An array of bytes.</param>
+        /// <param name="length">The maximum number of bytes to be read.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        public int Read(byte[] buffer, int length)
         {
-            _stream.Flush();
+            return _stream.Read(buffer, 0, length);
+        }
+
+        /// <summary>
+        /// Attach a seek handler.
+        /// </summary>
+        /// <param name="offset">A byte offset relative to the <paramref name="origin"/>
+        /// parameter.</param>
+        /// <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the
+        /// reference point used to obtain the new position.</param>
+        /// <returns>The new position within the current stream.</returns>
+        public long Seek(long offset, SeekOrigin origin)
+        {
+            try
+            {
+                switch (origin)
+                {
+                    case SeekOrigin.Begin:
+                        return _stream.Seek(_startPosition + offset, SeekOrigin.Begin) - _startPosition;
+                    case SeekOrigin.Current:
+                        return _stream.Seek(offset, SeekOrigin.Current) - _startPosition;
+                    case SeekOrigin.End:
+                        return _stream.Seek(offset, SeekOrigin.End) - _startPosition;
+                    default:
+                        return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Attach a end handler.
+        /// </summary>
+        /// <returns>0 on success, -1 on error.</returns>
+        public int End()
+        {
+            try
+            {
+                _stream.Flush();
+            }
+            catch
+            {
+                return -1;
+            }
+
+            return 0;
         }
     }
 }
