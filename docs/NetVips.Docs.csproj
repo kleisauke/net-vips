@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="docfx.console" Version="2.59.2">
+    <!-- DocFX requires Mono on non-Windows systems -->
+    <PackageReference Include="docfx.console" Version="2.59.2" Condition="$([MSBuild]::IsOSPlatform('Windows'))">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

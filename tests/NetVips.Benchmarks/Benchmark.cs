@@ -2,7 +2,6 @@ namespace NetVips.Benchmarks
 {
     using System;
     using System.IO;
-    using System.Runtime.Versioning;
     using BenchmarkDotNet.Attributes;
 
     using ImageMagick;
@@ -14,15 +13,18 @@ namespace NetVips.Benchmarks
 
     using SkiaSharp;
 
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
-    using System.Drawing.Imaging;
-
+    // Alias to handle conflicting namespaces
     using NetVipsImage = Image;
     using ImageSharpImage = SixLabors.ImageSharp.Image;
     using ImageSharpRectangle = SixLabors.ImageSharp.Rectangle;
+
+#if Windows_NT
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
     using SystemDrawingImage = System.Drawing.Image;
     using SystemDrawingRectangle = System.Drawing.Rectangle;
+#endif
 
     [Config(typeof(Config))]
     public class Benchmark
@@ -147,7 +149,7 @@ namespace NetVips.Benchmarks
         [Benchmark(Description = "System.Drawing<sup>3</sup>")]
         [Arguments("t.jpg", "t2.jpg")]
         [Arguments("t.tif", "t2.tif")]
-        [SupportedOSPlatform("windows")]
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
         public void SystemDrawing(string input, string output)
         {
             using var image = SystemDrawingImage.FromFile(input, true);

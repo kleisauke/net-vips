@@ -1165,7 +1165,13 @@ namespace NetVips
             NOCACHE = 1 << 2,
 
             /// <summary>A compatibility thing.</summary>
-            DEPRECATED = 1 << 3
+            DEPRECATED = 1 << 3,
+
+            /// <summary>Not hardened for untrusted input.</summary>
+            UNTRUSTED = 1 << 4,
+
+            /// <summary>Prevent this operation from running.</summary>
+            BLOCKED = 1 << 5
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace NetVips.Tests
 
     public static class Helper
     {
-        public static readonly string Images = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData");
+        public static readonly string Images = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images");
 
         public static readonly string JpegFile = Path.Combine(Images, "йцук.jpg");
         public static readonly string TruncatedFile = Path.Combine(Images, "truncated.jpg");

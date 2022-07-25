@@ -31,11 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <Folder Include="images\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ContentWithTargetPath Include="Images\sample2.v">
+    <ContentWithTargetPath Include="images\sample2.v">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>sample2.v</TargetPath>
     </ContentWithTargetPath>
