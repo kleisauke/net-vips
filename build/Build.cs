@@ -56,24 +56,12 @@ partial class Build : NukeBuild
     protected override void OnBuildInitialized()
     {
         Information("Building version {0} of NetVips ({1}).", GetVersion(), Configuration);
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            Information("OS: Windows");
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            Information("OS: Linux");
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            Information("OS: macOS");
-        }
-
-        Information("Bitness: " + (Environment.Is64BitProcess ? "64 bit" : "32 bit"));
-        Information("Host type: " + (IsServerBuild ? "Server" : "Local"));
+        Information("OS: {0}", RuntimeInformation.OSDescription);
+        Information("Architecture: {0}", RuntimeInformation.ProcessArchitecture);
+        Information("Host type: {0}", IsServerBuild ? "Server" : "Local");
         if (!string.IsNullOrWhiteSpace(VipsVersion))
         {
-            Information("Version of libvips: " + VipsVersion);
+            Information("Version of libvips: {0}", VipsVersion);
         }
     }
 
