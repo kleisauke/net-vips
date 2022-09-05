@@ -30,16 +30,16 @@ jobs:
         if: contains(matrix.container, 'bullseye')
         run: |
           apt-get update
-          apt-get install -y fonts-dejavu
+          apt-get install -y fontconfig-config
       - name: Dependencies (CentOS 7)
         if: contains(matrix.container, 'centos')
         run: |
           yum install -y \
             https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-          yum install -y dotnet-sdk-6.0 dejavu-sans-fonts which
+          yum install -y dotnet-sdk-6.0 google-noto-sans-fonts which
       - name: Dependencies (Alpine 3.14)
         if: contains(matrix.container, 'alpine')
-        run: apk add bash ttf-dejavu --update-cache
+        run: apk add bash font-noto --update-cache
       - name: Setup dotnet (macOS 11)
         if: runner.os == 'macOS'
         uses: actions/setup-dotnet@v2

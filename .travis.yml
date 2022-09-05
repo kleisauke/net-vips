@@ -10,7 +10,7 @@ jobs:
       language: shell
       install:
         - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-arm64v8
-        - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fonts-dejavu"
+        - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fontconfig-config"
       script: sudo docker exec netvips bash -c "./build.sh"
     - name: "Linux ARM64v8 (Alpine 3.14, musl 1.2.2) - .NET 6.0"
       arch: arm64
@@ -19,5 +19,5 @@ jobs:
       language: shell
       install:
         - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-alpine3.14-arm64v8
-        - sudo docker exec netvips sh -c "apk add bash ttf-dejavu --update-cache"
+        - sudo docker exec netvips sh -c "apk add bash font-noto --update-cache"
       script: sudo docker exec netvips bash -c "./build.sh"
