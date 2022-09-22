@@ -58,7 +58,7 @@ namespace NetVips.Samples
             // Just for example.
             var buffer = File.ReadAllBytes(Filename);
 
-            // Find the name of the load operation vips will use to load a buffer 
+            // Find the name of the load operation vips will use to load a buffer
             // so that we can work out what options to pass to NewFromBuffer().
             var loader = Image.FindLoadBuffer(buffer);
 

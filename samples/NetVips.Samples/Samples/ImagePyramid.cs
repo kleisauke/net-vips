@@ -31,7 +31,7 @@ namespace NetVips.Samples
             }
             catch (VipsException exception)
             {
-                // Catch and log the VipsException, 
+                // Catch and log the VipsException,
                 // because we may block the evaluation of this image
                 Console.WriteLine("\n" + exception.Message);
             }

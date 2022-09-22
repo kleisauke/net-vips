@@ -176,7 +176,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Set the block state on all untrusted operations. 
+        /// Set the block state on all untrusted operations.
         /// </summary>
         /// <remarks>
         /// For example:

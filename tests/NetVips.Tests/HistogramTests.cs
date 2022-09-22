@@ -160,7 +160,7 @@ namespace NetVips.Tests
             var y = index.Case(10, 20);
             Assert.Equal(15, y.Avg());
 
-            // slice into four 
+            // slice into four
             index = Image.Switch(
                 x < 64,
                 x >= 64 && x < 128,

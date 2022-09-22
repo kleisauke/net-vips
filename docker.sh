@@ -11,7 +11,7 @@ docker pull mcr.microsoft.com/dotnet/sdk:6.0-alpine
 # Create a machine image with all the required build tools pre-installed
 docker build . -t netvips
 
-# Run build scripts inside container, with netvips directory 
+# Run build scripts inside container, with netvips directory
 # mounted at /app
 docker run --rm -t \
     -v $PWD:/app \

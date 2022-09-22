@@ -43,7 +43,7 @@ which gives some more background.
 ## Install
 
 You need the libvips shared library on your library search path, version 8.2 or
-later. There are separate NuGet packages that will contain the pre-compiled 
+later. There are separate NuGet packages that will contain the pre-compiled
 libvips binaries for the most common platforms (see
 [this repo](https://github.com/kleisauke/libvips-packaging) for details):
 
@@ -109,7 +109,7 @@ If NetVips was able to find the libvips shared library, you should see:
     Inited libvips [VERSION_NUMBER]
 
 However, if you see something else, NetVips was unable to initialize libvips.
-This can happen for a variety of reasons, even though most of the times it's because NetVips 
+This can happen for a variety of reasons, even though most of the times it's because NetVips
 was not able to find libvips or due to x86/x64 architecture problems:
 
 | Inner exception | HRESULT | Solution |
@@ -124,8 +124,8 @@ using NetVips;
 
 using var im = Image.NewFromFile("image.jpg");
 
-// put im at position (100, 100) in a 3000 x 3000 pixel image, 
-// make the other pixels in the image by mirroring im up / down / 
+// put im at position (100, 100) in a 3000 x 3000 pixel image,
+// make the other pixels in the image by mirroring im up / down /
 // left / right, see
 // https://libvips.github.io/libvips/API/current/libvips-conversion.html#vips-embed
 using var embed = im.Embed(100, 100, 3000, 3000, extend: Enums.Extend.Mirror);

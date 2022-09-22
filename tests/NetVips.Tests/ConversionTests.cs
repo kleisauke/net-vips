@@ -802,7 +802,7 @@ namespace NetVips.Tests
             var index = Image.Switch(x < 128, x >= 128);
             Assert.Equal(0.5, index.Avg());
 
-            // slice into four 
+            // slice into four
             index = Image.Switch(
                 x < 64,
                 x >= 64 && x < 128,

@@ -8,7 +8,7 @@ Introduction
 See the main libvips site for an introduction to the underlying library. These
 notes introduce the .NET binding.
 
-https://libvips.github.io/libvips 
+https://libvips.github.io/libvips
 
 ## Example
 
@@ -39,10 +39,10 @@ Reading this example line by line, we have:
 using var image = Image.NewFromFile("some-image.jpg", access: Enums.Access.Sequential);
 ```
 
-[`NewFromFile`](xref:NetVips.Image.NewFromFile*) can load any image file supported by libvips. 
+[`NewFromFile`](xref:NetVips.Image.NewFromFile*) can load any image file supported by libvips.
 When you load an image, only the header is fetched from the file. Pixels will
 not be read until you have built a pipeline of operations and connected it
-to an output. 
+to an output.
 
 When you load, you can hint what type of access you will need. In this
 example, we will be accessing pixels top-to-bottom as we sweep through
@@ -86,7 +86,7 @@ using var convolve = multiply.Conv(mask, precision: Enums.Precision.Integer);
 [`NewFromArray`](xref:NetVips.Image.NewFromArray*) creates an image from an array constant. The
 scale is the amount to divide the image by after integer convolution.
 
-See the libvips API docs for [`vips_conv()`](http://libvips.github.io/libvips/API/current/libvips-convolution.html#vips-conv) 
+See the libvips API docs for [`vips_conv()`](http://libvips.github.io/libvips/API/current/libvips-convolution.html#vips-conv)
 (the operation invoked by [`Conv`](xref:NetVips.Image.Conv*)) for details on the convolution operator. By
 default, it computes with a float mask, but `integer` is fine for this case,
 and is much faster.
@@ -105,7 +105,7 @@ image data to a C-style array in an C# byte array.
 ## Metadata and attributes
 
 NetVips has a [`Get`](xref:NetVips.Image.Get*) method to look up unknown names in libvips.
-To make it a bit easier, common properties that libvips keeps for images are accessible by C# properties, 
+To make it a bit easier, common properties that libvips keeps for images are accessible by C# properties,
 see [`.Width`](xref:NetVips.Image.Width*) and friends.
 
 As well as the core properties, you can read and write the metadata
@@ -150,19 +150,19 @@ To remove all metadata except the icc profile.
 
 You can use [`Set`](xref:NetVips.MutableImage.Set*) to change the value of an existing field,
 or to create a new field with a specified type.
- 
+
 ## Calling libvips operations
 
 All libvips operations were generated automatically to a PascalCase method in NetVips.
 For example, the libvips operation `add`, which appears in C as
-[`vips_add()`](http://libvips.github.io/libvips/API/current/libvips-arithmetic.html#vips-add), 
+[`vips_add()`](http://libvips.github.io/libvips/API/current/libvips-arithmetic.html#vips-add),
 appears in C# as [`Add`](xref:NetVips.Image.Add*) method.
 
 By taking advantage of nullable types (which allows you to omit any parameters in any position),
 we are able to call libvips operations that have optional arguments.
 
 Some libvips operations have optional output arguments, for such operations we generated
-the corresponding method overloads. For example, [`Min`](xref:NetVips.Image.Min*), the vips operation 
+the corresponding method overloads. For example, [`Min`](xref:NetVips.Image.Min*), the vips operation
 that searches an image for the minimum value, has a large number of optional arguments.
 You can use it to find the minimum value like this:
 
@@ -209,7 +209,7 @@ also [a full set of arithmetic operator overloads](introduction.md#overloads).
 
 If an operation takes several input images, you can use a constant for all but
 one of them and the wrapper will expand the constant to an image for you. For
-example, [`Ifthenelse`](xref:NetVips.Image.Ifthenelse*) uses a condition image to pick 
+example, [`Ifthenelse`](xref:NetVips.Image.Ifthenelse*) uses a condition image to pick
 pixels between a then and an else image:
 
 ```csharp
@@ -317,9 +317,9 @@ using var resultImage = image.Sin();
 ## Convenience functions
 
 The wrapper defines a few extra useful utility functions:
-[`Bandsplit`](xref:NetVips.Image.Bandsplit*), 
-[`MaxPos`](xref:NetVips.Image.MaxPos*), 
-[`MinPos`](xref:NetVips.Image.MinPos*), 
+[`Bandsplit`](xref:NetVips.Image.Bandsplit*),
+[`MaxPos`](xref:NetVips.Image.MaxPos*),
+[`MinPos`](xref:NetVips.Image.MinPos*),
 and [`Median`](xref:NetVips.Image.Median*).
 
 ## Tracking and interrupting computation
@@ -371,7 +371,7 @@ private void EvalHandler(Image image, VipsProgress progress)
 }
 ```
 
-Use [`SetKill`](xref:NetVips.Image.SetKill*) on the image to stop computation early. 
+Use [`SetKill`](xref:NetVips.Image.SetKill*) on the image to stop computation early.
 
 For example:
 
@@ -388,7 +388,7 @@ private void EvalHandler(Image image, VipsProgress progress)
 ## Custom sources and targets
 
 You can load and save images to and from [`Source`](xref:NetVips.Source) and
-[`Target`](xref:NetVips.Target). 
+[`Target`](xref:NetVips.Target).
 
 For example:
 

@@ -242,11 +242,11 @@ namespace NetVips.Tests
                     x = Image.NewFromFile(filename);
                     y = x.Get("exif-ifd0-ImageDescription");
 
-                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
+                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
                     // format area at the end
                     Assert.StartsWith("hello world", (string)y);
 
-                    // can set, save and reload UTF16 string fields ... NetVips is 
+                    // can set, save and reload UTF16 string fields ... NetVips is
                     // utf8, but it will be coded as utf16 and back for the XP* fields
                     x = Image.NewFromFile(Helper.JpegFile);
                     x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-XPComment", "йцук"));
@@ -257,7 +257,7 @@ namespace NetVips.Tests
                     x = Image.NewFromFile(filename);
                     y = x.Get("exif-ifd0-XPComment");
 
-                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
+                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
                     // format area at the end
                     Assert.StartsWith("йцук", (string)y);
 
@@ -273,7 +273,7 @@ namespace NetVips.Tests
                     x = Image.NewFromFile(filename);
                     y = x.Get("exif-ifd2-UserComment");
 
-                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)" 
+                    // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
                     // format area at the end
                     Assert.StartsWith("hello world", (string)y);
                 }
@@ -360,7 +360,7 @@ namespace NetVips.Tests
             // bitdepth option was added in libvips 8.10
             if (NetVips.AtLeastLibvips(8, 10))
             {
-                // size of a regular mono PNG 
+                // size of a regular mono PNG
                 var lenMono = _mono.PngsaveBuffer().Length;
 
                 // 4-bit should be smaller
@@ -741,7 +741,7 @@ namespace NetVips.Tests
             Skip.IfNot(Helper.Have("magicksave"), "no magick support, skipping test");
 
             // save to a file and load again ... we can't use SaveLoadFile since
-            // we want to make sure we use magickload/save 
+            // we want to make sure we use magickload/save
             // don't use BMP - GraphicsMagick always adds an alpha
             // don't use TIF - IM7 will save as 16-bit
             var filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
@@ -1427,7 +1427,7 @@ namespace NetVips.Tests
                 }
                 else
                 {
-                    // This image has been rotated incorrectly prior to vips 8.10 
+                    // This image has been rotated incorrectly prior to vips 8.10
                     Helper.AssertAlmostEqualObjects(new[]
                     {
                         255, 255, 255
@@ -1480,7 +1480,7 @@ namespace NetVips.Tests
             var b2 = _mono.HeifsaveBuffer(q: 90, compression: Enums.ForeignHeifCompression.Av1);
             Assert.True(b2.Length > b1.Length);
 
-            // try saving an image with an ICC profile and reading it back 
+            // try saving an image with an ICC profile and reading it back
             var buf = _colour.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
             var x = Image.NewFromBuffer(buf);
             if (x.Contains("icc-profile-data"))

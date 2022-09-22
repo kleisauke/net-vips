@@ -79,7 +79,7 @@ namespace NetVips
         /// The named metadata item is removed.
         /// </remarks>
         /// <param name="name">The name of the piece of metadata to remove.</param>
-        /// <returns><see langword="true"/> if the metadata is successfully removed; 
+        /// <returns><see langword="true"/> if the metadata is successfully removed;
         /// otherwise, <see langword="false"/>.</returns>
         public bool Remove(string name)
         {

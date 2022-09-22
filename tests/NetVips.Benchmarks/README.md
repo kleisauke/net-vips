@@ -41,7 +41,7 @@ Job=.Net 6.0 CLI  Arguments=/p:DebugType=portable  Toolchain=.NET 6.0
 
 ## Performance test design
 
-The project contains a `Benchmark.cs` file with specific scripts 
+The project contains a `Benchmark.cs` file with specific scripts
 using various libraries available on .NET.
 
 Each script is coded to execute the same scenario (see Scenario section).

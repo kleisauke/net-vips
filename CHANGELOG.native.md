@@ -187,7 +187,7 @@ https://libvips.org/2019/04/22/What's-new-in-8.8.html
 
 ## [8.7.4] - 2019-04-10
 ### Added
-- A [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package which depends on the other [NetVips.Native.*](https://www.nuget.org/packages?q=id%3ANetVips.Native) packages. 
+- A [NetVips.Native](https://www.nuget.org/packages/NetVips.Native/) package which depends on the other [NetVips.Native.*](https://www.nuget.org/packages?q=id%3ANetVips.Native) packages.
 
 ### Changed
 - The OS X binaries are now distributed with [`jpeg-turbo`](https://github.com/libjpeg-turbo/libjpeg-turbo) instead than [`jpeg`](https://www.ijg.org/) ([lovell/package-libvips-darwin#3](https://github.com/lovell/package-libvips-darwin/pull/3)).
