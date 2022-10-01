@@ -5350,24 +5350,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Jp2ksaveTarget
   nameWithType: Image.Jp2ksaveTarget
-- uid: NetVips.Image.Jpegload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: Jpegload(String, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_Jpegload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.Jpegload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: Jpegload(String, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.Jpegload(System.String, out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.Jpegload(System.String, ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.Jpegload(String, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.Jpegload(String, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-- uid: NetVips.Image.Jpegload(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: Jpegload(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_Jpegload_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.Jpegload(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: Jpegload(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.Jpegload(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.Jpegload(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.Jpegload(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.Jpegload(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.Jpegload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: Jpegload(String, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_Jpegload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.Jpegload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: Jpegload(String, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.Jpegload(System.String, out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.Jpegload(System.String, ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.Jpegload(String, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.Jpegload(String, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.Jpegload(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: Jpegload(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_Jpegload_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.Jpegload(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: Jpegload(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.Jpegload(System.String, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.Jpegload(System.String, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.Jpegload(String, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.Jpegload(String, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
 - uid: NetVips.Image.Jpegload*
   name: Jpegload
   href: api/NetVips.Image.html#NetVips_Image_Jpegload_
@@ -5375,24 +5375,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Jpegload
   nameWithType: Image.Jpegload
-- uid: NetVips.Image.JpegloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: JpegloadBuffer(Byte[], out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_JpegloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.JpegloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: JpegloadBuffer(Byte(), ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.JpegloadBuffer(System.Byte[], out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.JpegloadBuffer(System.Byte(), ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.JpegloadBuffer(Byte[], out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.JpegloadBuffer(Byte(), ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-- uid: NetVips.Image.JpegloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: JpegloadBuffer(Byte[], Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_JpegloadBuffer_System_Byte___System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.JpegloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: JpegloadBuffer(Byte(), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.JpegloadBuffer(System.Byte[], System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.JpegloadBuffer(System.Byte(), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.JpegloadBuffer(Byte[], Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.JpegloadBuffer(Byte(), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.JpegloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: JpegloadBuffer(Byte[], out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_JpegloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.JpegloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: JpegloadBuffer(Byte(), ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.JpegloadBuffer(System.Byte[], out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.JpegloadBuffer(System.Byte(), ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.JpegloadBuffer(Byte[], out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.JpegloadBuffer(Byte(), ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.JpegloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: JpegloadBuffer(Byte[], Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_JpegloadBuffer_System_Byte___System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.JpegloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: JpegloadBuffer(Byte(), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.JpegloadBuffer(System.Byte[], System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.JpegloadBuffer(System.Byte(), System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.JpegloadBuffer(Byte[], Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.JpegloadBuffer(Byte(), Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
 - uid: NetVips.Image.JpegloadBuffer*
   name: JpegloadBuffer
   href: api/NetVips.Image.html#NetVips_Image_JpegloadBuffer_
@@ -5400,24 +5400,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.JpegloadBuffer
   nameWithType: Image.JpegloadBuffer
-- uid: NetVips.Image.JpegloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: JpegloadSource(Source, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_JpegloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.JpegloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: JpegloadSource(Source, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.JpegloadSource(NetVips.Source, out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.JpegloadSource(NetVips.Source, ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.JpegloadSource(Source, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.JpegloadSource(Source, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-- uid: NetVips.Image.JpegloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: JpegloadSource(Source, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_JpegloadSource_NetVips_Source_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.JpegloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: JpegloadSource(Source, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.JpegloadSource(NetVips.Source, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.JpegloadSource(NetVips.Source, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.JpegloadSource(Source, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.JpegloadSource(Source, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.JpegloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: JpegloadSource(Source, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_JpegloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.JpegloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: JpegloadSource(Source, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.JpegloadSource(NetVips.Source, out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.JpegloadSource(NetVips.Source, ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.JpegloadSource(Source, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.JpegloadSource(Source, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.JpegloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: JpegloadSource(Source, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_JpegloadSource_NetVips_Source_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.JpegloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: JpegloadSource(Source, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.JpegloadSource(NetVips.Source, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.JpegloadSource(NetVips.Source, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.JpegloadSource(Source, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.JpegloadSource(Source, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
 - uid: NetVips.Image.JpegloadSource*
   name: JpegloadSource
   href: api/NetVips.Image.html#NetVips_Image_JpegloadSource_
@@ -5425,24 +5425,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.JpegloadSource
   nameWithType: Image.JpegloadSource
-- uid: NetVips.Image.JpegloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: JpegloadStream(Stream, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_JpegloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.JpegloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: JpegloadStream(Stream, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.JpegloadStream(System.IO.Stream, out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.JpegloadStream(System.IO.Stream, ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.JpegloadStream(Stream, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.JpegloadStream(Stream, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-- uid: NetVips.Image.JpegloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name: JpegloadStream(Stream, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  href: api/NetVips.Image.html#NetVips_Image_JpegloadStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
-  commentId: M:NetVips.Image.JpegloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
-  name.vb: JpegloadStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
-  fullName: NetVips.Image.JpegloadStream(System.IO.Stream, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
-  fullName.vb: NetVips.Image.JpegloadStream(System.IO.Stream, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
-  nameWithType: Image.JpegloadStream(Stream, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
-  nameWithType.vb: Image.JpegloadStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.JpegloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: JpegloadStream(Stream, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_JpegloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.JpegloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: JpegloadStream(Stream, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.JpegloadStream(System.IO.Stream, out NetVips.Enums.ForeignFlags, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.JpegloadStream(System.IO.Stream, ByRef NetVips.Enums.ForeignFlags, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.JpegloadStream(Stream, out Enums.ForeignFlags, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.JpegloadStream(Stream, ByRef Enums.ForeignFlags, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+- uid: NetVips.Image.JpegloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name: JpegloadStream(Stream, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  href: api/NetVips.Image.html#NetVips_Image_JpegloadStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__
+  commentId: M:NetVips.Image.JpegloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn})
+  name.vb: JpegloadStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
+  fullName: NetVips.Image.JpegloadStream(System.IO.Stream, System.Nullable<System.Int32>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<System.Boolean>, System.Nullable<NetVips.Enums.Access>, System.Nullable<NetVips.Enums.FailOn>)
+  fullName.vb: NetVips.Image.JpegloadStream(System.IO.Stream, System.Nullable(Of System.Int32), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of System.Boolean), System.Nullable(Of NetVips.Enums.Access), System.Nullable(Of NetVips.Enums.FailOn))
+  nameWithType: Image.JpegloadStream(Stream, Nullable<Int32>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Boolean>, Nullable<Enums.Access>, Nullable<Enums.FailOn>)
+  nameWithType.vb: Image.JpegloadStream(Stream, Nullable(Of Int32), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Boolean), Nullable(Of Enums.Access), Nullable(Of Enums.FailOn))
 - uid: NetVips.Image.JpegloadStream*
   name: JpegloadStream
   href: api/NetVips.Image.html#NetVips_Image_JpegloadStream_
