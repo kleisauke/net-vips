@@ -18,7 +18,7 @@
 
   <!-- Give an initial value based on the operating system where it's currently running on. -->
   <PropertyGroup Condition="'$(TargetOS)' == ''">
-    <TargetOS Condition="$([MSBuild]::IsOSPlatform('Linux'))">Linux</TargetOS>
+    <TargetOS Condition="$([MSBuild]::IsOSPlatform('Linux')) OR $([MSBuild]::IsOSPlatform('FreeBSD'))">Unix</TargetOS>
     <TargetOS Condition="$([MSBuild]::IsOSPlatform('OSX'))">OSX</TargetOS>
     <TargetOS Condition="$([MSBuild]::IsOSPlatform('Windows'))">Windows</TargetOS>
   </PropertyGroup>
@@ -41,11 +41,11 @@
     <PackageReference Include="System.Buffers" Version="4.5.1" />
   </ItemGroup>
 
-  <!-- Include .NET Standard packages on Linux and macOS -->
+  <!-- Include .NET Standard packages on *nix and macOS -->
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\Linux\$(AssemblyName).dll">
+    <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\Unix\$(AssemblyName).dll">
       <Pack>true</Pack>
-      <PackagePath>runtimes\linux\lib\netstandard2.0</PackagePath>
+      <PackagePath>runtimes\unix\lib\netstandard2.0</PackagePath>
     </None>
     <None Include="$(MSBuildThisFileDirectory)bin\$(Platform)\$(Configuration)\netstandard2.0\OSX\$(AssemblyName).dll">
       <Pack>true</Pack>
