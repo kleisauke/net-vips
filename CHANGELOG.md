@@ -3,6 +3,10 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - ???
+### Fixed
+- Ensure compatibility with FreeBSD and variants.
+
 ## [2.2.0] - 2022-07-25
 ### Added
 - Add `NetVips.BlockUntrusted` and `Operation.Block` for blocking operations at runtime.
@@ -22,15 +26,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - Add `image.SignalHandlerDisconnect()` for disconnecting a signal handler.
 
-### Fixed
-- Ensure recorded delegates are not released too early ([#141](https://github.com/kleisauke/net-vips/issues/141)).
-
 ### Changed
 - Update methods/enums for libvips 8.12.
 - Drop internal `ModuleInit.Fody` dependency in favor of the `[ModuleInitializer]` attribute.
 - `image.WriteToBuffer` tries to use the new target API first.
 - Bump minimum required .NET Framework version to v4.5.2.
 - The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library for .NET 6.0. See https://aka.ms/systemdrawingnonwindows for more information.
+
+### Fixed
+- Ensure recorded delegates are not released too early ([#141](https://github.com/kleisauke/net-vips/issues/141)).
 
 ## [2.0.1] - 2021-06-23
 ### Changed
@@ -47,13 +51,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add missing `image.AddAlpha()` operation ([#116](https://github.com/kleisauke/net-vips/issues/116)).
 - Add `image.Mutate` function for creating an `MutableImage` ([#119](https://github.com/kleisauke/net-vips/issues/119)).
 
-### Fixed
-- Ensure images are disposed early throughout the codebase ([#114](https://github.com/kleisauke/net-vips/issues/114)).
-
 ### Changed
 - Move cache/statistics helpers to dedicated classes ([#98](https://github.com/kleisauke/net-vips/issues/98)).
 - Use enumerations where possible ([#112](https://github.com/kleisauke/net-vips/issues/112)).
 - Methods which modify the image, such as setting or removing metadata requires an `MutableImage` (see `image.Mutate`).
+
+### Fixed
+- Ensure images are disposed early throughout the codebase ([#114](https://github.com/kleisauke/net-vips/issues/114)).
 
 ## [1.2.4] - 2020-07-13
 ### Changed
@@ -64,19 +68,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add support for a single shared libvips binary on Linux and macOS ([#83](https://github.com/kleisauke/net-vips/issues/83)).
 
 ## [1.2.2] - 2020-06-16
-### Fixed
-- Fix the buffer-based fallback mechanism for `NewFromStream` and `NewFromSource` on Windows 32-bit.
-
 ### Changed
 - Free the associated streams within `*loadStream` and `*saveStream` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
 - Speed-up UTF8 string marshalling by using `System.Buffers.ArrayPool`.
 
-## [1.2.1] - 2020-03-16
 ### Fixed
-- Fix a bug that freed the stream within `Image.NewFromStream` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
+- Fix the buffer-based fallback mechanism for `NewFromStream` and `NewFromSource` on Windows 32-bit.
 
+## [1.2.1] - 2020-03-16
 ### Changed
 - Update enums.
+
+### Fixed
+- Fix a bug that freed the stream within `Image.NewFromStream` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
 
 ## [1.2.0] - 2020-01-30
 ### Added
@@ -150,11 +154,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - Bundle pre-compiled libvips binary and its dependencies for 32-bit Windows.
 
-### Fixed
-- Fix five small memleaks ([libvips/lua-vips#24](https://github.com/libvips/lua-vips/issues/24)).
-
 ### Changed
 - Update bundled libvips binary to 8.7.0.
+
+### Fixed
+- Fix five small memleaks ([libvips/lua-vips#24](https://github.com/libvips/lua-vips/issues/24)).
 
 ## [1.0.4] - 2018-06-28
 ### Added
@@ -194,6 +198,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[2.2.1]: https://github.com/kleisauke/net-vips/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/kleisauke/net-vips/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/kleisauke/net-vips/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/kleisauke/net-vips/compare/v2.0.0...v2.0.1
