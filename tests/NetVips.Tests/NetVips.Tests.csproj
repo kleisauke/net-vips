@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
@@ -11,7 +11,7 @@
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{9A19103F-16F7-4668-BE54-9A1E7A4F7556}</ProjectTypeGuids>
     <TestProjectType>UnitTest</TestProjectType>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <TestWithNuGetBinaries>false</TestWithNuGetBinaries>
+    <TestWithNuGetBinaries>true</TestWithNuGetBinaries>
   </PropertyGroup>
 
   <!-- https://github.com/mono/mono/issues/15569 -->
@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(MSBuildRuntimeType)' == 'Mono'" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
   </ItemGroup>
@@ -45,8 +45,8 @@
     <ProjectReference Include="..\..\src\NetVips.Extensions\NetVips.Extensions.csproj" />
   </ItemGroup>
 
-  <!-- System.Drawing.Common 6.0.0 is only supported on Windows -->
-  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+  <!-- System.Drawing.Common 7.0.0 is only supported on Windows -->
+  <ItemGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
     <Compile Remove="ExtensionsTests.cs" />
   </ItemGroup>
 

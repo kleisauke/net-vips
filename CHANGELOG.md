@@ -3,9 +3,12 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.1] - ???
+## [2.3.0] - ???
 ### Fixed
 - Ensure compatibility with FreeBSD and variants.
+
+### Changed
+- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 7.0. See https://aka.ms/systemdrawingnonwindows for more information.
 
 ## [2.2.0] - 2022-07-25
 ### Added
@@ -31,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Drop internal `ModuleInit.Fody` dependency in favor of the `[ModuleInitializer]` attribute.
 - `image.WriteToBuffer` tries to use the new target API first.
 - Bump minimum required .NET Framework version to v4.5.2.
-- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library for .NET 6.0. See https://aka.ms/systemdrawingnonwindows for more information.
+- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library when targeting .NET 6.0 or higher. See https://aka.ms/systemdrawingnonwindows for more information.
 
 ### Fixed
 - Ensure recorded delegates are not released too early ([#141](https://github.com/kleisauke/net-vips/issues/141)).
@@ -198,7 +201,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[2.2.1]: https://github.com/kleisauke/net-vips/compare/v2.2.0...v2.2.1
+[2.3.0]: https://github.com/kleisauke/net-vips/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/kleisauke/net-vips/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/kleisauke/net-vips/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/kleisauke/net-vips/compare/v2.0.0...v2.0.1

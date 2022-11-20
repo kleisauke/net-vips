@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <RootNamespace>NetVips</RootNamespace>
     <Optimize>true</Optimize>
@@ -15,8 +15,8 @@
     <ProjectReference Include="..\..\src\NetVips.Extensions\NetVips.Extensions.csproj" />
   </ItemGroup>
 
-  <!-- System.Drawing.Common 6.0.0 is only supported on Windows -->
-  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+  <!-- System.Drawing.Common 7.0.0 is only supported on Windows -->
+  <ItemGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
     <Compile Remove="Samples/GdiConvert.cs" />
   </ItemGroup>
 

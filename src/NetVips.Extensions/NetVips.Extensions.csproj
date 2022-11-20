@@ -3,8 +3,10 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>net60;netstandard2.0;net461</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net70;net60;netstandard2.0;net461</TargetFrameworks>
+    <!-- Avoid building for all target frameworks when not packaging -->
+    <TargetFrameworks Condition="'$(_IsPacking)' != 'true'">net70</TargetFrameworks>
+    <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">netstandard2.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>NetVips.Extensions</PackageId>
     <AssemblyName>NetVips.Extensions</AssemblyName>
@@ -20,15 +22,22 @@
     <ProjectReference Include="..\..\src\NetVips\NetVips.csproj" />
   </ItemGroup>
 
+  <!-- Due to https://aka.ms/systemdrawingnonwindows, we constrain the System.Drawing.Common version to:
+    - >= 7 for .NET 7 or higher;
+    - <= 6 for .NET 6;
+    - <= 5 for .NET Standard 2.0.
+  -->
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net70'">
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="[4.5,6]" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <!-- For .NET Standard 2.0; constrain the version up below 6.x as later versions are Windows-only.
-     https://aka.ms/systemdrawingnonwindows
-    -->
-    <PackageReference Include="System.Drawing.Common" Version="[4.5,6)" />
+    <PackageReference Include="System.Drawing.Common" Version="[4.5,5]" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">

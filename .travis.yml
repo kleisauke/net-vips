@@ -3,21 +3,21 @@ jobs:
     - arch: arm64
   fast_finish: true
   include:
-    - name: "Linux ARM64v8 (Debian 11, glibc 2.31) - .NET 6.0"
+    - name: "Linux ARM64v8 (Debian 11, glibc 2.31) - .NET 7.0"
       arch: arm64
       os: linux
       dist: focal
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-arm64v8
+        - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim-arm64v8
         - sudo docker exec netvips sh -c "apt-get update && apt-get install -y fontconfig-config"
       script: sudo docker exec netvips bash -c "./build.sh"
-    - name: "Linux ARM64v8 (Alpine 3.14, musl 1.2.2) - .NET 6.0"
+    - name: "Linux ARM64v8 (Alpine 3.16, musl 1.2.3) - .NET 7.0"
       arch: arm64
       os: linux
       dist: focal
       language: shell
       install:
-        - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:6.0-alpine3.14-arm64v8
+        - sudo docker run -dit --name netvips -e TRAVIS -v $(pwd):/mnt/netvips -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:7.0-alpine3.16-arm64v8
         - sudo docker exec netvips sh -c "apk add bash font-noto --update-cache"
       script: sudo docker exec netvips bash -c "./build.sh"

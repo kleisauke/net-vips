@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <RootNamespace>Generator</RootNamespace>
   </PropertyGroup>

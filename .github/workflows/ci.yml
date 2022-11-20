@@ -8,20 +8,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
-            container: mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim
+          - os: ubuntu-22.04
+            container: mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim
             script: ./build.sh
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             container: centos:7
             script: ./build.sh
-          - os: ubuntu-20.04
-            container: mcr.microsoft.com/dotnet/sdk:6.0-alpine3.14
+          - os: ubuntu-22.04
+            container: mcr.microsoft.com/dotnet/sdk:7.0-alpine3.16
             script: ./build.sh
           # TODO(kleisauke): Re-enable Mono CI when C# 9 features are supported.
-          # - os: ubuntu-20.04
+          # - os: ubuntu-22.04
           #   script: ./build/test-mono.sh
           #   allow_failures: true
-          - os: macos-11
+          - os: macos-12
             script: ./build.sh
           - os: windows-2022
             script: .\build.ps1
@@ -36,15 +36,15 @@ jobs:
         run: |
           yum install -y \
             https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-          yum install -y dotnet-sdk-6.0 google-noto-sans-fonts which
-      - name: Dependencies (Alpine 3.14)
+          yum install -y dotnet-sdk-7.0 google-noto-sans-fonts which
+      - name: Dependencies (Alpine 3.16)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
-      - name: Setup dotnet (macOS 11)
-        if: runner.os == 'macOS'
-        uses: actions/setup-dotnet@v2
+      - name: Setup dotnet (macOS 12, Windows 2022)
+        if: runner.os != 'Linux'
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0'
+          dotnet-version: 7.x
       - name: Checkout
         uses: actions/checkout@v3
       - name: Test

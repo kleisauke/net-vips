@@ -11,19 +11,14 @@ namespace NetVips.Benchmarks
         public Config()
         {
             // Only support LTS and latest releases
+            // https://endoflife.date/dotnet
             AddJob(Job.Default
-#if NETCOREAPP2_1
-                    .WithToolchain(CsProjCoreToolchain.NetCoreApp21)
-                    .WithId(".Net Core 2.1 CLI")
-#elif NETCOREAPP3_1
-                    .WithToolchain(CsProjCoreToolchain.NetCoreApp31)
-                    .WithId(".Net Core 3.1 CLI")
-#elif NET5_0
-                    .WithToolchain(CsProjCoreToolchain.NetCoreApp50)
-                    .WithId(".Net 5.0 CLI")
-#elif NET6_0
+#if NET6_0
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp60)
                     .WithId(".Net 6.0 CLI")
+#elif NET7_0
+                    .WithToolchain(CsProjCoreToolchain.NetCoreApp70)
+                    .WithId(".Net 7.0 CLI")
 #endif
 #if GLOBAL_VIPS
                     .WithArguments(new Argument[]
