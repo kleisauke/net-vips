@@ -25,21 +25,19 @@ namespace NetVips.Benchmarks
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp60)
                     .WithId(".Net 6.0 CLI")
 #endif
+#if GLOBAL_VIPS
                     .WithArguments(new Argument[]
                     {
-                        // See https://github.com/dotnet/roslyn/issues/42393
-                        new MsBuildArgument("/p:DebugType=portable"),
-#if GLOBAL_VIPS
                         new MsBuildArgument("/p:UseGlobalLibvips=true")
-#endif
                     })
+#endif
             );
 
             // Don't escape HTML within the GitHub Markdown exporter,
             // to support <pre>-tags within the "Method" column.
             // Ouch, this is quite hackish.
             var githubExporter = MarkdownExporter.GitHub;
-            githubExporter.GetType().GetField("EscapeHtml", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(githubExporter, false);
+            githubExporter.GetType().GetField("EscapeHtml", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(githubExporter, false);
         }
     }
 }
