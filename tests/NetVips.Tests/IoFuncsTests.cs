@@ -215,7 +215,7 @@ namespace NetVips.Tests
             data[0] = 1;
 
             point = im[0, 0];
-            Assert.NotEqual(data[0], point[0]);
+            Assert.True(point[0] <= data[0]); // can be either 0 or 1
 
             im.Invalidate();
             point = im[0, 0];
