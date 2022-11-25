@@ -4,6 +4,9 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.3.0] - ???
+### Added
+- Add IntPtr-based overload for `Image.NewFromMemory()` ([#177](https://github.com/kleisauke/net-vips/issues/177)).
+
 ### Fixed
 - Ensure compatibility with FreeBSD and variants.
 
@@ -12,8 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [2.2.0] - 2022-07-25
 ### Added
-- Add `NetVips.BlockUntrusted` and `Operation.Block` for blocking operations at runtime.
-- Add `image.SignalHandlersDisconnectByFunc()` and `image.SignalHandlersDisconnectByData` for disconnecting signal handlers that match.
+- Add `NetVips.BlockUntrusted()` and `Operation.Block()` for blocking operations at runtime.
+- Add `image.SignalHandlersDisconnectByFunc()` and `image.SignalHandlersDisconnectByData()` for disconnecting signal handlers that match.
 - Implement `image.OnPostClose` remove event accessor.
 
 ### Changed
@@ -32,7 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Changed
 - Update methods/enums for libvips 8.12.
 - Drop internal `ModuleInit.Fody` dependency in favor of the `[ModuleInitializer]` attribute.
-- `image.WriteToBuffer` tries to use the new target API first.
+- `image.WriteToBuffer()` tries to use the new target API first.
 - Bump minimum required .NET Framework version to v4.5.2.
 - The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library when targeting .NET 6.0 or higher. See https://aka.ms/systemdrawingnonwindows for more information.
 
@@ -52,12 +55,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Expose "speed" parameter in heifsave to control the CPU effort spent on improving compression (applies to AV1 compression only, see [libvips/libvips#1819](https://github.com/libvips/libvips/pull/1819)).
 - Add missing `ForeignPngFilter` enum ([#106](https://github.com/kleisauke/net-vips/pull/106)).
 - Add missing `image.AddAlpha()` operation ([#116](https://github.com/kleisauke/net-vips/issues/116)).
-- Add `image.Mutate` function for creating an `MutableImage` ([#119](https://github.com/kleisauke/net-vips/issues/119)).
+- Add `image.Mutate()` function for creating an `MutableImage` ([#119](https://github.com/kleisauke/net-vips/issues/119)).
 
 ### Changed
 - Move cache/statistics helpers to dedicated classes ([#98](https://github.com/kleisauke/net-vips/issues/98)).
 - Use enumerations where possible ([#112](https://github.com/kleisauke/net-vips/issues/112)).
-- Methods which modify the image, such as setting or removing metadata requires an `MutableImage` (see `image.Mutate`).
+- Methods which modify the image, such as setting or removing metadata requires an `MutableImage` (see `image.Mutate()`).
 
 ### Fixed
 - Ensure images are disposed early throughout the codebase ([#114](https://github.com/kleisauke/net-vips/issues/114)).
@@ -72,18 +75,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [1.2.2] - 2020-06-16
 ### Changed
-- Free the associated streams within `*loadStream` and `*saveStream` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
+- Free the associated streams within `Image.*loadStream()` and `image.*saveStream()` earlier ([#78](https://github.com/kleisauke/net-vips/issues/78)).
 - Speed-up UTF8 string marshalling by using `System.Buffers.ArrayPool`.
 
 ### Fixed
-- Fix the buffer-based fallback mechanism for `NewFromStream` and `NewFromSource` on Windows 32-bit.
+- Fix the buffer-based fallback mechanism for `Image.NewFromStream()` and `Image.NewFromSource()` on Windows 32-bit.
 
 ## [1.2.1] - 2020-03-16
 ### Changed
 - Update enums.
 
 ### Fixed
-- Fix a bug that freed the stream within `Image.NewFromStream` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
+- Fix a bug that freed the stream within `Image.NewFromStream()` too early ([#58](https://github.com/kleisauke/net-vips/issues/58)).
 
 ## [1.2.0] - 2020-01-30
 ### Added
@@ -97,14 +100,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add `NetVips.GetOperations()` to get a list of operations available within the libvips library.
 - Add `VipsProgress` struct to the public API.
 - Add `image.WriteToMemory(out ulong)` to write the image to an unformatted C-style array.
-  - This is a low-level operation, make sure you free the returned memory with `NetVips.Free`.
+  - This is a low-level operation, make sure you free the returned memory with `NetVips.Free()`.
 
 ### Changed
 - The `image.SetType()` function has been renamed to `image.Set()`.
 - The `Image.Sum()` function uses the params keyword.
-- Speed-up `Operation.Call`.
-- Free the `VipsOperation` pointers within `Operation.Call` earlier ([#53](https://github.com/kleisauke/net-vips/issues/53)).
-- Unset the `GValue` within `VipsObject.Set` and `VipsObject.Get` earlier.
+- Speed-up `Operation.Call()`.
+- Free the `VipsOperation` pointers within `Operation.Call()` earlier ([#53](https://github.com/kleisauke/net-vips/issues/53)).
+- Unset the `GValue` within `VipsObject.Set()` and `VipsObject.Get()` earlier.
 - The internal function `Operation.GenerateImageClass()` has moved to the [samples directory](https://github.com/kleisauke/net-vips/blob/master/samples/NetVips.Samples/Samples/GenerateImageClass.cs).
 
 ## [1.1.0] - 2019-07-29
@@ -129,8 +132,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - The overloadable operators `==` and `!=` have been changed to `Equal` and `NotEqual` to avoid conflicts with `null` checks.
 - Some methods are overloaded instead of defining the parameters as `object` type.
 - The base class was renamed from `Base` to `NetVips` to comply with the C# code conventions.
-- The `Operation.VipsCacheSet*` utilities has been moved to `NetVips.CacheSet*`.
-- Speed-up `Operation.Call` by avoiding unnecessary loops.
+- The `Operation.VipsCacheSet*()` utilities has been moved to `NetVips.CacheSet*()`.
+- Speed-up `Operation.Call()` by avoiding unnecessary loops.
 - Remove usage of LINQ in several critical paths.
 - The composite x and y positions were changed into an array ([#39](https://github.com/kleisauke/net-vips/issues/39)).
 
@@ -140,7 +143,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [1.0.7] - 2019-01-18
 ### Changed
 - Update bundled libvips x86/x64 binary to 8.7.4.
-- Speed-up `Base.Version` by caching the libvips version as soon as the assembly is loaded.
+- Speed-up `Base.Version()` by caching the libvips version as soon as the assembly is loaded.
 
 ## [1.0.6] - 2019-01-10
 ### Added
@@ -165,7 +168,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [1.0.4] - 2018-06-28
 ### Added
-- Add `contains` helper (to check if the image contains an property of metadata).
+- Add `image.Contains()` helper (to check if the image contains an property of metadata).
 - Support 32-bit architecture ([#7](https://github.com/kleisauke/net-vips/issues/7)).
 
 ### Changed

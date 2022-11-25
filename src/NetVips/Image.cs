@@ -626,8 +626,8 @@ namespace NetVips
         /// Wrap an image around a memory array.
         /// </summary>
         /// <remarks>
-        /// Wraps an Image around an area of memory containing a C-style array. For
-        /// example, if the `data` memory array contains four bytes with the
+        /// Wraps an image around a C-style memory array. For example, if the
+        /// <paramref name="data"/> memory array contains four bytes with the
         /// values 1, 2, 3, 4, you can make a one-band, 2x2 uchar image from
         /// it like this:
         /// <code language="lang-csharp">
@@ -686,8 +686,43 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Like <see cref="NewFromMemory"/>, but VIPS will make a copy of the memory area.
-        /// This means more memory use and an extra copy operation, but is much simpler and safer.
+        /// Wrap an image around a memory area.
+        /// </summary>
+        /// <remarks>
+        /// Because libvips is "borrowing" <paramref name="data"/> from the caller, this function
+        /// is extremely dangerous. Unless you are very careful, you will get crashes or memory
+        /// corruption. Use <see cref="NewFromMemoryCopy"/> instead if you are at all unsure.
+        /// </remarks>
+        /// <param name="data">A unmanaged block of memory.</param>
+        /// <param name="size">Length of memory.</param>
+        /// <param name="width">Image width in pixels.</param>
+        /// <param name="height">Image height in pixels.</param>
+        /// <param name="bands">Number of bands.</param>
+        /// <param name="format">Band format.</param>
+        /// <returns>A new <see cref="Image"/>.</returns>
+        /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
+        public static Image NewFromMemory(
+            IntPtr data,
+            ulong size,
+            int width,
+            int height,
+            int bands,
+            Enums.BandFormat format)
+        {
+            var vi = VipsImage.NewFromMemory(data, (UIntPtr)size, width, height, bands, format);
+
+            if (vi == IntPtr.Zero)
+            {
+                throw new VipsException("unable to make image from memory");
+            }
+
+            return new Image(vi) { MemoryPressure = (long)size };
+        }
+
+        /// <summary>
+        /// Like <see cref="NewFromMemory(IntPtr,ulong,int,int,int,Enums.BandFormat)"/>, but libvips
+        /// will make a copy of the memory area. This means more memory use and an extra copy
+        /// operation, but is much simpler and safer.
         /// </summary>
         /// <param name="data">A unmanaged block of memory.</param>
         /// <param name="size">Length of memory.</param>

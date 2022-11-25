@@ -3,6 +3,7 @@ namespace NetVips.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -116,6 +117,30 @@ namespace NetVips.Tests
 
             im += 10;
             Assert.Equal(10, im.Avg());
+        }
+
+        [Fact]
+        public void TestNewFromMemoryPtr()
+        {
+            const int sizeInBytes = 100;
+            var memory = Marshal.AllocHGlobal(sizeInBytes);
+
+            // Zero the memory
+            // Unsafe.InitBlockUnaligned((byte*)memory, 0, sizeInBytes);
+            Marshal.Copy(new byte[sizeInBytes], 0, memory, sizeInBytes);
+
+            // Avoid reusing the image after subsequent use
+            var prevMax = Cache.Max;
+            Cache.Max = 0;
+
+            using (var im = Image.NewFromMemory(memory, sizeInBytes, 10, 10, 1, Enums.BandFormat.Uchar))
+            {
+                im.OnPostClose += () => Marshal.FreeHGlobal(memory);
+
+                Assert.Equal(0, im.Avg());
+            } // OnPostClose
+
+            Cache.Max = prevMax;
         }
 
         [SkippableFact]
