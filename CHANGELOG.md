@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [2.3.0] - ???
 ### Added
 - Add IntPtr-based overload for `Image.NewFromMemory()` ([#177](https://github.com/kleisauke/net-vips/issues/177)).
+- Add `image.Invalidate()` to drop caches on an image, and any downstream images.
 
 ### Fixed
 - Ensure compatibility with FreeBSD and variants.

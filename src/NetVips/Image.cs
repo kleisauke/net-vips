@@ -2107,6 +2107,23 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Drop caches on an image, and any downstream images.
+        /// </summary>
+        /// <remarks>
+        /// This method drops all pixel caches on an image and on all downstream
+        /// images. Any operations which depend on this image, directly or
+        /// indirectly, are also dropped from the libvips operation cache.
+        ///
+        /// This method can be useful if you wrap a libvips image around an array
+        /// with <see cref="NewFromMemory(Array,int,int,int,Enums.BandFormat)"/>
+        /// and then change some bytes without libvips knowing.
+        /// </remarks>
+        public void Invalidate()
+        {
+            VipsImage.InvalidateAll(this);
+        }
+
+        /// <summary>
         /// Enable progress reporting on an image.
         /// </summary>
         /// <remarks>

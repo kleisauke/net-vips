@@ -392,6 +392,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_image_invalidate_all")]
+        internal static extern void InvalidateAll(Image image);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_set_progress")]
         internal static extern void SetProgress(Image image, [MarshalAs(UnmanagedType.Bool)] bool progress);
 

@@ -204,6 +204,25 @@ namespace NetVips.Tests
         }
 
         [Fact]
+        public void TestInvalidate()
+        {
+            byte[] data = { 0 };
+
+            var im = Image.NewFromMemory(data, 1, 1, 1, Enums.BandFormat.Uchar);
+            var point = im[0, 0];
+            Assert.Equal(data[0], point[0]);
+
+            data[0] = 1;
+
+            point = im[0, 0];
+            Assert.NotEqual(data[0], point[0]);
+
+            im.Invalidate();
+            point = im[0, 0];
+            Assert.Equal(data[0], point[0]);
+        }
+
+        [Fact]
         public void TestSetProgress()
         {
             var im = Image.NewFromFile(Helper.JpegFile, access: Enums.Access.Sequential);
