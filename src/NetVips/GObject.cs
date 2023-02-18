@@ -55,33 +55,15 @@ namespace NetVips
         /// <remarks>
         /// The callback will be triggered every time this signal is issued on this instance.
         /// </remarks>
+        /// <typeparam name="T">The type of the callback to connect.</typeparam>
         /// <param name="detailedSignal">A string of the form "signal-name::detail".</param>
         /// <param name="callback">The callback to connect.</param>
         /// <param name="data">Data to pass to handler calls.</param>
         /// <returns>The handler id.</returns>
         /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
-        public ulong SignalConnect(string detailedSignal, Delegate callback, IntPtr data = default)
+        public ulong SignalConnect<T>(string detailedSignal, T callback, IntPtr data = default)
+            where T : notnull
         {
-            if (callback is Image.EvalDelegate evalDelegate)
-            {
-                void EvalMarshal(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr)
-                {
-                    if (progressPtr == IntPtr.Zero || imagePtr == IntPtr.Zero)
-                    {
-                        return;
-                    }
-
-                    using var image = new Image(imagePtr);
-                    image.ObjectRef();
-
-                    var progressStruct = progressPtr.Dereference<VipsProgress>();
-
-                    evalDelegate.Invoke(image, progressStruct);
-                }
-
-                callback = (VipsImage.EvalSignal)EvalMarshal;
-            }
-
             // add a weak reference callback to ensure all handles are released on finalization
             if (_handles.Count == 0)
             {
@@ -95,7 +77,8 @@ namespace NetVips
             var delegateHandle = GCHandle.Alloc(callback);
             _handles.Add(delegateHandle);
 
-            var ret = GSignal.ConnectData(this, detailedSignal, callback, data, null, default);
+            var cHandler = Marshal.GetFunctionPointerForDelegate(callback);
+            var ret = GSignal.ConnectData(this, detailedSignal, cHandler, data, null, default);
             if (ret == 0)
             {
                 throw new ArgumentException("Failed to connect signal " + detailedSignal);

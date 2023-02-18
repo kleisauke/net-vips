@@ -189,17 +189,16 @@ namespace NetVips
             }
             else
             {
-                IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance,
-                    IntPtr a,
-                    IntPtr b)
+                IntPtr AddConstruct(IntPtr self, GParamSpec.Struct pspec, VipsArgumentClass argumentClass,
+                    VipsArgumentInstance argumentInstance, IntPtr a, IntPtr b)
                 {
-                    var flags = argumentClass.Dereference<VipsArgumentClass>().Flags;
+                    var flags = argumentClass.Flags;
                     if ((flags & Enums.ArgumentFlags.CONSTRUCT) == 0)
                     {
                         return IntPtr.Zero;
                     }
 
-                    var name = Marshal.PtrToStringAnsi(pspec.Dereference<GParamSpec.Struct>().Name);
+                    var name = Marshal.PtrToStringAnsi(pspec.Name);
 
                     AddArg(name, flags);
 

@@ -48,7 +48,7 @@ namespace NetVips
         /// <returns>A newly allocated managed object of the specified type.</returns>
         internal static T Dereference<T>(this IntPtr ptr)
         {
-            return (T)Marshal.PtrToStructure(ptr, typeof(T));
+            return Marshal.PtrToStructure<T>(ptr);
         }
 
         /// <summary>

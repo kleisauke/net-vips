@@ -25,6 +25,11 @@ namespace NetVips
         /// </remarks>
         public delegate void EvalDelegate(Image image, VipsProgress progressStruct);
 
+        /// <summary>
+        /// Internal marshaller delegate for <see cref="EvalDelegate"/>
+        /// </summary>
+        internal delegate void EvalMarshallDelegate(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr);
+
         /// <inheritdoc cref="VipsObject"/>
         internal Image(IntPtr pointer)
             : base(pointer)
@@ -2092,14 +2097,27 @@ namespace NetVips
         /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
         public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, IntPtr data = default)
         {
+            void EvalMarshal(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr)
+            {
+                if (imagePtr == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                using var image = new Image(imagePtr);
+                image.ObjectRef();
+
+                callback.Invoke(image, progress);
+            }
+
             switch (signal)
             {
                 case Enums.Signals.PreEval:
-                    return SignalConnect("preeval", callback, data);
+                    return SignalConnect<EvalMarshallDelegate>("preeval", EvalMarshal, data);
                 case Enums.Signals.Eval:
-                    return SignalConnect("eval", callback, data);
+                    return SignalConnect<EvalMarshallDelegate>("eval", EvalMarshal, data);
                 case Enums.Signals.PostEval:
-                    return SignalConnect("posteval", callback, data);
+                    return SignalConnect<EvalMarshallDelegate>("posteval", EvalMarshal, data);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(signal), signal,
                         $"The value of argument '{nameof(signal)}' ({signal}) is invalid for enum type '{nameof(Enums.Signals)}'.");

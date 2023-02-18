@@ -249,7 +249,7 @@ namespace NetVips.Internal
             EntryPoint = "g_signal_connect_data")]
         internal static extern ulong ConnectData(GObjectManaged instance,
             [MarshalAs(UnmanagedType.LPStr)] string detailedSignal,
-            [MarshalAs(UnmanagedType.FunctionPtr)] Delegate cHandler, IntPtr data,
+            IntPtr cHandler, IntPtr data,
             GClosureNotify destroyData, Enums.GConnectFlags connectFlags);
 
         [SuppressUnmanagedCodeSecurity]

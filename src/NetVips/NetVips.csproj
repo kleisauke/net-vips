@@ -14,6 +14,8 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);Interop\Libraries.*.cs</DefaultItemExcludes>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
   </PropertyGroup>
 
   <!-- Give an initial value based on the operating system where it's currently running on. -->

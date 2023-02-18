@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Fixed
 - Ensure compatibility with FreeBSD and variants.
+- Ensure code is AOT-friendly ([#196](https://github.com/kleisauke/net-vips/issues/196)).
 
 ### Changed
 - The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 7.0. See https://aka.ms/systemdrawingnonwindows for more information.
