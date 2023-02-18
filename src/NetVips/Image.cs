@@ -26,9 +26,9 @@ namespace NetVips
         public delegate void EvalDelegate(Image image, VipsProgress progressStruct);
 
         /// <summary>
-        /// Internal marshaller delegate for <see cref="EvalDelegate"/>
+        /// Internal marshaller delegate for <see cref="EvalDelegate"/>.
         /// </summary>
-        internal delegate void EvalMarshallDelegate(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr);
+        internal delegate void EvalMarshalDelegate(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr);
 
         /// <inheritdoc cref="VipsObject"/>
         internal Image(IntPtr pointer)
@@ -2113,11 +2113,11 @@ namespace NetVips
             switch (signal)
             {
                 case Enums.Signals.PreEval:
-                    return SignalConnect<EvalMarshallDelegate>("preeval", EvalMarshal, data);
+                    return SignalConnect<EvalMarshalDelegate>("preeval", EvalMarshal, data);
                 case Enums.Signals.Eval:
-                    return SignalConnect<EvalMarshallDelegate>("eval", EvalMarshal, data);
+                    return SignalConnect<EvalMarshalDelegate>("eval", EvalMarshal, data);
                 case Enums.Signals.PostEval:
-                    return SignalConnect<EvalMarshallDelegate>("posteval", EvalMarshal, data);
+                    return SignalConnect<EvalMarshalDelegate>("posteval", EvalMarshal, data);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(signal), signal,
                         $"The value of argument '{nameof(signal)}' ({signal}) is invalid for enum type '{nameof(Enums.Signals)}'.");
