@@ -14,7 +14,7 @@ namespace NetVips
         // private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// We have to record all of the <see cref="SignalConnect"/> delegates to
+        /// We have to record all of the <see cref="SignalConnect{T}"/> delegates to
         /// prevent them from being re-located or disposed of by the garbage collector.
         /// </summary>
         /// <remarks>
@@ -106,14 +106,17 @@ namespace NetVips
         /// Disconnects all handlers from this object that match <paramref name="func"/> and
         /// <paramref name="data"/>.
         /// </summary>
+        /// <typeparam name="T">The type of the func.</typeparam>
         /// <param name="func">The func of the handlers.</param>
         /// <param name="data">The data of the handlers.</param>
         /// <returns>The number of handlers that matched.</returns>
-        public uint SignalHandlersDisconnectByFunc(Delegate func, IntPtr data = default)
+        public uint SignalHandlersDisconnectByFunc<T>(T func, IntPtr data = default)
+            where T : notnull
         {
+            var funcPtr = Marshal.GetFunctionPointerForDelegate(func);
             return GSignal.HandlersDisconnectMatched(this,
                 GSignalMatchType.G_SIGNAL_MATCH_FUNC | GSignalMatchType.G_SIGNAL_MATCH_DATA,
-                0, 0, IntPtr.Zero, func, data);
+                0, 0, IntPtr.Zero, funcPtr, data);
         }
 
         /// <summary>
@@ -125,7 +128,7 @@ namespace NetVips
         {
             return GSignal.HandlersDisconnectMatched(this,
                 GSignalMatchType.G_SIGNAL_MATCH_DATA,
-                0, 0, IntPtr.Zero, null, data);
+                0, 0, IntPtr.Zero, IntPtr.Zero, data);
         }
 
         /// <summary>
@@ -147,10 +150,10 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Release all the <see cref="SignalConnect"/> delegates by this object on finalization.
+        /// Release all the <see cref="SignalConnect{T}"/> delegates by this object on finalization.
         /// </summary>
         /// <remarks>
-        /// This function is only called when <see cref="SignalConnect"/> was used on this object.
+        /// This function is only called when <see cref="SignalConnect{T}"/> was used on this object.
         /// </remarks>
         /// <param name="data">Data that was provided when the weak reference was established.</param>
         /// <param name="objectPointer">The object being disposed.</param>

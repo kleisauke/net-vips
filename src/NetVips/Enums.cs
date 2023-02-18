@@ -1197,7 +1197,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Signals that can be used on an <see cref="Image"/>. See <see cref="GObject.SignalConnect"/>.
+        /// Signals that can be used on an <see cref="Image"/>. See <see cref="GObject.SignalConnect{T}"/>.
         /// </summary>
         public enum Signals
         {

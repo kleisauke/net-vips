@@ -262,6 +262,6 @@ namespace NetVips.Internal
             EntryPoint = "g_signal_handlers_disconnect_matched")]
         internal static extern uint HandlersDisconnectMatched(GObjectManaged instance,
             Enums.GSignalMatchType mask, uint signalId, uint detail, IntPtr closure,
-            [MarshalAs(UnmanagedType.FunctionPtr)] Delegate func, IntPtr data);
+            IntPtr func, IntPtr data);
     }
 }
