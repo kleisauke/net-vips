@@ -30,6 +30,11 @@ namespace NetVips.Internal
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "vips_shutdown")]
+        internal static extern void Shutdown();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_leak_set")]
         internal static extern void LeakSet([MarshalAs(UnmanagedType.Bool)] bool leak);
 

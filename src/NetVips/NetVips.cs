@@ -26,10 +26,24 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Call this to drop caches, close plugins, terminate background threads, and finalize
+        /// any internal library testing.
+        /// </summary>
+        /// <remarks>
+        /// Calling this is optional. If you don't call it, your platform will clean up for you.
+        /// The only negative consequences are that the leak checker (<see cref="Leak"/>)
+        /// and the profiler (<see cref="Profile"/>) will not work.
+        /// </remarks>
+        public static void Shutdown()
+        {
+            Vips.Shutdown();
+        }
+
+        /// <summary>
         /// Enable or disable libvips leak checking.
         /// </summary>
         /// <remarks>
-        /// With this enabled, libvips will check for object and area leaks on exit.
+        /// With this enabled, libvips will check for object and area leaks on <see cref="Shutdown"/>.
         /// Enabling this option will make libvips run slightly more slowly.
         /// </remarks>
         /// <param name="leak">Bool indicating if leak checking should be turned on.</param>
@@ -43,7 +57,7 @@ namespace NetVips
         /// Enable or disable libvips leak checking.
         /// </summary>
         /// <remarks>
-        /// With this enabled, libvips will check for object and area leaks on exit.
+        /// With this enabled, libvips will check for object and area leaks on <see cref="Shutdown"/>.
         /// Enabling this option will make libvips run slightly more slowly.
         /// </remarks>
         public static bool Leak
@@ -55,8 +69,8 @@ namespace NetVips
         /// Enable or disable libvips profile recording.
         /// </summary>
         /// <remarks>
-        /// If set, vips will record profiling information, and dump it on program
-        /// exit. These profiles can be analyzed with the `vipsprofile` program.
+        /// If set, vips will record profiling information, and dump it on <see cref="Shutdown"/>.
+        /// These profiles can be analyzed with the `vipsprofile` program.
         /// </remarks>
         /// <param name="profile">Bool indicating if profile recording should be turned on.</param>
         [Obsolete("NetVips.ProfileSet is deprecated, please use the NetVips.Profile setter instead.")]
@@ -69,8 +83,8 @@ namespace NetVips
         /// Enable or disable libvips profile recording.
         /// </summary>
         /// <remarks>
-        /// If set, vips will record profiling information, and dump it on program
-        /// exit. These profiles can be analyzed with the `vipsprofile` program.
+        /// If set, vips will record profiling information, and dump it on <see cref="Shutdown"/>.
+        /// These profiles can be analyzed with the `vipsprofile` program.
         /// </remarks>
         public static bool Profile
         {
