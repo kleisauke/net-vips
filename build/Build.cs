@@ -28,7 +28,6 @@ partial class Build : NukeBuild
 
     [Parameter("Build and create NuGet packages")] public bool Package { get; }
 
-    // FIXME: Broken on .NET SDK 7.0.100, see: https://github.com/microsoft/vstest/issues/4014
     [Parameter("Test with a globally installed libvips")] public bool GlobalVips { get; }
 
     AbsolutePath SourceDirectory => RootDirectory / "src";

@@ -11,7 +11,7 @@
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{9A19103F-16F7-4668-BE54-9A1E7A4F7556}</ProjectTypeGuids>
     <TestProjectType>UnitTest</TestProjectType>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <TestWithNuGetBinaries>true</TestWithNuGetBinaries>
+    <TestWithNuGetBinaries>false</TestWithNuGetBinaries>
   </PropertyGroup>
 
   <!-- https://github.com/mono/mono/issues/15569 -->
