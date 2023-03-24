@@ -4,14 +4,14 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.14.0-rc1] - 2022-12-30
+## [8.14.2] - 2023-03-24
 ### Note
-If you would like to see what's changed, please visit the (draft) release notes of libvips:  
-https://github.com/libvips/libvips/blob/gh-pages-8.14/_posts/2022-12-22-What's-new-in-8.14.md
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://www.libvips.org/2022/12/22/What's-new-in-8.14.html
 
 ### Changed
 - Bump the minimum required macOS version to 10.13 (was 10.9) ([lovell/sharp-libvips#164](https://github.com/lovell/sharp-libvips/pull/164)).
-- Prevent use of GLib's slice allocator on Linux ([lovell/sharp-libvips#165](https://github.com/lovell/sharp-libvips/pull/165)).
+- Support for tile-based output temporarily removed due to licensing issue ([libvips/libvips#3354](https://github.com/libvips/libvips/issues/3354)).
 
 ## [8.13.2] - 2022-10-01
 ### Note
@@ -218,7 +218,7 @@ https://libvips.org/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
-[8.14.0-rc1]: https://github.com/kleisauke/libvips-packaging/compare/v8.13.2...v8.14.0-rc1
+[8.14.2]: https://github.com/kleisauke/libvips-packaging/compare/v8.13.2...v8.14.2
 [8.13.2]: https://github.com/kleisauke/libvips-packaging/compare/v8.13.1...v8.13.2
 [8.13.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.13.0...v8.13.1
 [8.13.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.12.2...v8.13.0
