@@ -222,9 +222,11 @@ namespace NetVips.Tests
             Assert.Equal(data[0], point[0]);
         }
 
-        [Fact]
+        [SkippableFact]
         public void TestSetProgress()
         {
+            Skip.IfNot(Helper.Have("dzsave"), "no dzsave support, skipping test");
+
             var im = Image.NewFromFile(Helper.JpegFile, access: Enums.Access.Sequential);
 
             var lastPercent = 0;

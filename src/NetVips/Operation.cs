@@ -22,7 +22,7 @@ namespace NetVips
         /// </summary>
         /// <remarks>
         /// You'll need to set any arguments and build the operation before you can use it. See
-        /// <see cref="Call(string,VOption,Image,object[])"/> for a higher-level way to make new operations.
+        /// <see cref="O:Call"/> for a higher-level way to make new operations.
         /// </remarks>
         /// <param name="operationName">Nickname of operation to create.</param>
         /// <returns>The new operation.</returns>

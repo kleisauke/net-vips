@@ -21,7 +21,7 @@ namespace NetVips
         /// <see cref="Enums.Signals.PostEval"/> signals.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="SetProgress(bool)"/> to enable progress reporting on an image.
+        /// Use <see cref="O:SetProgress"/> to enable progress reporting on an image.
         /// </remarks>
         public delegate void EvalDelegate(Image image, VipsProgress progressStruct);
 
@@ -725,7 +725,7 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Like <see cref="NewFromMemory(IntPtr,ulong,int,int,int,Enums.BandFormat)"/>, but libvips
+        /// Like <see cref="NewFromMemory(IntPtr, ulong, int, int, int, Enums.BandFormat)"/>, but libvips
         /// will make a copy of the memory area. This means more memory use and an extra copy
         /// operation, but is much simpler and safer.
         /// </summary>
@@ -2133,7 +2133,7 @@ namespace NetVips
         /// indirectly, are also dropped from the libvips operation cache.
         ///
         /// This method can be useful if you wrap a libvips image around an array
-        /// with <see cref="NewFromMemory(Array,int,int,int,Enums.BandFormat)"/>
+        /// with <see cref="NewFromMemory(Array, int, int, int, Enums.BandFormat)"/>
         /// and then change some bytes without libvips knowing.
         /// </remarks>
         public void Invalidate()

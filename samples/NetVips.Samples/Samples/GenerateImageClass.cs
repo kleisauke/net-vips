@@ -58,9 +58,12 @@ namespace NetVips.Samples
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDirection"), "Enums.Direction");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsExtend"), "Enums.Extend");
             _gTypeToCSharpDict.Add(FailOnType, "Enums.FailOn");
-            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzContainer"), "Enums.ForeignDzContainer");
+            if (NetVips.TypeFind("VipsOperation", "dzsave") != IntPtr.Zero)
+            {
+                _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzContainer"), "Enums.ForeignDzContainer");
+                _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzLayout"), "Enums.ForeignDzLayout");
+            }
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzDepth"), "Enums.ForeignDzDepth");
-            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzLayout"), "Enums.ForeignDzLayout");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifCompression"), "Enums.ForeignHeifCompression");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPpmFormat"), "Enums.ForeignPpmFormat");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignSubsample"), "Enums.ForeignSubsample");
@@ -85,6 +88,11 @@ namespace NetVips.Samples
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsPrecision"), "Enums.Precision");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsRegionShrink"), "Enums.RegionShrink");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSize"), "Enums.Size");
+            if (NetVips.AtLeastLibvips(8, 14))
+            {
+                _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsTextWrap"), "Enums.TextWrap");
+                _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifEncoder"), "Enums.ForeignHeifEncoder");
+            }
 
             // Flags
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignFlags"), "Enums.ForeignFlags");

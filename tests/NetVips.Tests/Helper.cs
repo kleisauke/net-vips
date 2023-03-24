@@ -459,7 +459,7 @@ namespace NetVips.Tests
             var a = Convert.ToDouble(x);
             var b = Convert.ToDouble(y);
 
-            return Math.Abs(a - b) < delta;
+            return Math.Abs(a - b) <= delta;
         }
 
         public int GetHashCode(object obj)

@@ -29,7 +29,7 @@ namespace NetVips
         internal Internal.GValue.Struct Struct;
 
         /// <summary>
-        /// Track whether <see cref="Dispose(bool)"/> has been called.
+        /// Track whether <see cref="O:Dispose"/> has been called.
         /// </summary>
         private bool _disposed;
 

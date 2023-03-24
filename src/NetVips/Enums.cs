@@ -509,6 +509,31 @@ namespace NetVips
         }
 
         /// <summary>
+        /// The selected encoder to use.
+        /// </summary>
+        /// <remarks>
+        /// If libheif hasn't been compiled with the selected encoder, it will
+        /// fallback to the default encoder based on <see cref="ForeignHeifCompression"/>.
+        /// </remarks>
+        public enum ForeignHeifEncoder
+        {
+            /// <summary>Pick encoder automatically.</summary>
+            Auto = 0, // "auto"
+
+            /// <summary>AOM</summary>
+            Aom = 1, // "aom"
+
+            /// <summary>RAV1E</summary>
+            Rav1e = 2, // "rav1e"
+
+            /// <summary>SVT-AV1</summary>
+            Svt = 3, // "svt"
+
+            /// <summary>x265</summary>
+            X265 = 4 // "x265"
+        }
+
+        /// <summary>
         /// The netpbm file format to save as.
         /// </summary>
         public enum ForeignPpmFormat
@@ -523,7 +548,10 @@ namespace NetVips
             Ppm = 2, // "ppm"
 
             /// <summary>Images are 32-bit float pixels.</summary>
-            Pfm = 3 // "pfm"
+            Pfm = 3, // "pfm"
+
+            /// <summary>Images are anymap images -- the image format is used to pick the saver.</summary>
+            Pnm = 4 // "pnm"
         }
 
         /// <summary>
@@ -649,7 +677,7 @@ namespace NetVips
 
         /// <summary>
         /// Pick the algorithm vips uses to decide image "interestingness".
-        /// This is used by <see cref="Image.Smartcrop"/>, for example, to decide what parts of the image to keep.
+        /// This is used by <see cref="O:Image.Smartcrop"/>, for example, to decide what parts of the image to keep.
         /// </summary>
         public enum Interesting
         {
@@ -1047,6 +1075,24 @@ namespace NetVips
 
             /// <summary>Force size, that is, break aspect ratio.</summary>
             Force = 3 // "force"
+        }
+
+        /// <summary>
+        /// Sets the word wrapping style for <see cref="O:Image.Text"/> when used with a maximum width.
+        /// </summary>
+        public enum TextWrap
+        {
+            /// <summary>Wrap at word boundaries.</summary>
+            Word = 0, // "word"
+
+            /// <summary>Wrap at character boundaries.</summary>
+            Char = 1, // "char"
+
+            /// <summary>Wrap at word boundaries, but fall back to character boundaries if there is not enough space for a full word.</summary>
+            WordChar = 2, // "word-char"
+
+            /// <summary>No wrapping.</summary>
+            None = 3 // "none"
         }
 
         #endregion
