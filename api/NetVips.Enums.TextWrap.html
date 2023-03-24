@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Enum Enums.OperationMath
+    <title>Enum Enums.TextWrap
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Enum Enums.OperationMath
+    <meta name="title" content="Enum Enums.TextWrap
    ">
     <meta name="generator" content="docfx 2.59.4.0">
     
@@ -68,23 +68,20 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.OperationMath">
+            <article class="content wrap" id="_content" data-uid="NetVips.Enums.TextWrap">
   
   
-  <h1 id="NetVips_Enums_OperationMath" data-uid="NetVips.Enums.OperationMath" class="text-break">Enum Enums.OperationMath
+  <h1 id="NetVips_Enums_TextWrap" data-uid="NetVips.Enums.TextWrap" class="text-break">Enum Enums.TextWrap
   </h1>
-  <div class="markdown level0 summary"><p>Various math functions on images.</p>
+  <div class="markdown level0 summary"><p>Sets the word wrapping style for <see cref="O:Image.Text"></see> when used with a maximum width.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_OperationMath_syntax">Syntax</h5>
+  <h5 id="NetVips_Enums_TextWrap_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum OperationMath</code></pre>
+    <pre><code class="lang-csharp hljs">public enum TextWrap</code></pre>
   </div>
-  <h5 id="NetVips_Enums_OperationMath_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>See <a class="xref" href="NetVips.Image.html#NetVips_Image_Math_NetVips_Enums_OperationMath_">Math(Enums.OperationMath)</a>.</p>
-</div>
   <h3 id="fields">Fields
   </h3>
   <table class="table table-bordered table-striped table-condensed">
@@ -96,83 +93,23 @@
     <thead>
     <tbody>
       <tr>
-        <td id="NetVips_Enums_OperationMath_Acos">Acos</td>
-        <td><p>acos(), angles in degrees.</p>
+        <td id="NetVips_Enums_TextWrap_Char">Char</td>
+        <td><p>Wrap at character boundaries.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_OperationMath_Acosh">Acosh</td>
-        <td><p>acosh(), angles in radians.</p>
+        <td id="NetVips_Enums_TextWrap_None">None</td>
+        <td><p>No wrapping.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_OperationMath_Asin">Asin</td>
-        <td><p>asin(), angles in degrees.</p>
+        <td id="NetVips_Enums_TextWrap_Word">Word</td>
+        <td><p>Wrap at word boundaries.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_OperationMath_Asinh">Asinh</td>
-        <td><p>asinh(), angles in radians.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Atan">Atan</td>
-        <td><p>atan(), angles in degrees.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Atanh">Atanh</td>
-        <td><p>atanh(), angles in radians.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Cos">Cos</td>
-        <td><p>cos(), angles in degrees.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Cosh">Cosh</td>
-        <td><p>cosh(), angles in radians.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Exp">Exp</td>
-        <td><p>e to the something.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Exp10">Exp10</td>
-        <td><p>10 to the something.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Log">Log</td>
-        <td><p>log base e.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Log10">Log10</td>
-        <td><p>log base 10.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Sin">Sin</td>
-        <td><p>sin(), angles in degrees.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Sinh">Sinh</td>
-        <td><p>sinh(), angles in radians.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Tan">Tan</td>
-        <td><p>tan(), angles in degrees.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="NetVips_Enums_OperationMath_Tanh">Tanh</td>
-        <td><p>tanh(), angles in radians.</p>
+        <td id="NetVips_Enums_TextWrap_WordChar">WordChar</td>
+        <td><p>Wrap at word boundaries, but fall back to character boundaries if there is not enough space for a full word.</p>
 </td>
       </tr>
     </tbody>
@@ -185,10 +122,10 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_OperationMath.md&amp;value=---%0Auid%3A%20NetVips.Enums.OperationMath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/kleisauke/net-vips/new/master/apiSpec/new?filename=NetVips_Enums_TextWrap.md&amp;value=---%0Auid%3A%20NetVips.Enums.TextWrap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L876" class="contribution-link">View Source</a>
+                    <a href="https://github.com/kleisauke/net-vips/blob/master/src/NetVips/Enums.cs/#L1083" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
