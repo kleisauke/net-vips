@@ -9,13 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add `image.Invalidate()` to drop caches on an image, and any downstream images.
 - Add `NetVips.Shutdown()` to finalize the internal leak checker and profiler.
 
-### Fixed
-- Ensure compatibility with FreeBSD and variants.
-- Ensure code is AOT-friendly ([#196](https://github.com/kleisauke/net-vips/issues/196)).
-
 ### Changed
 - Update methods/enums for libvips 8.14.
 - The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 7.0. See https://aka.ms/systemdrawingnonwindows for more information.
+
+### Fixed
+- Ensure compatibility with FreeBSD and variants.
+- Ensure code is AOT-friendly ([#196](https://github.com/kleisauke/net-vips/issues/196)).
 
 ## [2.2.0] - 2022-07-25
 ### Added
