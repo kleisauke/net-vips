@@ -1,6 +1,7 @@
 namespace NetVips.Benchmarks
 {
     using BenchmarkDotNet.Configs;
+    using BenchmarkDotNet.Environments;
     using BenchmarkDotNet.Exporters;
     using BenchmarkDotNet.Jobs;
     using BenchmarkDotNet.Toolchains.CsProj;
@@ -15,10 +16,11 @@ namespace NetVips.Benchmarks
             AddJob(Job.Default
 #if NET6_0
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp60)
-                    .WithId(".Net 6.0 CLI")
+                    .WithId(".NET 6.0 CLI")
 #elif NET7_0
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp70)
-                    .WithId(".Net 7.0 CLI")
+                    .WithRuntime(NativeAotRuntime.Net70)
+                    .WithId(".NET 7.0 CLI (NativeAOT)")
 #endif
 #if GLOBAL_VIPS
                     .WithArguments(new Argument[]

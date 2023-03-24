@@ -91,8 +91,9 @@ namespace NetVips.Benchmarks
             im.Write(output);
         }
 
-        [Benchmark(Description = "ImageSharp<sup>1</sup>")]
-        [Arguments("t.jpg", "t2.jpg")] // ImageSharp doesn't support tiled TIFF images
+        [Benchmark(Description = "ImageSharp")]
+        [Arguments("t.tif", "t2.tif")]
+        [Arguments("t.jpg", "t2.jpg")]
         public void ImageSharp(string input, string output)
         {
             using var image = ImageSharpImage.Load(input);
@@ -100,13 +101,13 @@ namespace NetVips.Benchmarks
                 .Crop(new ImageSharpRectangle(100, 100, image.Width - 200, image.Height - 200))
                 .Resize((int)Math.Round(image.Width * .9F), (int)Math.Round(image.Height * .9F),
                     KnownResamplers.Triangle)
-                .ApplyProcessor(_processor, image.Bounds()));
+                .ApplyProcessor(_processor, image.Bounds));
 
             // Default quality is 75
             image.Save(output);
         }
 
-        [Benchmark(Description = "SkiaSharp<sup>2</sup>")]
+        [Benchmark(Description = "SkiaSharp<sup>1</sup>")]
         [Arguments("t.jpg", "t2.jpg")] // SkiaSharp doesn't have TIFF support
         public void SkiaSharp(string input, string output)
         {
@@ -146,9 +147,9 @@ namespace NetVips.Benchmarks
         }
 
 #if Windows_NT
-        [Benchmark(Description = "System.Drawing<sup>3</sup>")]
-        [Arguments("t.jpg", "t2.jpg")]
+        [Benchmark(Description = "System.Drawing<sup>2</sup>")]
         [Arguments("t.tif", "t2.tif")]
+        [Arguments("t.jpg", "t2.jpg")]
         [System.Runtime.Versioning.SupportedOSPlatform("windows")]
         public void SystemDrawing(string input, string output)
         {
@@ -186,7 +187,7 @@ namespace NetVips.Benchmarks
             // No sharpening or convolution operation seems to be available
 
             // Default quality is 75, see:
-            // https://stackoverflow.com/a/3959115/10952119
+            // https://stackoverflow.com/a/3959115
             resized.Save(output);
         }
 #endif
