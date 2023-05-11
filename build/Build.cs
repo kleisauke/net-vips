@@ -10,7 +10,6 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
@@ -68,10 +67,10 @@ partial class Build : NukeBuild
     Target Clean => _ => _
         .Executes(() =>
         {
-            SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-            TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-            EnsureCleanDirectory(PackingDirectory);
-            EnsureCleanDirectory(ArtifactsDirectory);
+            SourceDirectory.GlobDirectories("**/bin", "**/obj").DeleteDirectories();
+            TestsDirectory.GlobDirectories("**/bin", "**/obj").DeleteDirectories();
+            PackingDirectory.CreateOrCleanDirectory();
+            ArtifactsDirectory.CreateOrCleanDirectory();
         });
 
     Target RunTests => _ => _
@@ -103,7 +102,7 @@ partial class Build : NukeBuild
                 if (!File.Exists(filePath))
                 {
                     Information(filePath + " not in download directory. Downloading now ...");
-                    EnsureExistingDirectory(DownloadDirectory);
+                    DownloadDirectory.CreateDirectory();
                     var response = await client.GetAsync(tarball);
                     await using var fs = new FileStream(filePath, FileMode.CreateNew);
                     await response.Content.CopyToAsync(fs);
@@ -115,15 +114,15 @@ partial class Build : NukeBuild
                 ExtractTarball(filePath, tempDir);
 
                 var dllPackDir = PackingDirectory / architecture;
-                EnsureExistingDirectory(dllPackDir);
+                dllPackDir.CreateDirectory();
 
                 // The C++ binding isn't needed.
-                tempDir.GlobFiles("lib/libvips-cpp*").ForEach(DeleteFile);
+                tempDir.GlobFiles("lib/libvips-cpp*").DeleteFiles();
 
                 tempDir.GlobFiles("lib/*.dll", "lib/*.so*", "lib/*.dylib", "THIRD-PARTY-NOTICES.md", "versions.json")
-                    .ForEach(f => CopyFileToDirectory(f, dllPackDir));
+                    .ForEach(f => f.MoveToDirectory(dllPackDir));
 
-                DeleteDirectory(tempDir);
+                tempDir.DeleteDirectory();
             }
         });
 
