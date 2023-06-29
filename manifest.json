@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "Gq0uBEb1zPSiqmo//kkLCNIqLg3ia0Wks7K+zkIXTmo="
+          "hash": "fB1W/51t1hxQLLT9YaTnjcr0mMA/zdp8SjrnZQ5uw6k="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.native.html",
-          "hash": "E7Gu20QAsCeTyZbIVkRjRlId8JQmK7rgjq7Z3IVvbJo="
+          "hash": "0p8QKQxQ2iV3GmzRMt77WpBgOg1iQn+AlIaszLR16LM="
         }
       },
       "is_incremental": false,
@@ -753,7 +753,7 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.Image.html",
-          "hash": "hpGK+uHY6wW6MoiyYWIHQ9nRZAx5Xy6k73/zBUzf1Jo="
+          "hash": "ZFkeScCZhndeT8oYB8UPRyYNB97kn3xJtgew423g5Ys="
         }
       },
       "is_incremental": false,
