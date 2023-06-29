@@ -570,7 +570,7 @@ namespace NetVips.Internal
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_load")]
-        internal static extern IntPtr FindLoad([MarshalAs(UnmanagedType.LPStr)] string filename);
+        internal static extern IntPtr FindLoad(byte[] filename);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

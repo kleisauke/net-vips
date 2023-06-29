@@ -173,6 +173,12 @@ namespace NetVips.Tests
         }
 
         [Fact]
+        public void TestFindLoadUtf8()
+        {
+            Assert.Equal("VipsForeignLoadJpegFile", Image.FindLoad(Helper.JpegFile));
+        }
+
+        [Fact]
         public void TestWriteToMemory()
         {
             var s = Enumerable.Repeat((byte)0, 200).ToArray();

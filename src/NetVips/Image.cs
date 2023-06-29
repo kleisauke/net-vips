@@ -140,7 +140,11 @@ namespace NetVips
         /// </remarks>
         /// <param name="filename">The file to test.</param>
         /// <returns>The name of the load operation, or <see langword="null"/>.</returns>
-        public static string FindLoad(string filename) => Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
+        public static string FindLoad(string filename)
+        {
+            var bytes = Encoding.UTF8.GetBytes(filename + char.MinValue); // Ensure null-terminated string
+            return Marshal.PtrToStringAnsi(VipsForeign.FindLoad(bytes));
+        }
 
         /// <summary>
         /// Find the name of the load operation vips will use to load a buffer.
@@ -415,8 +419,8 @@ namespace NetVips
 
             #region fallback mechanism
 
-            var filename = source.GetFileName();
-            if (filename != null)
+            var filename = VipsConnection.FileName(source);
+            if (filename != IntPtr.Zero)
             {
                 // Try with the old file-based loaders.
                 operationName = Marshal.PtrToStringAnsi(VipsForeign.FindLoad(filename));
@@ -425,7 +429,7 @@ namespace NetVips
                     throw new VipsException("unable to load from source");
                 }
 
-                return Operation.Call(operationName, options, filename) as Image;
+                return Operation.Call(operationName, options, filename.ToUtf8String()) as Image;
             }
 
             // Try with the old buffer-based loaders.
