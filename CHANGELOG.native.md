@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [8.14.2] - 2023-03-24
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
-https://www.libvips.org/2022/12/22/What's-new-in-8.14.html
+https://libvips.org/2022/12/22/What's-new-in-8.14.html
 
 ### Changed
 - Bump the minimum required macOS version to 10.13 (was 10.9) ([lovell/sharp-libvips#164](https://github.com/lovell/sharp-libvips/pull/164)).
