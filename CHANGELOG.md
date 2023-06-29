@@ -212,6 +212,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[2.3.1]: https://github.com/kleisauke/net-vips/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/kleisauke/net-vips/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/kleisauke/net-vips/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/kleisauke/net-vips/compare/v2.0.1...v2.1.0
