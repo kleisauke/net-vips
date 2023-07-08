@@ -37,8 +37,7 @@ which gives some more background.
 ## Supported platforms
 
 - .NET Framework 4.5.2 and higher
-- .NET Standard 2.0 and higher
-- Mono
+- .NET 6.0 and higher
 
 ## Install
 
@@ -58,7 +57,7 @@ libvips binaries for the most common platforms (see
 | **Linux ARM64v8 musl**<sup>3</sup>  | [![NetVips.Native.linux-musl-arm64-badge]][NetVips.Native.linux-musl-arm64-nuget] |
 | **Linux ARMv7**                     | [![NetVips.Native.linux-arm-badge]][NetVips.Native.linux-arm-nuget]               |
 | **macOS x64**                       | [![NetVips.Native.osx-x64-badge]][NetVips.Native.osx-x64-nuget]                   |
-| **macOS ARM64**<sup>4</sup>         | [![NetVips.Native.osx-arm64-badge]][NetVips.Native.osx-arm64-nuget]               |
+| **macOS ARM64**                     | [![NetVips.Native.osx-arm64-badge]][NetVips.Native.osx-arm64-nuget]               |
 
 [NetVips.Native.win-x64-badge]: https://img.shields.io/nuget/v/NetVips.Native.win-x64.svg
 [NetVips.Native.win-x64-nuget]: https://www.nuget.org/packages/NetVips.Native.win-x64
@@ -83,8 +82,7 @@ libvips binaries for the most common platforms (see
 
 <sup>1</sup> The version number of these NuGet packages is in sync with libvips' version number.  
 <sup>2</sup> Uses glibc as the standard C library (Ubuntu, Debian, etc).  
-<sup>3</sup> Uses musl as the standard C library (Alpine, Gentoo Linux, etc).  
-<sup>4</sup> Requires .NET 6.0 or higher.
+<sup>3</sup> Uses musl as the standard C library (Alpine, Gentoo Linux, etc).
 
 Then just install this package, perhaps:
 

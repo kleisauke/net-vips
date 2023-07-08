@@ -17,10 +17,6 @@ jobs:
           - os: ubuntu-22.04
             container: mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
             script: ./build.sh
-          # TODO(kleisauke): Re-enable Mono CI when C# 9 features are supported.
-          # - os: ubuntu-22.04
-          #   script: ./build/test-mono.sh
-          #   allow_failures: true
           - os: macos-12
             script: ./build.sh
           - os: windows-2022
@@ -45,5 +41,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test
-        continue-on-error: ${{ matrix.allow_failures == true }}
         run: ${{ matrix.script }}
