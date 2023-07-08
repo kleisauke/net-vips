@@ -1,6 +1,6 @@
-// This file enables ModuleInitializer, a C# 9 feature to work with .NET Standard/Framework.
+// This file enables ModuleInitializer, a C# 9 feature to work with .NET Framework.
 
-#if NETSTANDARD || NETFRAMEWORK
+#if NETFRAMEWORK
 namespace System.Runtime.CompilerServices
 {
     /// <inheritdoc />

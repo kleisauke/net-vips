@@ -25,7 +25,9 @@ namespace NetVips
         /// <summary>
         /// Initializes the module.
         /// </summary>
+#pragma warning disable CA2255
         [System.Runtime.CompilerServices.ModuleInitializer]
+#pragma warning restore CA2255
         public static void Initialize()
         {
             try
