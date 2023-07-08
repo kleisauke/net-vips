@@ -132,21 +132,10 @@ partial class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            // Need to build the macOS and *nix DLL first.
-            DotNetBuild(c => c
-                .SetProjectFile(Solution.NetVips)
-                .SetConfiguration(Configuration)
-                .SetFramework("netstandard2.0")
-                .AddProperty("Platform", "AnyCPU")
-                .CombineWith(
-                    new[] { "OSX", "Unix" },
-                    (_, os) => _.AddProperty("TargetOS", os)));
-
             DotNetPack(c => c
                 .SetProject(Solution.NetVips)
                 .SetConfiguration(Configuration)
                 .SetOutputDirectory(ArtifactsDirectory)
-                .AddProperty("TargetOS", "Windows")
             );
         });
 
