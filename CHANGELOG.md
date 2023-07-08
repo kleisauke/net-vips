@@ -4,6 +4,9 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [3.0.0] - TBD
+### Added
+- Add support for a single shared libvips binary on Windows ([#211](https://github.com/kleisauke/net-vips/issues/211)).
+
 ### Removed
 - Drop support for .NET Standard 2.0 and Mono. NetVips now targets .NET 6 (`net6.0`) and .NET Framework 4.5.2 (`net452`) moving forward.
   See https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/ for more information.
