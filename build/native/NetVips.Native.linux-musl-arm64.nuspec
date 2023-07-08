@@ -32,8 +32,7 @@
     <file src="pack\linux-musl-arm64\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <!-- Note: Linux musl ARM64v8 is supported since .NET Core 3.0 (.NET Standard 2.1) -->
-    <file src="_._" target="lib/netstandard2.1" />
+    <file src="_._" target="lib/net6.0" />
 
   </files>
 </package>

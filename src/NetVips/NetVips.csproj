@@ -3,8 +3,8 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
-    <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net452</TargetFrameworks>
+    <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">net6.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
@@ -39,7 +39,7 @@
     <InternalsVisibleTo Include="$(AssemblyName).Samples" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
     <PackageReference Include="System.Buffers" Version="4.5.1" />
   </ItemGroup>
 

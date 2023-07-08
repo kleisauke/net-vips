@@ -3,8 +3,8 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;netstandard2.0;net461</TargetFrameworks>
-    <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net461</TargetFrameworks>
+    <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">net6.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>NetVips.Extensions</PackageId>
     <AssemblyName>NetVips.Extensions</AssemblyName>
@@ -20,15 +20,8 @@
     <ProjectReference Include="..\..\src\NetVips\NetVips.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)','net6.0'))">
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <!-- For .NET Standard 2.0; constrain the version to 5.0.3 as later versions are Windows-only.
-         https://aka.ms/systemdrawingnonwindows
-    -->
-    <PackageReference Include="System.Drawing.Common" Version="[5.0.3]" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">

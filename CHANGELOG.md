@@ -3,6 +3,11 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - TBD
+### Removed
+- Drop support for .NET Standard 2.0 and Mono. NetVips now targets .NET 6 (`net6.0`) and .NET Framework 4.5.2 (`net452`) moving forward.
+  See https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/ for more information.
+
 ## [2.4.2] - 2024-10-13
 ### Fixed
 - Fix incorrect progress reporting on Linux ([#237](https://github.com/kleisauke/net-vips/issues/237)).
@@ -31,7 +36,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 - Update methods/enums for libvips 8.14.
-- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 6.0 or higher. See https://aka.ms/systemdrawingnonwindows for more information.
+- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 6.0 or higher.
+  See https://aka.ms/systemdrawingnonwindows for more information.
 
 ### Fixed
 - Ensure compatibility with FreeBSD and variants.
@@ -45,12 +51,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 - Update methods/enums for libvips 8.13.
-- Remove internal `VipsSaveable` enum.
 - Avoid throwing general exceptions.
 - Ensure debug and unit tests functions are internal.
 
 ### Fixed
 - Use the correct type for signal handler IDs.
+
+### Removed
+- Remove internal `VipsSaveable` enum.
 
 ## [2.1.0] - 2021-12-02
 ### Added
@@ -61,7 +69,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Drop internal `ModuleInit.Fody` dependency in favor of the `[ModuleInitializer]` attribute.
 - `image.WriteToBuffer()` tries to use the new target API first.
 - Bump minimum required .NET Framework version to v4.5.2.
-- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library when targeting .NET 6.0 or higher. See https://aka.ms/systemdrawingnonwindows for more information.
+- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now attributed as a Windows-specific library when targeting .NET 6.0 or higher.
+  See https://aka.ms/systemdrawingnonwindows for more information.
 
 ### Fixed
 - Ensure recorded delegates are not released too early ([#141](https://github.com/kleisauke/net-vips/issues/141)).
@@ -228,6 +237,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
+[3.0.0]: https://github.com/kleisauke/net-vips/compare/v2.4.2...v3.0.0
 [2.4.2]: https://github.com/kleisauke/net-vips/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/kleisauke/net-vips/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/kleisauke/net-vips/compare/v2.3.1...v2.4.0

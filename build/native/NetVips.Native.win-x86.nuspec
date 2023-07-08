@@ -22,8 +22,8 @@
   </metadata>
   <files>
 
-    <!-- The .NET Framework >= 4.5 build bits -->
-    <file src="targets\NetVips.Native.win-x86.targets" target="build/net45" />
+    <!-- The .NET Framework >= 4.5.2 build bits -->
+    <file src="targets\NetVips.Native.win-x86.targets" target="build/net452" />
 
     <!-- Include libvips Windows x86 binaries -->
     <file src="pack\win-x86\*.dll" target="runtimes/win-x86/native" />

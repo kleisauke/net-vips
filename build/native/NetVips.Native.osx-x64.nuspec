@@ -22,9 +22,6 @@
   </metadata>
   <files>
 
-    <!-- The .NET Framework >= 4.6.1 build bits for Mono runtime -->
-    <file src="targets\NetVips.Native.osx-x64.targets" target="build/net461" />
-
     <!-- Include libvips macOS x64 binaries -->
     <file src="pack\osx-x64\*.dylib" target="runtimes/osx-x64/native" />
 
@@ -35,7 +32,7 @@
     <file src="pack\osx-x64\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <file src="_._" target="lib/netstandard1.0" />
+    <file src="_._" target="lib/net6.0" />
 
   </files>
 </package>
