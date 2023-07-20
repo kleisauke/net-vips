@@ -2,6 +2,7 @@ namespace NetVips.Tests
 {
     using System;
     using System.IO;
+    using System.Text;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -1355,7 +1356,16 @@ namespace NetVips.Tests
             _colour.Dzsave(filename2, compression: -1);
 
             Assert.True(File.Exists(filename2));
-            Assert.True(new FileInfo(filename2).Length < new FileInfo(filename).Length);
+
+            var buf1 = File.ReadAllBytes(filename);
+            var buf2 = File.ReadAllBytes(filename2);
+
+            // compressed output should produce smaller file size
+            Assert.True(buf2.Length < buf1.Length);
+
+            // check whether the *.dzi file is Deflate-compressed
+            Assert.Contains("http://schemas.microsoft.com/deepzoom/2008", Encoding.ASCII.GetString(buf1));
+            Assert.DoesNotContain("http://schemas.microsoft.com/deepzoom/2008", Encoding.ASCII.GetString(buf2));
 
             // test suffix
             filename = Helper.GetTemporaryFile(_tempDir);
@@ -1387,12 +1397,12 @@ namespace NetVips.Tests
 
                 _colour.Dzsave(filename);
 
-                var buf1 = File.ReadAllBytes(filename);
-                var buf2 = _colour.DzsaveBuffer(basename: baseName);
+                buf1 = File.ReadAllBytes(filename);
+                buf2 = _colour.DzsaveBuffer(basename: baseName);
                 Assert.Equal(buf1.Length, buf2.Length);
 
-                // we can't test the bytes are exactly equal -- the timestamps will
-                // be different
+                // we can't test the bytes are exactly equal -- the timestamp in
+                // vips-properties.xml will be different
 
                 // added in 8.7
                 if (NetVips.AtLeastLibvips(8, 7))
