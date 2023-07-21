@@ -65,29 +65,37 @@
 <p>All notable changes to the pre-compiled binaries of libvips will be documented in this file. The version number of these NuGet packages is in sync with libvips' version number.
 The changes of libvips are documented <a href="https://github.com/libvips/libvips/blob/master/ChangeLog">here</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="8142---2023-03-24"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.13.2...v8.14.2">8.14.2</a> - 2023-03-24</h2>
+<h2 id="8143---2023-07-21"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.14.2...v8.14.3">8.14.3</a> - 2023-07-21</h2>
 <h3 id="note">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
-<a href="https://libvips.org/2022/12/22/What%27s-new-in-8.14.html">https://libvips.org/2022/12/22/What's-new-in-8.14.html</a></p>
+<a href="https://github.com/libvips/libvips/releases/tag/v8.14.3">https://github.com/libvips/libvips/releases/tag/v8.14.3</a></p>
 <h3 id="changed">Changed</h3>
+<ul>
+<li>Restore support for tile-based output (<a href="https://github.com/libvips/libvips/issues/3354">libvips/libvips#3354</a>).</li>
+</ul>
+<h2 id="8142---2023-03-24"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.13.2...v8.14.2">8.14.2</a> - 2023-03-24</h2>
+<h3 id="note-1">Note</h3>
+<p>If you would like to see what's changed, please visit the release notes of libvips:<br>
+<a href="https://libvips.org/2022/12/22/What%27s-new-in-8.14.html">https://libvips.org/2022/12/22/What's-new-in-8.14.html</a></p>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Bump the minimum required macOS version to 10.13 (was 10.9) (<a href="https://github.com/lovell/sharp-libvips/pull/164">lovell/sharp-libvips#164</a>).</li>
 <li>Support for tile-based output temporarily removed due to licensing issue (<a href="https://github.com/libvips/libvips/issues/3354">libvips/libvips#3354</a>).</li>
 </ul>
 <h2 id="8132---2022-10-01"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.13.1...v8.13.2">8.13.2</a> - 2022-10-01</h2>
-<h3 id="note-1">Note</h3>
+<h3 id="note-2">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.13.2">https://github.com/libvips/libvips/releases/tag/v8.13.2</a></p>
 <h2 id="8131---2022-09-05"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.13.0...v8.13.1">8.13.1</a> - 2022-09-05</h2>
-<h3 id="note-2">Note</h3>
+<h3 id="note-3">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.13.1">https://github.com/libvips/libvips/releases/tag/v8.13.1</a></p>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Align Linux x64 binaries with the v2 standard microarchitecture (<a href="https://github.com/lovell/sharp-libvips/pull/155">lovell/sharp-libvips#155</a>).</li>
 </ul>
 <h2 id="8130---2022-07-25"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.12.2...v8.13.0">8.13.0</a> - 2022-07-25</h2>
-<h3 id="note-3">Note</h3>
+<h3 id="note-4">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://libvips.org/2022/05/28/What%27s-new-in-8.13.html">https://libvips.org/2022/05/28/What's-new-in-8.13.html</a></p>
 <h3 id="added">Added</h3>
@@ -95,35 +103,35 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>Enable Arm Neon support in libwebp, if available (<a href="https://github.com/lovell/sharp-libvips/pull/135">lovell/sharp-libvips#135</a>).</li>
 <li>Enable WebP support in libtiff (<a href="https://github.com/lovell/sharp-libvips/pull/135">lovell/sharp-libvips#135</a>).</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Build Linux x64 glibc binaires with GCC 11.</li>
 <li>Build Linux musl binaires on Alpine 3.12.</li>
 <li>Switch libvips build to Meson (<a href="https://github.com/lovell/sharp-libvips/pull/144">lovell/sharp-libvips#144</a>).</li>
 </ul>
 <h2 id="8122---2022-01-27"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.12.1...v8.12.2">8.12.2</a> - 2022-01-27</h2>
-<h3 id="note-4">Note</h3>
+<h3 id="note-5">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.12.2">https://github.com/libvips/libvips/releases/tag/v8.12.2</a></p>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>Build macOS binaries with Clang 13.</li>
 </ul>
 <h2 id="8121---2021-12-02"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.11.4...v8.12.1">8.12.1</a> - 2021-12-02</h2>
-<h3 id="note-5">Note</h3>
+<h3 id="note-6">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://libvips.org/2021/11/14/What%27s-new-in-8.12.html">https://libvips.org/2021/11/14/What's-new-in-8.12.html</a></p>
 <h3 id="added-1">Added</h3>
 <ul>
 <li>Include cgif as dependency.</li>
 </ul>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>Build Linux ARM64v8 binaries on CircleCI (<a href="https://github.com/lovell/sharp-libvips/issues/114">lovell/sharp-libvips#114</a>).</li>
 <li>Move macOS ARM64 NuGet package to <code>netstandard2.1</code> group (<a href="https://github.com/kleisauke/net-vips/issues/151">#151</a>).</li>
 </ul>
 <h2 id="8114---2021-09-25"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.11.3-build2...v8.11.4">8.11.4</a> - 2021-09-25</h2>
-<h3 id="note-6">Note</h3>
+<h3 id="note-7">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.11.4">https://github.com/libvips/libvips/releases/tag/v8.11.4</a></p>
 <h3 id="fixed">Fixed</h3>
@@ -136,23 +144,23 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li><code>System.DllNotFoundException</code> on .NET Framework (<a href="https://github.com/kleisauke/net-vips/issues/136">#136</a>).</li>
 </ul>
 <h2 id="8113---2021-08-17"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.11.0...v8.11.3">8.11.3</a> - 2021-08-17</h2>
-<h3 id="note-7">Note</h3>
+<h3 id="note-8">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.11.3">https://github.com/libvips/libvips/releases/tag/v8.11.3</a></p>
-<h3 id="changed-5">Changed</h3>
+<h3 id="changed-6">Changed</h3>
 <ul>
 <li>Build Linux ARM64v8 and ARMv7 binaries with GCC 11.2.</li>
 </ul>
 <h2 id="8110---2021-06-23"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.10.6...v8.11.0">8.11.0</a> - 2021-06-23</h2>
-<h3 id="note-8">Note</h3>
+<h3 id="note-9">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://libvips.org/2021/06/04/What%27s-new-in-8.11.html">https://libvips.org/2021/06/04/What's-new-in-8.11.html</a></p>
-<h3 id="changed-6">Changed</h3>
+<h3 id="changed-7">Changed</h3>
 <ul>
 <li>Build Linux ARM64v8 and ARMv7 binaries with GCC 11.1.</li>
 </ul>
 <h2 id="8106---2021-03-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.10.5-build2...v8.10.6">8.10.6</a> - 2021-03-30</h2>
-<h3 id="note-9">Note</h3>
+<h3 id="note-10">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.10.6">https://github.com/libvips/libvips/releases/tag/v8.10.6</a></p>
 <h3 id="added-2">Added</h3>
@@ -161,7 +169,7 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>Provide prebuilt binaries for Linux musl ARM64 (<a href="https://github.com/lovell/sharp-libvips/pull/90">lovell/sharp-libvips#90</a>).</li>
 <li>Include libimagequant as dependency (<a href="https://github.com/lovell/sharp-libvips/pull/91">lovell/sharp-libvips#91</a>).</li>
 </ul>
-<h3 id="changed-7">Changed</h3>
+<h3 id="changed-8">Changed</h3>
 <ul>
 <li>Switch from zlib to zlib-ng (<a href="https://github.com/lovell/sharp-libvips/issues/25">lovell/sharp-libvips#25</a>).</li>
 <li>Allow linker to remove unused sections (<a href="https://github.com/lovell/sharp-libvips/pull/88">lovell/sharp-libvips#88</a>).</li>
@@ -177,7 +185,7 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>Compatibility with older Linux ARM64v8 and ARMv7 distributions (<a href="https://github.com/kleisauke/libvips-packaging/issues/3">kleisauke/libvips-packaging#3</a>).</li>
 </ul>
 <h2 id="8105---2020-12-24"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.10.1...v8.10.5">8.10.5</a> - 2020-12-24</h2>
-<h3 id="note-10">Note</h3>
+<h3 id="note-11">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.10.5">https://github.com/libvips/libvips/releases/tag/v8.10.5</a></p>
 <h3 id="added-3">Added</h3>
@@ -186,11 +194,11 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>Add support for AVIF (<a href="https://github.com/lovell/sharp/issues/2289">lovell/sharp#2289</a>).</li>
 </ul>
 <h2 id="8101---2020-09-12"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.10.0-build2...v8.10.1">8.10.1</a> - 2020-09-12</h2>
-<h3 id="note-11">Note</h3>
+<h3 id="note-12">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.10.1">https://github.com/libvips/libvips/releases/tag/v8.10.1</a></p>
 <h2 id="8100---2020-08-26"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.2-build3...v8.10.0-build2">8.10.0</a> - 2020-08-26</h2>
-<h3 id="note-12">Note</h3>
+<h3 id="note-13">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://libvips.org/2020/06/18/What%27s-new-in-8.10.html">https://libvips.org/2020/06/18/What's-new-in-8.10.html</a></p>
 <h3 id="fixed-3">Fixed</h3>
@@ -203,20 +211,20 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>Include libspng as dependency.</li>
 </ul>
 <h2 id="892-build3---2020-06-21"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.2-build2...v8.9.2-build3">8.9.2-build3</a> - 2020-06-21</h2>
-<h3 id="note-13">Note</h3>
+<h3 id="note-14">Note</h3>
 <p>Requires NetVips v1.2.3.</p>
-<h3 id="changed-8">Changed</h3>
+<h3 id="changed-9">Changed</h3>
 <ul>
 <li>A single shared libvips binary is build for Linux and macOS (<a href="https://github.com/kleisauke/net-vips/issues/83">#83</a>).</li>
 </ul>
 <h2 id="892-build2---2020-06-16"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.2...v8.9.2-build2">8.9.2-build2</a> - 2020-06-16</h2>
-<h3 id="changed-9">Changed</h3>
+<h3 id="changed-10">Changed</h3>
 <ul>
 <li>Binaries are copied to the output directory for Mono runtime (<a href="https://github.com/kleisauke/net-vips/issues/80">#80</a>).</li>
 <li>A statically linked libvips binary is build for macOS (<a href="https://github.com/kleisauke/libvips-packaging/issues/1">kleisauke/libvips-packaging#1</a>).</li>
 </ul>
 <h2 id="892---2020-04-28"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.1...v8.9.2">8.9.2</a> - 2020-04-28</h2>
-<h3 id="note-14">Note</h3>
+<h3 id="note-15">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.9.2">https://github.com/libvips/libvips/releases/tag/v8.9.2</a></p>
 <h3 id="fixed-4">Fixed</h3>
@@ -225,14 +233,14 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <li>A GLib regression when running inside the Visual Studio debugger (<a href="https://github.com/libvips/build-win64-mxe/issues/9">libvips/build-win64-mxe#9</a>).</li>
 </ul>
 <h2 id="891---2020-01-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.9.0...v8.9.1">8.9.1</a> - 2020-01-30</h2>
-<h3 id="note-15">Note</h3>
+<h3 id="note-16">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.9.1">https://github.com/libvips/libvips/releases/tag/v8.9.1</a></p>
 <h2 id="890---2020-01-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.4...v8.9.0">8.9.0</a> - 2020-01-30</h2>
-<h3 id="note-16">Note</h3>
+<h3 id="note-17">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://libvips.org/2019/12/11/What%27s-new-in-8.9.html">https://libvips.org/2019/12/11/What's-new-in-8.9.html</a></p>
-<h3 id="changed-10">Changed</h3>
+<h3 id="changed-11">Changed</h3>
 <ul>
 <li>A statically linked libvips binary is build for Linux (<a href="https://github.com/kleisauke/net-vips/issues/51">#51</a>).</li>
 <li>The NuGet packages now includes:
@@ -243,23 +251,23 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 </li>
 </ul>
 <h2 id="884---2019-12-30"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.3...v8.8.4">8.8.4</a> - 2019-12-30</h2>
-<h3 id="note-17">Note</h3>
+<h3 id="note-18">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.4">https://github.com/libvips/libvips/releases/tag/v8.8.4</a></p>
 <h2 id="883---2019-10-14"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.2...v8.8.3">8.8.3</a> - 2019-10-14</h2>
-<h3 id="note-18">Note</h3>
+<h3 id="note-19">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.3">https://github.com/libvips/libvips/releases/tag/v8.8.3</a></p>
 <h2 id="882---2019-09-05"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.1...v8.8.2">8.8.2</a> - 2019-09-05</h2>
-<h3 id="note-19">Note</h3>
+<h3 id="note-20">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.2">https://github.com/libvips/libvips/releases/tag/v8.8.2</a></p>
 <h2 id="881---2019-07-29"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.8.0...v8.8.1">8.8.1</a> - 2019-07-29</h2>
-<h3 id="note-20">Note</h3>
+<h3 id="note-21">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://github.com/libvips/libvips/releases/tag/v8.8.1">https://github.com/libvips/libvips/releases/tag/v8.8.1</a></p>
 <h2 id="880---2019-06-22"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.7.4...v8.8.0">8.8.0</a> - 2019-06-22</h2>
-<h3 id="note-21">Note</h3>
+<h3 id="note-22">Note</h3>
 <p>If you would like to see what's changed, please visit the release notes of libvips:<br>
 <a href="https://libvips.org/2019/04/22/What%27s-new-in-8.8.html">https://libvips.org/2019/04/22/What's-new-in-8.8.html</a></p>
 <h2 id="874---2019-04-10"><a href="https://github.com/kleisauke/libvips-packaging/compare/v8.7.4-beta1...v8.7.4">8.7.4</a> - 2019-04-10</h2>
@@ -267,7 +275,7 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 <ul>
 <li>A <a href="https://www.nuget.org/packages/NetVips.Native/">NetVips.Native</a> package which depends on the other <a href="https://www.nuget.org/packages?q=id%3ANetVips.Native">NetVips.Native.*</a> packages.</li>
 </ul>
-<h3 id="changed-11">Changed</h3>
+<h3 id="changed-12">Changed</h3>
 <ul>
 <li>The OS X binaries are now distributed with <a href="https://github.com/libjpeg-turbo/libjpeg-turbo"><code>jpeg-turbo</code></a> instead than <a href="https://www.ijg.org/"><code>jpeg</code></a> (<a href="https://github.com/lovell/package-libvips-darwin/pull/3">lovell/package-libvips-darwin#3</a>).</li>
 </ul>
@@ -284,7 +292,7 @@ The changes of libvips are documented <a href="https://github.com/libvips/libvip
 </ul>
 </li>
 </ul>
-<h3 id="changed-12">Changed</h3>
+<h3 id="changed-13">Changed</h3>
 <ul>
 <li>A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 (<a href="https://github.com/libvips/build-win64/issues/21#issuecomment-458112440">libvips/build-win64#21</a>).</li>
 </ul>
