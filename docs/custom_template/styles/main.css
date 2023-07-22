@@ -1,6 +1,11 @@
 /* Start of DocFX css fix
    See: https://github.com/dotnet/docfx/pull/6659#issuecomment-728897346
  */
+
+.affix {
+    overflow-y: auto;
+}
+
 .affix ul > li > a:before {
     content: "|";
     font-size: 16px;
