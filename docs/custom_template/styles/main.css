@@ -1,7 +1,8 @@
 /* Start of DocFX css fix
-   See: https://github.com/dotnet/docfx/pull/6659#issuecomment-728897346
+ * See:
+ * https://github.com/dotnet/docfx/pull/6659#issuecomment-728897346
+ * https://github.com/kleisauke/net-vips/pull/214
  */
-
 .affix {
     overflow-y: auto;
 }

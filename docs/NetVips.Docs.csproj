@@ -3,15 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
-    <RootNamespace>Generator</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- DocFX requires Mono on non-Windows systems -->
-    <PackageReference Include="docfx.console" Version="2.59.4" Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Docfx.App" Version="2.70.0" />
   </ItemGroup>
 
 </Project>

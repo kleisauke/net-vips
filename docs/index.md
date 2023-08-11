@@ -6,7 +6,6 @@ _disableNavbar: true
 _disableBreadcrumb: true
 _disableToc: true
 _disableAffix: true
-_disableContribution: true
 _disableFooter: true
 ---
 <div class="hero">
