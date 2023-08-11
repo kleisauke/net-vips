@@ -2664,15 +2664,6 @@ references:
   commentId: M:NetVips.Image.Autorot
   fullName: NetVips.Image.Autorot()
   nameWithType: Image.Autorot()
-- uid: NetVips.Image.Autorot(NetVips.Enums.Angle@)
-  name: Autorot(out Enums.Angle)
-  href: api/NetVips.Image.html#NetVips_Image_Autorot_NetVips_Enums_Angle__
-  commentId: M:NetVips.Image.Autorot(NetVips.Enums.Angle@)
-  name.vb: Autorot(ByRef Enums.Angle)
-  fullName: NetVips.Image.Autorot(out NetVips.Enums.Angle)
-  fullName.vb: NetVips.Image.Autorot(ByRef NetVips.Enums.Angle)
-  nameWithType: Image.Autorot(out Enums.Angle)
-  nameWithType.vb: Image.Autorot(ByRef Enums.Angle)
 - uid: NetVips.Image.Autorot(NetVips.Enums.Angle@,System.Boolean@)
   name: Autorot(out Enums.Angle, out Boolean)
   href: api/NetVips.Image.html#NetVips_Image_Autorot_NetVips_Enums_Angle__System_Boolean__
@@ -2682,6 +2673,15 @@ references:
   fullName.vb: NetVips.Image.Autorot(ByRef NetVips.Enums.Angle, ByRef System.Boolean)
   nameWithType: Image.Autorot(out Enums.Angle, out Boolean)
   nameWithType.vb: Image.Autorot(ByRef Enums.Angle, ByRef Boolean)
+- uid: NetVips.Image.Autorot(NetVips.Enums.Angle@)
+  name: Autorot(out Enums.Angle)
+  href: api/NetVips.Image.html#NetVips_Image_Autorot_NetVips_Enums_Angle__
+  commentId: M:NetVips.Image.Autorot(NetVips.Enums.Angle@)
+  name.vb: Autorot(ByRef Enums.Angle)
+  fullName: NetVips.Image.Autorot(out NetVips.Enums.Angle)
+  fullName.vb: NetVips.Image.Autorot(ByRef NetVips.Enums.Angle)
+  nameWithType: Image.Autorot(out Enums.Angle)
+  nameWithType.vb: Image.Autorot(ByRef Enums.Angle)
 - uid: NetVips.Image.Autorot*
   name: Autorot
   href: api/NetVips.Image.html#NetVips_Image_Autorot_
@@ -5236,15 +5236,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.IsKilled
   nameWithType: Image.IsKilled
-- uid: NetVips.Image.Item(System.Int32)
-  name: Item[Int32]
-  href: api/NetVips.Image.html#NetVips_Image_Item_System_Int32_
-  commentId: P:NetVips.Image.Item(System.Int32)
-  name.vb: Item(Int32)
-  fullName: NetVips.Image.Item[System.Int32]
-  fullName.vb: NetVips.Image.Item(System.Int32)
-  nameWithType: Image.Item[Int32]
-  nameWithType.vb: Image.Item(Int32)
 - uid: NetVips.Image.Item(System.Int32,System.Int32)
   name: Item[Int32, Int32]
   href: api/NetVips.Image.html#NetVips_Image_Item_System_Int32_System_Int32_
@@ -5254,6 +5245,15 @@ references:
   fullName.vb: NetVips.Image.Item(System.Int32, System.Int32)
   nameWithType: Image.Item[Int32, Int32]
   nameWithType.vb: Image.Item(Int32, Int32)
+- uid: NetVips.Image.Item(System.Int32)
+  name: Item[Int32]
+  href: api/NetVips.Image.html#NetVips_Image_Item_System_Int32_
+  commentId: P:NetVips.Image.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: NetVips.Image.Item[System.Int32]
+  fullName.vb: NetVips.Image.Item(System.Int32)
+  nameWithType: Image.Item[Int32]
+  nameWithType.vb: Image.Item(Int32)
 - uid: NetVips.Image.Item*
   name: Item
   href: api/NetVips.Image.html#NetVips_Image_Item_
@@ -9779,6 +9779,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Switch
   nameWithType: Image.Switch
+- uid: NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String)
+  name: System(String, Image[], String, String)
+  href: api/NetVips.Image.html#NetVips_Image_System_System_String_NetVips_Image___System_String_System_String_
+  commentId: M:NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String)
+  name.vb: System(String, Image(), String, String)
+  fullName: NetVips.Image.System(System.String, NetVips.Image[], System.String, System.String)
+  fullName.vb: NetVips.Image.System(System.String, NetVips.Image(), System.String, System.String)
+  nameWithType: Image.System(String, Image[], String, String)
+  nameWithType.vb: Image.System(String, Image(), String, String)
 - uid: NetVips.Image.System(System.String,NetVips.Image@,NetVips.Image[],System.String,System.String)
   name: System(String, out Image, Image[], String, String)
   href: api/NetVips.Image.html#NetVips_Image_System_System_String_NetVips_Image__NetVips_Image___System_String_System_String_
@@ -9797,15 +9806,6 @@ references:
   fullName.vb: NetVips.Image.System(System.String, ByRef NetVips.Image, ByRef System.String, NetVips.Image(), System.String, System.String)
   nameWithType: Image.System(String, out Image, out String, Image[], String, String)
   nameWithType.vb: Image.System(String, ByRef Image, ByRef String, Image(), String, String)
-- uid: NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String)
-  name: System(String, Image[], String, String)
-  href: api/NetVips.Image.html#NetVips_Image_System_System_String_NetVips_Image___System_String_System_String_
-  commentId: M:NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String)
-  name.vb: System(String, Image(), String, String)
-  fullName: NetVips.Image.System(System.String, NetVips.Image[], System.String, System.String)
-  fullName.vb: NetVips.Image.System(System.String, NetVips.Image(), System.String, System.String)
-  nameWithType: Image.System(String, Image[], String, String)
-  nameWithType.vb: Image.System(String, Image(), String, String)
 - uid: NetVips.Image.System*
   name: System
   href: api/NetVips.Image.html#NetVips_Image_System_
@@ -12115,18 +12115,18 @@ references:
   commentId: M:NetVips.VipsException.#ctor
   fullName: NetVips.VipsException.VipsException()
   nameWithType: VipsException.VipsException()
-- uid: NetVips.VipsException.#ctor(System.String)
-  name: VipsException(String)
-  href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_System_String_
-  commentId: M:NetVips.VipsException.#ctor(System.String)
-  fullName: NetVips.VipsException.VipsException(System.String)
-  nameWithType: VipsException.VipsException(String)
 - uid: NetVips.VipsException.#ctor(System.String,System.Exception)
   name: VipsException(String, Exception)
   href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_System_String_System_Exception_
   commentId: M:NetVips.VipsException.#ctor(System.String,System.Exception)
   fullName: NetVips.VipsException.VipsException(System.String, System.Exception)
   nameWithType: VipsException.VipsException(String, Exception)
+- uid: NetVips.VipsException.#ctor(System.String)
+  name: VipsException(String)
+  href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_System_String_
+  commentId: M:NetVips.VipsException.#ctor(System.String)
+  fullName: NetVips.VipsException.VipsException(System.String)
+  nameWithType: VipsException.VipsException(String)
 - uid: NetVips.VipsException.#ctor*
   name: VipsException
   href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_
