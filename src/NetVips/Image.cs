@@ -4,6 +4,7 @@ namespace NetVips
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.InteropServices;
+    using System.Security;
     using System.Text;
     using System.Threading;
     using Internal;
@@ -28,6 +29,7 @@ namespace NetVips
         /// <summary>
         /// Internal marshaller delegate for <see cref="EvalDelegate"/>.
         /// </summary>
+        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate void EvalMarshalDelegate(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr);
 
         /// <inheritdoc cref="VipsObject"/>
