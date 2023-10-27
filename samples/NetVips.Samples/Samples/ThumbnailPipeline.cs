@@ -35,7 +35,7 @@ namespace NetVips.Samples
         public bool LoaderSupportPage(string loader)
         {
             return loader.StartsWith("VipsForeignLoadPdf") ||
-                   loader.StartsWith("VipsForeignLoadGif") ||
+                   loader.StartsWith("VipsForeignLoadNsgif") ||
                    loader.StartsWith("VipsForeignLoadTiff") ||
                    loader.StartsWith("VipsForeignLoadWebp") ||
                    loader.StartsWith("VipsForeignLoadHeif") ||
@@ -85,9 +85,7 @@ namespace NetVips.Samples
             int inputWidth;
             int inputHeight;
             int pageHeight;
-            bool isCmyk;
-            bool isLabs;
-            bool embeddedProfile;
+            bool hasIccProfile;
 
             Image image = null;
             try
@@ -109,9 +107,7 @@ namespace NetVips.Samples
                 }
 
                 pageHeight = image.PageHeight;
-                isCmyk = image.Interpretation == Enums.Interpretation.Cmyk;
-                isLabs = image.Interpretation == Enums.Interpretation.Labs;
-                embeddedProfile = image.Contains(VipsMetaIccName);
+                hasIccProfile = image.Contains(VipsMetaIccName);
             }
             catch (VipsException e)
             {
@@ -128,17 +124,17 @@ namespace NetVips.Samples
             string exportProfile = null;
             Enums.Intent? intent = null;
 
-            // Ensure we're using a device-independent color space
-            if ((embeddedProfile || isCmyk) && !isLabs)
+            // If there's some kind of import profile, we can transform to the
+            // output.
+            if (hasIccProfile)
             {
-                // Embedded profile; fallback in case the profile embedded in the image
-                // is broken. No embedded profile; import using default CMYK profile.
-                importProfile = isCmyk ? "cmyk" : "srgb";
+                // Fallback to sRGB.
+                importProfile = "srgb";
 
                 // Convert to sRGB using embedded or import profile.
                 exportProfile = "srgb";
 
-                // Use "perceptual" intent to better match imagemagick.
+                // Use "perceptual" intent to better match *magick.
                 intent = Enums.Intent.Perceptual;
             }
 
@@ -209,7 +205,7 @@ namespace NetVips.Samples
             // shrink-on-load tricks are possible. This can make thumbnailing of large
             // images extremely slow.
             using var thumb = Image.ThumbnailBuffer(buffer, thumbnailWidth, stringOptions, thumbnailHeight, size,
-                false, importProfile: importProfile, exportProfile: exportProfile, intent: intent);
+                importProfile: importProfile, exportProfile: exportProfile, intent: intent);
 
             thumb.WriteToFile("thumbnail.webp", new VOption
             {
