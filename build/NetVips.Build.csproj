@@ -17,7 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Nuke.Common" Version="7.0.5" />
+    <PackageReference Include="Nuke.Common" Version="7.0.6" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
   </ItemGroup>
 
