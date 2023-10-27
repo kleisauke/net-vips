@@ -1,5 +1,4 @@
 {
-  "homepages": [],
   "source_base_path": "C:/Users/kleisauke/Documents/GitHub/net-vips/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -914,7 +913,6 @@
       "version": ""
     }
   ],
-  "version_info": {},
   "groups": [
     {
       "xrefmap": "xrefmap.yml"
