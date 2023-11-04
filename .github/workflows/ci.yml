@@ -46,7 +46,7 @@ jobs:
         with:
           dotnet-version: 7.x
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Test
         continue-on-error: ${{ matrix.allow_failures == true }}
         run: ${{ matrix.script }}
