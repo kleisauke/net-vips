@@ -35,7 +35,15 @@ namespace NetVips.Tests
                 }
 
                 var pixel = im[10, 10];
-                Assert.Equal(42, pixel[3], 2);
+                if (col == Enums.Interpretation.Scrgb && NetVips.AtLeastLibvips(8, 15))
+                {
+                    // libvips 8.15 uses alpha range of 0.0 - 1.0 for scRGB images.
+                    Assert.Equal(42.0 / 255.0, pixel[3], 4);
+                }
+                else
+                {
+                    Assert.Equal(42, pixel[3], 2);
+                }
             }
 
             // alpha won't be equal for RGB16, but it should be preserved if we go

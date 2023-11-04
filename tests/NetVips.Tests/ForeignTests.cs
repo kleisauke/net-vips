@@ -937,7 +937,8 @@ namespace NetVips.Tests
                     0.159668,
                     0.040375,
                     // OpenEXR alpha is scaled to 0 - 255 in libvips 8.7+
-                    NetVips.AtLeastLibvips(8, 7) ? 255 : 1.0
+                    // but libvips 8.15+ uses alpha range of 0 - 1 for scRGB.
+                    NetVips.AtLeastLibvips(8, 7) && !NetVips.AtLeastLibvips(8, 15) ? 255 : 1.0
                 }, a, 0.00001);
                 Assert.Equal(610, im.Width);
                 Assert.Equal(406, im.Height);
@@ -1298,7 +1299,7 @@ namespace NetVips.Tests
             x = Image.NewFromFile(filename + "/2/2/3.jpg");
             Assert.Equal(256, x.Width);
             Assert.Equal(256, x.Height);
-            Assert.False(Directory.Exists(filename + "/2/2/4.jpg"));
+            Assert.False(File.Exists(filename + "/2/2/4.jpg"));
             Assert.False(Directory.Exists(filename + "/3"));
             x = Image.NewFromFile(filename + "/blank.png");
             Assert.Equal(256, x.Width);
@@ -1316,7 +1317,7 @@ namespace NetVips.Tests
             x = Image.NewFromFile(filename + "/0/1/1.jpg");
             Assert.Equal(256, x.Width);
             Assert.Equal(256, x.Height);
-            Assert.False(Directory.Exists(filename + "/0/2/2.jpg"));
+            Assert.False(File.Exists(filename + "/0/2/2.jpg"));
 
             // with 511x511, it'll fit exactly into 2x2 -- we we actually generate
             // 3x3, since we output the overlaps
@@ -1330,7 +1331,7 @@ namespace NetVips.Tests
                 x = Image.NewFromFile(filename + "/0/2/2.jpg");
                 Assert.Equal(256, x.Width);
                 Assert.Equal(256, x.Height);
-                Assert.False(Directory.Exists(filename + "/0/3/3.jpg"));
+                Assert.False(File.Exists(filename + "/0/3/3.jpg"));
             }
 
             // default zoomify layout
@@ -1398,7 +1399,7 @@ namespace NetVips.Tests
                 _colour.Dzsave(filename);
 
                 buf1 = File.ReadAllBytes(filename);
-                buf2 = _colour.DzsaveBuffer(basename: baseName);
+                buf2 = _colour.DzsaveBuffer(imagename: baseName);
                 Assert.Equal(buf1.Length, buf2.Length);
 
                 // we can't test the bytes are exactly equal -- the timestamp in

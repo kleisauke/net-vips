@@ -509,6 +509,34 @@ namespace NetVips
         }
 
         /// <summary>
+        /// Which metadata to retain.
+        /// </summary>
+        [Flags]
+        public enum ForeignKeep
+        {
+            /// <summary>Don't attach metadata.</summary>
+            None = 0, // "none"
+
+            /// <summary>Keep Exif metadata.</summary>
+            Exif = 1 << 0, // "exif"
+
+            /// <summary>Keep XMP metadata.</summary>
+            Xmp = 1 << 1, // "xmp"
+
+            /// <summary>Keep IPTC metadata.</summary>
+            Iptc = 1 << 2, // "iptc"
+
+            /// <summary>Keep ICC metadata.</summary>
+            Icc = 1 << 3, // "icc"
+
+            /// <summary>Keep other metadata (e.g. PNG comments and some TIFF tags)</summary>
+            Other = 1 << 4, // "other"
+
+            /// <summary>Keep all metadata.</summary>
+            All = Exif | Xmp | Iptc | Icc | Other // "all"
+        }
+
+        /// <summary>
         /// The selected encoder to use.
         /// </summary>
         /// <remarks>

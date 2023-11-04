@@ -209,13 +209,13 @@ namespace NetVips.Samples
 
             thumb.WriteToFile("thumbnail.webp", new VOption
             {
-                {"strip", true}
+                {"keep", Enums.ForeignKeep.None}
             });
 
             // Or:
             /*buffer = thumb.WriteToBuffer(".webp", new VOption
             {
-                {"strip", true}
+                {"keep", Enums.ForeignKeep.None}
             });*/
 
             Console.WriteLine("See thumbnail.webp");

@@ -272,5 +272,32 @@ namespace NetVips
                 options.Add("fail", failOn > Enums.FailOn.None);
             }
         }
+
+        /// <summary>
+        /// Compatibility method to call savers with the <see cref="Enums.ForeignKeep"/> enum.
+        /// </summary>
+        /// <param name="options">The optional arguments for the saver.</param>
+        /// <param name="keep">The optional <see cref="Enums.ForeignKeep"/> parameter.</param>
+        /// <param name="isDzsave">Whether this operation is <see cref="Image.Dzsave"/>-like.</param>
+        internal static void AddForeignKeep(this VOption options, Enums.ForeignKeep? keep = null, bool isDzsave = false)
+        {
+            if (!keep.HasValue)
+            {
+                return;
+            }
+
+            if (NetVips.AtLeastLibvips(8, 15))
+            {
+                options.Add(nameof(keep), keep);
+            }
+            else if (isDzsave)
+            {
+                options.Add("no_strip", keep != Enums.ForeignKeep.None);
+            }
+            else
+            {
+                options.Add("strip", keep == Enums.ForeignKeep.None);
+            }
+        }
     }
 }

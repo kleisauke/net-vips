@@ -54,11 +54,6 @@ namespace NetVips.Samples
 
             foreach (var name in allEnums)
             {
-                if (name.StartsWith("Gsf"))
-                {
-                    continue;
-                }
-
                 var gtype = NetVips.TypeFromName(name);
                 var csharpName = RemovePrefix(name);
 

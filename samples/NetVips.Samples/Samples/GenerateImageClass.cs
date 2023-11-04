@@ -37,6 +37,11 @@ namespace NetVips.Samples
         /// </summary>
         public static readonly IntPtr FailOnType = NetVips.TypeFromName("VipsFailOn");
 
+        /// <summary>
+        /// The fundamental type for VipsForeignKeep. See <see cref="Enums.ForeignKeep"/>.
+        /// </summary>
+        public static readonly IntPtr ForeignKeepType = NetVips.TypeFromName("VipsForeignKeep");
+
         public GenerateImageClass()
         {
             // Classes
@@ -57,12 +62,17 @@ namespace NetVips.Samples
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDemandStyle"), "Enums.DemandStyle");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsDirection"), "Enums.Direction");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsExtend"), "Enums.Extend");
-            _gTypeToCSharpDict.Add(FailOnType, "Enums.FailOn");
+            if (FailOnType != IntPtr.Zero)
+            {
+                _gTypeToCSharpDict.Add(FailOnType, "Enums.FailOn");
+            }
+
             if (NetVips.TypeFind("VipsOperation", "dzsave") != IntPtr.Zero)
             {
                 _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzContainer"), "Enums.ForeignDzContainer");
                 _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzLayout"), "Enums.ForeignDzLayout");
             }
+
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignDzDepth"), "Enums.ForeignDzDepth");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifCompression"), "Enums.ForeignHeifCompression");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPpmFormat"), "Enums.ForeignPpmFormat");
@@ -97,6 +107,10 @@ namespace NetVips.Samples
             // Flags
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignFlags"), "Enums.ForeignFlags");
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPngFilter"), "Enums.ForeignPngFilter");
+            if (ForeignKeepType != IntPtr.Zero)
+            {
+                _gTypeToCSharpDict.Add(ForeignKeepType, "Enums.ForeignKeep");
+            }
         }
 
         /// <summary>
@@ -410,9 +424,24 @@ namespace NetVips.Samples
                         ? $"nameof({arg.Name})"
                         : $"\"{arg.Name}\"";
 
-                    result.AppendLine(arg.Type == FailOnType
-                        ? $"{indent}    options.AddFailOn({safeIdentifier});"
-                        : $"{indent}    options.AddIfPresent({optionsName}, {safeIdentifier});");
+                    if (operationName.StartsWith("dzsave") && arg.Name == "imagename")
+                    {
+                        result.AppendLine(
+                            $"{indent}    options.AddIfPresent(NetVips.AtLeastLibvips(8, 15) ? {optionsName} : \"basename\", {safeIdentifier});");
+                    }
+                    else if (arg.Type == FailOnType)
+                    {
+                        result.AppendLine($"{indent}    options.AddFailOn({safeIdentifier});");
+                    }
+                    else if (arg.Type == ForeignKeepType)
+                    {
+                        result.Append($"{indent}    options.AddForeignKeep({safeIdentifier}");
+                        result.AppendLine(operationName.StartsWith("dzsave") ? ", true);" : ");");
+                    }
+                    else
+                    {
+                        result.AppendLine($"{indent}    options.AddIfPresent({optionsName}, {safeIdentifier});");
+                    }
                 }
 
                 result.AppendLine();

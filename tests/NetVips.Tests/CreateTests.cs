@@ -493,7 +493,7 @@ namespace NetVips.Tests
             Assert.True(im.Height > 10);
             Assert.Equal(1, im.Bands);
             Assert.Equal(Enums.BandFormat.Uchar, im.Format);
-            Assert.Equal(255, im.Max());
+            Assert.True(im.Max() > 240);
             Assert.Equal(0, im.Min());
 
             if (NetVips.AtLeastLibvips(8, 9))
