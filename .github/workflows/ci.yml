@@ -12,10 +12,10 @@ jobs:
             container: mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim
             script: ./build.sh
           - os: ubuntu-22.04
-            container: centos:7
+            container: rockylinux:8
             script: ./build.sh
           - os: ubuntu-22.04
-            container: mcr.microsoft.com/dotnet/sdk:7.0-alpine3.16
+            container: mcr.microsoft.com/dotnet/sdk:7.0-alpine3.18
             script: ./build.sh
           # TODO(kleisauke): Re-enable Mono CI when C# 9 features are supported.
           # - os: ubuntu-22.04
@@ -31,13 +31,10 @@ jobs:
         run: |
           apt-get update
           apt-get install -y fontconfig-config
-      - name: Dependencies (CentOS 7)
-        if: contains(matrix.container, 'centos')
-        run: |
-          yum install -y \
-            https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-          yum install -y dotnet-sdk-7.0 google-noto-sans-fonts which
-      - name: Dependencies (Alpine 3.16)
+      - name: Dependencies (Rocky Linux 8)
+        if: contains(matrix.container, 'rockylinux')
+        run: dnf install -y dotnet-sdk-7.0 google-noto-sans-fonts which
+      - name: Dependencies (Alpine 3.18)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
       - name: Setup dotnet (macOS 12, Windows 2022)
