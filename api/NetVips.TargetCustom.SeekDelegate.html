@@ -80,7 +80,7 @@
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
   <h5 id="NetVips_TargetCustom_SeekDelegate_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate long SeekDelegate(long offset, SeekOrigin origin);</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate long TargetCustom.SeekDelegate(long offset, SeekOrigin origin)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -93,16 +93,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Int64</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
         <td><span class="parametername">offset</span></td>
-        <td><p>A byte offset relative to the <code data-dev-comment-type="paramref" class="paramref">origin</code>
+        <td><p>A byte offset relative to the <code class="paramref">origin</code>
 parameter.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">SeekOrigin</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.seekorigin">SeekOrigin</a></td>
         <td><span class="parametername">origin</span></td>
-        <td><p>A value of type <span class="xref">System.IO.SeekOrigin</span> indicating the
+        <td><p>A value of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.seekorigin">SeekOrigin</a> indicating the
 reference point used to obtain the new position.</p>
 </td>
       </tr>
@@ -118,7 +118,7 @@ reference point used to obtain the new position.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Int64</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
         <td><p>The new position within the current target.</p>
 </td>
       </tr>

@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Enum Enums.CombineMode
+      <title>Enum Enums.ForeignKeep
  </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Enum Enums.CombineMode
+      <meta name="title" content="Enum Enums.ForeignKeep
  ">
     
       <link rel="shortcut icon" href="../favicon.ico">
@@ -67,26 +67,23 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.CombineMode">
+            <article class="content wrap" id="_content" data-uid="NetVips.Enums.ForeignKeep">
 
 
 
 
-  <h1 id="NetVips_Enums_CombineMode" data-uid="NetVips.Enums.CombineMode" class="text-break">Enum Enums.CombineMode
+  <h1 id="NetVips_Enums_ForeignKeep" data-uid="NetVips.Enums.ForeignKeep" class="text-break">Enum Enums.ForeignKeep
 </h1>
-  <div class="markdown level0 summary"><p>How to combine pixels.</p>
+  <div class="markdown level0 summary"><p>Which metadata to retain.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_CombineMode_syntax">Syntax</h5>
+  <h5 id="NetVips_Enums_ForeignKeep_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum Enums.CombineMode</code></pre>
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum Enums.ForeignKeep</code></pre>
   </div>
-  <h5 id="NetVips_Enums_CombineMode_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Operations like <a class="xref" href="NetVips.MutableImage.html#NetVips_MutableImage_DrawImage_NetVips_Image_System_Int32_System_Int32_System_Nullable_NetVips_Enums_CombineMode__">DrawImage(Image, int, int, CombineMode?)</a> need to be told how to
-combine images from two sources. See also <a class="xref" href="NetVips.Image.html#NetVips_Image_Join_NetVips_Image_NetVips_Enums_Direction_System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Double___System_Nullable_NetVips_Enums_Align__">Join(Image, Direction, bool?, int?, double[], Align?)</a>.</p>
-</div>
   <h3 id="fields">Fields
 </h3>
   <table class="table table-bordered table-condensed">
@@ -98,13 +95,38 @@ combine images from two sources. See also <a class="xref" href="NetVips.Image.ht
     <thead>
     <tbody>
       <tr>
-        <td id="NetVips_Enums_CombineMode_Add">Add</td>
-        <td><p>Add pixels.</p>
+        <td id="NetVips_Enums_ForeignKeep_All">All</td>
+        <td><p>Keep all metadata.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_CombineMode_Set">Set</td>
-        <td><p>Set pixels to the new value.</p>
+        <td id="NetVips_Enums_ForeignKeep_Exif">Exif</td>
+        <td><p>Keep Exif metadata.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignKeep_Icc">Icc</td>
+        <td><p>Keep ICC metadata.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignKeep_Iptc">Iptc</td>
+        <td><p>Keep IPTC metadata.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignKeep_None">None</td>
+        <td><p>Don't attach metadata.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignKeep_Other">Other</td>
+        <td><p>Keep other metadata (e.g. PNG comments and some TIFF tags)</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignKeep_Xmp">Xmp</td>
+        <td><p>Keep XMP metadata.</p>
 </td>
       </tr>
     </tbody>

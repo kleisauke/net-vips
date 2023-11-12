@@ -80,7 +80,7 @@
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
   <h5 id="NetVips_Log_LogDelegate_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate void LogDelegate(string logDomain, Enums.LogLevelFlags logLevel, string message);</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate void Log.LogDelegate(string logDomain, Enums.LogLevelFlags logLevel, string message)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -93,19 +93,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">logDomain</span></td>
         <td><p>The log domain of the message.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="NetVips.Enums.LogLevelFlags.html">Enums.LogLevelFlags</a></td>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.LogLevelFlags.html">LogLevelFlags</a></td>
         <td><span class="parametername">logLevel</span></td>
         <td><p>The log level of the message (including the fatal and recursion flags).</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">message</span></td>
         <td><p>The message to process.</p>
 </td>

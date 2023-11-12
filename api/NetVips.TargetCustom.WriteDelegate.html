@@ -80,7 +80,7 @@
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
   <h5 id="NetVips_TargetCustom_WriteDelegate_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate long WriteDelegate(byte[] buffer, int length);</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate long TargetCustom.WriteDelegate(byte[] buffer, int length)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -93,13 +93,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">buffer</span></td>
         <td><p>An array of bytes.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">length</span></td>
         <td><p>The number of bytes to be written to the current target.</p>
 </td>
@@ -116,14 +116,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Int64</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
         <td><p>The total number of bytes written to the target.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="NetVips_TargetCustom_WriteDelegate_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>The interface is the same as <span class="xref">System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)</span>, so the handler is
+  <div class="markdown level0 remarks"><p>The interface is the same as <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream.write">Write(byte[], int, int)</a>, so the handler is
 given a bytes-like object to write. However, the handler MUST return the number
 of bytes written.</p>
 </div>
