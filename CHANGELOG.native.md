@@ -4,10 +4,10 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.15.0-rc2] - 2023-11-05
+## [8.15.0] - 2023-11-12
 ### Note
-If you would like to see what's changed, please visit the (draft) release notes of libvips:  
-https://github.com/libvips/libvips/blob/gh-pages-8.15/_posts/2023-10-10-What's-new-in-8.15.md
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://libvips.org/2023/10/10/What's-new-in-8.15.html
 
 ### Changed
 - Bump the minimum required glibc version to 2.26 ([lovell/sharp-libvips#197](https://github.com/lovell/sharp-libvips/pull/197)).
@@ -246,7 +246,7 @@ https://libvips.org/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
-[8.15.0-rc2]: https://github.com/kleisauke/libvips-packaging/compare/v8.14.5...v8.15.0-rc2
+[8.15.0]: https://github.com/kleisauke/libvips-packaging/compare/v8.14.5...v8.15.0
 [8.14.5]: https://github.com/kleisauke/libvips-packaging/compare/v8.14.4...v8.14.5
 [8.14.4]: https://github.com/kleisauke/libvips-packaging/compare/v8.14.3...v8.14.4
 [8.14.3]: https://github.com/kleisauke/libvips-packaging/compare/v8.14.2...v8.14.3
