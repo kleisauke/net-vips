@@ -176,7 +176,7 @@ namespace NetVips
 
                 for (var i = 0; i < nArgs; i++)
                 {
-                    var flag = (Enums.ArgumentFlags)Marshal.PtrToStructure(flags + i * sizeof(int), typeof(int));
+                    var flag = (Enums.ArgumentFlags)Marshal.PtrToStructure<int>(flags + i * sizeof(int));
                     if ((flag & Enums.ArgumentFlags.CONSTRUCT) == 0)
                     {
                         continue;

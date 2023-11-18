@@ -514,7 +514,7 @@ namespace NetVips
                 var enumValue = Marshal.PtrToStructure<GEnumValue>(ptr);
                 values[enumValue.ValueNick] = enumValue.Value;
 
-                ptr += Marshal.SizeOf(typeof(GEnumValue));
+                ptr += Marshal.SizeOf<GEnumValue>();
             }
 
             return values;
