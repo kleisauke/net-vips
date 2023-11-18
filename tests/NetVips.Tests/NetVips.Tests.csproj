@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
@@ -45,7 +45,7 @@
     <ProjectReference Include="..\..\src\NetVips.Extensions\NetVips.Extensions.csproj" />
   </ItemGroup>
 
-  <!-- System.Drawing.Common 7.0.0 is only supported on Windows -->
+  <!-- System.Drawing.Common 8.0.0 is only supported on Windows -->
   <ItemGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
     <Compile Remove="ExtensionsTests.cs" />
   </ItemGroup>

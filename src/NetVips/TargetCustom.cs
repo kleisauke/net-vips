@@ -16,9 +16,9 @@ namespace NetVips
         /// A write delegate.
         /// </summary>
         /// <remarks>
-        /// The interface is the same as <see cref="Stream.Write"/>, so the handler is
-        /// given a bytes-like object to write. However, the handler MUST return the number
-        /// of bytes written.
+        /// The interface is the same as <see cref="Stream.Write(byte[], int, int)"/>.
+        /// The handler is given a bytes-like object to write. However, the handler MUST
+        /// return the number of bytes written.
         /// </remarks>
         /// <param name="buffer">An array of bytes.</param>
         /// <param name="length">The number of bytes to be written to the current target.</param>

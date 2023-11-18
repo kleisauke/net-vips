@@ -9,13 +9,15 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
-            container: mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim
+            container: mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim
             script: ./build.sh
           - os: ubuntu-22.04
             container: rockylinux:8
             script: ./build.sh
+            # TODO(kleisauke): Remove when dotnet-sdk-8.0 is available in the AppStream repository
+            allow_failures: true
           - os: ubuntu-22.04
-            container: mcr.microsoft.com/dotnet/sdk:7.0-alpine3.18
+            container: mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
             script: ./build.sh
           # TODO(kleisauke): Re-enable Mono CI when C# 9 features are supported.
           # - os: ubuntu-22.04
@@ -26,14 +28,14 @@ jobs:
           - os: windows-2022
             script: .\build.ps1
     steps:
-      - name: Dependencies (Debian 11)
-        if: contains(matrix.container, 'bullseye')
+      - name: Dependencies (Debian 12)
+        if: contains(matrix.container, 'bookworm')
         run: |
           apt-get update
           apt-get install -y fontconfig-config
       - name: Dependencies (Rocky Linux 8)
         if: contains(matrix.container, 'rockylinux')
-        run: dnf install -y dotnet-sdk-7.0 google-noto-sans-fonts which
+        run: dnf install -y dotnet-sdk-8.0 google-noto-sans-fonts which || true
       - name: Dependencies (Alpine 3.18)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
@@ -41,7 +43,7 @@ jobs:
         if: runner.os != 'Linux'
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 7.x
+          dotnet-version: 8.x
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test

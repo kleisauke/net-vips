@@ -61,11 +61,11 @@ namespace NetVips
         /// <summary>
         /// Get the number of bytes of data.
         /// </summary>
-        internal ulong Length => (ulong)handle.Dereference<Internal.VipsArea.Struct>().Length;
+        internal ulong Length => (ulong)Marshal.PtrToStructure<Internal.VipsArea.Struct>(handle).Length;
 
         /// <summary>
         /// Get the reference count of the blob. Handy for debugging.
         /// </summary>
-        internal int RefCount => handle.Dereference<Internal.VipsArea.Struct>().Count;
+        internal int RefCount => Marshal.PtrToStructure<Internal.VipsArea.Struct>(handle).Count;
     }
 }

@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 - Update methods/enums for libvips 8.14.
-- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 7.0. See https://aka.ms/systemdrawingnonwindows for more information.
+- The [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package is now only supported on Windows when targeting .NET 6.0 or higher. See https://aka.ms/systemdrawingnonwindows for more information.
 
 ### Fixed
 - Ensure compatibility with FreeBSD and variants.

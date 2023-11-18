@@ -18,16 +18,12 @@ export NUKE_TELEMETRY_OPTOUT=1
 # EXECUTION
 ###########################################################################
 
-# Do not use -x to check for the presence of dotnet,
-# because that might fail on bash under Alpine 3.14, see:
-# https://github.com/alpinelinux/docker-alpine/issues/156
-# https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.14.0#faccessat2
-if ! [ -e "$(command -v dotnet)" ]; then
+if ! [ -x "$(command -v dotnet)" ]; then
     echo 'Error: dotnet is not installed.' >&2
     exit 1
 fi
 
-echo "Microsoft (R) .NET Core SDK version $(dotnet --version)"
+echo "Microsoft (R) .NET SDK version $(dotnet --version)"
 
 dotnet build "$BUILD_PROJECT_FILE" -nodeReuse:false -p:UseSharedCompilation=false -nologo -clp:NoSummary --verbosity quiet
 dotnet run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"

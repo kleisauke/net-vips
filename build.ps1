@@ -34,7 +34,7 @@ if ((Get-Command "dotnet" -ErrorAction SilentlyContinue) -eq $null) {
 	exit 1
 }
 
-Write-Output "Microsoft (R) .NET Core SDK version $(& dotnet --version)"
+Write-Output "Microsoft (R) .NET SDK version $(& dotnet --version)"
 
 ExecSafe { & dotnet build $BuildProjectFile /nodeReuse:false /p:UseSharedCompilation=false /nologo /clp:NoSummary --verbosity quiet }
 ExecSafe { & dotnet run --project $BuildProjectFile --no-build -- $BuildArguments }

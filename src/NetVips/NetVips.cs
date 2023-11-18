@@ -502,7 +502,7 @@ namespace NetVips
         public static Dictionary<string, int> ValuesForEnum(IntPtr type)
         {
             var typeClass = GType.ClassRef(type);
-            var enumClass = typeClass.Dereference<GEnumClass>();
+            var enumClass = Marshal.PtrToStructure<GEnumClass>(typeClass);
 
             var values = new Dictionary<string, int>((int)(enumClass.NValues - 1));
 
@@ -511,7 +511,7 @@ namespace NetVips
             // -1 since we always have a "last" member
             for (var i = 0; i < enumClass.NValues - 1; i++)
             {
-                var enumValue = ptr.Dereference<GEnumValue>();
+                var enumValue = Marshal.PtrToStructure<GEnumValue>(ptr);
                 values[enumValue.ValueNick] = enumValue.Value;
 
                 ptr += Marshal.SizeOf(typeof(GEnumValue));

@@ -196,7 +196,7 @@ namespace NetVips
         /// <summary>
         /// Get the reference count of object. Handy for debugging.
         /// </summary>
-        internal uint RefCount => handle.Dereference<Internal.GObject.Struct>().RefCount;
+        internal uint RefCount => Marshal.PtrToStructure<Internal.GObject.Struct>(handle).RefCount;
 
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for us.

@@ -16,10 +16,10 @@ namespace NetVips
         /// A read delegate.
         /// </summary>
         /// <remarks>
-        /// The interface is exactly as <see cref="Stream.Read"/>. The handler is given a number
-        /// of bytes to fetch, and should return a bytes-like object containing up
-        /// to that number of bytes. If there is no more data available, it should
-        /// return <see langword="0"/>.
+        /// The interface is exactly as <see cref="Stream.Read(byte[], int, int)"/>.
+        /// The handler is given a number of bytes to fetch, and should return a
+        /// bytes-like object containing up to that number of bytes. If there is
+        /// no more data available, it should return <see langword="0"/>.
         /// </remarks>
         /// <param name="buffer">An array of bytes.</param>
         /// <param name="length">The maximum number of bytes to be read.</param>

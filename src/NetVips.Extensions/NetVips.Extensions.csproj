@@ -3,9 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>net70;net60;netstandard2.0;net461</TargetFrameworks>
-    <!-- Avoid building for all target frameworks when not packaging -->
-    <TargetFrameworks Condition="'$(_IsPacking)' != 'true'">net70</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0;net461</TargetFrameworks>
     <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">netstandard2.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>NetVips.Extensions</PackageId>
@@ -22,25 +20,18 @@
     <ProjectReference Include="..\..\src\NetVips\NetVips.csproj" />
   </ItemGroup>
 
-  <!-- Due to https://aka.ms/systemdrawingnonwindows, we constrain the System.Drawing.Common version to:
-    - >= 7 for .NET 7 or higher;
-    - <= 6 for .NET 6;
-    - <= 5 for .NET Standard 2.0.
-  -->
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net70'">
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
-    <PackageReference Include="System.Drawing.Common" Version="[4.5,6]" />
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)','net6.0'))">
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Drawing.Common" Version="[4.5,5]" />
+    <!-- For .NET Standard 2.0; constrain the version to 5.0.3 as later versions are Windows-only.
+         https://aka.ms/systemdrawingnonwindows
+    -->
+    <PackageReference Include="System.Drawing.Common" Version="[5.0.3]" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />

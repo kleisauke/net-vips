@@ -21,6 +21,10 @@ namespace NetVips.Benchmarks
                     .WithToolchain(CsProjCoreToolchain.NetCoreApp70)
                     .WithRuntime(NativeAotRuntime.Net70)
                     .WithId(".NET 7.0 CLI (NativeAOT)")
+#elif NET8_0       
+                    .WithToolchain(CsProjCoreToolchain.NetCoreApp80)
+                    .WithRuntime(NativeAotRuntime.Net80)
+                    .WithId(".NET 8.0 CLI (NativeAOT)")
 #endif
 #if GLOBAL_VIPS
                     .WithArguments(new Argument[]

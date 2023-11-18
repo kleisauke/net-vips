@@ -51,7 +51,7 @@ namespace NetVips
 
             return argument != 0
                 ? default(GParamSpec.Struct?)
-                : pspec.Dereference<GParamSpec.Struct>();
+                : Marshal.PtrToStructure<GParamSpec.Struct>(pspec);
         }
 
         /// <summary>

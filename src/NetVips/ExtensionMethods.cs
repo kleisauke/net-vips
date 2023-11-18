@@ -39,19 +39,6 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Dereferences data from an unmanaged block of memory
-        /// to a newly allocated managed object of the specified type.
-        /// </summary>
-        /// <typeparam name="T">The type of object to be created. This object
-        /// must represent a formatted class or a structure.</typeparam>
-        /// <param name="ptr">A pointer to an unmanaged block of memory.</param>
-        /// <returns>A newly allocated managed object of the specified type.</returns>
-        internal static T Dereference<T>(this IntPtr ptr)
-        {
-            return Marshal.PtrToStructure<T>(ptr);
-        }
-
-        /// <summary>
         /// Call a libvips operation.
         /// </summary>
         /// <param name="image">A <see cref="Image"/> used as guide.</param>
