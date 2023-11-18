@@ -162,14 +162,9 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Enable or disable SIMD and the run-time compiler.
+        /// Enable or disable SIMD.
         /// </summary>
-        /// <remarks>
-        /// This can give a nice speed-up, but can also be unstable on
-        /// some systems or with some versions of the run-time compiler.
-        /// </remarks>
-        /// <param name="enabled">Bool indicating if SIMD and the run-time
-        /// compiler should be turned on.</param>
+        /// <param name="enabled">Bool indicating if SIMD should be turned on.</param>
         [Obsolete("NetVips.VectorSet is deprecated, please use the NetVips.Vector setter instead.")]
         public static void VectorSet(bool enabled)
         {
@@ -177,12 +172,8 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Enable or disable SIMD and the run-time compiler.
+        /// Enable or disable SIMD.
         /// </summary>
-        /// <remarks>
-        /// This can give a nice speed-up, but can also be unstable on
-        /// some systems or with some versions of the run-time compiler.
-        /// </remarks>
         public static bool Vector
         {
             get => Vips.VectorIsEnabled();
