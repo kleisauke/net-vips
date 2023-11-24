@@ -14,8 +14,6 @@ jobs:
           - os: ubuntu-22.04
             container: rockylinux:8
             script: ./build.sh
-            # TODO(kleisauke): Remove when dotnet-sdk-8.0 is available in the AppStream repository
-            allow_failures: true
           - os: ubuntu-22.04
             container: mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
             script: ./build.sh
@@ -35,7 +33,7 @@ jobs:
           apt-get install -y fontconfig-config
       - name: Dependencies (Rocky Linux 8)
         if: contains(matrix.container, 'rockylinux')
-        run: dnf install -y dotnet-sdk-8.0 google-noto-sans-fonts which || true
+        run: dnf install -y dotnet-sdk-8.0 google-noto-sans-fonts which
       - name: Dependencies (Alpine 3.18)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
