@@ -21,9 +21,6 @@ skip_tags: true
 pull_requests:
   do_not_increment_build_number: true
 
-# TODO(kleisauke): Remove when .NET 8.0 is available in AppVeyor
-build: off
-
 # Disable automatic tests and deployment
 test: off
 deploy: off
