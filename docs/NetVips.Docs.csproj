@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Docfx.App" Version="2.73.2" />
+    <PackageReference Include="Docfx.App" Version="2.74.1" />
   </ItemGroup>
 
 </Project>

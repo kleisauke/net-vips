@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(MSBuildRuntimeType)' == 'Mono'" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="xunit" Version="2.6.1" />
+    <PackageReference Include="xunit" Version="2.6.3" />
     <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
   </ItemGroup>
 
@@ -34,7 +34,7 @@
 
   <ItemGroup Condition="'$(MSBuildRuntimeType)' != 'Mono'">
     <PackageReference Include="NetVips.Native" Version="8.15.0" Condition="'$(TestWithNuGetBinaries)' == 'true'" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
