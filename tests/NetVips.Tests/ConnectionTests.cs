@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -47,6 +48,21 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
         var image2 = Image.NewFromFile(filename, access: Enums.Access.Sequential);
 
         Assert.True((image - image2).Abs().Max() < 10);
+    }
+
+    [SkippableFact]
+    public void TestSourceNewFromMemorySpan()
+    {
+        Skip.IfNot(Helper.Have("svgload_source"), "no svg source support, skipping test");
+
+        ReadOnlySpan<byte> input = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\" />"u8;
+        var source = Source.NewFromMemory(input);
+        var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
+        var image2 = Image.NewFromBuffer(input, access: Enums.Access.Sequential);
+
+        Assert.Equal(0, (image - image2).Abs().Max());
+        Assert.Equal(200, image.Width);
+        Assert.Equal(200, image.Height);
     }
 
     [SkippableFact]
