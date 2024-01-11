@@ -289,6 +289,10 @@ internal static class VipsBlob
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_blob_get")]
     internal static extern nint Get(VipsBlobManaged blob, out nuint length);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vips_blob_copy")]
+    internal static extern unsafe nint Copy(void* data, nuint length);
 }
 
 internal static class VipsArea
@@ -418,8 +422,20 @@ internal static class VipsImage
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "vips_image_new_from_memory")]
+    internal static extern unsafe nint NewFromMemory(void* data, nuint size, int width, int height,
+        int bands, BandFormat format);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "vips_image_new_from_memory_copy")]
     internal static extern nint NewFromMemoryCopy(nint data, nuint size, int width, int height,
+        int bands, BandFormat format);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "vips_image_new_from_memory_copy")]
+    internal static extern unsafe nint NewFromMemoryCopy(void* data, nuint size, int width, int height,
         int bands, BandFormat format);
 
     [SuppressUnmanagedCodeSecurity]
@@ -569,6 +585,11 @@ internal static class VipsForeign
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "vips_foreign_find_load_buffer")]
+    internal static extern unsafe nint FindLoadBuffer(void* data, ulong size);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "vips_foreign_find_load_source")]
     internal static extern nint FindLoadSource(Source stream);
 
@@ -616,6 +637,11 @@ internal static class VipsSource
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "vips_source_new_from_file")]
     internal static extern nint NewFromFile(byte[] filename);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "vips_source_new_from_blob")]
+    internal static extern nint NewFromBlob(VipsBlobManaged blob);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

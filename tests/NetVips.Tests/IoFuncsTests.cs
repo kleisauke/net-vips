@@ -138,6 +138,36 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
         Cache.Max = prevMax;
     }
 
+    [Fact]
+    public void TestNewFromMemoryReadOnly()
+    {
+        ReadOnlyMemory<byte> s = new byte[200];
+        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
+        Assert.Equal(20, im.Width);
+        Assert.Equal(10, im.Height);
+        Assert.Equal(Enums.BandFormat.Uchar, im.Format);
+        Assert.Equal(1, im.Bands);
+        Assert.Equal(0, im.Avg());
+
+        im += 10;
+        Assert.Equal(10, im.Avg());
+    }
+
+    [Fact]
+    public void TestNewFromMemoryCopySpan()
+    {
+        ReadOnlySpan<byte> s = stackalloc byte[200];
+        var im = Image.NewFromMemoryCopy(s, 20, 10, 1, Enums.BandFormat.Uchar);
+        Assert.Equal(20, im.Width);
+        Assert.Equal(10, im.Height);
+        Assert.Equal(Enums.BandFormat.Uchar, im.Format);
+        Assert.Equal(1, im.Bands);
+        Assert.Equal(0, im.Avg());
+
+        im += 10;
+        Assert.Equal(10, im.Avg());
+    }
+
     [SkippableFact]
     public void TestGetFields()
     {

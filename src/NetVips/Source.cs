@@ -7,7 +7,7 @@ namespace NetVips;
 /// <summary>
 /// An input connection.
 /// </summary>
-public class Source : Connection
+public partial class Source : Connection
 {
     /// <summary>
     /// Secret ref for <see cref="NewFromMemory(byte[])"/>.

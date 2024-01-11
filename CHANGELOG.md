@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [3.0.0] - TBD
 ### Added
 - Add support for a single shared libvips binary on Windows ([#211](https://github.com/kleisauke/net-vips/issues/211)).
+- Add `ReadOnlySpan<T>` / `ReadOnlyMemory<T>` overloads ([#225](https://github.com/kleisauke/net-vips/issues/225)).
 
 ### Removed
 - Drop support for .NET Standard 2.0 and Mono. NetVips now targets .NET 6 (`net6.0`) and .NET Framework 4.5.2 (`net452`) moving forward.
