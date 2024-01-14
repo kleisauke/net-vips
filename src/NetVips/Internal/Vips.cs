@@ -489,15 +489,6 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_image_get_fields")]
         internal static extern IntPtr GetFields(Image image);
-
-        internal static IntPtr NewTempFile(string format)
-        {
-            var bytes = Encoding.UTF8.GetBytes(format);
-            return NewTempFile(bytes);
-        }
-
-        [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void EvalSignal(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr);
     }
 
     internal static class VipsInterpolate
@@ -596,11 +587,6 @@ namespace NetVips.Internal
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "vips_foreign_find_save_buffer")]
         internal static extern IntPtr FindSaveBuffer(byte[] name);
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "vips_foreign_find_save_target")]
-        internal static extern IntPtr FindSaveTarget(IntPtr name);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

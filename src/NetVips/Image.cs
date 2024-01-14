@@ -785,7 +785,7 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to make temp file from <paramref name="format"/>.</exception>
         public static Image NewTempFile(string format)
         {
-            var vi = VipsImage.NewTempFile(format);
+            var vi = VipsImage.NewTempFile(Encoding.UTF8.GetBytes(format));
             if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to make temp file");
