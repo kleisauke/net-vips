@@ -854,16 +854,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "obj/temp/api/NetVips.VOption.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/NetVips.VOption.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "obj/temp/api/NetVips.VipsException.yml",
       "output": {
         ".html": {
@@ -888,6 +878,16 @@
       "output": {
         ".html": {
           "relative_path": "api/NetVips.VipsProgress.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.VOption.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.VOption.html"
         }
       },
       "version": ""
