@@ -1,26 +1,25 @@
-namespace NetVips.Samples
+using System;
+
+namespace NetVips.Samples;
+
+public class Sobel : ISample
 {
-    using System;
+    public string Name => "Sobel";
+    public string Category => "Edge detection";
 
-    public class Sobel : ISample
+    public const string Filename = "images/lichtenstein.jpg";
+
+    public void Execute(string[] args)
     {
-        public string Name => "Sobel";
-        public string Category => "Edge detection";
+        using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
 
-        public const string Filename = "images/lichtenstein.jpg";
+        // Optionally, convert to greyscale
+        //using var mono = im.Colourspace(Enums.Interpretation.Bw);
 
-        public void Execute(string[] args)
-        {
-            using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+        // Apply sobel operator
+        using var sobel = /*mono*/im.Sobel();
+        sobel.WriteToFile("sobel.jpg");
 
-            // Optionally, convert to greyscale
-            //using var mono = im.Colourspace(Enums.Interpretation.Bw);
-
-            // Apply sobel operator
-            using var sobel = /*mono*/im.Sobel();
-            sobel.WriteToFile("sobel.jpg");
-
-            Console.WriteLine("See sobel.jpg");
-        }
+        Console.WriteLine("See sobel.jpg");
     }
 }

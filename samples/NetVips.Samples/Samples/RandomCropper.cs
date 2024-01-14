@@ -1,45 +1,44 @@
-namespace NetVips.Samples
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace NetVips.Samples;
+
+/// <summary>
+/// See: https://github.com/kleisauke/net-vips/issues/58
+/// </summary>
+public class RandomCropper : ISample
 {
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
+    public string Name => "Random cropper";
+    public string Category => "Internal";
 
-    /// <summary>
-    /// See: https://github.com/kleisauke/net-vips/issues/58
-    /// </summary>
-    public class RandomCropper : ISample
+    public const int TileSize = 256;
+
+    public const string Filename = "images/equus_quagga.jpg";
+
+    public static readonly Random Rnd = new Random();
+
+    public Image RandomCrop(Image image, int tileSize)
     {
-        public string Name => "Random cropper";
-        public string Category => "Internal";
+        var x = Rnd.Next(0, image.Width);
+        var y = Rnd.Next(0, image.Height);
 
-        public const int TileSize = 256;
+        var width = Math.Min(tileSize, image.Width - x);
+        var height = Math.Min(tileSize, image.Height - y);
 
-        public const string Filename = "images/equus_quagga.jpg";
+        return image.Crop(x, y, width, height);
+    }
 
-        public static readonly Random Rnd = new Random();
+    public void Execute(string[] args)
+    {
+        using var fileStream = File.OpenRead(Filename);
+        using var image = Image.NewFromStream(fileStream);
 
-        public Image RandomCrop(Image image, int tileSize)
-        {
-            var x = Rnd.Next(0, image.Width);
-            var y = Rnd.Next(0, image.Height);
-
-            var width = Math.Min(tileSize, image.Width - x);
-            var height = Math.Min(tileSize, image.Height - y);
-
-            return image.Crop(x, y, width, height);
-        }
-
-        public void Execute(string[] args)
-        {
-            using var fileStream = File.OpenRead(Filename);
-            using var image = Image.NewFromStream(fileStream);
-
-            Parallel.For(0, 1000, new ParallelOptions {MaxDegreeOfParallelism = NetVips.Concurrency},
-                i =>
-                {
-                    using var crop = RandomCrop(image, TileSize);
-                    crop.WriteToFile($"x_{i}.png");
-                });
-        }
+        Parallel.For(0, 1000, new ParallelOptions {MaxDegreeOfParallelism = NetVips.Concurrency},
+            i =>
+            {
+                using var crop = RandomCrop(image, TileSize);
+                crop.WriteToFile($"x_{i}.png");
+            });
     }
 }

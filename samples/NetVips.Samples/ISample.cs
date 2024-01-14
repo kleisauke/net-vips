@@ -1,11 +1,10 @@
-namespace NetVips
+namespace NetVips;
+
+public interface ISample
 {
-    public interface ISample
-    {
-        string Name { get; }
+    string Name { get; }
 
-        string Category { get; }
+    string Category { get; }
 
-        void Execute(string[] args);
-    }
+    void Execute(string[] args);
 }

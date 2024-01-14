@@ -1,20 +1,19 @@
-namespace NetVips.Samples
+using System;
+
+namespace NetVips.Samples;
+
+public class Thumbnail : ISample
 {
-    using System;
+    public string Name => "Thumbnail";
+    public string Category => "Resample";
 
-    public class Thumbnail : ISample
+    public const string Filename = "images/lichtenstein.jpg";
+
+    public void Execute(string[] args)
     {
-        public string Name => "Thumbnail";
-        public string Category => "Resample";
+        using var image = Image.Thumbnail(Filename, 300, height: 300);
+        image.WriteToFile("thumbnail.jpg");
 
-        public const string Filename = "images/lichtenstein.jpg";
-
-        public void Execute(string[] args)
-        {
-            using var image = Image.Thumbnail(Filename, 300, height: 300);
-            image.WriteToFile("thumbnail.jpg");
-
-            Console.WriteLine("See thumbnail.jpg");
-        }
+        Console.WriteLine("See thumbnail.jpg");
     }
 }

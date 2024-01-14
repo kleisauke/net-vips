@@ -1,76 +1,75 @@
-namespace NetVips
+using System;
+using System.Runtime.InteropServices;
+
+namespace NetVips;
+
+/// <summary>
+/// Records a start time, and counts microseconds elapsed since that time.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct GTimer
 {
-    using System;
-    using System.Runtime.InteropServices;
+    /// <summary>
+    /// Monotonic start time, in microseconds.
+    /// </summary>
+    public ulong Start;
 
     /// <summary>
-    /// Records a start time, and counts microseconds elapsed since that time.
+    /// Monotonic end time, in microseconds.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct GTimer
-    {
-        /// <summary>
-        /// Monotonic start time, in microseconds.
-        /// </summary>
-        public ulong Start;
-
-        /// <summary>
-        /// Monotonic end time, in microseconds.
-        /// </summary>
-        public ulong End;
-
-        /// <summary>
-        /// Is the timer currently active?
-        /// </summary>
-        [MarshalAs(UnmanagedType.I1)]
-        public bool Active;
-    }
+    public ulong End;
 
     /// <summary>
-    /// Struct we keep a record of execution time in. Passed to eval signal so
-    /// it can assess progress.
+    /// Is the timer currently active?
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct VipsProgress
-    {
-        /// <summary>
-        /// Image we are part of.
-        /// </summary>
-        private IntPtr Im;
+    [MarshalAs(UnmanagedType.I1)]
+    public bool Active;
+}
 
-        /// <summary>
-        /// Time we have been running.
-        /// </summary>
-        public int Run;
+/// <summary>
+/// Struct we keep a record of execution time in. Passed to eval signal so
+/// it can assess progress.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct VipsProgress
+{
+    /// <summary>
+    /// Image we are part of.
+    /// </summary>
+    private IntPtr Im;
 
-        /// <summary>
-        /// Estimated seconds of computation left.
-        /// </summary>
-        public int Eta;
+    /// <summary>
+    /// Time we have been running.
+    /// </summary>
+    public int Run;
 
-        /// <summary>
-        /// Number of pels we expect to calculate.
-        /// </summary>
-        public long TPels;
+    /// <summary>
+    /// Estimated seconds of computation left.
+    /// </summary>
+    public int Eta;
 
-        /// <summary>
-        ///  Number of pels calculated so far.
-        /// </summary>
-        public long NPels;
+    /// <summary>
+    /// Number of pels we expect to calculate.
+    /// </summary>
+    public long TPels;
 
-        /// <summary>
-        /// Percent complete.
-        /// </summary>
-        public int Percent;
+    /// <summary>
+    ///  Number of pels calculated so far.
+    /// </summary>
+    public long NPels;
 
-        /// <summary>
-        /// Start time.
-        /// </summary>
-        private IntPtr StartPtr;
+    /// <summary>
+    /// Percent complete.
+    /// </summary>
+    public int Percent;
 
-        /// <summary>
-        /// Start time.
-        /// </summary>
-        public GTimer Start => Marshal.PtrToStructure<GTimer>(StartPtr);
-    }
+    /// <summary>
+    /// Start time.
+    /// </summary>
+    private IntPtr StartPtr;
+
+    /// <summary>
+    /// Start time.
+    /// </summary>
+    public GTimer Start => Marshal.PtrToStructure<GTimer>(StartPtr);
 }
