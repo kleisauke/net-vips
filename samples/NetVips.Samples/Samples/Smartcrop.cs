@@ -1,20 +1,19 @@
-namespace NetVips.Samples
+using System;
+
+namespace NetVips.Samples;
+
+public class Smartcrop : ISample
 {
-    using System;
+    public string Name => "Smartcrop";
+    public string Category => "Conversion";
 
-    public class Smartcrop : ISample
+    public const string Filename = "images/equus_quagga.jpg";
+
+    public void Execute(string[] args)
     {
-        public string Name => "Smartcrop";
-        public string Category => "Conversion";
+        using var image = Image.Thumbnail(Filename, 300, height: 300, crop: Enums.Interesting.Attention);
+        image.WriteToFile("smartcrop.jpg");
 
-        public const string Filename = "images/equus_quagga.jpg";
-
-        public void Execute(string[] args)
-        {
-            using var image = Image.Thumbnail(Filename, 300, height: 300, crop: Enums.Interesting.Attention);
-            image.WriteToFile("smartcrop.jpg");
-
-            Console.WriteLine("See smartcrop.jpg");
-        }
+        Console.WriteLine("See smartcrop.jpg");
     }
 }

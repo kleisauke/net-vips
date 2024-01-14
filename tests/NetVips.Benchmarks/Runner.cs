@@ -1,14 +1,13 @@
-namespace NetVips.Benchmarks
-{
-    using System;
-    using BenchmarkDotNet.Running;
+using System;
+using BenchmarkDotNet.Running;
 
-    public class Runner
+namespace NetVips.Benchmarks;
+
+public class Runner
+{
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            TestImage.BuildTestImages(AppDomain.CurrentDomain.BaseDirectory);
-            BenchmarkRunner.Run<Benchmark>();
-        }
+        TestImage.BuildTestImages(AppDomain.CurrentDomain.BaseDirectory);
+        BenchmarkRunner.Run<Benchmark>();
     }
 }

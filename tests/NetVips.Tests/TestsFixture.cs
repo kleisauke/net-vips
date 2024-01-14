@@ -1,28 +1,27 @@
-namespace NetVips.Tests
+using System;
+using Xunit.Abstractions;
+
+namespace NetVips.Tests;
+
+public class TestsFixture : IDisposable
 {
-    using System;
-    using Xunit.Abstractions;
+    private uint _handlerId;
 
-    public class TestsFixture : IDisposable
+    public void SetUpLogging(ITestOutputHelper output)
     {
-        private uint _handlerId;
-
-        public void SetUpLogging(ITestOutputHelper output)
+        _handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Error, (domain, level, message) =>
         {
-            _handlerId = Log.SetLogHandler("VIPS", Enums.LogLevelFlags.Error, (domain, level, message) =>
-            {
-                output.WriteLine("Domain: '{0}' Level: {1}", domain, level);
-                output.WriteLine("Message: {0}", message);
-            });
-        }
+            output.WriteLine("Domain: '{0}' Level: {1}", domain, level);
+            output.WriteLine("Message: {0}", message);
+        });
+    }
 
-        public void Dispose()
+    public void Dispose()
+    {
+        if (_handlerId > 0)
         {
-            if (_handlerId > 0)
-            {
-                Log.RemoveLogHandler("VIPS", _handlerId);
-                _handlerId = 0;
-            }
+            Log.RemoveLogHandler("VIPS", _handlerId);
+            _handlerId = 0;
         }
     }
 }

@@ -1,30 +1,29 @@
-namespace NetVips.Samples
+using System;
+
+namespace NetVips.Samples;
+
+public class Canny : ISample
 {
-    using System;
+    public string Name => "Canny";
+    public string Category => "Edge detection";
 
-    public class Canny : ISample
+    public const string Filename = "images/lichtenstein.jpg";
+
+    public void Execute(string[] args)
     {
-        public string Name => "Canny";
-        public string Category => "Edge detection";
+        using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
 
-        public const string Filename = "images/lichtenstein.jpg";
+        // Optionally, convert to greyscale
+        //using var mono = im.Colourspace(Enums.Interpretation.Bw);
 
-        public void Execute(string[] args)
-        {
-            using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+        // Canny edge detector
+        using var canny = /*mono*/im.Canny(1.4, precision: Enums.Precision.Integer);
 
-            // Optionally, convert to greyscale
-            //using var mono = im.Colourspace(Enums.Interpretation.Bw);
+        // Canny makes a float image, scale the output up to make it visible.
+        using var scale = canny * 64;
 
-            // Canny edge detector
-            using var canny = /*mono*/im.Canny(1.4, precision: Enums.Precision.Integer);
+        scale.WriteToFile("canny.jpg");
 
-            // Canny makes a float image, scale the output up to make it visible.
-            using var scale = canny * 64;
-
-            scale.WriteToFile("canny.jpg");
-
-            Console.WriteLine("See canny.jpg");
-        }
+        Console.WriteLine("See canny.jpg");
     }
 }
