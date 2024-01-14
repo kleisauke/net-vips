@@ -18,8 +18,7 @@ public class Introspect
     /// <summary>
     /// A cache for introspection data.
     /// </summary>
-    private static readonly ConcurrentDictionary<string, Introspect> IntrospectCache =
-        new ConcurrentDictionary<string, Introspect>();
+    private static readonly ConcurrentDictionary<string, Introspect> IntrospectCache = new();
 
     /// <summary>
     /// An object structure that encapsulates the metadata
@@ -40,7 +39,7 @@ public class Introspect
         /// <summary>
         /// The GType for this argument.
         /// </summary>
-        public IntPtr Type;
+        public nint Type;
     }
 
     /// <summary>
@@ -51,27 +50,27 @@ public class Introspect
     /// <summary>
     /// A bool indicating if this operation is mutable.
     /// </summary>
-    public bool Mutable;
+    public readonly bool Mutable;
 
     /// <summary>
     /// The required input for this operation.
     /// </summary>
-    public List<Argument> RequiredInput = new List<Argument>();
+    public readonly List<Argument> RequiredInput = new();
 
     /// <summary>
     /// The optional input for this operation.
     /// </summary>
-    public Dictionary<string, Argument> OptionalInput = new Dictionary<string, Argument>();
+    public readonly Dictionary<string, Argument> OptionalInput = new();
 
     /// <summary>
     /// The required output for this operation.
     /// </summary>
-    public List<Argument> RequiredOutput = new List<Argument>();
+    public readonly List<Argument> RequiredOutput = new();
 
     /// <summary>
     /// The optional output for this operation.
     /// </summary>
-    public Dictionary<string, Argument> OptionalOutput = new Dictionary<string, Argument>();
+    public readonly Dictionary<string, Argument> OptionalOutput = new();
 
     /// <summary>
     /// Build introspection data for a specified operation name.
@@ -186,8 +185,8 @@ public class Introspect
         }
         else
         {
-            IntPtr AddConstruct(IntPtr self, IntPtr pspec, IntPtr argumentClass, IntPtr argumentInstance,
-                IntPtr a, IntPtr b)
+            nint AddConstruct(nint self, nint pspec, nint argumentClass, nint argumentInstance,
+                nint a, nint b)
             {
                 var flags = Marshal.PtrToStructure<VipsArgumentClass>(argumentClass).Flags;
                 if ((flags & Enums.ArgumentFlags.CONSTRUCT) == 0)

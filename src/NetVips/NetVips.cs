@@ -257,7 +257,7 @@ public static class NetVips
             }
         }
 
-        if (flag < 0 || flag > 2)
+        if (flag is < 0 or > 2)
         {
             throw new ArgumentOutOfRangeException(nameof(flag), "Flag must be in the range of 0 to 2");
         }
@@ -308,7 +308,7 @@ public static class NetVips
         var names = new List<string>();
 
         var count = 0;
-        IntPtr strPtr;
+        nint strPtr;
         while ((strPtr = Marshal.ReadIntPtr(ptrArr, count * IntPtr.Size)) != IntPtr.Zero)
         {
             var name = Marshal.PtrToStringAnsi(strPtr);
@@ -391,7 +391,7 @@ public static class NetVips
     /// <param name="basename">Name of base class.</param>
     /// <param name="nickname">Search for a class with this nickname.</param>
     /// <returns>The GType of the class, or <see cref="IntPtr.Zero"/> if the class is not found.</returns>
-    public static IntPtr TypeFind(string basename, string nickname)
+    public static nint TypeFind(string basename, string nickname)
     {
         return Vips.TypeFind(basename, nickname);
     }
@@ -401,7 +401,7 @@ public static class NetVips
     /// </summary>
     /// <param name="type">Type to return name for.</param>
     /// <returns>Type name.</returns>
-    public static string TypeName(IntPtr type)
+    public static string TypeName(nint type)
     {
         return Marshal.PtrToStringAnsi(GType.Name(type));
     }
@@ -411,7 +411,7 @@ public static class NetVips
     /// </summary>
     /// <param name="type">Type to return nickname for.</param>
     /// <returns>Nickname.</returns>
-    public static string NicknameFind(IntPtr type)
+    public static string NicknameFind(nint type)
     {
         return Marshal.PtrToStringAnsi(Vips.NicknameFind(type));
     }
@@ -428,7 +428,7 @@ public static class NetVips
         var allNickNames = new List<string>();
         var handle = GCHandle.Alloc(allNickNames);
 
-        IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
+        nint TypeMap(nint type, nint a, nint b)
         {
             var nickname = NicknameFind(type);
 
@@ -469,7 +469,7 @@ public static class NetVips
         var allEnums = new List<string>();
         var handle = GCHandle.Alloc(allEnums);
 
-        IntPtr TypeMap(IntPtr type, IntPtr a, IntPtr b)
+        nint TypeMap(nint type, nint a, nint b)
         {
             var nickname = TypeName(type);
 
@@ -499,7 +499,7 @@ public static class NetVips
     /// </summary>
     /// <param name="type">Type to return enum values for.</param>
     /// <returns>A list of values.</returns>
-    public static Dictionary<string, int> ValuesForEnum(IntPtr type)
+    public static Dictionary<string, int> ValuesForEnum(nint type)
     {
         var typeClass = GType.ClassRef(type);
         var enumClass = Marshal.PtrToStructure<GEnumClass>(typeClass);
@@ -525,7 +525,7 @@ public static class NetVips
     /// </summary>
     /// <param name="name">Type name to lookup.</param>
     /// <returns>Corresponding type ID or <see cref="IntPtr.Zero"/>.</returns>
-    public static IntPtr TypeFromName(string name)
+    public static nint TypeFromName(string name)
     {
         return GType.FromName(name);
     }
@@ -535,7 +535,7 @@ public static class NetVips
     /// </summary>
     /// <param name="type">A valid type ID.</param>
     /// <returns>Fundamental type ID.</returns>
-    public static IntPtr FundamentalType(IntPtr type)
+    public static nint FundamentalType(nint type)
     {
         return GType.Fundamental(type);
     }
@@ -547,7 +547,7 @@ public static class NetVips
     /// This is needed for <see cref="Image.WriteToMemory(out ulong)"/>.
     /// </remarks>
     /// <param name="mem">The memory to free.</param>
-    public static void Free(IntPtr mem)
+    public static void Free(nint mem)
     {
         GLib.GFree(mem);
     }

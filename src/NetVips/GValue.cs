@@ -41,87 +41,87 @@ public class GValue : IDisposable
     /// <summary>
     /// The fundamental type corresponding to gboolean.
     /// </summary>
-    public static readonly IntPtr GBoolType = new IntPtr(5 << FundamentalShift);
+    public static readonly nint GBoolType = 5 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type corresponding to gint.
     /// </summary>
-    public static readonly IntPtr GIntType = new IntPtr(6 << FundamentalShift);
+    public static readonly nint GIntType = 6 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type corresponding to guint64.
     /// </summary>
-    public static readonly IntPtr GUint64Type = new IntPtr(11 << FundamentalShift);
+    public static readonly nint GUint64Type = 11 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type from which all enumeration types are derived.
     /// </summary>
-    public static readonly IntPtr GEnumType = new IntPtr(12 << FundamentalShift);
+    public static readonly nint GEnumType = 12 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type from which all flags types are derived.
     /// </summary>
-    public static readonly IntPtr GFlagsType = new IntPtr(13 << FundamentalShift);
+    public static readonly nint GFlagsType = 13 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type corresponding to gdouble.
     /// </summary>
-    public static readonly IntPtr GDoubleType = new IntPtr(15 << FundamentalShift);
+    public static readonly nint GDoubleType = 15 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type corresponding to null-terminated C strings.
     /// </summary>
-    public static readonly IntPtr GStrType = new IntPtr(16 << FundamentalShift);
+    public static readonly nint GStrType = 16 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type for GObject.
     /// </summary>
-    public static readonly IntPtr GObjectType = new IntPtr(20 << FundamentalShift);
+    public static readonly nint GObjectType = 20 << FundamentalShift;
 
     /// <summary>
     /// The fundamental type for VipsImage.
     /// </summary>
-    public static readonly IntPtr ImageType = NetVips.TypeFromName("VipsImage");
+    public static readonly nint ImageType = NetVips.TypeFromName("VipsImage");
 
     /// <summary>
     /// The fundamental type for VipsArrayInt.
     /// </summary>
-    public static readonly IntPtr ArrayIntType = NetVips.TypeFromName("VipsArrayInt");
+    public static readonly nint ArrayIntType = NetVips.TypeFromName("VipsArrayInt");
 
     /// <summary>
     /// The fundamental type for VipsArrayDouble.
     /// </summary>
-    public static readonly IntPtr ArrayDoubleType = NetVips.TypeFromName("VipsArrayDouble");
+    public static readonly nint ArrayDoubleType = NetVips.TypeFromName("VipsArrayDouble");
 
     /// <summary>
     /// The fundamental type for VipsArrayImage.
     /// </summary>
-    public static readonly IntPtr ArrayImageType = NetVips.TypeFromName("VipsArrayImage");
+    public static readonly nint ArrayImageType = NetVips.TypeFromName("VipsArrayImage");
 
     /// <summary>
     /// The fundamental type for VipsRefString.
     /// </summary>
-    public static readonly IntPtr RefStrType = NetVips.TypeFromName("VipsRefString");
+    public static readonly nint RefStrType = NetVips.TypeFromName("VipsRefString");
 
     /// <summary>
     /// The fundamental type for VipsBlob.
     /// </summary>
-    public static readonly IntPtr BlobType = NetVips.TypeFromName("VipsBlob");
+    public static readonly nint BlobType = NetVips.TypeFromName("VipsBlob");
 
     /// <summary>
     /// The fundamental type for VipsBlendMode. See <see cref="Enums.BlendMode"/>.
     /// </summary>
-    public static readonly IntPtr BlendModeType;
+    public static readonly nint BlendModeType;
 
     /// <summary>
     /// The fundamental type for VipsSource. See <see cref="Source"/>.
     /// </summary>
-    public static readonly IntPtr SourceType;
+    public static readonly nint SourceType;
 
     /// <summary>
     /// The fundamental type for VipsTarget. See <see cref="Target"/>.
     /// </summary>
-    public static readonly IntPtr TargetType;
+    public static readonly nint TargetType;
 
     /// <summary>
     /// Hint of how much native memory is actually occupied by the object.
@@ -171,7 +171,7 @@ public class GValue : IDisposable
     /// TypeFind.
     /// </remarks>
     /// <param name="gtype">Type the GValue should hold values of.</param>
-    public void SetType(IntPtr gtype)
+    public void SetType(nint gtype)
     {
         Internal.GValue.Init(ref Struct, gtype);
     }
@@ -250,53 +250,37 @@ public class GValue : IDisposable
         }
         else if (gtype == ArrayIntType)
         {
-            if (!(value is IEnumerable))
+            if (value is not IEnumerable)
             {
                 value = new[] { value };
             }
 
-            int[] integers;
-            switch (value)
+            var integers = value switch
             {
-                case int[] ints:
-                    integers = ints;
-                    break;
-                case double[] doubles:
-                    integers = Array.ConvertAll(doubles, Convert.ToInt32);
-                    break;
-                case object[] objects:
-                    integers = Array.ConvertAll(objects, Convert.ToInt32);
-                    break;
-                default:
-                    throw new ArgumentException(
-                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
-            }
+                int[] ints => ints,
+                double[] doubles => Array.ConvertAll(doubles, Convert.ToInt32),
+                object[] objects => Array.ConvertAll(objects, Convert.ToInt32),
+                _ => throw new ArgumentException(
+                    $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}")
+            };
 
             VipsValue.SetArrayInt(ref Struct, integers, integers.Length);
         }
         else if (gtype == ArrayDoubleType)
         {
-            if (!(value is IEnumerable))
+            if (value is not IEnumerable)
             {
                 value = new[] { value };
             }
 
-            double[] doubles;
-            switch (value)
+            var doubles = value switch
             {
-                case double[] dbls:
-                    doubles = dbls;
-                    break;
-                case int[] ints:
-                    doubles = Array.ConvertAll(ints, Convert.ToDouble);
-                    break;
-                case object[] objects:
-                    doubles = Array.ConvertAll(objects, Convert.ToDouble);
-                    break;
-                default:
-                    throw new ArgumentException(
-                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
-            }
+                double[] dbls => dbls,
+                int[] ints => Array.ConvertAll(ints, Convert.ToDouble),
+                object[] objects => Array.ConvertAll(objects, Convert.ToDouble),
+                _ => throw new ArgumentException(
+                    $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}")
+            };
 
             VipsValue.SetArrayDouble(ref Struct, doubles, doubles.Length);
         }
@@ -324,23 +308,14 @@ public class GValue : IDisposable
         }
         else if (gtype == BlobType)
         {
-            byte[] memory;
-
-            switch (value)
+            var memory = value switch
             {
-                case string strValue:
-                    memory = Encoding.UTF8.GetBytes(strValue);
-                    break;
-                case char[] charArrValue:
-                    memory = Encoding.UTF8.GetBytes(charArrValue);
-                    break;
-                case byte[] byteArrValue:
-                    memory = byteArrValue;
-                    break;
-                default:
-                    throw new ArgumentException(
-                        $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}");
-            }
+                string strValue => Encoding.UTF8.GetBytes(strValue),
+                char[] charArrValue => Encoding.UTF8.GetBytes(charArrValue),
+                byte[] byteArrValue => byteArrValue,
+                _ => throw new ArgumentException(
+                    $"unsupported value type {value.GetType()} for gtype {NetVips.TypeName(gtype)}")
+            };
 
             // We need to set the blob to a copy of the string that vips can own
             var ptr = GLib.GMalloc((ulong)memory.Length);
@@ -354,7 +329,7 @@ public class GValue : IDisposable
             }
             else
             {
-                int FreeFn(IntPtr a, IntPtr b)
+                int FreeFn(nint a, nint b)
                 {
                     GLib.GFree(a);
 
@@ -482,7 +457,7 @@ public class GValue : IDisposable
     /// Get the GType of this GValue.
     /// </summary>
     /// <returns>The GType of this GValue.</returns>
-    public IntPtr GetTypeOf()
+    public nint GetTypeOf()
     {
         return Struct.GType;
     }

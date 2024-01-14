@@ -503,7 +503,7 @@ public class CreateTests : IClassFixture<TestsFixture>
 
             // quite a large threshold, since we need to work with a huge range of
             // text rendering systems
-            Assert.True(Math.Abs(im.Width - 500) < 50);
+            Assert.Equal(500, im.Width, 50.0);
         }
     }
 

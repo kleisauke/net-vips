@@ -36,8 +36,7 @@ public static class ModuleInitializer
     /// <summary>
     /// A cache for <see cref="DllImportResolver"/>.
     /// </summary>
-    internal static readonly Dictionary<string, IntPtr> DllImportCache =
-        new Dictionary<string, IntPtr>();
+    internal static readonly Dictionary<string, nint> DllImportCache = new();
 
     internal static string RemapLibraryName(string libraryName)
     {
@@ -64,7 +63,7 @@ public static class ModuleInitializer
             : "libvips.so.42";
     }
 
-    internal static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+    internal static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
     {
         libraryName = RemapLibraryName(libraryName);
         if (DllImportCache.TryGetValue(libraryName, out var cachedHandle))

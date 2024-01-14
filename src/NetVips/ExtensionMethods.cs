@@ -104,7 +104,7 @@ internal static class ExtensionMethods
     /// <param name="freePtr">If set to <see langword="true"/>, free the GLib string.</param>
     /// <param name="size">Size of the GLib string, use 0 to read until the null character.</param>
     /// <returns>The managed string.</returns>
-    internal static string ToUtf8String(this IntPtr utf8Str, bool freePtr = false, int size = 0)
+    internal static string ToUtf8String(this nint utf8Str, bool freePtr = false, int size = 0)
     {
         if (utf8Str == IntPtr.Zero)
         {

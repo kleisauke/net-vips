@@ -22,18 +22,12 @@ public class ResampleTests : IClassFixture<TestsFixture>
     /// <returns></returns>
     public Image RunCmplx(Func<Image, Image> func, Image image)
     {
-        Enums.BandFormat newFormat;
-        switch (image.Format)
+        var newFormat = image.Format switch
         {
-            case Enums.BandFormat.Float:
-                newFormat = Enums.BandFormat.Complex;
-                break;
-            case Enums.BandFormat.Double:
-                newFormat = Enums.BandFormat.Dpcomplex;
-                break;
-            default:
-                throw new Exception("run_cmplx: not float or double");
-        }
+            Enums.BandFormat.Float => Enums.BandFormat.Complex,
+            Enums.BandFormat.Double => Enums.BandFormat.Dpcomplex,
+            _ => throw new Exception("run_cmplx: not float or double")
+        };
 
         // tag as complex, run, revert tagging
         var cmplx = image.Copy(bands: 1, format: newFormat);
@@ -154,8 +148,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
                     var x = im.Cast(fmt);
                     var r = x.Reduce(fac, fac, kernel: kernel);
 
-                    var d = Math.Abs(r.Avg() - im.Avg());
-                    Assert.True(d < 2);
+                    Assert.Equal(im.Avg(), r.Avg(), 2.0);
                 }
             }
         }
@@ -176,8 +169,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
                 // Console.WriteLine($"testing kernel = {kernel}");
                 // Console.WriteLine($"testing const = {@const}");
                 var shr = im.Reduce(2, 2, kernel: kernel);
-                var d = Math.Abs(shr.Avg() - im.Avg());
-                Assert.Equal(0, d);
+                Assert.Equal(im.Avg(), shr.Avg());
             }
         }
     }
@@ -204,12 +196,12 @@ public class ResampleTests : IClassFixture<TestsFixture>
         var im2 = im.Shrink(4, 4);
         Assert.Equal(Math.Round(im.Width / 4.0), im2.Width);
         Assert.Equal(Math.Round(im.Height / 4.0), im2.Height);
-        Assert.True(Math.Abs(im.Avg() - im2.Avg()) < 1);
+        Assert.Equal(im.Avg(), im2.Avg(), 1.0);
 
         im2 = im.Shrink(2.5, 2.5);
         Assert.Equal(Math.Round(im.Width / 2.5), im2.Width);
         Assert.Equal(Math.Round(im.Height / 2.5), im2.Height);
-        Assert.True(Math.Abs(im.Avg() - im2.Avg()) < 1);
+        Assert.Equal(im.Avg(), im2.Avg(), 1.0);
     }
 
     [SkippableFact]
@@ -223,7 +215,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
 
         // the average shouldn't move too much
         var imOrig = Image.NewFromFile(Helper.JpegFile);
-        Assert.True(Math.Abs(imOrig.Avg() - im.Avg()) < 1);
+        Assert.Equal(imOrig.Avg(), im.Avg(), 1.0);
 
         // make sure we always get the right width
         for (var width = 1000; width >= 1; width -= 13)
@@ -248,7 +240,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
         var im1 = Image.Thumbnail(Helper.JpegFile, 100);
         var buf = File.ReadAllBytes(Helper.JpegFile);
         var im2 = Image.ThumbnailBuffer(buf, 100);
-        Assert.True(Math.Abs(im1.Avg() - im2.Avg()) < 1);
+        Assert.Equal(im1.Avg(), im2.Avg(), 1.0);
 
         // OME-TIFF subifd thumbnail support added in 8.10
         if (NetVips.AtLeastLibvips(8, 10))
