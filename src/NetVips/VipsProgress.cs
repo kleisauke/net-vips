@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 
 namespace NetVips;
@@ -36,7 +35,7 @@ public struct VipsProgress
     /// <summary>
     /// Image we are part of.
     /// </summary>
-    private IntPtr Im;
+    private nint Im;
 
     /// <summary>
     /// Time we have been running.
@@ -66,7 +65,7 @@ public struct VipsProgress
     /// <summary>
     /// Start time.
     /// </summary>
-    private IntPtr StartPtr;
+    private nint StartPtr;
 
     /// <summary>
     /// Start time.

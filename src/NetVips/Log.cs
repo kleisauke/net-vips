@@ -21,8 +21,8 @@ public static class Log
     /// <param name="message">The message to process.</param>
     public delegate void LogDelegate(string logDomain, Enums.LogLevelFlags logLevel, string message);
 
-    private static void NativeCallback(IntPtr logDomainNative, Enums.LogLevelFlags flags, IntPtr messageNative,
-        IntPtr userData)
+    private static void NativeCallback(nint logDomainNative, Enums.LogLevelFlags flags, nint messageNative,
+        nint userData)
     {
         if (userData == IntPtr.Zero)
         {
@@ -38,7 +38,7 @@ public static class Log
         }
     }
 
-    private static readonly ConcurrentDictionary<uint, GCHandle> Handlers = new ConcurrentDictionary<uint, GCHandle>();
+    private static readonly ConcurrentDictionary<uint, GCHandle> Handlers = new();
 
     /// <summary>
     /// Sets the log handler for a domain and a set of log levels.
@@ -52,7 +52,7 @@ public static class Log
         _nativeHandler ??= NativeCallback;
 
         var gch = GCHandle.Alloc(logFunc);
-        var result = GLib.GLogSetHandler(logDomain, flags, _nativeHandler, (IntPtr)gch);
+        var result = GLib.GLogSetHandler(logDomain, flags, _nativeHandler, (nint)gch);
         Handlers.AddOrUpdate(result, gch, (_, _) => gch);
         return result;
     }

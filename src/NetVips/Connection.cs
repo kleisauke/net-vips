@@ -1,5 +1,3 @@
-using System;
-
 namespace NetVips;
 
 /// <summary>
@@ -8,7 +6,7 @@ namespace NetVips;
 public abstract class Connection : VipsObject
 {
     /// <inheritdoc cref="GObject"/>
-    internal Connection(IntPtr pointer) : base(pointer)
+    internal Connection(nint pointer) : base(pointer)
     {
     }
 

@@ -22,7 +22,7 @@ public class VipsObject : GObject
     }
 
     /// <inheritdoc cref="GObject"/>
-    internal VipsObject(IntPtr pointer) : base(pointer)
+    internal VipsObject(nint pointer) : base(pointer)
     {
     }
 
@@ -82,7 +82,7 @@ public class VipsObject : GObject
     /// <param name="name">The name of the property to set.</param>
     /// <param name="value">The value.</param>
     /// <param name="gtype">The GType of the property.</param>
-    internal void Set(IntPtr gtype, string name, object value)
+    internal void Set(nint gtype, string name, object value)
     {
         using var gv = new GValue();
         gv.SetType(gtype);
@@ -111,9 +111,9 @@ public class VipsObject : GObject
     /// Get the GType of a GObject property.
     /// </summary>
     /// <param name="name">The name of the GType to get the type of.</param>
-    /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
+    /// <returns>A new instance of <see langword="nint"/> initialized to the GType or
     /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
-    public IntPtr GetTypeOf(string name)
+    public nint GetTypeOf(string name)
     {
         var pspec = GetPspec(name);
         if (!pspec.HasValue)

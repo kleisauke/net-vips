@@ -488,7 +488,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
                 // we use float arithetic for int and uint, so the rounding
                 // differs ... don't require huge accuracy
-                Assert.True(Math.Abs(x - y) < 2);
+                Assert.Equal(x, y, 2.0);
             }
 
             im = test.Flatten(background: new double[] { 100, 100, 100 });
@@ -505,7 +505,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
                 var x = zip[0];
                 var y = zip[1];
 
-                Assert.True(Math.Abs(x - y) < 2);
+                Assert.Equal(x, y, 2.0);
             }
         }
     }
@@ -539,7 +539,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
                 // we use float arithetic for int and uint, so the rounding
                 // differs ... don't require huge accuracy
-                Assert.True(Math.Abs(x - y) < 2);
+                Assert.Equal(x, y, 2.0);
             }
         }
     }
@@ -586,7 +586,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
                 // we use float arithetic for int and uint, so the rounding
                 // differs ... don't require huge accuracy
-                Assert.True(Math.Abs(x - y) < 2);
+                Assert.Equal(x, y, 2.0);
             }
         }
     }
@@ -630,7 +630,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
                 // ie. less than 1% error, rounding on 7-bit images
                 // means this is all we can expect
-                Assert.True(Math.Abs(a - b) < mx / 100.0);
+                Assert.Equal(a, b, mx / 100.0);
             }
         }
 
@@ -652,7 +652,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
                 // ie. less than 1% error, rounding on 7-bit images
                 // means this is all we can expect
-                Assert.True(Math.Abs(a - b) < mx / 100.0);
+                Assert.Equal(a, b, mx / 100.0);
             }
         }
     }

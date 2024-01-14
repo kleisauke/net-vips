@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using NetVips.Interop;
@@ -9,18 +8,18 @@ using VipsBlobManaged = NetVips.VipsBlob;
 namespace NetVips.Internal;
 
 [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal delegate void GWeakNotify(IntPtr data, IntPtr objectPointer);
+internal delegate void GWeakNotify(nint data, nint objectPointer);
 
 internal static class GObject
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct Struct
     {
-        internal IntPtr GTypeInstance;
+        internal nint GTypeInstance;
 
         internal uint RefCount;
 
-        internal IntPtr QData;
+        internal nint QData;
     }
 
     [SuppressUnmanagedCodeSecurity]
@@ -38,17 +37,17 @@ internal static class GObject
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_object_ref")]
-    internal static extern IntPtr Ref(IntPtr @object);
+    internal static extern nint Ref(nint @object);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_object_unref")]
-    internal static extern void Unref(IntPtr @object);
+    internal static extern void Unref(nint @object);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_object_weak_ref")]
-    internal static extern void WeakRef(GObjectManaged @object, GWeakNotify notify, IntPtr data);
+    internal static extern void WeakRef(GObjectManaged @object, GWeakNotify notify, nint data);
 }
 
 [StructLayout(LayoutKind.Sequential)]
@@ -66,13 +65,13 @@ internal struct GEnumValue
 [StructLayout(LayoutKind.Sequential)]
 internal struct GEnumClass
 {
-    internal IntPtr GTypeClass;
+    internal nint GTypeClass;
 
     internal int Minimum;
     internal int Maximum;
     internal uint NValues;
 
-    internal IntPtr Values;
+    internal nint Values;
 }
 
 internal static class GType
@@ -80,22 +79,22 @@ internal static class GType
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_type_name")]
-    internal static extern IntPtr Name(IntPtr type);
+    internal static extern nint Name(nint type);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_type_from_name")]
-    internal static extern IntPtr FromName([MarshalAs(UnmanagedType.LPStr)] string name);
+    internal static extern nint FromName([MarshalAs(UnmanagedType.LPStr)] string name);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_type_fundamental")]
-    internal static extern IntPtr Fundamental(IntPtr typeId);
+    internal static extern nint Fundamental(nint typeId);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_type_class_ref")]
-    internal static extern IntPtr ClassRef(IntPtr type);
+    internal static extern nint ClassRef(nint type);
 }
 
 internal static class GValue
@@ -104,17 +103,17 @@ internal static class GValue
     internal struct Struct
     {
         [FieldOffset(0)]
-        internal IntPtr GType;
+        internal nint GType;
 
         [FieldOffset(8)]
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        internal IntPtr[] Data;
+        internal nint[] Data;
     }
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_value_init")]
-    internal static extern IntPtr Init(ref Struct value, IntPtr gType);
+    internal static extern nint Init(ref Struct value, nint gType);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
@@ -170,7 +169,7 @@ internal static class GValue
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_value_get_string")]
-    internal static extern IntPtr GetString(in Struct value);
+    internal static extern nint GetString(in Struct value);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
@@ -200,7 +199,7 @@ internal static class GValue
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_value_get_object")]
-    internal static extern IntPtr GetObject(in Struct value);
+    internal static extern nint GetObject(in Struct value);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
@@ -213,17 +212,17 @@ internal static class GParamSpec
     [StructLayout(LayoutKind.Sequential)]
     internal struct Struct
     {
-        internal IntPtr GTypeInstance;
+        internal nint GTypeInstance;
 
-        internal IntPtr Name;
+        internal nint Name;
 
         internal Enums.GParamFlags Flags;
-        internal IntPtr ValueType;
-        internal IntPtr OwnerType;
+        internal nint ValueType;
+        internal nint OwnerType;
 
-        internal IntPtr Nick;
-        internal IntPtr Blurb;
-        internal IntPtr QData;
+        internal nint Nick;
+        internal nint Blurb;
+        internal nint QData;
         internal uint RefCount;
         internal uint ParamId;
     }
@@ -231,11 +230,11 @@ internal static class GParamSpec
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_param_spec_get_blurb")]
-    internal static extern IntPtr GetBlurb(in Struct pspec);
+    internal static extern nint GetBlurb(in Struct pspec);
 }
 
 [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal delegate void GClosureNotify(IntPtr data, IntPtr closure);
+internal delegate void GClosureNotify(nint data, nint closure);
 
 internal static class GSignal
 {
@@ -244,7 +243,7 @@ internal static class GSignal
         EntryPoint = "g_signal_connect_data")]
     internal static extern ulong ConnectData(GObjectManaged instance,
         [MarshalAs(UnmanagedType.LPStr)] string detailedSignal,
-        IntPtr cHandler, IntPtr data,
+        nint cHandler, nint data,
         GClosureNotify destroyData, Enums.GConnectFlags connectFlags);
 
     [SuppressUnmanagedCodeSecurity]
@@ -256,6 +255,6 @@ internal static class GSignal
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_signal_handlers_disconnect_matched")]
     internal static extern uint HandlersDisconnectMatched(GObjectManaged instance,
-        Enums.GSignalMatchType mask, uint signalId, uint detail, IntPtr closure,
-        IntPtr func, IntPtr data);
+        Enums.GSignalMatchType mask, uint signalId, uint detail, nint closure,
+        nint func, nint data);
 }

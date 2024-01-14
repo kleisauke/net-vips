@@ -178,7 +178,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     {
         dynamic FloorDiv(dynamic x, dynamic y)
         {
-            if (y is Image rightImage && !(x is Image))
+            if (y is Image rightImage && x is not Image)
             {
                 // There's no  __rfloordiv__ & __pow__ equivalent in C# :(
                 return (rightImage.Pow(-1) * x).Floor();
@@ -203,7 +203,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     {
         dynamic Pow(dynamic x, dynamic y)
         {
-            if (y is Image rightImage && !(x is Image))
+            if (y is Image rightImage && x is not Image)
             {
                 // There's no  __rpow__ equivalent in C# :(
                 return rightImage.Wop(x);
@@ -365,12 +365,12 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     {
         dynamic Equal(dynamic x, dynamic y)
         {
-            if (y is Image rightImage && !(x is Image))
+            if (y is Image rightImage && x is not Image)
             {
                 return x == rightImage;
             }
 
-            if (x is Image leftImage && !(y is Image))
+            if (x is Image leftImage && y is not Image)
             {
                 return y == leftImage;
             }
@@ -392,12 +392,12 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     {
         dynamic NotEq(dynamic x, dynamic y)
         {
-            if (y is Image rightImage && !(x is Image))
+            if (y is Image rightImage && x is not Image)
             {
                 return x != rightImage;
             }
 
-            if (x is Image leftImage && !(y is Image))
+            if (x is Image leftImage && y is not Image)
             {
                 return y != leftImage;
             }

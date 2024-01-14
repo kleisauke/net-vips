@@ -15,7 +15,7 @@ public class Source : Connection
     private GCHandle _dataHandle;
 
     /// <inheritdoc cref="Connection"/>
-    internal Source(IntPtr pointer) : base(pointer)
+    internal Source(nint pointer) : base(pointer)
     {
     }
 
@@ -86,7 +86,7 @@ public class Source : Connection
     public static Source NewFromMemory(byte[] data)
     {
         var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-        var pointer = Internal.VipsSource.NewFromMemory(handle.AddrOfPinnedObject(), (UIntPtr)data.Length);
+        var pointer = Internal.VipsSource.NewFromMemory(handle.AddrOfPinnedObject(), (nuint)data.Length);
         if (pointer == IntPtr.Zero)
         {
             if (handle.IsAllocated)

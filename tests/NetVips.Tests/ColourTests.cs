@@ -96,11 +96,11 @@ public class ColourTests : IClassFixture<TestsFixture>
             var alphaBefore = pixelBefore[1];
             var pixelAfter = im[10, 10];
             var alphaAfter = pixelAfter[1];
-            Assert.True(Math.Abs(alphaAfter - alphaBefore) < 1);
+            Assert.Equal(alphaBefore, alphaAfter, 1.0);
 
             // GREY16 can wind up rather different due to rounding but 8-bit we should hit exactly
-            Assert.True(
-                Math.Abs(pixelAfter[0] - pixelBefore[0]) < (monoFmt == Enums.Interpretation.Grey16 ? 30 : 1));
+            Assert.Equal(pixelBefore[0], pixelAfter[0],
+                monoFmt == Enums.Interpretation.Grey16 ? 30.0 : 1.0);
         }
 
         if (NetVips.AtLeastLibvips(8, 8))
@@ -171,7 +171,7 @@ public class ColourTests : IClassFixture<TestsFixture>
 
         var difference = reference.DECMC(sample);
         var diffPixel = difference[10, 10];
-        Assert.True(Math.Abs(diffPixel[0] - 4.97) < 0.5);
+        Assert.Equal(4.97, diffPixel[0], 0.5);
         Assert.Equal(42.0, diffPixel[1], 3);
     }
 

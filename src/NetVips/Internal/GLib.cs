@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using NetVips.Interop;
@@ -10,24 +9,24 @@ namespace NetVips.Internal;
 internal static class GLib
 {
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void LogFuncNative(IntPtr logDomain, LogLevelFlags flags, IntPtr message,
-        IntPtr userData);
+    internal delegate void LogFuncNative(nint logDomain, LogLevelFlags flags, nint message,
+        nint userData);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_free")]
-    internal static extern void GFree(IntPtr mem);
+    internal static extern void GFree(nint mem);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_malloc")]
-    internal static extern IntPtr GMalloc(ulong nBytes);
+    internal static extern nint GMalloc(ulong nBytes);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_log_set_handler")]
     internal static extern uint GLogSetHandler([MarshalAs(UnmanagedType.LPStr)] string logDomain,
-        LogLevelFlags flags, LogFuncNative logFunc, IntPtr userData);
+        LogLevelFlags flags, LogFuncNative logFunc, nint userData);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl,

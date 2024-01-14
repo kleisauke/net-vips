@@ -110,7 +110,7 @@ public static class Helper
         .Concat(CmykColourspaces)
         .ToArray();
 
-    public static readonly Dictionary<Enums.BandFormat, double> MaxValue = new Dictionary<Enums.BandFormat, double>
+    public static readonly Dictionary<Enums.BandFormat, double> MaxValue = new()
     {
         {
             Enums.BandFormat.Uchar,
@@ -154,7 +154,7 @@ public static class Helper
         }
     };
 
-    public static readonly Dictionary<Enums.BandFormat, int> SizeOfFormat = new Dictionary<Enums.BandFormat, int>
+    public static readonly Dictionary<Enums.BandFormat, int> SizeOfFormat = new()
     {
         {
             Enums.BandFormat.Uchar,
@@ -248,12 +248,12 @@ public static class Helper
     public static IEnumerable<object[]> ZipExpand(object x, object y)
     {
         // handle singleton list case
-        if (x is Array xArray && xArray.Length == 1)
+        if (x is Array { Length: 1 } xArray)
         {
             x = xArray.GetValue(0);
         }
 
-        if (y is Array yArray && yArray.Length == 1)
+        if (y is Array { Length: 1 } yArray)
         {
             y = yArray.GetValue(0);
         }
@@ -343,7 +343,7 @@ public static class Helper
         var im2 = (Image)func(im);
         var v2 = im2[x, y];
 
-        AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
+        AssertAlmostEqualObjects(v1 as IEnumerable ?? new[] { v1 }, v2);
     }
 
     /// <summary>
@@ -364,7 +364,7 @@ public static class Helper
         var after = (Image)func(left, right);
         var v2 = after[x, y];
 
-        AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
+        AssertAlmostEqualObjects(v1 as IEnumerable ?? new[] { v1 }, v2);
     }
 
     /// <summary>

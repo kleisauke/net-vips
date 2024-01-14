@@ -117,10 +117,10 @@ public class HistogramTests : IClassFixture<TestsFixture>
         var pc = im.Percent(90);
 
         var msk = im <= pc;
-        var nSet = (msk.Avg() * msk.Width * msk.Height) / 255.0;
+        var nSet = msk.Avg() * msk.Width * msk.Height / 255.0;
         var pcSet = 100 * nSet / (msk.Width * msk.Height);
 
-        Assert.True(Math.Abs(pcSet - 90) < 1);
+        Assert.Equal(90, pcSet, 1.0);
     }
 
     [Fact]
@@ -130,7 +130,7 @@ public class HistogramTests : IClassFixture<TestsFixture>
 
         var ent = im.HistFind().HistEntropy();
 
-        Assert.Equal(4.37, ent, 2);
+        Assert.Equal(4.37, ent, 0.01);
     }
 
     [Fact]

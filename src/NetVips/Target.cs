@@ -9,7 +9,7 @@ namespace NetVips;
 public class Target : Connection
 {
     /// <inheritdoc cref="Connection"/>
-    internal Target(IntPtr pointer) : base(pointer)
+    internal Target(nint pointer) : base(pointer)
     {
     }
 

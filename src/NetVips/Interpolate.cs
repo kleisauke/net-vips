@@ -8,7 +8,7 @@ namespace NetVips;
 /// </summary>
 public class Interpolate : VipsObject
 {
-    private Interpolate(IntPtr pointer) : base(pointer)
+    private Interpolate(nint pointer) : base(pointer)
     {
     }
 

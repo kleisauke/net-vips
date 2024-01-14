@@ -10,7 +10,7 @@ namespace NetVips;
 /// </summary>
 public class VOption : IEnumerable<KeyValuePair<string, object>>
 {
-    private readonly Dictionary<string, object> _internalDictionary = new Dictionary<string, object>();
+    private readonly Dictionary<string, object> _internalDictionary = new();
 
     /// <summary>
     /// Returns an enumerator that iterates through the <see cref="_internalDictionary"/>.
@@ -86,7 +86,7 @@ public class VOption : IEnumerable<KeyValuePair<string, object>>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AddIfPresent<T>(string key, T[] array) where T : struct
     {
-        if (array != null && array.Length > 0)
+        if (array is { Length: > 0 })
         {
             _internalDictionary.Add(key, array);
         }

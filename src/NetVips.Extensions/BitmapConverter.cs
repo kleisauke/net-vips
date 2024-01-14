@@ -20,30 +20,26 @@ public static class BitmapConverter
     /// <returns>The number of bands.</returns>
     private static int GuessBands(PixelFormat pixelFormat)
     {
-        switch (pixelFormat)
+        return pixelFormat switch
         {
-            case PixelFormat.Format8bppIndexed:
+            PixelFormat.Format8bppIndexed =>
                 /* Note: Maplut below will create a 3-band image */
-                return 1;
-            /*case PixelFormat.Format16bppGrayScale:
-                return 2;*/
-            /*case PixelFormat.Format1bppIndexed:*/
-            /*case PixelFormat.Format4bppIndexed:*/
-            /*case PixelFormat.Format16bppRgb555:*/
-            /*case PixelFormat.Format16bppRgb565:*/
-            case PixelFormat.Format24bppRgb:
-            /*case PixelFormat.Format32bppRgb:*/
-            case PixelFormat.Format48bppRgb:
-                return 3;
-            /*case PixelFormat.Format16bppArgb1555:*/
-            case PixelFormat.Format32bppArgb:
-            case PixelFormat.Format32bppPArgb:
-            case PixelFormat.Format64bppArgb:
-            case PixelFormat.Format64bppPArgb:
-                return 4;
-            default:
-                throw new NotImplementedException($"GuessBands({pixelFormat}) is not yet implemented.");
-        }
+                1,
+            //PixelFormat.Format16bppGrayScale => 2,
+            //PixelFormat.Format1bppIndexed => 3,
+            //PixelFormat.Format4bppIndexed => 3,
+            //PixelFormat.Format16bppRgb555 => 3,
+            //PixelFormat.Format16bppRgb565 => 3,
+            PixelFormat.Format24bppRgb => 3,
+            //PixelFormat.Format32bppRgb => 3,
+            PixelFormat.Format48bppRgb => 3,
+            //PixelFormat.Format16bppArgb1555 => 4,
+            PixelFormat.Format32bppArgb => 4,
+            PixelFormat.Format32bppPArgb => 4,
+            PixelFormat.Format64bppArgb => 4,
+            PixelFormat.Format64bppPArgb => 4,
+            _ => throw new NotImplementedException($"GuessBands({pixelFormat}) is not yet implemented.")
+        };
     }
 
     /// <summary>
@@ -56,27 +52,24 @@ public static class BitmapConverter
     /// <returns>The <see cref="Enums.BandFormat"/>.</returns>
     private static Enums.BandFormat GuessBandFormat(PixelFormat pixelFormat)
     {
-        switch (pixelFormat)
+        return pixelFormat switch
         {
-            /*case PixelFormat.Format1bppIndexed:*/
-            /*case PixelFormat.Format4bppIndexed:*/
-            case PixelFormat.Format8bppIndexed:
-            /*case PixelFormat.Format16bppGrayScale:*/
-            /*case PixelFormat.Format16bppRgb555:*/
-            /*case PixelFormat.Format16bppRgb565:*/
-            case PixelFormat.Format24bppRgb:
-            /*case PixelFormat.Format32bppRgb:*/
-            /*case PixelFormat.Format16bppArgb1555:*/
-            case PixelFormat.Format32bppArgb:
-            case PixelFormat.Format32bppPArgb:
-                return Enums.BandFormat.Uchar;
-            case PixelFormat.Format48bppRgb:
-            case PixelFormat.Format64bppArgb:
-            case PixelFormat.Format64bppPArgb:
-                return Enums.BandFormat.Ushort;
-            default:
-                throw new NotImplementedException($"GuessBandFormat({pixelFormat}) is not yet implemented.");
-        }
+            //PixelFormat.Format1bppIndexed => Enums.BandFormat.Uchar,
+            //PixelFormat.Format4bppIndexed => Enums.BandFormat.Uchar,
+            PixelFormat.Format8bppIndexed => Enums.BandFormat.Uchar,
+            //PixelFormat.Format16bppGrayScale => Enums.BandFormat.Uchar,
+            //PixelFormat.Format16bppRgb555 => Enums.BandFormat.Uchar,
+            //PixelFormat.Format16bppRgb565 => Enums.BandFormat.Uchar,
+            PixelFormat.Format24bppRgb => Enums.BandFormat.Uchar,
+            //PixelFormat.Format32bppRgb => Enums.BandFormat.Uchar,
+            //PixelFormat.Format16bppArgb1555 => Enums.BandFormat.Uchar,
+            PixelFormat.Format32bppArgb => Enums.BandFormat.Uchar,
+            PixelFormat.Format32bppPArgb => Enums.BandFormat.Uchar,
+            PixelFormat.Format48bppRgb => Enums.BandFormat.Ushort,
+            PixelFormat.Format64bppArgb => Enums.BandFormat.Ushort,
+            PixelFormat.Format64bppPArgb => Enums.BandFormat.Ushort,
+            _ => throw new NotImplementedException($"GuessBandFormat({pixelFormat}) is not yet implemented.")
+        };
     }
 
     /// <summary>
@@ -94,9 +87,7 @@ public static class BitmapConverter
         // 8 bits are not used anyway) images. This is faster than the pixel
         // loops commented below and simplifies the code considerably.
         var pf =
-            src.PixelFormat == PixelFormat.Format1bppIndexed ||
-            src.PixelFormat == PixelFormat.Format4bppIndexed ||
-            src.PixelFormat == PixelFormat.Format32bppRgb
+            src.PixelFormat is PixelFormat.Format1bppIndexed or PixelFormat.Format4bppIndexed or PixelFormat.Format32bppRgb
                 ? PixelFormat.Format24bppRgb
                 : src.PixelFormat;
 
@@ -354,7 +345,7 @@ public static class BitmapConverter
                     $"Number of bands must be 1 or in the in the range of 3 to 4. Got: {src.Bands}");
         }
 
-        if (src.Format != Enums.BandFormat.Uchar || src.Format != Enums.BandFormat.Ushort)
+        if (src.Format is not (Enums.BandFormat.Uchar or Enums.BandFormat.Ushort))
         {
             // Pixel formats other than uchar and ushort needs to be casted to uint8 (unsigned char)
             using (src)

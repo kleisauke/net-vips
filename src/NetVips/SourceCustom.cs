@@ -1,4 +1,3 @@
-using System;
 using System.Buffers;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -67,7 +66,7 @@ public class SourceCustom : Source
     /// <param name="length">The maximum number of bytes to be read.</param>
     /// <param name="userDataPtr">User data associated with the source.</param>
     /// <returns>The total number of bytes read into the buffer.</returns>
-    internal long ReadHandler(IntPtr sourcePtr, IntPtr buffer, long length, IntPtr userDataPtr)
+    internal long ReadHandler(nint sourcePtr, nint buffer, long length, nint userDataPtr)
     {
         if (length <= 0)
         {
@@ -110,7 +109,7 @@ public class SourceCustom : Source
     /// reference point used to obtain the new position.</param>
     /// <param name="userDataPtr">User data associated with the source.</param>
     /// <returns>The new position within the current source.</returns>
-    internal long SeekHandler(IntPtr sourcePtr, long offset, int whence, IntPtr userDataPtr)
+    internal long SeekHandler(nint sourcePtr, long offset, int whence, nint userDataPtr)
     {
         var newPosition = OnSeek?.Invoke(offset, (SeekOrigin)whence);
         return newPosition ?? -1;

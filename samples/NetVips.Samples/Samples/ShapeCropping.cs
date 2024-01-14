@@ -308,8 +308,7 @@ public class ShapeCropping : ISample
     /// otherwise, <see langword="false"/></returns>
     public static bool Is16Bit(Enums.Interpretation interpretation)
     {
-        return interpretation == Enums.Interpretation.Rgb16 ||
-               interpretation == Enums.Interpretation.Grey16;
+        return interpretation is Enums.Interpretation.Rgb16 or Enums.Interpretation.Grey16;
     }
 
     #endregion
