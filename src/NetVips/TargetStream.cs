@@ -8,8 +8,6 @@ namespace NetVips
     /// </summary>
     internal class TargetStream : TargetCustom
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Write to this stream.
         /// </summary>
@@ -23,7 +21,6 @@ namespace NetVips
         /// <inheritdoc cref="GObject"/>
         internal TargetStream(Stream stream)
         {
-            // logger.Debug($"TargetStream: stream = {stream}");
             var readable = stream.CanRead;
             var seekable = stream.CanSeek;
 
@@ -50,7 +47,6 @@ namespace NetVips
         /// <exception cref="T:System.ArgumentException">If <paramref name="stream"/> is not writable.</exception>
         internal static TargetStream NewFromStream(Stream stream)
         {
-            // logger.Debug($"TargetStream.NewFromStream: stream = {stream}");
             if (!stream.CanWrite)
             {
                 throw new ArgumentException("The stream should be writable.", nameof(stream));
@@ -102,17 +98,13 @@ namespace NetVips
         {
             try
             {
-                switch (origin)
+                return origin switch
                 {
-                    case SeekOrigin.Begin:
-                        return _stream.Seek(_startPosition + offset, SeekOrigin.Begin) - _startPosition;
-                    case SeekOrigin.Current:
-                        return _stream.Seek(offset, SeekOrigin.Current) - _startPosition;
-                    case SeekOrigin.End:
-                        return _stream.Seek(offset, SeekOrigin.End) - _startPosition;
-                    default:
-                        return -1;
-                }
+                    SeekOrigin.Begin => _stream.Seek(_startPosition + offset, SeekOrigin.Begin) - _startPosition,
+                    SeekOrigin.Current => _stream.Seek(offset, SeekOrigin.Current) - _startPosition,
+                    SeekOrigin.End => _stream.Seek(offset, SeekOrigin.End) - _startPosition,
+                    _ => -1
+                };
             }
             catch
             {

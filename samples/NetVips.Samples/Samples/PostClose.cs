@@ -19,7 +19,7 @@ namespace NetVips.Samples
             // Avoid reusing the image after subsequent use
             Cache.Max = 0;
 
-            Action action = OnPostClose;
+            var action = OnPostClose;
 
             var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
             im.OnPostClose += action;

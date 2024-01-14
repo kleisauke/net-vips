@@ -3,7 +3,6 @@ namespace NetVips.Samples
     using System;
     using System.IO;
     using System.Net.Http;
-    using System.Threading.Tasks;
 
     public class NetworkStream : ISample
     {
@@ -39,7 +38,7 @@ namespace NetVips.Samples
             using var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
             Console.WriteLine(image.ToString());
 
-            using var output = File.OpenWrite("stream-network.jpg");
+            await using var output = File.OpenWrite("stream-network.jpg");
             image.WriteToStream(output, ".jpg");
 
             Console.WriteLine("See stream-network.jpg");

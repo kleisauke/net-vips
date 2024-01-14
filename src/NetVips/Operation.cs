@@ -8,13 +8,10 @@ namespace NetVips
     /// </summary>
     public class Operation : VipsObject
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <inheritdoc cref="VipsObject"/>
         private Operation(IntPtr pointer)
             : base(pointer)
         {
-            // logger.Debug($"Operation = {pointer}");
         }
 
         /// <summary>
@@ -45,10 +42,8 @@ namespace NetVips
         /// <param name="matchImage">A <see cref="Image"/> used as guide.</param>
         /// <param name="value">The value.</param>
         /// <param name="gtype">The GType of the property.</param>
-        private void Set(IntPtr gtype, Image matchImage, string name, object value)
+        private void Set(nint gtype, Image matchImage, string name, object value)
         {
-            // logger.Debug($"Operation.Set: name = {name}, matchImage = {matchImage}, value = {value}");
-
             // if the object wants an image and we have a constant, Imageize it
             //
             // if the object wants an image array, Imageize any constants in the
@@ -61,7 +56,7 @@ namespace NetVips
                 }
                 else if (gtype == GValue.ArrayImageType)
                 {
-                    if (!(value is Array values) || values.Rank != 1)
+                    if (value is not Array { Rank: 1 } values)
                     {
                         throw new ArgumentException(
                             $"unsupported value type {value.GetType()} for VipsArrayImage");
@@ -138,14 +133,9 @@ namespace NetVips
         public static object Call(string operationName, VOption kwargs = null, Image matchImage = null,
             params object[] args)
         {
-            // logger.Debug($"Operation.call: operationName = {operationName}");
-            // logger.Debug($"Operation.call: matchImage = {matchImage}");
-            // logger.Debug($"Operation.call: args = {args}, kwargs = {kwargs}");
-
             // pull out the special string_options kwarg
             object stringOptions = null;
             kwargs?.Remove("string_options", out stringOptions);
-            // logger.Debug($"Operation.call: stringOptions = {stringOptions}");
 
             var intro = Introspect.Get(operationName);
             if (intro.RequiredInput.Count != args.Length)
@@ -159,7 +149,7 @@ namespace NetVips
                 throw new VipsException($"unable to call {operationName}: operation must be mutable");
             }
 
-            IntPtr vop;
+            nint vop;
             using (var op = NewFromName(operationName))
             {
                 // set any string options before any args so they can't be
@@ -247,8 +237,6 @@ namespace NetVips
 
                 Internal.VipsObject.UnrefOutputs(op);
             }
-
-            // logger.Debug($"Operation.call: result = {result}");
 
             return results.Length == 1 ? results[0] : results;
         }

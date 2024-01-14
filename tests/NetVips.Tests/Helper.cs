@@ -110,7 +110,7 @@ namespace NetVips.Tests
             .Concat(CmykColourspaces)
             .ToArray();
 
-        public static readonly Dictionary<Enums.BandFormat, double> MaxValue = new Dictionary<Enums.BandFormat, double>
+        public static readonly Dictionary<Enums.BandFormat, double> MaxValue = new()
         {
             {
                 Enums.BandFormat.Uchar,
@@ -154,7 +154,7 @@ namespace NetVips.Tests
             }
         };
 
-        public static readonly Dictionary<Enums.BandFormat, int> SizeOfFormat = new Dictionary<Enums.BandFormat, int>
+        public static readonly Dictionary<Enums.BandFormat, int> SizeOfFormat = new()
         {
             {
                 Enums.BandFormat.Uchar,
@@ -248,12 +248,12 @@ namespace NetVips.Tests
         public static IEnumerable<object[]> ZipExpand(object x, object y)
         {
             // handle singleton list case
-            if (x is Array xArray && xArray.Length == 1)
+            if (x is Array { Length: 1 } xArray)
             {
                 x = xArray.GetValue(0);
             }
 
-            if (y is Array yArray && yArray.Length == 1)
+            if (y is Array { Length: 1 } yArray)
             {
                 y = yArray.GetValue(0);
             }
@@ -343,7 +343,7 @@ namespace NetVips.Tests
             var im2 = (Image)func(im);
             var v2 = im2[x, y];
 
-            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
+            AssertAlmostEqualObjects(v1 as IEnumerable ?? new[] { v1 }, v2);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace NetVips.Tests
             var after = (Image)func(left, right);
             var v2 = after[x, y];
 
-            AssertAlmostEqualObjects(v1 is IEnumerable enumerable ? enumerable : new[] { v1 }, v2);
+            AssertAlmostEqualObjects(v1 as IEnumerable ?? new[] { v1 }, v2);
         }
 
         /// <summary>
@@ -447,11 +447,11 @@ namespace NetVips.Tests
 
     internal class ObjectComparerDelta : IEqualityComparer<object>
     {
-        private double delta;
+        private readonly double _delta;
 
         public ObjectComparerDelta(double delta)
         {
-            this.delta = delta;
+            _delta = delta;
         }
 
         public new bool Equals(object x, object y)
@@ -459,7 +459,7 @@ namespace NetVips.Tests
             var a = Convert.ToDouble(x);
             var b = Convert.ToDouble(y);
 
-            return Math.Abs(a - b) <= delta;
+            return Math.Abs(a - b) <= _delta;
         }
 
         public int GetHashCode(object obj)

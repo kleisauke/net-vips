@@ -22,7 +22,7 @@ namespace NetVips.Samples
             }
         }
 
-        public List<string> Images = new List<string>
+        public List<string> Images = new()
         {
             "images/cd1.1.jpg",
             "images/cd1.2.jpg",
@@ -34,7 +34,7 @@ namespace NetVips.Samples
             "images/cd4.2.jpg"
         };
 
-        public List<Point> HorizontalMarks = new List<Point>
+        public List<Point> HorizontalMarks = new()
         {
             new Point(489, 140),
             new Point(66, 141),
@@ -46,7 +46,7 @@ namespace NetVips.Samples
             new Point(40, 57)
         };
 
-        public List<Point> VerticalMarks = new List<Point>
+        public List<Point> VerticalMarks = new()
         {
             new Point(364, 346),
             new Point(388, 44),

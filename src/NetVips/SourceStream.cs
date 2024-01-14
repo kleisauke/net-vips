@@ -8,8 +8,6 @@ namespace NetVips
     /// </summary>
     internal class SourceStream : SourceCustom
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Read from this stream.
         /// </summary>
@@ -23,7 +21,6 @@ namespace NetVips
         /// <inheritdoc cref="SourceCustom"/>
         internal SourceStream(Stream stream)
         {
-            // logger.Debug($"SourceStream: stream = {stream}");
             var seekable = stream.CanSeek;
 
             _stream = stream;
@@ -44,8 +41,6 @@ namespace NetVips
         /// <exception cref="T:System.ArgumentException">If <paramref name="stream"/> is not readable.</exception>
         internal static SourceStream NewFromStream(Stream stream)
         {
-            // logger.Debug($"SourceStream.NewFromStream: stream = {stream}");
-
             if (!stream.CanRead)
             {
                 throw new ArgumentException("The stream should be readable.", nameof(stream));
@@ -77,17 +72,13 @@ namespace NetVips
         {
             try
             {
-                switch (origin)
+                return origin switch
                 {
-                    case SeekOrigin.Begin:
-                        return _stream.Seek(_startPosition + offset, SeekOrigin.Begin) - _startPosition;
-                    case SeekOrigin.Current:
-                        return _stream.Seek(offset, SeekOrigin.Current) - _startPosition;
-                    case SeekOrigin.End:
-                        return _stream.Seek(offset, SeekOrigin.End) - _startPosition;
-                    default:
-                        return -1;
-                }
+                    SeekOrigin.Begin => _stream.Seek(_startPosition + offset, SeekOrigin.Begin) - _startPosition,
+                    SeekOrigin.Current => _stream.Seek(offset, SeekOrigin.Current) - _startPosition,
+                    SeekOrigin.End => _stream.Seek(offset, SeekOrigin.End) - _startPosition,
+                    _ => -1
+                };
             }
             catch
             {

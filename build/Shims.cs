@@ -5,23 +5,17 @@ using System.Text;
 using System.Xml.Linq;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
-using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TravisCI;
+using Serilog;
 
 public partial class Build
 {
-    static void Information(string info)
-    {
-        Serilog.Log.Information(info);
-    }
+    static void Information(string info) => Log.Information(info);
 
-    static void Information(string info, params object[] args)
-    {
-        Serilog.Log.Information(info, args);
-    }
+    static void Information(string info, params object[] args) => Log.Information(info, args);
 
     public static string GetVersion()
     {

@@ -351,11 +351,10 @@ namespace NetVips.Tests
                 {Enums.CompassDirection.NorthWest, new[] {0, 0}}
             };
 
-            foreach (var kvp in positions)
+            foreach (var (direction, value) in positions)
             {
-                var direction = kvp.Key;
-                var x = kvp.Value[0];
-                var y = kvp.Value[1];
+                var x = value[0];
+                var y = value[1];
                 var im2 = im.Gravity(direction, 3, 3);
                 Assert.Equal(new double[] { 255 }, im2[x, y]);
                 Assert.Equal(255.0 / 9.0, im2.Avg());
@@ -489,7 +488,7 @@ namespace NetVips.Tests
 
                     // we use float arithetic for int and uint, so the rounding
                     // differs ... don't require huge accuracy
-                    Assert.True(Math.Abs(x - y) < 2);
+                    Assert.Equal(x, y, 2.0);
                 }
 
                 im = test.Flatten(background: new double[] { 100, 100, 100 });
@@ -506,7 +505,7 @@ namespace NetVips.Tests
                     var x = zip[0];
                     var y = zip[1];
 
-                    Assert.True(Math.Abs(x - y) < 2);
+                    Assert.Equal(x, y, 2.0);
                 }
             }
         }
@@ -540,7 +539,7 @@ namespace NetVips.Tests
 
                     // we use float arithetic for int and uint, so the rounding
                     // differs ... don't require huge accuracy
-                    Assert.True(Math.Abs(x - y) < 2);
+                    Assert.Equal(x, y, 2.0);
                 }
             }
         }
@@ -587,7 +586,7 @@ namespace NetVips.Tests
 
                     // we use float arithetic for int and uint, so the rounding
                     // differs ... don't require huge accuracy
-                    Assert.True(Math.Abs(x - y) < 2);
+                    Assert.Equal(x, y, 2.0);
                 }
             }
         }
@@ -631,7 +630,7 @@ namespace NetVips.Tests
 
                     // ie. less than 1% error, rounding on 7-bit images
                     // means this is all we can expect
-                    Assert.True(Math.Abs(a - b) < mx / 100.0);
+                    Assert.Equal(a, b, mx / 100.0);
                 }
             }
 
@@ -653,7 +652,7 @@ namespace NetVips.Tests
 
                     // ie. less than 1% error, rounding on 7-bit images
                     // means this is all we can expect
-                    Assert.True(Math.Abs(a - b) < mx / 100.0);
+                    Assert.Equal(a, b, mx / 100.0);
                 }
             }
         }

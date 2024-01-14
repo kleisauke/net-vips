@@ -15,13 +15,10 @@ namespace NetVips
     /// </remarks>
     public class Introspect
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// A cache for introspection data.
         /// </summary>
-        private static readonly ConcurrentDictionary<string, Introspect> IntrospectCache =
-            new ConcurrentDictionary<string, Introspect>();
+        private static readonly ConcurrentDictionary<string, Introspect> IntrospectCache = new();
 
         /// <summary>
         /// An object structure that encapsulates the metadata
@@ -42,7 +39,7 @@ namespace NetVips
             /// <summary>
             /// The GType for this argument.
             /// </summary>
-            public IntPtr Type;
+            public nint Type;
         }
 
         /// <summary>
@@ -53,27 +50,27 @@ namespace NetVips
         /// <summary>
         /// A bool indicating if this operation is mutable.
         /// </summary>
-        public bool Mutable;
+        public readonly bool Mutable;
 
         /// <summary>
         /// The required input for this operation.
         /// </summary>
-        public List<Argument> RequiredInput = new List<Argument>();
+        public readonly List<Argument> RequiredInput = new();
 
         /// <summary>
         /// The optional input for this operation.
         /// </summary>
-        public Dictionary<string, Argument> OptionalInput = new Dictionary<string, Argument>();
+        public readonly Dictionary<string, Argument> OptionalInput = new();
 
         /// <summary>
         /// The required output for this operation.
         /// </summary>
-        public List<Argument> RequiredOutput = new List<Argument>();
+        public readonly List<Argument> RequiredOutput = new();
 
         /// <summary>
         /// The optional output for this operation.
         /// </summary>
-        public Dictionary<string, Argument> OptionalOutput = new Dictionary<string, Argument>();
+        public readonly Dictionary<string, Argument> OptionalOutput = new();
 
         /// <summary>
         /// Build introspection data for a specified operation name.
@@ -81,7 +78,6 @@ namespace NetVips
         /// <param name="operationName">The operation name to introspect.</param>
         private Introspect(string operationName)
         {
-            // logger.Debug($"Introspect = {operationName}");
             using var op = Operation.NewFromName(operationName);
             var arguments = GetArgs(op);
 
@@ -189,8 +185,8 @@ namespace NetVips
             }
             else
             {
-                IntPtr AddConstruct(IntPtr self, GParamSpec.Struct pspec, VipsArgumentClass argumentClass,
-                    VipsArgumentInstance argumentInstance, IntPtr a, IntPtr b)
+                nint AddConstruct(nint self, GParamSpec.Struct pspec, VipsArgumentClass argumentClass,
+                    VipsArgumentInstance argumentInstance, nint a, nint b)
                 {
                     var flags = argumentClass.Flags;
                     if ((flags & Enums.ArgumentFlags.CONSTRUCT) == 0)

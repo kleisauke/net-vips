@@ -26,7 +26,7 @@ namespace NetVips.Samples
             for (var i = 0; i < 1000; i++)
             {
                 using var crop = image.Crop(0, 0, 256, 256);
-                var _ = crop.Avg();
+                _ = crop.Avg();
 
                 Console.WriteLine($"reference count: {image.RefCount}");
 
@@ -45,7 +45,7 @@ namespace NetVips.Samples
                     using var crop = image.Crop(0, 0, 256, 256);
                     lock (locker)
                     {
-                        var _ = crop.Avg();
+                        _ = crop.Avg();
 
                         Console.WriteLine($"reference count: {image.RefCount} with {count} active threads");
 

@@ -8,8 +8,6 @@ namespace NetVips
     /// </summary>
     internal class VipsBlob : SafeHandle
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="VipsBlob"/> class
         /// with the specified pointer to wrap around.
@@ -20,16 +18,14 @@ namespace NetVips
         {
             // record the pointer we were given to manage
             SetHandle(pointer);
-
-            // logger.Debug($"VipsBlob = {pointer}");
         }
 
         /// <summary>
         /// Get the data from a <see cref="Internal.VipsBlob"/>.
         /// </summary>
         /// <param name="length">Return number of bytes of data.</param>
-        /// <returns>A <see cref="IntPtr"/> containing the data.</returns>
-        internal IntPtr GetData(out UIntPtr length)
+        /// <returns>A <see langword="nint"/> containing the data.</returns>
+        internal nint GetData(out nuint length)
         {
             return Internal.VipsBlob.Get(this, out length);
         }
@@ -42,7 +38,6 @@ namespace NetVips
         /// in the event of a catastrophic failure, <see langword="false"/>.</returns>
         protected override bool ReleaseHandle()
         {
-            // logger.Debug($"Unref: VipsBlob = {handle}");
             if (!IsInvalid)
             {
                 // Free the VipsArea
@@ -61,7 +56,7 @@ namespace NetVips
         /// <summary>
         /// Get the number of bytes of data.
         /// </summary>
-        internal ulong Length => (ulong)Marshal.PtrToStructure<Internal.VipsArea.Struct>(handle).Length;
+        internal ulong Length => Marshal.PtrToStructure<Internal.VipsArea.Struct>(handle).Length;
 
         /// <summary>
         /// Get the reference count of the blob. Handy for debugging.

@@ -9,8 +9,6 @@ namespace NetVips
     /// </summary>
     public class VipsObject : GObject
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Attach a post-close delegate. This is called on finalization.
         /// </summary>
@@ -27,7 +25,6 @@ namespace NetVips
         internal VipsObject(IntPtr pointer)
             : base(pointer)
         {
-            // logger.Debug($"VipsObject = {pointer}");
         }
 
         /// <summary>
@@ -46,7 +43,6 @@ namespace NetVips
         /// <returns>The pspec for this arg.</returns>
         private GParamSpec.Struct? GetPspec(string name)
         {
-            // logger.Debug($"GetPspec: this = {this}, name = {name}");
             var argument = Internal.VipsObject.GetArgument(this, name, out var pspec, out _, out _);
 
             return argument != 0
@@ -64,7 +60,6 @@ namespace NetVips
         /// <returns>The GObject property.</returns>
         internal object Get(string name)
         {
-            // logger.Debug($"Get: name = {name}");
             var pspec = GetPspec(name);
             if (!pspec.HasValue)
             {
@@ -88,9 +83,8 @@ namespace NetVips
         /// <param name="name">The name of the property to set.</param>
         /// <param name="value">The value.</param>
         /// <param name="gtype">The GType of the property.</param>
-        internal void Set(IntPtr gtype, string name, object value)
+        internal void Set(nint gtype, string name, object value)
         {
-            // logger.Debug($"Set: gtype = {gtype}, name = {name}, value = {value}");
             using var gv = new GValue();
             gv.SetType(gtype);
             gv.Set(value);
@@ -118,11 +112,10 @@ namespace NetVips
         /// Get the GType of a GObject property.
         /// </summary>
         /// <param name="name">The name of the GType to get the type of.</param>
-        /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
+        /// <returns>A new instance of <see langword="nint"/> initialized to the GType or
         /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
-        public IntPtr GetTypeOf(string name)
+        public nint GetTypeOf(string name)
         {
-            // logger.Debug($"GetTypeOf: this = {this}, name = {name}");
             var pspec = GetPspec(name);
 
             if (!pspec.HasValue)

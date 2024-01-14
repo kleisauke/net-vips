@@ -11,8 +11,6 @@ namespace NetVips
     /// </summary>
     public class GObject : SafeHandle
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// We have to record all of the <see cref="SignalConnect{T}"/> delegates to
         /// prevent them from being re-located or disposed of by the garbage collector.
@@ -46,7 +44,6 @@ namespace NetVips
             SetHandle(pointer);
 
             // NObjects++;
-            // logger.Debug($"GObject = {pointer}");
         }
 
         /// <summary>
@@ -61,7 +58,7 @@ namespace NetVips
         /// <param name="data">Data to pass to handler calls.</param>
         /// <returns>The handler id.</returns>
         /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
-        public ulong SignalConnect<T>(string detailedSignal, T callback, IntPtr data = default)
+        public ulong SignalConnect<T>(string detailedSignal, T callback, nint data = default)
             where T : notnull
         {
             // add a weak reference callback to ensure all handles are released on finalization
@@ -110,7 +107,7 @@ namespace NetVips
         /// <param name="func">The func of the handlers.</param>
         /// <param name="data">The data of the handlers.</param>
         /// <returns>The number of handlers that matched.</returns>
-        public uint SignalHandlersDisconnectByFunc<T>(T func, IntPtr data = default)
+        public uint SignalHandlersDisconnectByFunc<T>(T func, nint data = default)
             where T : notnull
         {
             var funcPtr = Marshal.GetFunctionPointerForDelegate(func);
@@ -124,7 +121,7 @@ namespace NetVips
         /// </summary>
         /// <param name="data">The data of the handlers.</param>
         /// <returns>The number of handlers that matched.</returns>
-        public uint SignalHandlersDisconnectByData(IntPtr data)
+        public uint SignalHandlersDisconnectByData(nint data)
         {
             return GSignal.HandlersDisconnectMatched(this,
                 GSignalMatchType.G_SIGNAL_MATCH_DATA,
@@ -139,7 +136,6 @@ namespace NetVips
         /// in the event of a catastrophic failure, <see langword="false"/>.</returns>
         protected override bool ReleaseHandle()
         {
-            // logger.Debug($"Unref: GObject = {handle}");
             if (!IsInvalid)
             {
                 Internal.GObject.Unref(handle);
@@ -157,7 +153,7 @@ namespace NetVips
         /// </remarks>
         /// <param name="data">Data that was provided when the weak reference was established.</param>
         /// <param name="objectPointer">The object being disposed.</param>
-        internal void ReleaseDelegates(IntPtr data, IntPtr objectPointer)
+        internal void ReleaseDelegates(nint data, nint objectPointer)
         {
             foreach (var gcHandle in _handles)
             {
@@ -181,9 +177,8 @@ namespace NetVips
         /// <summary>
         /// Increases the reference count of object.
         /// </summary>
-        internal IntPtr ObjectRef()
+        internal nint ObjectRef()
         {
-            // logger.Debug($"Ref: GObject = {handle}");
             return Internal.GObject.Ref(handle);
         }
 

@@ -6,7 +6,7 @@ namespace NetVips
     using System.Reflection;
     using System.Text;
 
-    class Program
+    internal class Program
     {
         private static readonly List<ISample> Samples = Assembly.GetExecutingAssembly().GetTypes()
             .Where(x => x.GetInterfaces().Contains(typeof(ISample)) && x.GetConstructor(Type.EmptyTypes) != null)
@@ -14,7 +14,7 @@ namespace NetVips
             .OrderBy(s => s?.Category)
             .ToList();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (!ModuleInitializer.VipsInitialized)
             {
@@ -33,7 +33,7 @@ namespace NetVips
             string input;
             do
             {
-                string[] sampleArgs = Array.Empty<string>();
+                var sampleArgs = Array.Empty<string>();
                 if (args.Length > 0)
                 {
                     var sampleId = Samples.Select((value, index) => new { Index = index + 1, value.Name })

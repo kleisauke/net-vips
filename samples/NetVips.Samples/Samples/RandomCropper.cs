@@ -16,7 +16,7 @@ namespace NetVips.Samples
 
         public const string Filename = "images/equus_quagga.jpg";
 
-        public static readonly Random Rnd = new Random();
+        public static readonly Random Rnd = new();
 
         public Image RandomCrop(Image image, int tileSize)
         {

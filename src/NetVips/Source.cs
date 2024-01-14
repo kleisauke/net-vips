@@ -9,8 +9,6 @@ namespace NetVips
     /// </summary>
     public class Source : Connection
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Secret ref for <see cref="NewFromMemory(byte[])"/>.
         /// </summary>
@@ -39,8 +37,6 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to create a new <see cref="Source"/> from <paramref name="descriptor"/>.</exception>
         public static Source NewFromDescriptor(int descriptor)
         {
-            // logger.Debug($"Source.NewFromDescriptor: descriptor = {descriptor}");
-
             var pointer = Internal.VipsSource.NewFromDescriptor(descriptor);
             if (pointer == IntPtr.Zero)
             {
@@ -65,8 +61,6 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to create a new <see cref="Source"/> from <paramref name="filename"/>.</exception>
         public static Source NewFromFile(string filename)
         {
-            // logger.Debug($"Source.NewFromFile: filename = {filename}");
-
             var bytes = Encoding.UTF8.GetBytes(filename + char.MinValue); // Ensure null-terminated string
             var pointer = Internal.VipsSource.NewFromFile(bytes);
             if (pointer == IntPtr.Zero)
@@ -92,11 +86,8 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to create a new <see cref="Source"/> from <paramref name="data"/>.</exception>
         public static Source NewFromMemory(byte[] data)
         {
-            // logger.Debug($"Source.NewFromMemory");
-
             var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            var pointer = Internal.VipsSource.NewFromMemory(handle.AddrOfPinnedObject(), (UIntPtr)data.Length);
-
+            var pointer = Internal.VipsSource.NewFromMemory(handle.AddrOfPinnedObject(), (nuint)data.Length);
             if (pointer == IntPtr.Zero)
             {
                 if (handle.IsAllocated)

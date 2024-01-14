@@ -184,7 +184,7 @@ namespace NetVips.Tests
                 SaveLoadStream(".jpg", "", _colour, 80);
             }
 
-            var _ = Image.Jpegload(Helper.JpegFile, out var flags);
+            _ = Image.Jpegload(Helper.JpegFile, out var flags);
             Assert.Equal(Enums.ForeignFlags.SEQUENTIAL, flags);
 
             // see if we have exif parsing: our test image has this field
@@ -321,7 +321,7 @@ namespace NetVips.Tests
 
             // but this should fail with a warning, and knock TRUNCATED_FILE out of
             // the cache
-            var _ = im.Avg();
+            _ = im.Avg();
 
             // now we should open again, but it won't come from cache, it'll reload
             im = Image.NewFromFile(Helper.TruncatedFile);
@@ -390,7 +390,7 @@ namespace NetVips.Tests
             Assert.Equal(_colour.Width, x.Width);
             Assert.Equal(_colour.Height, x.Height);
             Assert.Equal(_colour.Bands, x.Bands);
-            Assert.True((_colour - x).Abs().Max() <= 0);
+            Assert.Equal(0, (_colour - x).Abs().Max());
         }
 
         [SkippableFact]
@@ -689,7 +689,7 @@ namespace NetVips.Tests
             // we should have rgb or rgba for svg files ... different versions of
             // IM handle this differently. GM even gives 1 band.
             var x = Image.Magickload(Helper.SvgFile);
-            Assert.True(x.Bands == 3 || x.Bands == 4 || x.Bands == 1);
+            Assert.True(x.Bands is 3 or 4 or 1);
 
             // density should change size of generated svg
             x = Image.Magickload(Helper.SvgFile, density: "100");
@@ -780,7 +780,7 @@ namespace NetVips.Tests
                 Assert.Equal(x2.Get(delayName), x1.Get(delayName));
                 Assert.Equal(x2.Get("page-height"), x1.Get("page-height"));
                 // magicks vary in how they handle this ... just pray we are close
-                Assert.True(Math.Abs((int)x1.Get("gif-loop") - (int)x2.Get("gif-loop")) < 5);
+                Assert.Equal((int)x1.Get("gif-loop"), (int)x2.Get("gif-loop"), 5.0);
             }
         }
 
@@ -814,7 +814,7 @@ namespace NetVips.Tests
             var x = Image.NewFromFile(Helper.WebpFile);
             var buf = x.WebpsaveBuffer(lossless: true);
             var im2 = Image.NewFromBuffer(buf);
-            Assert.True(Math.Abs(x.Avg() - im2.Avg()) < 1);
+            Assert.Equal(0, (x - im2).Abs().Max());
 
             // higher Q should mean a bigger buffer
             var b1 = x.WebpsaveBuffer(q: 10);
@@ -1040,16 +1040,16 @@ namespace NetVips.Tests
             {
                 {"scale", 2}
             });
-            Assert.True(Math.Abs(x.Width * 2 - y.Width) < 2);
-            Assert.True(Math.Abs(x.Height * 2 - y.Height) < 2);
+            Assert.Equal(x.Width * 2, y.Width, 2.0);
+            Assert.Equal(x.Height * 2, y.Height, 2.0);
 
             x = Image.NewFromFile(Helper.PdfFile);
             y = Image.NewFromFile(Helper.PdfFile, kwargs: new VOption
             {
                 {"dpi", 144}
             });
-            Assert.True(Math.Abs(x.Width * 2 - y.Width) < 2);
-            Assert.True(Math.Abs(x.Height * 2 - y.Height) < 2);
+            Assert.Equal(x.Width * 2, y.Width, 2.0);
+            Assert.Equal(x.Height * 2, y.Height, 2.0);
         }
 
         [SkippableFact]
@@ -1155,16 +1155,16 @@ namespace NetVips.Tests
                 {"scale", 2}
             });
 
-            Assert.True(Math.Abs(x.Width * 2 - y.Width) < 2);
-            Assert.True(Math.Abs(x.Height * 2 - y.Height) < 2);
+            Assert.Equal(x.Width * 2, y.Width, 2.0);
+            Assert.Equal(x.Height * 2, y.Height, 2.0);
 
             x = Image.NewFromFile(Helper.SvgFile);
             y = Image.NewFromFile(Helper.SvgFile, kwargs: new VOption
             {
                 {"dpi", 144}
             });
-            Assert.True(Math.Abs(x.Width * 2 - y.Width) < 2);
-            Assert.True(Math.Abs(x.Height * 2 - y.Height) < 2);
+            Assert.Equal(x.Width * 2, y.Width, 2.0);
+            Assert.Equal(x.Height * 2, y.Height, 2.0);
         }
 
         [Fact]
@@ -1483,7 +1483,7 @@ namespace NetVips.Tests
             //var im2 = Image.NewFromBuffer(buf);
 
             // not in fact quite lossless
-            //Assert.True(Math.Abs(x.Avg() - im2.Avg()) < 3);
+            //Assert.Equal(x.Avg(), im2.Avg(), 3.0);
 
             // higher Q should mean a bigger buffer, needs libheif >= v1.8.0,
             // see: https://github.com/libvips/libvips/issues/1757

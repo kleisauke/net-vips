@@ -8,12 +8,9 @@ namespace NetVips
     /// </summary>
     public class Interpolate : VipsObject
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         private Interpolate(IntPtr pointer)
             : base(pointer)
         {
-            // logger.Debug($"VipsInterpolate = {pointer}");
         }
 
         /// <summary>
@@ -36,7 +33,6 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to make a new interpolator from <paramref name="name"/>.</exception>
         public static Interpolate NewFromName(string name)
         {
-            // logger.Debug($"Interpolate.NewFromName: name = {name}");
             var vi = VipsInterpolate.New(name);
             if (vi == IntPtr.Zero)
             {

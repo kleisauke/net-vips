@@ -1,12 +1,12 @@
 namespace NetVips.Tests
 {
-    using Xunit;
-    using Xunit.Abstractions;
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
-    using System.Runtime.Versioning;
     using System.Runtime.InteropServices;
+    using System.Runtime.Versioning;
+    using Xunit;
+    using Xunit.Abstractions;
     using Extensions;
     using Image = Image;
 
@@ -83,9 +83,7 @@ namespace NetVips.Tests
             // Switch from BGR(A) to RGB(A)
             if (expected.Length > 2)
             {
-                var t = pixels[0];
-                pixels[0] = pixels[2];
-                pixels[2] = t;
+                (pixels[0], pixels[2]) = (pixels[2], pixels[0]);
             }
 
             Assert.Equal(expected, pixels);

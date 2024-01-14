@@ -2,7 +2,6 @@ namespace NetVips.Samples
 {
     using System;
     using System.IO;
-    using System.Text;
 
     public class IdentifyExtension : ISample
     {
@@ -72,10 +71,10 @@ namespace NetVips.Samples
             Console.WriteLine(GetExtensionNonTruncated(File.ReadAllBytes("images/lichtenstein.jpg")));
 
             Console.WriteLine("FindLoad function (truncated buffer)");
-            Console.WriteLine(GetExtension(Encoding.UTF8.GetBytes("GIF89a")));
+            Console.WriteLine(GetExtension("GIF89a"u8.ToArray()));
 
             Console.WriteLine("vips-loader function (truncated buffer)");
-            Console.WriteLine(GetExtensionNonTruncated(Encoding.UTF8.GetBytes("GIF89a")));
+            Console.WriteLine(GetExtensionNonTruncated("GIF89a"u8.ToArray()));
         }
     }
 }

@@ -14,12 +14,9 @@ namespace NetVips
     /// </remarks>
     public class Region : VipsObject
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         private Region(IntPtr pointer)
             : base(pointer)
         {
-            // logger.Debug($"Region = {pointer}");
         }
 
         /// <summary>
@@ -30,7 +27,6 @@ namespace NetVips
         /// <exception cref="VipsException">If unable to make a new region on <paramref name="image"/>.</exception>
         public static Region New(Image image)
         {
-            // logger.Debug($"Region.New: image = {image}");
             var vi = VipsRegion.New(image);
             if (vi == IntPtr.Zero)
             {

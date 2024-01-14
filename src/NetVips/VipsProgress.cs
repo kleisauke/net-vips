@@ -1,6 +1,5 @@
 namespace NetVips
 {
-    using System;
     using System.Runtime.InteropServices;
 
     /// <summary>
@@ -35,7 +34,7 @@ namespace NetVips
         /// <summary>
         /// Image we are part of.
         /// </summary>
-        private IntPtr Im;
+        private nint Im;
 
         /// <summary>
         /// Time we have been running.

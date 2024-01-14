@@ -34,11 +34,11 @@ namespace NetVips.Tests
             var cases = new Dictionary<string, string[]>
             {
                 {
-                    "c:\\silly:dir:name\\fr:ed.tif:jpeg:95,,,,c:\\icc\\srgb.icc",
+                    @"c:\silly:dir:name\fr:ed.tif:jpeg:95,,,,c:\icc\srgb.icc",
                     new[]
                     {
-                        "c:\\silly:dir:name\\fr:ed.tif",
-                        "jpeg:95,,,,c:\\icc\\srgb.icc"
+                        @"c:\silly:dir:name\fr:ed.tif",
+                        @"jpeg:95,,,,c:\icc\srgb.icc"
                     }
                 },
                 {
@@ -58,18 +58,18 @@ namespace NetVips.Tests
                     }
                 },
                 {
-                    "c:\\program files\\x:hello",
+                    @"c:\program files\x:hello",
                     new[]
                     {
-                        "c:\\program files\\x",
+                        @"c:\program files\x",
                         "hello"
                     }
                 },
                 {
-                    "C:\\fixtures\\2569067123_aca715a2ee_o.jpg",
+                    @"C:\fixtures\2569067123_aca715a2ee_o.jpg",
                     new[]
                     {
-                        "C:\\fixtures\\2569067123_aca715a2ee_o.jpg",
+                        @"C:\fixtures\2569067123_aca715a2ee_o.jpg",
                         ""
                     }
                 }
@@ -107,7 +107,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestNewFromMemory()
         {
-            var s = Enumerable.Repeat((byte)0, 200).ToArray();
+            var s = new byte[200];
             var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
             Assert.Equal(20, im.Width);
             Assert.Equal(10, im.Height);
@@ -181,7 +181,7 @@ namespace NetVips.Tests
         [Fact]
         public void TestWriteToMemory()
         {
-            var s = Enumerable.Repeat((byte)0, 200).ToArray();
+            var s = new byte[200];
             var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
             var t = im.WriteToMemory();
             Assert.True(s.SequenceEqual(t));
@@ -198,14 +198,14 @@ namespace NetVips.Tests
 
             Assert.Equal(10, region.Width);
             Assert.Equal(10, region.Height);
-            Assert.True(data.Length == 100);
+            Assert.Equal(100, data.Length);
             Assert.True(data.All(p => p == 0));
 
             data = region.Fetch(0, 0, 20, 10);
 
             Assert.Equal(20, region.Width);
             Assert.Equal(10, region.Height);
-            Assert.True(data.Length == 200);
+            Assert.Equal(200, data.Length);
             Assert.True(data.All(p => p == 0));
         }
 

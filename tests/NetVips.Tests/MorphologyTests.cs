@@ -68,7 +68,7 @@ namespace NetVips.Tests
         public void TestRank()
         {
             var im = Image.Black(100, 100);
-            im = im.Mutate(x=> x.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true));
+            im = im.Mutate(x => x.DrawCircle(new double[] { 255 }, 50, 50, 25, fill: true));
             var im2 = im.Rank(3, 3, 8);
             Assert.Equal(im.Width, im2.Width);
             Assert.Equal(im.Height, im2.Height);

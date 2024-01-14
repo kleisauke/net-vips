@@ -1,6 +1,5 @@
 namespace NetVips
 {
-    using System;
     using System.IO;
     using System.Buffers;
     using System.Runtime.InteropServices;
@@ -10,8 +9,6 @@ namespace NetVips
     /// </summary>
     public class TargetCustom : Target
     {
-        // private static Logger logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// A write delegate.
         /// </summary>
@@ -107,7 +104,7 @@ namespace NetVips
         /// <param name="length">The number of bytes to be written to the current target.</param>
         /// <param name="userDataPtr">User data associated with the target.</param>
         /// <returns>The total number of bytes written to the target.</returns>
-        internal long WriteHandler(IntPtr targetPtr, byte[] buffer, int length, IntPtr userDataPtr)
+        internal long WriteHandler(nint targetPtr, byte[] buffer, int length, nint userDataPtr)
         {
             var bytesWritten = OnWrite?.Invoke(buffer, length);
             return bytesWritten ?? -1;
@@ -121,7 +118,7 @@ namespace NetVips
         /// <param name="length">The maximum number of bytes to be read.</param>
         /// <param name="userDataPtr">User data associated with the target.</param>
         /// <returns>The total number of bytes read into the buffer.</returns>
-        internal long ReadHandler(IntPtr targetPtr, IntPtr buffer, long length, IntPtr userDataPtr)
+        internal long ReadHandler(nint targetPtr, nint buffer, long length, nint userDataPtr)
         {
             if (length <= 0)
             {
@@ -164,7 +161,7 @@ namespace NetVips
         /// reference point used to obtain the new position.</param>
         /// <param name="userDataPtr">User data associated with the target.</param>
         /// <returns>The new position within the current target.</returns>
-        internal long SeekHandler(IntPtr targetPtr, long offset, int whence, IntPtr userDataPtr)
+        internal long SeekHandler(nint targetPtr, long offset, int whence, nint userDataPtr)
         {
             var newPosition = OnSeek?.Invoke(offset, (SeekOrigin)whence);
             return newPosition ?? -1;
@@ -176,7 +173,7 @@ namespace NetVips
         /// <param name="targetPtr">The underlying pointer to the target.</param>
         /// <param name="userDataPtr">User data associated with the target.</param>
         /// <returns>0 on success, -1 on error.</returns>
-        internal int EndHandler(IntPtr targetPtr, IntPtr userDataPtr)
+        internal int EndHandler(nint targetPtr, nint userDataPtr)
         {
             return OnEnd?.Invoke() ?? 0;
         }

@@ -24,7 +24,7 @@ namespace NetVips.Samples
             test.SignalConnect(Enums.Signals.Eval, EvalHandler);
             test.SignalConnect(Enums.Signals.PostEval, PostEvalHandler);
 
-            var avg = test.Avg();
+            _ = test.Avg();
         }
 
         private void ProgressPrint(Enums.Signals signal, VipsProgress progress)

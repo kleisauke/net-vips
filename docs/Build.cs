@@ -3,11 +3,12 @@ namespace NetVips.Docs
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using Docfx;
     using Docfx.Dotnet;
 
-    class Build
+    internal class Build
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var projectDir =
                 Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."));
@@ -15,7 +16,7 @@ namespace NetVips.Docs
 
             Directory.SetCurrentDirectory(projectDir);
             await DotnetApiCatalog.GenerateManagedReferenceYamlFiles("docfx.json");
-            await Docfx.Docset.Build("docfx.json");
+            await Docset.Build("docfx.json");
             Directory.SetCurrentDirectory(currentDirectory);
         }
     }

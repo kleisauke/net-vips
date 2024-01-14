@@ -40,15 +40,15 @@ namespace NetVips.Benchmarks.ImageSharp
             var type = Type.GetType(
                 "SixLabors.ImageSharp.Processing.Processors.Convolution.ConvolutionProcessor`1, SixLabors.ImageSharp");
             Type[] typeArgs = { typeof(TPixel) };
-            Type genericType = type.MakeGenericType(typeArgs);
+            var genericType = type.MakeGenericType(typeArgs);
             Type[] parameterTypes =
             {
                 configuration.GetType(), KernelXY.GetType().MakeByRefType(), PreserveAlpha.GetType(), source.GetType(),
                 sourceRectangle.GetType()
             };
-            ConstructorInfo ctor = genericType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null,
+            var ctor = genericType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null,
                 parameterTypes, null);
-            object instance =
+            var instance =
                 ctor.Invoke(new object[] { configuration, KernelXY, PreserveAlpha, source, sourceRectangle });
 
             return (IImageProcessor<TPixel>)instance;

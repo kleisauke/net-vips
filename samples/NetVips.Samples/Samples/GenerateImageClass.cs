@@ -12,7 +12,7 @@ namespace NetVips.Samples
         public string Name => "Generate image class";
         public string Category => "Internal";
 
-        private readonly Dictionary<IntPtr, string> _gTypeToCSharpDict = new Dictionary<IntPtr, string>
+        private readonly Dictionary<nint, string> _gTypeToCSharpDict = new()
         {
             {GValue.GBoolType, "bool"},
             {GValue.GIntType, "int"},
@@ -35,12 +35,12 @@ namespace NetVips.Samples
         /// <summary>
         /// The fundamental type for VipsFailOn. See <see cref="Enums.FailOn"/>.
         /// </summary>
-        public static readonly IntPtr FailOnType = NetVips.TypeFromName("VipsFailOn");
+        public static readonly nint FailOnType = NetVips.TypeFromName("VipsFailOn");
 
         /// <summary>
         /// The fundamental type for VipsForeignKeep. See <see cref="Enums.ForeignKeep"/>.
         /// </summary>
-        public static readonly IntPtr ForeignKeepType = NetVips.TypeFromName("VipsForeignKeep");
+        public static readonly nint ForeignKeepType = NetVips.TypeFromName("VipsForeignKeep");
 
         public GenerateImageClass()
         {
@@ -119,18 +119,18 @@ namespace NetVips.Samples
         /// <param name="name">The GType identifier.</param>
         /// <param name="gtype">The GType to map.</param>
         /// <returns>The C# type we use to represent it.</returns>
-        private string GTypeToCSharp(string name, IntPtr gtype)
+        private string GTypeToCSharp(string name, nint gtype)
         {
-            if (_gTypeToCSharpDict.ContainsKey(gtype))
+            if (_gTypeToCSharpDict.TryGetValue(gtype, out var value))
             {
-                return _gTypeToCSharpDict[gtype];
+                return value;
             }
 
             var fundamental = NetVips.FundamentalType(gtype);
 
-            if (_gTypeToCSharpDict.ContainsKey(fundamental))
+            if (_gTypeToCSharpDict.TryGetValue(fundamental, out var fundamentalValue))
             {
-                return _gTypeToCSharpDict[fundamental];
+                return fundamentalValue;
             }
 
             throw new Exception($"Unsupported type: {gtype} name: {name}");
@@ -190,62 +190,52 @@ namespace NetVips.Samples
 
             string SafeCast(string type, string name = "result")
             {
-                switch (type)
+                return type switch
                 {
-                    case "GObject":
-                    case "Image":
-                    case "int[]":
-                    case "double[]":
-                    case "byte[]":
-                    case "Image[]":
-                    case "object[]":
-                        return $" as {type};";
-                    case "bool":
-                        return $" is {type} {name} && {name};";
-                    case "int":
-                        return $" is {type} {name} ? {name} : 0;";
-                    case "ulong":
-                        return $" is {type} {name} ? {name} : 0ul;";
-                    case "double":
-                        return $" is {type} {name} ? {name} : 0d;";
-                    case "string":
-                        return $" is {type} {name} ? {name} : null;";
-                    default:
-                        return ";";
-                }
+                    "GObject" => $" as {type};",
+                    "Image" => $" as {type};",
+                    "int[]" => $" as {type};",
+                    "double[]" => $" as {type};",
+                    "byte[]" => $" as {type};",
+                    "Image[]" => $" as {type};",
+                    "object[]" => $" as {type};",
+                    "bool" => $" is {type} {name} && {name};",
+                    "int" => $" is {type} {name} ? {name} : 0;",
+                    "ulong" => $" is {type} {name} ? {name} : 0ul;",
+                    "double" => $" is {type} {name} ? {name} : 0d;",
+                    "string" => $" is {type} {name} ? {name} : null;",
+                    _ => ";"
+                };
             }
 
             string ExplicitCast(string type)
             {
                 return type switch
                 {
-                    { } enumString when enumString.StartsWith("Enums.") => $"({type})",
+                    not null when type.StartsWith("Enums.") => $"({type})",
                     _ => string.Empty
                 };
             }
 
             string ToNullable(string type, string name)
             {
-                switch (type)
+                return type switch
                 {
-                    case "Image[]":
-                    case "object[]":
-                    case "int[]":
-                    case "double[]":
-                    case "byte[]":
-                    case "GObject":
-                    case "Image":
-                    case "string":
-                        return $"{type} {name} = null";
-                    case "bool":
-                    case "int":
-                    case "ulong":
-                    case "double":
-                    case { } enumString when enumString.StartsWith("Enums."):
-                        return $"{type}? {name} = null";
-                    default:
-                        throw new Exception($"Unsupported type: {type}");
-                }
+                    "Image[]" => $"{type} {name} = null",
+                    "object[]" => $"{type} {name} = null",
+                    "int[]" => $"{type} {name} = null",
+                    "double[]" => $"{type} {name} = null",
+                    "byte[]" => $"{type} {name} = null",
+                    "GObject" => $"{type} {name} = null",
+                    "Image" => $"{type} {name} = null",
+                    "string" => $"{type} {name} = null",
+                    "bool" => $"{type}? {name} = null",
+                    "int" => $"{type}? {name} = null",
+                    "ulong" => $"{type}? {name} = null",
+                    "double" => $"{type}? {name} = null",
+                    not null when type.StartsWith("Enums.") => $"{type}? {name} = null",
+                    _ => throw new Exception($"Unsupported type: {type}")
+                };
             }
 
             var result = new StringBuilder($"{indent}/// <summary>\n");
@@ -340,10 +330,8 @@ namespace NetVips.Samples
                     $"{indent}/// <param name=\"{arg.Name.ToPascalCase().FirstLetterToLower()}\">{op.GetBlurb(arg.Name)}.</param>");
             }
 
-            string outputType;
-
             var outputTypes = requiredOutput.Select(arg => GTypeToCSharp(arg.Name, arg.Type)).ToArray();
-            outputType = outputTypes.Length switch
+            var outputType = outputTypes.Length switch
             {
                 0 => "void",
                 1 => outputTypes[0],
@@ -555,7 +543,7 @@ namespace NetVips.Samples
             result.Append($"{indent}}}")
                 .AppendLine();
 
-            var firstArgType = requiredInput.Length > 0 ? op.GetTypeOf(requiredInput[0].Name) : IntPtr.Zero;
+            nint firstArgType = requiredInput.Length > 0 ? op.GetTypeOf(requiredInput[0].Name) : IntPtr.Zero;
 
             // Create stream overload if necessary
             if (firstArgType == GValue.SourceType || firstArgType == GValue.TargetType)
@@ -787,15 +775,17 @@ namespace NetVips.Samples
             // get the list of all nicknames we can generate docstrings for.
             var allNickNames = _allNickNames.Where(x => !exclude.Contains(x)).ToList();
 
-            const string preamble = @"//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
-//     libvips version: {0}
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------";
+            const string preamble = """
+                                    //------------------------------------------------------------------------------
+                                    // <auto-generated>
+                                    //     This code was generated by a tool.
+                                    //     libvips version: {0}
+                                    //
+                                    //     Changes to this file may cause incorrect behavior and will be lost if
+                                    //     the code is regenerated.
+                                    // </auto-generated>
+                                    //------------------------------------------------------------------------------
+                                    """;
 
             var stringBuilder =
                 new StringBuilder(string.Format(preamble,
@@ -860,15 +850,17 @@ namespace NetVips.Samples
         /// <returns>The `MutableImage.Generated.cs` as string.</returns>
         private string GenerateMutable(string indent = "        ")
         {
-            const string preamble = @"//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
-//     libvips version: {0}
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------";
+            const string preamble = """
+                                    //------------------------------------------------------------------------------
+                                    // <auto-generated>
+                                    //     This code was generated by a tool.
+                                    //     libvips version: {0}
+                                    //
+                                    //     Changes to this file may cause incorrect behavior and will be lost if
+                                    //     the code is regenerated.
+                                    // </auto-generated>
+                                    //------------------------------------------------------------------------------
+                                    """;
 
             var stringBuilder =
                 new StringBuilder(string.Format(preamble,

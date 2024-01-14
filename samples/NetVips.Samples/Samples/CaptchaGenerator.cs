@@ -65,7 +65,7 @@ namespace NetVips.Samples
                 using var wobble = Wobble(similarity);
 
                 // random colour
-                var colour = Enumerable.Range(1, 3).Select(i => random.Next(0, 255)).ToArray();
+                var colour = Enumerable.Range(1, 3).Select(_ => random.Next(0, 255)).ToArray();
                 using var ifthenelse = wobble.Ifthenelse(colour, 0, blend: true);
 
                 // tag as 9-bit srgb
@@ -101,10 +101,10 @@ namespace NetVips.Samples
                 textLayer = textLayer.Bandjoin(alpha);
             }
 
-            //  make a white background with random speckles
+            // make a white background with random speckles
             using var speckles = Image.Gaussnoise(textLayer.Width, textLayer.Height, mean: 400, sigma: 200);
             using var background = Enumerable.Range(1, 2).Aggregate(speckles,
-                (a, b) =>
+                (a, _) =>
                 {
                     using (a)
                     {

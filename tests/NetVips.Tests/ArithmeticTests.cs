@@ -178,7 +178,7 @@ namespace NetVips.Tests
         {
             dynamic FloorDiv(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
+                if (y is Image rightImage && x is not Image)
                 {
                     // There's no  __rfloordiv__ & __pow__ equivalent in C# :(
                     return (rightImage.Pow(-1) * x).Floor();
@@ -203,7 +203,7 @@ namespace NetVips.Tests
         {
             dynamic Pow(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
+                if (y is Image rightImage && x is not Image)
                 {
                     // There's no  __rpow__ equivalent in C# :(
                     return rightImage.Wop(x);
@@ -365,12 +365,12 @@ namespace NetVips.Tests
         {
             dynamic Equal(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
+                if (y is Image rightImage && x is not Image)
                 {
                     return x == rightImage;
                 }
 
-                if (x is Image leftImage && !(y is Image))
+                if (x is Image leftImage && y is not Image)
                 {
                     return y == leftImage;
                 }
@@ -392,12 +392,12 @@ namespace NetVips.Tests
         {
             dynamic NotEq(dynamic x, dynamic y)
             {
-                if (y is Image rightImage && !(x is Image))
+                if (y is Image rightImage && x is not Image)
                 {
                     return x != rightImage;
                 }
 
-                if (x is Image leftImage && !(y is Image))
+                if (x is Image leftImage && y is not Image)
                 {
                     return y != leftImage;
                 }
@@ -684,7 +684,7 @@ namespace NetVips.Tests
                 var y = (int)maxPos[2];
 
                 var vec = hough[x, y];
-                var r = Array.IndexOf(vec, vec.Min(d => v)) + 35;
+                var r = Array.IndexOf(vec, vec.Min(_ => v)) + 35;
 
                 Assert.Equal(50, x);
                 Assert.Equal(50, y);

@@ -41,7 +41,7 @@ namespace NetVips
         /// <param name="name">The name of the piece of metadata to create.</param>
         /// <param name="value">The value to set as a C# value. It is
         /// converted to the GType, if possible.</param>
-        public new void Set(IntPtr gtype, string name, object value)
+        public new void Set(nint gtype, string name, object value)
         {
             using var gv = new GValue();
             gv.SetType(gtype);
@@ -66,7 +66,7 @@ namespace NetVips
             if (gtype == IntPtr.Zero)
             {
                 throw new ArgumentException(
-                    $"metadata item {name} does not exist - use the Set(IntPtr, string, object) overload to create and set");
+                    $"metadata item {name} does not exist - use the Set(nint, string, object) overload to create and set");
             }
 
             Set(gtype, name, value);
