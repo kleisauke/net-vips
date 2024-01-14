@@ -28,10 +28,10 @@ public partial class Image : VipsObject
     /// Internal marshaller delegate for <see cref="EvalDelegate"/>.
     /// </summary>
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void EvalMarshalDelegate(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr);
+    internal delegate void EvalMarshalDelegate(nint imagePtr, nint progressPtr, nint userDataPtr);
 
     /// <inheritdoc cref="VipsObject"/>
-    internal Image(IntPtr pointer) : base(pointer)
+    internal Image(nint pointer) : base(pointer)
     {
     }
 
@@ -106,26 +106,17 @@ public partial class Image : VipsObject
     public static Image Imageize(Image matchImage, object value)
     {
         // careful! this can be None if value is a 2D array
-        switch (value)
+        return value switch
         {
-            case Image image:
-                return image;
-            case double[,] doubleArray:
-                return NewFromArray(doubleArray);
-            case int[,] intArray:
-                return NewFromArray(intArray);
-            case double[] doubles:
-                return matchImage.NewFromImage(doubles);
-            case int[] ints:
-                return matchImage.NewFromImage(ints);
-            case double doubleValue:
-                return matchImage.NewFromImage(doubleValue);
-            case int intValue:
-                return matchImage.NewFromImage(intValue);
-            default:
-                throw new ArgumentException(
-                    $"unsupported value type {value.GetType()} for Imageize");
-        }
+            Image image => image,
+            double[,] doubleArray => NewFromArray(doubleArray),
+            int[,] intArray => NewFromArray(intArray),
+            double[] doubles => matchImage.NewFromImage(doubles),
+            int[] ints => matchImage.NewFromImage(ints),
+            double doubleValue => matchImage.NewFromImage(doubleValue),
+            int intValue => matchImage.NewFromImage(intValue),
+            _ => throw new ArgumentException($"unsupported value type {value.GetType()} for Imageize")
+        };
     }
 
     /// <summary>
@@ -445,7 +436,7 @@ public partial class Image : VipsObject
         using var blob = new VipsBlob(ptr);
         var buf = blob.GetData(out var length);
 
-        operationName = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, (ulong)length));
+        operationName = Marshal.PtrToStringAnsi(VipsForeign.FindLoadBuffer(buf, length));
         if (operationName == null)
         {
             throw new VipsException("unable to load from source");
@@ -516,7 +507,7 @@ public partial class Image : VipsObject
         {
             for (var x = 0; x < width; x++)
             {
-                ref var value = ref a[x + (y * width)];
+                ref var value = ref a[x + y * width];
                 value = Convert.ToDouble(array[y, x]);
             }
         }
@@ -563,7 +554,7 @@ public partial class Image : VipsObject
         {
             for (var x = 0; x < width; x++)
             {
-                ref var value = ref a[x + (y * width)];
+                ref var value = ref a[x + y * width];
                 value = Convert.ToDouble(array[y][x]);
             }
         }
@@ -661,7 +652,7 @@ public partial class Image : VipsObject
         Enums.BandFormat format)
     {
         var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-        var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), (UIntPtr)data.Length, width, height, bands,
+        var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), (nuint)data.Length, width, height, bands,
             format);
         if (vi == IntPtr.Zero)
         {
@@ -704,14 +695,14 @@ public partial class Image : VipsObject
     /// <returns>A new <see cref="Image"/>.</returns>
     /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
     public static Image NewFromMemory(
-        IntPtr data,
+        nint data,
         ulong size,
         int width,
         int height,
         int bands,
         Enums.BandFormat format)
     {
-        var vi = VipsImage.NewFromMemory(data, (UIntPtr)size, width, height, bands, format);
+        var vi = VipsImage.NewFromMemory(data, (nuint)size, width, height, bands, format);
         if (vi == IntPtr.Zero)
         {
             throw new VipsException("unable to make image from memory");
@@ -721,7 +712,7 @@ public partial class Image : VipsObject
     }
 
     /// <summary>
-    /// Like <see cref="NewFromMemory(IntPtr, ulong, int, int, int, Enums.BandFormat)"/>, but libvips
+    /// Like <see cref="NewFromMemory(nint, ulong, int, int, int, Enums.BandFormat)"/>, but libvips
     /// will make a copy of the memory area. This means more memory use and an extra copy
     /// operation, but is much simpler and safer.
     /// </summary>
@@ -734,14 +725,14 @@ public partial class Image : VipsObject
     /// <returns>A new <see cref="Image"/>.</returns>
     /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
     public static Image NewFromMemoryCopy(
-        IntPtr data,
+        nint data,
         ulong size,
         int width,
         int height,
         int bands,
         Enums.BandFormat format)
     {
-        var vi = VipsImage.NewFromMemoryCopy(data, (UIntPtr)size, width, height, bands, format);
+        var vi = VipsImage.NewFromMemoryCopy(data, (nuint)size, width, height, bands, format);
         if (vi == IntPtr.Zero)
         {
             throw new VipsException("unable to make image from memory");
@@ -1071,9 +1062,9 @@ public partial class Image : VipsObject
     /// The caller is responsible for freeing this memory with <see cref="NetVips.Free"/>.
     /// </remarks>
     /// <param name="size">Output buffer length.</param>
-    /// <returns>A <see cref="IntPtr"/> pointing to an unformatted C-style array.</returns>
+    /// <returns>A <see langword="nint"/> pointing to an unformatted C-style array.</returns>
     /// <exception cref="VipsException">If unable to write to memory.</exception>
-    public IntPtr WriteToMemory(out ulong size)
+    public nint WriteToMemory(out ulong size)
     {
         var pointer = VipsImage.WriteToMemory(this, out size);
         if (pointer == IntPtr.Zero)
@@ -1142,9 +1133,9 @@ public partial class Image : VipsObject
     /// item does not exist. See <see cref="GValue"/>.
     /// </remarks>
     /// <param name="name">The name of the piece of metadata to get the type of.</param>
-    /// <returns>A new instance of <see cref="IntPtr"/> initialized to the GType or
+    /// <returns>A new instance of <see langword="nint"/> initialized to the GType or
     /// <see cref="IntPtr.Zero"/> if the property does not exist.</returns>
-    public new IntPtr GetTypeOf(string name)
+    public new nint GetTypeOf(string name)
     {
         // on libvips before 8.5, property types must be fetched separately,
         // since built-in enums were reported as ints
@@ -1234,7 +1225,7 @@ public partial class Image : VipsObject
         var names = new List<string>();
 
         var count = 0;
-        IntPtr strPtr;
+        nint strPtr;
         while ((strPtr = Marshal.ReadIntPtr(ptrArr, count * IntPtr.Size)) != IntPtr.Zero)
         {
             var name = Marshal.PtrToStringAnsi(strPtr);
@@ -2034,7 +2025,7 @@ public partial class Image : VipsObject
             return new Image(vi);
         }
 
-        var maxAlpha = Interpretation == Enums.Interpretation.Grey16 || Interpretation == Enums.Interpretation.Rgb16
+        var maxAlpha = Interpretation is Enums.Interpretation.Grey16 or Enums.Interpretation.Rgb16
             ? 65535
             : 255;
         return Bandjoin(maxAlpha);
@@ -2090,9 +2081,9 @@ public partial class Image : VipsObject
     /// <param name="data">Data to pass to handler calls.</param>
     /// <returns>The handler id.</returns>
     /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
-    public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, IntPtr data = default)
+    public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, nint data = default)
     {
-        void EvalMarshal(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr)
+        void EvalMarshal(nint imagePtr, nint progressPtr, nint userDataPtr)
         {
             if (imagePtr == IntPtr.Zero || progressPtr == IntPtr.Zero)
             {
@@ -2107,18 +2098,14 @@ public partial class Image : VipsObject
             callback.Invoke(image, progress);
         }
 
-        switch (signal)
+        return signal switch
         {
-            case Enums.Signals.PreEval:
-                return SignalConnect<EvalMarshalDelegate>("preeval", EvalMarshal, data);
-            case Enums.Signals.Eval:
-                return SignalConnect<EvalMarshalDelegate>("eval", EvalMarshal, data);
-            case Enums.Signals.PostEval:
-                return SignalConnect<EvalMarshalDelegate>("posteval", EvalMarshal, data);
-            default:
-                throw new ArgumentOutOfRangeException(nameof(signal), signal,
-                    $"The value of argument '{nameof(signal)}' ({signal}) is invalid for enum type '{nameof(Enums.Signals)}'.");
-        }
+            Enums.Signals.PreEval => SignalConnect<EvalMarshalDelegate>("preeval", EvalMarshal, data),
+            Enums.Signals.Eval => SignalConnect<EvalMarshalDelegate>("eval", EvalMarshal, data),
+            Enums.Signals.PostEval => SignalConnect<EvalMarshalDelegate>("posteval", EvalMarshal, data),
+            _ => throw new ArgumentOutOfRangeException(nameof(signal), signal,
+                $"The value of argument '{nameof(signal)}' ({signal}) is invalid for enum type '{nameof(Enums.Signals)}'.")
+        };
     }
 
     /// <summary>

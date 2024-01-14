@@ -14,7 +14,7 @@
     <CLSCompliant>false</CLSCompliant>
     <ComVisible>false</ComVisible>
 
-    <LangVersion>10</LangVersion>
+    <LangVersion>11</LangVersion>
 
     <Major>2</Major>
     <Minor>4</Minor>

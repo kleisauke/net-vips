@@ -21,7 +21,7 @@ public static class Cache
     /// </summary>
     public static ulong MaxMem
     {
-        get => (ulong) Vips.CacheGetMaxMem();
+        get => Vips.CacheGetMaxMem();
         set => Vips.CacheSetMaxMem(value);
     }
 

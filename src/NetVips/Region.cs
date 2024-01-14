@@ -14,7 +14,7 @@ namespace NetVips;
 /// </remarks>
 public class Region : VipsObject
 {
-    private Region(IntPtr pointer) : base(pointer)
+    private Region(nint pointer) : base(pointer)
     {
     }
 

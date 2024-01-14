@@ -9,7 +9,7 @@ namespace NetVips;
 public class Operation : VipsObject
 {
     /// <inheritdoc cref="VipsObject"/>
-    private Operation(IntPtr pointer) : base(pointer)
+    private Operation(nint pointer) : base(pointer)
     {
     }
 
@@ -41,7 +41,7 @@ public class Operation : VipsObject
     /// <param name="matchImage">A <see cref="Image"/> used as guide.</param>
     /// <param name="value">The value.</param>
     /// <param name="gtype">The GType of the property.</param>
-    private void Set(IntPtr gtype, Image matchImage, string name, object value)
+    private void Set(nint gtype, Image matchImage, string name, object value)
     {
         // if the object wants an image and we have a constant, Imageize it
         //
@@ -55,7 +55,7 @@ public class Operation : VipsObject
             }
             else if (gtype == GValue.ArrayImageType)
             {
-                if (!(value is Array values) || values.Rank != 1)
+                if (value is not Array { Rank: 1 } values)
                 {
                     throw new ArgumentException(
                         $"unsupported value type {value.GetType()} for VipsArrayImage");
@@ -148,7 +148,7 @@ public class Operation : VipsObject
             throw new VipsException($"unable to call {operationName}: operation must be mutable");
         }
 
-        IntPtr vop;
+        nint vop;
         using (var op = NewFromName(operationName))
         {
             // set any string options before any args so they can't be
