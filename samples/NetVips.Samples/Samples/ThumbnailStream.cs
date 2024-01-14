@@ -1,25 +1,24 @@
-namespace NetVips.Samples
+using System;
+using System.IO;
+
+namespace NetVips.Samples;
+
+public class ThumbnailStream : ISample
 {
-    using System;
-    using System.IO;
+    public string Name => "Thumbnail a file stream";
+    public string Category => "Streaming";
 
-    public class ThumbnailStream : ISample
+    public const string Filename = "images/lichtenstein.jpg";
+
+    public void Execute(string[] args)
     {
-        public string Name => "Thumbnail a file stream";
-        public string Category => "Streaming";
+        using var input = File.OpenRead(Filename);
+        using var thumbnail = Image.ThumbnailStream(input, 300, height: 300);
+        Console.WriteLine(thumbnail.ToString());
 
-        public const string Filename = "images/lichtenstein.jpg";
+        using var output = File.OpenWrite("thumbnail-stream.jpg");
+        thumbnail.WriteToStream(output, ".jpg");
 
-        public void Execute(string[] args)
-        {
-            using var input = File.OpenRead(Filename);
-            using var thumbnail = Image.ThumbnailStream(input, 300, height: 300);
-            Console.WriteLine(thumbnail.ToString());
-
-            using var output = File.OpenWrite("thumbnail-stream.jpg");
-            thumbnail.WriteToStream(output, ".jpg");
-
-            Console.WriteLine("See thumbnail-stream.jpg");
-        }
+        Console.WriteLine("See thumbnail-stream.jpg");
     }
 }

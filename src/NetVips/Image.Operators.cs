@@ -7,865 +7,864 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NetVips
+namespace NetVips;
+
+public partial class Image
 {
-    public partial class Image
-    {
-        #region auto-generated operator overloads
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(Image left, Image right) =>
-            left.Call("add", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(double left, Image right) =>
-            right.Call("linear", 1.0, left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(Image left, double right) =>
-            left.Call("linear", 1.0, right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(double[] left, Image right) =>
-            right.Call("linear", 1.0, left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(Image left, double[] right) =>
-            left.Call("linear", 1.0, right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(int[] left, Image right) =>
-            right.Call("linear", 1.0, left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator +(Image left, int[] right) =>
-            left.Call("linear", 1.0, right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(Image left, Image right) =>
-            left.Call("subtract", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(double left, Image right) =>
-            right.Call("linear", -1.0, left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(Image left, double right) =>
-            left.Call("linear", 1.0, -right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(double[] left, Image right) =>
-            right.Call("linear", -1.0, left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(Image left, double[] right) =>
-            left.Call("linear", 1.0, right.Negate()) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(int[] left, Image right) =>
-            right.Call("linear", -1.0, left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator -(Image left, int[] right) =>
-            left.Call("linear", 1.0, right.Negate()) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(Image left, Image right) =>
-            left.Call("multiply", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(double left, Image right) =>
-            right.Call("linear", left, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(Image left, double right) =>
-            left.Call("linear", right, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(double[] left, Image right) =>
-            right.Call("linear", left, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(Image left, double[] right) =>
-            left.Call("linear", right, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(int[] left, Image right) =>
-            right.Call("linear", left, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator *(Image left, int[] right) =>
-            left.Call("linear", right, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(Image left, Image right) =>
-            left.Call("divide", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(double left, Image right) =>
-            right.Pow(-1.0).Call("linear", left, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(Image left, double right) =>
-            left.Call("linear", 1.0 / right, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(double[] left, Image right) =>
-            right.Pow(-1.0).Call("linear", left, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(Image left, double[] right) =>
-            left.Call("linear", right.Invert(), 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(int[] left, Image right) =>
-            right.Pow(-1.0).Call("linear", left, 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator /(Image left, int[] right) =>
-            left.Call("linear", right.Invert(), 0.0) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(Image left, Image right) =>
-            left.Call("remainder", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(double left, Image right) =>
-            right.Call("remainder_const", left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(Image left, double right) =>
-            left.Call("remainder_const", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(double[] left, Image right) =>
-            right.Call("remainder_const", left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(Image left, double[] right) =>
-            left.Call("remainder_const", right) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(int[] left, Image right) =>
-            right.Call("remainder_const", left) as Image;
-
-        /// <summary>
-        /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
-        /// (remainder after integer division).
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator %(Image left, int[] right) =>
-            left.Call("remainder_const", right) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(Image left, Image right) =>
-            left.Call("boolean", right, Enums.OperationBoolean.And) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(double left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(Image left, double right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(double[] left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(Image left, double[] right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(int[] left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
-
-        /// <summary>
-        /// This operation computes the logical bitwise AND of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator &(Image left, int[] right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(Image left, Image right) =>
-            left.Call("boolean", right, Enums.OperationBoolean.Or) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(double left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(Image left, double right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(double[] left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(Image left, double[] right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(int[] left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator |(Image left, int[] right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(Image left, Image right) =>
-            left.Call("boolean", right, Enums.OperationBoolean.Eor) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(double left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(Image left, double right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(double[] left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(Image left, double[] right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(int[] left, Image right) =>
-            right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
-
-        /// <summary>
-        /// This operation computes the bitwise exclusive-OR of its operands.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ^(Image left, int[] right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
-
-        /// <summary>
-        /// This operation shifts its first operand left by the number of bits specified by its second operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">The number of bits.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <<(Image left, int right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Lshift, right) as Image;
-
-        /// <summary>
-        /// This operation shifts its first operand right by the number of bits specified by its second operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">The number of bits.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >>(Image left, int right) =>
-            left.Call("boolean_const", Enums.OperationBoolean.Rshift, right) as Image;
-
-        /// <summary>
-        /// This operation compares two images on equality.
-        /// </summary>
-        /// <param name="left">Left double constant to compare.</param>
-        /// <param name="right">Right <see cref="Image"/> to compare.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ==(double left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
-
-        /// <summary>
-        /// This operation compares two images on equality.
-        /// </summary>
-        /// <param name="left">Left double array to compare.</param>
-        /// <param name="right">Right <see cref="Image"/> to compare.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ==(double[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
-
-        /// <summary>
-        /// This operation compares two images on equality.
-        /// </summary>
-        /// <param name="left">Left integer array to compare.</param>
-        /// <param name="right">Right <see cref="Image"/> to compare.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator ==(int[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
-
-        /// <summary>
-        /// This operation compares two images on inequality.
-        /// </summary>
-        /// <param name="left">Left double constant to compare.</param>
-        /// <param name="right">Right <see cref="Image"/> to compare.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator !=(double left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
-
-        /// <summary>
-        /// This operation compares two images on inequality.
-        /// </summary>
-        /// <param name="left">Left double array to compare.</param>
-        /// <param name="right">Right <see cref="Image"/> to compare.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator !=(double[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
-
-        /// <summary>
-        /// This operation compares two images on inequality.
-        /// </summary>
-        /// <param name="left">Left integer array to compare.</param>
-        /// <param name="right">Right <see cref="Image"/> to compare.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator !=(int[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(Image left, Image right) =>
-            left.Call("relational", right, Enums.OperationRelational.Less) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(double left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(Image left, double right) =>
-            left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(double[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(Image left, double[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(int[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <(Image left, int[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(Image left, Image right) =>
-            left.Call("relational", right, Enums.OperationRelational.More) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(double left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(Image left, double right) =>
-            left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(double[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(Image left, double[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(int[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >(Image left, int[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(Image left, Image right) =>
-            left.Call("relational", right, Enums.OperationRelational.Lesseq) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(double left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(Image left, double right) =>
-            left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(double[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(Image left, double[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(int[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is less than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator <=(Image left, int[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(Image left, Image right) =>
-            left.Call("relational", right, Enums.OperationRelational.Moreeq) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left double constant.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(double left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double constant.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(Image left, double right) =>
-            left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left double array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(double[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right double array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(Image left, double[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left integer array.</param>
-        /// <param name="right">Right <see cref="Image"/>.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(int[] left, Image right) =>
-            right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
-
-        /// <summary>
-        /// This operation compares if the left operand is greater than or equal to the right operand.
-        /// </summary>
-        /// <param name="left">Left <see cref="Image"/>.</param>
-        /// <param name="right">Right integer array.</param>
-        /// <returns>A new <see cref="Image"/>.</returns>
-        public static Image operator >=(Image left, int[] right) =>
-            left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
-
-        /// <summary>
-        /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="true"/>.
-        /// </summary>
-        /// <param name="image">The image to check.</param>
-        /// <returns><see langword="true"/> if <paramref name="image"/> is definitely <see langword="true"/>; otherwise, <see langword="false"/>.</returns>
-        public static bool operator true(Image image) =>
-            // Always evaluate to false so that each side of the && equation is evaluated
-            false;
-
-        /// <summary>
-        /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="false"/>.
-        /// </summary>
-        /// <param name="image">The image to check.</param>
-        /// <returns><see langword="true"/> if <paramref name="image"/> is definitely <see langword="false"/>; otherwise, <see langword="false"/>.</returns>
-        public static bool operator false(Image image) =>
-            // Always evaluate to false so that each side of the && equation is evaluated
-            false;
-
-        #endregion
-    }
+    #region auto-generated operator overloads
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(Image left, Image right) =>
+        left.Call("add", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(double left, Image right) =>
+        right.Call("linear", 1.0, left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(Image left, double right) =>
+        left.Call("linear", 1.0, right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(double[] left, Image right) =>
+        right.Call("linear", 1.0, left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(Image left, double[] right) =>
+        left.Call("linear", 1.0, right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(int[] left, Image right) =>
+        right.Call("linear", 1.0, left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> + <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator +(Image left, int[] right) =>
+        left.Call("linear", 1.0, right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(Image left, Image right) =>
+        left.Call("subtract", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(double left, Image right) =>
+        right.Call("linear", -1.0, left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(Image left, double right) =>
+        left.Call("linear", 1.0, -right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(double[] left, Image right) =>
+        right.Call("linear", -1.0, left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(Image left, double[] right) =>
+        left.Call("linear", 1.0, right.Negate()) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(int[] left, Image right) =>
+        right.Call("linear", -1.0, left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> - <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator -(Image left, int[] right) =>
+        left.Call("linear", 1.0, right.Negate()) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(Image left, Image right) =>
+        left.Call("multiply", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(double left, Image right) =>
+        right.Call("linear", left, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(Image left, double right) =>
+        left.Call("linear", right, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(double[] left, Image right) =>
+        right.Call("linear", left, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(Image left, double[] right) =>
+        left.Call("linear", right, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(int[] left, Image right) =>
+        right.Call("linear", left, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> * <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator *(Image left, int[] right) =>
+        left.Call("linear", right, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(Image left, Image right) =>
+        left.Call("divide", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(double left, Image right) =>
+        right.Pow(-1.0).Call("linear", left, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(Image left, double right) =>
+        left.Call("linear", 1.0 / right, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(double[] left, Image right) =>
+        right.Pow(-1.0).Call("linear", left, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(Image left, double[] right) =>
+        left.Call("linear", right.Invert(), 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(int[] left, Image right) =>
+        right.Pow(-1.0).Call("linear", left, 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> / <paramref name="right"/>.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator /(Image left, int[] right) =>
+        left.Call("linear", right.Invert(), 0.0) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(Image left, Image right) =>
+        left.Call("remainder", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(double left, Image right) =>
+        right.Call("remainder_const", left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(Image left, double right) =>
+        left.Call("remainder_const", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(double[] left, Image right) =>
+        right.Call("remainder_const", left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(Image left, double[] right) =>
+        left.Call("remainder_const", right) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(int[] left, Image right) =>
+        right.Call("remainder_const", left) as Image;
+
+    /// <summary>
+    /// This operation calculates <paramref name="left"/> % <paramref name="right"/>
+    /// (remainder after integer division).
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator %(Image left, int[] right) =>
+        left.Call("remainder_const", right) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(Image left, Image right) =>
+        left.Call("boolean", right, Enums.OperationBoolean.And) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(double left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(Image left, double right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(double[] left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(Image left, double[] right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(int[] left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.And, left) as Image;
+
+    /// <summary>
+    /// This operation computes the logical bitwise AND of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator &(Image left, int[] right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.And, right) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(Image left, Image right) =>
+        left.Call("boolean", right, Enums.OperationBoolean.Or) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(double left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(Image left, double right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(double[] left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(Image left, double[] right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(int[] left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.Or, left) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator |(Image left, int[] right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Or, right) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(Image left, Image right) =>
+        left.Call("boolean", right, Enums.OperationBoolean.Eor) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(double left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(Image left, double right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(double[] left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(Image left, double[] right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(int[] left, Image right) =>
+        right.Call("boolean_const", Enums.OperationBoolean.Eor, left) as Image;
+
+    /// <summary>
+    /// This operation computes the bitwise exclusive-OR of its operands.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ^(Image left, int[] right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Eor, right) as Image;
+
+    /// <summary>
+    /// This operation shifts its first operand left by the number of bits specified by its second operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">The number of bits.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <<(Image left, int right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Lshift, right) as Image;
+
+    /// <summary>
+    /// This operation shifts its first operand right by the number of bits specified by its second operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">The number of bits.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >>(Image left, int right) =>
+        left.Call("boolean_const", Enums.OperationBoolean.Rshift, right) as Image;
+
+    /// <summary>
+    /// This operation compares two images on equality.
+    /// </summary>
+    /// <param name="left">Left double constant to compare.</param>
+    /// <param name="right">Right <see cref="Image"/> to compare.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ==(double left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
+
+    /// <summary>
+    /// This operation compares two images on equality.
+    /// </summary>
+    /// <param name="left">Left double array to compare.</param>
+    /// <param name="right">Right <see cref="Image"/> to compare.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ==(double[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
+
+    /// <summary>
+    /// This operation compares two images on equality.
+    /// </summary>
+    /// <param name="left">Left integer array to compare.</param>
+    /// <param name="right">Right <see cref="Image"/> to compare.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator ==(int[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Equal, left) as Image;
+
+    /// <summary>
+    /// This operation compares two images on inequality.
+    /// </summary>
+    /// <param name="left">Left double constant to compare.</param>
+    /// <param name="right">Right <see cref="Image"/> to compare.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator !=(double left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
+
+    /// <summary>
+    /// This operation compares two images on inequality.
+    /// </summary>
+    /// <param name="left">Left double array to compare.</param>
+    /// <param name="right">Right <see cref="Image"/> to compare.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator !=(double[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
+
+    /// <summary>
+    /// This operation compares two images on inequality.
+    /// </summary>
+    /// <param name="left">Left integer array to compare.</param>
+    /// <param name="right">Right <see cref="Image"/> to compare.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator !=(int[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Noteq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(Image left, Image right) =>
+        left.Call("relational", right, Enums.OperationRelational.Less) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(double left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(Image left, double right) =>
+        left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(double[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(Image left, double[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(int[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.More, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <(Image left, int[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.Less, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(Image left, Image right) =>
+        left.Call("relational", right, Enums.OperationRelational.More) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(double left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(Image left, double right) =>
+        left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(double[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(Image left, double[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(int[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Less, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >(Image left, int[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.More, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(Image left, Image right) =>
+        left.Call("relational", right, Enums.OperationRelational.Lesseq) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(double left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(Image left, double right) =>
+        left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(double[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(Image left, double[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(int[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Moreeq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is less than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator <=(Image left, int[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.Lesseq, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(Image left, Image right) =>
+        left.Call("relational", right, Enums.OperationRelational.Moreeq) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left double constant.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(double left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double constant.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(Image left, double right) =>
+        left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left double array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(double[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right double array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(Image left, double[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left integer array.</param>
+    /// <param name="right">Right <see cref="Image"/>.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(int[] left, Image right) =>
+        right.Call("relational_const", Enums.OperationRelational.Lesseq, left) as Image;
+
+    /// <summary>
+    /// This operation compares if the left operand is greater than or equal to the right operand.
+    /// </summary>
+    /// <param name="left">Left <see cref="Image"/>.</param>
+    /// <param name="right">Right integer array.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    public static Image operator >=(Image left, int[] right) =>
+        left.Call("relational_const", Enums.OperationRelational.Moreeq, right) as Image;
+
+    /// <summary>
+    /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="true"/>.
+    /// </summary>
+    /// <param name="image">The image to check.</param>
+    /// <returns><see langword="true"/> if <paramref name="image"/> is definitely <see langword="true"/>; otherwise, <see langword="false"/>.</returns>
+    public static bool operator true(Image image) =>
+        // Always evaluate to false so that each side of the && equation is evaluated
+        false;
+
+    /// <summary>
+    /// Returns a value indicating whether a given <see cref="Image"/> is definitely <see langword="false"/>.
+    /// </summary>
+    /// <param name="image">The image to check.</param>
+    /// <returns><see langword="true"/> if <paramref name="image"/> is definitely <see langword="false"/>; otherwise, <see langword="false"/>.</returns>
+    public static bool operator false(Image image) =>
+        // Always evaluate to false so that each side of the && equation is evaluated
+        false;
+
+    #endregion
 }
