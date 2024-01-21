@@ -10,8 +10,6 @@
     <NukeRootDirectory>..</NukeRootDirectory>
     <NukeScriptDirectory>..</NukeScriptDirectory>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
-    <!-- https://github.com/nuke-build/nuke/pull/1247 -->
-    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Nuke.Common" Version="7.0.6" />
+    <PackageReference Include="Nuke.Common" Version="8.0.0" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
   </ItemGroup>
 

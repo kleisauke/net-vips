@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(MSBuildRuntimeType)' == 'Mono'" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="xunit" Version="2.6.5" />
+    <PackageReference Include="xunit" Version="2.6.6" />
     <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
   </ItemGroup>
 
