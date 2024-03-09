@@ -29,7 +29,7 @@ namespace NetVips
         public object this[string key]
         {
             get => _internalDictionary[key];
-            set => Add(key, value);
+            set => _internalDictionary[key] = value;
         }
 
         /// <summary>
