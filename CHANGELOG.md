@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [2.4.1] - ???
 ### Fixed
-- Avoid key collision during shared `VOption` merge.
+- Avoid key collision during shared `VOption` merge ([#228](https://github.com/kleisauke/net-vips/issues/228)).
 
 ## [2.4.0] - 2023-11-12
 ### Changed
