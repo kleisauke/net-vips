@@ -39,7 +39,7 @@ jobs:
         run: apk add bash font-noto --update-cache
       - name: Setup dotnet (macOS 12, Windows 2022)
         if: runner.os != 'Linux'
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.x
       - name: Checkout
