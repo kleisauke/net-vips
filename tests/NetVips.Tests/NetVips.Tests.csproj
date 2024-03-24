@@ -28,12 +28,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TestWithNuGetBinaries)' == 'true' And '$(MSBuildRuntimeType)' == 'Mono'">
-    <PackageReference Include="NetVips.Native.linux-x64" Version="8.15.1" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
-    <PackageReference Include="NetVips.Native.osx-x64" Version="8.15.1" Condition="$([MSBuild]::IsOSPlatform('OSX'))" />
+    <PackageReference Include="NetVips.Native.linux-x64" Version="8.15.2" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
+    <PackageReference Include="NetVips.Native.osx-x64" Version="8.15.2" Condition="$([MSBuild]::IsOSPlatform('OSX'))" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(MSBuildRuntimeType)' != 'Mono'">
-    <PackageReference Include="NetVips.Native" Version="8.15.1" Condition="'$(TestWithNuGetBinaries)' == 'true'" />
+    <PackageReference Include="NetVips.Native" Version="8.15.2" Condition="'$(TestWithNuGetBinaries)' == 'true'" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
