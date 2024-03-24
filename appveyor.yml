@@ -1,7 +1,7 @@
 image: Visual Studio 2022
 
 # Version format
-version: 2.4.0.{build}
+version: 2.4.1.{build}
 
 init:
   - git config --global core.autocrlf true
