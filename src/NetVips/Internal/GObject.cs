@@ -15,7 +15,7 @@ namespace NetVips.Internal
         [StructLayout(LayoutKind.Sequential)]
         internal struct Struct
         {
-            internal GType.Instance GTypeInstance;
+            internal IntPtr GTypeInstance;
 
             internal uint RefCount;
 
@@ -76,12 +76,6 @@ namespace NetVips.Internal
 
     internal static class GType
     {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Instance
-        {
-            internal IntPtr GClass;
-        }
-
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "g_type_name")]
@@ -218,7 +212,7 @@ namespace NetVips.Internal
         [StructLayout(LayoutKind.Sequential)]
         internal struct Struct
         {
-            internal GType.Instance GTypeInstance;
+            internal IntPtr GTypeInstance;
 
             internal IntPtr Name;
 

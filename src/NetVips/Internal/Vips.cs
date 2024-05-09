@@ -261,15 +261,9 @@ namespace NetVips.Internal
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct VipsArgument
-    {
-        internal IntPtr Pspec;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     internal struct VipsArgumentClass
     {
-        internal VipsArgument Parent;
+        internal IntPtr Parent;
         internal IntPtr ObjectClass;
         internal ArgumentFlags Flags;
 
@@ -280,7 +274,7 @@ namespace NetVips.Internal
     [StructLayout(LayoutKind.Sequential)]
     internal struct VipsArgumentInstance
     {
-        internal VipsArgument Parent;
+        internal IntPtr Parent;
         internal IntPtr ArgumentClass;
         internal IntPtr Object;
 
