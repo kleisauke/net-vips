@@ -30,7 +30,7 @@ namespace NetVips
         /// Internal marshaller delegate for <see cref="EvalDelegate"/>.
         /// </summary>
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate void EvalMarshalDelegate(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr);
+        internal delegate void EvalMarshalDelegate(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr);
 
         /// <inheritdoc cref="VipsObject"/>
         internal Image(IntPtr pointer)
@@ -2103,9 +2103,9 @@ namespace NetVips
         /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
         public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, IntPtr data = default)
         {
-            void EvalMarshal(IntPtr imagePtr, VipsProgress progress, IntPtr userDataPtr)
+            void EvalMarshal(IntPtr imagePtr, IntPtr progressPtr, IntPtr userDataPtr)
             {
-                if (imagePtr == IntPtr.Zero)
+                if (imagePtr == IntPtr.Zero || progressPtr == IntPtr.Zero)
                 {
                     return;
                 }
@@ -2113,6 +2113,8 @@ namespace NetVips
                 using var image = new Image(imagePtr);
                 image.ObjectRef();
 
+                var progress = Marshal.PtrToStructure<VipsProgress>(progressPtr);
+                
                 callback.Invoke(image, progress);
             }
 

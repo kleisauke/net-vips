@@ -17,8 +17,8 @@ namespace NetVips.Internal
         internal delegate IntPtr TypeMap2Fn(IntPtr type, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate IntPtr ArgumentMapFn(IntPtr @object, GParamSpec.Struct pspec, VipsArgumentClass argumentClass,
-            VipsArgumentInstance argumentInstance, IntPtr a, IntPtr b);
+        internal delegate IntPtr ArgumentMapFn(IntPtr @object, IntPtr pspec, IntPtr argumentClass,
+            IntPtr argumentInstance, IntPtr a, IntPtr b);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate int CallbackFn(IntPtr a, IntPtr b);

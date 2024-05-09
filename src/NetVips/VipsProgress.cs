@@ -22,7 +22,8 @@ namespace NetVips
         /// <summary>
         /// Is the timer currently active?
         /// </summary>
-        public int Active;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool Active;
     }
 
     /// <summary>
@@ -65,6 +66,11 @@ namespace NetVips
         /// <summary>
         /// Start time.
         /// </summary>
-        public GTimer Start;
+        private IntPtr StartPtr;
+
+        /// <summary>
+        /// Start time.
+        /// </summary>
+        public GTimer Start => Marshal.PtrToStructure<GTimer>(StartPtr);
     }
 }
