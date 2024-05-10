@@ -2114,7 +2114,7 @@ namespace NetVips
                 image.ObjectRef();
 
                 var progress = Marshal.PtrToStructure<VipsProgress>(progressPtr);
-                
+
                 callback.Invoke(image, progress);
             }
 
