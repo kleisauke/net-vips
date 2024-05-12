@@ -55,22 +55,22 @@ public class Introspect
     /// <summary>
     /// The required input for this operation.
     /// </summary>
-    public readonly List<Argument> RequiredInput = new();
+    public readonly List<Argument> RequiredInput = [];
 
     /// <summary>
     /// The optional input for this operation.
     /// </summary>
-    public readonly Dictionary<string, Argument> OptionalInput = new();
+    public readonly Dictionary<string, Argument> OptionalInput = [];
 
     /// <summary>
     /// The required output for this operation.
     /// </summary>
-    public readonly List<Argument> RequiredOutput = new();
+    public readonly List<Argument> RequiredOutput = [];
 
     /// <summary>
     /// The optional output for this operation.
     /// </summary>
-    public readonly Dictionary<string, Argument> OptionalOutput = new();
+    public readonly Dictionary<string, Argument> OptionalOutput = [];
 
     /// <summary>
     /// Build introspection data for a specified operation name.

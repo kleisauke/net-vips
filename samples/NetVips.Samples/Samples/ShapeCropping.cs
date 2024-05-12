@@ -284,7 +284,7 @@ public class ShapeCropping : ISample
         var left = (int)Math.Round((width - trimWidth) / 2);
         var top = (int)Math.Round((height - trimHeight) / 2);
 
-        return new[] { left, top, (int)Math.Round(trimWidth), (int)Math.Round(trimHeight) };
+        return [left, top, (int)Math.Round(trimWidth), (int)Math.Round(trimHeight)];
     }
 
     #region helpers

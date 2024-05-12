@@ -39,39 +39,39 @@ public static class Helper
     public static readonly string AvifFile = Path.Combine(Images, "avif-orientation-6.avif");
 
     public static readonly Enums.BandFormat[] UnsignedFormats =
-    {
+    [
         Enums.BandFormat.Uchar,
         Enums.BandFormat.Ushort,
         Enums.BandFormat.Uint
-    };
+    ];
 
     public static readonly Enums.BandFormat[] SignedFormats =
-    {
+    [
         Enums.BandFormat.Char,
         Enums.BandFormat.Short,
         Enums.BandFormat.Int
-    };
+    ];
 
     public static readonly Enums.BandFormat[] FloatFormats =
-    {
+    [
         Enums.BandFormat.Float,
         Enums.BandFormat.Double
-    };
+    ];
 
     public static readonly Enums.BandFormat[] ComplexFormats =
-    {
+    [
         Enums.BandFormat.Complex,
         Enums.BandFormat.Dpcomplex
-    };
+    ];
 
-    public static readonly Enums.BandFormat[] IntFormats = UnsignedFormats.Concat(SignedFormats).ToArray();
+    public static readonly Enums.BandFormat[] IntFormats = [.. UnsignedFormats, .. SignedFormats];
 
-    public static readonly Enums.BandFormat[] NonComplexFormats = IntFormats.Concat(FloatFormats).ToArray();
+    public static readonly Enums.BandFormat[] NonComplexFormats = [.. IntFormats, .. FloatFormats];
 
-    public static readonly Enums.BandFormat[] AllFormats = IntFormats.Concat(FloatFormats).Concat(ComplexFormats).ToArray();
+    public static readonly Enums.BandFormat[] AllFormats = [.. IntFormats, .. FloatFormats, .. ComplexFormats];
 
     public static readonly Enums.Interpretation[] ColourColourspaces =
-    {
+    [
         Enums.Interpretation.Xyz,
         Enums.Interpretation.Lab,
         Enums.Interpretation.Lch,
@@ -81,34 +81,33 @@ public static class Helper
         Enums.Interpretation.Hsv,
         Enums.Interpretation.Srgb,
         Enums.Interpretation.Yxy
-    };
+    ];
 
     public static readonly Enums.Interpretation[] CodedColourspaces =
-    {
+    [
         Enums.Interpretation.Labq
-    };
+    ];
 
     public static readonly Enums.Interpretation[] MonoColourspaces =
-    {
+    [
         Enums.Interpretation.Bw
-    };
+    ];
 
     public static readonly Enums.Interpretation[] SixteenbitColourspaces =
-    {
+    [
         Enums.Interpretation.Grey16,
         Enums.Interpretation.Rgb16
-    };
+    ];
 
     public static readonly Enums.Interpretation[] CmykColourspaces =
-    {
+    [
         Enums.Interpretation.Cmyk
-    };
+    ];
 
-    public static Enums.Interpretation[] AllColourspaces = ColourColourspaces.Concat(MonoColourspaces)
-        .Concat(CodedColourspaces)
-        .Concat(SixteenbitColourspaces)
-        .Concat(CmykColourspaces)
-        .ToArray();
+    public static readonly Enums.Interpretation[] AllColourspaces =
+    [
+        .. ColourColourspaces, .. MonoColourspaces, .. CodedColourspaces, .. SixteenbitColourspaces, .. CmykColourspaces
+    ];
 
     public static readonly Dictionary<Enums.BandFormat, double> MaxValue = new()
     {
@@ -199,7 +198,7 @@ public static class Helper
     };
 
     public static readonly Enums.Angle45[] Rot45Angles =
-    {
+    [
         Enums.Angle45.D0,
         Enums.Angle45.D45,
         Enums.Angle45.D90,
@@ -208,10 +207,10 @@ public static class Helper
         Enums.Angle45.D225,
         Enums.Angle45.D270,
         Enums.Angle45.D315
-    };
+    ];
 
     public static readonly Enums.Angle45[] Rot45AngleBonds =
-    {
+    [
         Enums.Angle45.D0,
         Enums.Angle45.D315,
         Enums.Angle45.D270,
@@ -220,23 +219,23 @@ public static class Helper
         Enums.Angle45.D135,
         Enums.Angle45.D90,
         Enums.Angle45.D45
-    };
+    ];
 
     public static readonly Enums.Angle[] RotAngles =
-    {
+    [
         Enums.Angle.D0,
         Enums.Angle.D90,
         Enums.Angle.D180,
         Enums.Angle.D270
-    };
+    ];
 
     public static readonly Enums.Angle[] RotAngleBonds =
-    {
+    [
         Enums.Angle.D0,
         Enums.Angle.D270,
         Enums.Angle.D180,
         Enums.Angle.D90
-    };
+    ];
 
     /// <summary>
     /// an expanding zip ... if either of the args is a scalar or a one-element list,
@@ -283,10 +282,10 @@ public static class Helper
             }).ToArray();
         }
 
-        return new[]
-        {
-            new[] {x, y}
-        };
+        return
+        [
+            [x, y]
+        ];
     }
 
     /// <summary>
@@ -445,21 +444,14 @@ public static class Helper
     }
 }
 
-internal class ObjectComparerDelta : IEqualityComparer<object>
+internal class ObjectComparerDelta(double delta) : IEqualityComparer<object>
 {
-    private readonly double _delta;
-
-    public ObjectComparerDelta(double delta)
-    {
-        _delta = delta;
-    }
-
     public new bool Equals(object x, object y)
     {
         var a = Convert.ToDouble(x);
         var b = Convert.ToDouble(y);
 
-        return Math.Abs(a - b) <= _delta;
+        return Math.Abs(a - b) <= delta;
     }
 
     public int GetHashCode(object obj)

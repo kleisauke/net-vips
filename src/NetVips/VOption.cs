@@ -10,7 +10,7 @@ namespace NetVips;
 /// </summary>
 public class VOption : IEnumerable<KeyValuePair<string, object>>
 {
-    private readonly Dictionary<string, object> _internalDictionary = new();
+    private readonly Dictionary<string, object> _internalDictionary = [];
 
     /// <summary>
     /// Returns an enumerator that iterates through the <see cref="_internalDictionary"/>.

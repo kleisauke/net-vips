@@ -1236,7 +1236,7 @@ public partial class Image : VipsObject
 
         GLib.GFree(ptrArr);
 
-        return names.ToArray();
+        return [.. names];
     }
 
     /// <summary>
@@ -1378,7 +1378,7 @@ public partial class Image : VipsObject
     /// <param name="images">Array of case images.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     public Image Case(params Image[] images) =>
-        this.Call("case", new object[] { images }) as Image;
+        this.Call("case", [images]) as Image;
 
     /// <summary>
     /// Use pixel values to pick cases from an a set of mixed images and constants.
@@ -1391,7 +1391,7 @@ public partial class Image : VipsObject
     /// <param name="objects">Array of mixed images and constants.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     public Image Case(params object[] objects) =>
-        this.Call("case", new object[] { objects }) as Image;
+        this.Call("case", [objects]) as Image;
 
     /// <summary>
     /// Append a set of constants bandwise.
@@ -1430,7 +1430,7 @@ public partial class Image : VipsObject
     /// <param name="images">Array of images.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     public Image Bandjoin(params Image[] images) =>
-        this.Call("bandjoin", new object[] { images.PrependImage(this) }) as Image;
+        this.Call("bandjoin", [images.PrependImage(this)]) as Image;
 
     /// <summary>
     /// Append a set of mixed images and constants bandwise.
@@ -1443,7 +1443,7 @@ public partial class Image : VipsObject
     /// <param name="objects">Array of mixed images and constants.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     public Image Bandjoin(params object[] objects) =>
-        this.Call("bandjoin", new object[] { objects.PrependImage(this) }) as Image;
+        this.Call("bandjoin", [objects.PrependImage(this)]) as Image;
 
     /// <summary>
     /// Band-wise rank a set of constants.
@@ -1496,7 +1496,7 @@ public partial class Image : VipsObject
 
         options.AddIfPresent(nameof(index), index);
 
-        return this.Call("bandrank", options, new object[] { images.PrependImage(this) }) as Image;
+        return this.Call("bandrank", options, [images.PrependImage(this)]) as Image;
     }
 
     /// <summary>
@@ -1511,7 +1511,7 @@ public partial class Image : VipsObject
     /// <param name="index">Select this band element from sorted list.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     public Image Bandrank(Image other, int? index = null) =>
-        Bandrank(new[] { other }, index);
+        Bandrank([other], index);
 
     /// <summary>
     /// Band-wise rank a set of mixed images and constants.
@@ -1530,7 +1530,7 @@ public partial class Image : VipsObject
 
         options.AddIfPresent(nameof(index), index);
 
-        return this.Call("bandrank", options, new object[] { objects.PrependImage(this) }) as Image;
+        return this.Call("bandrank", options, [objects.PrependImage(this)]) as Image;
     }
 
     /// <summary>
@@ -1603,7 +1603,7 @@ public partial class Image : VipsObject
     public double[] MaxPos()
     {
         var v = Max(out var x, out var y);
-        return new[] { v, x, y };
+        return [v, x, y];
     }
 
     /// <summary>
@@ -1613,7 +1613,7 @@ public partial class Image : VipsObject
     public double[] MinPos()
     {
         var v = Min(out var x, out var y);
-        return new[] { v, x, y };
+        return [v, x, y];
     }
 
     /// <summary>
@@ -1754,7 +1754,7 @@ public partial class Image : VipsObject
     /// </summary>
     /// <param name="exp">To the power of this.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public Image Pow(double exp) => Math2Const(Enums.OperationMath2.Pow, new[] { exp });
+    public Image Pow(double exp) => Math2Const(Enums.OperationMath2.Pow, [exp]);
 
     /// <summary>
     /// Raise to power of an array.
@@ -1783,7 +1783,7 @@ public partial class Image : VipsObject
     /// </summary>
     /// <param name="base">To the base of this.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public Image Wop(double @base) => Math2Const(Enums.OperationMath2.Wop, new[] { @base });
+    public Image Wop(double @base) => Math2Const(Enums.OperationMath2.Wop, [@base]);
 
     /// <summary>
     /// Raise to power of an array, but with the arguments reversed.
@@ -1812,7 +1812,7 @@ public partial class Image : VipsObject
     /// </summary>
     /// <param name="x">Arc tangent of y / <paramref name="x"/>.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public Image Atan2(double x) => Math2Const(Enums.OperationMath2.Atan2, new[] { x });
+    public Image Atan2(double x) => Math2Const(Enums.OperationMath2.Atan2, [x]);
 
     /// <summary>
     /// Arc tangent of an array in degrees.

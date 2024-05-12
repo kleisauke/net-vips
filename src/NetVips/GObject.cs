@@ -19,7 +19,7 @@ public class GObject : SafeHandle
     /// <remarks>
     /// All recorded delegates are freed in <see cref="ReleaseDelegates"/>.
     /// </remarks>
-    private readonly ICollection<GCHandle> _handles = new List<GCHandle>();
+    private readonly ICollection<GCHandle> _handles = [];
 
     /// <summary>
     /// Hint of how much native memory is actually occupied by the object.

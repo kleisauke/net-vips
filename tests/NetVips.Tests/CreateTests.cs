@@ -39,18 +39,17 @@ public class CreateTests : IClassFixture<TestsFixture>
         {
             var pixel = im[i, i];
             Assert.Equal(3, pixel.Length);
-            Assert.Equal(new double[] { 0, 0, 0 }, pixel);
+            Assert.Equal([0, 0, 0], pixel);
         }
     }
 
     [Fact]
     public void TestBuildlut()
     {
-        var m = Image.NewFromArray(new[]
-        {
-            new double[] {0, 0},
-            new double[] {255, 100}
-        });
+        var m = Image.NewFromArray([
+            [0, 0],
+            [255, 100]
+        ]);
         var lut = m.Buildlut();
         Assert.Equal(256, lut.Width);
         Assert.Equal(1, lut.Height);
@@ -62,12 +61,11 @@ public class CreateTests : IClassFixture<TestsFixture>
         p = lut[10, 0];
         Assert.Equal(100 * 10.0 / 255.0, p[0]);
 
-        m = Image.NewFromArray(new[]
-        {
-            new double[] {0, 0, 100},
-            new double[] {255, 100, 0},
-            new double[] {128, 10, 90}
-        });
+        m = Image.NewFromArray([
+            [0, 0, 100],
+            [255, 100, 0],
+            [128, 10, 90]
+        ]);
         lut = m.Buildlut();
         Assert.Equal(256, lut.Width);
         Assert.Equal(1, lut.Height);
@@ -241,9 +239,9 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(Enums.BandFormat.Double, im.Format);
 
         var p = im[0, 0];
-        Assert.Equal(new double[] { 0, 0, 0 }, p);
+        Assert.Equal([0, 0, 0], p);
         p = im[255, 0];
-        Assert.Equal(new double[] { 1, 1, 1 }, p);
+        Assert.Equal([1, 1, 1], p);
         p = im[(int)0.2 * 255, 0];
         Assert.Equal(0, p[0], 1);
         p = im[(int)0.3 * 255, 0];
@@ -527,7 +525,7 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(128, im.Width);
         Assert.Equal(128, im.Height);
         var p = im[45, 35];
-        Assert.Equal(new double[] { 45, 35 }, p);
+        Assert.Equal([45, 35], p);
     }
 
     [Fact]

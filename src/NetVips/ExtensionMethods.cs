@@ -88,7 +88,7 @@ internal static class ExtensionMethods
     {
         if (args == null)
         {
-            return new object[] { image };
+            return [image];
         }
 
         var newValues = new object[args.Length + 1];
@@ -152,7 +152,7 @@ internal static class ExtensionMethods
     /// <returns>The readable format of the bytes.</returns>
     internal static string ToReadableBytes(this ulong value)
     {
-        string[] sizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        string[] sizeSuffixes = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
         var i = 0;
         decimal dValue = value;
