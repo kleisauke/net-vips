@@ -214,12 +214,12 @@ public static class NetVips
     [Obsolete("NetVips.MemoryStats is deprecated, please use the Stats class instead.")]
     public static int[] MemoryStats()
     {
-        return new[]
-        {
+        return
+        [
             Stats.Allocations,
             Stats.Mem,
             Stats.Files
-        };
+        ];
     }
 
     /// <summary>
@@ -319,7 +319,7 @@ public static class NetVips
 
         GLib.GFree(ptrArr);
 
-        return names.ToArray();
+        return [.. names];
     }
 
     /// <summary>

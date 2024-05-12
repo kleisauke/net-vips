@@ -267,22 +267,22 @@ public class GenerateImageOperators : ISample
         // generate list of all operator overloads and supported types
         var allOverloads = new Dictionary<string, string[]>
         {
-            {"+", new[] {"Image", "double", "double[]", "int[]"}},
-            {"-", new[] {"Image", "double", "double[]", "int[]"}},
-            {"*", new[] {"Image", "double", "double[]", "int[]"}},
-            {"/", new[] {"Image", "double", "double[]", "int[]"}},
-            {"%", new[] {"Image", "double", "double[]", "int[]"}},
-            {"&", new[] {"Image", "double", "double[]", "int[]"}},
-            {"|", new[] {"Image", "double", "double[]", "int[]"}},
-            {"^", new[] {"Image", "double", "double[]", "int[]"}},
-            {"<<", new[] {"int"}},
-            {">>", new[] {"int"}},
-            {"==", new[] {"double", "double[]", "int[]"}},
-            {"!=", new[] {"double", "double[]", "int[]"}},
-            {"<", new[] {"Image", "double", "double[]", "int[]"}},
-            {">", new[] {"Image", "double", "double[]", "int[]"}},
-            {"<=", new[] {"Image", "double", "double[]", "int[]"}},
-            {">=", new[] {"Image", "double", "double[]", "int[]"}}
+            {"+", ["Image", "double", "double[]", "int[]"]},
+            {"-", ["Image", "double", "double[]", "int[]"]},
+            {"*", ["Image", "double", "double[]", "int[]"]},
+            {"/", ["Image", "double", "double[]", "int[]"]},
+            {"%", ["Image", "double", "double[]", "int[]"]},
+            {"&", ["Image", "double", "double[]", "int[]"]},
+            {"|", ["Image", "double", "double[]", "int[]"]},
+            {"^", ["Image", "double", "double[]", "int[]"]},
+            {"<<", ["int"]},
+            {">>", ["int"]},
+            {"==", ["double", "double[]", "int[]"]},
+            {"!=", ["double", "double[]", "int[]"]},
+            {"<", ["Image", "double", "double[]", "int[]"]},
+            {">", ["Image", "double", "double[]", "int[]"]},
+            {"<=", ["Image", "double", "double[]", "int[]"]},
+            {">=", ["Image", "double", "double[]", "int[]"]}
         };
 
         const string preamble = """

@@ -15,7 +15,7 @@ public class MutableImage : ISample
             for (var i = 0; i <= 100; i++)
             {
                 var j = i / 100.0;
-                x.DrawLine(new[] { 255.0 }, (int)(x.Width * j), 0, 0, (int)(x.Height * (1 - j)));
+                x.DrawLine([255.0], (int)(x.Width * j), 0, 0, (int)(x.Height * (1 - j)));
             }
         });
         mutated.WriteToFile("mutated.jpg");

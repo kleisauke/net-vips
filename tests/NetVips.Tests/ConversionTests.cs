@@ -22,11 +22,11 @@ public class ConversionTests : IClassFixture<TestsFixture>
         _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
         _mono = _colour[1];
         _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
-        _allImages = new[]
-        {
+        _allImages =
+        [
             _mono,
             _colour
-        };
+        ];
         _image = Image.Jpegload(Helper.JpegFile);
     }
 
@@ -300,24 +300,24 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
             var im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40);
             var pixel = im[10, 10];
-            Assert.Equal(new double[] { 0, 0, 0 }, pixel);
+            Assert.Equal([0, 0, 0], pixel);
             pixel = im[30, 30];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
             pixel = im[im.Width - 10, im.Height - 10];
-            Assert.Equal(new double[] { 0, 0, 0 }, pixel);
+            Assert.Equal([0, 0, 0], pixel);
 
             im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, extend: Enums.Extend.Copy);
             pixel = im[10, 10];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
             pixel = im[im.Width - 10, im.Height - 10];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
 
             im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, extend: Enums.Extend.Background,
-                background: new double[] { 7, 8, 9 });
+                background: [7, 8, 9]);
             pixel = im[10, 10];
-            Assert.Equal(new double[] { 7, 8, 9 }, pixel);
+            Assert.Equal([7, 8, 9], pixel);
             pixel = im[im.Width - 10, im.Height - 10];
-            Assert.Equal(new double[] { 7, 8, 9 }, pixel);
+            Assert.Equal([7, 8, 9], pixel);
 
             im = test.Embed(20, 20, _colour.Width + 40, _colour.Height + 40, extend: Enums.Extend.White);
 
@@ -325,10 +325,10 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
             // uses 255 in all bytes of ints, 255.0 for float
             var pixelLongs = pixel.Select(x => (double)(Convert.ToInt64(x) & 255));
-            Assert.Equal(new double[] { 255, 255, 255 }, pixelLongs);
+            Assert.Equal([255, 255, 255], pixelLongs);
             pixel = im[im.Width - 10, im.Height - 10];
             pixelLongs = pixel.Select(x => (double)(Convert.ToInt64(x) & 255));
-            Assert.Equal(new double[] { 255, 255, 255 }, pixelLongs);
+            Assert.Equal([255, 255, 255], pixelLongs);
         }
     }
 
@@ -340,15 +340,15 @@ public class ConversionTests : IClassFixture<TestsFixture>
         var im = Image.Black(1, 1) + 255;
         var positions = new Dictionary<Enums.CompassDirection, int[]>
         {
-            {Enums.CompassDirection.Centre, new[] {1, 1}},
-            {Enums.CompassDirection.North, new[] {1, 0}},
-            {Enums.CompassDirection.South, new[] {1, 2}},
-            {Enums.CompassDirection.East, new[] {2, 1}},
-            {Enums.CompassDirection.West, new[] {0, 1}},
-            {Enums.CompassDirection.NorthEast, new[] {2, 0}},
-            {Enums.CompassDirection.SouthEast, new[] {2, 2}},
-            {Enums.CompassDirection.SouthWest, new[] {0, 2}},
-            {Enums.CompassDirection.NorthWest, new[] {0, 0}}
+            {Enums.CompassDirection.Centre, [1, 1] },
+            {Enums.CompassDirection.North, [1, 0] },
+            {Enums.CompassDirection.South, [1, 2] },
+            {Enums.CompassDirection.East, [2, 1] },
+            {Enums.CompassDirection.West, [0, 1] },
+            {Enums.CompassDirection.NorthEast, [2, 0] },
+            {Enums.CompassDirection.SouthEast, [2, 2] },
+            {Enums.CompassDirection.SouthWest, [0, 2] },
+            {Enums.CompassDirection.NorthWest, [0, 0] }
         };
 
         foreach (var (direction, value) in positions)
@@ -356,7 +356,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
             var x = value[0];
             var y = value[1];
             var im2 = im.Gravity(direction, 3, 3);
-            Assert.Equal(new double[] { 255 }, im2[x, y]);
+            Assert.Equal([255], im2[x, y]);
             Assert.Equal(255.0 / 9.0, im2.Avg());
         }
     }
@@ -369,17 +369,17 @@ public class ConversionTests : IClassFixture<TestsFixture>
             var test = _colour.Cast(fmt);
 
             var pixel = test[30, 30];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
 
             var sub = test.ExtractArea(25, 25, 10, 10);
 
             pixel = sub[5, 5];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
 
             sub = test.ExtractBand(1, n: 2);
 
             pixel = sub[30, 30];
-            Assert.Equal(new double[] { 3, 4 }, pixel);
+            Assert.Equal([3, 4], pixel);
         }
     }
 
@@ -424,10 +424,10 @@ public class ConversionTests : IClassFixture<TestsFixture>
         {
             var test = _colour.Cast(fmt);
             var pixel = test[30, 30];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
             var sub = test.Crop(25, 25, 10, 10);
             pixel = sub[5, 5];
-            Assert.Equal(new double[] { 2, 3, 4 }, pixel);
+            Assert.Equal([2, 3, 4], pixel);
         }
     }
 
@@ -455,7 +455,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
             Assert.Equal(3, im.Bands);
 
             var pixel = im[30, 30];
-            Assert.Equal(new double[] { 20, 0, 41 }, pixel);
+            Assert.Equal([20, 0, 41], pixel);
         }
     }
 
@@ -467,7 +467,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
         const double nalpha = mx - alpha;
 
         foreach (var fmt in Helper.UnsignedFormats
-                     .Concat(new[] { Enums.BandFormat.Short, Enums.BandFormat.Int })
+                     .Concat([Enums.BandFormat.Short, Enums.BandFormat.Int])
                      .Concat(Helper.FloatFormats))
         {
             var test = _colour.Bandjoin(alpha).Cast(fmt);
@@ -491,7 +491,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
                 Assert.Equal(x, y, 2.0);
             }
 
-            im = test.Flatten(background: new double[] { 100, 100, 100 });
+            im = test.Flatten(background: [100, 100, 100]);
 
             pixel = test[30, 30];
             predict = pixel.Take(pixel.Length - 1)
@@ -517,7 +517,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
         const double alpha = mx / 2.0;
 
         foreach (var fmt in Helper.UnsignedFormats
-                     .Concat(new[] { Enums.BandFormat.Short, Enums.BandFormat.Int })
+                     .Concat([Enums.BandFormat.Short, Enums.BandFormat.Int])
                      .Concat(Helper.FloatFormats))
         {
             var test = _colour.Bandjoin(alpha).Cast(fmt);
@@ -525,7 +525,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
             var predict = pixel.Take(pixel.Length - 1)
                 .Select(x => Convert.ToInt32(x) * alpha / mx)
-                .Concat(new[] { alpha })
+                .Concat([alpha])
                 .ToArray();
 
             var im = test.Premultiply();
@@ -564,7 +564,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
         const double alpha = mx / 2.0;
 
         foreach (var fmt in Helper.UnsignedFormats
-                     .Concat(new[] { Enums.BandFormat.Short, Enums.BandFormat.Int })
+                     .Concat([Enums.BandFormat.Short, Enums.BandFormat.Int])
                      .Concat(Helper.FloatFormats))
         {
             var test = _colour.Bandjoin(alpha).Cast(fmt);
@@ -572,7 +572,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
 
             var predict = pixel.Take(pixel.Length - 1)
                 .Select(x => Convert.ToInt32(x) / (alpha / mx))
-                .Concat(new[] { alpha })
+                .Concat([alpha])
                 .ToArray();
 
             var im = test.Unpremultiply();
@@ -758,7 +758,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
                 Assert.Equal(_colour.Bands, r.Bands);
 
                 var result = r[10, 10];
-                Assert.Equal(new double[] { 3, 3, 13 }, result);
+                Assert.Equal([3, 3, 13], result);
             }
         }
 
@@ -771,9 +771,9 @@ public class ConversionTests : IClassFixture<TestsFixture>
         Assert.Equal(_colour.Format, r2.Format);
         Assert.Equal(_colour.Interpretation, r2.Interpretation);
         var result2 = r2[10, 10];
-        Assert.Equal(new double[] { 2, 3, 4 }, result2);
+        Assert.Equal([2, 3, 4], result2);
         result2 = r2[50, 50];
-        Assert.Equal(new double[] { 1, 2, 3 }, result2);
+        Assert.Equal([1, 2, 3], result2);
 
         test = _mono;
         r2 = test.Ifthenelse(new[] { 1, 2, 3 }, _colour, blend: true);
@@ -846,14 +846,14 @@ public class ConversionTests : IClassFixture<TestsFixture>
             {
                 var main = _mono.Cast(x);
                 var sub = _colour.Cast(y);
-                var r = main.Insert(sub, 10, 10, expand: true, background: new double[] { 100 });
+                var r = main.Insert(sub, 10, 10, expand: true, background: [100]);
 
                 Assert.Equal(main.Width + 10, r.Width);
                 Assert.Equal(main.Height + 10, r.Height);
                 Assert.Equal(sub.Bands, r.Bands);
 
                 var a = r[r.Width - 5, 5];
-                Assert.Equal(new double[] { 100, 100, 100 }, a);
+                Assert.Equal([100, 100, 100], a);
             }
         }
     }
@@ -970,7 +970,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
         {
             if (x is Image image)
             {
-                return image.Recomb(Image.NewFromArray(new[] { array }));
+                return image.Recomb(Image.NewFromArray([array]));
             }
 
             var sum = array
@@ -984,7 +984,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
             };
         }
 
-        RunUnary(new[] { _colour }, Recomb, Helper.NonComplexFormats);
+        RunUnary([_colour], Recomb, Helper.NonComplexFormats);
     }
 
     [Fact]

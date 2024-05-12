@@ -179,9 +179,9 @@ public class GenerateImageClass : ISample
         }
 
         string[] reservedKeywords =
-        {
+        [
             "in", "ref", "out", "ushort"
-        };
+        ];
 
         string SafeIdentifier(string name) =>
             reservedKeywords.Contains(name)
@@ -739,7 +739,7 @@ public class GenerateImageClass : ISample
         if (optionalOutput.Length > 0 && outParameters == null)
         {
             result.AppendLine()
-                .Append(GenerateFunction(operationName, indent, mutable, new[] { optionalOutput[0] }));
+                .Append(GenerateFunction(operationName, indent, mutable, [optionalOutput[0]]));
         }
         else if (outParameters != null && outParameters.Count != optionalOutput.Length)
         {

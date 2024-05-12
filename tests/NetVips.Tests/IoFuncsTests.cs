@@ -28,50 +28,45 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
         {
             var filename7 = NetVips.PathFilename7(path);
             var mode7 = NetVips.PathMode7(path);
-            return new[] { filename7, mode7 };
+            return [filename7, mode7];
         }
 
         var cases = new Dictionary<string, string[]>
         {
             {
                 @"c:\silly:dir:name\fr:ed.tif:jpeg:95,,,,c:\icc\srgb.icc",
-                new[]
-                {
+                [
                     @"c:\silly:dir:name\fr:ed.tif",
                     @"jpeg:95,,,,c:\icc\srgb.icc"
-                }
+                ]
             },
             {
                 "I180:",
-                new[]
-                {
+                [
                     "I180",
                     ""
-                }
+                ]
             },
             {
                 @"c:\silly:",
-                new[]
-                {
+                [
                     @"c:\silly",
                     ""
-                }
+                ]
             },
             {
                 @"c:\program files\x:hello",
-                new[]
-                {
+                [
                     @"c:\program files\x",
                     "hello"
-                }
+                ]
             },
             {
                 @"C:\fixtures\2569067123_aca715a2ee_o.jpg",
-                new[]
-                {
+                [
                     @"C:\fixtures\2569067123_aca715a2ee_o.jpg",
                     ""
-                }
+                ]
             }
         };
 
@@ -212,7 +207,7 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestInvalidate()
     {
-        byte[] data = { 0 };
+        byte[] data = [0];
 
         var im = Image.NewFromMemory(data, 1, 1, 1, Enums.BandFormat.Uchar);
         var point = im[0, 0];

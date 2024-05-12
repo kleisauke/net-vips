@@ -11,19 +11,13 @@ public class OnePointMosaic : ISample
     public string Name => "1 Point Mosaic";
     public string Category => "Mosaicing";
 
-    public struct Point
+    public struct Point(int x, int y)
     {
-        public int X, Y;
-
-        public Point(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
+        public int X = x, Y = y;
     }
 
-    public List<string> Images = new()
-    {
+    public List<string> Images =
+    [
         "images/cd1.1.jpg",
         "images/cd1.2.jpg",
         "images/cd2.1.jpg",
@@ -32,10 +26,10 @@ public class OnePointMosaic : ISample
         "images/cd3.2.jpg",
         "images/cd4.1.jpg",
         "images/cd4.2.jpg"
-    };
+    ];
 
-    public List<Point> HorizontalMarks = new()
-    {
+    public List<Point> HorizontalMarks =
+    [
         new Point(489, 140),
         new Point(66, 141),
         new Point(453, 40),
@@ -44,17 +38,17 @@ public class OnePointMosaic : ISample
         new Point(65, 121),
         new Point(495, 58),
         new Point(40, 57)
-    };
+    ];
 
-    public List<Point> VerticalMarks = new()
-    {
+    public List<Point> VerticalMarks =
+    [
         new Point(364, 346),
         new Point(388, 44),
         new Point(385, 629),
         new Point(384, 17),
         new Point(503, 959),
         new Point(527, 42)
-    };
+    ];
 
     public void Execute(string[] args)
     {

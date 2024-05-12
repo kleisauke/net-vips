@@ -71,7 +71,7 @@ public class ExtensionsTests : IClassFixture<TestsFixture>
         // An additional band is added for greyscale images
         if (expected.Length == 2)
         {
-            expected = new byte[] { expected[0], expected[1], 255 };
+            expected = [expected[0], expected[1], 255];
         }
 
         var pixels = new byte[expected.Length];
