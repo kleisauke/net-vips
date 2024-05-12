@@ -38,8 +38,8 @@ partial class Build : NukeBuild
 
     string VipsVersion => Environment.GetEnvironmentVariable("VIPS_VERSION");
 
-    string[] NuGetArchitectures => new[]
-    {
+    string[] NuGetArchitectures =>
+    [
         "win-x64",
         "win-x86",
         "win-arm64",
@@ -50,7 +50,7 @@ partial class Build : NukeBuild
         "linux-arm64",
         "osx-x64",
         "osx-arm64"
-    };
+    ];
 
     protected override void OnBuildInitialized()
     {

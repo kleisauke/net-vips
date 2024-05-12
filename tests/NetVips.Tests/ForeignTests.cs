@@ -164,7 +164,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         void JpegValid(Image im)
         {
             var a = im[10, 10];
-            Assert.Equal(new double[] { 6, 5, 3 }, a);
+            Assert.Equal([6, 5, 3], a);
             var profile = (byte[])im.Get("icc-profile-data");
 
             Assert.Equal(1352, profile.Length);
@@ -1005,7 +1005,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         {
             var a = im[10, 10];
 
-            Assert.Equal(new double[] { 244, 250, 243, 255 }, a);
+            Assert.Equal([244, 250, 243, 255], a);
             Assert.Equal(2220, im.Width);
             Assert.Equal(2967, im.Height);
             Assert.Equal(4, im.Bands);
@@ -1023,7 +1023,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         {
             var a = im[10, 10];
 
-            Assert.Equal(new double[] { 35, 31, 32, 255 }, a);
+            Assert.Equal([35, 31, 32, 255], a);
 
             // New sizing rules in libvips 8.8+, see:
             // https://github.com/libvips/libvips/commit/29d29533d45848ecc12a3c50c39c26c835458a61

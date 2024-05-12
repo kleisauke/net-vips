@@ -22,7 +22,7 @@ public class ColourTests : IClassFixture<TestsFixture>
 
         // a long series should come in a circle
         var im = test;
-        foreach (var col in Helper.ColourColourspaces.Concat(new[] { Enums.Interpretation.Lab }))
+        foreach (var col in Helper.ColourColourspaces.Concat([Enums.Interpretation.Lab]))
         {
             im = im.Colourspace(col);
             Assert.Equal(col, im.Interpretation);
@@ -86,7 +86,7 @@ public class ColourTests : IClassFixture<TestsFixture>
         {
             var testGrey = test.Colourspace(monoFmt);
             im = testGrey;
-            foreach (var col in Helper.ColourColourspaces.Concat(new[] { monoFmt }))
+            foreach (var col in Helper.ColourColourspaces.Concat([monoFmt]))
             {
                 im = im.Colourspace(col);
                 Assert.Equal(col, im.Interpretation);

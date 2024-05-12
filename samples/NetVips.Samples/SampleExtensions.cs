@@ -52,7 +52,7 @@ public static class SampleExtensions
     /// <returns>A new camel cased string.</returns>
     internal static string ToPascalCase(this string str)
     {
-        return str.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
+        return str.Split(["_"], StringSplitOptions.RemoveEmptyEntries)
             .Select(s => char.ToUpperInvariant(s[0]) + s[1..])
             .Aggregate(string.Empty, (s1, s2) => s1 + s2);
     }

@@ -14,7 +14,7 @@ public class DrawTests : IClassFixture<TestsFixture>
     public void TestDrawCircle()
     {
         var im = Image.Black(100, 100);
-        im = im.Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 25));
+        im = im.Mutate(x => x.DrawCircle([100], 50, 50, 25));
         var pixel = im[25, 50];
         Assert.Single(pixel);
         Assert.Equal(100, pixel[0]);
@@ -23,7 +23,7 @@ public class DrawTests : IClassFixture<TestsFixture>
         Assert.Equal(0, pixel[0]);
 
         im = Image.Black(100, 100);
-        im = im.Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 25, fill: true));
+        im = im.Mutate(x => x.DrawCircle([100], 50, 50, 25, fill: true));
         pixel = im[25, 50];
         Assert.Single(pixel);
         Assert.Equal(100, pixel[0]);
@@ -39,12 +39,12 @@ public class DrawTests : IClassFixture<TestsFixture>
         var im = Image.Black(100, 100);
         im = im.Mutate(x =>
         {
-            x.DrawCircle(new double[] { 100 }, 50, 50, 25);
-            x.DrawFlood(new double[] { 100 }, 50, 50);
+            x.DrawCircle([100], 50, 50, 25);
+            x.DrawFlood([100], 50, 50);
         });
 
         var im2 = Image.Black(100, 100);
-        im2 = im2.Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 25, fill: true));
+        im2 = im2.Mutate(x => x.DrawCircle([100], 50, 50, 25, fill: true));
 
         var diff = (im - im2).Abs().Max();
         Assert.Equal(0, diff);
@@ -54,13 +54,13 @@ public class DrawTests : IClassFixture<TestsFixture>
     public void TestDrawImage()
     {
         var im = Image.Black(51, 51);
-        im = im.Mutate(x => x.DrawCircle(new double[] { 100 }, 25, 25, 25, fill: true));
+        im = im.Mutate(x => x.DrawCircle([100], 25, 25, 25, fill: true));
 
         var im2 = Image.Black(100, 100);
         im2 = im2.Mutate(x => x.DrawImage(im, 25, 25));
 
         var im3 = Image.Black(100, 100);
-        im3 = im3.Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 25, fill: true));
+        im3 = im3.Mutate(x => x.DrawCircle([100], 50, 50, 25, fill: true));
 
         var diff = (im2 - im3).Abs().Max();
         Assert.Equal(0, diff);
@@ -70,7 +70,7 @@ public class DrawTests : IClassFixture<TestsFixture>
     public void TestDrawLine()
     {
         var im = Image.Black(100, 100);
-        im = im.Mutate(x => x.DrawLine(new double[] { 100 }, 0, 0, 100, 0));
+        im = im.Mutate(x => x.DrawLine([100], 0, 0, 100, 0));
         var pixel = im[0, 0];
         Assert.Single(pixel);
         Assert.Equal(100, pixel[0]);
@@ -83,13 +83,13 @@ public class DrawTests : IClassFixture<TestsFixture>
     public void TestDrawMask()
     {
         var mask = Image.Black(51, 51);
-        mask = mask.Mutate(x => x.DrawCircle(new double[] { 128 }, 25, 25, 25, fill: true));
+        mask = mask.Mutate(x => x.DrawCircle([128], 25, 25, 25, fill: true));
 
         var im = Image.Black(100, 100);
-        im = im.Mutate(x => x.DrawMask(new double[] { 200 }, mask, 25, 25));
+        im = im.Mutate(x => x.DrawMask([200], mask, 25, 25));
 
         var im2 = Image.Black(100, 100);
-        im2 = im2.Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 25, fill: true));
+        im2 = im2.Mutate(x => x.DrawCircle([100], 50, 50, 25, fill: true));
 
         var diff = (im - im2).Abs().Max();
         Assert.Equal(0, diff);
@@ -99,14 +99,14 @@ public class DrawTests : IClassFixture<TestsFixture>
     public void TestDrawRect()
     {
         var im = Image.Black(100, 100);
-        im = im.Mutate(x => x.DrawRect(new double[] { 100 }, 25, 25, 50, 50, fill: true));
+        im = im.Mutate(x => x.DrawRect([100], 25, 25, 50, 50, fill: true));
 
         var im2 = Image.Black(100, 100);
         im2 = im2.Mutate(x =>
         {
             for (var y = 25; y < 75; y++)
             {
-                x.DrawLine(new double[] { 100 }, 25, y, 74, y);
+                x.DrawLine([100], 25, y, 74, y);
             }
         });
 
@@ -119,7 +119,7 @@ public class DrawTests : IClassFixture<TestsFixture>
     public void TestDrawSmudge()
     {
         var im = Image.Black(100, 100);
-        im = im.Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 25, fill: true));
+        im = im.Mutate(x => x.DrawCircle([100], 50, 50, 25, fill: true));
 
         var im2 = im.ExtractArea(10, 10, 50, 50);
 

@@ -85,7 +85,7 @@ public class CaptchaGenerator : ISample
         }
 
         // remove any unused edges
-        var trim = textLayer.FindTrim(background: new double[] { 0 });
+        var trim = textLayer.FindTrim(background: [0]);
         using (textLayer)
         {
             textLayer = textLayer.Crop((int)trim[0], (int)trim[1], (int)trim[2], (int)trim[3]);

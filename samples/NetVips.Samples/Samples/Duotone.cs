@@ -13,10 +13,10 @@ public class Duotone : ISample
     public const string Filename = "images/equus_quagga.jpg";
 
     // #C83658 as CIELAB triple
-    public double[] Start = { 46.479, 58.976, 15.052 };
+    public double[] Start = [46.479, 58.976, 15.052];
 
     // #D8E74F as CIELAB triple
-    public double[] Stop = { 88.12, -23.952, 69.178 };
+    public double[] Stop = [88.12, -23.952, 69.178];
 
     public void Execute(string[] args)
     {

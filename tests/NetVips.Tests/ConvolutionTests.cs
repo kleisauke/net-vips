@@ -28,11 +28,11 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
         _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
         _mono = _colour[0];
         _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
-        _allImages = new[]
-        {
+        _allImages =
+        [
             _mono,
             _colour
-        };
+        ];
         _sharp = Image.NewFromArray(new[,]
         {
             {-1, -1, -1},
@@ -57,7 +57,7 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
             {0, 0, 0},
             {-1, -2, -1}
         });
-        _allMasks = new[] { _sharp, _blur, _line, _sobel };
+        _allMasks = [_sharp, _blur, _line, _sobel];
     }
 
     #region helpers

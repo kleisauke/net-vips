@@ -191,7 +191,7 @@ public static class NetVips
 
         GLib.GFree(ptrArr);
 
-        return names.ToArray();
+        return [.. names];
     }
 
     /// <summary>

@@ -36,7 +36,7 @@ public static class ModuleInitializer
     /// <summary>
     /// A cache for <see cref="DllImportResolver"/>.
     /// </summary>
-    internal static readonly Dictionary<string, nint> DllImportCache = new();
+    internal static readonly Dictionary<string, nint> DllImportCache = [];
 
     internal static string RemapLibraryName(string libraryName)
     {

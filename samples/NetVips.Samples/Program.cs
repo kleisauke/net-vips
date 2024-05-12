@@ -8,11 +8,13 @@ namespace NetVips;
 
 internal class Program
 {
-    private static readonly List<ISample> Samples = Assembly.GetExecutingAssembly().GetTypes()
-        .Where(x => x.GetInterfaces().Contains(typeof(ISample)) && x.GetConstructor(Type.EmptyTypes) != null)
-        .Select(x => Activator.CreateInstance(x) as ISample)
-        .OrderBy(s => s?.Category)
-        .ToList();
+    private static readonly List<ISample> Samples =
+    [
+        .. Assembly.GetExecutingAssembly().GetTypes()
+            .Where(x => x.GetInterfaces().Contains(typeof(ISample)) && x.GetConstructor(Type.EmptyTypes) != null)
+            .Select(x => Activator.CreateInstance(x) as ISample)
+            .OrderBy(s => s?.Category)
+    ];
 
     private static void Main(string[] args)
     {
@@ -60,7 +62,7 @@ internal class Program
             }
 
             // Clear any arguments
-            args = Array.Empty<string>();
+            args = [];
         } while (!string.IsNullOrEmpty(input) && !string.Equals(input, "Q", StringComparison.OrdinalIgnoreCase));
     }
 

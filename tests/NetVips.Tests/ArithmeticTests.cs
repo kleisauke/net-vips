@@ -20,11 +20,11 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         _image = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
         _colour = _image * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
         _mono = _colour[1];
-        _allImages = new[]
-        {
+        _allImages =
+        [
             _mono,
             _colour
-        };
+        ];
     }
 
     #region helpers
@@ -439,10 +439,10 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = _colour * -1;
-        RunUnary(new[]
-        {
+        RunUnary(
+        [
             im
-        }, Abs);
+        ], Abs);
     }
 
     [Fact]
@@ -530,7 +530,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
 
         // image ^ -1 is trimmed to image max so it's hard to test for all formats
         // just test uchar
-        RunUnary(_allImages, Invert, new[] { Enums.BandFormat.Uchar });
+        RunUnary(_allImages, Invert, [Enums.BandFormat.Uchar]);
     }
 
     #endregion
@@ -605,23 +605,23 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         foreach (var fmt in Helper.AllFormats)
         {
             var hist = test.Cast(fmt).HistFind();
-            Assert.Equal(new double[] { 5000 }, hist[0, 0]);
-            Assert.Equal(new double[] { 5000 }, hist[10, 0]);
-            Assert.Equal(new double[] { 0 }, hist[5, 0]);
+            Assert.Equal([5000], hist[0, 0]);
+            Assert.Equal([5000], hist[10, 0]);
+            Assert.Equal([0], hist[5, 0]);
         }
 
         test *= new[] { 1, 2, 3 };
         foreach (var fmt in Helper.AllFormats)
         {
             var hist = test.Cast(fmt).HistFind(band: 0);
-            Assert.Equal(new double[] { 5000 }, hist[0, 0]);
-            Assert.Equal(new double[] { 5000 }, hist[10, 0]);
-            Assert.Equal(new double[] { 0 }, hist[5, 0]);
+            Assert.Equal([5000], hist[0, 0]);
+            Assert.Equal([5000], hist[10, 0]);
+            Assert.Equal([0], hist[5, 0]);
 
             hist = test.Cast(fmt).HistFind(band: 1);
-            Assert.Equal(new double[] { 5000 }, hist[0, 0]);
-            Assert.Equal(new double[] { 5000 }, hist[20, 0]);
-            Assert.Equal(new double[] { 0 }, hist[5, 0]);
+            Assert.Equal([5000], hist[0, 0]);
+            Assert.Equal([5000], hist[20, 0]);
+            Assert.Equal([0], hist[5, 0]);
         }
     }
 
@@ -641,8 +641,8 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
                 var a = test.Cast(x);
                 var b = index.Cast(y);
                 var hist = a.HistFindIndexed(b);
-                Assert.Equal(new double[] { 0 }, hist[0, 0]);
-                Assert.Equal(new double[] { 50000 }, hist[1, 0]);
+                Assert.Equal([0], hist[0, 0]);
+                Assert.Equal([50000], hist[1, 0]);
             }
         }
     }
@@ -671,7 +671,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestHoughCircle()
     {
-        var test = Image.Black(100, 100).Mutate(x => x.DrawCircle(new double[] { 100 }, 50, 50, 40));
+        var test = Image.Black(100, 100).Mutate(x => x.DrawCircle([100], 50, 50, 40));
 
         foreach (var fmt in Helper.AllFormats)
         {
@@ -699,7 +699,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         // test earlier versions
         Skip.IfNot(NetVips.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
 
-        var test = Image.Black(100, 100).Mutate(x => x.DrawLine(new double[] { 100 }, 10, 90, 90, 10));
+        var test = Image.Black(100, 100).Mutate(x => x.DrawLine([100], 10, 90, 90, 10));
 
         foreach (var fmt in Helper.AllFormats)
         {
@@ -780,7 +780,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
-        RunUnary(new[] { im }, Asin, Helper.NonComplexFormats);
+        RunUnary([im], Asin, Helper.NonComplexFormats);
     }
 
     [Fact]
@@ -797,7 +797,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
-        RunUnary(new[] { im }, Acos, Helper.NonComplexFormats);
+        RunUnary([im], Acos, Helper.NonComplexFormats);
     }
 
     [Fact]
@@ -814,7 +814,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = (Image.Black(100, 100) + new[] { 1, 2, 3 }) / 3.0;
-        RunUnary(new[] { im }, Atan, Helper.NonComplexFormats);
+        RunUnary([im], Atan, Helper.NonComplexFormats);
     }
 
     [SkippableFact]
@@ -888,7 +888,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = (Image.Black(100, 100) + new[] { 4, 5, 6 }) / 3.0;
-        RunUnary(new[] { im }, Asinh, Helper.NonComplexFormats);
+        RunUnary([im], Asinh, Helper.NonComplexFormats);
     }
 
     [SkippableFact]
@@ -907,7 +907,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = (Image.Black(100, 100) + new[] { 4, 5, 6 }) / 3.0;
-        RunUnary(new[] { im }, Acosh, Helper.NonComplexFormats);
+        RunUnary([im], Acosh, Helper.NonComplexFormats);
     }
 
     [SkippableFact]
@@ -926,7 +926,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = (Image.Black(100, 100) + new[] { 0, 1, 2 }) / 3.0;
-        RunUnary(new[] { im }, Atanh, Helper.NonComplexFormats);
+        RunUnary([im], Atanh, Helper.NonComplexFormats);
     }
 #endif
 
@@ -1090,7 +1090,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestMax()
     {
-        var test = Image.Black(100, 100).Mutate(x => x.DrawRect(new double[] { 100 }, 40, 50, 1, 1));
+        var test = Image.Black(100, 100).Mutate(x => x.DrawRect([100], 40, 50, 1, 1));
 
         foreach (var fmt in Helper.AllFormats)
         {
@@ -1112,7 +1112,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestMin()
     {
-        var test = (Image.Black(100, 100) + 100).Mutate(x => x.DrawRect(new double[] { 0 }, 40, 50, 1, 1));
+        var test = (Image.Black(100, 100) + 100).Mutate(x => x.DrawRect([0], 40, 50, 1, 1));
 
         foreach (var fmt in Helper.AllFormats)
         {
@@ -1173,7 +1173,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var testRgb = test.Bandjoin(test, test);
-        var trim2 = testRgb.FindTrim(background: new double[] { 255, 255, 255 });
+        var trim2 = testRgb.FindTrim(background: [255, 255, 255]);
         var left2 = trim2[0];
         var top2 = trim2[1];
         var width2 = trim2[2];
@@ -1188,7 +1188,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestProfile()
     {
-        var test = Image.Black(100, 100).Mutate(x => x.DrawRect(new double[] { 100 }, 40, 50, 1, 1));
+        var test = Image.Black(100, 100).Mutate(x => x.DrawRect([100], 40, 50, 1, 1));
 
         foreach (var fmt in Helper.NonComplexFormats)
         {
@@ -1228,10 +1228,10 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
             var columns = (Image)profile[0];
             var rows = (Image)profile[1];
 
-            Assert.Equal(new double[] { 0 }, columns[10, 0]);
-            Assert.Equal(new double[] { 50 * 10 }, columns[70, 0]);
+            Assert.Equal([0], columns[10, 0]);
+            Assert.Equal([50 * 10], columns[70, 0]);
 
-            Assert.Equal(new double[] { 50 * 10 }, rows[0, 10]);
+            Assert.Equal([50 * 10], rows[0, 10]);
         }
     }
 
@@ -1248,15 +1248,15 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
 
             Assert.Equal(new[] { a.Min() }, matrix[0, 0]);
             Assert.Equal(new[] { a.Max() }, matrix[1, 0]);
-            Assert.Equal(new double[] { 50 * 50 * 10 }, matrix[2, 0]);
-            Assert.Equal(new double[] { 50 * 50 * 100 }, matrix[3, 0]);
+            Assert.Equal([50 * 50 * 10], matrix[2, 0]);
+            Assert.Equal([50 * 50 * 100], matrix[3, 0]);
             Assert.Equal(new[] { a.Avg() }, matrix[4, 0]);
             Assert.Equal(new[] { a.Deviate() }, matrix[5, 0]);
 
             Assert.Equal(new[] { a.Min() }, matrix[0, 1]);
             Assert.Equal(new[] { a.Max() }, matrix[1, 1]);
-            Assert.Equal(new double[] { 50 * 50 * 10 }, matrix[2, 1]);
-            Assert.Equal(new double[] { 50 * 50 * 100 }, matrix[3, 1]);
+            Assert.Equal([50 * 50 * 10], matrix[2, 1]);
+            Assert.Equal([50 * 50 * 100], matrix[3, 1]);
             Assert.Equal(new[] { a.Avg() }, matrix[4, 1]);
             Assert.Equal(new[] { a.Deviate() }, matrix[5, 1]);
         }

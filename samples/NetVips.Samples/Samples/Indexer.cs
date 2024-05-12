@@ -12,7 +12,7 @@ public class Indexer : ISample
 
     public void Execute(string[] args)
     {
-        using var r = Image.NewFromArray(new[] { 1, 2, 3 });
+        using var r = Image.NewFromArray([1, 2, 3]);
         using var g = r + 1;
         using var b = r + 2;
         using var image = r.Bandjoin(g, b);

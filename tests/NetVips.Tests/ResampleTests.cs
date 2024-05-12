@@ -50,21 +50,21 @@ public class ResampleTests : IClassFixture<TestsFixture>
     {
         // xy image, zero in the centre, scaled to fit image to a circle
         var xy = Image.Xyz(image.Width, image.Height);
-        xy -= new[]
-        {
+        xy -=
+        [
             image.Width / 2.0,
             image.Height / 2.0
-        };
+        ];
         var scale = Math.Min(image.Width, image.Height) / Convert.ToDouble(image.Width);
         xy *= 2.0 / scale;
 
         // to polar, scale vertical axis to 360 degrees
         var index = RunCmplx(x => x.Polar(), xy);
-        index *= new[]
-        {
+        index *=
+        [
             1,
             image.Height / 360.0
-        };
+        ];
 
         return image.Mapim(index);
     }
@@ -83,21 +83,21 @@ public class ResampleTests : IClassFixture<TestsFixture>
     {
         // xy image, vertical scaled to 360 degrees
         var xy = Image.Xyz(image.Width, image.Height);
-        xy *= new[]
-        {
+        xy *=
+        [
             1,
             360.0 / image.Height
-        };
+        ];
 
         // to rect, scale to image rect
         var index = RunCmplx(x => x.Rect(), xy);
         var scale = Math.Min(image.Width, image.Height) / Convert.ToDouble(image.Width);
         index *= scale / 2.0;
-        index += new[]
-        {
+        index +=
+        [
             image.Width / 2.0,
             image.Height / 2.0
-        };
+        ];
 
         return image.Mapim(index);
     }
@@ -116,7 +116,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
             var interpolate = Interpolate.NewFromName(name);
             for (var i = 0; i < 4; i++)
             {
-                x = x.Affine(new double[] { 0, 1, 1, 0 }, interpolate: interpolate);
+                x = x.Affine([0, 1, 1, 0], interpolate: interpolate);
             }
 
             Assert.Equal(0, (x - im).Abs().Max());
@@ -282,7 +282,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
     {
         var im = Image.NewFromFile(Helper.JpegFile);
         var im2 = im.Similarity(angle: 90);
-        var im3 = im.Affine(new double[] { 0, -1, 1, 0 });
+        var im3 = im.Affine([0, -1, 1, 0]);
 
         // rounding in calculating the affine transform from the angle stops
         // this being exactly true
@@ -294,7 +294,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
     {
         var im = Image.NewFromFile(Helper.JpegFile);
         var im2 = im.Similarity(scale: 2);
-        var im3 = im.Affine(new double[] { 2, 0, 0, 2 });
+        var im3 = im.Affine([2, 0, 0, 2]);
         Assert.Equal(0, (im2 - im3).Abs().Max());
     }
 
@@ -306,7 +306,7 @@ public class ResampleTests : IClassFixture<TestsFixture>
 
         var im = Image.NewFromFile(Helper.JpegFile);
         var im2 = im.Rotate(90);
-        var im3 = im.Affine(new double[] { 0, -1, 1, 0 });
+        var im3 = im.Affine([0, -1, 1, 0]);
         // rounding in calculating the affine transform from the angle stops
         // this being exactly true
         Assert.True((im2 - im3).Abs().Max() < 50);
