@@ -2036,7 +2036,7 @@ namespace NetVips
             // use `vips_addalpha` on libvips >= 8.6.
             if (NetVips.AtLeastLibvips(8, 6))
             {
-                var result = VipsImage.AddAlpha(this, out var vi);
+                var result = VipsImage.AddAlpha(this, out var vi, IntPtr.Zero);
                 if (result != 0)
                 {
                     throw new VipsException("unable to append alpha channel to image.");

@@ -776,12 +776,13 @@ namespace NetVips.Samples
             // remove operations we have to wrap by hand
             var exclude = new[]
             {
-                "scale",
-                "ifthenelse",
+                "addalpha",
                 "bandjoin",
                 "bandrank",
+                "case",
                 "composite",
-                "case"
+                "ifthenelse",
+                "scale"
             };
 
             // get the list of all nicknames we can generate docstrings for.
