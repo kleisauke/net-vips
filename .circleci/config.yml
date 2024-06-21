@@ -1,0 +1,35 @@
+version: 2.1
+
+workflows:
+  build:
+    jobs:
+      - linux-arm64-glibc-net-8:
+          filters:
+            tags:
+              only: /^v.*/
+      - linux-arm64-musl-net-8:
+          filters:
+            tags:
+              only: /^v.*/
+
+jobs:
+  linux-arm64-glibc-net-8:
+    resource_class: arm.medium
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - checkout
+      - run: |
+          sudo docker run -dit --name netvips -e CI -v "$(pwd):/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim-arm64v8
+          sudo docker exec netvips sh -c "apt-get update && apt-get install -y fontconfig-config"
+      - run: sudo docker exec netvips bash -c "./build.sh"
+  linux-arm64-musl-net-8:
+    resource_class: arm.medium
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - checkout
+      - run: |
+          sudo docker run -dit --name netvips -e CI -v "$(pwd):/mnt/netvips" -w /mnt/netvips mcr.microsoft.com/dotnet/sdk:8.0-alpine3.19-arm64v8
+          sudo docker exec netvips sh -c "apk add bash font-noto --update-cache"
+      - run: sudo docker exec netvips bash -c "./build.sh"

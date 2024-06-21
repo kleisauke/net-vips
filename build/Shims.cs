@@ -9,7 +9,6 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.TravisCI;
 
 public partial class Build
 {
@@ -35,9 +34,6 @@ public partial class Build
         {
             case GitHubActions gitHubActions:
                 buildNumber = gitHubActions.RunNumber;
-                break;
-            case TravisCI travis:
-                buildNumber = travis.BuildNumber;
                 break;
             case AppVeyor appVeyor:
                 buildNumber = appVeyor.BuildNumber;
