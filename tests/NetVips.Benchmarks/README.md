@@ -50,10 +50,9 @@ See "Do it yourself" section for how to run benchmark scenario.
 
 ## Scenario
 
-Test scenario was taken from [Speed and Memory
-use](https://github.com/libvips/libvips/wiki/Speed-and-memory-use)
-page from libvips [Home
-page](https://libvips.github.io/libvips/).
+Test scenario was taken from [Speed and Memory use](
+https://github.com/libvips/libvips/wiki/Speed-and-memory-use)
+page from libvips [Home page](https://www.libvips.org/).
 
 ## Do it yourself
 

@@ -17,7 +17,7 @@ _disableFooter: true
       <a class="changelog-link" href="../CHANGELOG.md">Changelog</a><span>|</span><a class="github-link" href="https://github.com/kleisauke/net-vips">View on Github</a>
     </div>
     <div class="minitext">
-    .NET binding for the <a href="https://libvips.github.io/libvips">libvips image processing library</a>.
+    .NET binding for the <a href="https://www.libvips.org/">libvips image processing library</a>.
     </div>
     <div class="buttons-unit">
       <a href="introduction.md"><i class="glyphicon glyphicon-send"></i>Introduction</a>

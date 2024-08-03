@@ -110,7 +110,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [1.2.0] - 2020-01-30
 ### Added
 - Add support for true streaming ([#33](https://github.com/kleisauke/net-vips/issues/33)).
-  - See the [blogpost](https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/introduction.html#custom-sources-and-targets) for more information.
+  - See the [blogpost](https://www.libvips.org/2019/11/29/True-streaming-for-libvips.html) and the [tutorial](https://kleisauke.github.io/net-vips/introduction.html#custom-sources-and-targets) for more information.
 - A new [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package containing useful helpers ([#41](https://github.com/kleisauke/net-vips/issues/41)).
 - Add `Image.Switch()`, `image.Case()` and `image.NewFromMemoryCopy()` operations.
 - Add support for the short-circuit operators (`&&` and `||`).

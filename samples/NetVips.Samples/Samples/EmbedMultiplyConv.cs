@@ -19,7 +19,7 @@ namespace NetVips.Samples
             // put im at position (100, 100) in a 3000 x 3000 pixel image,
             // make the other pixels in the image by mirroring im up / down /
             // left / right, see
-            // https://libvips.github.io/libvips/API/current/libvips-conversion.html#vips-embed
+            // https://www.libvips.org/API/current/libvips-conversion.html#vips-embed
             using var embed = im.Embed(100, 100, 3000, 3000, extend: Enums.Extend.Mirror);
 
             // multiply the green (middle) band by 2, leave the other two alone

@@ -300,7 +300,7 @@ namespace NetVips.Extensions
                     break;
                 case 2 when src.Interpretation == Enums.Interpretation.Grey16:
                     // Convert to sRGB, since Format16bppGrayScale appears to be unsupported by GDI+.
-                    // See: https://stackoverflow.com/a/19706842/10952119
+                    // See: https://stackoverflow.com/a/19706842
                     src = src.Colourspace(Enums.Interpretation.Srgb);
 
                     goto case 4;

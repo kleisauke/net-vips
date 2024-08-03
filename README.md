@@ -5,7 +5,7 @@
 [![CI status (Linux ARM64v8)](https://circleci.com/gh/kleisauke/net-vips.svg?style=shield)](https://circleci.com/gh/kleisauke/net-vips)
 [![CI status (NetVips nightly packaging)](https://ci.appveyor.com/api/projects/status/d2r9uanb5yij07pt/branch/master?svg=true)](https://ci.appveyor.com/project/kleisauke/net-vips/branch/master)
 
-This NuGet package provides a .NET binding for the [libvips image processing library](https://libvips.github.io/libvips).
+This NuGet package provides a .NET binding for the [libvips image processing library](https://www.libvips.org/).
 
 This binding passes the vips test suite cleanly with no leaks on Windows, macOS and Linux.
 
@@ -29,9 +29,9 @@ keep entire images in memory, it's light. For example, the `NetVips` benchmark:
 Loads a large image, shrinks by 10%, sharpens, and saves again. On this test
 `NetVips` is around 20 times faster than Magick.NET and 3 times faster than ImageSharp.
 
-The [libvips documentation](https://libvips.github.io/libvips/API/current)
-has a [chapter explaining how libvips opens
-files](https://libvips.github.io/libvips/API/current/How-it-opens-files.md.html)
+The [libvips documentation](https://www.libvips.org/API/current/)
+has a [chapter explaining how libvips opens files](
+https://www.libvips.org/API/current/How-it-opens-files.html)
 which gives some more background.
 
 ## Supported platforms
@@ -127,7 +127,7 @@ using var im = Image.NewFromFile("image.jpg");
 // put im at position (100, 100) in a 3000 x 3000 pixel image,
 // make the other pixels in the image by mirroring im up / down /
 // left / right, see
-// https://libvips.github.io/libvips/API/current/libvips-conversion.html#vips-embed
+// https://www.libvips.org/API/current/libvips-conversion.html#vips-embed
 using var embed = im.Embed(100, 100, 3000, 3000, extend: Enums.Extend.Mirror);
 
 // multiply the green (middle) band by 2, leave the other two alone

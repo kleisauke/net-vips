@@ -171,7 +171,7 @@ namespace NetVips.Samples
         }
 
         /// <summary>
-        /// Formula from http://mathworld.wolfram.com/HeartCurve.html
+        /// Formula from https://mathworld.wolfram.com/HeartCurve.html
         /// </summary>
         /// <param name="midX">Image width / 2</param>
         /// <param name="midY">Image height / 2</param>
@@ -208,7 +208,7 @@ namespace NetVips.Samples
         }
 
         /// <summary>
-        /// Inspired by this JSFiddle: http://jsfiddle.net/tohan/8vwjn4cx/
+        /// Inspired by this JSFiddle: https://jsfiddle.net/tohan/8vwjn4cx/
         /// modified to support SVG paths
         /// </summary>
         /// <param name="midX">Image width / 2</param>
