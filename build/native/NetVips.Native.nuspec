@@ -35,8 +35,8 @@
       </group>
       <group targetFramework="net452">
         <!-- Only .NET Framework needs to include the build directory containing the .targets file -->
-        <dependency id="NetVips.Native.win-x64" version="$version$" include="native, build" />
-        <dependency id="NetVips.Native.win-x86" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x64.net452" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86.net452" version="$version$" include="native, build" />
       </group>
     </dependencies>
 

@@ -4,6 +4,17 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.16.0-rc1] - 2024-10-14
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://www.libvips.org/2024/10/10/What's-new-in-8.16.html
+
+### Added
+- Add `NetVips.Native.win-x64.net452` and `NetVips.Native.win-x86.net452` compat packages.
+
+### Changed
+- A single shared libvips binary is build for Windows ([#211](https://github.com/kleisauke/net-vips/issues/211)).
+
 ## [8.15.3] - 2024-08-14
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  
@@ -261,6 +272,7 @@ https://www.libvips.org/2019/04/22/What's-new-in-8.8.html
 ### Changed
 - A statically linked libvips binary is build for Windows. This reduces the number of DLLs from 37 to 3 ([libvips/build-win64#21](https://github.com/libvips/build-win64/issues/21#issuecomment-458112440)).
 
+[8.16.0-rc1]: https://github.com/kleisauke/libvips-packaging/compare/v8.15.3...v8.16.0-rc1
 [8.15.3]: https://github.com/kleisauke/libvips-packaging/compare/v8.15.2...v8.15.3
 [8.15.2]: https://github.com/kleisauke/libvips-packaging/compare/v8.15.1...v8.15.2
 [8.15.1]: https://github.com/kleisauke/libvips-packaging/compare/v8.15.0...v8.15.1

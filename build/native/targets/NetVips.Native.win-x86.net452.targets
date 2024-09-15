@@ -7,9 +7,9 @@
         <LibvipsOutputBase Condition="'$(LibvipsOutputBase)' != '' AND !HasTrailingSlash('$(LibvipsOutputBase)')">$(LibvipsOutputBase)\</LibvipsOutputBase>
     </PropertyGroup>
 
-    <!-- This copy step is only necessary when our platform is x64 and if we are not building with .NET Core -->
-    <ItemGroup Condition="'$(MSBuildRuntimeType)' != 'Core' AND ('$(Platform)' == 'x64' OR '$(Platform)|$(Prefer32Bit)' == 'AnyCPU|false')">
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\*">
+    <!-- This copy step is only necessary when our platform is x86 -->
+    <ItemGroup Condition="'$(Platform)' == 'x86' OR '$(Platform)|$(Prefer32Bit)' == 'AnyCPU|true'">
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\*">
             <Link>$(LibvipsOutputBase)%(Filename)%(Extension)</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

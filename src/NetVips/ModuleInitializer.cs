@@ -43,9 +43,9 @@ public static class ModuleInitializer
         // For Windows, we try to locate the GLib symbols within
         // `libvips-42.dll` first. If these symbols cannot be found there,
         // we proceed to locate them within `libglib-2.0-0.dll` and
-        // `libgobject-2.0-0.dll`. Note that distributing a single shared
-        // library is only possible when we drop support for .NET Framework.
-        // Therefore, we always ship at least 3 DLLs for now.
+        // `libgobject-2.0-0.dll`. Note that this is only possible when
+        // targeting .NET 6 or higher. As a result, we always ship at least
+        // 3 DLLs in a separate package for .NET Framework.
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return _gLibStaticallyLinked ? Libraries.Vips : libraryName;

@@ -41,7 +41,9 @@ partial class Build : NukeBuild
     string[] NuGetArchitectures =>
     [
         "win-x64",
+        "win-x64.net452",
         "win-x86",
+        "win-x86.net452",
         "win-arm64",
         "linux-x64",
         "linux-musl-x64",
