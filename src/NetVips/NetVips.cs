@@ -46,37 +46,9 @@ namespace NetVips
         /// With this enabled, libvips will check for object and area leaks on <see cref="Shutdown"/>.
         /// Enabling this option will make libvips run slightly more slowly.
         /// </remarks>
-        /// <param name="leak">Bool indicating if leak checking should be turned on.</param>
-        [Obsolete("NetVips.LeakSet is deprecated, please use the NetVips.Leak setter instead.")]
-        public static void LeakSet(bool leak)
-        {
-            Leak = leak;
-        }
-
-        /// <summary>
-        /// Enable or disable libvips leak checking.
-        /// </summary>
-        /// <remarks>
-        /// With this enabled, libvips will check for object and area leaks on <see cref="Shutdown"/>.
-        /// Enabling this option will make libvips run slightly more slowly.
-        /// </remarks>
         public static bool Leak
         {
             set => Vips.LeakSet(value);
-        }
-
-        /// <summary>
-        /// Enable or disable libvips profile recording.
-        /// </summary>
-        /// <remarks>
-        /// If set, vips will record profiling information, and dump it on <see cref="Shutdown"/>.
-        /// These profiles can be analyzed with the `vipsprofile` program.
-        /// </remarks>
-        /// <param name="profile">Bool indicating if profile recording should be turned on.</param>
-        [Obsolete("NetVips.ProfileSet is deprecated, please use the NetVips.Profile setter instead.")]
-        public static void ProfileSet(bool profile)
-        {
-            Profile = profile;
         }
 
         /// <summary>
@@ -92,83 +64,12 @@ namespace NetVips
         }
 
         /// <summary>
-        /// Set the maximum number of operations libvips will cache.
-        /// </summary>
-        /// <param name="max">Maximum number of operations.</param>
-        [Obsolete("NetVips.CacheSetMax is deprecated, please use the Cache.Max setter instead.")]
-        public static void CacheSetMax(int max)
-        {
-            Cache.Max = max;
-        }
-
-        /// <summary>
-        /// Limit the operation cache by memory use.
-        /// </summary>
-        /// <param name="maxMem">Maximum memory use.</param>
-        [Obsolete("NetVips.CacheSetMaxMem is deprecated, please use the Cache.MaxMem setter instead.")]
-        public static void CacheSetMaxMem(ulong maxMem)
-        {
-            Cache.MaxMem = maxMem;
-        }
-
-        /// <summary>
-        /// Limit the operation cache by number of open files.
-        /// </summary>
-        /// <param name="maxFiles">Maximum open files.</param>
-        [Obsolete("NetVips.CacheSetMaxFiles is deprecated, please use the Cache.MaxFiles setter instead.")]
-        public static void CacheSetMaxFiles(int maxFiles)
-        {
-            Cache.MaxFiles = maxFiles;
-        }
-
-        /// <summary>
-        /// Turn on libvips cache tracing.
-        /// </summary>
-        /// <param name="trace">Bool indicating if tracing should be turned on.</param>
-        [Obsolete("NetVips.CacheSetTrace is deprecated, please use the Cache.Trace setter instead.")]
-        public static void CacheSetTrace(bool trace)
-        {
-            Cache.Trace = trace;
-        }
-
-        /// <summary>
-        /// Set the size of the pools of worker threads vips uses for image evaluation.
-        /// </summary>
-        /// <param name="concurrency">The size of the pools of worker threads vips uses
-        /// for image evaluation.</param>
-        [Obsolete("NetVips.ConcurrencySet is deprecated, please use the NetVips.Concurrency setter instead.")]
-        public static void ConcurrencySet(int concurrency)
-        {
-            Concurrency = concurrency;
-        }
-
-        /// <summary>
-        /// Returns the number of worker threads that vips uses for image evaluation.
-        /// </summary>
-        /// <returns>The number of worker threads.</returns>
-        [Obsolete("NetVips.ConcurrencyGet is deprecated, please use the NetVips.Concurrency getter instead.")]
-        public static int ConcurrencyGet()
-        {
-            return Concurrency;
-        }
-
-        /// <summary>
         /// Gets or sets the number of worker threads libvips' should create to process each image.
         /// </summary>
         public static int Concurrency
         {
             get => Vips.ConcurrencyGet();
             set => Vips.ConcurrencySet(value);
-        }
-
-        /// <summary>
-        /// Enable or disable SIMD.
-        /// </summary>
-        /// <param name="enabled">Bool indicating if SIMD should be turned on.</param>
-        [Obsolete("NetVips.VectorSet is deprecated, please use the NetVips.Vector setter instead.")]
-        public static void VectorSet(bool enabled)
-        {
-            Vector = enabled;
         }
 
         /// <summary>
@@ -202,35 +103,6 @@ namespace NetVips
         public static bool BlockUntrusted
         {
             set => Vips.BlockUntrustedSet(value);
-        }
-
-        /// <summary>
-        /// Returns an array with:
-        /// - the number of active allocations.
-        /// - the number of bytes currently allocated via `vips_malloc()` and friends.
-        /// - the number of open files.
-        /// </summary>
-        /// <returns>An array with memory stats. Handy for debugging / leak testing.</returns>
-        [Obsolete("NetVips.MemoryStats is deprecated, please use the Stats class instead.")]
-        public static int[] MemoryStats()
-        {
-            return new[]
-            {
-                Stats.Allocations,
-                Stats.Mem,
-                Stats.Files
-            };
-        }
-
-        /// <summary>
-        /// Returns the largest number of bytes simultaneously allocated via vips_tracked_malloc().
-        /// Handy for estimating max memory requirements for a program.
-        /// </summary>
-        /// <returns>The largest number of bytes simultaneously allocated.</returns>
-        [Obsolete("NetVips.MemoryHigh is deprecated, please use the Stats.MemHighwater getter instead.")]
-        public static ulong MemoryHigh()
-        {
-            return Stats.MemHighwater;
         }
 
         /// <summary>
