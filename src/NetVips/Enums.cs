@@ -1085,6 +1085,24 @@ public static class Enums
     }
 
     /// <summary>
+    /// The SDF to generate.
+    /// </summary>
+    /// <remarks>
+    /// See for example <see cref="Image.Sdf"/>.
+    /// </remarks>
+    public enum SdfShape
+    {
+        /// <summary>A circle at @a, radius @r.</summary>
+        Circle = 0, // "circle"
+        /// <summary>A box from @a to @b.</summary>
+        Box = 1, // "box"
+        /// <summary>A box with rounded @corners from @a to @b.</summary>
+        RoundedBox = 2, // "rounded-box"
+        /// <summary> A line from @a to @b.</summary>
+        Line = 3 // "line"
+    }
+
+    /// <summary>
     /// Controls whether an operation should upsize, downsize, both up and downsize, or force a size.
     /// </summary>
     /// <remarks>

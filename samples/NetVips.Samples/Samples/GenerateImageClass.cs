@@ -104,6 +104,11 @@ public class GenerateImageClass : ISample
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignHeifEncoder"), "Enums.ForeignHeifEncoder");
         }
 
+        if (NetVips.AtLeastLibvips(8, 16))
+        {
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSdfShape"), "Enums.SdfShape");
+        }
+
         // Flags
         _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignFlags"), "Enums.ForeignFlags");
         _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPngFilter"), "Enums.ForeignPngFilter");

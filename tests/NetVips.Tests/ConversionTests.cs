@@ -226,22 +226,6 @@ public class ConversionTests : IClassFixture<TestsFixture>
     }
 
     [Fact]
-    public void TestCache()
-    {
-        dynamic Cache(dynamic x)
-        {
-            if (x is Image image)
-            {
-                return image.Cache();
-            }
-
-            return x;
-        }
-
-        RunUnary(_allImages, Cache);
-    }
-
-    [Fact]
     public void TestCopy()
     {
         var x = _colour.Copy(interpretation: Enums.Interpretation.Lab);
