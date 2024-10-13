@@ -12715,7 +12715,14 @@ references:
 - uid: NetVips.VipsProgress.Start
   name: Start
   href: api/NetVips.VipsProgress.html#NetVips_VipsProgress_Start
-  commentId: F:NetVips.VipsProgress.Start
+  commentId: P:NetVips.VipsProgress.Start
+  fullName: NetVips.VipsProgress.Start
+  nameWithType: VipsProgress.Start
+- uid: NetVips.VipsProgress.Start*
+  name: Start
+  href: api/NetVips.VipsProgress.html#NetVips_VipsProgress_Start_
+  commentId: Overload:NetVips.VipsProgress.Start
+  isSpec: "True"
   fullName: NetVips.VipsProgress.Start
   nameWithType: VipsProgress.Start
 - uid: NetVips.VipsProgress.TPels

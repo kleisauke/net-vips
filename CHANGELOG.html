@@ -64,8 +64,14 @@
 
 <p>All notable changes to NetVips will be documented in this file. See <a href="CHANGELOG.native.html">here</a> for the changes to the <a href="https://www.nuget.org/packages/NetVips.Native/">pre-compiled binaries of libvips</a>.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="241---2024-03-24"><a href="https://github.com/kleisauke/net-vips/compare/v2.4.0...v2.4.1">2.4.1</a> - 2024-03-24</h2>
+<h2 id="242---2024-10-13"><a href="https://github.com/kleisauke/net-vips/compare/v2.4.1...v2.4.2">2.4.2</a> - 2024-10-13</h2>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fix incorrect progress reporting on Linux (<a href="https://github.com/kleisauke/net-vips/issues/237">#237</a>).</li>
+<li>Fix <code>image.AddAlpha()</code> with libvips 8.16.</li>
+</ul>
+<h2 id="241---2024-03-24"><a href="https://github.com/kleisauke/net-vips/compare/v2.4.0...v2.4.1">2.4.1</a> - 2024-03-24</h2>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Avoid key collision during shared <code>VOption</code> merge (<a href="https://github.com/kleisauke/net-vips/issues/228">#228</a>).</li>
 </ul>
@@ -74,12 +80,12 @@
 <ul>
 <li>Update methods/enums for libvips 8.15.</li>
 </ul>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>Ensure correct calling convention for unmanaged-to-managed callbacks.</li>
 </ul>
 <h2 id="231---2023-06-29"><a href="https://github.com/kleisauke/net-vips/compare/v2.3.0...v2.3.1">2.3.1</a> - 2023-06-29</h2>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li>Ensure <code>Image.FindLoad()</code> works on UTF-8 strings (<a href="https://github.com/kleisauke/net-vips/issues/210">#210</a>).</li>
 </ul>
@@ -95,7 +101,7 @@
 <li>Update methods/enums for libvips 8.14.</li>
 <li>The <a href="https://www.nuget.org/packages/NetVips.Extensions/">NetVips.Extensions</a> package is now only supported on Windows when targeting .NET 6.0 or higher. See <a href="https://aka.ms/systemdrawingnonwindows">https://aka.ms/systemdrawingnonwindows</a> for more information.</li>
 </ul>
-<h3 id="fixed-3">Fixed</h3>
+<h3 id="fixed-4">Fixed</h3>
 <ul>
 <li>Ensure compatibility with FreeBSD and variants.</li>
 <li>Ensure code is AOT-friendly (<a href="https://github.com/kleisauke/net-vips/issues/196">#196</a>).</li>
@@ -114,7 +120,7 @@
 <li>Avoid throwing general exceptions.</li>
 <li>Ensure debug and unit tests functions are internal.</li>
 </ul>
-<h3 id="fixed-4">Fixed</h3>
+<h3 id="fixed-5">Fixed</h3>
 <ul>
 <li>Use the correct type for signal handler IDs.</li>
 </ul>
@@ -131,7 +137,7 @@
 <li>Bump minimum required .NET Framework version to v4.5.2.</li>
 <li>The <a href="https://www.nuget.org/packages/NetVips.Extensions/">NetVips.Extensions</a> package is now attributed as a Windows-specific library when targeting .NET 6.0 or higher. See <a href="https://aka.ms/systemdrawingnonwindows">https://aka.ms/systemdrawingnonwindows</a> for more information.</li>
 </ul>
-<h3 id="fixed-5">Fixed</h3>
+<h3 id="fixed-6">Fixed</h3>
 <ul>
 <li>Ensure recorded delegates are not released too early (<a href="https://github.com/kleisauke/net-vips/issues/141">#141</a>).</li>
 </ul>
@@ -141,7 +147,7 @@
 <li>Update methods/enums for libvips 8.11.</li>
 <li>Avoid using <code>Span&lt;T&gt;</code> throughout the codebase (<a href="https://github.com/kleisauke/net-vips/issues/131">#131</a>).</li>
 </ul>
-<h3 id="fixed-6">Fixed</h3>
+<h3 id="fixed-7">Fixed</h3>
 <ul>
 <li>Ensure strings are null-terminated (<a href="https://github.com/kleisauke/net-vips/issues/131">#131</a>).</li>
 </ul>
@@ -159,7 +165,7 @@
 <li>Use enumerations where possible (<a href="https://github.com/kleisauke/net-vips/issues/112">#112</a>).</li>
 <li>Methods which modify the image, such as setting or removing metadata requires an <code>MutableImage</code> (see <code>image.Mutate()</code>).</li>
 </ul>
-<h3 id="fixed-7">Fixed</h3>
+<h3 id="fixed-8">Fixed</h3>
 <ul>
 <li>Ensure images are disposed early throughout the codebase (<a href="https://github.com/kleisauke/net-vips/issues/114">#114</a>).</li>
 </ul>
@@ -179,7 +185,7 @@
 <li>Free the associated streams within <code>Image.*loadStream()</code> and <code>image.*saveStream()</code> earlier (<a href="https://github.com/kleisauke/net-vips/issues/78">#78</a>).</li>
 <li>Speed-up UTF8 string marshalling by using <code>System.Buffers.ArrayPool</code>.</li>
 </ul>
-<h3 id="fixed-8">Fixed</h3>
+<h3 id="fixed-9">Fixed</h3>
 <ul>
 <li>Fix the buffer-based fallback mechanism for <code>Image.NewFromStream()</code> and <code>Image.NewFromSource()</code> on Windows 32-bit.</li>
 </ul>
@@ -188,7 +194,7 @@
 <ul>
 <li>Update enums.</li>
 </ul>
-<h3 id="fixed-9">Fixed</h3>
+<h3 id="fixed-10">Fixed</h3>
 <ul>
 <li>Fix a bug that freed the stream within <code>Image.NewFromStream()</code> too early (<a href="https://github.com/kleisauke/net-vips/issues/58">#58</a>).</li>
 </ul>
@@ -197,7 +203,7 @@
 <ul>
 <li>Add support for true streaming (<a href="https://github.com/kleisauke/net-vips/issues/33">#33</a>).
 <ul>
-<li>See the <a href="https://libvips.github.io/libvips/2019/11/29/True-streaming-for-libvips.html">blogpost</a> and the <a href="https://kleisauke.github.io/net-vips/introduction.html#custom-sources-and-targets">tutorial</a> for more information.</li>
+<li>See the <a href="https://www.libvips.org/2019/11/29/True-streaming-for-libvips.html">blogpost</a> and the <a href="https://kleisauke.github.io/net-vips/introduction.html#custom-sources-and-targets">tutorial</a> for more information.</li>
 </ul>
 </li>
 <li>A new <a href="https://www.nuget.org/packages/NetVips.Extensions/">NetVips.Extensions</a> package containing useful helpers (<a href="https://github.com/kleisauke/net-vips/issues/41">#41</a>).</li>
@@ -287,7 +293,7 @@
 <ul>
 <li>Update bundled libvips binary to 8.7.0.</li>
 </ul>
-<h3 id="fixed-10">Fixed</h3>
+<h3 id="fixed-11">Fixed</h3>
 <ul>
 <li>Fix five small memleaks (<a href="https://github.com/libvips/lua-vips/issues/24">libvips/lua-vips#24</a>).</li>
 </ul>
@@ -301,7 +307,7 @@
 <ul>
 <li>Update bundled libvips binary to 8.6.4.</li>
 </ul>
-<h3 id="fixed-11">Fixed</h3>
+<h3 id="fixed-12">Fixed</h3>
 <ul>
 <li>Fix a bug that freed a string pointer too early (<a href="https://github.com/kleisauke/net-vips/issues/9">#9</a>).</li>
 </ul>
@@ -321,7 +327,7 @@
 <li>Add missing libvips 8.7 methods.</li>
 <li>Add logging handler to log warnings and debug messages from libvips.</li>
 </ul>
-<h3 id="fixed-12">Fixed</h3>
+<h3 id="fixed-13">Fixed</h3>
 <ul>
 <li>Fix a bug that tried to reference an empty pointer.</li>
 <li>Fix a bug that causes libvips arguments to be set incorrectly.</li>
@@ -329,7 +335,7 @@
 <li>Prevent the GC from unsetting the gvalue and disposing a delegate prematurely.</li>
 </ul>
 <h2 id="101---2018-04-10"><a href="https://github.com/kleisauke/net-vips/compare/v1.0.0...v1.0.1">1.0.1</a> - 2018-04-10</h2>
-<h3 id="fixed-13">Fixed</h3>
+<h3 id="fixed-14">Fixed</h3>
 <ul>
 <li>Fix reference count bug.</li>
 </ul>
