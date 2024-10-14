@@ -5,11 +5,11 @@
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Enum Enums.Signals </title>
+      <title>Enum Enums.SdfShape </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Enum Enums.Signals ">
+      <meta name="title" content="Enum Enums.SdfShape ">
     
-    <meta name="description" content="Signals that can be used on an . See .">
+    <meta name="description" content="The SDF to generate.">
       <link rel="shortcut icon" href="../favicon.ico">
       <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
       <link rel="stylesheet" href="../styles/docfx.css">
@@ -66,21 +66,24 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.Signals">
+            <article class="content wrap" id="_content" data-uid="NetVips.Enums.SdfShape">
 
 
 
 
-  <h1 id="NetVips_Enums_Signals" data-uid="NetVips.Enums.Signals" class="text-break">Enum Enums.Signals</h1>
-  <div class="markdown level0 summary"><p>Signals that can be used on an <a class="xref" href="NetVips.Image.html">Image</a>. See <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">SignalConnect&lt;T&gt;(string, T, nint)</a>.</p>
+  <h1 id="NetVips_Enums_SdfShape" data-uid="NetVips.Enums.SdfShape" class="text-break">Enum Enums.SdfShape</h1>
+  <div class="markdown level0 summary"><p>The SDF to generate.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_Signals_syntax">Syntax</h5>
+  <h5 id="NetVips_Enums_SdfShape_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum Enums.Signals</code></pre>
+    <pre><code class="lang-csharp hljs">public enum Enums.SdfShape</code></pre>
   </div>
+  <h5 id="NetVips_Enums_SdfShape_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>See for example <a class="xref" href="NetVips.Image.html#NetVips_Image_Sdf_System_Int32_System_Int32_NetVips_Enums_SdfShape_System_Nullable_System_Double__System_Double___System_Double___System_Double___">Sdf(int, int, SdfShape, double?, double[], double[], double[])</a>.</p>
+</div>
   <h3 id="fields">Fields
 </h3>
   <table class="table table-bordered table-condensed">
@@ -92,18 +95,23 @@
     <thead>
     </thead></thead><tbody>
       <tr>
-        <td id="NetVips_Enums_Signals_Eval">Eval</td>
-        <td><p>Evaluation progress.</p>
+        <td id="NetVips_Enums_SdfShape_Box">Box</td>
+        <td><p>A box from @a to @b.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_Signals_PostEval">PostEval</td>
-        <td><p>Evaluation is ending.</p>
+        <td id="NetVips_Enums_SdfShape_Circle">Circle</td>
+        <td><p>A circle at @a, radius @r.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_Signals_PreEval">PreEval</td>
-        <td><p>Evaluation is starting.</p>
+        <td id="NetVips_Enums_SdfShape_Line">Line</td>
+        <td><p>A line from @a to @b.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_SdfShape_RoundedBox">RoundedBox</td>
+        <td><p>A box with rounded @corners from @a to @b.</p>
 </td>
       </tr>
     </tbody>

@@ -110,16 +110,16 @@
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetDescription">VipsObject.GetDescription()</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">GObject.SignalConnect&lt;T&gt;(string, T, IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">GObject.SignalConnect&lt;T&gt;(string, T, nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt64_">GObject.SignalHandlerDisconnect(ulong)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc&lt;T&gt;(T, IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc&lt;T&gt;(T, nint)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
@@ -449,6 +449,70 @@
     </tbody>
   </table>
   <h5 id="NetVips_Source_NewFromMemory_System_Char____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Make a new source that is attached to the memory object. For example:</p>
+<pre><code class="lang-lang-csharp">using var source = Source.NewFromMemory(data);</code></pre>
+<p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, string, Access?, FailOn?, VOption)</a>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.VipsException.html">VipsException</a></td>
+        <td><p>If unable to create a new <a class="xref" href="NetVips.Source.html">Source</a> from <code class="paramref">data</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="NetVips_Source_NewFromMemory_" data-uid="NetVips.Source.NewFromMemory*"></a>
+  <h4 id="NetVips_Source_NewFromMemory_System_ReadOnlySpan_System_Byte__" data-uid="NetVips.Source.NewFromMemory(System.ReadOnlySpan{System.Byte})">NewFromMemory(ReadOnlySpan&lt;byte&gt;)</h4>
+  <div class="markdown level1 summary"><p>Make a new source from a memory object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Source NewFromMemory(ReadOnlySpan&lt;byte&gt; data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>The memory object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Source.html">Source</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Source.html">Source</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Source_NewFromMemory_System_ReadOnlySpan_System_Byte___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Make a new source that is attached to the memory object. For example:</p>
 <pre><code class="lang-lang-csharp">using var source = Source.NewFromMemory(data);</code></pre>
 <p>You can pass this source to (for example) <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromSource(Source, string, Access?, FailOn?, VOption)</a>.</p>

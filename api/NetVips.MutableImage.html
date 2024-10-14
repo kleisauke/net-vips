@@ -143,10 +143,10 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory_System_Array_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemory(Array, int, int, int, Enums.BandFormat)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemory(IntPtr, ulong, int, int, int, Enums.BandFormat)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemory(nint, ulong, int, int, int, Enums.BandFormat)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemoryCopy(IntPtr, ulong, int, int, int, Enums.BandFormat)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemoryCopy(nint, ulong, int, int, int, Enums.BandFormat)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_NewTempFile_System_String_">Image.NewTempFile(string)</a>
@@ -434,7 +434,7 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_SetKill_System_Boolean_">Image.SetKill(bool)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_SignalConnect_NetVips_Enums_Signals_NetVips_Image_EvalDelegate_System_IntPtr_">Image.SignalConnect(Enums.Signals, Image.EvalDelegate, IntPtr)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_SignalConnect_NetVips_Enums_Signals_NetVips_Image_EvalDelegate_System_IntPtr_">Image.SignalConnect(Enums.Signals, Image.EvalDelegate, nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Invalidate">Image.Invalidate()</a>
@@ -527,13 +527,13 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Byteswap">Image.Byteswap()</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_Cache_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__">Image.Cache(int?, int?, int?)</a>
-    </div>
-    <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Canny_System_Nullable_System_Double__System_Nullable_NetVips_Enums_Precision__">Image.Canny(double?, Enums.Precision?)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Cast_NetVips_Enums_BandFormat_System_Nullable_System_Boolean__">Image.Cast(Enums.BandFormat, bool?)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Clamp_System_Nullable_System_Double__System_Nullable_System_Double__">Image.Clamp(double?, double?)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_CMC2LCh">Image.CMC2LCh()</a>
@@ -719,7 +719,7 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Gaussnoise_System_Int32_System_Int32_System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Int32__">Image.Gaussnoise(int, int, double?, double?, int?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_">Image.Getpoint(int, int)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean__">Image.Getpoint(int, int, bool?)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Gifload_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.Gifload(string, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
@@ -950,28 +950,28 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_JpegsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignSubsample__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.JpegsaveStream(Stream, int?, bool?, bool?, bool?, bool?, bool?, int?, Enums.ForeignSubsample?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_Jxlload_System_String_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.Jxlload(string, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Jxlload_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.Jxlload(string, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.Jxlload(string, out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.Jxlload(string, out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadBuffer(byte[], bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadBuffer(byte[], int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadBuffer(byte[], out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadBuffer(byte[], out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadSource(Source, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadSource(Source, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadStream(Stream, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadStream(Stream, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadSource(Source, out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadSource(Source, out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadStream(Stream, out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.JxlloadStream(Stream, out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Jxlsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Double__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.Jxlsave(string, int?, double?, int?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
@@ -1157,6 +1157,9 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Max_System_Int32__System_Int32__System_Double____System_Int32____System_Int32____System_Nullable_System_Int32__">Image.Max(out int, out int, out double[], out int[], out int[], int?)</a>
     </div>
     <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Maxpair_NetVips_Image_">Image.Maxpair(Image)</a>
+    </div>
+    <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Measure_System_Int32_System_Int32_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__">Image.Measure(int, int, int?, int?, int?, int?)</a>
     </div>
     <div>
@@ -1179,6 +1182,9 @@
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Min_System_Int32__System_Int32__System_Double____System_Int32____System_Int32____System_Nullable_System_Int32__">Image.Min(out int, out int, out double[], out int[], out int[], int?)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Minpair_NetVips_Image_">Image.Minpair(Image)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Morph_NetVips_Image_NetVips_Enums_OperationMorphology_">Image.Morph(Image, Enums.OperationMorphology)</a>
@@ -1424,7 +1430,13 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Rawsave_System_String_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.Rawsave(string, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_RawsaveFd_System_Int32_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.RawsaveFd(int, Enums.ForeignKeep?, double[], int?, string)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_RawsaveBuffer_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.RawsaveBuffer(Enums.ForeignKeep?, double[], int?, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_RawsaveTarget_NetVips_Target_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.RawsaveTarget(Target, Enums.ForeignKeep?, double[], int?, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_RawsaveStream_System_IO_Stream_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.RawsaveStream(Stream, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Recomb_NetVips_Image_">Image.Recomb(Image)</a>
@@ -1479,6 +1491,9 @@
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_ScRGB2XYZ">Image.ScRGB2XYZ()</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Sdf_System_Int32_System_Int32_NetVips_Enums_SdfShape_System_Nullable_System_Double__System_Double___System_Double___System_Double___">Image.Sdf(int, int, Enums.SdfShape, double?, double[], double[], double[])</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Sequential_System_Nullable_System_Int32__">Image.Sequential(int?)</a>
@@ -1700,19 +1715,19 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_WebploadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Double__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__">Image.WebploadStream(Stream, out Enums.ForeignFlags, int?, int?, double?, bool?, Enums.Access?, Enums.FailOn?, bool?)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.Webpsave(string, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.Webpsave(string, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveBuffer(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveBuffer(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveMime(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveMime(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveTarget(Target, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveTarget(Target, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveStream(Stream, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)</a>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_">Image.WebpsaveStream(Stream, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Worley_System_Int32_System_Int32_System_Nullable_System_Int32__System_Nullable_System_Int32__">Image.Worley(int, int, int?, int?)</a>
@@ -1778,6 +1793,18 @@
       <a class="xref" href="NetVips.Image.html#NetVips_Image_Filename">Image.Filename</a>
     </div>
     <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_FindLoadBuffer_System_ReadOnlySpan_System_Byte__">Image.FindLoadBuffer(ReadOnlySpan&lt;byte&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromBuffer_System_ReadOnlySpan_System_Byte__System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">Image.NewFromBuffer(ReadOnlySpan&lt;byte&gt;, string, Enums.Access?, Enums.FailOn?, VOption)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory__1_System_ReadOnlyMemory___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemory&lt;T&gt;(ReadOnlyMemory&lt;T&gt;, int, int, int, Enums.BandFormat)</a>
+    </div>
+    <div>
+      <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemoryCopy__1_System_ReadOnlySpan___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">Image.NewFromMemoryCopy&lt;T&gt;(ReadOnlySpan&lt;T&gt;, int, int, int, Enums.BandFormat)</a>
+    </div>
+    <div>
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_OnPostClose">VipsObject.OnPostClose</a>
     </div>
     <div>
@@ -1787,16 +1814,16 @@
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetDescription">VipsObject.GetDescription()</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">GObject.SignalConnect&lt;T&gt;(string, T, IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">GObject.SignalConnect&lt;T&gt;(string, T, nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt64_">GObject.SignalHandlerDisconnect(ulong)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc&lt;T&gt;(T, IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc&lt;T&gt;(T, nint)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_IsInvalid">GObject.IsInvalid</a>
@@ -2623,13 +2650,13 @@ otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference
   <div class="markdown level1 remarks"><p>The named metadata item is removed.</p>
 </div>
   <a id="NetVips_MutableImage_Set_" data-uid="NetVips.MutableImage.Set*"></a>
-  <h4 id="NetVips_MutableImage_Set_System_IntPtr_System_String_System_Object_" data-uid="NetVips.MutableImage.Set(System.IntPtr,System.String,System.Object)">Set(IntPtr, string, object)</h4>
+  <h4 id="NetVips_MutableImage_Set_System_IntPtr_System_String_System_Object_" data-uid="NetVips.MutableImage.Set(System.IntPtr,System.String,System.Object)">Set(nint, string, object)</h4>
   <div class="markdown level1 summary"><p>Set the type and value of an item of metadata.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Set(IntPtr gtype, string name, object value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Set(nint gtype, string name, object value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -2642,7 +2669,7 @@ otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">gtype</span></td>
         <td><p>The GType of the metadata item to create.</p>
 </td>
@@ -2750,10 +2777,6 @@ Only use this once you have finished all modifications.</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>
-  </div>
-  <h3 id="extensionmethods">Extension Methods</h3>
-  <div>
-      <a class="xref" href="NetVips.Extensions.BitmapConverter.html#NetVips_Extensions_BitmapConverter_ToBitmap_NetVips_Image_">BitmapConverter.ToBitmap(Image)</a>
   </div>
 
 </article>

@@ -100,16 +100,16 @@
       <a class="xref" href="NetVips.VipsObject.html#NetVips_VipsObject_GetDescription">VipsObject.GetDescription()</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">GObject.SignalConnect&lt;T&gt;(string, T, IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_">GObject.SignalConnect&lt;T&gt;(string, T, nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlerDisconnect_System_UInt64_">GObject.SignalHandlerDisconnect(ulong)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc&lt;T&gt;(T, IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_">GObject.SignalHandlersDisconnectByFunc&lt;T&gt;(T, nint)</a>
     </div>
     <div>
-      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(IntPtr)</a>
+      <a class="xref" href="NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_">GObject.SignalHandlersDisconnectByData(nint)</a>
     </div>
     <div>
       <a class="xref" href="NetVips.GObject.html#NetVips_GObject_ReleaseHandle">GObject.ReleaseHandle()</a>
@@ -362,7 +362,7 @@
 </div>
   <a id="NetVips_Image_Item_" data-uid="NetVips.Image.Item*"></a>
   <h4 id="NetVips_Image_Item_System_Int32_System_Int32_" data-uid="NetVips.Image.Item(System.Int32,System.Int32)">this[int, int]</h4>
-  <div class="markdown level1 summary"><p>A synonym for <a class="xref" href="NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_">Getpoint(int, int)</a>.</p>
+  <div class="markdown level1 summary"><p>A synonym for <a class="xref" href="NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean__">Getpoint(int, int, bool?)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -2547,64 +2547,6 @@ If page-height is not set, it defaults to the image height.</p>
   <h5 id="NetVips_Image_CMYK2XYZ_examples">Examples</h5>
   <pre><code class="lang-lang-csharp">using Image @out = in.CMYK2XYZ();</code></pre>
 
-  <a id="NetVips_Image_Cache_" data-uid="NetVips.Image.Cache*"></a>
-  <h4 id="NetVips_Image_Cache_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__" data-uid="NetVips.Image.Cache(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">Cache(int?, int?, int?)</h4>
-  <div class="markdown level1 summary"><p>Cache an image.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Image Cache(int? maxTiles = null, int? tileHeight = null, int? tileWidth = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
-        <td><span class="parametername">maxTiles</span></td>
-        <td><p>Maximum number of tiles to cache.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
-        <td><span class="parametername">tileHeight</span></td>
-        <td><p>Tile height in pixels.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
-        <td><span class="parametername">tileWidth</span></td>
-        <td><p>Tile width in pixels.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
-        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="NetVips_Image_Cache_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = in.Cache(maxTiles: int, tileHeight: int, tileWidth: int);</code></pre>
-
   <a id="NetVips_Image_Canny_" data-uid="NetVips.Image.Canny*"></a>
   <h4 id="NetVips_Image_Canny_System_Nullable_System_Double__System_Nullable_NetVips_Enums_Precision__" data-uid="NetVips.Image.Canny(System.Nullable{System.Double},System.Nullable{NetVips.Enums.Precision})">Canny(double?, Precision?)</h4>
   <div class="markdown level1 summary"><p>Canny edge detector.</p>
@@ -2918,6 +2860,58 @@ If page-height is not set, it defaults to the image height.</p>
       </tr>
     </tbody>
   </table>
+  <a id="NetVips_Image_Clamp_" data-uid="NetVips.Image.Clamp*"></a>
+  <h4 id="NetVips_Image_Clamp_System_Nullable_System_Double__System_Nullable_System_Double__" data-uid="NetVips.Image.Clamp(System.Nullable{System.Double},System.Nullable{System.Double})">Clamp(double?, double?)</h4>
+  <div class="markdown level1 summary"><p>Clamp values of an image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Image Clamp(double? min = null, double? max = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</td>
+        <td><span class="parametername">min</span></td>
+        <td><p>Minimum value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</td>
+        <td><span class="parametername">max</span></td>
+        <td><p>Maximum value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_Clamp_System_Nullable_System_Double__System_Nullable_System_Double___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = in.Clamp(min: double, max: double);</code></pre>
+
   <a id="NetVips_Image_Colourspace_" data-uid="NetVips.Image.Colourspace*"></a>
   <h4 id="NetVips_Image_Colourspace_NetVips_Enums_Interpretation_System_Nullable_NetVips_Enums_Interpretation__" data-uid="NetVips.Image.Colourspace(NetVips.Enums.Interpretation,System.Nullable{NetVips.Enums.Interpretation})">Colourspace(Interpretation, Interpretation?)</h4>
   <div class="markdown level1 summary"><p>Convert to a new colorspace.</p>
@@ -6653,6 +6647,53 @@ options to pass to <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFro
 options to pass to <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromBuffer_System_Char___System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromBuffer(char[], string, Access?, FailOn?, VOption)</a>.</p>
 </div>
   <a id="NetVips_Image_FindLoadBuffer_" data-uid="NetVips.Image.FindLoadBuffer*"></a>
+  <h4 id="NetVips_Image_FindLoadBuffer_System_ReadOnlySpan_System_Byte__" data-uid="NetVips.Image.FindLoadBuffer(System.ReadOnlySpan{System.Byte})">FindLoadBuffer(ReadOnlySpan&lt;byte&gt;)</h4>
+  <div class="markdown level1 summary"><p>Find the name of the load operation vips will use to load a buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string FindLoadBuffer(ReadOnlySpan&lt;byte&gt; data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>The buffer to test.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><p>The name of the load operation, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_FindLoadBuffer_System_ReadOnlySpan_System_Byte___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For example &quot;VipsForeignLoadJpegBuffer&quot;. You can use this to work out what
+options to pass to <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromBuffer_System_ReadOnlySpan_System_Byte__System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromBuffer(ReadOnlySpan&lt;byte&gt;, string, Access?, FailOn?, VOption)</a>.</p>
+</div>
+  <a id="NetVips_Image_FindLoadBuffer_" data-uid="NetVips.Image.FindLoadBuffer*"></a>
   <h4 id="NetVips_Image_FindLoadBuffer_System_String_" data-uid="NetVips.Image.FindLoadBuffer(System.String)">FindLoadBuffer(string)</h4>
   <div class="markdown level1 summary"><p>Find the name of the load operation vips will use to load a buffer.</p>
 </div>
@@ -8040,7 +8081,7 @@ options to pass to <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFro
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IntPtr GetTypeOf(string name)</code></pre>
+    <pre><code class="lang-csharp hljs">public nint GetTypeOf(string name)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -8070,8 +8111,8 @@ options to pass to <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFro
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
-        <td><p>A new instance of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a> initialized to the GType or
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
+        <td><p>A new instance of <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/integral-numeric-types">nint</a> initialized to the GType or
 <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr.zero">Zero</a> if the property does not exist.</p>
 </td>
       </tr>
@@ -8082,13 +8123,13 @@ options to pass to <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFro
 item does not exist. See <a class="xref" href="NetVips.GValue.html">GValue</a>.</p>
 </div>
   <a id="NetVips_Image_Getpoint_" data-uid="NetVips.Image.Getpoint*"></a>
-  <h4 id="NetVips_Image_Getpoint_System_Int32_System_Int32_" data-uid="NetVips.Image.Getpoint(System.Int32,System.Int32)">Getpoint(int, int)</h4>
+  <h4 id="NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean__" data-uid="NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})">Getpoint(int, int, bool?)</h4>
   <div class="markdown level1 summary"><p>Read a point from an image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double[] Getpoint(int x, int y)</code></pre>
+    <pre><code class="lang-csharp hljs">public double[] Getpoint(int x, int y, bool? unpackComplex = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -8112,6 +8153,12 @@ item does not exist. See <a class="xref" href="NetVips.GValue.html">GValue</a>.<
         <td><p>Point to read.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td><span class="parametername">unpackComplex</span></td>
+        <td><p>Complex pixels should be unpacked.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -8130,8 +8177,8 @@ item does not exist. See <a class="xref" href="NetVips.GValue.html">GValue</a>.<
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_Getpoint_System_Int32_System_Int32__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">double[] outArray = in.Getpoint(x, y);</code></pre>
+  <h5 id="NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">double[] outArray = in.Getpoint(x, y, unpackComplex: bool);</code></pre>
 
   <a id="NetVips_Image_Gifload_" data-uid="NetVips.Image.Gifload*"></a>
   <h4 id="NetVips_Image_Gifload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.Gifload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">Gifload(string, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
@@ -12600,7 +12647,7 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">filename</span></td>
-        <td><p>Filename to load from.</p>
+        <td><p>Filename to save to.</p>
 </td>
       </tr>
       <tr>
@@ -14197,13 +14244,13 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
   <pre><code class="lang-lang-csharp">in.JpegsaveTarget(target, q: int, optimizeCoding: bool, interlace: bool, trellisQuant: bool, overshootDeringing: bool, optimizeScans: bool, quantTable: int, subsampleMode: Enums.ForeignSubsample, restartInterval: int, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_Jxlload_" data-uid="NetVips.Image.Jxlload*"></a>
-  <h4 id="NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.Jxlload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">Jxlload(string, out ForeignFlags, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.Jxlload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">Jxlload(string, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image Jxlload(string filename, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image Jxlload(string filename, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14225,6 +14272,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
         <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.ForeignFlags.html">ForeignFlags</a></td>
         <td><span class="parametername">flags</span></td>
         <td><p>Flags for this file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
 </td>
       </tr>
       <tr>
@@ -14269,17 +14328,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.Jxlload(filename, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.Jxlload(filename, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_Jxlload_" data-uid="NetVips.Image.Jxlload*"></a>
-  <h4 id="NetVips_Image_Jxlload_System_String_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.Jxlload(System.String,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">Jxlload(string, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_Jxlload_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.Jxlload(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">Jxlload(string, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image Jxlload(string filename, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image Jxlload(string filename, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14298,6 +14357,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14339,17 +14410,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_Jxlload_System_String_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.Jxlload(filename, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_Jxlload_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.Jxlload(filename, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_JxlloadBuffer_" data-uid="NetVips.Image.JxlloadBuffer*"></a>
-  <h4 id="NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadBuffer(byte[], out ForeignFlags, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadBuffer(byte[], out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image JxlloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image JxlloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14374,6 +14445,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14415,17 +14498,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_JxlloadBuffer_" data-uid="NetVips.Image.JxlloadBuffer*"></a>
-  <h4 id="NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadBuffer(byte[], bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadBuffer(byte[], int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image JxlloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image JxlloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14444,6 +14527,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14485,17 +14580,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadBuffer(buffer, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadBuffer(buffer, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_JxlloadSource_" data-uid="NetVips.Image.JxlloadSource*"></a>
-  <h4 id="NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadSource(Source, out ForeignFlags, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadSource(Source, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image JxlloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image JxlloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14520,6 +14615,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14561,17 +14668,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadSource(source, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_JxlloadSource_" data-uid="NetVips.Image.JxlloadSource*"></a>
-  <h4 id="NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadSource(NetVips.Source,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadSource(Source, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadSource(Source, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image JxlloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image JxlloadSource(Source source, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14590,6 +14697,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14631,17 +14750,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadSource(source, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_JxlloadStream_" data-uid="NetVips.Image.JxlloadStream*"></a>
-  <h4 id="NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadStream(Stream, out ForeignFlags, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadStream(Stream, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image JxlloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image JxlloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14666,6 +14785,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14707,17 +14838,17 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadStream(stream, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_JxlloadStream_" data-uid="NetVips.Image.JxlloadStream*"></a>
-  <h4 id="NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadStream(System.IO.Stream,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadStream(Stream, bool?, Access?, FailOn?, bool?)</h4>
+  <h4 id="NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__" data-uid="NetVips.Image.JxlloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})">JxlloadStream(Stream, int?, int?, bool?, Access?, FailOn?, bool?)</h4>
   <div class="markdown level1 summary"><p>Load JPEG-XL image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image JxlloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image JxlloadStream(Stream stream, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -14736,6 +14867,18 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">page</span></td>
+        <td><p>First page to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of pages to load, -1 for all.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">memory</span></td>
         <td><p>Force open via memory.</p>
@@ -14777,8 +14920,8 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
+  <h5 id="NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean___examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.JxlloadStream(stream, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_Jxlsave_" data-uid="NetVips.Image.Jxlsave*"></a>
   <h4 id="NetVips_Image_Jxlsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Double__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.Jxlsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">Jxlsave(string, int?, double?, int?, bool?, int?, ForeignKeep?, double[], int?, string)</h4>
@@ -14802,7 +14945,7 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">filename</span></td>
-        <td><p>Filename to load from.</p>
+        <td><p>Filename to save to.</p>
 </td>
       </tr>
       <tr>
@@ -18835,6 +18978,52 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
+  <a id="NetVips_Image_Maxpair_" data-uid="NetVips.Image.Maxpair*"></a>
+  <h4 id="NetVips_Image_Maxpair_NetVips_Image_" data-uid="NetVips.Image.Maxpair(NetVips.Image)">Maxpair(Image)</h4>
+  <div class="markdown level1 summary"><p>Maximum of a pair of images.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Image Maxpair(Image right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Right-hand image argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_Maxpair_NetVips_Image__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = left.Maxpair(right);</code></pre>
+
   <a id="NetVips_Image_Measure_" data-uid="NetVips.Image.Measure*"></a>
   <h4 id="NetVips_Image_Measure_System_Int32_System_Int32_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__" data-uid="NetVips.Image.Measure(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">Measure(int, int, int?, int?, int?, int?)</h4>
   <div class="markdown level1 summary"><p>Measure a set of patches on a color chart.</p>
@@ -19415,6 +19604,52 @@ it will always return <a href="https://learn.microsoft.com/dotnet/csharp/languag
       </tr>
     </tbody>
   </table>
+  <a id="NetVips_Image_Minpair_" data-uid="NetVips.Image.Minpair*"></a>
+  <h4 id="NetVips_Image_Minpair_NetVips_Image_" data-uid="NetVips.Image.Minpair(NetVips.Image)">Minpair(Image)</h4>
+  <div class="markdown level1 summary"><p>Minimum of a pair of images.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Image Minpair(Image right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Right-hand image argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_Minpair_NetVips_Image__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = left.Minpair(right);</code></pre>
+
   <a id="NetVips_Image_Morph_" data-uid="NetVips.Image.Morph*"></a>
   <h4 id="NetVips_Image_Morph_NetVips_Image_NetVips_Enums_OperationMorphology_" data-uid="NetVips.Image.Morph(NetVips.Image,NetVips.Enums.OperationMorphology)">Morph(Image, OperationMorphology)</h4>
   <div class="markdown level1 summary"><p>Morphology operation.</p>
@@ -21028,6 +21263,95 @@ object can be a string or buffer.</p>
     </tbody>
   </table>
   <a id="NetVips_Image_NewFromBuffer_" data-uid="NetVips.Image.NewFromBuffer*"></a>
+  <h4 id="NetVips_Image_NewFromBuffer_System_ReadOnlySpan_System_Byte__System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_" data-uid="NetVips.Image.NewFromBuffer(System.ReadOnlySpan{System.Byte},System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)">NewFromBuffer(ReadOnlySpan&lt;byte&gt;, string, Access?, FailOn?, VOption)</h4>
+  <div class="markdown level1 summary"><p>Load a formatted image from memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image NewFromBuffer(ReadOnlySpan&lt;byte&gt; data, string strOptions = &quot;&quot;, Enums.Access? access = null, Enums.FailOn? failOn = null, VOption kwargs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>The memory object to load the image from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">strOptions</span></td>
+        <td><p>Load options as a string. Use <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string.empty">Empty</a> for no options.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.Access.html">Access</a>?</td>
+        <td><span class="parametername">access</span></td>
+        <td><p>Hint the expected access pattern for the image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.FailOn.html">FailOn</a>?</td>
+        <td><span class="parametername">failOn</span></td>
+        <td><p>The type of error that will cause load to fail. By
+default, loaders are permissive, that is, <a class="xref" href="NetVips.Enums.FailOn.html#NetVips_Enums_FailOn_None">None</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.VOption.html">VOption</a></td>
+        <td><span class="parametername">kwargs</span></td>
+        <td><p>Optional options that depend on the load operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_NewFromBuffer_System_ReadOnlySpan_System_Byte__System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This behaves exactly as <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromFile_System_String_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_">NewFromFile(string, bool?, Access?, FailOn?, VOption)</a>, but the image is
+loaded from the memory object rather than from a file. The memory
+object can be a string or buffer.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.VipsException.html">VipsException</a></td>
+        <td><p>If unable to load from <code class="paramref">data</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="NetVips_Image_NewFromBuffer_" data-uid="NetVips.Image.NewFromBuffer*"></a>
   <h4 id="NetVips_Image_NewFromBuffer_System_String_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_" data-uid="NetVips.Image.NewFromBuffer(System.String,System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)">NewFromBuffer(string, string, Access?, FailOn?, VOption)</h4>
   <div class="markdown level1 summary"><p>Load a formatted image from memory.</p>
 </div>
@@ -21465,13 +21789,13 @@ into libvips.</p>
     </tbody>
   </table>
   <a id="NetVips_Image_NewFromMemory_" data-uid="NetVips.Image.NewFromMemory*"></a>
-  <h4 id="NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_" data-uid="NetVips.Image.NewFromMemory(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)">NewFromMemory(IntPtr, ulong, int, int, int, BandFormat)</h4>
+  <h4 id="NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_" data-uid="NetVips.Image.NewFromMemory(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)">NewFromMemory(nint, ulong, int, int, int, BandFormat)</h4>
   <div class="markdown level1 summary"><p>Wrap an image around a memory area.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image NewFromMemory(IntPtr data, ulong size, int width, int height, int bands, Enums.BandFormat format)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image NewFromMemory(nint data, ulong size, int width, int height, int bands, Enums.BandFormat format)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -21484,7 +21808,7 @@ into libvips.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">data</span></td>
         <td><p>A unmanaged block of memory.</p>
 </td>
@@ -21540,7 +21864,7 @@ into libvips.</p>
   <h5 id="NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Because libvips is &quot;borrowing&quot; <code class="paramref">data</code> from the caller, this function
 is extremely dangerous. Unless you are very careful, you will get crashes or memory
-corruption. Use <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">NewFromMemoryCopy(IntPtr, ulong, int, int, int, BandFormat)</a> instead if you are at all unsure.</p>
+corruption. Use <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">NewFromMemoryCopy(nint, ulong, int, int, int, BandFormat)</a> instead if you are at all unsure.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-condensed">
@@ -21559,15 +21883,15 @@ corruption. Use <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMe
     </tbody>
   </table>
   <a id="NetVips_Image_NewFromMemoryCopy_" data-uid="NetVips.Image.NewFromMemoryCopy*"></a>
-  <h4 id="NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_" data-uid="NetVips.Image.NewFromMemoryCopy(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)">NewFromMemoryCopy(IntPtr, ulong, int, int, int, BandFormat)</h4>
-  <div class="markdown level1 summary"><p>Like <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">NewFromMemory(IntPtr, ulong, int, int, int, BandFormat)</a>, but libvips
+  <h4 id="NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_" data-uid="NetVips.Image.NewFromMemoryCopy(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)">NewFromMemoryCopy(nint, ulong, int, int, int, BandFormat)</h4>
+  <div class="markdown level1 summary"><p>Like <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">NewFromMemory(nint, ulong, int, int, int, BandFormat)</a>, but libvips
 will make a copy of the memory area. This means more memory use and an extra copy
 operation, but is much simpler and safer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Image NewFromMemoryCopy(IntPtr data, ulong size, int width, int height, int bands, Enums.BandFormat format)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Image NewFromMemoryCopy(nint data, ulong size, int width, int height, int bands, Enums.BandFormat format)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -21580,7 +21904,7 @@ operation, but is much simpler and safer.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">data</span></td>
         <td><p>A unmanaged block of memory.</p>
 </td>
@@ -21630,6 +21954,203 @@ operation, but is much simpler and safer.</p>
         <td><a class="xref" href="NetVips.Image.html">Image</a></td>
         <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.VipsException.html">VipsException</a></td>
+        <td><p>If unable to make image from <code class="paramref">data</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="NetVips_Image_NewFromMemoryCopy_" data-uid="NetVips.Image.NewFromMemoryCopy*"></a>
+  <h4 id="NetVips_Image_NewFromMemoryCopy__1_System_ReadOnlySpan___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_" data-uid="NetVips.Image.NewFromMemoryCopy``1(System.ReadOnlySpan{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)">NewFromMemoryCopy&lt;T&gt;(ReadOnlySpan&lt;T&gt;, int, int, int, BandFormat)</h4>
+  <div class="markdown level1 summary"><p>Like <a class="xref" href="NetVips.Image.html#NetVips_Image_NewFromMemory__1_System_ReadOnlyMemory___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_">NewFromMemory&lt;T&gt;(ReadOnlyMemory&lt;T&gt;, int, int, int, BandFormat)</a>, but
+for <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan&lt;T&gt;</a>, so we must copy as it could be allocated on the stack.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image NewFromMemoryCopy&lt;T&gt;(ReadOnlySpan&lt;T&gt; data, int width, int height, int bands, Enums.BandFormat format) where T : unmanaged</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;T&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan&lt;T&gt;</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">bands</span></td>
+        <td><p>Number of bands.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.BandFormat.html">BandFormat</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>Band format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.VipsException.html">VipsException</a></td>
+        <td><p>If unable to make image from <code class="paramref">data</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="NetVips_Image_NewFromMemory_" data-uid="NetVips.Image.NewFromMemory*"></a>
+  <h4 id="NetVips_Image_NewFromMemory__1_System_ReadOnlyMemory___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_" data-uid="NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)">NewFromMemory&lt;T&gt;(ReadOnlyMemory&lt;T&gt;, int, int, int, BandFormat)</h4>
+  <div class="markdown level1 summary"><p>Wrap an image around a memory array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image NewFromMemory&lt;T&gt;(ReadOnlyMemory&lt;T&gt; data, int width, int height, int bands, Enums.BandFormat format) where T : unmanaged</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlymemory-1">ReadOnlyMemory</a>&lt;T&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlymemory-1">ReadOnlyMemory&lt;T&gt;</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">bands</span></td>
+        <td><p>Number of bands.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.BandFormat.html">BandFormat</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>Band format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -27659,14 +28180,14 @@ generally look something like <code>vips-12-EJKJFGH.v</code>.</p>
   <h5 id="NetVips_Image_Rawsave_System_String_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
   <pre><code class="lang-lang-csharp">in.Rawsave(filename, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
-  <a id="NetVips_Image_RawsaveFd_" data-uid="NetVips.Image.RawsaveFd*"></a>
-  <h4 id="NetVips_Image_RawsaveFd_System_Int32_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.RawsaveFd(System.Int32,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">RawsaveFd(int, ForeignKeep?, double[], int?, string)</h4>
-  <div class="markdown level1 summary"><p>Write raw image to file descriptor.</p>
+  <a id="NetVips_Image_RawsaveBuffer_" data-uid="NetVips.Image.RawsaveBuffer*"></a>
+  <h4 id="NetVips_Image_RawsaveBuffer_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.RawsaveBuffer(System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">RawsaveBuffer(ForeignKeep?, double[], int?, string)</h4>
+  <div class="markdown level1 summary"><p>Write raw image to buffer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RawsaveFd(int fd, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public byte[] RawsaveBuffer(Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -27679,9 +28200,73 @@ generally look something like <code>vips-12-EJKJFGH.v</code>.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
-        <td><span class="parametername">fd</span></td>
-        <td><p>File descriptor to write to.</p>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.ForeignKeep.html">ForeignKeep</a>?</td>
+        <td><span class="parametername">keep</span></td>
+        <td><p>Which metadata to retain.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</td>
+        <td><span class="parametername">background</span></td>
+        <td><p>Background value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">pageHeight</span></td>
+        <td><p>Set page height for multipage save.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">profile</span></td>
+        <td><p>Filename of ICC profile to embed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
+        <td><p>An array of bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_RawsaveBuffer_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">byte[] buffer = in.RawsaveBuffer(keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+
+  <a id="NetVips_Image_RawsaveStream_" data-uid="NetVips.Image.RawsaveStream*"></a>
+  <h4 id="NetVips_Image_RawsaveStream_System_IO_Stream_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.RawsaveStream(System.IO.Stream,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">RawsaveStream(Stream, ForeignKeep?, double[], int?, string)</h4>
+  <div class="markdown level1 summary"><p>Write raw image to stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RawsaveStream(Stream stream, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>Stream to save to.</p>
 </td>
       </tr>
       <tr>
@@ -27710,8 +28295,62 @@ generally look something like <code>vips-12-EJKJFGH.v</code>.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_RawsaveFd_System_Int32_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">in.RawsaveFd(fd, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+  <h5 id="NetVips_Image_RawsaveStream_System_IO_Stream_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">in.RawsaveStream(stream, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+
+  <a id="NetVips_Image_RawsaveTarget_" data-uid="NetVips.Image.RawsaveTarget*"></a>
+  <h4 id="NetVips_Image_RawsaveTarget_NetVips_Target_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.RawsaveTarget(NetVips.Target,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">RawsaveTarget(Target, ForeignKeep?, double[], int?, string)</h4>
+  <div class="markdown level1 summary"><p>Write raw image to target.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RawsaveTarget(Target target, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Target.html">Target</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target to save to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.ForeignKeep.html">ForeignKeep</a>?</td>
+        <td><span class="parametername">keep</span></td>
+        <td><p>Which metadata to retain.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</td>
+        <td><span class="parametername">background</span></td>
+        <td><p>Background value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">pageHeight</span></td>
+        <td><p>Set page height for multipage save.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">profile</span></td>
+        <td><p>Filename of ICC profile to embed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_RawsaveTarget_NetVips_Target_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">in.RawsaveTarget(target, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_Real_" data-uid="NetVips.Image.Real*"></a>
   <h4 id="NetVips_Image_Real" data-uid="NetVips.Image.Real">Real()</h4>
@@ -28515,7 +29154,7 @@ generally look something like <code>vips-12-EJKJFGH.v</code>.</p>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></td>
         <td><span class="parametername">angle</span></td>
-        <td><p>Rotate anticlockwise by this many degrees.</p>
+        <td><p>Rotate clockwise by this many degrees.</p>
 </td>
       </tr>
       <tr>
@@ -28880,6 +29519,88 @@ the <code>scale</code> for convolution masks.</p>
   </table>
   <h5 id="NetVips_Image_Scharr_examples">Examples</h5>
   <pre><code class="lang-lang-csharp">using Image @out = in.Scharr();</code></pre>
+
+  <a id="NetVips_Image_Sdf_" data-uid="NetVips.Image.Sdf*"></a>
+  <h4 id="NetVips_Image_Sdf_System_Int32_System_Int32_NetVips_Enums_SdfShape_System_Nullable_System_Double__System_Double___System_Double___System_Double___" data-uid="NetVips.Image.Sdf(System.Int32,System.Int32,NetVips.Enums.SdfShape,System.Nullable{System.Double},System.Double[],System.Double[],System.Double[])">Sdf(int, int, SdfShape, double?, double[], double[], double[])</h4>
+  <div class="markdown level1 summary"><p>Create an SDF image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image Sdf(int width, int height, Enums.SdfShape shape, double? r = null, double[] a = null, double[] b = null, double[] corners = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="NetVips.Enums.html">Enums</a>.<a class="xref" href="NetVips.Enums.SdfShape.html">SdfShape</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>SDF shape to create.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</td>
+        <td><span class="parametername">r</span></td>
+        <td><p>Radius.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Point a.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Point b.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</td>
+        <td><span class="parametername">corners</span></td>
+        <td><p>Corner radii.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="NetVips.Image.html">Image</a></td>
+        <td><p>A new <a class="xref" href="NetVips.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="NetVips_Image_Sdf_System_Int32_System_Int32_NetVips_Enums_SdfShape_System_Nullable_System_Double__System_Double___System_Double___System_Double____examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.Sdf(width, height, shape, r: double, a: double[], b: double[], corners: double[]);</code></pre>
 
   <a id="NetVips_Image_Sequential_" data-uid="NetVips.Image.Sequential*"></a>
   <h4 id="NetVips_Image_Sequential_System_Nullable_System_Int32__" data-uid="NetVips.Image.Sequential(System.Nullable{System.Int32})">Sequential(int?)</h4>
@@ -29306,13 +30027,13 @@ If this version requirement is not met, it will only stop updating the progress.
   <pre><code class="lang-lang-csharp">using Image @out = in.Sign();</code></pre>
 
   <a id="NetVips_Image_SignalConnect_" data-uid="NetVips.Image.SignalConnect*"></a>
-  <h4 id="NetVips_Image_SignalConnect_NetVips_Enums_Signals_NetVips_Image_EvalDelegate_System_IntPtr_" data-uid="NetVips.Image.SignalConnect(NetVips.Enums.Signals,NetVips.Image.EvalDelegate,System.IntPtr)">SignalConnect(Signals, EvalDelegate, IntPtr)</h4>
+  <h4 id="NetVips_Image_SignalConnect_NetVips_Enums_Signals_NetVips_Image_EvalDelegate_System_IntPtr_" data-uid="NetVips.Image.SignalConnect(NetVips.Enums.Signals,NetVips.Image.EvalDelegate,System.IntPtr)">SignalConnect(Signals, EvalDelegate, nint)</h4>
   <div class="markdown level1 summary"><p>Connects a callback function (<code class="paramref">callback</code>) to a signal on this image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ulong SignalConnect(Enums.Signals signal, Image.EvalDelegate callback, IntPtr data = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public ulong SignalConnect(Enums.Signals signal, Image.EvalDelegate callback, nint data = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -29337,7 +30058,7 @@ If this version requirement is not met, it will only stop updating the progress.
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">data</span></td>
         <td><p>Data to pass to handler calls.</p>
 </td>
@@ -29407,7 +30128,7 @@ If this version requirement is not met, it will only stop updating the progress.
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</td>
         <td><span class="parametername">angle</span></td>
-        <td><p>Rotate anticlockwise by this many degrees.</p>
+        <td><p>Rotate clockwise by this many degrees.</p>
 </td>
       </tr>
       <tr>
@@ -32793,7 +33514,7 @@ If this version requirement is not met, it will only stop updating the progress.
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
         <td><span class="parametername">level</span></td>
-        <td><p>ZSTD compression level.</p>
+        <td><p>Deflate (1-9, default 6) or ZSTD (1-22, default 9) compression level.</p>
 </td>
       </tr>
       <tr>
@@ -32961,7 +33682,7 @@ If this version requirement is not met, it will only stop updating the progress.
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
         <td><span class="parametername">level</span></td>
-        <td><p>ZSTD compression level.</p>
+        <td><p>Deflate (1-9, default 6) or ZSTD (1-22, default 9) compression level.</p>
 </td>
       </tr>
       <tr>
@@ -33151,7 +33872,7 @@ If this version requirement is not met, it will only stop updating the progress.
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
         <td><span class="parametername">level</span></td>
-        <td><p>ZSTD compression level.</p>
+        <td><p>Deflate (1-9, default 6) or ZSTD (1-22, default 9) compression level.</p>
 </td>
       </tr>
       <tr>
@@ -33325,7 +34046,7 @@ If this version requirement is not met, it will only stop updating the progress.
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
         <td><span class="parametername">level</span></td>
-        <td><p>ZSTD compression level.</p>
+        <td><p>Deflate (1-9, default 6) or ZSTD (1-22, default 9) compression level.</p>
 </td>
       </tr>
       <tr>
@@ -35011,13 +35732,13 @@ If this version requirement is not met, it will only stop updating the progress.
   <pre><code class="lang-lang-csharp">using Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);</code></pre>
 
   <a id="NetVips_Image_Webpsave_" data-uid="NetVips.Image.Webpsave*"></a>
-  <h4 id="NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.Webpsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">Webpsave(string, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)</h4>
+  <h4 id="NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.Webpsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">Webpsave(string, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)</h4>
   <div class="markdown level1 summary"><p>Save as WebP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Webpsave(string filename, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, bool? mixed = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Webpsave(string filename, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, int? targetSize = null, bool? mixed = null, bool? smartDeblock = null, int? passes = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -35096,9 +35817,27 @@ If this version requirement is not met, it will only stop updating the progress.
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">targetSize</span></td>
+        <td><p>Desired target size in bytes.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">mixed</span></td>
         <td><p>Allow mixed encoding (might reduce file size).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td><span class="parametername">smartDeblock</span></td>
+        <td><p>Enable auto-adjusting of the deblocking filter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">passes</span></td>
+        <td><p>Number of entropy-analysis passes (in [1..10]).</p>
 </td>
       </tr>
       <tr>
@@ -35127,17 +35866,17 @@ If this version requirement is not met, it will only stop updating the progress.
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">in.Webpsave(filename, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, mixed: bool, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+  <h5 id="NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">in.Webpsave(filename, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, targetSize: int, mixed: bool, smartDeblock: bool, passes: int, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_WebpsaveBuffer_" data-uid="NetVips.Image.WebpsaveBuffer*"></a>
-  <h4 id="NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveBuffer(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)</h4>
+  <h4 id="NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveBuffer(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)</h4>
   <div class="markdown level1 summary"><p>Save as WebP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, bool? mixed = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public byte[] WebpsaveBuffer(int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, int? targetSize = null, bool? mixed = null, bool? smartDeblock = null, int? passes = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -35210,9 +35949,27 @@ If this version requirement is not met, it will only stop updating the progress.
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">targetSize</span></td>
+        <td><p>Desired target size in bytes.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">mixed</span></td>
         <td><p>Allow mixed encoding (might reduce file size).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td><span class="parametername">smartDeblock</span></td>
+        <td><p>Enable auto-adjusting of the deblocking filter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">passes</span></td>
+        <td><p>Number of entropy-analysis passes (in [1..10]).</p>
 </td>
       </tr>
       <tr>
@@ -35257,17 +36014,17 @@ If this version requirement is not met, it will only stop updating the progress.
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, mixed: bool, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+  <h5 id="NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">byte[] buffer = in.WebpsaveBuffer(q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, targetSize: int, mixed: bool, smartDeblock: bool, passes: int, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_WebpsaveMime_" data-uid="NetVips.Image.WebpsaveMime*"></a>
-  <h4 id="NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveMime(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveMime(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)</h4>
+  <h4 id="NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveMime(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveMime(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)</h4>
   <div class="markdown level1 summary"><p>Save image to webp mime.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void WebpsaveMime(int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, bool? mixed = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void WebpsaveMime(int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, int? targetSize = null, bool? mixed = null, bool? smartDeblock = null, int? passes = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -35340,9 +36097,27 @@ If this version requirement is not met, it will only stop updating the progress.
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">targetSize</span></td>
+        <td><p>Desired target size in bytes.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">mixed</span></td>
         <td><p>Allow mixed encoding (might reduce file size).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td><span class="parametername">smartDeblock</span></td>
+        <td><p>Enable auto-adjusting of the deblocking filter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">passes</span></td>
+        <td><p>Number of entropy-analysis passes (in [1..10]).</p>
 </td>
       </tr>
       <tr>
@@ -35371,17 +36146,17 @@ If this version requirement is not met, it will only stop updating the progress.
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">in.WebpsaveMime(q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, mixed: bool, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+  <h5 id="NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">in.WebpsaveMime(q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, targetSize: int, mixed: bool, smartDeblock: bool, passes: int, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_WebpsaveStream_" data-uid="NetVips.Image.WebpsaveStream*"></a>
-  <h4 id="NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveStream(Stream, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)</h4>
+  <h4 id="NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveStream(Stream, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)</h4>
   <div class="markdown level1 summary"><p>Save as WebP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, bool? mixed = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void WebpsaveStream(Stream stream, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, int? targetSize = null, bool? mixed = null, bool? smartDeblock = null, int? passes = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -35460,9 +36235,27 @@ If this version requirement is not met, it will only stop updating the progress.
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">targetSize</span></td>
+        <td><p>Desired target size in bytes.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">mixed</span></td>
         <td><p>Allow mixed encoding (might reduce file size).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td><span class="parametername">smartDeblock</span></td>
+        <td><p>Enable auto-adjusting of the deblocking filter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">passes</span></td>
+        <td><p>Number of entropy-analysis passes (in [1..10]).</p>
 </td>
       </tr>
       <tr>
@@ -35491,17 +36284,17 @@ If this version requirement is not met, it will only stop updating the progress.
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">in.WebpsaveStream(stream, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, mixed: bool, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+  <h5 id="NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">in.WebpsaveStream(stream, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, targetSize: int, mixed: bool, smartDeblock: bool, passes: int, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_WebpsaveTarget_" data-uid="NetVips.Image.WebpsaveTarget*"></a>
-  <h4 id="NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveTarget(Target, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)</h4>
+  <h4 id="NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_" data-uid="NetVips.Image.WebpsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)">WebpsaveTarget(Target, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)</h4>
   <div class="markdown level1 summary"><p>Save as WebP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, bool? mixed = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void WebpsaveTarget(Target target, int? q = null, bool? lossless = null, Enums.ForeignWebpPreset? preset = null, bool? smartSubsample = null, bool? nearLossless = null, int? alphaQ = null, bool? minSize = null, int? kmin = null, int? kmax = null, int? effort = null, int? targetSize = null, bool? mixed = null, bool? smartDeblock = null, int? passes = null, Enums.ForeignKeep? keep = null, double[] background = null, int? pageHeight = null, string profile = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -35580,9 +36373,27 @@ If this version requirement is not met, it will only stop updating the progress.
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">targetSize</span></td>
+        <td><p>Desired target size in bytes.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
         <td><span class="parametername">mixed</span></td>
         <td><p>Allow mixed encoding (might reduce file size).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td><span class="parametername">smartDeblock</span></td>
+        <td><p>Enable auto-adjusting of the deblocking filter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">passes</span></td>
+        <td><p>Number of entropy-analysis passes (in [1..10]).</p>
 </td>
       </tr>
       <tr>
@@ -35611,8 +36422,8 @@ If this version requirement is not met, it will only stop updating the progress.
       </tr>
     </tbody>
   </table>
-  <h5 id="NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
-  <pre><code class="lang-lang-csharp">in.WebpsaveTarget(target, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, mixed: bool, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
+  <h5 id="NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String__examples">Examples</h5>
+  <pre><code class="lang-lang-csharp">in.WebpsaveTarget(target, q: int, lossless: bool, preset: Enums.ForeignWebpPreset, smartSubsample: bool, nearLossless: bool, alphaQ: int, minSize: bool, kmin: int, kmax: int, effort: int, targetSize: int, mixed: bool, smartDeblock: bool, passes: int, keep: Enums.ForeignKeep, background: double[], pageHeight: int, profile: string);</code></pre>
 
   <a id="NetVips_Image_Wop_" data-uid="NetVips.Image.Wop*"></a>
   <h4 id="NetVips_Image_Wop_NetVips_Image_" data-uid="NetVips.Image.Wop(NetVips.Image)">Wop(Image)</h4>
@@ -36154,7 +36965,7 @@ memory array, and the array is returned as a buffer.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IntPtr WriteToMemory(out ulong size)</code></pre>
+    <pre><code class="lang-csharp hljs">public nint WriteToMemory(out ulong size)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -36184,14 +36995,14 @@ memory array, and the array is returned as a buffer.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
-        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a> pointing to an unformatted C-style array.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
+        <td><p>A <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/integral-numeric-types">nint</a> pointing to an unformatted C-style array.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="NetVips_Image_WriteToMemory_System_UInt64___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The caller is responsible for freeing this memory with <a class="xref" href="NetVips.NetVips.html#NetVips_NetVips_Free_System_IntPtr_">Free(IntPtr)</a>.</p>
+  <div class="markdown level1 remarks"><p>The caller is responsible for freeing this memory with <a class="xref" href="NetVips.NetVips.html#NetVips_NetVips_Free_System_IntPtr_">Free(nint)</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-condensed">
@@ -41273,10 +42084,6 @@ At least libvips 8.9 is needed.</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>
-  </div>
-  <h3 id="extensionmethods">Extension Methods</h3>
-  <div>
-      <a class="xref" href="NetVips.Extensions.BitmapConverter.html#NetVips_Extensions_BitmapConverter_ToBitmap_NetVips_Image_">BitmapConverter.ToBitmap(Image)</a>
   </div>
 
 </article>

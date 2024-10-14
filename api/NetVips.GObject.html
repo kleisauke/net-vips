@@ -207,13 +207,13 @@ in the event of a catastrophic failure, <a href="https://learn.microsoft.com/dot
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.interopservices.safehandle.releasehandle">SafeHandle.ReleaseHandle()</a></div>
   <a id="NetVips_GObject_SignalConnect_" data-uid="NetVips.GObject.SignalConnect*"></a>
-  <h4 id="NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_" data-uid="NetVips.GObject.SignalConnect``1(System.String,``0,System.IntPtr)">SignalConnect&lt;T&gt;(string, T, IntPtr)</h4>
+  <h4 id="NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_" data-uid="NetVips.GObject.SignalConnect``1(System.String,``0,System.IntPtr)">SignalConnect&lt;T&gt;(string, T, nint)</h4>
   <div class="markdown level1 summary"><p>Connects a callback function (<code class="paramref">callback</code>) to a signal on this object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ulong SignalConnect&lt;T&gt;(string detailedSignal, T callback, IntPtr data = default) where T : notnull</code></pre>
+    <pre><code class="lang-csharp hljs">public ulong SignalConnect&lt;T&gt;(string detailedSignal, T callback, nint data = 0) where T : notnull</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -238,7 +238,7 @@ in the event of a catastrophic failure, <a href="https://learn.microsoft.com/dot
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">data</span></td>
         <td><p>Data to pass to handler calls.</p>
 </td>
@@ -327,13 +327,13 @@ in the event of a catastrophic failure, <a href="https://learn.microsoft.com/dot
   <div class="markdown level1 remarks"><p>If the <code class="paramref">handlerId</code> is 0 then this function does nothing.</p>
 </div>
   <a id="NetVips_GObject_SignalHandlersDisconnectByData_" data-uid="NetVips.GObject.SignalHandlersDisconnectByData*"></a>
-  <h4 id="NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_" data-uid="NetVips.GObject.SignalHandlersDisconnectByData(System.IntPtr)">SignalHandlersDisconnectByData(IntPtr)</h4>
+  <h4 id="NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_" data-uid="NetVips.GObject.SignalHandlersDisconnectByData(System.IntPtr)">SignalHandlersDisconnectByData(nint)</h4>
   <div class="markdown level1 summary"><p>Disconnects all handlers from this object that match <code class="paramref">data</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public uint SignalHandlersDisconnectByData(IntPtr data)</code></pre>
+    <pre><code class="lang-csharp hljs">public uint SignalHandlersDisconnectByData(nint data)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -346,7 +346,7 @@ in the event of a catastrophic failure, <a href="https://learn.microsoft.com/dot
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">data</span></td>
         <td><p>The data of the handlers.</p>
 </td>
@@ -370,14 +370,14 @@ in the event of a catastrophic failure, <a href="https://learn.microsoft.com/dot
     </tbody>
   </table>
   <a id="NetVips_GObject_SignalHandlersDisconnectByFunc_" data-uid="NetVips.GObject.SignalHandlersDisconnectByFunc*"></a>
-  <h4 id="NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_" data-uid="NetVips.GObject.SignalHandlersDisconnectByFunc``1(``0,System.IntPtr)">SignalHandlersDisconnectByFunc&lt;T&gt;(T, IntPtr)</h4>
+  <h4 id="NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_" data-uid="NetVips.GObject.SignalHandlersDisconnectByFunc``1(``0,System.IntPtr)">SignalHandlersDisconnectByFunc&lt;T&gt;(T, nint)</h4>
   <div class="markdown level1 summary"><p>Disconnects all handlers from this object that match <code class="paramref">func</code> and
 <code class="paramref">data</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public uint SignalHandlersDisconnectByFunc&lt;T&gt;(T func, IntPtr data = default) where T : notnull</code></pre>
+    <pre><code class="lang-csharp hljs">public uint SignalHandlersDisconnectByFunc&lt;T&gt;(T func, nint data = 0) where T : notnull</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -396,7 +396,7 @@ in the event of a catastrophic failure, <a href="https://learn.microsoft.com/dot
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
         <td><span class="parametername">data</span></td>
         <td><p>The data of the handlers.</p>
 </td>

@@ -534,6 +534,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.Enums.SdfShape.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.Enums.SdfShape.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "obj/temp/api/NetVips.Enums.Signals.yml",
       "output": {
         ".html": {

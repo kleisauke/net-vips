@@ -2036,6 +2036,36 @@ references:
   commentId: F:NetVips.Enums.RegionShrink.Nearest
   fullName: NetVips.Enums.RegionShrink.Nearest
   nameWithType: Enums.RegionShrink.Nearest
+- uid: NetVips.Enums.SdfShape
+  name: Enums.SdfShape
+  href: api/NetVips.Enums.SdfShape.html
+  commentId: T:NetVips.Enums.SdfShape
+  fullName: NetVips.Enums.SdfShape
+  nameWithType: Enums.SdfShape
+- uid: NetVips.Enums.SdfShape.Box
+  name: Box
+  href: api/NetVips.Enums.SdfShape.html#NetVips_Enums_SdfShape_Box
+  commentId: F:NetVips.Enums.SdfShape.Box
+  fullName: NetVips.Enums.SdfShape.Box
+  nameWithType: Enums.SdfShape.Box
+- uid: NetVips.Enums.SdfShape.Circle
+  name: Circle
+  href: api/NetVips.Enums.SdfShape.html#NetVips_Enums_SdfShape_Circle
+  commentId: F:NetVips.Enums.SdfShape.Circle
+  fullName: NetVips.Enums.SdfShape.Circle
+  nameWithType: Enums.SdfShape.Circle
+- uid: NetVips.Enums.SdfShape.Line
+  name: Line
+  href: api/NetVips.Enums.SdfShape.html#NetVips_Enums_SdfShape_Line
+  commentId: F:NetVips.Enums.SdfShape.Line
+  fullName: NetVips.Enums.SdfShape.Line
+  nameWithType: Enums.SdfShape.Line
+- uid: NetVips.Enums.SdfShape.RoundedBox
+  name: RoundedBox
+  href: api/NetVips.Enums.SdfShape.html#NetVips_Enums_SdfShape_RoundedBox
+  commentId: F:NetVips.Enums.SdfShape.RoundedBox
+  fullName: NetVips.Enums.SdfShape.RoundedBox
+  nameWithType: Enums.SdfShape.RoundedBox
 - uid: NetVips.Enums.Signals
   name: Enums.Signals
   href: api/NetVips.Enums.Signals.html
@@ -2204,13 +2234,13 @@ references:
   fullName: NetVips.GObject.SignalConnect
   nameWithType: GObject.SignalConnect
 - uid: NetVips.GObject.SignalConnect``1(System.String,``0,System.IntPtr)
-  name: SignalConnect<T>(string, T, IntPtr)
+  name: SignalConnect<T>(string, T, nint)
   href: api/NetVips.GObject.html#NetVips_GObject_SignalConnect__1_System_String___0_System_IntPtr_
   commentId: M:NetVips.GObject.SignalConnect``1(System.String,``0,System.IntPtr)
   name.vb: SignalConnect(Of T)(String, T, IntPtr)
-  fullName: NetVips.GObject.SignalConnect<T>(string, T, System.IntPtr)
+  fullName: NetVips.GObject.SignalConnect<T>(string, T, nint)
   fullName.vb: NetVips.GObject.SignalConnect(Of T)(String, T, System.IntPtr)
-  nameWithType: GObject.SignalConnect<T>(string, T, IntPtr)
+  nameWithType: GObject.SignalConnect<T>(string, T, nint)
   nameWithType.vb: GObject.SignalConnect(Of T)(String, T, IntPtr)
 - uid: NetVips.GObject.SignalHandlerDisconnect(System.UInt64)
   name: SignalHandlerDisconnect(ulong)
@@ -2229,11 +2259,14 @@ references:
   fullName: NetVips.GObject.SignalHandlerDisconnect
   nameWithType: GObject.SignalHandlerDisconnect
 - uid: NetVips.GObject.SignalHandlersDisconnectByData(System.IntPtr)
-  name: SignalHandlersDisconnectByData(IntPtr)
+  name: SignalHandlersDisconnectByData(nint)
   href: api/NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_System_IntPtr_
   commentId: M:NetVips.GObject.SignalHandlersDisconnectByData(System.IntPtr)
-  fullName: NetVips.GObject.SignalHandlersDisconnectByData(System.IntPtr)
-  nameWithType: GObject.SignalHandlersDisconnectByData(IntPtr)
+  name.vb: SignalHandlersDisconnectByData(IntPtr)
+  fullName: NetVips.GObject.SignalHandlersDisconnectByData(nint)
+  fullName.vb: NetVips.GObject.SignalHandlersDisconnectByData(System.IntPtr)
+  nameWithType: GObject.SignalHandlersDisconnectByData(nint)
+  nameWithType.vb: GObject.SignalHandlersDisconnectByData(IntPtr)
 - uid: NetVips.GObject.SignalHandlersDisconnectByData*
   name: SignalHandlersDisconnectByData
   href: api/NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByData_
@@ -2249,13 +2282,13 @@ references:
   fullName: NetVips.GObject.SignalHandlersDisconnectByFunc
   nameWithType: GObject.SignalHandlersDisconnectByFunc
 - uid: NetVips.GObject.SignalHandlersDisconnectByFunc``1(``0,System.IntPtr)
-  name: SignalHandlersDisconnectByFunc<T>(T, IntPtr)
+  name: SignalHandlersDisconnectByFunc<T>(T, nint)
   href: api/NetVips.GObject.html#NetVips_GObject_SignalHandlersDisconnectByFunc__1___0_System_IntPtr_
   commentId: M:NetVips.GObject.SignalHandlersDisconnectByFunc``1(``0,System.IntPtr)
   name.vb: SignalHandlersDisconnectByFunc(Of T)(T, IntPtr)
-  fullName: NetVips.GObject.SignalHandlersDisconnectByFunc<T>(T, System.IntPtr)
+  fullName: NetVips.GObject.SignalHandlersDisconnectByFunc<T>(T, nint)
   fullName.vb: NetVips.GObject.SignalHandlersDisconnectByFunc(Of T)(T, System.IntPtr)
-  nameWithType: GObject.SignalHandlersDisconnectByFunc<T>(T, IntPtr)
+  nameWithType: GObject.SignalHandlersDisconnectByFunc<T>(T, nint)
   nameWithType.vb: GObject.SignalHandlersDisconnectByFunc(Of T)(T, IntPtr)
 - uid: NetVips.GTimer
   name: GTimer
@@ -2324,12 +2357,6 @@ references:
   commentId: F:NetVips.GValue.ArrayIntType
   fullName: NetVips.GValue.ArrayIntType
   nameWithType: GValue.ArrayIntType
-- uid: NetVips.GValue.BandFormatType
-  name: BandFormatType
-  href: api/NetVips.GValue.html#NetVips_GValue_BandFormatType
-  commentId: F:NetVips.GValue.BandFormatType
-  fullName: NetVips.GValue.BandFormatType
-  nameWithType: GValue.BandFormatType
 - uid: NetVips.GValue.BlendModeType
   name: BlendModeType
   href: api/NetVips.GValue.html#NetVips_GValue_BlendModeType
@@ -2483,11 +2510,14 @@ references:
   fullName: NetVips.GValue.Set
   nameWithType: GValue.Set
 - uid: NetVips.GValue.SetType(System.IntPtr)
-  name: SetType(IntPtr)
+  name: SetType(nint)
   href: api/NetVips.GValue.html#NetVips_GValue_SetType_System_IntPtr_
   commentId: M:NetVips.GValue.SetType(System.IntPtr)
-  fullName: NetVips.GValue.SetType(System.IntPtr)
-  nameWithType: GValue.SetType(IntPtr)
+  name.vb: SetType(IntPtr)
+  fullName: NetVips.GValue.SetType(nint)
+  fullName.vb: NetVips.GValue.SetType(System.IntPtr)
+  nameWithType: GValue.SetType(nint)
+  nameWithType.vb: GValue.SetType(IntPtr)
 - uid: NetVips.GValue.SetType*
   name: SetType
   href: api/NetVips.GValue.html#NetVips_GValue_SetType_
@@ -3092,22 +3122,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Byteswap
   nameWithType: Image.Byteswap
-- uid: NetVips.Image.Cache(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name: Cache(int?, int?, int?)
-  href: api/NetVips.Image.html#NetVips_Image_Cache_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.Cache(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name.vb: Cache(Integer?, Integer?, Integer?)
-  fullName: NetVips.Image.Cache(int?, int?, int?)
-  fullName.vb: NetVips.Image.Cache(Integer?, Integer?, Integer?)
-  nameWithType: Image.Cache(int?, int?, int?)
-  nameWithType.vb: Image.Cache(Integer?, Integer?, Integer?)
-- uid: NetVips.Image.Cache*
-  name: Cache
-  href: api/NetVips.Image.html#NetVips_Image_Cache_
-  commentId: Overload:NetVips.Image.Cache
-  isSpec: "True"
-  fullName: NetVips.Image.Cache
-  nameWithType: Image.Cache
 - uid: NetVips.Image.Canny(System.Nullable{System.Double},System.Nullable{NetVips.Enums.Precision})
   name: Canny(double?, Precision?)
   href: api/NetVips.Image.html#NetVips_Image_Canny_System_Nullable_System_Double__System_Nullable_NetVips_Enums_Precision__
@@ -3196,6 +3210,22 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Ceil
   nameWithType: Image.Ceil
+- uid: NetVips.Image.Clamp(System.Nullable{System.Double},System.Nullable{System.Double})
+  name: Clamp(double?, double?)
+  href: api/NetVips.Image.html#NetVips_Image_Clamp_System_Nullable_System_Double__System_Nullable_System_Double__
+  commentId: M:NetVips.Image.Clamp(System.Nullable{System.Double},System.Nullable{System.Double})
+  name.vb: Clamp(Double?, Double?)
+  fullName: NetVips.Image.Clamp(double?, double?)
+  fullName.vb: NetVips.Image.Clamp(Double?, Double?)
+  nameWithType: Image.Clamp(double?, double?)
+  nameWithType.vb: Image.Clamp(Double?, Double?)
+- uid: NetVips.Image.Clamp*
+  name: Clamp
+  href: api/NetVips.Image.html#NetVips_Image_Clamp_
+  commentId: Overload:NetVips.Image.Clamp
+  isSpec: "True"
+  fullName: NetVips.Image.Clamp
+  nameWithType: Image.Clamp
 - uid: NetVips.Image.CMC2LCh
   name: CMC2LCh()
   href: api/NetVips.Image.html#NetVips_Image_CMC2LCh
@@ -4091,6 +4121,15 @@ references:
   fullName.vb: NetVips.Image.FindLoadBuffer(Char())
   nameWithType: Image.FindLoadBuffer(char[])
   nameWithType.vb: Image.FindLoadBuffer(Char())
+- uid: NetVips.Image.FindLoadBuffer(System.ReadOnlySpan{System.Byte})
+  name: FindLoadBuffer(ReadOnlySpan<byte>)
+  href: api/NetVips.Image.html#NetVips_Image_FindLoadBuffer_System_ReadOnlySpan_System_Byte__
+  commentId: M:NetVips.Image.FindLoadBuffer(System.ReadOnlySpan{System.Byte})
+  name.vb: FindLoadBuffer(ReadOnlySpan(Of Byte))
+  fullName: NetVips.Image.FindLoadBuffer(System.ReadOnlySpan<byte>)
+  fullName.vb: NetVips.Image.FindLoadBuffer(System.ReadOnlySpan(Of Byte))
+  nameWithType: Image.FindLoadBuffer(ReadOnlySpan<byte>)
+  nameWithType.vb: Image.FindLoadBuffer(ReadOnlySpan(Of Byte))
 - uid: NetVips.Image.FindLoadBuffer(System.String)
   name: FindLoadBuffer(string)
   href: api/NetVips.Image.html#NetVips_Image_FindLoadBuffer_System_String_
@@ -4482,15 +4521,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.GetHashCode
   nameWithType: Image.GetHashCode
-- uid: NetVips.Image.Getpoint(System.Int32,System.Int32)
-  name: Getpoint(int, int)
-  href: api/NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_
-  commentId: M:NetVips.Image.Getpoint(System.Int32,System.Int32)
-  name.vb: Getpoint(Integer, Integer)
-  fullName: NetVips.Image.Getpoint(int, int)
-  fullName.vb: NetVips.Image.Getpoint(Integer, Integer)
-  nameWithType: Image.Getpoint(int, int)
-  nameWithType.vb: Image.Getpoint(Integer, Integer)
+- uid: NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})
+  name: Getpoint(int, int, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})
+  name.vb: Getpoint(Integer, Integer, Boolean?)
+  fullName: NetVips.Image.Getpoint(int, int, bool?)
+  fullName.vb: NetVips.Image.Getpoint(Integer, Integer, Boolean?)
+  nameWithType: Image.Getpoint(int, int, bool?)
+  nameWithType.vb: Image.Getpoint(Integer, Integer, Boolean?)
 - uid: NetVips.Image.Getpoint*
   name: Getpoint
   href: api/NetVips.Image.html#NetVips_Image_Getpoint_
@@ -5729,24 +5768,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.JpegsaveTarget
   nameWithType: Image.JpegsaveTarget
-- uid: NetVips.Image.Jxlload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: Jxlload(string, out ForeignFlags, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.Jxlload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: Jxlload(String, ForeignFlags, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.Jxlload(string, out NetVips.Enums.ForeignFlags, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.Jxlload(String, NetVips.Enums.ForeignFlags, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.Jxlload(string, out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.Jxlload(String, Enums.ForeignFlags, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
-- uid: NetVips.Image.Jxlload(System.String,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: Jxlload(string, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_Jxlload_System_String_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.Jxlload(System.String,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: Jxlload(String, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.Jxlload(string, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.Jxlload(String, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.Jxlload(string, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.Jxlload(String, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.Jxlload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: Jxlload(string, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_Jxlload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Jxlload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: Jxlload(String, ForeignFlags, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.Jxlload(string, out NetVips.Enums.ForeignFlags, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.Jxlload(String, NetVips.Enums.ForeignFlags, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.Jxlload(string, out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.Jxlload(String, Enums.ForeignFlags, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.Jxlload(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: Jxlload(string, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_Jxlload_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Jxlload(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: Jxlload(String, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.Jxlload(string, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.Jxlload(String, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.Jxlload(string, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.Jxlload(String, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
 - uid: NetVips.Image.Jxlload*
   name: Jxlload
   href: api/NetVips.Image.html#NetVips_Image_Jxlload_
@@ -5754,24 +5793,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Jxlload
   nameWithType: Image.Jxlload
-- uid: NetVips.Image.JxlloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: JxlloadBuffer(byte[], out ForeignFlags, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.JxlloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: JxlloadBuffer(Byte(), ForeignFlags, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.JxlloadBuffer(byte[], out NetVips.Enums.ForeignFlags, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.JxlloadBuffer(Byte(), NetVips.Enums.ForeignFlags, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.JxlloadBuffer(byte[], out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.JxlloadBuffer(Byte(), Enums.ForeignFlags, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
-- uid: NetVips.Image.JxlloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: JxlloadBuffer(byte[], bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.JxlloadBuffer(System.Byte[],System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: JxlloadBuffer(Byte(), Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.JxlloadBuffer(byte[], bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.JxlloadBuffer(Byte(), Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.JxlloadBuffer(byte[], bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.JxlloadBuffer(Byte(), Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.JxlloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: JxlloadBuffer(byte[], out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.JxlloadBuffer(System.Byte[],NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: JxlloadBuffer(Byte(), ForeignFlags, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.JxlloadBuffer(byte[], out NetVips.Enums.ForeignFlags, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.JxlloadBuffer(Byte(), NetVips.Enums.ForeignFlags, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.JxlloadBuffer(byte[], out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.JxlloadBuffer(Byte(), Enums.ForeignFlags, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.JxlloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: JxlloadBuffer(byte[], int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_JxlloadBuffer_System_Byte___System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.JxlloadBuffer(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: JxlloadBuffer(Byte(), Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.JxlloadBuffer(byte[], int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.JxlloadBuffer(Byte(), Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.JxlloadBuffer(byte[], int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.JxlloadBuffer(Byte(), Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
 - uid: NetVips.Image.JxlloadBuffer*
   name: JxlloadBuffer
   href: api/NetVips.Image.html#NetVips_Image_JxlloadBuffer_
@@ -5779,24 +5818,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.JxlloadBuffer
   nameWithType: Image.JxlloadBuffer
-- uid: NetVips.Image.JxlloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: JxlloadSource(Source, out ForeignFlags, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.JxlloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: JxlloadSource(Source, ForeignFlags, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.JxlloadSource(NetVips.Source, out NetVips.Enums.ForeignFlags, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.JxlloadSource(NetVips.Source, NetVips.Enums.ForeignFlags, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.JxlloadSource(Source, out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.JxlloadSource(Source, Enums.ForeignFlags, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
-- uid: NetVips.Image.JxlloadSource(NetVips.Source,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: JxlloadSource(Source, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.JxlloadSource(NetVips.Source,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: JxlloadSource(Source, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.JxlloadSource(NetVips.Source, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.JxlloadSource(NetVips.Source, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.JxlloadSource(Source, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.JxlloadSource(Source, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.JxlloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: JxlloadSource(Source, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.JxlloadSource(NetVips.Source,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: JxlloadSource(Source, ForeignFlags, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.JxlloadSource(NetVips.Source, out NetVips.Enums.ForeignFlags, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.JxlloadSource(NetVips.Source, NetVips.Enums.ForeignFlags, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.JxlloadSource(Source, out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.JxlloadSource(Source, Enums.ForeignFlags, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.JxlloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: JxlloadSource(Source, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_JxlloadSource_NetVips_Source_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.JxlloadSource(NetVips.Source,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: JxlloadSource(Source, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.JxlloadSource(NetVips.Source, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.JxlloadSource(NetVips.Source, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.JxlloadSource(Source, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.JxlloadSource(Source, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
 - uid: NetVips.Image.JxlloadSource*
   name: JxlloadSource
   href: api/NetVips.Image.html#NetVips_Image_JxlloadSource_
@@ -5804,24 +5843,24 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.JxlloadSource
   nameWithType: Image.JxlloadSource
-- uid: NetVips.Image.JxlloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: JxlloadStream(Stream, out ForeignFlags, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.JxlloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: JxlloadStream(Stream, ForeignFlags, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.JxlloadStream(System.IO.Stream, out NetVips.Enums.ForeignFlags, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.JxlloadStream(System.IO.Stream, NetVips.Enums.ForeignFlags, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.JxlloadStream(Stream, out Enums.ForeignFlags, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.JxlloadStream(Stream, Enums.ForeignFlags, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
-- uid: NetVips.Image.JxlloadStream(System.IO.Stream,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name: JxlloadStream(Stream, bool?, Access?, FailOn?, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.JxlloadStream(System.IO.Stream,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
-  name.vb: JxlloadStream(Stream, Boolean?, Access?, FailOn?, Boolean?)
-  fullName: NetVips.Image.JxlloadStream(System.IO.Stream, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
-  fullName.vb: NetVips.Image.JxlloadStream(System.IO.Stream, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
-  nameWithType: Image.JxlloadStream(Stream, bool?, Enums.Access?, Enums.FailOn?, bool?)
-  nameWithType.vb: Image.JxlloadStream(Stream, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.JxlloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: JxlloadStream(Stream, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.JxlloadStream(System.IO.Stream,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: JxlloadStream(Stream, ForeignFlags, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.JxlloadStream(System.IO.Stream, out NetVips.Enums.ForeignFlags, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.JxlloadStream(System.IO.Stream, NetVips.Enums.ForeignFlags, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.JxlloadStream(Stream, out Enums.ForeignFlags, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.JxlloadStream(Stream, Enums.ForeignFlags, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
+- uid: NetVips.Image.JxlloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name: JxlloadStream(Stream, int?, int?, bool?, Access?, FailOn?, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_JxlloadStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.JxlloadStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
+  name.vb: JxlloadStream(Stream, Integer?, Integer?, Boolean?, Access?, FailOn?, Boolean?)
+  fullName: NetVips.Image.JxlloadStream(System.IO.Stream, int?, int?, bool?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, bool?)
+  fullName.vb: NetVips.Image.JxlloadStream(System.IO.Stream, Integer?, Integer?, Boolean?, NetVips.Enums.Access?, NetVips.Enums.FailOn?, Boolean?)
+  nameWithType: Image.JxlloadStream(Stream, int?, int?, bool?, Enums.Access?, Enums.FailOn?, bool?)
+  nameWithType.vb: Image.JxlloadStream(Stream, Integer?, Integer?, Boolean?, Enums.Access?, Enums.FailOn?, Boolean?)
 - uid: NetVips.Image.JxlloadStream*
   name: JxlloadStream
   href: api/NetVips.Image.html#NetVips_Image_JxlloadStream_
@@ -6705,6 +6744,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Max
   nameWithType: Image.Max
+- uid: NetVips.Image.Maxpair(NetVips.Image)
+  name: Maxpair(Image)
+  href: api/NetVips.Image.html#NetVips_Image_Maxpair_NetVips_Image_
+  commentId: M:NetVips.Image.Maxpair(NetVips.Image)
+  fullName: NetVips.Image.Maxpair(NetVips.Image)
+  nameWithType: Image.Maxpair(Image)
+- uid: NetVips.Image.Maxpair*
+  name: Maxpair
+  href: api/NetVips.Image.html#NetVips_Image_Maxpair_
+  commentId: Overload:NetVips.Image.Maxpair
+  isSpec: "True"
+  fullName: NetVips.Image.Maxpair
+  nameWithType: Image.Maxpair
 - uid: NetVips.Image.MaxPos
   name: MaxPos()
   href: api/NetVips.Image.html#NetVips_Image_MaxPos
@@ -6827,6 +6879,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Min
   nameWithType: Image.Min
+- uid: NetVips.Image.Minpair(NetVips.Image)
+  name: Minpair(Image)
+  href: api/NetVips.Image.html#NetVips_Image_Minpair_NetVips_Image_
+  commentId: M:NetVips.Image.Minpair(NetVips.Image)
+  fullName: NetVips.Image.Minpair(NetVips.Image)
+  nameWithType: Image.Minpair(Image)
+- uid: NetVips.Image.Minpair*
+  name: Minpair
+  href: api/NetVips.Image.html#NetVips_Image_Minpair_
+  commentId: Overload:NetVips.Image.Minpair
+  isSpec: "True"
+  fullName: NetVips.Image.Minpair
+  nameWithType: Image.Minpair
 - uid: NetVips.Image.MinPos
   name: MinPos()
   href: api/NetVips.Image.html#NetVips_Image_MinPos
@@ -7036,6 +7101,15 @@ references:
   fullName.vb: NetVips.Image.NewFromBuffer(Char(), String, NetVips.Enums.Access?, NetVips.Enums.FailOn?, NetVips.VOption)
   nameWithType: Image.NewFromBuffer(char[], string, Enums.Access?, Enums.FailOn?, VOption)
   nameWithType.vb: Image.NewFromBuffer(Char(), String, Enums.Access?, Enums.FailOn?, VOption)
+- uid: NetVips.Image.NewFromBuffer(System.ReadOnlySpan{System.Byte},System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)
+  name: NewFromBuffer(ReadOnlySpan<byte>, string, Access?, FailOn?, VOption)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromBuffer_System_ReadOnlySpan_System_Byte__System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_
+  commentId: M:NetVips.Image.NewFromBuffer(System.ReadOnlySpan{System.Byte},System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)
+  name.vb: NewFromBuffer(ReadOnlySpan(Of Byte), String, Access?, FailOn?, VOption)
+  fullName: NetVips.Image.NewFromBuffer(System.ReadOnlySpan<byte>, string, NetVips.Enums.Access?, NetVips.Enums.FailOn?, NetVips.VOption)
+  fullName.vb: NetVips.Image.NewFromBuffer(System.ReadOnlySpan(Of Byte), String, NetVips.Enums.Access?, NetVips.Enums.FailOn?, NetVips.VOption)
+  nameWithType: Image.NewFromBuffer(ReadOnlySpan<byte>, string, Enums.Access?, Enums.FailOn?, VOption)
+  nameWithType.vb: Image.NewFromBuffer(ReadOnlySpan(Of Byte), String, Enums.Access?, Enums.FailOn?, VOption)
 - uid: NetVips.Image.NewFromBuffer(System.String,System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)
   name: NewFromBuffer(string, string, Access?, FailOn?, VOption)
   href: api/NetVips.Image.html#NetVips_Image_NewFromBuffer_System_String_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_
@@ -7109,13 +7183,13 @@ references:
   nameWithType: Image.NewFromMemory(Array, int, int, int, Enums.BandFormat)
   nameWithType.vb: Image.NewFromMemory(Array, Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromMemory(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
-  name: NewFromMemory(IntPtr, ulong, int, int, int, BandFormat)
+  name: NewFromMemory(nint, ulong, int, int, int, BandFormat)
   href: api/NetVips.Image.html#NetVips_Image_NewFromMemory_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
   commentId: M:NetVips.Image.NewFromMemory(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
   name.vb: NewFromMemory(IntPtr, ULong, Integer, Integer, Integer, BandFormat)
-  fullName: NetVips.Image.NewFromMemory(System.IntPtr, ulong, int, int, int, NetVips.Enums.BandFormat)
+  fullName: NetVips.Image.NewFromMemory(nint, ulong, int, int, int, NetVips.Enums.BandFormat)
   fullName.vb: NetVips.Image.NewFromMemory(System.IntPtr, ULong, Integer, Integer, Integer, NetVips.Enums.BandFormat)
-  nameWithType: Image.NewFromMemory(IntPtr, ulong, int, int, int, Enums.BandFormat)
+  nameWithType: Image.NewFromMemory(nint, ulong, int, int, int, Enums.BandFormat)
   nameWithType.vb: Image.NewFromMemory(IntPtr, ULong, Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromMemory*
   name: NewFromMemory
@@ -7124,14 +7198,23 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewFromMemory
   nameWithType: Image.NewFromMemory
+- uid: NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name: NewFromMemory<T>(ReadOnlyMemory<T>, int, int, int, BandFormat)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromMemory__1_System_ReadOnlyMemory___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
+  commentId: M:NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name.vb: NewFromMemory(Of T)(ReadOnlyMemory(Of T), Integer, Integer, Integer, BandFormat)
+  fullName: NetVips.Image.NewFromMemory<T>(System.ReadOnlyMemory<T>, int, int, int, NetVips.Enums.BandFormat)
+  fullName.vb: NetVips.Image.NewFromMemory(Of T)(System.ReadOnlyMemory(Of T), Integer, Integer, Integer, NetVips.Enums.BandFormat)
+  nameWithType: Image.NewFromMemory<T>(ReadOnlyMemory<T>, int, int, int, Enums.BandFormat)
+  nameWithType.vb: Image.NewFromMemory(Of T)(ReadOnlyMemory(Of T), Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromMemoryCopy(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
-  name: NewFromMemoryCopy(IntPtr, ulong, int, int, int, BandFormat)
+  name: NewFromMemoryCopy(nint, ulong, int, int, int, BandFormat)
   href: api/NetVips.Image.html#NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
   commentId: M:NetVips.Image.NewFromMemoryCopy(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
   name.vb: NewFromMemoryCopy(IntPtr, ULong, Integer, Integer, Integer, BandFormat)
-  fullName: NetVips.Image.NewFromMemoryCopy(System.IntPtr, ulong, int, int, int, NetVips.Enums.BandFormat)
+  fullName: NetVips.Image.NewFromMemoryCopy(nint, ulong, int, int, int, NetVips.Enums.BandFormat)
   fullName.vb: NetVips.Image.NewFromMemoryCopy(System.IntPtr, ULong, Integer, Integer, Integer, NetVips.Enums.BandFormat)
-  nameWithType: Image.NewFromMemoryCopy(IntPtr, ulong, int, int, int, Enums.BandFormat)
+  nameWithType: Image.NewFromMemoryCopy(nint, ulong, int, int, int, Enums.BandFormat)
   nameWithType.vb: Image.NewFromMemoryCopy(IntPtr, ULong, Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromMemoryCopy*
   name: NewFromMemoryCopy
@@ -7140,6 +7223,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewFromMemoryCopy
   nameWithType: Image.NewFromMemoryCopy
+- uid: NetVips.Image.NewFromMemoryCopy``1(System.ReadOnlySpan{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name: NewFromMemoryCopy<T>(ReadOnlySpan<T>, int, int, int, BandFormat)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromMemoryCopy__1_System_ReadOnlySpan___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
+  commentId: M:NetVips.Image.NewFromMemoryCopy``1(System.ReadOnlySpan{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name.vb: NewFromMemoryCopy(Of T)(ReadOnlySpan(Of T), Integer, Integer, Integer, BandFormat)
+  fullName: NetVips.Image.NewFromMemoryCopy<T>(System.ReadOnlySpan<T>, int, int, int, NetVips.Enums.BandFormat)
+  fullName.vb: NetVips.Image.NewFromMemoryCopy(Of T)(System.ReadOnlySpan(Of T), Integer, Integer, Integer, NetVips.Enums.BandFormat)
+  nameWithType: Image.NewFromMemoryCopy<T>(ReadOnlySpan<T>, int, int, int, Enums.BandFormat)
+  nameWithType.vb: Image.NewFromMemoryCopy(Of T)(ReadOnlySpan(Of T), Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromSource(NetVips.Source,System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)
   name: NewFromSource(Source, string, Access?, FailOn?, VOption)
   href: api/NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_
@@ -9261,22 +9353,54 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Rawsave
   nameWithType: Image.Rawsave
-- uid: NetVips.Image.RawsaveFd(System.Int32,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name: RawsaveFd(int, ForeignKeep?, double[], int?, string)
-  href: api/NetVips.Image.html#NetVips_Image_RawsaveFd_System_Int32_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
-  commentId: M:NetVips.Image.RawsaveFd(System.Int32,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name.vb: RawsaveFd(Integer, ForeignKeep?, Double(), Integer?, String)
-  fullName: NetVips.Image.RawsaveFd(int, NetVips.Enums.ForeignKeep?, double[], int?, string)
-  fullName.vb: NetVips.Image.RawsaveFd(Integer, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
-  nameWithType: Image.RawsaveFd(int, Enums.ForeignKeep?, double[], int?, string)
-  nameWithType.vb: Image.RawsaveFd(Integer, Enums.ForeignKeep?, Double(), Integer?, String)
-- uid: NetVips.Image.RawsaveFd*
-  name: RawsaveFd
-  href: api/NetVips.Image.html#NetVips_Image_RawsaveFd_
-  commentId: Overload:NetVips.Image.RawsaveFd
+- uid: NetVips.Image.RawsaveBuffer(System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: RawsaveBuffer(ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_RawsaveBuffer_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.RawsaveBuffer(System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: RawsaveBuffer(ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.RawsaveBuffer(NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.RawsaveBuffer(NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.RawsaveBuffer(Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.RawsaveBuffer(Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.RawsaveBuffer*
+  name: RawsaveBuffer
+  href: api/NetVips.Image.html#NetVips_Image_RawsaveBuffer_
+  commentId: Overload:NetVips.Image.RawsaveBuffer
   isSpec: "True"
-  fullName: NetVips.Image.RawsaveFd
-  nameWithType: Image.RawsaveFd
+  fullName: NetVips.Image.RawsaveBuffer
+  nameWithType: Image.RawsaveBuffer
+- uid: NetVips.Image.RawsaveStream(System.IO.Stream,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: RawsaveStream(Stream, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_RawsaveStream_System_IO_Stream_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.RawsaveStream(System.IO.Stream,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: RawsaveStream(Stream, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.RawsaveStream(System.IO.Stream, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.RawsaveStream(System.IO.Stream, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.RawsaveStream(Stream, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.RawsaveStream(Stream, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.RawsaveStream*
+  name: RawsaveStream
+  href: api/NetVips.Image.html#NetVips_Image_RawsaveStream_
+  commentId: Overload:NetVips.Image.RawsaveStream
+  isSpec: "True"
+  fullName: NetVips.Image.RawsaveStream
+  nameWithType: Image.RawsaveStream
+- uid: NetVips.Image.RawsaveTarget(NetVips.Target,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: RawsaveTarget(Target, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_RawsaveTarget_NetVips_Target_System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.RawsaveTarget(NetVips.Target,System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: RawsaveTarget(Target, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.RawsaveTarget(NetVips.Target, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.RawsaveTarget(NetVips.Target, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.RawsaveTarget(Target, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.RawsaveTarget(Target, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.RawsaveTarget*
+  name: RawsaveTarget
+  href: api/NetVips.Image.html#NetVips_Image_RawsaveTarget_
+  commentId: Overload:NetVips.Image.RawsaveTarget
+  isSpec: "True"
+  fullName: NetVips.Image.RawsaveTarget
+  nameWithType: Image.RawsaveTarget
 - uid: NetVips.Image.Real
   name: Real()
   href: api/NetVips.Image.html#NetVips_Image_Real
@@ -9635,6 +9759,22 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.ScRGB2XYZ
   nameWithType: Image.ScRGB2XYZ
+- uid: NetVips.Image.Sdf(System.Int32,System.Int32,NetVips.Enums.SdfShape,System.Nullable{System.Double},System.Double[],System.Double[],System.Double[])
+  name: Sdf(int, int, SdfShape, double?, double[], double[], double[])
+  href: api/NetVips.Image.html#NetVips_Image_Sdf_System_Int32_System_Int32_NetVips_Enums_SdfShape_System_Nullable_System_Double__System_Double___System_Double___System_Double___
+  commentId: M:NetVips.Image.Sdf(System.Int32,System.Int32,NetVips.Enums.SdfShape,System.Nullable{System.Double},System.Double[],System.Double[],System.Double[])
+  name.vb: Sdf(Integer, Integer, SdfShape, Double?, Double(), Double(), Double())
+  fullName: NetVips.Image.Sdf(int, int, NetVips.Enums.SdfShape, double?, double[], double[], double[])
+  fullName.vb: NetVips.Image.Sdf(Integer, Integer, NetVips.Enums.SdfShape, Double?, Double(), Double(), Double())
+  nameWithType: Image.Sdf(int, int, Enums.SdfShape, double?, double[], double[], double[])
+  nameWithType.vb: Image.Sdf(Integer, Integer, Enums.SdfShape, Double?, Double(), Double(), Double())
+- uid: NetVips.Image.Sdf*
+  name: Sdf
+  href: api/NetVips.Image.html#NetVips_Image_Sdf_
+  commentId: Overload:NetVips.Image.Sdf
+  isSpec: "True"
+  fullName: NetVips.Image.Sdf
+  nameWithType: Image.Sdf
 - uid: NetVips.Image.Sequential(System.Nullable{System.Int32})
   name: Sequential(int?)
   href: api/NetVips.Image.html#NetVips_Image_Sequential_System_Nullable_System_Int32__
@@ -9770,11 +9910,14 @@ references:
   fullName: NetVips.Image.Sign
   nameWithType: Image.Sign
 - uid: NetVips.Image.SignalConnect(NetVips.Enums.Signals,NetVips.Image.EvalDelegate,System.IntPtr)
-  name: SignalConnect(Signals, EvalDelegate, IntPtr)
+  name: SignalConnect(Signals, EvalDelegate, nint)
   href: api/NetVips.Image.html#NetVips_Image_SignalConnect_NetVips_Enums_Signals_NetVips_Image_EvalDelegate_System_IntPtr_
   commentId: M:NetVips.Image.SignalConnect(NetVips.Enums.Signals,NetVips.Image.EvalDelegate,System.IntPtr)
-  fullName: NetVips.Image.SignalConnect(NetVips.Enums.Signals, NetVips.Image.EvalDelegate, System.IntPtr)
-  nameWithType: Image.SignalConnect(Enums.Signals, Image.EvalDelegate, IntPtr)
+  name.vb: SignalConnect(Signals, EvalDelegate, IntPtr)
+  fullName: NetVips.Image.SignalConnect(NetVips.Enums.Signals, NetVips.Image.EvalDelegate, nint)
+  fullName.vb: NetVips.Image.SignalConnect(NetVips.Enums.Signals, NetVips.Image.EvalDelegate, System.IntPtr)
+  nameWithType: Image.SignalConnect(Enums.Signals, Image.EvalDelegate, nint)
+  nameWithType.vb: Image.SignalConnect(Enums.Signals, Image.EvalDelegate, IntPtr)
 - uid: NetVips.Image.SignalConnect*
   name: SignalConnect
   href: api/NetVips.Image.html#NetVips_Image_SignalConnect_
@@ -10758,15 +10901,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.WebploadStream
   nameWithType: Image.WebploadStream
-- uid: NetVips.Image.Webpsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name: Webpsave(string, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)
-  href: api/NetVips.Image.html#NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
-  commentId: M:NetVips.Image.Webpsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name.vb: Webpsave(String, Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, ForeignKeep?, Double(), Integer?, String)
-  fullName: NetVips.Image.Webpsave(string, int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, NetVips.Enums.ForeignKeep?, double[], int?, string)
-  fullName.vb: NetVips.Image.Webpsave(String, Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
-  nameWithType: Image.Webpsave(string, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)
-  nameWithType.vb: Image.Webpsave(String, Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.Webpsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: Webpsave(string, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_Webpsave_System_String_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.Webpsave(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: Webpsave(String, Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.Webpsave(string, int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.Webpsave(String, Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.Webpsave(string, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.Webpsave(String, Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, Enums.ForeignKeep?, Double(), Integer?, String)
 - uid: NetVips.Image.Webpsave*
   name: Webpsave
   href: api/NetVips.Image.html#NetVips_Image_Webpsave_
@@ -10774,15 +10917,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Webpsave
   nameWithType: Image.Webpsave
-- uid: NetVips.Image.WebpsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name: WebpsaveBuffer(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)
-  href: api/NetVips.Image.html#NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
-  commentId: M:NetVips.Image.WebpsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name.vb: WebpsaveBuffer(Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, ForeignKeep?, Double(), Integer?, String)
-  fullName: NetVips.Image.WebpsaveBuffer(int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, NetVips.Enums.ForeignKeep?, double[], int?, string)
-  fullName.vb: NetVips.Image.WebpsaveBuffer(Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
-  nameWithType: Image.WebpsaveBuffer(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)
-  nameWithType.vb: Image.WebpsaveBuffer(Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.WebpsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: WebpsaveBuffer(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_WebpsaveBuffer_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.WebpsaveBuffer(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: WebpsaveBuffer(Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.WebpsaveBuffer(int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.WebpsaveBuffer(Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.WebpsaveBuffer(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.WebpsaveBuffer(Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, Enums.ForeignKeep?, Double(), Integer?, String)
 - uid: NetVips.Image.WebpsaveBuffer*
   name: WebpsaveBuffer
   href: api/NetVips.Image.html#NetVips_Image_WebpsaveBuffer_
@@ -10790,15 +10933,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.WebpsaveBuffer
   nameWithType: Image.WebpsaveBuffer
-- uid: NetVips.Image.WebpsaveMime(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name: WebpsaveMime(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)
-  href: api/NetVips.Image.html#NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
-  commentId: M:NetVips.Image.WebpsaveMime(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name.vb: WebpsaveMime(Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, ForeignKeep?, Double(), Integer?, String)
-  fullName: NetVips.Image.WebpsaveMime(int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, NetVips.Enums.ForeignKeep?, double[], int?, string)
-  fullName.vb: NetVips.Image.WebpsaveMime(Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
-  nameWithType: Image.WebpsaveMime(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)
-  nameWithType.vb: Image.WebpsaveMime(Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.WebpsaveMime(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: WebpsaveMime(int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_WebpsaveMime_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.WebpsaveMime(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: WebpsaveMime(Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.WebpsaveMime(int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.WebpsaveMime(Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.WebpsaveMime(int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.WebpsaveMime(Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, Enums.ForeignKeep?, Double(), Integer?, String)
 - uid: NetVips.Image.WebpsaveMime*
   name: WebpsaveMime
   href: api/NetVips.Image.html#NetVips_Image_WebpsaveMime_
@@ -10806,15 +10949,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.WebpsaveMime
   nameWithType: Image.WebpsaveMime
-- uid: NetVips.Image.WebpsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name: WebpsaveStream(Stream, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)
-  href: api/NetVips.Image.html#NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
-  commentId: M:NetVips.Image.WebpsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name.vb: WebpsaveStream(Stream, Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, ForeignKeep?, Double(), Integer?, String)
-  fullName: NetVips.Image.WebpsaveStream(System.IO.Stream, int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, NetVips.Enums.ForeignKeep?, double[], int?, string)
-  fullName.vb: NetVips.Image.WebpsaveStream(System.IO.Stream, Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
-  nameWithType: Image.WebpsaveStream(Stream, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)
-  nameWithType.vb: Image.WebpsaveStream(Stream, Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.WebpsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: WebpsaveStream(Stream, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_WebpsaveStream_System_IO_Stream_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.WebpsaveStream(System.IO.Stream,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: WebpsaveStream(Stream, Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.WebpsaveStream(System.IO.Stream, int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.WebpsaveStream(System.IO.Stream, Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.WebpsaveStream(Stream, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.WebpsaveStream(Stream, Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, Enums.ForeignKeep?, Double(), Integer?, String)
 - uid: NetVips.Image.WebpsaveStream*
   name: WebpsaveStream
   href: api/NetVips.Image.html#NetVips_Image_WebpsaveStream_
@@ -10822,15 +10965,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.WebpsaveStream
   nameWithType: Image.WebpsaveStream
-- uid: NetVips.Image.WebpsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name: WebpsaveTarget(Target, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, ForeignKeep?, double[], int?, string)
-  href: api/NetVips.Image.html#NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
-  commentId: M:NetVips.Image.WebpsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
-  name.vb: WebpsaveTarget(Target, Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, ForeignKeep?, Double(), Integer?, String)
-  fullName: NetVips.Image.WebpsaveTarget(NetVips.Target, int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, NetVips.Enums.ForeignKeep?, double[], int?, string)
-  fullName.vb: NetVips.Image.WebpsaveTarget(NetVips.Target, Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
-  nameWithType: Image.WebpsaveTarget(Target, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, bool?, Enums.ForeignKeep?, double[], int?, string)
-  nameWithType.vb: Image.WebpsaveTarget(Target, Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Boolean?, Enums.ForeignKeep?, Double(), Integer?, String)
+- uid: NetVips.Image.WebpsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name: WebpsaveTarget(Target, int?, bool?, ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, ForeignKeep?, double[], int?, string)
+  href: api/NetVips.Image.html#NetVips_Image_WebpsaveTarget_NetVips_Target_System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_ForeignWebpPreset__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_System_Boolean__System_Nullable_System_Int32__System_Nullable_NetVips_Enums_ForeignKeep__System_Double___System_Nullable_System_Int32__System_String_
+  commentId: M:NetVips.Image.WebpsaveTarget(NetVips.Target,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.ForeignWebpPreset},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{NetVips.Enums.ForeignKeep},System.Double[],System.Nullable{System.Int32},System.String)
+  name.vb: WebpsaveTarget(Target, Integer?, Boolean?, ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, ForeignKeep?, Double(), Integer?, String)
+  fullName: NetVips.Image.WebpsaveTarget(NetVips.Target, int?, bool?, NetVips.Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, NetVips.Enums.ForeignKeep?, double[], int?, string)
+  fullName.vb: NetVips.Image.WebpsaveTarget(NetVips.Target, Integer?, Boolean?, NetVips.Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, NetVips.Enums.ForeignKeep?, Double(), Integer?, String)
+  nameWithType: Image.WebpsaveTarget(Target, int?, bool?, Enums.ForeignWebpPreset?, bool?, bool?, int?, bool?, int?, int?, int?, int?, bool?, bool?, int?, Enums.ForeignKeep?, double[], int?, string)
+  nameWithType.vb: Image.WebpsaveTarget(Target, Integer?, Boolean?, Enums.ForeignWebpPreset?, Boolean?, Boolean?, Integer?, Boolean?, Integer?, Integer?, Integer?, Integer?, Boolean?, Boolean?, Integer?, Enums.ForeignKeep?, Double(), Integer?, String)
 - uid: NetVips.Image.WebpsaveTarget*
   name: WebpsaveTarget
   href: api/NetVips.Image.html#NetVips_Image_WebpsaveTarget_
@@ -11635,13 +11778,13 @@ references:
   fullName: NetVips.MutableImage.Remove
   nameWithType: MutableImage.Remove
 - uid: NetVips.MutableImage.Set(System.IntPtr,System.String,System.Object)
-  name: Set(IntPtr, string, object)
+  name: Set(nint, string, object)
   href: api/NetVips.MutableImage.html#NetVips_MutableImage_Set_System_IntPtr_System_String_System_Object_
   commentId: M:NetVips.MutableImage.Set(System.IntPtr,System.String,System.Object)
   name.vb: Set(IntPtr, String, Object)
-  fullName: NetVips.MutableImage.Set(System.IntPtr, string, object)
+  fullName: NetVips.MutableImage.Set(nint, string, object)
   fullName.vb: NetVips.MutableImage.Set(System.IntPtr, String, Object)
-  nameWithType: MutableImage.Set(IntPtr, string, object)
+  nameWithType: MutableImage.Set(nint, string, object)
   nameWithType.vb: MutableImage.Set(IntPtr, String, Object)
 - uid: NetVips.MutableImage.Set(System.String,System.Object)
   name: Set(string, object)
@@ -11707,70 +11850,6 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.BlockUntrusted
   nameWithType: NetVips.BlockUntrusted
-- uid: NetVips.NetVips.CacheSetMax(System.Int32)
-  name: CacheSetMax(int)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetMax_System_Int32_
-  commentId: M:NetVips.NetVips.CacheSetMax(System.Int32)
-  name.vb: CacheSetMax(Integer)
-  fullName: NetVips.NetVips.CacheSetMax(int)
-  fullName.vb: NetVips.NetVips.CacheSetMax(Integer)
-  nameWithType: NetVips.CacheSetMax(int)
-  nameWithType.vb: NetVips.CacheSetMax(Integer)
-- uid: NetVips.NetVips.CacheSetMax*
-  name: CacheSetMax
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetMax_
-  commentId: Overload:NetVips.NetVips.CacheSetMax
-  isSpec: "True"
-  fullName: NetVips.NetVips.CacheSetMax
-  nameWithType: NetVips.CacheSetMax
-- uid: NetVips.NetVips.CacheSetMaxFiles(System.Int32)
-  name: CacheSetMaxFiles(int)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetMaxFiles_System_Int32_
-  commentId: M:NetVips.NetVips.CacheSetMaxFiles(System.Int32)
-  name.vb: CacheSetMaxFiles(Integer)
-  fullName: NetVips.NetVips.CacheSetMaxFiles(int)
-  fullName.vb: NetVips.NetVips.CacheSetMaxFiles(Integer)
-  nameWithType: NetVips.CacheSetMaxFiles(int)
-  nameWithType.vb: NetVips.CacheSetMaxFiles(Integer)
-- uid: NetVips.NetVips.CacheSetMaxFiles*
-  name: CacheSetMaxFiles
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetMaxFiles_
-  commentId: Overload:NetVips.NetVips.CacheSetMaxFiles
-  isSpec: "True"
-  fullName: NetVips.NetVips.CacheSetMaxFiles
-  nameWithType: NetVips.CacheSetMaxFiles
-- uid: NetVips.NetVips.CacheSetMaxMem(System.UInt64)
-  name: CacheSetMaxMem(ulong)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetMaxMem_System_UInt64_
-  commentId: M:NetVips.NetVips.CacheSetMaxMem(System.UInt64)
-  name.vb: CacheSetMaxMem(ULong)
-  fullName: NetVips.NetVips.CacheSetMaxMem(ulong)
-  fullName.vb: NetVips.NetVips.CacheSetMaxMem(ULong)
-  nameWithType: NetVips.CacheSetMaxMem(ulong)
-  nameWithType.vb: NetVips.CacheSetMaxMem(ULong)
-- uid: NetVips.NetVips.CacheSetMaxMem*
-  name: CacheSetMaxMem
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetMaxMem_
-  commentId: Overload:NetVips.NetVips.CacheSetMaxMem
-  isSpec: "True"
-  fullName: NetVips.NetVips.CacheSetMaxMem
-  nameWithType: NetVips.CacheSetMaxMem
-- uid: NetVips.NetVips.CacheSetTrace(System.Boolean)
-  name: CacheSetTrace(bool)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetTrace_System_Boolean_
-  commentId: M:NetVips.NetVips.CacheSetTrace(System.Boolean)
-  name.vb: CacheSetTrace(Boolean)
-  fullName: NetVips.NetVips.CacheSetTrace(bool)
-  fullName.vb: NetVips.NetVips.CacheSetTrace(Boolean)
-  nameWithType: NetVips.CacheSetTrace(bool)
-  nameWithType.vb: NetVips.CacheSetTrace(Boolean)
-- uid: NetVips.NetVips.CacheSetTrace*
-  name: CacheSetTrace
-  href: api/NetVips.NetVips.html#NetVips_NetVips_CacheSetTrace_
-  commentId: Overload:NetVips.NetVips.CacheSetTrace
-  isSpec: "True"
-  fullName: NetVips.NetVips.CacheSetTrace
-  nameWithType: NetVips.CacheSetTrace
 - uid: NetVips.NetVips.Concurrency
   name: Concurrency
   href: api/NetVips.NetVips.html#NetVips_NetVips_Concurrency
@@ -11784,41 +11863,15 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.Concurrency
   nameWithType: NetVips.Concurrency
-- uid: NetVips.NetVips.ConcurrencyGet
-  name: ConcurrencyGet()
-  href: api/NetVips.NetVips.html#NetVips_NetVips_ConcurrencyGet
-  commentId: M:NetVips.NetVips.ConcurrencyGet
-  fullName: NetVips.NetVips.ConcurrencyGet()
-  nameWithType: NetVips.ConcurrencyGet()
-- uid: NetVips.NetVips.ConcurrencyGet*
-  name: ConcurrencyGet
-  href: api/NetVips.NetVips.html#NetVips_NetVips_ConcurrencyGet_
-  commentId: Overload:NetVips.NetVips.ConcurrencyGet
-  isSpec: "True"
-  fullName: NetVips.NetVips.ConcurrencyGet
-  nameWithType: NetVips.ConcurrencyGet
-- uid: NetVips.NetVips.ConcurrencySet(System.Int32)
-  name: ConcurrencySet(int)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_ConcurrencySet_System_Int32_
-  commentId: M:NetVips.NetVips.ConcurrencySet(System.Int32)
-  name.vb: ConcurrencySet(Integer)
-  fullName: NetVips.NetVips.ConcurrencySet(int)
-  fullName.vb: NetVips.NetVips.ConcurrencySet(Integer)
-  nameWithType: NetVips.ConcurrencySet(int)
-  nameWithType.vb: NetVips.ConcurrencySet(Integer)
-- uid: NetVips.NetVips.ConcurrencySet*
-  name: ConcurrencySet
-  href: api/NetVips.NetVips.html#NetVips_NetVips_ConcurrencySet_
-  commentId: Overload:NetVips.NetVips.ConcurrencySet
-  isSpec: "True"
-  fullName: NetVips.NetVips.ConcurrencySet
-  nameWithType: NetVips.ConcurrencySet
 - uid: NetVips.NetVips.Free(System.IntPtr)
-  name: Free(IntPtr)
+  name: Free(nint)
   href: api/NetVips.NetVips.html#NetVips_NetVips_Free_System_IntPtr_
   commentId: M:NetVips.NetVips.Free(System.IntPtr)
-  fullName: NetVips.NetVips.Free(System.IntPtr)
-  nameWithType: NetVips.Free(IntPtr)
+  name.vb: Free(IntPtr)
+  fullName: NetVips.NetVips.Free(nint)
+  fullName.vb: NetVips.NetVips.Free(System.IntPtr)
+  nameWithType: NetVips.Free(nint)
+  nameWithType.vb: NetVips.Free(IntPtr)
 - uid: NetVips.NetVips.Free*
   name: Free
   href: api/NetVips.NetVips.html#NetVips_NetVips_Free_
@@ -11827,11 +11880,14 @@ references:
   fullName: NetVips.NetVips.Free
   nameWithType: NetVips.Free
 - uid: NetVips.NetVips.FundamentalType(System.IntPtr)
-  name: FundamentalType(IntPtr)
+  name: FundamentalType(nint)
   href: api/NetVips.NetVips.html#NetVips_NetVips_FundamentalType_System_IntPtr_
   commentId: M:NetVips.NetVips.FundamentalType(System.IntPtr)
-  fullName: NetVips.NetVips.FundamentalType(System.IntPtr)
-  nameWithType: NetVips.FundamentalType(IntPtr)
+  name.vb: FundamentalType(IntPtr)
+  fullName: NetVips.NetVips.FundamentalType(nint)
+  fullName.vb: NetVips.NetVips.FundamentalType(System.IntPtr)
+  nameWithType: NetVips.FundamentalType(nint)
+  nameWithType.vb: NetVips.FundamentalType(IntPtr)
 - uid: NetVips.NetVips.FundamentalType*
   name: FundamentalType
   href: api/NetVips.NetVips.html#NetVips_NetVips_FundamentalType_
@@ -11904,54 +11960,15 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.Leak
   nameWithType: NetVips.Leak
-- uid: NetVips.NetVips.LeakSet(System.Boolean)
-  name: LeakSet(bool)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_LeakSet_System_Boolean_
-  commentId: M:NetVips.NetVips.LeakSet(System.Boolean)
-  name.vb: LeakSet(Boolean)
-  fullName: NetVips.NetVips.LeakSet(bool)
-  fullName.vb: NetVips.NetVips.LeakSet(Boolean)
-  nameWithType: NetVips.LeakSet(bool)
-  nameWithType.vb: NetVips.LeakSet(Boolean)
-- uid: NetVips.NetVips.LeakSet*
-  name: LeakSet
-  href: api/NetVips.NetVips.html#NetVips_NetVips_LeakSet_
-  commentId: Overload:NetVips.NetVips.LeakSet
-  isSpec: "True"
-  fullName: NetVips.NetVips.LeakSet
-  nameWithType: NetVips.LeakSet
-- uid: NetVips.NetVips.MemoryHigh
-  name: MemoryHigh()
-  href: api/NetVips.NetVips.html#NetVips_NetVips_MemoryHigh
-  commentId: M:NetVips.NetVips.MemoryHigh
-  fullName: NetVips.NetVips.MemoryHigh()
-  nameWithType: NetVips.MemoryHigh()
-- uid: NetVips.NetVips.MemoryHigh*
-  name: MemoryHigh
-  href: api/NetVips.NetVips.html#NetVips_NetVips_MemoryHigh_
-  commentId: Overload:NetVips.NetVips.MemoryHigh
-  isSpec: "True"
-  fullName: NetVips.NetVips.MemoryHigh
-  nameWithType: NetVips.MemoryHigh
-- uid: NetVips.NetVips.MemoryStats
-  name: MemoryStats()
-  href: api/NetVips.NetVips.html#NetVips_NetVips_MemoryStats
-  commentId: M:NetVips.NetVips.MemoryStats
-  fullName: NetVips.NetVips.MemoryStats()
-  nameWithType: NetVips.MemoryStats()
-- uid: NetVips.NetVips.MemoryStats*
-  name: MemoryStats
-  href: api/NetVips.NetVips.html#NetVips_NetVips_MemoryStats_
-  commentId: Overload:NetVips.NetVips.MemoryStats
-  isSpec: "True"
-  fullName: NetVips.NetVips.MemoryStats
-  nameWithType: NetVips.MemoryStats
 - uid: NetVips.NetVips.NicknameFind(System.IntPtr)
-  name: NicknameFind(IntPtr)
+  name: NicknameFind(nint)
   href: api/NetVips.NetVips.html#NetVips_NetVips_NicknameFind_System_IntPtr_
   commentId: M:NetVips.NetVips.NicknameFind(System.IntPtr)
-  fullName: NetVips.NetVips.NicknameFind(System.IntPtr)
-  nameWithType: NetVips.NicknameFind(IntPtr)
+  name.vb: NicknameFind(IntPtr)
+  fullName: NetVips.NetVips.NicknameFind(nint)
+  fullName.vb: NetVips.NetVips.NicknameFind(System.IntPtr)
+  nameWithType: NetVips.NicknameFind(nint)
+  nameWithType.vb: NetVips.NicknameFind(IntPtr)
 - uid: NetVips.NetVips.NicknameFind*
   name: NicknameFind
   href: api/NetVips.NetVips.html#NetVips_NetVips_NicknameFind_
@@ -11972,22 +11989,6 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.Profile
   nameWithType: NetVips.Profile
-- uid: NetVips.NetVips.ProfileSet(System.Boolean)
-  name: ProfileSet(bool)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_ProfileSet_System_Boolean_
-  commentId: M:NetVips.NetVips.ProfileSet(System.Boolean)
-  name.vb: ProfileSet(Boolean)
-  fullName: NetVips.NetVips.ProfileSet(bool)
-  fullName.vb: NetVips.NetVips.ProfileSet(Boolean)
-  nameWithType: NetVips.ProfileSet(bool)
-  nameWithType.vb: NetVips.ProfileSet(Boolean)
-- uid: NetVips.NetVips.ProfileSet*
-  name: ProfileSet
-  href: api/NetVips.NetVips.html#NetVips_NetVips_ProfileSet_
-  commentId: Overload:NetVips.NetVips.ProfileSet
-  isSpec: "True"
-  fullName: NetVips.NetVips.ProfileSet
-  nameWithType: NetVips.ProfileSet
 - uid: NetVips.NetVips.Shutdown
   name: Shutdown()
   href: api/NetVips.NetVips.html#NetVips_NetVips_Shutdown
@@ -12034,11 +12035,14 @@ references:
   fullName: NetVips.NetVips.TypeFromName
   nameWithType: NetVips.TypeFromName
 - uid: NetVips.NetVips.TypeName(System.IntPtr)
-  name: TypeName(IntPtr)
+  name: TypeName(nint)
   href: api/NetVips.NetVips.html#NetVips_NetVips_TypeName_System_IntPtr_
   commentId: M:NetVips.NetVips.TypeName(System.IntPtr)
-  fullName: NetVips.NetVips.TypeName(System.IntPtr)
-  nameWithType: NetVips.TypeName(IntPtr)
+  name.vb: TypeName(IntPtr)
+  fullName: NetVips.NetVips.TypeName(nint)
+  fullName.vb: NetVips.NetVips.TypeName(System.IntPtr)
+  nameWithType: NetVips.TypeName(nint)
+  nameWithType.vb: NetVips.TypeName(IntPtr)
 - uid: NetVips.NetVips.TypeName*
   name: TypeName
   href: api/NetVips.NetVips.html#NetVips_NetVips_TypeName_
@@ -12047,11 +12051,14 @@ references:
   fullName: NetVips.NetVips.TypeName
   nameWithType: NetVips.TypeName
 - uid: NetVips.NetVips.ValuesForEnum(System.IntPtr)
-  name: ValuesForEnum(IntPtr)
+  name: ValuesForEnum(nint)
   href: api/NetVips.NetVips.html#NetVips_NetVips_ValuesForEnum_System_IntPtr_
   commentId: M:NetVips.NetVips.ValuesForEnum(System.IntPtr)
-  fullName: NetVips.NetVips.ValuesForEnum(System.IntPtr)
-  nameWithType: NetVips.ValuesForEnum(IntPtr)
+  name.vb: ValuesForEnum(IntPtr)
+  fullName: NetVips.NetVips.ValuesForEnum(nint)
+  fullName.vb: NetVips.NetVips.ValuesForEnum(System.IntPtr)
+  nameWithType: NetVips.ValuesForEnum(nint)
+  nameWithType.vb: NetVips.ValuesForEnum(IntPtr)
 - uid: NetVips.NetVips.ValuesForEnum*
   name: ValuesForEnum
   href: api/NetVips.NetVips.html#NetVips_NetVips_ValuesForEnum_
@@ -12072,22 +12079,6 @@ references:
   isSpec: "True"
   fullName: NetVips.NetVips.Vector
   nameWithType: NetVips.Vector
-- uid: NetVips.NetVips.VectorSet(System.Boolean)
-  name: VectorSet(bool)
-  href: api/NetVips.NetVips.html#NetVips_NetVips_VectorSet_System_Boolean_
-  commentId: M:NetVips.NetVips.VectorSet(System.Boolean)
-  name.vb: VectorSet(Boolean)
-  fullName: NetVips.NetVips.VectorSet(bool)
-  fullName.vb: NetVips.NetVips.VectorSet(Boolean)
-  nameWithType: NetVips.VectorSet(bool)
-  nameWithType.vb: NetVips.VectorSet(Boolean)
-- uid: NetVips.NetVips.VectorSet*
-  name: VectorSet
-  href: api/NetVips.NetVips.html#NetVips_NetVips_VectorSet_
-  commentId: Overload:NetVips.NetVips.VectorSet
-  isSpec: "True"
-  fullName: NetVips.NetVips.VectorSet
-  nameWithType: NetVips.VectorSet
 - uid: NetVips.NetVips.Version(System.Int32,System.Boolean)
   name: Version(int, bool)
   href: api/NetVips.NetVips.html#NetVips_NetVips_Version_System_Int32_System_Boolean_
@@ -12322,6 +12313,15 @@ references:
   fullName.vb: NetVips.Source.NewFromMemory(Char())
   nameWithType: Source.NewFromMemory(char[])
   nameWithType.vb: Source.NewFromMemory(Char())
+- uid: NetVips.Source.NewFromMemory(System.ReadOnlySpan{System.Byte})
+  name: NewFromMemory(ReadOnlySpan<byte>)
+  href: api/NetVips.Source.html#NetVips_Source_NewFromMemory_System_ReadOnlySpan_System_Byte__
+  commentId: M:NetVips.Source.NewFromMemory(System.ReadOnlySpan{System.Byte})
+  name.vb: NewFromMemory(ReadOnlySpan(Of Byte))
+  fullName: NetVips.Source.NewFromMemory(System.ReadOnlySpan<byte>)
+  fullName.vb: NetVips.Source.NewFromMemory(System.ReadOnlySpan(Of Byte))
+  nameWithType: Source.NewFromMemory(ReadOnlySpan<byte>)
+  nameWithType.vb: Source.NewFromMemory(ReadOnlySpan(Of Byte))
 - uid: NetVips.Source.NewFromMemory(System.String)
   name: NewFromMemory(string)
   href: api/NetVips.Source.html#NetVips_Source_NewFromMemory_System_String_
