@@ -16,13 +16,14 @@
 
     <LangVersion>12</LangVersion>
 
-    <Major>2</Major>
-    <Minor>4</Minor>
-    <Revision>2</Revision>
+    <Major>3</Major>
+    <Minor>0</Minor>
+    <Revision>0</Revision>
 
     <BuildNumber Condition="'$(APPVEYOR_BUILD_NUMBER)' != ''">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
 
+    <PrereleaseLabel>-rc1</PrereleaseLabel>
     <PrereleaseLabel Condition="'$(APPVEYOR_BUILD_NUMBER)' != ''">-develop</PrereleaseLabel>
 
     <PrereleaseLabelConstants></PrereleaseLabelConstants>
