@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using Nuke.Common;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -158,9 +159,12 @@ partial class Build : NukeBuild
         .DependsOn(DownloadBinaries)
         .Executes(() =>
         {
+            var commitSha = GitRepository.FromLocalDirectory(RootDirectory).Commit;
+
             // Build the architecture specific packages
             NuGetPack(c => c
                 .SetVersion(VipsVersion)
+                .AddProperty("commit", commitSha)
                 .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128")
                 .CombineWith(NuGetArchitectures,
@@ -171,6 +175,7 @@ partial class Build : NukeBuild
             NuGetPack(c => c
                 .SetTargetPath(RootDirectory / "build/native/NetVips.Native.nuspec")
                 .SetVersion(VipsVersion)
+                .AddProperty("commit", commitSha)
                 .SetOutputDirectory(ArtifactsDirectory)
                 .AddProperty("NoWarn", "NU5128"));
         });

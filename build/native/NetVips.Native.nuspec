@@ -9,7 +9,7 @@
     <description>This package complements the NetVips package and contains native binaries of libvips</description>
     <summary>Native binaries of libvips</summary>
     <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
-    <repository type="git" url="https://github.com/kleisauke/net-vips" />
+    <repository type="git" url="https://github.com/kleisauke/net-vips" commit="$commit$" />
     <tags>libvips binaries image-processing</tags>
 
     <!-- legal -->
