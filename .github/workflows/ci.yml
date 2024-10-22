@@ -17,7 +17,7 @@ jobs:
           - os: ubuntu-22.04
             container: mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
             script: ./build.sh
-          - os: macos-12
+          - os: macos-13
             script: ./build.sh
           - os: windows-2022
             script: .\build.ps1
@@ -33,7 +33,7 @@ jobs:
       - name: Dependencies (Alpine 3.18)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
-      - name: Setup dotnet (macOS 12, Windows 2022)
+      - name: Setup dotnet (macOS 13, Windows 2022)
         if: runner.os != 'Linux'
         uses: actions/setup-dotnet@v4
         with:
