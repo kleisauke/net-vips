@@ -46,7 +46,7 @@ public static class ModuleInitializer
         // `libgobject-2.0-0.dll`. Note that this is only possible when
         // targeting .NET 6 or higher. As a result, we always ship at least
         // 3 DLLs in a separate package for .NET Framework.
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (OperatingSystem.IsWindows())
         {
             return _gLibStaticallyLinked ? Libraries.Vips : libraryName;
         }
@@ -58,7 +58,7 @@ public static class ModuleInitializer
         // single shared library with all dependencies statically linked
         // without breaking compatibility with the shared builds
         // (i.e. what is usually installed via package managers).
-        return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+        return OperatingSystem.IsMacOS()
             ? "libvips.42.dylib"
             : "libvips.so.42";
     }
@@ -104,7 +104,7 @@ public static class ModuleInitializer
                 Version = (Version << 8) + NetVips.Version(2, false);
 
 #if NET6_0_OR_GREATER
-                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+                if (!OperatingSystem.IsWindows()) return;
 
                 try
                 {
