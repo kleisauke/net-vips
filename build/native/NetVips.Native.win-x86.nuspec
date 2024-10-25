@@ -13,7 +13,7 @@
     <tags>libvips binaries image-processing</tags>
 
     <!-- legal -->
-    <license type="expression">MIT</license>
+    <license type="expression">LGPL-3.0-or-later</license>
     <authors>Kleis Auke Wolthuizen</authors>
     <owners>Kleis Auke Wolthuizen</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
