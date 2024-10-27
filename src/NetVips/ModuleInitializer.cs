@@ -58,7 +58,7 @@ public static class ModuleInitializer
         // single shared library with all dependencies statically linked
         // without breaking compatibility with the shared builds
         // (i.e. what is usually installed via package managers).
-        return OperatingSystem.IsMacOS()
+        return OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst()
             ? "libvips.42.dylib"
             : "libvips.so.42";
     }
