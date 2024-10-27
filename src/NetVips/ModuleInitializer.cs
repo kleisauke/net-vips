@@ -51,6 +51,11 @@ public static class ModuleInitializer
             return _gLibStaticallyLinked ? Libraries.Vips : libraryName;
         }
 
+        // FIXME: Switch to `OperatingSystem.IsApplePlatform()` once public.
+        // See: https://github.com/dotnet/runtime/issues/113262
+        var isApplePlatform = OperatingSystem.IsMacOS() || OperatingSystem.IsIOS() ||
+                              OperatingSystem.IsTvOS() || OperatingSystem.IsWatchOS();
+
         // We can safely remap the library names to `libvips.so.42` on *nix
         // and `libvips.42.dylib` on macOS since DLLImport uses dlsym() there.
         // This function also searches for named symbols in the dependencies
@@ -58,9 +63,7 @@ public static class ModuleInitializer
         // single shared library with all dependencies statically linked
         // without breaking compatibility with the shared builds
         // (i.e. what is usually installed via package managers).
-        return OperatingSystem.IsMacOS()
-            ? "libvips.42.dylib"
-            : "libvips.so.42";
+        return isApplePlatform ? "libvips.42.dylib" : "libvips.so.42";
     }
 
     internal static nint DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
