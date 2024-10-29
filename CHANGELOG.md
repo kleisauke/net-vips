@@ -3,7 +3,7 @@ All notable changes to NetVips will be documented in this file. See [here](CHANG
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.0-rc1] - 2024-10-14
+## [3.0.0] - 2024-10-29
 ### Added
 - Add support for a single shared libvips binary on Windows ([#211](https://github.com/kleisauke/net-vips/issues/211)).
 - Add `ReadOnlySpan<T>` / `ReadOnlyMemory<T>` overloads ([#225](https://github.com/kleisauke/net-vips/issues/225)).
@@ -245,7 +245,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - First release!
 
-[3.0.0-rc1]: https://github.com/kleisauke/net-vips/compare/v2.4.2...v3.0.0-rc1
+[3.0.0]: https://github.com/kleisauke/net-vips/compare/v2.4.2...v3.0.0
 [2.4.2]: https://github.com/kleisauke/net-vips/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/kleisauke/net-vips/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/kleisauke/net-vips/compare/v2.3.1...v2.4.0
