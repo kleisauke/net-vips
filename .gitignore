@@ -8,6 +8,8 @@
 *.sln.docstates
 download/
 build/native/pack/
+tests/NetVips.Benchmarks/images
+!tests/NetVips.Benchmarks/images/sample2.v
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
