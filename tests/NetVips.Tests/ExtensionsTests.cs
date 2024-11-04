@@ -66,7 +66,9 @@ public class ExtensionsTests : IClassFixture<TestsFixture>
     private static void AssertPixelValue(byte[] expected, Bitmap actual)
     {
         if (actual.Width != 1 || actual.Height != 1)
+        {
             throw new Exception("1x1 image only");
+        }
 
         // An additional band is added for greyscale images
         if (expected.Length == 2)

@@ -104,7 +104,10 @@ public static class ModuleInitializer
                 Version = (Version << 8) + NetVips.Version(2, false);
 
 #if NET6_0_OR_GREATER
-                if (!OperatingSystem.IsWindows()) return;
+                if (!OperatingSystem.IsWindows())
+                {
+                    return;
+                }
 
                 try
                 {

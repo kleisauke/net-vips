@@ -80,7 +80,9 @@ public static class BitmapConverter
     public static Image ToVips(this Bitmap src)
     {
         if (src == null)
+        {
             throw new ArgumentNullException(nameof(src));
+        }
 
         // Let LockBits convert the pixel data to Format24bppRgb for indexed
         // (excluding Format8bppIndexed) and Format32bppRgb (the remaining
@@ -200,7 +202,9 @@ public static class BitmapConverter
         finally
         {
             if (bd != null)
+            {
                 src.UnlockBits(bd);
+            }
         }
 
         if (pf == PixelFormat.Format8bppIndexed)
@@ -267,7 +271,9 @@ public static class BitmapConverter
     public static Bitmap ToBitmap(this Image src)
     {
         if (src == null)
+        {
             throw new ArgumentNullException(nameof(src));
+        }
 
         // Ensure image is converted to sRGB
         if (src.Bands >= 3)
@@ -414,9 +420,14 @@ public static class BitmapConverter
         finally
         {
             if (bd != null)
+            {
                 dst.UnlockBits(bd);
+            }
+
             if (memory != IntPtr.Zero)
+            {
                 NetVips.Free(memory);
+            }
         }
 
         return dst;
