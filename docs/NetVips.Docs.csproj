@@ -9,10 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Docfx.App" Version="2.77.0" />
+    <PackageReference Include="Docfx.App" Version="2.78.0" />
     <!-- The versions of Microsoft.CodeAnalysis.* must match exactly what Docfx.App was built against -->
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="[4.10.0]" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="[4.10.0]" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="[4.11.0]" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="[4.11.0]" />
   </ItemGroup>
 
 </Project>
