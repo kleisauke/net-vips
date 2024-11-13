@@ -9,13 +9,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
-            container: mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim
+            container: mcr.microsoft.com/dotnet/sdk:9.0-bookworm-slim
             script: ./build.sh
           - os: ubuntu-22.04
             container: rockylinux:8
             script: ./build.sh
           - os: ubuntu-22.04
-            container: mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
+            container: mcr.microsoft.com/dotnet/sdk:9.0-alpine3.20
             script: ./build.sh
           - os: macos-13
             script: ./build.sh
@@ -29,15 +29,15 @@ jobs:
           apt-get install -y fontconfig-config
       - name: Dependencies (Rocky Linux 8)
         if: contains(matrix.container, 'rockylinux')
-        run: dnf install -y dotnet-sdk-8.0 google-noto-sans-fonts which
-      - name: Dependencies (Alpine 3.18)
+        run: dnf install -y dotnet-sdk-9.0 google-noto-sans-fonts which
+      - name: Dependencies (Alpine 3.20)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
       - name: Setup dotnet (macOS 13, Windows 2022)
         if: runner.os != 'Linux'
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.x
+          dotnet-version: 9.x
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test

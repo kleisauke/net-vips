@@ -3,7 +3,7 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <Optimize>true</Optimize>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
@@ -23,7 +23,7 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
     <PackageReference Include="SkiaSharp" Version="2.88.8" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.10" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
   </ItemGroup>
 
   <ItemGroup>

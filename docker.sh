@@ -6,7 +6,7 @@ if ! [ -x "$(command -v docker)" ]; then
 fi
 
 # Ensure latest .NET SDK
-docker pull mcr.microsoft.com/dotnet/sdk:8.0-alpine
+docker pull mcr.microsoft.com/dotnet/sdk:9.0-alpine
 
 # Create a machine image with all the required build tools pre-installed
 docker build . -t netvips
