@@ -13,14 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NuGet.CommandLine" Version="6.12.1">
+    <PackageReference Include="NuGet.CommandLine" Version="6.12.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Nuke.Common" Version="8.1.4" />
+    <PackageReference Include="Nuke.Common" Version="9.0.3" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
-    <!-- https://github.com/nuke-build/nuke/issues/818 -->
-    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.0" />
   </ItemGroup>
 
 </Project>
