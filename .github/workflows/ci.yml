@@ -9,13 +9,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: mcr.microsoft.com/dotnet/sdk:9.0-bookworm-slim
             script: ./build.sh
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: rockylinux:8
             script: ./build.sh
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: mcr.microsoft.com/dotnet/sdk:9.0-alpine3.20
             script: ./build.sh
           - os: macos-13
