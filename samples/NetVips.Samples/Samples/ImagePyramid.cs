@@ -14,7 +14,7 @@ public class ImagePyramid : ISample
     public void Execute(string[] args)
     {
         // Build test image
-        using var im = Image.NewFromFile(Filename, access: Enums.Access.Sequential);
+        using var im = Image.NewFromFile(Filename);
         using var test = im.Replicate(TileSize, TileSize);
 
         var cts = new CancellationTokenSource();
