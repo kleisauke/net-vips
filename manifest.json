@@ -50,7 +50,11 @@
           "relative_path": "api/NetVips.Cache.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Cache",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Cache.yml\" sourcestartlinenumber=\"1\">A class around libvips' operation cache.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -60,7 +64,11 @@
           "relative_path": "api/NetVips.Connection.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Connection",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Connection.yml\" sourcestartlinenumber=\"1\">The abstract base Connection class.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -70,7 +78,11 @@
           "relative_path": "api/NetVips.Enums.Access.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Access",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Access.yml\" sourcestartlinenumber=\"1\">The type of access an operation has to supply.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -80,7 +92,11 @@
           "relative_path": "api/NetVips.Enums.Align.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Align",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Align.yml\" sourcestartlinenumber=\"1\">Various types of alignment.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -90,7 +106,11 @@
           "relative_path": "api/NetVips.Enums.Angle.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Angle",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Angle.yml\" sourcestartlinenumber=\"1\">Various fixed 90 degree rotation angles.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -100,7 +120,11 @@
           "relative_path": "api/NetVips.Enums.Angle45.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Angle45",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Angle45.yml\" sourcestartlinenumber=\"1\">Various fixed 45 degree rotation angles.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -110,7 +134,11 @@
           "relative_path": "api/NetVips.Enums.ArgumentFlags.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ArgumentFlags",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ArgumentFlags.yml\" sourcestartlinenumber=\"1\">Flags we associate with each object argument.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -120,7 +148,11 @@
           "relative_path": "api/NetVips.Enums.BandFormat.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.BandFormat",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.BandFormat.yml\" sourcestartlinenumber=\"1\">The format of image bands.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -130,7 +162,11 @@
           "relative_path": "api/NetVips.Enums.BlendMode.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.BlendMode",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.BlendMode.yml\" sourcestartlinenumber=\"1\">The various Porter-Duff and PDF blend modes. See <xref href=\"NetVips.Image.Composite2(NetVips.Image%2cNetVips.Enums.BlendMode%2cSystem.Nullable%7bSystem.Int32%7d%2cSystem.Nullable%7bSystem.Int32%7d%2cSystem.Nullable%7bNetVips.Enums.Interpretation%7d%2cSystem.Nullable%7bSystem.Boolean%7d)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -140,7 +176,11 @@
           "relative_path": "api/NetVips.Enums.Coding.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Coding",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Coding.yml\" sourcestartlinenumber=\"1\">How pixels are coded.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -150,7 +190,11 @@
           "relative_path": "api/NetVips.Enums.Combine.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Combine",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Combine.yml\" sourcestartlinenumber=\"1\">How to combine passes.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -160,7 +204,11 @@
           "relative_path": "api/NetVips.Enums.CombineMode.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.CombineMode",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.CombineMode.yml\" sourcestartlinenumber=\"1\">How to combine pixels.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -170,7 +218,11 @@
           "relative_path": "api/NetVips.Enums.CompassDirection.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.CompassDirection",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.CompassDirection.yml\" sourcestartlinenumber=\"1\">A direction on a compass. Used for <xref href=\"NetVips.Image.Gravity(NetVips.Enums.CompassDirection%2cSystem.Int32%2cSystem.Int32%2cSystem.Nullable%7bNetVips.Enums.Extend%7d%2cSystem.Double%5b%5d)\" data-throw-if-not-resolved=\"false\"></xref>, for example.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -180,7 +232,11 @@
           "relative_path": "api/NetVips.Enums.DemandStyle.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.DemandStyle",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.DemandStyle.yml\" sourcestartlinenumber=\"1\">A hint about the kind of demand geometry VIPS images prefer.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -190,7 +246,11 @@
           "relative_path": "api/NetVips.Enums.Direction.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Direction",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Direction.yml\" sourcestartlinenumber=\"1\">A direction.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -200,7 +260,11 @@
           "relative_path": "api/NetVips.Enums.Extend.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Extend",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Extend.yml\" sourcestartlinenumber=\"1\">How to extend image edges.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -210,7 +274,11 @@
           "relative_path": "api/NetVips.Enums.FailOn.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.FailOn",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.FailOn.yml\" sourcestartlinenumber=\"1\">How sensitive loaders are to errors, from never stop (very insensitive), to\nstop on the smallest warning (very sensitive).</p>\n<p sourcefile=\"obj/temp/api/NetVips.Enums.FailOn.yml\" sourcestartlinenumber=\"4\">Each one implies the ones before it, so <xref href=\"NetVips.Enums.FailOn.Error\" data-throw-if-not-resolved=\"false\"></xref> implies\n<xref href=\"NetVips.Enums.FailOn.Truncated\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -220,7 +288,11 @@
           "relative_path": "api/NetVips.Enums.ForeignDzContainer.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignDzContainer",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignDzContainer.yml\" sourcestartlinenumber=\"1\">The container type of the pyramid.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -230,7 +302,11 @@
           "relative_path": "api/NetVips.Enums.ForeignDzDepth.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignDzDepth",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignDzDepth.yml\" sourcestartlinenumber=\"1\">How many pyramid layers to create.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -240,7 +316,11 @@
           "relative_path": "api/NetVips.Enums.ForeignDzLayout.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignDzLayout",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignDzLayout.yml\" sourcestartlinenumber=\"1\">What directory layout and metadata standard to use.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -250,7 +330,11 @@
           "relative_path": "api/NetVips.Enums.ForeignFlags.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignFlags",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignFlags.yml\" sourcestartlinenumber=\"1\">Flags we associate with a file load operation.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -260,7 +344,11 @@
           "relative_path": "api/NetVips.Enums.ForeignHeifCompression.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignHeifCompression",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignHeifCompression.yml\" sourcestartlinenumber=\"1\">The compression format to use inside a HEIF container.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -270,7 +358,11 @@
           "relative_path": "api/NetVips.Enums.ForeignHeifEncoder.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignHeifEncoder",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignHeifEncoder.yml\" sourcestartlinenumber=\"1\">The selected encoder to use.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -280,7 +372,11 @@
           "relative_path": "api/NetVips.Enums.ForeignKeep.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignKeep",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignKeep.yml\" sourcestartlinenumber=\"1\">Which metadata to retain.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -290,7 +386,11 @@
           "relative_path": "api/NetVips.Enums.ForeignPngFilter.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignPngFilter",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignPngFilter.yml\" sourcestartlinenumber=\"1\">The PNG filter to use.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -300,7 +400,11 @@
           "relative_path": "api/NetVips.Enums.ForeignPpmFormat.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignPpmFormat",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignPpmFormat.yml\" sourcestartlinenumber=\"1\">The netpbm file format to save as.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -310,7 +414,11 @@
           "relative_path": "api/NetVips.Enums.ForeignSubsample.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignSubsample",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignSubsample.yml\" sourcestartlinenumber=\"1\">Set JPEG/HEIF subsampling mode.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -320,7 +428,11 @@
           "relative_path": "api/NetVips.Enums.ForeignTiffCompression.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignTiffCompression",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignTiffCompression.yml\" sourcestartlinenumber=\"1\">The compression types supported by the tiff writer.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -330,7 +442,11 @@
           "relative_path": "api/NetVips.Enums.ForeignTiffPredictor.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignTiffPredictor",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignTiffPredictor.yml\" sourcestartlinenumber=\"1\">The predictor can help deflate and lzw compression.\nThe values are fixed by the tiff library.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -340,7 +456,11 @@
           "relative_path": "api/NetVips.Enums.ForeignTiffResunit.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignTiffResunit",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignTiffResunit.yml\" sourcestartlinenumber=\"1\">Use inches or centimeters as the resolution unit for a tiff file.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -350,7 +470,11 @@
           "relative_path": "api/NetVips.Enums.ForeignWebpPreset.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignWebpPreset",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignWebpPreset.yml\" sourcestartlinenumber=\"1\">Tune lossy encoder settings for different image types.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -360,7 +484,11 @@
           "relative_path": "api/NetVips.Enums.Intent.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Intent",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Intent.yml\" sourcestartlinenumber=\"1\">The rendering intent.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -370,7 +498,11 @@
           "relative_path": "api/NetVips.Enums.Interesting.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Interesting",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Interesting.yml\" sourcestartlinenumber=\"1\">Pick the algorithm vips uses to decide image &quot;interestingness&quot;.\nThis is used by <see cref=\"O:Image.Smartcrop\"></see>, for example, to decide what parts of the image to keep.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -380,7 +512,11 @@
           "relative_path": "api/NetVips.Enums.Interpretation.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Interpretation",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Interpretation.yml\" sourcestartlinenumber=\"1\">How the values in an image should be interpreted.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -390,7 +526,11 @@
           "relative_path": "api/NetVips.Enums.Kernel.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Kernel",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Kernel.yml\" sourcestartlinenumber=\"1\">A resizing kernel. One of these can be given to operations like\n<xref href=\"NetVips.Image.Reduce(System.Double%2cSystem.Double%2cSystem.Nullable%7bNetVips.Enums.Kernel%7d%2cSystem.Nullable%7bSystem.Double%7d)\" data-throw-if-not-resolved=\"false\"></xref> or <xref href=\"NetVips.Image.Resize(System.Double%2cSystem.Nullable%7bNetVips.Enums.Kernel%7d%2cSystem.Nullable%7bSystem.Double%7d%2cSystem.Nullable%7bSystem.Double%7d)\" data-throw-if-not-resolved=\"false\"></xref> to select the resizing kernel to use.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -400,7 +540,11 @@
           "relative_path": "api/NetVips.Enums.LogLevelFlags.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.LogLevelFlags",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.LogLevelFlags.yml\" sourcestartlinenumber=\"1\">Flags specifying the level of log messages.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -410,7 +554,11 @@
           "relative_path": "api/NetVips.Enums.OperationBoolean.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationBoolean",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationBoolean.yml\" sourcestartlinenumber=\"1\">Boolean operations.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -420,7 +568,11 @@
           "relative_path": "api/NetVips.Enums.OperationComplex.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationComplex",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationComplex.yml\" sourcestartlinenumber=\"1\">Operations on complex images.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -430,7 +582,11 @@
           "relative_path": "api/NetVips.Enums.OperationComplex2.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationComplex2",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationComplex2.yml\" sourcestartlinenumber=\"1\">Binary operations on complex images.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -440,7 +596,11 @@
           "relative_path": "api/NetVips.Enums.OperationComplexget.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationComplexget",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationComplexget.yml\" sourcestartlinenumber=\"1\">Components of complex images.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -450,7 +610,11 @@
           "relative_path": "api/NetVips.Enums.OperationFlags.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationFlags",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationFlags.yml\" sourcestartlinenumber=\"1\">Flags we associate with an <xref href=\"NetVips.Operation\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -460,7 +624,11 @@
           "relative_path": "api/NetVips.Enums.OperationMath.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationMath",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationMath.yml\" sourcestartlinenumber=\"1\">Various math functions on images.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -470,7 +638,11 @@
           "relative_path": "api/NetVips.Enums.OperationMath2.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationMath2",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationMath2.yml\" sourcestartlinenumber=\"1\">Various math functions on images.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -480,7 +652,11 @@
           "relative_path": "api/NetVips.Enums.OperationMorphology.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationMorphology",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationMorphology.yml\" sourcestartlinenumber=\"1\">Morphological operations.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -490,7 +666,11 @@
           "relative_path": "api/NetVips.Enums.OperationRelational.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationRelational",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationRelational.yml\" sourcestartlinenumber=\"1\">Various relational operations.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -500,7 +680,11 @@
           "relative_path": "api/NetVips.Enums.OperationRound.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.OperationRound",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.OperationRound.yml\" sourcestartlinenumber=\"1\">Round operations.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -510,7 +694,11 @@
           "relative_path": "api/NetVips.Enums.PCS.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.PCS",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.PCS.yml\" sourcestartlinenumber=\"1\">Set Profile Connection Space.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -520,7 +708,11 @@
           "relative_path": "api/NetVips.Enums.Precision.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Precision",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Precision.yml\" sourcestartlinenumber=\"1\">Computation precision.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -530,7 +722,11 @@
           "relative_path": "api/NetVips.Enums.RegionShrink.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.RegionShrink",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.RegionShrink.yml\" sourcestartlinenumber=\"1\">How to calculate the output pixels when shrinking a 2x2 region.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -540,7 +736,11 @@
           "relative_path": "api/NetVips.Enums.SdfShape.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.SdfShape",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.SdfShape.yml\" sourcestartlinenumber=\"1\">The SDF to generate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -550,7 +750,11 @@
           "relative_path": "api/NetVips.Enums.Signals.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Signals",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Signals.yml\" sourcestartlinenumber=\"1\">Signals that can be used on an <xref href=\"NetVips.Image\" data-throw-if-not-resolved=\"false\"></xref>. See <xref href=\"NetVips.GObject.SignalConnect%60%601(System.String%2c%60%600%2cSystem.IntPtr)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -560,7 +764,11 @@
           "relative_path": "api/NetVips.Enums.Size.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.Size",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.Size.yml\" sourcestartlinenumber=\"1\">Controls whether an operation should upsize, downsize, both up and downsize, or force a size.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -570,7 +778,11 @@
           "relative_path": "api/NetVips.Enums.TextWrap.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.TextWrap",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.TextWrap.yml\" sourcestartlinenumber=\"1\">Sets the word wrapping style for <see cref=\"O:Image.Text\"></see> when used with a maximum width.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -580,7 +792,11 @@
           "relative_path": "api/NetVips.Enums.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.yml\" sourcestartlinenumber=\"1\">This module contains the various libvips enums.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -590,7 +806,11 @@
           "relative_path": "api/NetVips.Extensions.BitmapConverter.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Extensions.BitmapConverter",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Extensions.BitmapConverter.yml\" sourcestartlinenumber=\"1\">Static class which provides conversion between <xref href=\"System.Drawing.Bitmap\" data-throw-if-not-resolved=\"false\"></xref> and <xref href=\"NetVips.Image\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -600,7 +820,11 @@
           "relative_path": "api/NetVips.Extensions.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Extensions",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -610,7 +834,11 @@
           "relative_path": "api/NetVips.GObject.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.GObject",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.GObject.yml\" sourcestartlinenumber=\"1\">Manage <xref href=\"NetVips.Internal.GObject\" data-throw-if-not-resolved=\"false\"></xref> lifetime.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -620,7 +848,11 @@
           "relative_path": "api/NetVips.GTimer.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.GTimer",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.GTimer.yml\" sourcestartlinenumber=\"1\">Records a start time, and counts microseconds elapsed since that time.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -630,7 +862,11 @@
           "relative_path": "api/NetVips.GValue.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.GValue",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.GValue.yml\" sourcestartlinenumber=\"1\">Wrap <xref href=\"NetVips.Internal.GValue\" data-throw-if-not-resolved=\"false\"></xref> in a C# class.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -640,7 +876,11 @@
           "relative_path": "api/NetVips.Image.EvalDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Image.EvalDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Image.EvalDelegate.yml\" sourcestartlinenumber=\"1\">A evaluation delegate that can be used on the\n<xref href=\"NetVips.Enums.Signals.PreEval\" data-throw-if-not-resolved=\"false\"></xref>, <xref href=\"NetVips.Enums.Signals.Eval\" data-throw-if-not-resolved=\"false\"></xref> and\n<xref href=\"NetVips.Enums.Signals.PostEval\" data-throw-if-not-resolved=\"false\"></xref> signals.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -650,7 +890,11 @@
           "relative_path": "api/NetVips.Image.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Image",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Image.yml\" sourcestartlinenumber=\"1\">Wrap a <xref href=\"NetVips.Internal.VipsImage\" data-throw-if-not-resolved=\"false\"></xref> object.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -660,7 +904,11 @@
           "relative_path": "api/NetVips.Interpolate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Interpolate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Interpolate.yml\" sourcestartlinenumber=\"1\">Make interpolators for operators like <xref href=\"NetVips.Image.Affine(System.Double%5b%5d%2cNetVips.GObject%2cSystem.Int32%5b%5d%2cSystem.Nullable%7bSystem.Double%7d%2cSystem.Nullable%7bSystem.Double%7d%2cSystem.Nullable%7bSystem.Double%7d%2cSystem.Nullable%7bSystem.Double%7d%2cSystem.Double%5b%5d%2cSystem.Nullable%7bSystem.Boolean%7d%2cSystem.Nullable%7bNetVips.Enums.Extend%7d)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -670,7 +918,11 @@
           "relative_path": "api/NetVips.Introspect.Argument.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Introspect.Argument",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Introspect.Argument.yml\" sourcestartlinenumber=\"1\">An object structure that encapsulates the metadata\nrequired to specify arguments.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -680,7 +932,11 @@
           "relative_path": "api/NetVips.Introspect.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Introspect",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Introspect.yml\" sourcestartlinenumber=\"1\">Build introspection data for operations.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -690,7 +946,11 @@
           "relative_path": "api/NetVips.Log.LogDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Log.LogDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Log.LogDelegate.yml\" sourcestartlinenumber=\"1\">Specifies the prototype of log handler functions.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -700,7 +960,11 @@
           "relative_path": "api/NetVips.Log.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Log",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Log.yml\" sourcestartlinenumber=\"1\">Wrapper for message logging functions.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -710,7 +974,11 @@
           "relative_path": "api/NetVips.ModuleInitializer.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.ModuleInitializer",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.ModuleInitializer.yml\" sourcestartlinenumber=\"1\">All code inside the <xref href=\"NetVips.ModuleInitializer.Initialize\" data-throw-if-not-resolved=\"false\"></xref> method is ran as soon as the assembly is loaded.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -720,7 +988,11 @@
           "relative_path": "api/NetVips.MutableImage.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.MutableImage",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.MutableImage.yml\" sourcestartlinenumber=\"1\">This class represents a libvips image which can be modified. See\n<xref href=\"NetVips.Image.Mutate(System.Action%7bNetVips.MutableImage%7d)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -730,7 +1002,11 @@
           "relative_path": "api/NetVips.NetVips.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.NetVips",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.NetVips.yml\" sourcestartlinenumber=\"1\">Basic utility stuff.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -740,7 +1016,11 @@
           "relative_path": "api/NetVips.Operation.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Operation",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Operation.yml\" sourcestartlinenumber=\"1\">Wrap a <xref href=\"NetVips.Internal.VipsOperation\" data-throw-if-not-resolved=\"false\"></xref> object.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -750,7 +1030,11 @@
           "relative_path": "api/NetVips.Region.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Region",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Region.yml\" sourcestartlinenumber=\"1\">Wrap a <xref href=\"NetVips.Internal.VipsRegion\" data-throw-if-not-resolved=\"false\"></xref> object.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -760,7 +1044,11 @@
           "relative_path": "api/NetVips.Source.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Source",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Source.yml\" sourcestartlinenumber=\"1\">An input connection.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -770,7 +1058,11 @@
           "relative_path": "api/NetVips.SourceCustom.ReadDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.SourceCustom.ReadDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.SourceCustom.ReadDelegate.yml\" sourcestartlinenumber=\"1\">A read delegate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -780,7 +1072,11 @@
           "relative_path": "api/NetVips.SourceCustom.SeekDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.SourceCustom.SeekDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.SourceCustom.SeekDelegate.yml\" sourcestartlinenumber=\"1\">A seek delegate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -790,7 +1086,11 @@
           "relative_path": "api/NetVips.SourceCustom.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.SourceCustom",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.SourceCustom.yml\" sourcestartlinenumber=\"1\">An source you can connect delegates to implement behaviour.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -800,7 +1100,11 @@
           "relative_path": "api/NetVips.Stats.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Stats",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Stats.yml\" sourcestartlinenumber=\"1\">A class that provides the statistics of memory usage and opened files.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -810,7 +1114,11 @@
           "relative_path": "api/NetVips.Target.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Target",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Target.yml\" sourcestartlinenumber=\"1\">An output connection.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -820,7 +1128,11 @@
           "relative_path": "api/NetVips.TargetCustom.EndDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.TargetCustom.EndDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.TargetCustom.EndDelegate.yml\" sourcestartlinenumber=\"1\">A end delegate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -830,7 +1142,11 @@
           "relative_path": "api/NetVips.TargetCustom.ReadDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.TargetCustom.ReadDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.TargetCustom.ReadDelegate.yml\" sourcestartlinenumber=\"1\">A read delegate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -840,7 +1156,11 @@
           "relative_path": "api/NetVips.TargetCustom.SeekDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.TargetCustom.SeekDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.TargetCustom.SeekDelegate.yml\" sourcestartlinenumber=\"1\">A seek delegate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -850,7 +1170,11 @@
           "relative_path": "api/NetVips.TargetCustom.WriteDelegate.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.TargetCustom.WriteDelegate",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.TargetCustom.WriteDelegate.yml\" sourcestartlinenumber=\"1\">A write delegate.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -860,7 +1184,11 @@
           "relative_path": "api/NetVips.TargetCustom.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.TargetCustom",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.TargetCustom.yml\" sourcestartlinenumber=\"1\">An target you can connect delegates to implement behaviour.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -870,7 +1198,11 @@
           "relative_path": "api/NetVips.VipsException.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.VipsException",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.VipsException.yml\" sourcestartlinenumber=\"1\">Our own exception class which handles the libvips error buffer.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -880,7 +1212,11 @@
           "relative_path": "api/NetVips.VipsObject.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.VipsObject",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.VipsObject.yml\" sourcestartlinenumber=\"1\">Manage a <xref href=\"NetVips.Internal.VipsObject\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -890,7 +1226,11 @@
           "relative_path": "api/NetVips.VipsProgress.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.VipsProgress",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.VipsProgress.yml\" sourcestartlinenumber=\"1\">Struct we keep a record of execution time in. Passed to eval signal so\nit can assess progress.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -900,7 +1240,11 @@
           "relative_path": "api/NetVips.VOption.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.VOption",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.VOption.yml\" sourcestartlinenumber=\"1\">This class wraps a <xref href=\"System.Collections.Generic.Dictionary%602\" data-throw-if-not-resolved=\"false\"></xref>.\nThis is used to call functions with optional arguments. See <xref href=\"NetVips.Operation.Call(System.String%2cNetVips.VOption%2cSystem.Object%5b%5d)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -910,7 +1254,11 @@
           "relative_path": "api/NetVips.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips",
+      "Summary": null
     },
     {
       "type": "Toc",
