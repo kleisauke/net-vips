@@ -74,14 +74,10 @@ public static class ModuleInitializer
             return cachedHandle;
         }
 
-        if (NativeLibrary.TryLoad(libraryName, assembly, searchPath, out var handle))
-        {
-            DllImportCache[libraryName] = handle;
-            return handle;
-        }
+        var handle = NativeLibrary.Load(libraryName, assembly, searchPath);
+        DllImportCache[libraryName] = handle;
 
-        // Fallback to the default import resolver.
-        return IntPtr.Zero;
+        return handle;
     }
 #endif
 
