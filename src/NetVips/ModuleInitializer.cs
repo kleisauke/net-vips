@@ -90,7 +90,14 @@ public static class ModuleInitializer
     public static void Initialize()
     {
 #if NET6_0_OR_GREATER
-        NativeLibrary.SetDllImportResolver(typeof(ModuleInitializer).Assembly, DllImportResolver);
+        try
+        {
+            NativeLibrary.SetDllImportResolver(typeof(ModuleInitializer).Assembly, DllImportResolver);
+        }
+        catch
+        {
+            // Ignored; allows this function to be called multiple times.
+        }
 #endif
 
         try

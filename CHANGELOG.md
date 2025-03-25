@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Fixed
 - Load the correct library on all Apple platforms ([#240](https://github.com/kleisauke/net-vips/issues/240)).
+- Allow `ModuleInitializer.Initialize()` to be called multiple times.
 
 ## [3.0.0] - 2024-10-29
 ### Added
