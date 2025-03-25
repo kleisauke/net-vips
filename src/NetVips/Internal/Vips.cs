@@ -467,7 +467,7 @@ internal static class VipsImage
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "vips_addalpha")]
-    internal static extern int AddAlpha(Image image, out nint @out, nint args);
+    internal static extern int AddAlpha(Image image, out nint @out, nint sentinel = default);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,

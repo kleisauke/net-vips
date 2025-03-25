@@ -2013,13 +2013,19 @@ public partial class Image : VipsObject
     /// <returns>A new <see cref="Image"/>.</returns>
     public Image AddAlpha()
     {
+        // `vips_addalpha` was turned into a VipsOperation in 8.16.
+        if (NetVips.AtLeastLibvips(8, 16))
+        {
+            return this.Call("addalpha") as Image;
+        }
+
         // use `vips_addalpha` on libvips >= 8.6.
         if (NetVips.AtLeastLibvips(8, 6))
         {
-            var result = VipsImage.AddAlpha(this, out var vi, IntPtr.Zero);
+            var result = VipsImage.AddAlpha(this, out var vi);
             if (result != 0)
             {
-                throw new VipsException("unable to append alpha channel to image.");
+                throw new VipsException("unable to append an alpha channel");
             }
 
             return new Image(vi);
