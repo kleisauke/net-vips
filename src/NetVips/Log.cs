@@ -21,7 +21,7 @@ public static class Log
     /// <param name="message">The message to process.</param>
     public delegate void LogDelegate(string logDomain, Enums.LogLevelFlags logLevel, string message);
 
-    private static void NativeCallback(nint logDomainNative, Enums.LogLevelFlags flags, nint messageNative,
+    private static void NativeCallback(string logDomain, Enums.LogLevelFlags flags, nint messagePtr,
         nint userData)
     {
         if (userData == IntPtr.Zero)
@@ -29,8 +29,7 @@ public static class Log
             return;
         }
 
-        var logDomain = logDomainNative.ToUtf8String();
-        var message = messageNative.ToUtf8String();
+        var message = messagePtr.ToUtf8String();
         var gch = (GCHandle)userData;
         if (gch.Target is LogDelegate func)
         {

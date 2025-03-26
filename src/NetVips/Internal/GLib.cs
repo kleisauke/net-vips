@@ -9,8 +9,8 @@ namespace NetVips.Internal;
 internal static class GLib
 {
     [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void LogFuncNative(nint logDomain, LogLevelFlags flags, nint message,
-        nint userData);
+    internal delegate void LogFuncNative([MarshalAs(UnmanagedType.LPStr)] string logDomain,
+        LogLevelFlags flags, nint message, nint userData);
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GLib, CallingConvention = CallingConvention.Cdecl,
