@@ -24,6 +24,7 @@ internal static class Enums
     [Flags]
     internal enum GConnectFlags
     {
+        G_CONNECT_DEFAULT = 0,
         G_CONNECT_AFTER = 1 << 0,
         G_CONNECT_SWAPPED = 1 << 1
     }
