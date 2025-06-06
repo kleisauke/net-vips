@@ -21,10 +21,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">
-    <!-- Constrain the version to 8.0.15, as later versions require .NET 8.0.
+    <!-- Constrain the version to 8.0.16, as later versions require .NET 8.0.
          https://github.com/dotnet/winforms/issues/9851
     -->
-    <PackageReference Include="System.Drawing.Common" Version="[8.0.15]" />
+    <PackageReference Include="System.Drawing.Common" Version="[8.0.16]" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
