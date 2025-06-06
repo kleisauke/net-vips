@@ -1186,8 +1186,9 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         im = Image.NewFromFile(Helper.SvgFile);
         Assert.True(im.Avg() < 5);
 
-        im = Image.Svgload(Helper.SvgFile, stylesheet: "path{stroke:#f00;stroke-width:1em;}");
-        Assert.True(im.Avg() > 5);
+        // FIXME(kleisauke): https://github.com/lovell/sharp-libvips/pull/275#issuecomment-2949574029
+        /*im = Image.Svgload(Helper.SvgFile, stylesheet: "path{stroke:#f00;stroke-width:1em;}");
+        Assert.True(im.Avg() > 5);*/
     }
 
     [Fact]
