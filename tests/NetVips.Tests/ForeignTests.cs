@@ -35,7 +35,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         _cmyk = _cmyk.Copy(interpretation: Enums.Interpretation.Cmyk);
         _cmyk = _cmyk.Mutate(x => x.Remove("icc-profile-data"));
         var im = Image.NewFromFile(Helper.GifFile);
-        _oneBit = im > 128;
+        _oneBit = im[1] > 128;
     }
 
     public void Dispose()
@@ -301,6 +301,20 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(q90SubsampleAuto.Length, q90.Length);
         Assert.True(q90SubsampleOn.Length < q90.Length);
         Assert.Equal(q90SubsampleAuto.Length, q90SubsampleOff.Length);
+
+        // A non-zero restart_interval should result in a bigger file.
+        // Otherwise, smaller restart intervals will have more restart markers
+        // and therefore be larger
+        var r0 = im.JpegsaveBuffer(restartInterval: 0);
+        var r10 = im.JpegsaveBuffer(restartInterval: 10);
+        var r2 = im.JpegsaveBuffer(restartInterval: 2);
+        Assert.True(r10.Length > r0.Length);
+        Assert.True(r2.Length > r10.Length);
+
+        // we should be able to reload jpegs with extra MCU markers
+        var im0 = Image.JpegloadBuffer(r0);
+        var im10 = Image.JpegloadBuffer(r10);
+        Assert.Equal(im10.Avg(), im0.Avg());
     }
 
     [SkippableFact]
@@ -335,6 +349,8 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(290, im.Width);
             Assert.Equal(442, im.Height);
             Assert.Equal(3, im.Bands);
+            Assert.Equal(16, im.Get("bits-per-sample"));
+            Assert.False(im.Contains("palette"));
         }
 
         FileLoader("pngload", Helper.PngFile, PngValid);
@@ -359,8 +375,32 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         var lenMono1 = _mono.PngsaveBuffer(bitdepth: 1).Length;
         Assert.True(lenMono1 < lenMono2);
 
+        // take a 1-bit image to png and back
+        var onebit = _mono > 128;
+        var data = onebit.PngsaveBuffer(bitdepth: 1);
+        var after = Image.NewFromBuffer(data);
+        Assert.Equal(0, (onebit - after).Abs().Max());
+        Assert.Equal(1, after.Get("bits-per-sample"));
+
         // we can't test palette save since we can't be sure libimagequant is
         // available and there's no easy test for its presence
+
+        // Add EXIF to new PNG
+        var im1 = Image.Black(8, 8);
+        im1 = im1.Mutate(im => im.Set(GValue.GStrType,
+            "exif-ifd0-ImageDescription", "test description"));
+        var im2 = Image.NewFromBuffer(im1.WriteToBuffer(".png"));
+        Assert.StartsWith("test description", (string)im2.Get("exif-ifd0-ImageDescription"));
+
+        // we should be able to save an 8-bit image as a 16-bit PNG
+        data = _colour.PngsaveBuffer(bitdepth: 16);
+        var rgb16 = Image.PngloadBuffer(data);
+        Assert.Equal(Enums.BandFormat.Ushort, rgb16.Format);
+
+        // we should be able to save a 16-bit image as an 8-bit PNG
+        data = rgb16.PngsaveBuffer(bitdepth: 8);
+        var rgb = Image.PngloadBuffer(data);
+        Assert.Equal(Enums.BandFormat.Uchar, rgb.Format);
     }
 
     [SkippableFact]
@@ -411,6 +451,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(290, im.Width);
             Assert.Equal(442, im.Height);
             Assert.Equal(3, im.Bands);
+            Assert.Equal(16, im.Get("bits-per-sample"));
         }
 
         void Tiff1Valid(Image im)
@@ -422,6 +463,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(256, im.Width);
             Assert.Equal(4, im.Height);
             Assert.Equal(1, im.Bands);
+            Assert.Equal(1, im.Get("bits-per-sample"));
         }
 
         FileLoader("tiffload", Helper.Tif1File, Tiff1Valid);
@@ -435,6 +477,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(256, im.Width);
             Assert.Equal(4, im.Height);
             Assert.Equal(1, im.Bands);
+            Assert.Equal(2, im.Get("bits-per-sample"));
         }
 
         FileLoader("tiffload", Helper.Tif2File, Tiff2Valid);
@@ -448,6 +491,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(256, im.Width);
             Assert.Equal(4, im.Height);
             Assert.Equal(1, im.Bands);
+            Assert.Equal(4, im.Get("bits-per-sample"));
         }
 
         FileLoader("tiffload", Helper.Tif4File, Tiff4Valid);
@@ -623,6 +667,19 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     }
 
     [SkippableFact]
+    public void TestTiffJp2K()
+    {
+        Skip.IfNot(Helper.Have("tiffload") && Helper.Have("jp2kload"), "no tiff or jp2k support, skipping test");
+
+        SaveLoadFile(".tif", "[tile,compression=jp2k]", _colour, 80);
+        SaveLoadFile(".tif",
+            "[tile,pyramid,compression=jp2k]", _colour, 80);
+        SaveLoadFile(".tif",
+            "[tile,pyramid,subifd,compression=jp2k]",
+            _colour, 80);
+    }
+
+    [SkippableFact]
     public void TestMagickLoad()
     {
         Skip.IfNot(Helper.Have("magickload"), "no magick support, skipping test");
@@ -634,6 +691,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Helper.AssertAlmostEqualObjects(new double[] { 227, 216, 201 }, a);
             Assert.Equal(1419, im.Width);
             Assert.Equal(1001, im.Height);
+            Assert.Equal(8, im.Get("bits-per-sample"));
         }
 
         FileLoader("magickload", Helper.BmpFile, BmpValid);
@@ -818,6 +876,11 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(x1.Get("page-height"), x2.Get("page-height"));
             Assert.Equal(x1.Get("gif-loop"), x2.Get("gif-loop"));
         }
+
+        //  target_size should reasonably work, +/- 2% is fine
+        x = Image.NewFromFile(Helper.WebpFile);
+        buf = x.WebpsaveBuffer(targetSize: 20_000, keep: Enums.ForeignKeep.None);
+        Assert.InRange(buf.Length, 19600, 20400);
     }
 
     [SkippableFact]
@@ -1081,6 +1144,50 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         });
         Assert.Equal(x.Width * 2, y.Width, 2.0);
         Assert.Equal(x.Height * 2, y.Height, 2.0);
+
+        Assert.Throws<VipsException>(() => Image.NewFromBuffer(
+            """<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0"></svg>"""));
+
+        // recognize dimensions for SVGs without width/height
+        var svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"></svg>""";
+        var im = Image.NewFromBuffer(svg);
+        Assert.Equal(100, im.Width);
+        Assert.Equal(100, im.Height);
+
+        svg = """<svg xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" /></svg>""";
+        im = Image.NewFromBuffer(svg);
+        Assert.Equal(100, im.Width);
+        Assert.Equal(100, im.Height);
+
+        // width and height of 0.5 is valid
+        svg = """<svg xmlns="http://www.w3.org/2000/svg" width="0.5" height="0.5"></svg>""";
+        im = Image.NewFromBuffer(svg);
+        Assert.Equal(1, im.Width);
+        Assert.Equal(1, im.Height);
+
+        // scale up
+        var svgSpan = """<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"></svg>"""u8;
+        im = Image.NewFromBuffer(svgSpan, kwargs: new VOption
+        {
+            {"scale", 10000}
+        });
+        Assert.Equal(10000, im.Width);
+        Assert.Equal(10000, im.Height);
+
+        svgSpan = """<svg xmlns="http://www.w3.org/2000/svg" width="100000" height="100000"></svg>"""u8;
+        im = Image.NewFromBuffer(svgSpan, kwargs: new VOption
+        {
+            {"scale", 0.0001}
+        });
+        Assert.Equal(10, im.Width);
+        Assert.Equal(10, im.Height);
+
+        // Custom CSS stylesheet
+        im = Image.NewFromFile(Helper.SvgFile);
+        Assert.True(im.Avg() < 5);
+
+        im = Image.Svgload(Helper.SvgFile, stylesheet: "path{stroke:#f00;stroke-width:1em;}");
+        Assert.True(im.Avg() > 5);
     }
 
     [Fact]
@@ -1116,9 +1223,19 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     {
         Skip.IfNot(Helper.Have("ppmload"), "no PPM support, skipping test");
 
-        SaveLoad("%s.ppm", _mono);
-        SaveLoad("%s.ppm", _colour);
-    
+        SaveLoadFile(".pgm", "[ascii]", _mono);
+        SaveLoadFile(".ppm", "[ascii]", _colour);
+
+        SaveLoadFile(".pbm", "[ascii]", _oneBit);
+
+        var rgb16 = _colour.Colourspace(Enums.Interpretation.Rgb16);
+        var grey16 = _mono.Colourspace(Enums.Interpretation.Rgb16);
+
+        SaveLoad("%s.ppm", rgb16);
+
+        SaveLoadFile(".ppm", "[ascii]", grey16);
+        SaveLoadFile(".ppm", "[ascii]", rgb16);
+
         var x = Target.NewToMemory();
         _mono.PpmsaveTarget(x);
 
@@ -1133,7 +1250,9 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     {
         Skip.IfNot(Helper.Have("radload"), "no Radiance support, skipping test");
 
-        SaveLoad("%s.hdr", _colour);
+        SaveLoad("%s.hdr", _rad);
+        SaveLoad("%s.pfm", _rad);
+        SaveLoad("%s.tif", _rad);
         SaveBufferTempFile("radsave_buffer", ".hdr", _rad);
         SaveLoadStream(".hdr", "", _rad);
     }

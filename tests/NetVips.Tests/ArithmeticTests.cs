@@ -432,10 +432,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
 
         var im = _colour * -1;
-        RunUnary(
-        [
-            im
-        ], Abs);
+        RunUnary([im], Abs);
     }
 
     [Fact]
@@ -1244,6 +1241,55 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
             var im3 = Image.Sum(im2);
 
             Assert.Equal(Enumerable.Range(0, 100).Where(i => i % 10 == 0).Sum(), im3.Max());
+        }
+    }
+
+    [Fact]
+    public void TestClamp()
+    {
+        foreach (var fmt in Helper.NonComplexFormats)
+        {
+            for (var x = 0; x < 100; x += 10)
+            {
+                var im2 = (_colour + x).Cast(fmt);
+                var im3 = im2.Clamp();
+                Assert.True(im3.Max() <= 1.0);
+                Assert.True(im3.Min() >= 0.0);
+
+                im3 = im2.Clamp(min: 14, max: 45);
+                Assert.True(im3.Max() <= 45);
+                Assert.True(im3.Min() >= 14);
+            }
+        }
+    }
+
+    [Fact]
+    public void TestMinpair()
+    {
+        foreach (var fmt in Helper.NonComplexFormats)
+        {
+            for (var x = 0; x < 100; x += 10)
+            {
+                var im2 = ((_colour - x) * 5).Cast(fmt);
+                var im3 = im2.Minpair(_colour);
+                var im4 = (im2 < _colour).Ifthenelse(im2, _colour);
+                Assert.Equal(0, (im3 - im4).Abs().Max());
+            }
+        }
+    }
+
+    [Fact]
+    public void TestMaxpair()
+    {
+        foreach (var fmt in Helper.NonComplexFormats)
+        {
+            for (var x = 0; x < 100; x += 10)
+            {
+                var im2 = ((_colour - x) * 5).Cast(fmt);
+                var im3 = im2.Maxpair(_colour);
+                var im4 = (im2 > _colour).Ifthenelse(im2, _colour);
+                Assert.Equal(0, (im3 - im4).Abs().Max());
+            }
         }
     }
 

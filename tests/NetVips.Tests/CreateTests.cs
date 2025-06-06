@@ -522,6 +522,45 @@ public class CreateTests : IClassFixture<TestsFixture>
     }
 
     [Fact]
+    public void TestSdf()
+    {
+        var im = Image.Sdf(128, 128, Enums.SdfShape.Circle, a: [64, 64], r: 32);
+        Assert.Equal(1, im.Bands);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
+        Assert.Equal(128, im.Width);
+        Assert.Equal(128, im.Height);
+        var p = im[45, 35];
+        Assert.Equal(2.670, p[0], 2);
+
+        im = Image.Sdf(128, 128, Enums.SdfShape.Box, a: [10, 10], b: [50, 40]);
+        Assert.Equal(1, im.Bands);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
+        Assert.Equal(128, im.Width);
+        Assert.Equal(128, im.Height);
+        p = im[45, 35];
+        Assert.Equal(-5.0, p[0], 4);
+
+        im = Image.Sdf(128, 128, Enums.SdfShape.RoundedBox,
+            a: [10, 10],
+            b: [50, 40],
+            corners: [50, 0, 0, 0]);
+        Assert.Equal(1, im.Bands);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
+        Assert.Equal(128, im.Width);
+        Assert.Equal(128, im.Height);
+        p = im[45, 35];
+        Assert.Equal(13.640, p[0], 2);
+
+        im = Image.Sdf(128, 128, Enums.SdfShape.Line, a: [10, 10], b: [50, 40]);
+        Assert.Equal(1, im.Bands);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
+        Assert.Equal(128, im.Width);
+        Assert.Equal(128, im.Height);
+        p = im[45, 35];
+        Assert.Equal(1.0, p[0], 2);
+    }
+
+    [Fact]
     public void TestZone()
     {
         var im = Image.Zone(128, 128);

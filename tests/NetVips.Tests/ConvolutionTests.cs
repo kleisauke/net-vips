@@ -103,11 +103,11 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
                 {
                     var convolved = im.Conv(msk, precision: prec);
 
-                    var result = convolved.Getpoint(25, 50);
+                    var result = convolved[25, 50];
                     var @true = Conv(im, msk, 24, 49) as IEnumerable;
                     Helper.AssertAlmostEqualObjects(@true, result);
 
-                    result = convolved.Getpoint(50, 50);
+                    result = convolved[50, 50];
                     @true = Conv(im, msk, 49, 49) as IEnumerable;
                     Helper.AssertAlmostEqualObjects(@true, result);
                 }
@@ -128,12 +128,12 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
 
                 var convolved = im.Conv(msk, precision: Enums.Precision.Approximate);
 
-                var result = convolved.Getpoint(25, 50);
+                var result = convolved[25, 50];
                 var @true = Conv(im, msk, 24, 49);
                 Console.WriteLine($"result = {result}, true = {@true}");
                 Helper.AssertLessThreshold(@true, result, 5);
 
-                result = convolved.Getpoint(50, 50);
+                result = convolved[50, 50];
                 @true = Conv(im, msk, 49, 49);
                 Console.WriteLine($"result = {result}, true = {@true}");
                 Helper.AssertLessThreshold(@true, result, 5);
@@ -155,7 +155,7 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
                         var convolved = im.Compass(msk, times: times, angle: Enums.Angle45.D45,
                             combine: Enums.Combine.Max, precision: prec);
 
-                        var result = convolved.Getpoint(25, 50);
+                        var result = convolved[25, 50];
                         var @true =
                             Compass(im, msk, 24, 49, times,
                                 (dynamic a, dynamic b) => Math.Max(a, b)) as IEnumerable;
@@ -176,7 +176,7 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
                         var convolved = im.Compass(msk, times: times, angle: Enums.Angle45.D45,
                             combine: Enums.Combine.Sum, precision: prec);
 
-                        var result = convolved.Getpoint(25, 50);
+                        var result = convolved[25, 50];
                         var @true = Compass(im, msk, 24, 49, times, (dynamic a, dynamic b) => a + b) as IEnumerable;
                         Helper.AssertAlmostEqualObjects(@true, result);
                     }
@@ -202,8 +202,8 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
                 var a = im.Conv(gmask, precision: prec);
                 var b = im.Convsep(gmaskSep, precision: prec);
 
-                var aPoint = a.Getpoint(25, 50);
-                var bPoint = b.Getpoint(25, 50);
+                var aPoint = a[25, 50];
+                var bPoint = b[25, 50];
 
                 Helper.AssertAlmostEqualObjects(aPoint, bPoint, 0.1);
             }
@@ -267,8 +267,8 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
                     var a = im.Conv(gmask, precision: prec);
                     var b = im.Gaussblur(sigma, minAmpl: 0.2, precision: prec);
 
-                    var aPoint = a.Getpoint(25, 50);
-                    var bPoint = b.Getpoint(25, 50);
+                    var aPoint = a[25, 50];
+                    var bPoint = b[25, 50];
 
                     Helper.AssertAlmostEqualObjects(aPoint, bPoint, 0.1);
                 }

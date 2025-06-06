@@ -89,6 +89,33 @@ public class ConversionTests : IClassFixture<TestsFixture>
     #endregion
 
     [Fact]
+    public void TestCast()
+    {
+        // casting negative pixels to an unsigned format should clip to zero
+        foreach (var signed in Helper.SignedFormats)
+        {
+            var im = (Image.Black(1, 1) - 10).Cast(signed);
+            foreach (var unsigned in Helper.UnsignedFormats)
+            {
+                var im2 = im.Cast(unsigned);
+                Assert.Equal(0, im2.Avg());
+            }
+        }
+
+        // casting very positive pixels to a signed format should clip to max
+        var im3 = (Image.Black(1, 1) + Helper.MaxValue[Enums.BandFormat.Uint]).Cast(Enums.BandFormat.Uint);
+        Assert.Equal(Helper.MaxValue[Enums.BandFormat.Uint], im3.Avg());
+        var im4 = im3.Cast(Enums.BandFormat.Int);
+        Assert.Equal(Helper.MaxValue[Enums.BandFormat.Int], im4.Avg());
+        im3 = (Image.Black(1, 1) + Helper.MaxValue[Enums.BandFormat.Ushort]).Cast(Enums.BandFormat.Ushort);
+        im4 = im3.Cast(Enums.BandFormat.Short);
+        Assert.Equal(Helper.MaxValue[Enums.BandFormat.Short], im4.Avg());
+        im3 = (Image.Black(1, 1) + Helper.MaxValue[Enums.BandFormat.Uchar]).Cast(Enums.BandFormat.Uchar);
+        im4 = im3.Cast(Enums.BandFormat.Char);
+        Assert.Equal(Helper.MaxValue[Enums.BandFormat.Char], im4.Avg());
+    }
+
+    [Fact]
     public void TestBandAnd()
     {
         dynamic BandAnd(dynamic x)
@@ -418,6 +445,20 @@ public class ConversionTests : IClassFixture<TestsFixture>
     }
 
     [Fact]
+    public void TestSmartcropAttention()
+    {
+        var test = _image.Smartcrop(100, 100,
+            interesting: Enums.Interesting.Attention,
+            attentionX: out var attentionX,
+            attentionY: out var attentionY);
+        Assert.Equal(100, test.Width);
+        Assert.Equal(100, test.Height);
+
+        Assert.Equal(576, attentionX);
+        Assert.Equal(288, attentionY);
+    }
+
+    [Fact]
     public void TestFalsecolour()
     {
         foreach (var fmt in Helper.AllFormats)
@@ -462,7 +503,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
                 var x = zip[0];
                 var y = zip[1];
 
-                // we use float arithetic for int and uint, so the rounding
+                // we use float arithmetic for int and uint, so the rounding
                 // differs ... don't require huge accuracy
                 Assert.Equal(x, y, 2.0);
             }
