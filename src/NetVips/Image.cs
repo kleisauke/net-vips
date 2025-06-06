@@ -235,6 +235,7 @@ public partial class Image : VipsObject
     /// <param name="access">Hint the expected access pattern for the image.</param>
     /// <param name="failOn">The type of error that will cause load to fail. By
     /// default, loaders are permissive, that is, <see cref="Enums.FailOn.None"/>.</param>
+    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <param name="kwargs">Optional options that depend on the load operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     /// <exception cref="VipsException">If unable to load from <paramref name="vipsFilename"/>.</exception>
@@ -243,6 +244,7 @@ public partial class Image : VipsObject
         bool? memory = null,
         Enums.Access? access = null,
         Enums.FailOn? failOn = null,
+        bool? revalidate = null,
         VOption kwargs = null)
     {
         var bytes = Encoding.UTF8.GetBytes(vipsFilename + char.MinValue); // Ensure null-terminated string
@@ -264,6 +266,7 @@ public partial class Image : VipsObject
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
+        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("string_options", fileOptions);
 

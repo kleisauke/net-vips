@@ -7,6 +7,7 @@ using Xunit.Abstractions;
 
 namespace NetVips.Tests;
 
+[Collection(nameof(NonParallelTestCollection))]
 public class IoFuncsTests : IClassFixture<TestsFixture>
 {
     public IoFuncsTests(TestsFixture testsFixture, ITestOutputHelper output)
@@ -275,5 +276,36 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
     {
         // vips should have been initialized when this assembly was loaded.
         Assert.True(ModuleInitializer.VipsInitialized);
+    }
+
+    [SkippableFact]
+    public void TestRevalidate()
+    {
+        Skip.If(Cache.Max == 0, "requires a functional operation cache");
+
+        var tempDir = Helper.GetTemporaryDirectory();
+        var filename = Helper.GetTemporaryFile(tempDir, ".v");
+
+        var im1 = Image.Black(10, 10);
+        im1.WriteToFile(filename);
+
+        var load1 = Image.NewFromFile(filename);
+        Assert.Equal(im1.Width, load1.Width);
+
+        var im2 = Image.Black(20, 20);
+        im2.WriteToFile(filename);
+
+        // this will use the old, cached load
+        var load2 = Image.NewFromFile(filename);
+        Assert.Equal(im1.Width, load2.Width);
+
+        // load again with "revalidate" and we should see the new image
+        load2 = Image.NewFromFile(filename, revalidate: true);
+        Assert.Equal(im2.Width, load2.Width);
+
+        // load once more without revalidate and we should see the cache
+        // new image
+        load2 = Image.NewFromFile(filename);
+        Assert.Equal(im2.Width, load2.Width);
     }
 }
