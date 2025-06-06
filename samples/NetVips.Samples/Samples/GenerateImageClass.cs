@@ -163,19 +163,23 @@ public class GenerateImageClass : ISample
 
         var intro = Introspect.Get(operationName);
 
+        // these are always non-deprecated
+        var requiredInput = intro.RequiredInput.ToArray();
+        var requiredOutput = intro.RequiredOutput.ToArray();
+
+        nint firstArgType = requiredInput.Length > 0 ? op.GetTypeOf(requiredInput[0].Name) : IntPtr.Zero;
+
         // we are only interested in non-deprecated args
         var optionalInput = intro.OptionalInput
             .Where(arg => (arg.Value.Flags & Enums.ArgumentFlags.DEPRECATED) == 0)
+            // Drop "revalidate" option from source and buffer loaders as they are already uncached
+            .Where(arg => arg.Key != "revalidate" || (firstArgType != GValue.SourceType && firstArgType != GValue.BlobType))
             .Select(x => x.Value)
             .ToArray();
         var optionalOutput = intro.OptionalOutput
             .Where(arg => (arg.Value.Flags & Enums.ArgumentFlags.DEPRECATED) == 0)
             .Select(x => x.Value)
             .ToArray();
-
-        // these are always non-deprecated
-        var requiredInput = intro.RequiredInput.ToArray();
-        var requiredOutput = intro.RequiredOutput.ToArray();
 
         if (mutable ^ intro.Mutable)
         {
@@ -547,8 +551,6 @@ public class GenerateImageClass : ISample
 
         result.Append($"{indent}}}")
             .AppendLine();
-
-        nint firstArgType = requiredInput.Length > 0 ? op.GetTypeOf(requiredInput[0].Name) : IntPtr.Zero;
 
         // Create stream overload if necessary
         if (firstArgType == GValue.SourceType || firstArgType == GValue.TargetType)

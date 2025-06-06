@@ -898,7 +898,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.CsvloadSource(source, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.CsvloadSource(source, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -909,9 +909,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image CsvloadSource(Source source, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image CsvloadSource(Source source, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -922,7 +921,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("csvload_source", options, source) as Image;
     }
@@ -932,7 +930,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.CsvloadStream(stream, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.CsvloadStream(stream, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -943,12 +941,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image CsvloadStream(Stream stream, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image CsvloadStream(Stream stream, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = CsvloadSource(source, skip, lines, whitespace, separator, memory, access, failOn, revalidate);
+        var image = CsvloadSource(source, skip, lines, whitespace, separator, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -960,7 +957,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.CsvloadSource(source, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.CsvloadSource(source, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -972,9 +969,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image CsvloadSource(Source source, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image CsvloadSource(Source source, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -985,7 +981,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -1002,7 +997,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.CsvloadStream(stream, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.CsvloadStream(stream, out var flags, skip: int, lines: int, whitespace: string, separator: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -1014,12 +1009,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image CsvloadStream(Stream stream, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image CsvloadStream(Stream stream, out Enums.ForeignFlags flags, int? skip = null, int? lines = null, string whitespace = null, string separator = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = CsvloadSource(source, out flags, skip, lines, whitespace, separator, memory, access, failOn, revalidate);
+        var image = CsvloadSource(source, out flags, skip, lines, whitespace, separator, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -1608,23 +1602,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.FitsloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.FitsloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image FitsloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image FitsloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("fitsload_source", options, source) as Image;
     }
@@ -1634,19 +1626,18 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.FitsloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.FitsloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image FitsloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image FitsloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = FitsloadSource(source, memory, access, failOn, revalidate);
+        var image = FitsloadSource(source, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -1658,7 +1649,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.FitsloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.FitsloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -1666,16 +1657,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image FitsloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image FitsloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -1692,7 +1681,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.FitsloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.FitsloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -1700,12 +1689,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image FitsloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image FitsloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = FitsloadSource(source, out flags, memory, access, failOn, revalidate);
+        var image = FitsloadSource(source, out flags, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -2016,7 +2004,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.GifloadBuffer(buffer, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.GifloadBuffer(buffer, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -2025,9 +2013,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image GifloadBuffer(byte[] buffer, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image GifloadBuffer(byte[] buffer, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2036,7 +2023,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("gifload_buffer", options, buffer) as Image;
     }
@@ -2046,7 +2032,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.GifloadBuffer(buffer, out var flags, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -2056,9 +2042,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image GifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image GifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2067,7 +2052,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -2084,7 +2068,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.GifloadSource(source, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.GifloadSource(source, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -2093,9 +2077,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image GifloadSource(Source source, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image GifloadSource(Source source, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2104,7 +2087,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("gifload_source", options, source) as Image;
     }
@@ -2114,7 +2096,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.GifloadStream(stream, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.GifloadStream(stream, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -2123,12 +2105,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image GifloadStream(Stream stream, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image GifloadStream(Stream stream, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = GifloadSource(source, n, page, memory, access, failOn, revalidate);
+        var image = GifloadSource(source, n, page, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -2140,7 +2121,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.GifloadSource(source, out var flags, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.GifloadSource(source, out var flags, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -2150,9 +2131,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image GifloadSource(Source source, out Enums.ForeignFlags flags, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image GifloadSource(Source source, out Enums.ForeignFlags flags, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2161,7 +2141,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -2178,7 +2157,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.GifloadStream(stream, out var flags, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.GifloadStream(stream, out var flags, n: int, page: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -2188,12 +2167,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image GifloadStream(Stream stream, out Enums.ForeignFlags flags, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image GifloadStream(Stream stream, out Enums.ForeignFlags flags, int? n = null, int? page = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = GifloadSource(source, out flags, n, page, memory, access, failOn, revalidate);
+        var image = GifloadSource(source, out flags, n, page, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -2514,7 +2492,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.HeifloadBuffer(buffer, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.HeifloadBuffer(buffer, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -2525,9 +2503,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image HeifloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image HeifloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2538,7 +2515,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("heifload_buffer", options, buffer) as Image;
     }
@@ -2548,7 +2524,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.HeifloadBuffer(buffer, out var flags, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.HeifloadBuffer(buffer, out var flags, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -2560,9 +2536,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image HeifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image HeifloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2573,7 +2548,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -2590,7 +2564,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.HeifloadSource(source, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.HeifloadSource(source, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -2601,9 +2575,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image HeifloadSource(Source source, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image HeifloadSource(Source source, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2614,7 +2587,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("heifload_source", options, source) as Image;
     }
@@ -2624,7 +2596,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.HeifloadStream(stream, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.HeifloadStream(stream, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -2635,12 +2607,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image HeifloadStream(Stream stream, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image HeifloadStream(Stream stream, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = HeifloadSource(source, page, n, thumbnail, unlimited, memory, access, failOn, revalidate);
+        var image = HeifloadSource(source, page, n, thumbnail, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -2652,7 +2623,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.HeifloadSource(source, out var flags, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.HeifloadSource(source, out var flags, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -2664,9 +2635,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image HeifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image HeifloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -2677,7 +2647,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -2694,7 +2663,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.HeifloadStream(stream, out var flags, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.HeifloadStream(stream, out var flags, page: int, n: int, thumbnail: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -2706,12 +2675,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image HeifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image HeifloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? thumbnail = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = HeifloadSource(source, out flags, page, n, thumbnail, unlimited, memory, access, failOn, revalidate);
+        var image = HeifloadSource(source, out flags, page, n, thumbnail, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -3385,7 +3353,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.Jp2kloadBuffer(buffer, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.Jp2kloadBuffer(buffer, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -3394,9 +3362,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image Jp2kloadBuffer(byte[] buffer, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image Jp2kloadBuffer(byte[] buffer, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3405,7 +3372,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("jp2kload_buffer", options, buffer) as Image;
     }
@@ -3415,7 +3381,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.Jp2kloadBuffer(buffer, out var flags, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.Jp2kloadBuffer(buffer, out var flags, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -3425,9 +3391,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image Jp2kloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image Jp2kloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3436,7 +3401,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -3453,7 +3417,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.Jp2kloadSource(source, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.Jp2kloadSource(source, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -3462,9 +3426,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image Jp2kloadSource(Source source, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image Jp2kloadSource(Source source, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3473,7 +3436,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("jp2kload_source", options, source) as Image;
     }
@@ -3483,7 +3445,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.Jp2kloadStream(stream, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.Jp2kloadStream(stream, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -3492,12 +3454,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image Jp2kloadStream(Stream stream, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image Jp2kloadStream(Stream stream, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = Jp2kloadSource(source, page, oneshot, memory, access, failOn, revalidate);
+        var image = Jp2kloadSource(source, page, oneshot, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -3509,7 +3470,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.Jp2kloadSource(source, out var flags, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.Jp2kloadSource(source, out var flags, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -3519,9 +3480,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image Jp2kloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image Jp2kloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3530,7 +3490,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -3547,7 +3506,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.Jp2kloadStream(stream, out var flags, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.Jp2kloadStream(stream, out var flags, page: int, oneshot: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -3557,12 +3516,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image Jp2kloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image Jp2kloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, bool? oneshot = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = Jp2kloadSource(source, out flags, page, oneshot, memory, access, failOn, revalidate);
+        var image = Jp2kloadSource(source, out flags, page, oneshot, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -3775,7 +3733,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JpegloadBuffer(buffer, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JpegloadBuffer(buffer, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -3785,9 +3743,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JpegloadBuffer(byte[] buffer, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JpegloadBuffer(byte[] buffer, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3797,7 +3754,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("jpegload_buffer", options, buffer) as Image;
     }
@@ -3807,7 +3763,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JpegloadBuffer(buffer, out var flags, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -3818,9 +3774,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JpegloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JpegloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3830,7 +3785,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -3847,7 +3801,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JpegloadSource(source, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -3857,9 +3811,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JpegloadSource(Source source, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JpegloadSource(Source source, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3869,7 +3822,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("jpegload_source", options, source) as Image;
     }
@@ -3879,7 +3831,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JpegloadStream(stream, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -3889,12 +3841,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JpegloadStream(Stream stream, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JpegloadStream(Stream stream, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = JpegloadSource(source, shrink, autorotate, unlimited, memory, access, failOn, revalidate);
+        var image = JpegloadSource(source, shrink, autorotate, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -3906,7 +3857,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JpegloadSource(source, out var flags, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -3917,9 +3868,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JpegloadSource(Source source, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JpegloadSource(Source source, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -3929,7 +3879,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -3946,7 +3895,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JpegloadStream(stream, out var flags, shrink: int, autorotate: bool, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -3957,12 +3906,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JpegloadStream(Stream stream, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JpegloadStream(Stream stream, out Enums.ForeignFlags flags, int? shrink = null, bool? autorotate = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = JpegloadSource(source, out flags, shrink, autorotate, unlimited, memory, access, failOn, revalidate);
+        var image = JpegloadSource(source, out flags, shrink, autorotate, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -4241,7 +4189,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JxlloadBuffer(buffer, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JxlloadBuffer(buffer, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -4250,9 +4198,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JxlloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JxlloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -4261,7 +4208,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("jxlload_buffer", options, buffer) as Image;
     }
@@ -4271,7 +4217,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JxlloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JxlloadBuffer(buffer, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -4281,9 +4227,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JxlloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JxlloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -4292,7 +4237,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -4309,7 +4253,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JxlloadSource(source, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JxlloadSource(source, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -4318,9 +4262,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JxlloadSource(Source source, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JxlloadSource(Source source, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -4329,7 +4272,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("jxlload_source", options, source) as Image;
     }
@@ -4339,7 +4281,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JxlloadStream(stream, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JxlloadStream(stream, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -4348,12 +4290,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JxlloadStream(Stream stream, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JxlloadStream(Stream stream, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = JxlloadSource(source, page, n, memory, access, failOn, revalidate);
+        var image = JxlloadSource(source, page, n, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -4365,7 +4306,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JxlloadSource(source, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JxlloadSource(source, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -4375,9 +4316,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JxlloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JxlloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -4386,7 +4326,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -4403,7 +4342,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.JxlloadStream(stream, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.JxlloadStream(stream, out var flags, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -4413,12 +4352,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image JxlloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image JxlloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = JxlloadSource(source, out flags, page, n, memory, access, failOn, revalidate);
+        var image = JxlloadSource(source, out flags, page, n, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -4898,7 +4836,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.MagickloadBuffer(buffer, density: string, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -4908,9 +4846,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image MagickloadBuffer(byte[] buffer, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image MagickloadBuffer(byte[] buffer, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -4920,7 +4857,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("magickload_buffer", options, buffer) as Image;
     }
@@ -4930,7 +4866,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.MagickloadBuffer(buffer, out var flags, density: string, page: int, n: int, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -4941,9 +4877,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image MagickloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image MagickloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, string density = null, int? page = null, int? n = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -4953,7 +4888,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -5599,23 +5533,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.MatrixloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.MatrixloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image MatrixloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image MatrixloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("matrixload_source", options, source) as Image;
     }
@@ -5625,19 +5557,18 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.MatrixloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.MatrixloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image MatrixloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image MatrixloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = MatrixloadSource(source, memory, access, failOn, revalidate);
+        var image = MatrixloadSource(source, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -5649,7 +5580,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.MatrixloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.MatrixloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -5657,16 +5588,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image MatrixloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image MatrixloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -5683,7 +5612,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.MatrixloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.MatrixloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -5691,12 +5620,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image MatrixloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image MatrixloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = MatrixloadSource(source, out flags, memory, access, failOn, revalidate);
+        var image = MatrixloadSource(source, out flags, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -6721,23 +6649,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.NiftiloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.NiftiloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image NiftiloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image NiftiloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("niftiload_source", options, source) as Image;
     }
@@ -6747,19 +6673,18 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.NiftiloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.NiftiloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image NiftiloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image NiftiloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = NiftiloadSource(source, memory, access, failOn, revalidate);
+        var image = NiftiloadSource(source, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -6771,7 +6696,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.NiftiloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.NiftiloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -6779,16 +6704,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image NiftiloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image NiftiloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -6805,7 +6728,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.NiftiloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.NiftiloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -6813,12 +6736,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image NiftiloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image NiftiloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = NiftiloadSource(source, out flags, memory, access, failOn, revalidate);
+        var image = NiftiloadSource(source, out flags, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -6995,7 +6917,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.OpenslideloadSource(source, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.OpenslideloadSource(source, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -7007,9 +6929,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image OpenslideloadSource(Source source, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image OpenslideloadSource(Source source, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7021,7 +6942,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("openslideload_source", options, source) as Image;
     }
@@ -7031,7 +6951,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.OpenslideloadStream(stream, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.OpenslideloadStream(stream, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -7043,12 +6963,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image OpenslideloadStream(Stream stream, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image OpenslideloadStream(Stream stream, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = OpenslideloadSource(source, level, autocrop, associated, attachAssociated, rgb, memory, access, failOn, revalidate);
+        var image = OpenslideloadSource(source, level, autocrop, associated, attachAssociated, rgb, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -7060,7 +6979,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.OpenslideloadSource(source, out var flags, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.OpenslideloadSource(source, out var flags, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -7073,9 +6992,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image OpenslideloadSource(Source source, out Enums.ForeignFlags flags, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image OpenslideloadSource(Source source, out Enums.ForeignFlags flags, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7087,7 +7005,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -7104,7 +7021,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.OpenslideloadStream(stream, out var flags, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.OpenslideloadStream(stream, out var flags, level: int, autocrop: bool, associated: string, attachAssociated: bool, rgb: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -7117,12 +7034,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image OpenslideloadStream(Stream stream, out Enums.ForeignFlags flags, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image OpenslideloadStream(Stream stream, out Enums.ForeignFlags flags, int? level = null, bool? autocrop = null, string associated = null, bool? attachAssociated = null, bool? rgb = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = OpenslideloadSource(source, out flags, level, autocrop, associated, attachAssociated, rgb, memory, access, failOn, revalidate);
+        var image = OpenslideloadSource(source, out flags, level, autocrop, associated, attachAssociated, rgb, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -7218,7 +7134,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PdfloadBuffer(buffer, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PdfloadBuffer(buffer, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -7231,9 +7147,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PdfloadBuffer(byte[] buffer, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PdfloadBuffer(byte[] buffer, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7246,7 +7161,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("pdfload_buffer", options, buffer) as Image;
     }
@@ -7256,7 +7170,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PdfloadBuffer(buffer, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -7270,9 +7184,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PdfloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PdfloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7285,7 +7198,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -7302,7 +7214,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PdfloadSource(source, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PdfloadSource(source, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -7315,9 +7227,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PdfloadSource(Source source, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PdfloadSource(Source source, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7330,7 +7241,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("pdfload_source", options, source) as Image;
     }
@@ -7340,7 +7250,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PdfloadStream(stream, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PdfloadStream(stream, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -7353,12 +7263,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PdfloadStream(Stream stream, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PdfloadStream(Stream stream, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = PdfloadSource(source, page, n, dpi, scale, background, password, memory, access, failOn, revalidate);
+        var image = PdfloadSource(source, page, n, dpi, scale, background, password, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -7370,7 +7279,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PdfloadSource(source, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PdfloadSource(source, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -7384,9 +7293,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PdfloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PdfloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7399,7 +7307,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -7416,7 +7323,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PdfloadStream(stream, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PdfloadStream(stream, out var flags, page: int, n: int, dpi: double, scale: double, background: double[], password: string, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -7430,12 +7337,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PdfloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PdfloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? dpi = null, double? scale = null, double[] background = null, string password = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = PdfloadSource(source, out flags, page, n, dpi, scale, background, password, memory, access, failOn, revalidate);
+        var image = PdfloadSource(source, out flags, page, n, dpi, scale, background, password, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -7566,7 +7472,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PngloadBuffer(buffer, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PngloadBuffer(buffer, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -7574,9 +7480,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PngloadBuffer(byte[] buffer, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PngloadBuffer(byte[] buffer, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7584,7 +7489,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("pngload_buffer", options, buffer) as Image;
     }
@@ -7594,7 +7498,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PngloadBuffer(buffer, out var flags, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -7603,9 +7507,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PngloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PngloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7613,7 +7516,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -7630,7 +7532,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PngloadSource(source, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PngloadSource(source, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -7638,9 +7540,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PngloadSource(Source source, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PngloadSource(Source source, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7648,7 +7549,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("pngload_source", options, source) as Image;
     }
@@ -7658,7 +7558,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PngloadStream(stream, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PngloadStream(stream, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -7666,12 +7566,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PngloadStream(Stream stream, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PngloadStream(Stream stream, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = PngloadSource(source, unlimited, memory, access, failOn, revalidate);
+        var image = PngloadSource(source, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -7683,7 +7582,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PngloadSource(source, out var flags, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PngloadSource(source, out var flags, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -7692,9 +7591,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PngloadSource(Source source, out Enums.ForeignFlags flags, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PngloadSource(Source source, out Enums.ForeignFlags flags, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -7702,7 +7600,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -7719,7 +7616,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PngloadStream(stream, out var flags, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PngloadStream(stream, out var flags, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -7728,12 +7625,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PngloadStream(Stream stream, out Enums.ForeignFlags flags, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PngloadStream(Stream stream, out Enums.ForeignFlags flags, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = PngloadSource(source, out flags, unlimited, memory, access, failOn, revalidate);
+        var image = PngloadSource(source, out flags, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -7955,23 +7851,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PpmloadBuffer(buffer, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PpmloadBuffer(buffer, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PpmloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PpmloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("ppmload_buffer", options, buffer) as Image;
     }
@@ -7981,7 +7875,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PpmloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PpmloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -7989,16 +7883,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PpmloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PpmloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -8015,23 +7907,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PpmloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PpmloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PpmloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PpmloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("ppmload_source", options, source) as Image;
     }
@@ -8041,19 +7931,18 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PpmloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PpmloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PpmloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PpmloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = PpmloadSource(source, memory, access, failOn, revalidate);
+        var image = PpmloadSource(source, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -8065,7 +7954,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PpmloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PpmloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -8073,16 +7962,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PpmloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PpmloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -8099,7 +7986,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.PpmloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.PpmloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -8107,12 +7994,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image PpmloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image PpmloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = PpmloadSource(source, out flags, memory, access, failOn, revalidate);
+        var image = PpmloadSource(source, out flags, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -8378,23 +8264,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.RadloadBuffer(buffer, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image RadloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image RadloadBuffer(byte[] buffer, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("radload_buffer", options, buffer) as Image;
     }
@@ -8404,7 +8288,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.RadloadBuffer(buffer, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -8412,16 +8296,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image RadloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image RadloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -8438,23 +8320,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.RadloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image RadloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image RadloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("radload_source", options, source) as Image;
     }
@@ -8464,19 +8344,18 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.RadloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image RadloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image RadloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = RadloadSource(source, memory, access, failOn, revalidate);
+        var image = RadloadSource(source, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -8488,7 +8367,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.RadloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -8496,16 +8375,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image RadloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image RadloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -8522,7 +8399,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.RadloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -8530,12 +8407,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image RadloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image RadloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = RadloadSource(source, out flags, memory, access, failOn, revalidate);
+        var image = RadloadSource(source, out flags, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -9715,7 +9591,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.SvgloadBuffer(buffer, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.SvgloadBuffer(buffer, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -9727,9 +9603,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image SvgloadBuffer(byte[] buffer, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image SvgloadBuffer(byte[] buffer, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -9741,7 +9616,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("svgload_buffer", options, buffer) as Image;
     }
@@ -9751,7 +9625,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.SvgloadBuffer(buffer, out var flags, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -9764,9 +9638,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image SvgloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image SvgloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -9778,7 +9651,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -9795,7 +9667,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.SvgloadSource(source, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -9807,9 +9679,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image SvgloadSource(Source source, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image SvgloadSource(Source source, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -9821,7 +9692,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("svgload_source", options, source) as Image;
     }
@@ -9831,7 +9701,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.SvgloadStream(stream, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -9843,12 +9713,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image SvgloadStream(Stream stream, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image SvgloadStream(Stream stream, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = SvgloadSource(source, dpi, scale, unlimited, stylesheet, highBitdepth, memory, access, failOn, revalidate);
+        var image = SvgloadSource(source, dpi, scale, unlimited, stylesheet, highBitdepth, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -9860,7 +9729,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.SvgloadSource(source, out var flags, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -9873,9 +9742,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image SvgloadSource(Source source, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image SvgloadSource(Source source, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -9887,7 +9755,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -9904,7 +9771,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.SvgloadStream(stream, out var flags, dpi: double, scale: double, unlimited: bool, stylesheet: string, highBitdepth: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -9917,12 +9784,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image SvgloadStream(Stream stream, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image SvgloadStream(Stream stream, out Enums.ForeignFlags flags, double? dpi = null, double? scale = null, bool? unlimited = null, string stylesheet = null, bool? highBitdepth = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = SvgloadSource(source, out flags, dpi, scale, unlimited, stylesheet, highBitdepth, memory, access, failOn, revalidate);
+        var image = SvgloadSource(source, out flags, dpi, scale, unlimited, stylesheet, highBitdepth, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -10379,7 +10245,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.TiffloadBuffer(buffer, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.TiffloadBuffer(buffer, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -10391,9 +10257,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image TiffloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image TiffloadBuffer(byte[] buffer, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -10405,7 +10270,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("tiffload_buffer", options, buffer) as Image;
     }
@@ -10415,7 +10279,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.TiffloadBuffer(buffer, out var flags, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -10428,9 +10292,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image TiffloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image TiffloadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -10442,7 +10305,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -10459,7 +10321,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.TiffloadSource(source, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.TiffloadSource(source, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -10471,9 +10333,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image TiffloadSource(Source source, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image TiffloadSource(Source source, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -10485,7 +10346,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("tiffload_source", options, source) as Image;
     }
@@ -10495,7 +10355,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.TiffloadStream(stream, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.TiffloadStream(stream, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -10507,12 +10367,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image TiffloadStream(Stream stream, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image TiffloadStream(Stream stream, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = TiffloadSource(source, page, n, autorotate, subifd, unlimited, memory, access, failOn, revalidate);
+        var image = TiffloadSource(source, page, n, autorotate, subifd, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -10524,7 +10383,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.TiffloadSource(source, out var flags, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -10537,9 +10396,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image TiffloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image TiffloadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -10551,7 +10409,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -10568,7 +10425,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.TiffloadStream(stream, out var flags, page: int, n: int, autorotate: bool, subifd: int, unlimited: bool, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -10581,12 +10438,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image TiffloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image TiffloadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, bool? autorotate = null, int? subifd = null, bool? unlimited = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = TiffloadSource(source, out flags, page, n, autorotate, subifd, unlimited, memory, access, failOn, revalidate);
+        var image = TiffloadSource(source, out flags, page, n, autorotate, subifd, unlimited, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -10998,23 +10854,21 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.VipsloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.VipsloadSource(source, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image VipsloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image VipsloadSource(Source source, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("vipsload_source", options, source) as Image;
     }
@@ -11024,19 +10878,18 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.VipsloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.VipsloadStream(stream, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image VipsloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image VipsloadStream(Stream stream, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = VipsloadSource(source, memory, access, failOn, revalidate);
+        var image = VipsloadSource(source, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -11048,7 +10901,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.VipsloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.VipsloadSource(source, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -11056,16 +10909,14 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image VipsloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image VipsloadSource(Source source, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -11082,7 +10933,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.VipsloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.VipsloadStream(stream, out var flags, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -11090,12 +10941,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image VipsloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image VipsloadStream(Stream stream, out Enums.ForeignFlags flags, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = VipsloadSource(source, out flags, memory, access, failOn, revalidate);
+        var image = VipsloadSource(source, out flags, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -11248,7 +11098,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.WebploadBuffer(buffer, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -11258,9 +11108,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image WebploadBuffer(byte[] buffer, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image WebploadBuffer(byte[] buffer, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -11270,7 +11119,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("webpload_buffer", options, buffer) as Image;
     }
@@ -11280,7 +11128,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.WebploadBuffer(buffer, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="buffer">Buffer to load from.</param>
@@ -11291,9 +11139,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image WebploadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image WebploadBuffer(byte[] buffer, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -11303,7 +11150,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -11320,7 +11166,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.WebploadSource(source, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -11330,9 +11176,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image WebploadSource(Source source, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image WebploadSource(Source source, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -11342,7 +11187,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         return Operation.Call("webpload_source", options, source) as Image;
     }
@@ -11352,7 +11196,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.WebploadStream(stream, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -11362,12 +11206,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image WebploadStream(Stream stream, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image WebploadStream(Stream stream, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = WebploadSource(source, page, n, scale, memory, access, failOn, revalidate);
+        var image = WebploadSource(source, page, n, scale, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
@@ -11379,7 +11222,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.WebploadSource(source, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="source">Source to load from.</param>
@@ -11390,9 +11233,8 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image WebploadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image WebploadSource(Source source, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var options = new VOption();
 
@@ -11402,7 +11244,6 @@ public partial class Image
         options.AddIfPresent(nameof(memory), memory);
         options.AddIfPresent(nameof(access), access);
         options.AddFailOn(failOn);
-        options.AddIfPresent(nameof(revalidate), revalidate);
 
         options.Add("flags", true);
 
@@ -11419,7 +11260,7 @@ public partial class Image
     /// </summary>
     /// <example>
     /// <code language="lang-csharp">
-    /// using Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn, revalidate: bool);
+    /// using Image @out = NetVips.Image.WebploadStream(stream, out var flags, page: int, n: int, scale: double, memory: bool, access: Enums.Access, failOn: Enums.FailOn);
     /// </code>
     /// </example>
     /// <param name="stream">Stream to load from.</param>
@@ -11430,12 +11271,11 @@ public partial class Image
     /// <param name="memory">Force open via memory.</param>
     /// <param name="access">Required access pattern for this file.</param>
     /// <param name="failOn">Error level to fail on.</param>
-    /// <param name="revalidate">Don't use a cached result for this operation.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
-    public static Image WebploadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null, bool? revalidate = null)
+    public static Image WebploadStream(Stream stream, out Enums.ForeignFlags flags, int? page = null, int? n = null, double? scale = null, bool? memory = null, Enums.Access? access = null, Enums.FailOn? failOn = null)
     {
         var source = SourceStream.NewFromStream(stream);
-        var image = WebploadSource(source, out flags, page, n, scale, memory, access, failOn, revalidate);
+        var image = WebploadSource(source, out flags, page, n, scale, memory, access, failOn);
 
         image.OnPostClose += () => source.Dispose();
 
