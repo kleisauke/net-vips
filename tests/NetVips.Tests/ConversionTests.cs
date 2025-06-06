@@ -22,11 +22,7 @@ public class ConversionTests : IClassFixture<TestsFixture>
         _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
         _mono = _colour[1];
         _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
-        _allImages =
-        [
-            _mono,
-            _colour
-        ];
+        _allImages = [_mono, _colour];
         _image = Image.Jpegload(Helper.JpegFile);
     }
 
@@ -316,11 +312,9 @@ public class ConversionTests : IClassFixture<TestsFixture>
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestGravity()
     {
-        Skip.IfNot(Helper.Have("gravity"), "no gravity in this vips, skipping test");
-
         var im = Image.Black(1, 1) + 255;
         var positions = new Dictionary<Enums.CompassDirection, int[]>
         {
@@ -415,11 +409,9 @@ public class ConversionTests : IClassFixture<TestsFixture>
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestSmartcrop()
     {
-        Skip.IfNot(Helper.Have("smartcrop"), "no smartcrop, skipping test");
-
         var test = _image.Smartcrop(100, 100);
         Assert.Equal(100, test.Width);
         Assert.Equal(100, test.Height);
@@ -528,11 +520,9 @@ public class ConversionTests : IClassFixture<TestsFixture>
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestComposite()
     {
-        Skip.IfNot(Helper.Have("composite"), "no composite support, skipping test");
-
         // 50% transparent image
         var overlay = _colour.Bandjoin(128);
         var baseImage = _colour + 100;
@@ -773,12 +763,9 @@ public class ConversionTests : IClassFixture<TestsFixture>
         Helper.AssertAlmostEqualObjects(new[] { 3.0, 4.9, 6.9 }, result2, 0.1);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestSwitch()
     {
-        // switch was added in libvips 8.9.
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 9), "requires libvips >= 8.9");
-
         var x = Image.Grey(256, 256, uchar: true);
 
         // slice into two at 128, we should get 50% of pixels in each half

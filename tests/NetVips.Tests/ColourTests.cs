@@ -34,9 +34,8 @@ public class ColourTests : IClassFixture<TestsFixture>
             }
 
             var pixel = im[10, 10];
-            if (col == Enums.Interpretation.Scrgb && NetVips.AtLeastLibvips(8, 15))
+            if (col == Enums.Interpretation.Scrgb)
             {
-                // libvips 8.15 uses alpha range of 0.0 - 1.0 for scRGB images.
                 Assert.Equal(42.0 / 255.0, pixel[3], 4);
             }
             else
@@ -102,21 +101,18 @@ public class ColourTests : IClassFixture<TestsFixture>
                 monoFmt == Enums.Interpretation.Grey16 ? 30.0 : 1.0);
         }
 
-        if (NetVips.AtLeastLibvips(8, 8))
+        // we should be able to go from cmyk to any 3-band space and back again,
+        // approximately
+        var cmyk = test.Colourspace(Enums.Interpretation.Cmyk);
+        foreach (var end in Helper.ColourColourspaces)
         {
-            // we should be able to go from cmyk to any 3-band space and back again,
-            // approximately
-            var cmyk = test.Colourspace(Enums.Interpretation.Cmyk);
-            foreach (var end in Helper.ColourColourspaces)
-            {
-                im = cmyk.Colourspace(end);
-                var im2 = im.Colourspace(Enums.Interpretation.Cmyk);
+            im = cmyk.Colourspace(end);
+            var im2 = im.Colourspace(Enums.Interpretation.Cmyk);
 
-                before = cmyk[10, 10];
-                after = im2[10, 10];
+            before = cmyk[10, 10];
+            after = im2[10, 10];
 
-                Helper.AssertAlmostEqualObjects(before, after, 10);
-            }
+            Helper.AssertAlmostEqualObjects(before, after, 10);
         }
     }
 
@@ -218,11 +214,9 @@ public class ColourTests : IClassFixture<TestsFixture>
         Assert.Equal(Enums.Interpretation.Lab, im.Interpretation);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestCmyk()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
-
         // even without lcms, we should have a working approximation
         var test = Image.NewFromFile(Helper.JpegFile);
         var im = test.Colourspace(Enums.Interpretation.Cmyk).Colourspace(Enums.Interpretation.Srgb);

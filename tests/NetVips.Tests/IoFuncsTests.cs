@@ -169,11 +169,9 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
         Assert.Equal(10, im.Avg());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestGetFields()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
-
         var im = Image.Black(10, 10);
         var fields = im.GetFields();
 
@@ -183,11 +181,9 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
         Assert.Equal("width", fields[0]);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestGetSuffixes()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
-
         var suffixes = NetVips.GetSuffixes();
 
         // vips supports these file types by default
@@ -213,11 +209,9 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
         Assert.True(s.SequenceEqual(t));
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestRegion()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 8), "requires libvips >= 8.8");
-
         var im = Image.Black(100, 100);
         var region = Region.New(im);
         var data = region.Fetch(0, 0, 10, 10);

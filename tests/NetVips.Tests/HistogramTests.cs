@@ -58,14 +58,11 @@ public class HistogramTests : IClassFixture<TestsFixture>
         Assert.True(im.Avg() < im2.Avg());
         Assert.True(im.Deviate() < im2.Deviate());
 
-        if (NetVips.AtLeastLibvips(8, 5))
-        {
-            var im3 = im.HistLocal(10, 10, maxSlope: 3);
-            Assert.Equal(im.Width, im3.Width);
-            Assert.Equal(im.Height, im3.Height);
+        var im3 = im.HistLocal(10, 10, maxSlope: 3);
+        Assert.Equal(im.Width, im3.Width);
+        Assert.Equal(im.Height, im3.Height);
 
-            Assert.True(im3.Deviate() < im2.Deviate());
-        }
+        Assert.True(im3.Deviate() < im2.Deviate());
     }
 
     [Fact]
@@ -147,12 +144,9 @@ public class HistogramTests : IClassFixture<TestsFixture>
         Assert.True(Math.Abs(im.Avg() - 128) > Math.Abs(im2.Avg() - 128));
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestCase()
     {
-        // case was added in libvips 8.9.
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 9), "requires libvips >= 8.9");
-
         var x = Image.Grey(256, 256, uchar: true);
 
         // slice into two at 128, we should get 50% of pixels in each half

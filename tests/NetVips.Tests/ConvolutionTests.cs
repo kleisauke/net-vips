@@ -28,11 +28,7 @@ public class ConvolutionTests : IClassFixture<TestsFixture>
         _colour = _colour.Copy(interpretation: Enums.Interpretation.Srgb);
         _mono = _colour[0];
         _mono = _mono.Copy(interpretation: Enums.Interpretation.Bw);
-        _allImages =
-        [
-            _mono,
-            _colour
-        ];
+        _allImages = [_mono, _colour];
         _sharp = Image.NewFromArray(new[,]
         {
             {-1, -1, -1},

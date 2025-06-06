@@ -249,12 +249,9 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(0, p[2], 1);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestMatrixinvert()
     {
-        // matrixinvert was added in libvips 8.10.
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 10), "requires libvips >= 8.10");
-
         // 4x4 matrix to check if PLU decomposition works
         var mat = Image.NewFromArray(new[,]
         {
@@ -493,15 +490,12 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.True(im.Max() > 240);
         Assert.Equal(0, im.Min());
 
-        if (NetVips.AtLeastLibvips(8, 9))
-        {
-            // test autofit
-            im = Image.Text("Hello, world!", width: 500, height: 500);
+        // test autofit
+        im = Image.Text("Hello, world!", width: 500, height: 500);
 
-            // quite a large threshold, since we need to work with a huge range of
-            // text rendering systems
-            Assert.Equal(500, im.Width, 50.0);
-        }
+        // quite a large threshold, since we need to work with a huge range of
+        // text rendering systems
+        Assert.Equal(500, im.Width, 50.0);
     }
 
     [Fact]
@@ -537,11 +531,9 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(Enums.BandFormat.Float, im.Format);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestWorley()
     {
-        Skip.IfNot(Helper.Have("worley"), "no worley, skipping test");
-
         var im = Image.Worley(512, 512);
         Assert.Equal(512, im.Width);
         Assert.Equal(512, im.Height);
@@ -549,11 +541,9 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(Enums.BandFormat.Float, im.Format);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestPerlin()
     {
-        Skip.IfNot(Helper.Have("perlin"), "no perlin, skipping test");
-
         var im = Image.Perlin(512, 512);
         Assert.Equal(512, im.Width);
         Assert.Equal(512, im.Height);

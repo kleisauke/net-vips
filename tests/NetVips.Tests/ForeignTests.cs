@@ -159,7 +159,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestJpeg()
     {
-        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support in this vips, skipping test");
+        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         void JpegValid(Image im)
         {
@@ -179,10 +179,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         BufferLoader("jpegload_buffer", Helper.JpegFile, JpegValid);
         SaveLoadBuffer("jpegsave_buffer", "jpegload_buffer", _colour, 80);
-        if (Helper.Have("jpegload_source"))
-        {
-            SaveLoadStream(".jpg", "", _colour, 80);
-        }
+        SaveLoadStream(".jpg", "", _colour, 80);
 
         _ = Image.Jpegload(Helper.JpegFile, out var flags);
         Assert.Equal(Enums.ForeignFlags.SEQUENTIAL, flags);
@@ -231,61 +228,56 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(x1.Height, x2.Width);
 
             // can set, save and reload ASCII string fields
-            // added in 8.7
-            if (NetVips.AtLeastLibvips(8, 7))
-            {
-                x = Image.NewFromFile(Helper.JpegFile);
-                x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world"));
+            x = Image.NewFromFile(Helper.JpegFile);
+            x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-ImageDescription", "hello world"));
 
-                filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
-                x.WriteToFile(filename);
+            filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+            x.WriteToFile(filename);
 
-                x = Image.NewFromFile(filename);
-                y = x.Get("exif-ifd0-ImageDescription");
+            x = Image.NewFromFile(filename);
+            y = x.Get("exif-ifd0-ImageDescription");
 
-                // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
-                // format area at the end
-                Assert.StartsWith("hello world", (string)y);
+            // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
+            // format area at the end
+            Assert.StartsWith("hello world", (string)y);
 
-                // can set, save and reload UTF16 string fields ... NetVips is
-                // utf8, but it will be coded as utf16 and back for the XP* fields
-                x = Image.NewFromFile(Helper.JpegFile);
-                x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-XPComment", "йцук"));
+            // can set, save and reload UTF16 string fields ... NetVips is
+            // utf8, but it will be coded as utf16 and back for the XP* fields
+            x = Image.NewFromFile(Helper.JpegFile);
+            x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd0-XPComment", "йцук"));
 
-                filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
-                x.WriteToFile(filename);
+            filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+            x.WriteToFile(filename);
 
-                x = Image.NewFromFile(filename);
-                y = x.Get("exif-ifd0-XPComment");
+            x = Image.NewFromFile(filename);
+            y = x.Get("exif-ifd0-XPComment");
 
-                // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
-                // format area at the end
-                Assert.StartsWith("йцук", (string)y);
+            // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
+            // format area at the end
+            Assert.StartsWith("йцук", (string)y);
 
-                // can set/save/load UserComment, a tag which has the
-                // encoding in the first 8 bytes ... though libexif only supports
-                // ASCII for this
-                x = Image.NewFromFile(Helper.JpegFile);
-                x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd2-UserComment", "hello world"));
+            // can set/save/load UserComment, a tag which has the
+            // encoding in the first 8 bytes ... though libexif only supports
+            // ASCII for this
+            x = Image.NewFromFile(Helper.JpegFile);
+            x = x.Mutate(im => im.Set(GValue.GStrType, "exif-ifd2-UserComment", "hello world"));
 
-                filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
-                x.WriteToFile(filename);
+            filename = Helper.GetTemporaryFile(_tempDir, ".jpg");
+            x.WriteToFile(filename);
 
-                x = Image.NewFromFile(filename);
-                y = x.Get("exif-ifd2-UserComment");
+            x = Image.NewFromFile(filename);
+            y = x.Get("exif-ifd2-UserComment");
 
-                // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
-                // format area at the end
-                Assert.StartsWith("hello world", (string)y);
-            }
+            // can't use Assert.Equal since the string will have an extra " (xx, yy, zz)"
+            // format area at the end
+            Assert.StartsWith("hello world", (string)y);
         }
     }
 
     [SkippableFact]
     public void TestJpegSave()
     {
-        Skip.IfNot(Helper.Have("jpegsave") && NetVips.AtLeastLibvips(8, 10),
-            "requires libvips >= 8.10 with jpeg save support");
+        Skip.IfNot(Helper.Have("jpegsave"), "no jpeg support, skipping test");
 
         var im = Image.NewFromFile(Helper.JpegFile);
 
@@ -314,7 +306,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestTruncated()
     {
-        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support in this vips, skipping test");
+        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         // This should open (there's enough there for the header)
         var im = Image.NewFromFile(Helper.TruncatedFile);
@@ -333,7 +325,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestPng()
     {
-        Skip.IfNot(Helper.Have("pngload") && File.Exists(Helper.PngFile), "no png support, skipping test");
+        Skip.IfNot(Helper.Have("pngload"), "no png support, skipping test");
 
         void PngValid(Image im)
         {
@@ -352,31 +344,23 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         SaveLoad("%s.png", _colour);
         SaveLoadFile(".png", "[interlace]", _colour);
         SaveLoadFile(".png", "[interlace]", _mono);
+        SaveLoadStream(".png", "", _colour);
 
-        if (Helper.Have("pngload_source"))
-        {
-            SaveLoadStream(".png", "", _colour);
-        }
+        // size of a regular mono PNG
+        var lenMono = _mono.PngsaveBuffer().Length;
 
-        // bitdepth option was added in libvips 8.10
-        if (NetVips.AtLeastLibvips(8, 10))
-        {
-            // size of a regular mono PNG
-            var lenMono = _mono.PngsaveBuffer().Length;
+        // 4-bit should be smaller
+        var lenMono4 = _mono.PngsaveBuffer(bitdepth: 4).Length;
+        Assert.True(lenMono4 < lenMono);
 
-            // 4-bit should be smaller
-            var lenMono4 = _mono.PngsaveBuffer(bitdepth: 4).Length;
-            Assert.True(lenMono4 < lenMono);
+        var lenMono2 = _mono.PngsaveBuffer(bitdepth: 2).Length;
+        Assert.True(lenMono2 < lenMono4);
 
-            var lenMono2 = _mono.PngsaveBuffer(bitdepth: 2).Length;
-            Assert.True(lenMono2 < lenMono4);
+        var lenMono1 = _mono.PngsaveBuffer(bitdepth: 1).Length;
+        Assert.True(lenMono1 < lenMono2);
 
-            var lenMono1 = _mono.PngsaveBuffer(bitdepth: 1).Length;
-            Assert.True(lenMono1 < lenMono2);
-
-            // we can't test palette save since we can't be sure libimagequant is
-            // available and there's no easy test for its presence
-        }
+        // we can't test palette save since we can't be sure libimagequant is
+        // available and there's no easy test for its presence
     }
 
     [SkippableFact]
@@ -396,7 +380,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestStreamOverload()
     {
-        Skip.IfNot(Helper.Have("jpegload_source"), "no jpeg source support, skipping test");
+        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         // Set the beginning of the stream to an arbitrary but carefully chosen number.
         using var stream = new MemoryStream { Position = 42 };
@@ -417,9 +401,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestTiff()
     {
-        Skip.IfNot(Helper.Have("tiffload") && File.Exists(Helper.TifFile), "no tiff support, skipping test");
-
-        var vips810 = NetVips.AtLeastLibvips(8, 10);
+        Skip.IfNot(Helper.Have("tiffload"), "no tiff support, skipping test");
 
         void TiffValid(Image im)
         {
@@ -431,117 +413,101 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(3, im.Bands);
         }
 
-        if (vips810)
+        void Tiff1Valid(Image im)
         {
-            void Tiff1Valid(Image im)
-            {
-                var a = im[127, 0];
-                Assert.Equal(new[] { 0.0 }, a);
-                a = im[128, 0];
-                Assert.Equal(new[] { 255.0 }, a);
-                Assert.Equal(256, im.Width);
-                Assert.Equal(4, im.Height);
-                Assert.Equal(1, im.Bands);
-            }
-
-            FileLoader("tiffload", Helper.Tif1File, Tiff1Valid);
-
-            void Tiff2Valid(Image im)
-            {
-                var a = im[127, 0];
-                Assert.Equal(new[] { 85.0 }, a);
-                a = im[128, 0];
-                Assert.Equal(new[] { 170.0 }, a);
-                Assert.Equal(256, im.Width);
-                Assert.Equal(4, im.Height);
-                Assert.Equal(1, im.Bands);
-            }
-
-            FileLoader("tiffload", Helper.Tif2File, Tiff2Valid);
-
-            void Tiff4Valid(Image im)
-            {
-                var a = im[127, 0];
-                Assert.Equal(new[] { 119.0 }, a);
-                a = im[128, 0];
-                Assert.Equal(new[] { 136.0 }, a);
-                Assert.Equal(256, im.Width);
-                Assert.Equal(4, im.Height);
-                Assert.Equal(1, im.Bands);
-            }
-
-            FileLoader("tiffload", Helper.Tif4File, Tiff4Valid);
+            var a = im[127, 0];
+            Assert.Equal(new[] { 0.0 }, a);
+            a = im[128, 0];
+            Assert.Equal(new[] { 255.0 }, a);
+            Assert.Equal(256, im.Width);
+            Assert.Equal(4, im.Height);
+            Assert.Equal(1, im.Bands);
         }
+
+        FileLoader("tiffload", Helper.Tif1File, Tiff1Valid);
+
+        void Tiff2Valid(Image im)
+        {
+            var a = im[127, 0];
+            Assert.Equal(new[] { 85.0 }, a);
+            a = im[128, 0];
+            Assert.Equal(new[] { 170.0 }, a);
+            Assert.Equal(256, im.Width);
+            Assert.Equal(4, im.Height);
+            Assert.Equal(1, im.Bands);
+        }
+
+        FileLoader("tiffload", Helper.Tif2File, Tiff2Valid);
+
+        void Tiff4Valid(Image im)
+        {
+            var a = im[127, 0];
+            Assert.Equal(new[] { 119.0 }, a);
+            a = im[128, 0];
+            Assert.Equal(new[] { 136.0 }, a);
+            Assert.Equal(256, im.Width);
+            Assert.Equal(4, im.Height);
+            Assert.Equal(1, im.Bands);
+        }
+
+        FileLoader("tiffload", Helper.Tif4File, Tiff4Valid);
 
         FileLoader("tiffload", Helper.TifFile, TiffValid);
         BufferLoader("tiffload_buffer", Helper.TifFile, TiffValid);
-        if (NetVips.AtLeastLibvips(8, 5))
-        {
-            SaveLoadBuffer("tiffsave_buffer", "tiffload_buffer", _colour);
-        }
+        SaveLoadBuffer("tiffsave_buffer", "tiffload_buffer", _colour);
 
         SaveLoad("%s.tif", _mono);
         SaveLoad("%s.tif", _colour);
         SaveLoad("%s.tif", _cmyk);
 
         SaveLoad("%s.tif", _oneBit);
-        SaveLoadFile(".tif", vips810 ? "[bitdepth=1]" : "[squash]",
+        SaveLoadFile(".tif", "[bitdepth=1]",
             _oneBit);
         SaveLoadFile(".tif", "[miniswhite]", _oneBit);
-        SaveLoadFile(".tif", (vips810 ? "[bitdepth=1" : "[squash") + ",miniswhite]",
+        SaveLoadFile(".tif", "[bitdepth=1,miniswhite]",
             _oneBit);
 
         SaveLoadFile(".tif", $"[profile={Helper.SrgbFile}]", _colour);
         SaveLoadFile(".tif", "[tile]", _colour);
         SaveLoadFile(".tif", "[tile,pyramid]", _colour);
+        SaveLoadFile(".tif", "[tile,pyramid,subifd]", _colour);
         SaveLoadFile(".tif", "[tile,pyramid,compression=jpeg]", _colour, 80);
+        SaveLoadFile(".tif", "[tile,pyramid,subifd,compression=jpeg]", _colour, 80);
         SaveLoadFile(".tif", "[bigtiff]", _colour);
         SaveLoadFile(".tif", "[compression=jpeg]", _colour, 80);
         SaveLoadFile(".tif", "[tile,tile-width=256]", _colour, 10);
 
-        if (vips810)
+        var x = Image.NewFromFile(Helper.Tif2File);
+        SaveLoadFile(".tif", "[bitdepth=2]", x);
+        x = Image.NewFromFile(Helper.Tif4File);
+        SaveLoadFile(".tif", "[bitdepth=4]", x);
+
+        SaveLoadStream(".tif", "", _colour);
+
+        // Test Read/Seek in TargetCustom
+        using var input = File.OpenRead(Helper.GifAnimFile);
+        using var im = Image.NewFromStream(input, kwargs: new VOption
         {
-            // Support for SUBIFD tags was added in libvips 8.10
-            SaveLoadFile(".tif", "[tile,pyramid,subifd]", _colour);
-            SaveLoadFile(".tif", "[tile,pyramid,subifd,compression=jpeg]", _colour, 80);
+            {"n", -1}
+        });
 
-            // bitdepth option was added in libvips 8.10
-            var im = Image.NewFromFile(Helper.Tif2File);
-            SaveLoadFile(".tif", "[bitdepth=2]", im);
-            im = Image.NewFromFile(Helper.Tif4File);
-            SaveLoadFile(".tif", "[bitdepth=4]", im);
-        }
+        var tmpFile = Helper.GetTemporaryFile(_tempDir, ".tif");
+        using var output = File.Open(tmpFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+        im.TiffsaveStream(output);
 
-        if (Helper.Have("tiffsave_target"))
+        using var im2 = Image.NewFromFile(tmpFile, kwargs: new VOption
         {
-            // Support for tiffsave_target was added in libvips 8.13
-            SaveLoadStream(".tif", "", _colour);
-
-            // Test Read/Seek in TargetCustom
-            using var input = File.OpenRead(Helper.GifAnimFile);
-            using var im = Image.NewFromStream(input, kwargs: new VOption
-            {
-                {"n", -1}
-            });
-
-            var tmpFile = Helper.GetTemporaryFile(_tempDir, ".tif");
-            using var output = File.Open(tmpFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
-            im.TiffsaveStream(output);
-
-            using var im2 = Image.NewFromFile(tmpFile, kwargs: new VOption
-            {
-                {"n", -1}
-            });
-            Assert.Equal(im.Width, im2.Width);
-            Assert.Equal(im.Height, im2.Height);
-            Assert.Equal(im.Bands, im2.Bands);
-            var maxDiff = (im - im2).Abs().Max();
-            Assert.Equal(0, maxDiff);
-        }
+            {"n", -1}
+        });
+        Assert.Equal(im.Width, im2.Width);
+        Assert.Equal(im.Height, im2.Height);
+        Assert.Equal(im.Bands, im2.Bands);
+        var maxDiff = (im - im2).Abs().Max();
+        Assert.Equal(0, maxDiff);
 
         var filename = Helper.GetTemporaryFile(_tempDir, ".tif");
-        var x = Image.NewFromFile(Helper.TifFile);
-        x = x.Mutate(im => im.Set("orientation", 2));
+        x = Image.NewFromFile(Helper.TifFile);
+        x = x.Mutate(m => m.Set("orientation", 2));
         x.WriteToFile(filename);
         x = Image.NewFromFile(filename);
         var y = x.Get("orientation");
@@ -549,12 +515,12 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         filename = Helper.GetTemporaryFile(_tempDir, ".tif");
         x = Image.NewFromFile(Helper.TifFile);
-        x = x.Mutate(im => im.Set("orientation", 2));
+        x = x.Mutate(m => m.Set("orientation", 2));
         x.WriteToFile(filename);
         x = Image.NewFromFile(filename);
         y = x.Get("orientation");
         Assert.Equal(2, y);
-        x = x.Mutate(im => im.Remove("orientation"));
+        x = x.Mutate(m => m.Remove("orientation"));
 
         filename = Helper.GetTemporaryFile(_tempDir, ".tif");
         x.WriteToFile(filename);
@@ -564,7 +530,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         filename = Helper.GetTemporaryFile(_tempDir, ".tif");
         x = Image.NewFromFile(Helper.TifFile);
-        x = x.Mutate(im => im.Set("orientation", 6));
+        x = x.Mutate(m => m.Set("orientation", 6));
         x.WriteToFile(filename);
         var x1 = Image.NewFromFile(filename);
         var x2 = Image.NewFromFile(filename, kwargs: new VOption
@@ -575,104 +541,91 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(x1.Height, x2.Width);
 
         // OME support in 8.5
-        if (NetVips.AtLeastLibvips(8, 5))
+        x = Image.NewFromFile(Helper.OmeFile);
+        Assert.Equal(439, x.Width);
+        Assert.Equal(167, x.Height);
+        var pageHeight = x.Height;
+
+        x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
         {
-            x = Image.NewFromFile(Helper.OmeFile);
-            Assert.Equal(439, x.Width);
-            Assert.Equal(167, x.Height);
-            var pageHeight = x.Height;
+            {"n", -1}
+        });
+        Assert.Equal(439, x.Width);
+        Assert.Equal(pageHeight * 15, x.Height);
 
-            x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
-            {
-                {"n", -1}
-            });
-            Assert.Equal(439, x.Width);
-            Assert.Equal(pageHeight * 15, x.Height);
+        x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
+        {
+            {"page", 1},
+            {"n", -1}
+        });
+        Assert.Equal(439, x.Width);
+        Assert.Equal(pageHeight * 14, x.Height);
 
-            x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
-            {
-                {"page", 1},
-                {"n", -1}
-            });
-            Assert.Equal(439, x.Width);
-            Assert.Equal(pageHeight * 14, x.Height);
+        x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
+        {
+            {"page", 1},
+            {"n", 2}
+        });
+        Assert.Equal(439, x.Width);
+        Assert.Equal(pageHeight * 2, x.Height);
 
-            x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
-            {
-                {"page", 1},
-                {"n", 2}
-            });
-            Assert.Equal(439, x.Width);
-            Assert.Equal(pageHeight * 2, x.Height);
+        x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
+        {
+            {"n", -1}
+        });
+        Assert.Equal(96, x[0, 166][0]);
+        Assert.Equal(0, x[0, 167][0]);
+        Assert.Equal(1, x[0, 168][0]);
 
-            x = Image.NewFromFile(Helper.OmeFile, kwargs: new VOption
-            {
-                {"n", -1}
-            });
-            Assert.Equal(96, x[0, 166][0]);
-            Assert.Equal(0, x[0, 167][0]);
-            Assert.Equal(1, x[0, 168][0]);
+        filename = Helper.GetTemporaryFile(_tempDir, ".tif");
+        x.WriteToFile(filename);
 
-            filename = Helper.GetTemporaryFile(_tempDir, ".tif");
-            x.WriteToFile(filename);
-
-            x = Image.NewFromFile(filename, kwargs: new VOption
-            {
-                {"n", -1}
-            });
-            Assert.Equal(439, x.Width);
-            Assert.Equal(pageHeight * 15, x.Height);
-            Assert.Equal(96, x[0, 166][0]);
-            Assert.Equal(0, x[0, 167][0]);
-            Assert.Equal(1, x[0, 168][0]);
-        }
+        x = Image.NewFromFile(filename, kwargs: new VOption
+        {
+            {"n", -1}
+        });
+        Assert.Equal(439, x.Width);
+        Assert.Equal(pageHeight * 15, x.Height);
+        Assert.Equal(96, x[0, 166][0]);
+        Assert.Equal(0, x[0, 167][0]);
+        Assert.Equal(1, x[0, 168][0]);
 
         // pyr save to buffer added in 8.6
-        if (NetVips.AtLeastLibvips(8, 6))
-        {
-            x = Image.NewFromFile(Helper.TifFile);
-            var buf = x.TiffsaveBuffer(tile: true, pyramid: true);
-            filename = Helper.GetTemporaryFile(_tempDir, ".tif");
-            x.Tiffsave(filename, tile: true, pyramid: true);
-            var buf2 = File.ReadAllBytes(filename);
-            Assert.Equal(buf.Length, buf2.Length);
+        x = Image.NewFromFile(Helper.TifFile);
+        var buf = x.TiffsaveBuffer(tile: true, pyramid: true);
+        filename = Helper.GetTemporaryFile(_tempDir, ".tif");
+        x.Tiffsave(filename, tile: true, pyramid: true);
+        var buf2 = File.ReadAllBytes(filename);
+        Assert.Equal(buf.Length, buf2.Length);
 
-            var a = Image.NewFromBuffer(buf, kwargs: new VOption
-            {
-                {"page", 2}
-            });
-            var b = Image.NewFromBuffer(buf2, kwargs: new VOption
-            {
-                {"page", 2}
-            });
-            Assert.Equal(a.Width, b.Width);
-            Assert.Equal(a.Height, b.Height);
-            Assert.Equal(a.Avg(), b.Avg());
-        }
+        var a = Image.NewFromBuffer(buf, kwargs: new VOption
+        {
+            {"page", 2}
+        });
+        var b = Image.NewFromBuffer(buf2, kwargs: new VOption
+        {
+            {"page", 2}
+        });
+        Assert.Equal(a.Width, b.Width);
+        Assert.Equal(a.Height, b.Height);
+        Assert.Equal(a.Avg(), b.Avg());
 
         // region-shrink added in 8.7
-        if (NetVips.AtLeastLibvips(8, 7))
-        {
-            x = Image.NewFromFile(Helper.TifFile);
-            _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Mean);
-            _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Mode);
-            _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Median);
-        }
+        x = Image.NewFromFile(Helper.TifFile);
+        _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Mean);
+        _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Mode);
+        _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Median);
 
         // region-shrink max/min/nearest added in 8.10
-        if (vips810)
-        {
-            _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Max);
-            _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Min);
-            _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Nearest);
-        }
+        _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Max);
+        _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Min);
+        _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Nearest);
     }
 
     [SkippableFact]
     public void TestMagickLoad()
     {
-        Skip.IfNot(Helper.Have("magickload") &&
-                   File.Exists(Helper.BmpFile), "no magick support, skipping test");
+        Skip.IfNot(Helper.Have("magickload"), "no magick support, skipping test");
 
         void BmpValid(Image im)
         {
@@ -703,19 +656,15 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         //Assert.Equal(height * 2, x.Height);
 
         // page/n let you pick a range of pages
-        // 'n' param added in 8.5
-        if (NetVips.AtLeastLibvips(8, 5))
-        {
-            x = Image.Magickload(Helper.GifAnimFile);
-            width = x.Width;
-            height = x.Height;
-            x = Image.Magickload(Helper.GifAnimFile, page: 1, n: 2);
-            Assert.Equal(width, x.Width);
-            Assert.Equal(height * 2, x.Height);
+        x = Image.Magickload(Helper.GifAnimFile);
+        width = x.Width;
+        height = x.Height;
+        x = Image.Magickload(Helper.GifAnimFile, page: 1, n: 2);
+        Assert.Equal(width, x.Width);
+        Assert.Equal(height * 2, x.Height);
 
-            var pageHeight = x.Get("page-height");
-            Assert.Equal(height, pageHeight);
-        }
+        var pageHeight = x.Get("page-height");
+        Assert.Equal(height, pageHeight);
 
         // should work for dicom
         x = Image.Magickload(Helper.DicomFile);
@@ -726,14 +675,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         // Assert.Equal(1, x.Bands);
 
         // libvips has its own sniffer for ICO, test that
-        // added in 8.7
-        if (NetVips.AtLeastLibvips(8, 7))
-        {
-            var buf = File.ReadAllBytes(Helper.IcoFile);
-            var im = Image.NewFromBuffer(buf);
-            Assert.Equal(16, im.Width);
-            Assert.Equal(16, im.Height);
-        }
+        var buf = File.ReadAllBytes(Helper.IcoFile);
+        var im = Image.NewFromBuffer(buf);
+        Assert.Equal(16, im.Width);
+        Assert.Equal(16, im.Height);
     }
 
     [SkippableFact]
@@ -776,8 +721,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
                 {"n", -1}
             });
 
-            var delayName = NetVips.AtLeastLibvips(8, 9) ? "delay" : "gif-delay";
-            Assert.Equal(x2.Get(delayName), x1.Get(delayName));
+            Assert.Equal(x2.Get("delay"), x1.Get("delay"));
             Assert.Equal(x2.Get("page-height"), x1.Get("page-height"));
             // magicks vary in how they handle this ... just pray we are close
             Assert.Equal((int)x1.Get("gif-loop"), (int)x2.Get("gif-loop"), 5.0);
@@ -787,7 +731,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestWebp()
     {
-        Skip.IfNot(Helper.Have("webpload") && File.Exists(Helper.WebpFile), "no webp support, skipping test");
+        Skip.IfNot(Helper.Have("webpload"), "no webp support, skipping test");
 
         void WebpValid(Image im)
         {
@@ -805,10 +749,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         BufferLoader("webpload_buffer", Helper.WebpFile, WebpValid);
         SaveLoadBuffer("webpsave_buffer", "webpload_buffer", _colour, 60);
         SaveLoad("%s.webp", _colour);
-        if (Helper.Have("webpload_source"))
-        {
-            SaveLoadStream(".webp", "", _colour, 80);
-        }
+        SaveLoadStream(".webp", "", _colour, 80);
 
         // test lossless mode
         var x = Image.NewFromFile(Helper.WebpFile);
@@ -848,10 +789,8 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             }
         }
 
-        // try converting an animated gif to webp ... can't do back to gif
-        // again without IM support
-        // added in 8.8, delay metadata changed in 8.9
-        if (Helper.Have("gifload") && NetVips.AtLeastLibvips(8, 9))
+        // try converting an animated gif to webp
+        if (Helper.Have("gifload"))
         {
             var x1 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
             {
@@ -863,13 +802,9 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
             // our test gif has delay 0 for the first frame set in error,
             // when converting to WebP this should result in a 100ms delay.
-            // see: https://github.com/libvips/libvips/pull/2145
-            if (NetVips.AtLeastLibvips(8, 10, 6))
+            for (var i = 0; i < expectedDelay.Length; i++)
             {
-                for (var i = 0; i < expectedDelay.Length; i++)
-                {
-                    expectedDelay[i] = expectedDelay[i] <= 10 ? 100 : expectedDelay[i];
-                }
+                expectedDelay[i] = expectedDelay[i] <= 10 ? 100 : expectedDelay[i];
             }
 
             var x2 = Image.NewFromBuffer(w1, kwargs: new VOption
@@ -888,8 +823,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestAnalyzeLoad()
     {
-        Skip.IfNot(Helper.Have("analyzeload") && File.Exists(Helper.AnalyzeFile),
-            "no analyze support, skipping test");
+        Skip.IfNot(Helper.Have("analyzeload"), "no analyze support, skipping test");
 
         void AnalyzeValid(Image im)
         {
@@ -907,7 +841,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestMatLoad()
     {
-        Skip.IfNot(Helper.Have("matload") && File.Exists(Helper.MatlabFile), "no matlab support, skipping test");
+        Skip.IfNot(Helper.Have("matload"), "no matlab support, skipping test");
 
         void MatlabValid(Image im)
         {
@@ -925,7 +859,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestOpenexrLoad()
     {
-        Skip.IfNot(Helper.Have("openexrload") && File.Exists(Helper.ExrFile), "no openexr support, skipping test");
+        Skip.IfNot(Helper.Have("openexrload"), "no openexr support, skipping test");
 
         void ExrValid(Image im)
         {
@@ -936,9 +870,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
                 0.124512,
                 0.159668,
                 0.040375,
-                // OpenEXR alpha is scaled to 0 - 255 in libvips 8.7+
-                // but libvips 8.15+ uses alpha range of 0 - 1 for scRGB.
-                NetVips.AtLeastLibvips(8, 7) && !NetVips.AtLeastLibvips(8, 15) ? 255 : 1.0
+                1.0
             }, a, 0.00001);
             Assert.Equal(610, im.Width);
             Assert.Equal(406, im.Height);
@@ -951,7 +883,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestFitsLoad()
     {
-        Skip.IfNot(Helper.Have("fitsload") && File.Exists(Helper.FitsFile), "no fits support, skipping test");
+        Skip.IfNot(Helper.Have("fitsload"), "no fits support, skipping test");
 
         void FitsValid(Image im)
         {
@@ -976,7 +908,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestNiftiLoad()
     {
-        Skip.IfNot(Helper.Have("niftiload") && File.Exists(Helper.NiftiFile), "no nifti support, skipping test");
+        Skip.IfNot(Helper.Have("niftiload"), "no nifti support, skipping test");
 
         void NiftiValid(Image im)
         {
@@ -998,8 +930,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestOpenslideLoad()
     {
-        Skip.IfNot(Helper.Have("openslideload") && File.Exists(Helper.OpenslideFile),
-            "no openslide support, skipping test");
+        Skip.IfNot(Helper.Have("openslideload"), "no openslide support, skipping test");
 
         void OpenslideValid(Image im)
         {
@@ -1017,17 +948,14 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestPdfLoad()
     {
-        Skip.IfNot(Helper.Have("pdfload") && File.Exists(Helper.PdfFile), "no pdf support, skipping test");
+        Skip.IfNot(Helper.Have("pdfload"), "no pdf support, skipping test");
 
         void PdfValid(Image im)
         {
             var a = im[10, 10];
 
             Assert.Equal([35, 31, 32, 255], a);
-
-            // New sizing rules in libvips 8.8+, see:
-            // https://github.com/libvips/libvips/commit/29d29533d45848ecc12a3c50c39c26c835458a61
-            Assert.Equal(NetVips.AtLeastLibvips(8, 8) ? 1134 : 1133, im.Width);
+            Assert.Equal(1134, im.Width);
             Assert.Equal(680, im.Height);
             Assert.Equal(4, im.Bands);
         }
@@ -1055,78 +983,66 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestGifLoad()
     {
-        Skip.IfNot(Helper.Have("gifload") && File.Exists(Helper.GifFile), "no gif support, skipping test");
+        Skip.IfNot(Helper.Have("gifload"), "no gif support, skipping test");
 
         void GifValid(Image im)
         {
             var a = im[10, 10];
 
-            // libnsgif (vendored with libvips >= 8.11) is always RGB or RGBA
-            Assert.Equal(33, a[0]);
+            Assert.Equal([33, 33, 33], a);
             Assert.Equal(159, im.Width);
             Assert.Equal(203, im.Height);
-            Assert.Equal(NetVips.AtLeastLibvips(8, 11) ? 3 : 1, im.Bands);
+            Assert.Equal(3, im.Bands);
         }
 
         FileLoader("gifload", Helper.GifFile, GifValid);
         BufferLoader("gifload_buffer", Helper.GifFile, GifValid);
 
-        // test fallback stream mechanism, needs libvips >= 8.9
-        if (NetVips.AtLeastLibvips(8, 9))
+        // file-based loader fallback
+        using (var input = Source.NewFromFile(Helper.GifFile))
         {
-            // file-based loader fallback
-            using (var input = Source.NewFromFile(Helper.GifFile))
-            {
-                var img = Image.NewFromSource(input, access: Enums.Access.Sequential);
-                GifValid(img);
-            }
-
-            // buffer-based loader fallback
-            using (var input = File.OpenRead(Helper.GifFile))
-            {
-                var img = Image.NewFromStream(input, access: Enums.Access.Sequential);
-                GifValid(img);
-            }
+            var img = Image.NewFromSource(input, access: Enums.Access.Sequential);
+            GifValid(img);
         }
 
-        // 'n' param added in 8.5
-        if (NetVips.AtLeastLibvips(8, 5))
+        // buffer-based loader fallback
+        using (var input = File.OpenRead(Helper.GifFile))
         {
-            var x1 = Image.NewFromFile(Helper.GifAnimFile);
-            var x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
-            {
-                {"n", 2}
-            });
-            Assert.Equal(2 * x1.Height, x2.Height);
-            var pageHeight = x2.Get("page-height");
-            Assert.Equal(x1.Height, pageHeight);
-
-            x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
-            {
-                {"n", -1}
-            });
-            Assert.Equal(5 * x1.Height, x2.Height);
-
-            // delay metadata was added in libvips 8.9
-            if (NetVips.AtLeastLibvips(8, 9))
-            {
-                // our test gif has delay 0 for the first frame set in error
-                Assert.Equal(new[] { 0, 50, 50, 50, 50 }, x2.Get("delay"));
-            }
-
-            x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
-            {
-                {"page", 1},
-                {"n", -1}
-            });
-            Assert.Equal(4 * x1.Height, x2.Height);
+            var img = Image.NewFromStream(input, access: Enums.Access.Sequential);
+            GifValid(img);
         }
+
+        // test page handling
+        var x1 = Image.NewFromFile(Helper.GifAnimFile);
+        var x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
+        {
+            {"n", 2}
+        });
+        Assert.Equal(2 * x1.Height, x2.Height);
+        var pageHeight = x2.Get("page-height");
+        Assert.Equal(x1.Height, pageHeight);
+
+        x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
+        {
+            {"n", -1}
+        });
+        Assert.Equal(5 * x1.Height, x2.Height);
+
+        // our test gif has delay 0 for the first frame set in error
+        Assert.Equal(new[] { 0, 50, 50, 50, 50 }, x2.Get("delay"));
+
+        x2 = Image.NewFromFile(Helper.GifAnimFile, kwargs: new VOption
+        {
+            {"page", 1},
+            {"n", -1}
+        });
+        Assert.Equal(4 * x1.Height, x2.Height);
     }
 
     [SkippableFact]
     public void TestSvgLoad()
     {
-        Skip.IfNot(Helper.Have("svgload") && File.Exists(Helper.SvgFile), "no svg support, skipping test");
+        Skip.IfNot(Helper.Have("svgload"), "no svg support, skipping test");
 
         void SvgValid(Image im)
         {
@@ -1171,13 +1087,6 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     public void TestCsv()
     {
         SaveLoad("%s.csv", _mono);
-    }
-
-    [SkippableFact]
-    public void TestCsvConnection()
-    {
-        Skip.IfNot(Helper.Have("csvload_source") && Helper.Have("csvsave_target"),
-            "no CSV connection support, skipping test");
 
         var x = Target.NewToMemory();
         _mono.CsvsaveTarget(x);
@@ -1192,13 +1101,6 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     public void TestMatrix()
     {
         SaveLoad("%s.mat", _mono);
-    }
-
-    [SkippableFact]
-    public void TestMatrixConnection()
-    {
-        Skip.IfNot(Helper.Have("matrixload_source") && Helper.Have("matrixsave_target"),
-            "no matrix connection support, skipping test");
 
         var x = Target.NewToMemory();
         _mono.MatrixsaveTarget(x);
@@ -1216,15 +1118,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         SaveLoad("%s.ppm", _mono);
         SaveLoad("%s.ppm", _colour);
-    }
-
-
-    [SkippableFact]
-    public void TestPpmConnection()
-    {
-        Skip.IfNot(Helper.Have("ppmload_source") && Helper.Have("ppmsave_target"),
-            "no PPM connection support, skipping test");
-
+    
         var x = Target.NewToMemory();
         _mono.PpmsaveTarget(x);
 
@@ -1241,11 +1135,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         SaveLoad("%s.hdr", _colour);
         SaveBufferTempFile("radsave_buffer", ".hdr", _rad);
-
-        if (Helper.Have("radload_source"))
-        {
-            SaveLoadStream(".hdr", "", _rad);
-        }
+        SaveLoadStream(".hdr", "", _rad);
     }
 
     [SkippableFact]
@@ -1321,18 +1211,14 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         // with 511x511, it'll fit exactly into 2x2 -- we we actually generate
         // 3x3, since we output the overlaps
-        // 8.6 revised the rules on overlaps, so don't test earlier than that
-        if (NetVips.AtLeastLibvips(8, 6))
-        {
-            filename = Helper.GetTemporaryFile(_tempDir);
-            _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1,
-                depth: Enums.ForeignDzDepth.One);
+        filename = Helper.GetTemporaryFile(_tempDir);
+        _colour.ExtractArea(0, 0, 511, 511).Dzsave(filename, layout: Enums.ForeignDzLayout.Google, overlap: 1,
+            depth: Enums.ForeignDzDepth.One);
 
-            x = Image.NewFromFile(filename + "/0/2/2.jpg");
-            Assert.Equal(256, x.Width);
-            Assert.Equal(256, x.Height);
-            Assert.False(File.Exists(filename + "/0/3/3.jpg"));
-        }
+        x = Image.NewFromFile(filename + "/0/2/2.jpg");
+        Assert.Equal(256, x.Width);
+        Assert.Equal(256, x.Height);
+        Assert.False(File.Exists(filename + "/0/3/3.jpg"));
 
         // default zoomify layout
         filename = Helper.GetTemporaryFile(_tempDir);
@@ -1391,28 +1277,22 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(513, y.Height);
 
         // test save to memory buffer
-        if (Helper.Have("dzsave_buffer"))
-        {
-            filename = Helper.GetTemporaryFile(_tempDir, ".zip");
-            var baseName = Path.GetFileNameWithoutExtension(filename);
+        filename = Helper.GetTemporaryFile(_tempDir, ".zip");
+        var baseName = Path.GetFileNameWithoutExtension(filename);
 
-            _colour.Dzsave(filename);
+        _colour.Dzsave(filename);
 
-            buf1 = File.ReadAllBytes(filename);
-            buf2 = _colour.DzsaveBuffer(imagename: baseName);
-            Assert.Equal(buf1.Length, buf2.Length);
+        buf1 = File.ReadAllBytes(filename);
+        buf2 = _colour.DzsaveBuffer(imagename: baseName);
+        Assert.Equal(buf1.Length, buf2.Length);
 
-            // we can't test the bytes are exactly equal -- the timestamp in
-            // vips-properties.xml will be different
+        // we can't test the bytes are exactly equal -- the timestamp in
+        // vips-properties.xml will be different
 
-            // added in 8.7
-            if (NetVips.AtLeastLibvips(8, 7))
-            {
-                _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Mean);
-                _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Mode);
-                _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Median);
-            }
-        }
+        // added in 8.7
+        _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Mean);
+        _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Mode);
+        _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Median);
     }
 
     [SkippableFact]
@@ -1424,29 +1304,15 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         {
             var a = im[10, 10];
 
-            if (NetVips.AtLeastLibvips(8, 10))
+            // different versions of libheif decode have slightly different
+            // rounding
+            Helper.AssertAlmostEqualObjects(new[]
             {
-                // different versions of libheif decode have slightly different
-                // rounding
-                Helper.AssertAlmostEqualObjects(new[]
-                {
-                    197.0, 181.0, 158.0
-                }, a, 2);
+                197.0, 181.0, 158.0
+            }, a, 2);
 
-                Assert.Equal(3024, im.Width);
-                Assert.Equal(4032, im.Height);
-            }
-            else
-            {
-                // This image has been rotated incorrectly prior to vips 8.10
-                Helper.AssertAlmostEqualObjects(new[]
-                {
-                    255, 255, 255
-                }, a, 2);
-
-                Assert.Equal(4032, im.Width);
-                Assert.Equal(3024, im.Height);
-            }
+            Assert.Equal(3024, im.Width);
+            Assert.Equal(4032, im.Height);
 
             Assert.Equal(3, im.Bands);
         }
@@ -1466,15 +1332,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             {"compression", Enums.ForeignHeifCompression.Av1}
         });
 
-        // heifsave defaults to AV1 for .avif suffix since libvips 8.11
-        if (NetVips.AtLeastLibvips(8, 11))
-        {
-            SaveLoad("%s.avif", _colour);
-        }
-        else
-        {
-            SaveLoadFile(".avif", "[compression=av1]", _colour);
-        }
+        SaveLoad("%s.avif", _colour);
 
         // test lossless mode
         var x = Image.NewFromFile(Helper.AvifFile);

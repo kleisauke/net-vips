@@ -50,21 +50,13 @@ public class ResampleTests : IClassFixture<TestsFixture>
     {
         // xy image, zero in the centre, scaled to fit image to a circle
         var xy = Image.Xyz(image.Width, image.Height);
-        xy -=
-        [
-            image.Width / 2.0,
-            image.Height / 2.0
-        ];
+        xy -= [image.Width / 2.0, image.Height / 2.0];
         var scale = Math.Min(image.Width, image.Height) / Convert.ToDouble(image.Width);
         xy *= 2.0 / scale;
 
         // to polar, scale vertical axis to 360 degrees
         var index = RunCmplx(x => x.Polar(), xy);
-        index *=
-        [
-            1,
-            image.Height / 360.0
-        ];
+        index *= [1, image.Height / 360.0];
 
         return image.Mapim(index);
     }
@@ -83,21 +75,13 @@ public class ResampleTests : IClassFixture<TestsFixture>
     {
         // xy image, vertical scaled to 360 degrees
         var xy = Image.Xyz(image.Width, image.Height);
-        xy *=
-        [
-            1,
-            360.0 / image.Height
-        ];
+        xy *= [1, 360.0 / image.Height];
 
         // to rect, scale to image rect
         var index = RunCmplx(x => x.Rect(), xy);
         var scale = Math.Min(image.Width, image.Height) / Convert.ToDouble(image.Width);
         index *= scale / 2.0;
-        index +=
-        [
-            image.Width / 2.0,
-            image.Height / 2.0
-        ];
+        index += [image.Width / 2.0, image.Height / 2.0];
 
         return image.Mapim(index);
     }
@@ -204,11 +188,9 @@ public class ResampleTests : IClassFixture<TestsFixture>
         Assert.Equal(im.Avg(), im2.Avg(), 1.0);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestThumbnail()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 5), "requires libvips >= 8.5");
-
         var im = Image.Thumbnail(Helper.JpegFile, 100);
         Assert.Equal(100, im.Width);
         Assert.Equal(3, im.Bands);
@@ -242,38 +224,34 @@ public class ResampleTests : IClassFixture<TestsFixture>
         var im2 = Image.ThumbnailBuffer(buf, 100);
         Assert.Equal(im1.Avg(), im2.Avg(), 1.0);
 
-        // OME-TIFF subifd thumbnail support added in 8.10
-        if (NetVips.AtLeastLibvips(8, 10))
+        // should be able to thumbnail many-page tiff
+        im = Image.Thumbnail(Helper.OmeFile, 100);
+        Assert.Equal(100, im.Width);
+        Assert.Equal(38, im.Height);
+
+        // should be able to thumbnail individual pages from many-page tiff
+        im = Image.Thumbnail(Helper.OmeFile + "[page=0]", 100);
+        Assert.Equal(100, im.Width);
+        Assert.Equal(38, im.Height);
+        im2 = Image.Thumbnail(Helper.OmeFile + "[page=1]", 100);
+        Assert.Equal(100, im2.Width);
+        Assert.Equal(38, im2.Height);
+        Assert.NotEqual(0, (im - im2).Abs().Max());
+
+        // should be able to thumbnail entire many-page tiff as a toilet-roll
+        // image
+        im = Image.Thumbnail(Helper.OmeFile + "[n=-1]", 100);
+        Assert.Equal(100, im.Width);
+        Assert.Equal(570, im.Height);
+
+        if (Helper.Have("heifload"))
         {
-            // should be able to thumbnail many-page tiff
-            im = Image.Thumbnail(Helper.OmeFile, 100);
-            Assert.Equal(100, im.Width);
-            Assert.Equal(38, im.Height);
+            // this image is orientation 6 ... thumbnail should flip it
+            var thumb = Image.Thumbnail(Helper.AvifFile, 100);
 
-            // should be able to thumbnail individual pages from many-page tiff
-            im = Image.Thumbnail(Helper.OmeFile + "[page=0]", 100);
-            Assert.Equal(100, im.Width);
-            Assert.Equal(38, im.Height);
-            im2 = Image.Thumbnail(Helper.OmeFile + "[page=1]", 100);
-            Assert.Equal(100, im2.Width);
-            Assert.Equal(38, im2.Height);
-            Assert.NotEqual(0, (im - im2).Abs().Max());
-
-            // should be able to thumbnail entire many-page tiff as a toilet-roll
-            // image
-            im = Image.Thumbnail(Helper.OmeFile + "[n=-1]", 100);
-            Assert.Equal(100, im.Width);
-            Assert.Equal(570, im.Height);
-
-            if (Helper.Have("heifload"))
-            {
-                // this image is orientation 6 ... thumbnail should flip it
-                var thumb = Image.Thumbnail(Helper.AvifFile, 100);
-
-                // thumb should be portrait
-                Assert.True(thumb.Width < thumb.Height);
-                Assert.Equal(100, thumb.Height);
-            }
+            // thumb should be portrait
+            Assert.True(thumb.Width < thumb.Height);
+            Assert.Equal(100, thumb.Height);
         }
     }
 
@@ -298,12 +276,9 @@ public class ResampleTests : IClassFixture<TestsFixture>
         Assert.Equal(0, (im2 - im3).Abs().Max());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestRotate()
     {
-        // added in 8.7
-        Skip.IfNot(Helper.Have("rotate"), "no rotate support in this vips, skipping test");
-
         var im = Image.NewFromFile(Helper.JpegFile);
         var im2 = im.Rotate(90);
         var im3 = im.Affine([0, -1, 1, 0]);
@@ -328,12 +303,8 @@ public class ResampleTests : IClassFixture<TestsFixture>
 
         // this was a bug at one point, strangely, if executed with debug
         // enabled
-        // fixed in 8.7.3
-        if (NetVips.AtLeastLibvips(8, 7, 3))
-        {
-            var mp = Image.Xyz(im.Width, im.Height);
-            var interp = Interpolate.NewFromName("bicubic");
-            Assert.Equal(im.Avg(), im.Mapim(mp, interp).Avg());
-        }
+        var mp = Image.Xyz(im.Width, im.Height);
+        var interp = Interpolate.NewFromName("bicubic");
+        Assert.Equal(im.Avg(), im.Mapim(mp, interp).Avg());
     }
 }

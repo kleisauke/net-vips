@@ -20,11 +20,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         _image = Image.MaskIdeal(100, 100, 0.5, reject: true, optical: true);
         _colour = _image * new[] { 1, 2, 3 } + new[] { 2, 3, 4 };
         _mono = _colour[1];
-        _allImages =
-        [
-            _mono,
-            _colour
-        ];
+        _allImages = [_mono, _colour];
     }
 
     #region helpers
@@ -180,13 +176,13 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         {
             if (y is Image rightImage && x is not Image)
             {
-                // There's no  __rfloordiv__ & __pow__ equivalent in C# :(
+                // There's no __rfloordiv__ & __pow__ equivalent in C# :(
                 return (rightImage.Pow(-1) * x).Floor();
             }
 
             if (x is Image leftImage)
             {
-                // There's no  __floordiv__ equivalent in C# :(
+                // There's no __floordiv__ equivalent in C# :(
                 return (leftImage / y as Image)?.Floor();
             }
 
@@ -205,13 +201,13 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         {
             if (y is Image rightImage && x is not Image)
             {
-                // There's no  __rpow__ equivalent in C# :(
+                // There's no __rpow__ equivalent in C# :(
                 return rightImage.Wop(x);
             }
 
             if (x is Image leftImage)
             {
-                // There's no  __pow__ equivalent in C# :(
+                // There's no __pow__ equivalent in C# :(
                 return leftImage.Pow(y);
             }
 
@@ -413,16 +409,13 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunArithConst(NotEq);
         RunArith(NotEq);
 
-        if (NetVips.AtLeastLibvips(8, 9))
-        {
-            // comparisons against out of range values should always fail, and
-            // comparisons to fractional values should always fail
-            var z = Image.Grey(256, 256, uchar: true);
+        // comparisons against out of range values should always fail, and
+        // comparisons to fractional values should always fail
+        var z = Image.Grey(256, 256, uchar: true);
 
-            Assert.Equal(0, z.Equal(1000).Max());
-            Assert.Equal(255, z.Equal(12).Max());
-            Assert.Equal(0, z.Equal(12.5).Max());
-        }
+        Assert.Equal(0, z.Equal(1000).Max());
+        Assert.Equal(255, z.Equal(12).Max());
+        Assert.Equal(0, z.Equal(12.5).Max());
     }
 
     [Fact]
@@ -631,7 +624,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         var im = Image.Black(50, 100);
         var test = im.Insert(im + 10, 50, 0, expand: true);
 
-        // There's no  __floordiv__ equivalent in C# :(
+        // There's no __floordiv__ equivalent in C# :(
         var index = (test / 10).Floor();
 
         foreach (var x in Helper.NonComplexFormats)
@@ -692,13 +685,10 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestHoughLine()
     {
-        // hough_line changed the way it codes parameter space (again) in 8.17 ... don't
-        // test earlier versions
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 17), "requires libvips >= 8.17");
-
+        // hough_line changed the way it codes parameter space (again) in 8.17
         var test = Image.Black(100, 100).Mutate(x => x.DrawLine([100], 10, 90, 90, 10));
 
         foreach (var fmt in Helper.AllFormats)
@@ -817,11 +807,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunUnary([im], Atan, Helper.NonComplexFormats);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestSinh()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Sinh(dynamic x)
         {
             if (x is Image image)
@@ -835,11 +823,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunUnary(_allImages, Sinh, Helper.NonComplexFormats);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestCosh()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Cosh(dynamic x)
         {
             if (x is Image image)
@@ -853,11 +839,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunUnary(_allImages, Cosh, Helper.NonComplexFormats);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestTanh()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Tanh(dynamic x)
         {
             if (x is Image image)
@@ -871,12 +855,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunUnary(_allImages, Tanh, Helper.NonComplexFormats);
     }
 
-#if NET5_0_OR_GREATER // Inverse hyperbolic functions are not available on Mono
-    [SkippableFact]
+    [Fact]
     public void TestAsinh()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Asinh(dynamic x)
         {
             if (x is Image image)
@@ -891,11 +872,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunUnary([im], Asinh, Helper.NonComplexFormats);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestAcosh()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Acosh(dynamic x)
         {
             if (x is Image image)
@@ -910,11 +889,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         RunUnary([im], Acosh, Helper.NonComplexFormats);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestAtanh()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Atanh(dynamic x)
         {
             if (x is Image image)
@@ -928,13 +905,10 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         var im = (Image.Black(100, 100) + new[] { 0, 1, 2 }) / 3.0;
         RunUnary([im], Atanh, Helper.NonComplexFormats);
     }
-#endif
 
-    [SkippableFact]
+    [Fact]
     public void TestAtan2()
     {
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 12), "requires libvips >= 8.12");
-
         dynamic Atan2(dynamic x, dynamic y)
         {
             if (x is Image left)
@@ -1149,11 +1123,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestFindTrim()
     {
-        Skip.IfNot(Helper.Have("find_trim"), "no find_trim in this vips, skipping test");
-
         var im = Image.Black(50, 60) + 100;
         var test = im.Embed(10, 20, 200, 300, extend: Enums.Extend.White);
 

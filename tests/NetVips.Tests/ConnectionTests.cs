@@ -31,7 +31,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestConnection()
     {
-        Skip.IfNot(Helper.Have("jpegload_source"), "no jpeg source support, skipping test");
+        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         var source = Source.NewFromFile(Helper.JpegFile);
         var image = Image.NewFromSource(source, access: Enums.Access.Sequential);
@@ -52,7 +52,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestSourceNewFromMemorySpan()
     {
-        Skip.IfNot(Helper.Have("svgload_source"), "no svg source support, skipping test");
+        Skip.IfNot(Helper.Have("svgload"), "no svg support, skipping test");
 
         ReadOnlySpan<byte> input = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\" />"u8;
         var source = Source.NewFromMemory(input);
@@ -67,7 +67,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestSourceCustomNoSeek()
     {
-        Skip.IfNot(Helper.Have("jpegload_source"), "no jpeg source support, skipping test");
+        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         var input = File.OpenRead(Helper.JpegFile);
 
@@ -86,7 +86,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestSourceCustom()
     {
-        Skip.IfNot(Helper.Have("jpegload_source"), "no jpeg source support, skipping test");
+        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         var input = File.OpenRead(Helper.JpegFile);
 
@@ -106,7 +106,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestTargetCustom()
     {
-        Skip.IfNot(Helper.Have("jpegsave_target"), "no jpeg target support, skipping test");
+        Skip.IfNot(Helper.Have("jpegsave"), "no jpeg support, skipping test");
 
         var filename = Helper.GetTemporaryFile(_tempDir, ".png");
         var output = File.OpenWrite(filename);
@@ -139,7 +139,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestSourceCustomWebpNoSeek()
     {
-        Skip.IfNot(Helper.Have("webpload_source"), "no webp source support, skipping test");
+        Skip.IfNot(Helper.Have("webpload"), "no webp support, skipping test");
 
         var input = File.OpenRead(Helper.WebpFile);
 
@@ -158,7 +158,7 @@ public class ConnectionTests : IClassFixture<TestsFixture>, IDisposable
     [SkippableFact]
     public void TestSourceCustomWebp()
     {
-        Skip.IfNot(Helper.Have("webpload_source"), "no webp source support, skipping test");
+        Skip.IfNot(Helper.Have("webpload"), "no webp support, skipping test");
 
         var input = File.OpenRead(Helper.WebpFile);
 
