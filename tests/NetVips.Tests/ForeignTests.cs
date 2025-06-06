@@ -832,7 +832,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             var p2 = x.Get("icc-profile-data");
             Assert.Equal(p1, p2);
 
-            // add tests for exif, xmp, ipct
+            // add tests for exif, xmp, iptc
             // the exif test will need us to be able to walk the header,
             // we can't just check exif-data
 
@@ -1460,8 +1460,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
     {
         Skip.IfNot(Helper.Have("heifsave"), "no HEIF support, skipping test");
 
-        // TODO(kleisauke): Reduce the threshold once https://github.com/strukturag/libheif/issues/533 is resolved.
-        SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, 80, new VOption
+        SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, kwargs: new VOption
         {
             {"lossless", true},
             {"compression", Enums.ForeignHeifCompression.Av1}
@@ -1474,16 +1473,14 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         }
         else
         {
-            SaveLoadFile(".avif", "[compression=av1]", _colour, 90);
+            SaveLoadFile(".avif", "[compression=av1]", _colour);
         }
 
-        // uncomment to test lossless mode, will take a while
-        //var x = Image.NewFromFile(Helper.AvifFile);
-        //var buf = x.HeifsaveBuffer(lossless: true, compression: "av1");
-        //var im2 = Image.NewFromBuffer(buf);
-
-        // not in fact quite lossless
-        //Assert.Equal(x.Avg(), im2.Avg(), 3.0);
+        // test lossless mode
+        var x = Image.NewFromFile(Helper.AvifFile);
+        var buf = x.HeifsaveBuffer(lossless: true, compression: Enums.ForeignHeifCompression.Av1, effort: 0);
+        var im2 = Image.NewFromBuffer(buf);
+        Assert.Equal(0, (x - im2).Abs().Max());
 
         // higher Q should mean a bigger buffer, needs libheif >= v1.8.0,
         // see: https://github.com/libvips/libvips/issues/1757
@@ -1492,8 +1489,8 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.True(b2.Length > b1.Length);
 
         // try saving an image with an ICC profile and reading it back
-        var buf = _colour.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
-        var x = Image.NewFromBuffer(buf);
+        buf = _colour.HeifsaveBuffer(q: 10, compression: Enums.ForeignHeifCompression.Av1);
+        x = Image.NewFromBuffer(buf);
         if (x.Contains("icc-profile-data"))
         {
             var p1 = _colour.Get("icc-profile-data");
@@ -1501,7 +1498,7 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             Assert.Equal(p1, p2);
         }
 
-        // add tests for exif, xmp, ipct
+        // add tests for exif, xmp, iptc
         // the exif test will need us to be able to walk the header,
         // we can't just check exif-data
 

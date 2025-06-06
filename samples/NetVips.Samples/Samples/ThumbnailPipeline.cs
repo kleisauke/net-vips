@@ -119,8 +119,8 @@ public class ThumbnailPipeline : ISample
         }
 
 
-        string importProfile = null;
-        string exportProfile = null;
+        string inputProfile = null;
+        string outputProfile = null;
         Enums.Intent? intent = null;
 
         // If there's some kind of import profile, we can transform to the
@@ -128,10 +128,10 @@ public class ThumbnailPipeline : ISample
         if (hasIccProfile)
         {
             // Fallback to sRGB.
-            importProfile = "srgb";
+            inputProfile = "srgb";
 
             // Convert to sRGB using embedded or import profile.
-            exportProfile = "srgb";
+            outputProfile = "srgb";
 
             // Use "perceptual" intent to better match *magick.
             intent = Enums.Intent.Perceptual;
@@ -204,7 +204,7 @@ public class ThumbnailPipeline : ISample
         // shrink-on-load tricks are possible. This can make thumbnailing of large
         // images extremely slow.
         using var thumb = Image.ThumbnailBuffer(buffer, thumbnailWidth, stringOptions, thumbnailHeight, size,
-            importProfile: importProfile, exportProfile: exportProfile, intent: intent);
+            inputProfile: inputProfile, outputProfile: outputProfile, intent: intent);
 
         thumb.WriteToFile("thumbnail.webp", new VOption
         {

@@ -695,9 +695,9 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
     [SkippableFact]
     public void TestHoughLine()
     {
-        // hough_line changed the way it codes parameter space in 8.7 ... don't
+        // hough_line changed the way it codes parameter space (again) in 8.17 ... don't
         // test earlier versions
-        Skip.IfNot(NetVips.AtLeastLibvips(8, 7), "requires libvips >= 8.7");
+        Skip.IfNot(NetVips.AtLeastLibvips(8, 17), "requires libvips >= 8.17");
 
         var test = Image.Black(100, 100).Mutate(x => x.DrawLine([100], 10, 90, 90, 10));
 
@@ -714,7 +714,7 @@ public class ArithmeticTests : IClassFixture<TestsFixture>
             var distance = Math.Floor(test.Height * y / hough.Height);
 
             Assert.Equal(45, angle);
-            Assert.Equal(70, distance);
+            Assert.Equal(75, distance);
         }
     }
 

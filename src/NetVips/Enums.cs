@@ -324,24 +324,6 @@ public static class Enums
     }
 
     /// <summary>
-    /// A hint about the kind of demand geometry VIPS images prefer.
-    /// </summary>
-    public enum DemandStyle
-    {
-        /// <summary>Invalid setting.</summary>
-        Error = -1, // "error"
-
-        /// <summary>Demand in small (typically 64x64 pixel) tiles.</summary>
-        Smalltile = 0, // "smalltile"
-
-        /// <summary>Demand in fat (typically 10 pixel high) strips.</summary>
-        Fatstrip = 1, // "fatstrip"
-
-        /// <summary>Demand in thin (typically 1 pixel high) strips.</summary>
-        Thinstrip = 2 // "thinstrip"
-    }
-
-    /// <summary>
     /// A direction.
     /// </summary>
     /// <remarks>
@@ -700,7 +682,10 @@ public static class Enums
         Saturation = 2, // "saturation"
 
         /// <summary>Absolute colorimetric rendering intent.</summary>
-        Absolute = 3 // "absolute"
+        Absolute = 3, // "absolute"
+
+        /// <summary>The rendering intent that the profile suggests.</summary>
+        Auto = 32 // "auto"
     }
 
     /// <summary>
@@ -823,7 +808,13 @@ public static class Enums
         Lanczos2 = 4, // "lanczos2"
 
         /// <summary>Three-lobe Lanczos.</summary>
-        Lanczos3 = 5 // "lanczos3"
+        Lanczos3 = 5, // "lanczos3"
+
+        /// <summary>Magic Kernel Sharp 2013.</summary>
+        Mks2013 = 6, // "mks2013"
+
+        /// <summary>Magic Kernel Sharp 2021.</summary>
+        Mks2021 = 7 // "mks2021"
     }
 
     /// <summary>

@@ -376,12 +376,10 @@ public static class NetVips
         var typeClass = GType.ClassRef(type);
         var enumClass = Marshal.PtrToStructure<GEnumClass>(typeClass);
 
-        var values = new Dictionary<string, int>((int)(enumClass.NValues - 1));
+        var values = new Dictionary<string, int>((int)enumClass.NValues);
 
         var ptr = enumClass.Values;
-
-        // -1 since we always have a "last" member
-        for (var i = 0; i < enumClass.NValues - 1; i++)
+        for (var i = 0; i < enumClass.NValues; i++)
         {
             var enumValue = Marshal.PtrToStructure<GEnumValue>(ptr);
             values[enumValue.ValueNick] = enumValue.Value;

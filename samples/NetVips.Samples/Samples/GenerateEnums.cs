@@ -27,6 +27,7 @@ public class GenerateEnums : ISample
     private string Generate()
     {
         var allEnums = NetVips.GetEnums();
+        allEnums.Remove("VipsDemandStyle"); // Remove internal enums
 
         const string preamble = """
                                 //------------------------------------------------------------------------------
@@ -66,6 +67,8 @@ public class GenerateEnums : ISample
                 .AppendLine("    {");
 
             var enumValues = NetVips.ValuesForEnum(gtype);
+            enumValues.Remove("last"); // FIXME(kleisauke): remove after https://github.com/libvips/libvips/pull/4520
+
             for (var i = 0; i < enumValues.Count; i++)
             {
                 var kvp = enumValues.ElementAt(i);
