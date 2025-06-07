@@ -1,8 +1,7 @@
 # NetVips
 
 [![NuGet](https://img.shields.io/nuget/v/NetVips.svg)](https://www.nuget.org/packages/NetVips)
-[![CI status (x64 Linux, macOS and Windows)](https://github.com/kleisauke/net-vips/workflows/CI/badge.svg)](https://github.com/kleisauke/net-vips/actions)
-[![CI status (Linux ARM64v8)](https://circleci.com/gh/kleisauke/net-vips.svg?style=shield)](https://circleci.com/gh/kleisauke/net-vips)
+[![CI status (Linux, macOS and Windows)](https://github.com/kleisauke/net-vips/workflows/CI/badge.svg)](https://github.com/kleisauke/net-vips/actions)
 [![CI status (NetVips nightly packaging)](https://ci.appveyor.com/api/projects/status/d2r9uanb5yij07pt/branch/master?svg=true)](https://ci.appveyor.com/project/kleisauke/net-vips/branch/master)
 
 This NuGet package provides a .NET binding for the [libvips image processing library](https://www.libvips.org/).
