@@ -29,6 +29,8 @@ jobs:
             script: ./build.sh
           - os: windows-2022
             script: .\build.ps1
+          - os: windows-11-arm
+            script: .\build.ps1
     steps:
       - name: Dependencies (Debian 12)
         if: contains(matrix.container, 'bookworm')
@@ -41,8 +43,8 @@ jobs:
       - name: Dependencies (Alpine 3.20)
         if: contains(matrix.container, 'alpine')
         run: apk add bash font-noto --update-cache
-      - name: Setup dotnet (macOS 13, Windows 2022)
-        if: runner.os != 'Linux'
+      - name: Setup dotnet
+        if: ${{ matrix.container == '' }}
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.x
