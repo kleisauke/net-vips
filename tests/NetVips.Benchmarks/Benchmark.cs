@@ -12,7 +12,7 @@ using SixLabors.ImageSharp.Processing.Processors;
 using SkiaSharp;
 
 // Alias to handle conflicting namespaces
-using NetVipsImage = NetVips.Image;
+using Utils = NetVips.NetVips;
 using ImageSharpImage = SixLabors.ImageSharp.Image;
 using ImageSharpRectangle = SixLabors.ImageSharp.Rectangle;
 
@@ -41,11 +41,14 @@ public class Benchmark
     [GlobalSetup]
     public void GlobalSetup()
     {
-        // Turn off OpenCL acceleration
+        // Turn off OpenCL acceleration in ImageMagick
         OpenCL.IsEnabled = false;
 
         // Disable libvips cache to ensure tests are as fair as they can be
         Cache.Max = 0;
+
+        // Reduce concurrency, as a large thread pool can slow down overall processing
+        Utils.Concurrency = 4;
     }
 
     [Benchmark(Description = "NetVips", Baseline = true)]
@@ -53,10 +56,10 @@ public class Benchmark
     [Arguments("t.jpg", "t2.jpg")]
     public void NetVips(string input, string output)
     {
-        using var im = NetVipsImage.NewFromFile(input, access: Enums.Access.Sequential);
+        using var im = Image.NewFromFile(input, access: Enums.Access.Sequential);
         using var crop = im.Crop(100, 100, im.Width - 200, im.Height - 200);
         using var reduce = crop.Reduce(1.0 / 0.9, 1.0 / 0.9, kernel: Enums.Kernel.Linear);
-        using var mask = NetVipsImage.NewFromArray(new[,]
+        using var mask = Image.NewFromArray(new[,]
         {
             {-1, -1, -1},
             {-1, 16, -1},
@@ -118,13 +121,17 @@ public class Benchmark
         var targetHeight = (int)Math.Round(bitmap.Height * .9F);
 
         // bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKBitmapResizeMethod.Triangle)
-        // is deprecated, so we use `SKFilterQuality.Low` instead, see:
-        // https://github.com/mono/SkiaSharp/blob/1527bf392ebc7b4b57c992ef8bfe14c9899f76a3/binding/Binding/SKBitmap.cs#L24
-        using var resized = bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Low);
+        // and
+        // bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Low)
+        // are deprecated, so we use `new SKSamplingOptions(SKFilterMode.Linear)` instead, see:
+        // https://github.com/mono/SkiaSharp/blob/v2.88.9/binding/Binding/SKBitmap.cs#L26
+        // https://github.com/mono/SkiaSharp/blob/v3.116.0/binding/SkiaSharp/SKPaint.cs#L31
+        using var resized =
+            bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), new SKSamplingOptions(SKFilterMode.Linear));
         using var surface =
             SKSurface.Create(new SKImageInfo(targetWidth, targetHeight, bitmap.ColorType, bitmap.AlphaType));
         using var canvas = surface.Canvas;
-        using var paint = new SKPaint { FilterQuality = SKFilterQuality.High };
+        using var paint = new SKPaint { IsAntialias = true };
         var kernel = new[]
         {
             -1f, -1f, -1f,

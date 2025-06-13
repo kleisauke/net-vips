@@ -26,7 +26,7 @@ keep entire images in memory, it's light. For example, the `NetVips` benchmark:
 [NetVips.Benchmarks](https://github.com/kleisauke/net-vips/tree/master/tests/NetVips.Benchmarks)
 
 Loads a large image, shrinks by 10%, sharpens, and saves again. On this test
-`NetVips` is around 22 times faster than Magick.NET and 4 times faster than ImageSharp.
+`NetVips` is around 31 times faster than Magick.NET and 6 times faster than ImageSharp.
 
 The [libvips documentation](https://www.libvips.org/API/current/)
 has a [chapter explaining how libvips opens files](
