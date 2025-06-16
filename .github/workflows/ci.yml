@@ -7,7 +7,8 @@ jobs:
     container:
       image: ${{ matrix.container }}
       volumes:
-        - /:/host
+        - ${{ contains(matrix.container, 'alpine3.20-arm64v8') && '/opt:/opt:rw,rshared' || ' ' }}
+        - ${{ contains(matrix.container, 'alpine3.20-arm64v8') && '/opt:/__e/node20:ro,rshared' || ' ' }}
     strategy:
       fail-fast: false
       matrix:
@@ -35,15 +36,12 @@ jobs:
             script: .\build.ps1
     steps:
       - name: Allow Linux musl containers on ARM64 runners # https://github.com/actions/runner/issues/801#issuecomment-2394425757
-        if: runner.arch == 'ARM64' && contains(matrix.container, 'alpine')
-        shell: sh
+        if: contains(matrix.container, 'alpine3.20-arm64v8')
         run: |
-          apk add nodejs
-          sed -i "s:ID=alpine:ID=NotpineForGHA:" /etc/os-release
-          cd /host/home/runner/runners/*/externals/
-          rm -rf node20/*
-          mkdir node20/bin
-          ln -s /usr/bin/node node20/bin/node
+          sed -i "/^ID=/s/alpine/NotpineForGHA/" /etc/os-release
+          apk add nodejs --update-cache
+          mkdir /opt/bin
+          ln -s /usr/bin/node /opt/bin/node
       - name: Dependencies (Debian 12)
         if: contains(matrix.container, 'bookworm')
         run: |
