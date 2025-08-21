@@ -27,7 +27,8 @@ public static class Enums
         /// </summary>
         Sequential = 1, // "sequential"
 
-        /// <summary>Top-to-bottom without a buffer.</summary>
+        /// <summary>Deprecated, use <see cref="Sequential"/> instead.</summary>
+        [Obsolete($"{nameof(SequentialUnbuffered)} has been deprecated. Use {nameof(Sequential)} instead.")]
         SequentialUnbuffered = 2 // "sequential-unbuffered"
     }
 
@@ -469,7 +470,7 @@ public static class Enums
     /// The PNG filter to use.
     /// </summary>
     [Flags]
-    public enum ForeignPngFilter
+    public enum ForeignPngFilter : uint
     {
         /// <summary>No filtering.</summary>
         None = 0x08, // "none"
@@ -494,7 +495,7 @@ public static class Enums
     /// Which metadata to retain.
     /// </summary>
     [Flags]
-    public enum ForeignKeep
+    public enum ForeignKeep : uint
     {
         /// <summary>Don't attach metadata.</summary>
         None = 0, // "none"
@@ -541,6 +542,27 @@ public static class Enums
 
         /// <summary>x265</summary>
         X265 = 4 // "x265"
+    }
+
+    /// <summary>
+    /// Each page of a PDF document can contain multiple page boxes,
+    /// also known as boundary boxes or print marks.
+    ///
+    /// Each page box defines a region of the complete page that
+    /// should be rendered. The default region is the crop box.
+    /// </summary>
+    public enum ForeignPdfPageBox
+    {
+        /// <summary>Media box.</summary>
+        Media = 0, // "media"
+        /// <summary>Crop box.</summary>
+        Crop = 1, // "crop"
+        /// <summary>Trim box.</summary>
+        Trim = 2, // "trim"
+        /// <summary>Bleed box.</summary>
+        Bleed = 3, // "bleed"
+        /// <summary>Art box.</summary>
+        Art = 4 // "art"
     }
 
     /// <summary>
@@ -1199,7 +1221,7 @@ public static class Enums
     /// Flags we associate with each object argument.
     /// </summary>
     [Flags]
-    public enum ArgumentFlags
+    public enum ArgumentFlags : uint
     {
         /// <summary>No flags.</summary>
         NONE = 0,
@@ -1226,7 +1248,10 @@ public static class Enums
         DEPRECATED = 1 << 6,
 
         /// <summary>The input argument will be modified.</summary>
-        MODIFY = 1 << 7
+        MODIFY = 1 << 7,
+
+        /// <summary>The argument is non-hashable.</summary>
+        NON_HASHABLE = 1 << 8
     }
 
     /// <summary>
@@ -1241,7 +1266,8 @@ public static class Enums
         /// <summary>Can work sequentially with a small buffer.</summary>
         SEQUENTIAL = 1 << 0,
 
-        /// <summary>Can work sequentially without a buffer.</summary>
+        /// <summary>Deprecated, use <see cref="SEQUENTIAL"/> instead.</summary>
+        [Obsolete($"{nameof(SEQUENTIAL_UNBUFFERED)} has been deprecated. Use {nameof(SEQUENTIAL)} instead.")]
         SEQUENTIAL_UNBUFFERED = 1 << 1,
 
         /// <summary>Must not be cached.</summary>
@@ -1254,7 +1280,10 @@ public static class Enums
         UNTRUSTED = 1 << 4,
 
         /// <summary>Prevent this operation from running.</summary>
-        BLOCKED = 1 << 5
+        BLOCKED = 1 << 5,
+
+        /// <summary>Force the operation to run.</summary>
+        REVALIDATE = 1 << 6
     }
 
     /// <summary>
