@@ -367,6 +367,40 @@ public static class NetVips
     }
 
     /// <summary>
+    /// Get a list of flags available within the libvips library.
+    /// </summary>
+    /// <returns>A list of flags.</returns>
+    public static List<string> GetFlags()
+    {
+        var allFlags = new List<string>();
+        var handle = GCHandle.Alloc(allFlags);
+
+        nint TypeMap(nint type, nint a, nint b)
+        {
+            var nickname = TypeName(type);
+
+            var list = (List<string>)GCHandle.FromIntPtr(a).Target;
+            list.Add(nickname);
+
+            return Vips.TypeMap(type, TypeMap, a, b);
+        }
+
+        try
+        {
+            Vips.TypeMap(TypeFromName("GFlags"), TypeMap, GCHandle.ToIntPtr(handle), IntPtr.Zero);
+        }
+        finally
+        {
+            handle.Free();
+        }
+
+        // Sort
+        allFlags.Sort();
+
+        return allFlags;
+    }
+
+    /// <summary>
     /// Get all values for a enum (GType).
     /// </summary>
     /// <param name="type">Type to return enum values for.</param>
@@ -385,6 +419,30 @@ public static class NetVips
             values[enumValue.ValueNick] = enumValue.Value;
 
             ptr += Marshal.SizeOf<GEnumValue>();
+        }
+
+        return values;
+    }
+
+    /// <summary>
+    /// Get all values for flags (GType).
+    /// </summary>
+    /// <param name="type">Type to return flag values for.</param>
+    /// <returns>A list of values.</returns>
+    public static Dictionary<string, uint> ValuesForFlags(nint type)
+    {
+        var typeClass = GType.ClassRef(type);
+        var flagsClass = Marshal.PtrToStructure<GFlagsClass>(typeClass);
+
+        var values = new Dictionary<string, uint>((int)flagsClass.NValues);
+
+        var ptr = flagsClass.Values;
+        for (var i = 0; i < flagsClass.NValues; i++)
+        {
+            var flagsValue = Marshal.PtrToStructure<GFlagsValue>(ptr);
+            values[flagsValue.ValueNick] = flagsValue.Value;
+
+            ptr += Marshal.SizeOf<GFlagsValue>();
         }
 
         return values;

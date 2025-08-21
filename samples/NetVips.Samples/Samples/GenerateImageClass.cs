@@ -17,8 +17,8 @@ public class GenerateImageClass : ISample
         {GValue.GBoolType, "bool"},
         {GValue.GIntType, "int"},
         {GValue.GUint64Type, "ulong"},
-        //{GValue.GEnumType, "string"}, // Checked below
-        //{GValue.GFlagsType, "int"}, // Checked below
+        //{GValue.GEnumType, "int"}, // Checked below
+        //{GValue.GFlagsType, "uint"}, // Checked below
         {GValue.GDoubleType, "double"},
         {GValue.GStrType, "string"},
         {GValue.GObjectType, "GObject"},
@@ -109,6 +109,11 @@ public class GenerateImageClass : ISample
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsSdfShape"), "Enums.SdfShape");
         }
 
+        if (NetVips.AtLeastLibvips(8, 18) && NetVips.TypeFind("VipsOperation", "pdfload") != IntPtr.Zero)
+        {
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPdfPageBox"), "Enums.ForeignPdfPageBox");
+        }
+
         // Flags
         _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignFlags"), "Enums.ForeignFlags");
         _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPngFilter"), "Enums.ForeignPngFilter");
@@ -156,7 +161,8 @@ public class GenerateImageClass : ISample
         bool mutable = false, IReadOnlyList<Introspect.Argument> outParameters = null)
     {
         using var op = Operation.NewFromName(operationName);
-        if ((op.GetFlags() & Enums.OperationFlags.DEPRECATED) != 0)
+        var flags = op.GetFlags();
+        if ((flags & Enums.OperationFlags.DEPRECATED) != 0)
         {
             throw new ArgumentException($"No such operator. Operator \"{operationName}\" is deprecated");
         }
@@ -172,8 +178,8 @@ public class GenerateImageClass : ISample
         // we are only interested in non-deprecated args
         var optionalInput = intro.OptionalInput
             .Where(arg => (arg.Value.Flags & Enums.ArgumentFlags.DEPRECATED) == 0)
-            // Drop "revalidate" option from source and buffer loaders as they are already uncached
-            .Where(arg => arg.Key != "revalidate" || (firstArgType != GValue.SourceType && firstArgType != GValue.BlobType))
+            // Drop "revalidate" option from buffer loaders and operations marked "nocache" as they are already uncached
+            .Where(arg => arg.Key != "revalidate" || (firstArgType != GValue.BlobType && (flags & Enums.OperationFlags.NOCACHE) == 0))
             .Select(x => x.Value)
             .ToArray();
         var optionalOutput = intro.OptionalOutput
@@ -252,6 +258,10 @@ public class GenerateImageClass : ISample
         var newOperationName = operationName.ToPascalCase();
 
         var description = op.GetDescription();
+        if (description.EndsWith(" (poppler)"))
+        {
+            description = description[..^" (poppler)".Length];
+        }
         result.AppendLine($"{indent}/// {description.FirstLetterToUpper()}.")
             .AppendLine($"{indent}/// </summary>")
             .AppendLine($"{indent}/// <example>")

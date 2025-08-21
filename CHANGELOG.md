@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Add generic `image.WriteToMemory<T>()` operation.
 
 ### Changed
+- Update methods/enums for libvips 8.18.
 - Remove version constraint for `System.Buffers` when targeting .NET Framework ([#262](https://github.com/kleisauke/net-vips/issues/262)).
 - Lower minimum version requirement for `System.Drawing.Common` to 8.0.0 in [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package (only required when targeting .NET 6 or later).
 - Bump minimum required .NET Framework version to v4.6.2.

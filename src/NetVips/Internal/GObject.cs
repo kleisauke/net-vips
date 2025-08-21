@@ -74,6 +74,29 @@ internal struct GEnumClass
     internal nint Values;
 }
 
+[StructLayout(LayoutKind.Sequential)]
+internal struct GFlagsValue
+{
+    internal uint Value;
+
+    [MarshalAs(UnmanagedType.LPStr)]
+    internal string ValueName;
+
+    [MarshalAs(UnmanagedType.LPStr)]
+    internal string ValueNick;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+internal struct GFlagsClass
+{
+    internal nint GTypeClass;
+
+    internal uint Mask;
+    internal uint NValues;
+
+    internal nint Values;
+}
+
 internal static class GType
 {
     [SuppressUnmanagedCodeSecurity]
