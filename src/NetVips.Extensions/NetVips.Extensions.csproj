@@ -21,10 +21,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">
-    <!-- Constrain the version to 8.0.20, as later versions require .NET 8.0.
+    <!-- Minimum required version: 8.0.0 (due to https://aka.ms/systemdrawingnonwindows).
+         Version >= 9.0.0 requires .NET 8.0.
          https://github.com/dotnet/winforms/issues/9851
     -->
-    <PackageReference Include="System.Drawing.Common" Version="[8.0.20]" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
