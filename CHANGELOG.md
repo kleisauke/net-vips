@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [3.2.0] - TBD
 ### Changed
 - Remove version constraint for `System.Buffers` when targeting .NET Framework ([#262](https://github.com/kleisauke/net-vips/issues/262)).
-- Remove version constraint for `System.Drawing.Common` within the [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package.
+- Lower the minimum required version of `System.Drawing.Common` to 8.0.0 within the [NetVips.Extensions](https://www.nuget.org/packages/NetVips.Extensions/) package.
 
 ## [3.1.0] - 2025-06-07
 ### Added
