@@ -6,9 +6,7 @@
     <TargetFrameworks>net6.0;net452</TargetFrameworks>
     <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">net6.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <ApplicationIcon />
     <OutputType>Library</OutputType>
-    <StartupObject />
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
