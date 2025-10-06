@@ -3,7 +3,8 @@
   <Import Project="..\..\build\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net461</TargetFrameworks>
+    <!-- Buffer.MemoryCopy() requires .NET Framework >= 4.6. -->
+    <TargetFrameworks>net6.0;net46</TargetFrameworks>
     <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('Windows'))">net6.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>NetVips.Extensions</PackageId>
@@ -11,9 +12,11 @@
     <Description>A set of extension methods and helpers for NetVips</Description>
     <PackageTags>$(PackageTags);extensions</PackageTags>
     <OutputType>Library</OutputType>
+    <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Platforms>x64;x86;ARM64;ARM32</Platforms>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
