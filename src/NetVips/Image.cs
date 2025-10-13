@@ -692,6 +692,11 @@ public partial class Image : VipsObject
     /// <param name="format">Band format.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
+    [Obsolete("Use Image.NewFromMemory<T>(T[], int, int, int, Enums.BandFormat) instead.")]
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050:RequiresDynamicCode",
+        Justification = "This AOT-incompatible method overload is deprecated.")]
+#endif
     public static Image NewFromMemory(
         Array data,
         int width,
