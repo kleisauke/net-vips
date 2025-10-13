@@ -118,8 +118,8 @@ public partial class Image
         Enums.BandFormat format) where T : unmanaged
     {
         var handle = data.Pin();
-        var vi = VipsImage.NewFromMemory(handle.Pointer, (nuint)data.Length, width, height, bands,
-            format);
+        var size = (nuint)data.Length * (nuint)sizeof(T);
+        var vi = VipsImage.NewFromMemory(handle.Pointer, size, width, height, bands, format);
         if (vi == IntPtr.Zero)
         {
             handle.Dispose();
@@ -127,7 +127,7 @@ public partial class Image
             throw new VipsException("unable to make image from memory");
         }
 
-        var image = new Image(vi) { MemoryPressure = data.Length };
+        var image = new Image(vi) { MemoryPressure = (long)size };
 
         // Need to release the pinned MemoryHandle when the image is closed.
         image.OnPostClose += () => handle.Dispose();
@@ -155,13 +155,14 @@ public partial class Image
     {
         fixed (T* dataFixed = data)
         {
-            var vi = VipsImage.NewFromMemoryCopy(dataFixed, (nuint)data.Length, width, height, bands, format);
+            var size = (nuint)data.Length * (nuint)sizeof(T);
+            var vi = VipsImage.NewFromMemoryCopy(dataFixed, size, width, height, bands, format);
             if (vi == IntPtr.Zero)
             {
                 throw new VipsException("unable to make image from memory");
             }
 
-            return new Image(vi) { MemoryPressure = data.Length };
+            return new Image(vi) { MemoryPressure = (long)size };
         }
     }
 

@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   - `System.Drawing.Common` to 8.0.0 (only required when targeting .NET 6 or later).
   - .NET Framework version to 4.6 (`net46`).
 
+### Fixed
+- Fix size calculation in `Image.NewFromMemory()` for non-byte element types ([#264](https://github.com/kleisauke/net-vips/issues/264)).
+
 ## [3.1.0] - 2025-06-07
 ### Added
 - Add missing `revalidate` option to `Image.NewFromFile()`.

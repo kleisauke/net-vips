@@ -655,8 +655,8 @@ public partial class Image : VipsObject
         Enums.BandFormat format)
     {
         var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-        var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), (nuint)data.Length, width, height, bands,
-            format);
+        var size = (nuint)data.Length * (nuint)Marshal.SizeOf(data.GetValue(0));
+        var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), size, width, height, bands, format);
         if (vi == IntPtr.Zero)
         {
             if (handle.IsAllocated)

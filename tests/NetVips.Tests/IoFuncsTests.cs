@@ -103,11 +103,11 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestNewFromMemory()
     {
-        var s = new byte[200];
-        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
+        var s = new float[200];
+        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Float);
         Assert.Equal(20, im.Width);
         Assert.Equal(10, im.Height);
-        Assert.Equal(Enums.BandFormat.Uchar, im.Format);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
         Assert.Equal(1, im.Bands);
         Assert.Equal(0, im.Avg());
 
@@ -142,11 +142,11 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestNewFromMemoryReadOnly()
     {
-        ReadOnlyMemory<byte> s = new byte[200];
-        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
+        ReadOnlyMemory<float> s = new float[200];
+        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Float);
         Assert.Equal(20, im.Width);
         Assert.Equal(10, im.Height);
-        Assert.Equal(Enums.BandFormat.Uchar, im.Format);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
         Assert.Equal(1, im.Bands);
         Assert.Equal(0, im.Avg());
 
@@ -157,11 +157,11 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestNewFromMemoryCopySpan()
     {
-        ReadOnlySpan<byte> s = stackalloc byte[200];
-        var im = Image.NewFromMemoryCopy(s, 20, 10, 1, Enums.BandFormat.Uchar);
+        ReadOnlySpan<float> s = stackalloc float[200];
+        var im = Image.NewFromMemoryCopy(s, 20, 10, 1, Enums.BandFormat.Float);
         Assert.Equal(20, im.Width);
         Assert.Equal(10, im.Height);
-        Assert.Equal(Enums.BandFormat.Uchar, im.Format);
+        Assert.Equal(Enums.BandFormat.Float, im.Format);
         Assert.Equal(1, im.Bands);
         Assert.Equal(0, im.Avg());
 
