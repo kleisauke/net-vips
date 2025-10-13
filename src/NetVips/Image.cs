@@ -647,6 +647,51 @@ public partial class Image : VipsObject
     /// <param name="format">Band format.</param>
     /// <returns>A new <see cref="Image"/>.</returns>
     /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
+    public static Image NewFromMemory<T>(
+        T[] data,
+        int width,
+        int height,
+        int bands,
+        Enums.BandFormat format) where T : unmanaged
+    {
+        var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+        var size = (nuint)data.Length * (nuint)Marshal.SizeOf<T>();
+        var vi = VipsImage.NewFromMemory(handle.AddrOfPinnedObject(), size, width, height, bands, format);
+        if (vi == IntPtr.Zero)
+        {
+            if (handle.IsAllocated)
+            {
+                handle.Free();
+            }
+
+            throw new VipsException("unable to make image from memory");
+        }
+
+        var image = new Image(vi);
+
+        // Need to release the pinned GCHandle when the image is closed.
+        image.OnPostClose += () =>
+        {
+            if (handle.IsAllocated)
+            {
+                handle.Free();
+            }
+        };
+
+        return image;
+    }
+
+    /// <summary>
+    /// Like <see cref="NewFromMemory{T}(T[], int, int, int, Enums.BandFormat)"/>, but
+    /// for non-generic arrays.
+    /// </summary>
+    /// <param name="data">A non-generic array.</param>
+    /// <param name="width">Image width in pixels.</param>
+    /// <param name="height">Image height in pixels.</param>
+    /// <param name="bands">Number of bands.</param>
+    /// <param name="format">Band format.</param>
+    /// <returns>A new <see cref="Image"/>.</returns>
+    /// <exception cref="VipsException">If unable to make image from <paramref name="data"/>.</exception>
     public static Image NewFromMemory(
         Array data,
         int width,
@@ -2126,7 +2171,7 @@ public partial class Image : VipsObject
     /// indirectly, are also dropped from the libvips operation cache.
     ///
     /// This method can be useful if you wrap a libvips image around an array
-    /// with <see cref="NewFromMemory(Array, int, int, int, Enums.BandFormat)"/>
+    /// with <see cref="NewFromMemory{T}(T[], int, int, int, Enums.BandFormat)"/>
     /// and then change some bytes without libvips knowing.
     /// </remarks>
     public void Invalidate()
