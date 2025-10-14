@@ -667,7 +667,7 @@ public partial class Image : VipsObject
             throw new VipsException("unable to make image from memory");
         }
 
-        var image = new Image(vi);
+        var image = new Image(vi) { MemoryPressure = (long)size };
 
         // Need to release the pinned GCHandle when the image is closed.
         image.OnPostClose += () =>
@@ -717,7 +717,7 @@ public partial class Image : VipsObject
             throw new VipsException("unable to make image from memory");
         }
 
-        var image = new Image(vi);
+        var image = new Image(vi) { MemoryPressure = (long)size };
 
         // Need to release the pinned GCHandle when the image is closed.
         image.OnPostClose += () =>
