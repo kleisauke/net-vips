@@ -124,22 +124,21 @@ public class TargetCustom : Target
         {
             return 0;
         }
+        if (OnRead == null)
+        {
+            return -1;
+        }
 
         var tempArray = ArrayPool<byte>.Shared.Rent((int)length);
         try
         {
-            var readLength = OnRead?.Invoke(tempArray, (int)length);
-            if (!readLength.HasValue)
+            var readLength = OnRead.Invoke(tempArray, (int)length);
+            if (readLength > 0)
             {
-                return -1;
+                Marshal.Copy(tempArray, 0, buffer, readLength);
             }
 
-            if (readLength.Value > 0)
-            {
-                Marshal.Copy(tempArray, 0, buffer, readLength.Value);
-            }
-
-            return readLength.Value;
+            return readLength;
         }
         catch
         {
