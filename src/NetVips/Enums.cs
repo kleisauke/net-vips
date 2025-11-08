@@ -569,7 +569,7 @@ public static class Enums
     /// </summary>
     public enum ForeignSubsample
     {
-        /// <summary>Prevent subsampling when quality > 90.</summary>
+        /// <summary>Prevent subsampling when quality >= 90.</summary>
         Auto = 0, // "auto"
 
         /// <summary>Always perform subsampling.</summary>
