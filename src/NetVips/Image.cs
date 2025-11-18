@@ -1132,21 +1132,32 @@ public partial class Image : VipsObject
     /// Write the image to a large memory array.
     /// </summary>
     /// <remarks>
-    /// A large area of memory is allocated, the image is rendered to that
-    /// memory array, and the array is returned as a buffer.
+    /// A large area of memory is allocated, the image is rendered into it,
+    /// and the resulting data is returned as an array of bytes.
     ///
     /// For example, if you have a 2x2 uchar image containing the bytes 1, 2,
     /// 3, 4, read left-to-right, top-to-bottom, then:
     /// <code language="lang-csharp">
     /// var buf = image.WriteToMemory();
     /// </code>
-    /// will return a four byte buffer containing the values 1, 2, 3, 4.
+    /// will return a four byte array containing the values 1, 2, 3, 4.
     /// </remarks>
-    /// <returns>An array of bytes.</returns>
+    /// <returns>A managed array of bytes.</returns>
     /// <exception cref="VipsException">If unable to write to memory.</exception>
+    /// <exception cref="T:System.InvalidOperationException">If the image band format
+    /// is unsupported.</exception>
     public byte[] WriteToMemory()
     {
+        if (Format != Enums.BandFormat.Uchar)
+        {
+            throw new InvalidOperationException($"Invalid band format. Expected: '{Enums.BandFormat.Uchar}', actual: '{Format}.'");
+        }
+
         var pointer = WriteToMemory(out var size);
+        if (pointer == IntPtr.Zero)
+        {
+            throw new VipsException("unable to write to memory");
+        }
 
         var managedArray = new byte[size];
         Marshal.Copy(pointer, managedArray, 0, (int)size);
