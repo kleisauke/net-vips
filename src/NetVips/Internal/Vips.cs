@@ -211,6 +211,11 @@ internal static class Vips
         EntryPoint = "vips_nickname_find")]
     internal static extern nint NicknameFind(nint type);
 
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "vips_format_sizeof")]
+    internal static extern ulong FormatSizeof(BandFormat format);
+
     internal static string PathFilename7(string path)
     {
         var bytes = Encoding.UTF8.GetBytes(path + char.MinValue); // Ensure null-terminated string

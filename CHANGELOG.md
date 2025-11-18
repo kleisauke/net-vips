@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [3.2.0] - TBD
 ### Added
 - Add generic array overload for `Image.NewFromMemory()`.
+- Add generic `image.WriteToMemory<T>()` operation.
 
 ### Changed
 - Remove version constraint for `System.Buffers` when targeting .NET Framework ([#262](https://github.com/kleisauke/net-vips/issues/262)).
@@ -13,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   - `System.Drawing.Common` to 8.0.0 (only required when targeting .NET 6 or later).
   - .NET Framework version to 4.6 (`net46`).
 - Deprecate AOT-incompatible `Image.NewFromMemory(Array, int, int, int, Enums.BandFormat)` overload.
+- Deprecate `image.WriteToMemory()` in favor of `image.WriteToMemory<T>()`.
 
 ### Fixed
 - Fix size calculation in `Image.NewFromMemory()` for non-byte element types ([#264](https://github.com/kleisauke/net-vips/issues/264)).

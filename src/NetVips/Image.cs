@@ -636,7 +636,7 @@ public partial class Image : VipsObject
     /// This method is useful for efficiently transferring images from GDI+
     /// into libvips.
     ///
-    /// See <see cref="WriteToMemory()"/> for the opposite operation.
+    /// See <see cref="WriteToMemory{T}()"/> for the opposite operation.
     ///
     /// Use <see cref="Copy"/> to set other image attributes.
     /// </remarks>
@@ -1133,6 +1133,64 @@ public partial class Image : VipsObject
     /// </summary>
     /// <remarks>
     /// A large area of memory is allocated, the image is rendered into it,
+    /// and the resulting data is returned as an array of type
+    /// <typeparamref name="T"/>.
+    ///
+    /// For example, if you have a 2x2 uchar image containing the bytes 1, 2,
+    /// 3, 4, read left-to-right, top-to-bottom, then:
+    /// <code language="lang-csharp">
+    /// var buf = image.WriteToMemory&lt;byte&gt;();
+    /// </code>
+    /// will return a four byte array containing the values 1, 2, 3, 4.
+    /// </remarks>
+    /// <typeparam name="T">The type of each element in the returned array.</typeparam>
+    /// <returns>A managed array.</returns>
+    /// <exception cref="VipsException">If unable to write to memory.</exception>
+    /// <exception cref="T:System.ArgumentException">If the image band format does not
+    /// match <typeparamref name="T"/>.</exception>
+    public T[] WriteToMemory<T>() where T : unmanaged
+    {
+        var elementSize = (ulong)Marshal.SizeOf<T>();
+        if (elementSize != Vips.FormatSizeof(Format))
+        {
+            throw new ArgumentException($"Band format '{Format}' does not match the requested type '{typeof(T)}'.");
+        }
+
+        var pointer = WriteToMemory(out var size);
+        if (pointer == IntPtr.Zero)
+        {
+            throw new VipsException("unable to write to memory");
+        }
+
+        var length = size / elementSize;
+        var managedArray = new T[length];
+
+#if NET6_0_OR_GREATER
+        // Buffer.MemoryCopy() requires .NET Framework >= 4.6.
+        unsafe
+        {
+            fixed (T* arrFixed = &managedArray[0])
+            {
+                Buffer.MemoryCopy((void*)pointer, arrFixed, size, size);
+            }
+        }
+#else
+        var temp = new byte[size];
+
+        Marshal.Copy(pointer, temp, 0, (int)size);
+        Buffer.BlockCopy(temp, 0, managedArray, 0, (int)size);
+#endif
+
+        GLib.GFree(pointer);
+
+        return managedArray;
+    }
+
+    /// <summary>
+    /// Write the image to a large memory array.
+    /// </summary>
+    /// <remarks>
+    /// A large area of memory is allocated, the image is rendered into it,
     /// and the resulting data is returned as an array of bytes.
     ///
     /// For example, if you have a 2x2 uchar image containing the bytes 1, 2,
@@ -1146,6 +1204,7 @@ public partial class Image : VipsObject
     /// <exception cref="VipsException">If unable to write to memory.</exception>
     /// <exception cref="T:System.InvalidOperationException">If the image band format
     /// is unsupported.</exception>
+    [Obsolete("Use image.WriteToMemory<T>() instead.")]
     public byte[] WriteToMemory()
     {
         if (Format != Enums.BandFormat.Uchar)

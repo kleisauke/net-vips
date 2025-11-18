@@ -203,9 +203,9 @@ public class IoFuncsTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestWriteToMemory()
     {
-        var s = new byte[200];
-        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Uchar);
-        var t = im.WriteToMemory();
+        float[] s = [.. Enumerable.Range(0, 200).Select(i => i * 0.1f)];
+        var im = Image.NewFromMemory(s, 20, 10, 1, Enums.BandFormat.Float);
+        var t = im.WriteToMemory<float>();
         Assert.True(s.SequenceEqual(t));
     }
 

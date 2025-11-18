@@ -23,8 +23,8 @@ public class ExtensionsTests : IClassFixture<TestsFixture>
         var black = Image.Black(1, 1).Cast(Enums.BandFormat.Uchar);
         var white = (Image.Black(1, 1) + 255).Cast(Enums.BandFormat.Uchar);
 
-        AssertPixelValue(black.WriteToMemory(), black.ToBitmap());
-        AssertPixelValue(white.WriteToMemory(), white.ToBitmap());
+        AssertPixelValue(black.WriteToMemory<byte>(), black.ToBitmap());
+        AssertPixelValue(white.WriteToMemory<byte>(), white.ToBitmap());
     }
 
     [Fact]
@@ -34,9 +34,9 @@ public class ExtensionsTests : IClassFixture<TestsFixture>
         var white = (Image.Black(1, 1) + new[] { 255, 255 }).Cast(Enums.BandFormat.Uchar);
         var grey = (Image.Black(1, 1) + new[] { 128, 255 }).Cast(Enums.BandFormat.Uchar);
 
-        AssertPixelValue(black.WriteToMemory(), black.ToBitmap());
-        AssertPixelValue(white.WriteToMemory(), white.ToBitmap());
-        AssertPixelValue(grey.WriteToMemory(), grey.ToBitmap());
+        AssertPixelValue(black.WriteToMemory<byte>(), black.ToBitmap());
+        AssertPixelValue(white.WriteToMemory<byte>(), white.ToBitmap());
+        AssertPixelValue(grey.WriteToMemory<byte>(), grey.ToBitmap());
     }
 
     [Fact]
@@ -46,9 +46,9 @@ public class ExtensionsTests : IClassFixture<TestsFixture>
         var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255 }).Cast(Enums.BandFormat.Uchar);
         var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0 }).Cast(Enums.BandFormat.Uchar);
 
-        AssertPixelValue(redColor.WriteToMemory(), redColor.ToBitmap());
-        AssertPixelValue(blueColor.WriteToMemory(), blueColor.ToBitmap());
-        AssertPixelValue(greenColor.WriteToMemory(), greenColor.ToBitmap());
+        AssertPixelValue(redColor.WriteToMemory<byte>(), redColor.ToBitmap());
+        AssertPixelValue(blueColor.WriteToMemory<byte>(), blueColor.ToBitmap());
+        AssertPixelValue(greenColor.WriteToMemory<byte>(), greenColor.ToBitmap());
     }
 
     [Fact]
@@ -58,9 +58,9 @@ public class ExtensionsTests : IClassFixture<TestsFixture>
         var blueColor = (Image.Black(1, 1) + new[] { 0, 0, 255, 255 }).Cast(Enums.BandFormat.Uchar);
         var greenColor = (Image.Black(1, 1) + new[] { 0, 255, 0, 255 }).Cast(Enums.BandFormat.Uchar);
 
-        AssertPixelValue(redColor.WriteToMemory(), redColor.ToBitmap());
-        AssertPixelValue(blueColor.WriteToMemory(), blueColor.ToBitmap());
-        AssertPixelValue(greenColor.WriteToMemory(), greenColor.ToBitmap());
+        AssertPixelValue(redColor.WriteToMemory<byte>(), redColor.ToBitmap());
+        AssertPixelValue(blueColor.WriteToMemory<byte>(), blueColor.ToBitmap());
+        AssertPixelValue(greenColor.WriteToMemory<byte>(), greenColor.ToBitmap());
     }
 
     private static void AssertPixelValue(byte[] expected, Bitmap actual)
