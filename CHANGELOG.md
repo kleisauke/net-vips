@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Fixed
 - Fix size calculation in `Image.NewFromMemory()` for non-byte element types ([#264](https://github.com/kleisauke/net-vips/issues/264)).
-- Add missing checks to `image.WriteToMemory()`.
+- Add missing band format check to `image.WriteToMemory()`.
 
 ## [3.1.0] - 2025-06-07
 ### Added

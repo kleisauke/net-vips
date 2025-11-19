@@ -1157,10 +1157,6 @@ public partial class Image : VipsObject
         }
 
         var pointer = WriteToMemory(out var size);
-        if (pointer == IntPtr.Zero)
-        {
-            throw new VipsException("unable to write to memory");
-        }
 
         var length = size / elementSize;
         var managedArray = new T[length];
@@ -1213,10 +1209,6 @@ public partial class Image : VipsObject
         }
 
         var pointer = WriteToMemory(out var size);
-        if (pointer == IntPtr.Zero)
-        {
-            throw new VipsException("unable to write to memory");
-        }
 
         var managedArray = new byte[size];
         Marshal.Copy(pointer, managedArray, 0, (int)size);
