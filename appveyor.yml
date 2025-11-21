@@ -11,6 +11,12 @@ environment:
   VIPS_VERSION: "8.17.3"
   VIPS_WARNING: 0
 
+# https://github.com/appveyor/ci/issues/3984
+install:
+  - ps: |
+      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+      & $env:temp\dotnet-install.ps1 -Architecture x64 -Channel 10.0 -InstallDir "$env:ProgramFiles\dotnet"
+
 # Build script
 build_script:
   - ps: .\build.ps1 --package

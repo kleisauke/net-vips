@@ -14,14 +14,14 @@ public class Config : ManualConfig
         // Only support LTS and latest releases
         // https://endoflife.date/dotnet
         AddJob(Job.Default
-#if NET8_0
-                .WithToolchain(CsProjCoreToolchain.NetCoreApp80)
-                .WithRuntime(NativeAotRuntime.Net80)
-                .WithId(".NET 8.0 CLI (NativeAOT)")
-#elif NET9_0
+#if NET9_0
                 .WithToolchain(CsProjCoreToolchain.NetCoreApp90)
                 .WithRuntime(NativeAotRuntime.Net90)
                 .WithId(".NET 9.0 CLI (NativeAOT)")
+#elif NET10_0
+                .WithToolchain(CsProjCoreToolchain.NetCoreApp10_0)
+                .WithRuntime(NativeAotRuntime.Net10_0)
+                .WithId(".NET 10.0 CLI (NativeAOT)")
 #endif
 #if GLOBAL_VIPS
                 .WithArguments(new Argument[]

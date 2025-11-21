@@ -2,6 +2,12 @@
 bin/
 obj/
 
+# Build logs
+*.log
+
+# NuGet packages directory
+artifacts/
+
 # Visual Studio
 .vs/
 
@@ -9,7 +15,7 @@ obj/
 .idea/
 
 # BenchmarkDotNet
-**/BenchmarkDotNet.Artifacts/
+BenchmarkDotNet.Artifacts/
 
 # User-specific files
 *.suo
