@@ -1160,9 +1160,6 @@ public partial class Image : VipsObject
 
         var length = size / elementSize;
         var managedArray = new T[length];
-
-#if NET6_0_OR_GREATER
-        // Buffer.MemoryCopy() requires .NET Framework >= 4.6.
         unsafe
         {
             fixed (T* arrFixed = &managedArray[0])
@@ -1170,12 +1167,6 @@ public partial class Image : VipsObject
                 Buffer.MemoryCopy((void*)pointer, arrFixed, size, size);
             }
         }
-#else
-        var temp = new byte[size];
-
-        Marshal.Copy(pointer, temp, 0, (int)size);
-        Buffer.BlockCopy(temp, 0, managedArray, 0, (int)size);
-#endif
 
         GLib.GFree(pointer);
 

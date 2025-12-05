@@ -3,11 +3,11 @@
   <metadata>
 
     <!-- package -->
-    <id>NetVips.Native.win-x64.net452</id>
-    <title>NetVips - Native binaries for Windows x64</title>
+    <id>NetVips.Native.win-x86.net462</id>
+    <title>NetVips - Native binaries for Windows x86</title>
     <version>$version$</version>
-    <description>This package complements the NetVips package and contains native binaries of libvips for Windows (x64)</description>
-    <summary>Native binaries of libvips for Windows (x64)</summary>
+    <description>This package complements the NetVips package and contains native binaries of libvips for Windows (x86)</description>
+    <summary>Native binaries of libvips for Windows (x86)</summary>
     <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
     <repository type="git" url="https://github.com/kleisauke/net-vips" commit="$commit$" />
     <tags>libvips binaries image-processing</tags>
@@ -22,20 +22,20 @@
   </metadata>
   <files>
 
-    <!-- The .NET Framework >= 4.5.2 build bits -->
-    <file src="targets\NetVips.Native.win-x64.net452.targets" target="build/net452" />
+    <!-- The .NET Framework >= 4.6.2 build bits -->
+    <file src="targets\NetVips.Native.win-x86.net462.targets" target="build/net462" />
 
-    <!-- Include libvips Windows x64 binaries -->
-    <file src="pack\win-x64.net452\*.dll" target="runtimes/win-x64/native" />
+    <!-- Include libvips Windows x86 binaries -->
+    <file src="pack\win-x86.net462\*.dll" target="runtimes/win-x86/native" />
 
     <!-- Include the latest third-party notices -->
-    <file src="pack\win-x64.net452\THIRD-PARTY-NOTICES.md" />
+    <file src="pack\win-x86.net462\THIRD-PARTY-NOTICES.md" />
 
     <!-- Include the version numbers of libvips and its dependencies -->
-    <file src="pack\win-x64.net452\versions.json" />
+    <file src="pack\win-x86.net462\versions.json" />
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <file src="_._" target="lib/net452" />
+    <file src="_._" target="lib/net462" />
 
   </files>
 </package>

@@ -3,8 +3,7 @@
 
     <PropertyGroup>
         <LibvipsOutputBase Condition="'$(LibvipsOutputBase)' == ''"></LibvipsOutputBase>
-        <!-- EnsureTrailingSlash is only available since VS 2017 -->
-        <LibvipsOutputBase Condition="'$(LibvipsOutputBase)' != '' AND !HasTrailingSlash('$(LibvipsOutputBase)')">$(LibvipsOutputBase)\</LibvipsOutputBase>
+        <LibvipsOutputBase Condition="'$(LibvipsOutputBase)' != ''">$([MSBuild]::EnsureTrailingSlash('$(LibvipsOutputBase)'))</LibvipsOutputBase>
     </PropertyGroup>
 
     <!-- This copy step is only necessary when our platform is x86 -->

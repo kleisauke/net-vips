@@ -33,10 +33,10 @@
         <dependency id="NetVips.Native.win-x86" version="$version$" include="native" />
         <dependency id="NetVips.Native.win-arm64" version="$version$" include="native" />
       </group>
-      <group targetFramework="net452">
+      <group targetFramework="net462">
         <!-- Only .NET Framework needs to include the build directory containing the .targets file -->
-        <dependency id="NetVips.Native.win-x64.net452" version="$version$" include="native, build" />
-        <dependency id="NetVips.Native.win-x86.net452" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x64.net462" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86.net462" version="$version$" include="native, build" />
       </group>
     </dependencies>
 
@@ -44,7 +44,7 @@
   <files>
 
     <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
-    <file src="_._" target="lib/netstandard1.0" />
+    <file src="_._" target="lib/netstandard2.0" />
 
   </files>
 </package>

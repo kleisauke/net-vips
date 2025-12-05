@@ -35,7 +35,7 @@ which gives some more background.
 
 ## Supported platforms
 
-- .NET Framework 4.5.2 and higher
+- .NET Framework 4.6.2 and higher
 - .NET 6.0 and higher
 
 ## Install
