@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - Add generic array overload for `Image.NewFromMemory()`.
 - Add generic `image.WriteToMemory<T>()` operation.
+- Add `image.Gainmap` property to retrieve the gainmap from Ultra HDR images.
 
 ### Changed
 - Update methods/enums for libvips 8.18.

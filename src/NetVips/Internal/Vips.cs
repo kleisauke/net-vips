@@ -400,6 +400,11 @@ internal static class VipsImage
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "vips_image_get_gainmap")]
+    internal static extern nint GetGainmap(Image image);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.Vips, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "vips_image_invalidate_all")]
     internal static extern void InvalidateAll(Image image);
 

@@ -2325,6 +2325,26 @@ public partial class Image : VipsObject
     /// </remarks>
     public int PageHeight => VipsImage.GetPageHeight(this);
 
+    /// <summary>
+    /// The associated gainmap image, if any.
+    /// </summary>
+    /// <remarks>
+    /// At least libvips 8.18 is needed.
+    /// </remarks>
+    public Image Gainmap
+    {
+        get
+        {
+            var vi = VipsImage.GetGainmap(this);
+            if (vi == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            return new Image(vi);
+        }
+    }
+
     #endregion
 
     #region support with in the most trivial way
