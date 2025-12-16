@@ -405,6 +405,31 @@ These profiles can be analyzed with the <code>vipsprofile</code> program.</p>
       </tr>
     </tbody>
   </table>
+  <a id="NetVips_NetVips_GetFlags_" data-uid="NetVips.NetVips.GetFlags*"></a>
+  <h4 id="NetVips_NetVips_GetFlags" data-uid="NetVips.NetVips.GetFlags">GetFlags()</h4>
+  <div class="markdown level1 summary"><p>Get a list of flags available within the libvips library.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;string&gt; GetFlags()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><p>A list of flags.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="NetVips_NetVips_GetOperations_" data-uid="NetVips.NetVips.GetOperations*"></a>
   <h4 id="NetVips_NetVips_GetOperations" data-uid="NetVips.NetVips.GetOperations">GetOperations()</h4>
   <div class="markdown level1 summary"><p>Get a list of operations available within the libvips library.</p>
@@ -726,6 +751,49 @@ hierarchy are searched.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><p>A list of values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="NetVips_NetVips_ValuesForFlags_" data-uid="NetVips.NetVips.ValuesForFlags*"></a>
+  <h4 id="NetVips_NetVips_ValuesForFlags_System_IntPtr_" data-uid="NetVips.NetVips.ValuesForFlags(System.IntPtr)">ValuesForFlags(nint)</h4>
+  <div class="markdown level1 summary"><p>Get all values for flags (GType).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, uint&gt; ValuesForFlags(nint type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">nint</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Type to return flag values for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>&gt;</td>
         <td><p>A list of values.</p>
 </td>
       </tr>

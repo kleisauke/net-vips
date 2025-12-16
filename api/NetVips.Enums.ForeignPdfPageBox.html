@@ -5,11 +5,11 @@
   <head>
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Enum Enums.DemandStyle </title>
+      <title>Enum Enums.ForeignPdfPageBox </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Enum Enums.DemandStyle ">
+      <meta name="title" content="Enum Enums.ForeignPdfPageBox ">
     
-    <meta name="description" content="A hint about the kind of demand geometry VIPS images prefer.">
+    <meta name="description" content="Each page of a PDF document can contain multiple page boxes, also known as boundary boxes or print marks. Each page box defines a region of the complete page that should be rendered. The default region is the crop box.">
       <link rel="shortcut icon" href="../favicon.ico">
       <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
       <link rel="stylesheet" href="../styles/docfx.css">
@@ -66,20 +66,23 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="NetVips.Enums.DemandStyle">
+            <article class="content wrap" id="_content" data-uid="NetVips.Enums.ForeignPdfPageBox">
 
 
 
 
-  <h1 id="NetVips_Enums_DemandStyle" data-uid="NetVips.Enums.DemandStyle" class="text-break">Enum Enums.DemandStyle</h1>
-  <div class="markdown level0 summary"><p>A hint about the kind of demand geometry VIPS images prefer.</p>
+  <h1 id="NetVips_Enums_ForeignPdfPageBox" data-uid="NetVips.Enums.ForeignPdfPageBox" class="text-break">Enum Enums.ForeignPdfPageBox</h1>
+  <div class="markdown level0 summary"><p>Each page of a PDF document can contain multiple page boxes,
+also known as boundary boxes or print marks.</p>
+<p>Each page box defines a region of the complete page that
+should be rendered. The default region is the crop box.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="NetVips.html">NetVips</a></h6>
   <h6><strong>Assembly</strong>: NetVips.dll</h6>
-  <h5 id="NetVips_Enums_DemandStyle_syntax">Syntax</h5>
+  <h5 id="NetVips_Enums_ForeignPdfPageBox_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum Enums.DemandStyle</code></pre>
+    <pre><code class="lang-csharp hljs">public enum Enums.ForeignPdfPageBox</code></pre>
   </div>
   <h3 id="fields">Fields
 </h3>
@@ -92,23 +95,28 @@
     <thead>
     </thead></thead><tbody>
       <tr>
-        <td id="NetVips_Enums_DemandStyle_Error">Error</td>
-        <td><p>Invalid setting.</p>
+        <td id="NetVips_Enums_ForeignPdfPageBox_Art">Art</td>
+        <td><p>Art box.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_DemandStyle_Fatstrip">Fatstrip</td>
-        <td><p>Demand in fat (typically 10 pixel high) strips.</p>
+        <td id="NetVips_Enums_ForeignPdfPageBox_Bleed">Bleed</td>
+        <td><p>Bleed box.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_DemandStyle_Smalltile">Smalltile</td>
-        <td><p>Demand in small (typically 64x64 pixel) tiles.</p>
+        <td id="NetVips_Enums_ForeignPdfPageBox_Crop">Crop</td>
+        <td><p>Crop box.</p>
 </td>
       </tr>
       <tr>
-        <td id="NetVips_Enums_DemandStyle_Thinstrip">Thinstrip</td>
-        <td><p>Demand in thin (typically 1 pixel high) strips.</p>
+        <td id="NetVips_Enums_ForeignPdfPageBox_Media">Media</td>
+        <td><p>Media box.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NetVips_Enums_ForeignPdfPageBox_Trim">Trim</td>
+        <td><p>Trim box.</p>
 </td>
       </tr>
     </tbody>

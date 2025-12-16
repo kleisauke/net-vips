@@ -226,20 +226,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "obj/temp/api/NetVips.Enums.DemandStyle.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/NetVips.Enums.DemandStyle.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "NetVips.Enums.DemandStyle",
-      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.DemandStyle.yml\" sourcestartlinenumber=\"1\">A hint about the kind of demand geometry VIPS images prefer.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "obj/temp/api/NetVips.Enums.Direction.yml",
       "output": {
         ".html": {
@@ -377,6 +363,20 @@
       "IsMRef": true,
       "Title": "NetVips.Enums.ForeignKeep",
       "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignKeep.yml\" sourcestartlinenumber=\"1\">Which metadata to retain.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/temp/api/NetVips.Enums.ForeignPdfPageBox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetVips.Enums.ForeignPdfPageBox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "NetVips.Enums.ForeignPdfPageBox",
+      "Summary": "<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignPdfPageBox.yml\" sourcestartlinenumber=\"1\">Each page of a PDF document can contain multiple page boxes,\nalso known as boundary boxes or print marks.</p>\n<p sourcefile=\"obj/temp/api/NetVips.Enums.ForeignPdfPageBox.yml\" sourcestartlinenumber=\"4\">Each page box defines a region of the complete page that\nshould be rendered. The default region is the crop box.</p>\n"
     },
     {
       "type": "ManagedReference",
