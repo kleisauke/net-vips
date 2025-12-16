@@ -378,7 +378,7 @@ public static class Enums
     /// </summary>
     public enum FailOn
     {
-        /// <summary>Never stop,</summary>
+        /// <summary>Never stop.</summary>
         None = 0, // "none"
 
         /// <summary>Stop on image truncated, nothing else.</summary>
@@ -444,7 +444,7 @@ public static class Enums
         /// <summary>Use IIIF v2 directory layout.</summary>
         Iiif = 3, // "iiif"
 
-        /// <summary>Use IIIF v3 directory layout</summary>
+        /// <summary>Use IIIF v3 directory layout.</summary>
         Iiif3 = 4 // "iiif3"
     }
 
@@ -682,7 +682,7 @@ public static class Enums
         /// <summary>Hand or line drawing, with high-contrast details.</summary>
         Drawing = 3, // "drawing"
 
-        /// <summary>Small-sized colorful images/</summary>
+        /// <summary>Small-sized colorful images.</summary>
         Icon = 4, // "icon"
 
         /// <summary>Text-like.</summary>
@@ -1085,6 +1085,13 @@ public static class Enums
     /// <summary>
     /// How to calculate the output pixels when shrinking a 2x2 region.
     /// </summary>
+    /// <remarks>
+    /// Images with alpha (see <see cref="Image.HasAlpha"/>) always shrink with
+    /// <see cref="Mean"/> and pixels scaled by alpha to avoid fringing.
+    ///
+    /// Set the image interpretation to <see cref="Interpretation.Multiband"/> to
+    /// treat all bands equally.
+    /// </remarks>
     public enum RegionShrink
     {
         /// <summary>Use the average.</summary>
