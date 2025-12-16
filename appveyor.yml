@@ -8,7 +8,7 @@ init:
 
 # Environment
 environment:
-  VIPS_VERSION: "8.17.3"
+  VIPS_VERSION: "8.18.0-rc2"
   VIPS_WARNING: 0
 
 # https://github.com/appveyor/ci/issues/3984
