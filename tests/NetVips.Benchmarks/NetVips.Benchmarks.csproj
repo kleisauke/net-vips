@@ -17,13 +17,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.15.6" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.6.0" />
-    <PackageReference Include="NetVips.Native" Version="8.17.0.1" Condition="'$(UseGlobalLibvips)' == 'false'" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
-    <PackageReference Include="SkiaSharp" Version="3.119.0" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.0" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
-    <PackageReference Include="System.Drawing.Common" Version="10.0.0" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.10.1" />
+    <PackageReference Include="NetVips.Native" Version="8.18.0" Condition="'$(UseGlobalLibvips)' == 'false'" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.1" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.1" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
   </ItemGroup>
 
   <ItemGroup>

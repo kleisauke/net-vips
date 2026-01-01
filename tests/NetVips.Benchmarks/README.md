@@ -10,34 +10,36 @@ of VIPS library.
 
 ## Benchmarks
 
-Run on 13/06/25 with libvips 8.17.0, Magick.NET 14.6.0, ImageSharp 3.1.10, SkiaSharp 3.119.0 and System.Drawing.Common 9.0.6.
+Run on 01/01/26 with libvips 8.18.0, Magick.NET 14.10.1, ImageSharp 3.1.12, SkiaSharp 3.119.1 and System.Drawing.Common 10.0.1.
 
 ```
 
-BenchmarkDotNet v0.15.1, Windows 11 (10.0.26100.4351/24H2/2024Update/HudsonValley)
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.7462/25H2/2025Update/HudsonValley2)
 AMD Ryzen 9 7900 3.70GHz, 1 CPU, 24 logical and 12 physical cores
-.NET SDK 9.0.301
-  [Host]                   : .NET 9.0.6 (9.0.625.26613), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
-  .NET 9.0 CLI (NativeAOT) : .NET 9.0.6 (9.0.625.26613), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+.NET SDK 10.0.101
+  [Host]                    : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
+  .NET 10.0 CLI (NativeAOT) : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
 
-Job=.NET 9.0 CLI (NativeAOT)  Runtime=NativeAOT 9.0  Toolchain=.NET 9.0  
+Job=.NET 10.0 CLI (NativeAOT)  Runtime=NativeAOT 10.0  Toolchain=.NET 10.0  
 
 ```
-| Method                     | input | output | Mean        | Error      | StdDev     | Ratio | RatioSD |
-|--------------------------- |------ |------- |------------:|-----------:|-----------:|------:|--------:|
-| **NetVips**                    | **t.jpg** | **t2.jpg** |    **75.60 ms** |   **1.493 ms** |   **2.235 ms** |  **1.00** |    **0.04** |
-| Magick.NET                 | t.jpg | t2.jpg | 1,713.72 ms |   6.188 ms |   5.167 ms | 22.69 |    0.64 |
-| ImageSharp                 | t.jpg | t2.jpg |   450.68 ms |   8.907 ms |  22.992 ms |  5.97 |    0.35 |
-| SkiaSharp<sup>1</sup>      | t.jpg | t2.jpg | 5,935.11 ms | 115.547 ms | 102.429 ms | 78.57 |    2.57 |
-| System.Drawing<sup>2</sup> | t.jpg | t2.jpg | 1,521.53 ms |   5.685 ms |   5.040 ms | 20.14 |    0.57 |
-|                            |       |        |             |            |            |       |         |
-| **NetVips**                    | **t.tif** | **t2.tif** |    **39.39 ms** |   **0.443 ms** |   **0.393 ms** |  **1.00** |    **0.01** |
-| Magick.NET                 | t.tif | t2.tif | 1,606.64 ms |   7.674 ms |   7.179 ms | 40.79 |    0.43 |
-| ImageSharp                 | t.tif | t2.tif |   263.84 ms |   5.094 ms |   6.256 ms |  6.70 |    0.17 |
-| System.Drawing<sup>2</sup> | t.tif | t2.tif | 1,361.53 ms |  22.712 ms |  20.133 ms | 34.57 |    0.60 |
+| Method             | input | output | Mean        | Error     | StdDev    | Ratio | RatioSD |
+|------------------- |------ |------- |------------:|----------:|----------:|------:|--------:|
+| **NetVips**            | **t.jpg** | **t2.jpg** |    **74.47 ms** |  **0.695 ms** |  **0.650 ms** |  **1.00** |    **0.01** |
+| Magick.NET         | t.jpg | t2.jpg | 1,626.85 ms |  8.041 ms |  7.521 ms | 21.85 |    0.21 |
+| ImageSharp         | t.jpg | t2.jpg |   366.95 ms |  7.093 ms |  6.966 ms |  4.93 |    0.10 |
+| SkiaSharp[^1]      | t.jpg | t2.jpg | 5,362.23 ms | 78.791 ms | 73.701 ms | 72.01 |    1.14 |
+| System.Drawing[^2] | t.jpg | t2.jpg | 1,185.58 ms |  4.523 ms |  4.231 ms | 15.92 |    0.15 |
+|                    |       |        |             |           |           |       |         |
+| **NetVips**            | **t.tif** | **t2.tif** |    **49.80 ms** |  **0.293 ms** |  **0.260 ms** |  **1.00** |    **0.01** |
+| Magick.NET         | t.tif | t2.tif | 1,533.49 ms | 29.978 ms | 23.405 ms | 30.79 |    0.48 |
+| ImageSharp         | t.tif | t2.tif |   186.51 ms |  3.666 ms |  6.324 ms |  3.75 |    0.13 |
+| System.Drawing[^2] | t.tif | t2.tif |   985.05 ms | 16.399 ms | 13.694 ms | 19.78 |    0.28 |
 
-<sup>1</sup> SkiaSharp does not have TIFF support, so I only tested with JPEG files.  
-<sup>2</sup> System.Drawing does not have a sharpening or convolution operation, so I skipped that part of the benchmark.
+<!-- Note: when updating the benchmarks above, replace curly braces with square brackets to ensure the footnotes work correctly. -->
+
+[^1]: SkiaSharp does not have TIFF support, so I only tested with JPEG files.
+[^2]: System.Drawing does not have a sharpening or convolution operation, so I skipped that part of the benchmark.
 
 ## Performance test design
 

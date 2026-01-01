@@ -1,7 +1,5 @@
-using System.Reflection;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
-using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.CsProj;
 
@@ -30,12 +28,5 @@ public class Config : ManualConfig
                 })
 #endif
         );
-
-        // Don't escape HTML within the GitHub Markdown exporter,
-        // to support <pre>-tags within the "Method" column.
-        // Ouch, this is quite hackish.
-        var githubExporter = MarkdownExporter.GitHub;
-        githubExporter.GetType().GetField("EscapeHtml", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(
-            githubExporter, false);
     }
 }
