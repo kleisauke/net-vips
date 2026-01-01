@@ -83,7 +83,8 @@ libvips binaries for the most common platforms (see
 [^2]: Uses glibc as the standard C library (Ubuntu, Debian, etc).
 [^3]: Uses musl as the standard C library (Alpine, Gentoo Linux, etc).
 
-These binaries provides support for the JPEG, PNG, WebP, AVIF (limited to 8-bit depth), TIFF, GIF and SVG (input) image formats.
+These binaries provides support for the JPEG, PNG, Ultra HDR, WebP, AVIF (limited to
+8-bit depth), TIFF, GIF and SVG (input) image formats.
 
 Then just install this package, perhaps:
 
