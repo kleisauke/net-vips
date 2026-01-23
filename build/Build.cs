@@ -46,6 +46,7 @@ partial class Build : NukeBuild
         "win-x86",
         "win-x86.net462",
         "win-arm64",
+        "win-arm64.net481",
         "linux-x64",
         "linux-musl-x64",
         "linux-musl-arm64",

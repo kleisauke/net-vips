@@ -4,6 +4,10 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.18.1] - TBD
+### Added
+- Add `NetVips.Native.win-arm64.net481` compat package.
+
 ## [8.18.0] - 2026-01-01
 ### Note
 If you would like to see what's changed, please visit the release notes of libvips:  

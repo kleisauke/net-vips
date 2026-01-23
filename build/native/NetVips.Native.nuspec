@@ -33,8 +33,15 @@
         <dependency id="NetVips.Native.win-x86" version="$version$" include="native" />
         <dependency id="NetVips.Native.win-arm64" version="$version$" include="native" />
       </group>
-      <group targetFramework="net462">
+      <!-- In-sync with net462 below except for NetVips.Native.win-arm64.net481 -->
+      <group targetFramework="net481">
         <!-- Only .NET Framework needs to include the build directory containing the .targets file -->
+        <dependency id="NetVips.Native.win-x64.net462" version="$version$" include="native, build" />
+        <dependency id="NetVips.Native.win-x86.net462" version="$version$" include="native, build" />
+        <!-- Windows ARM64 is supported since .NET Framework 4.8.1 -->
+        <dependency id="NetVips.Native.win-arm64.net481" version="$version$" include="native, build" />
+      </group>
+      <group targetFramework="net462">
         <dependency id="NetVips.Native.win-x64.net462" version="$version$" include="native, build" />
         <dependency id="NetVips.Native.win-x86.net462" version="$version$" include="native, build" />
       </group>
