@@ -4,13 +4,11 @@
     <PropertyGroup>
         <LibvipsOutputBase Condition="'$(LibvipsOutputBase)' == ''"></LibvipsOutputBase>
         <LibvipsOutputBase Condition="'$(LibvipsOutputBase)' != ''">$([MSBuild]::EnsureTrailingSlash('$(LibvipsOutputBase)'))</LibvipsOutputBase>
-        <!-- Ensure compatibility with MSBuild < v17.11.3 -->
-        <PreferNativeArm64 Condition="'$(PreferNativeArm64)' == ''">false</PreferNativeArm64>
     </PropertyGroup>
 
-    <!-- This copy step is only necessary when our platform is x64 -->
-    <ItemGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)|$(Prefer32Bit)|$(PreferNativeArm64)' == 'AnyCPU|false|false'">
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\*">
+    <!-- This copy step is only necessary when our platform is ARM64 -->
+    <ItemGroup Condition="'$(Platform)' == 'ARM64' OR '$(Platform)|$(PreferNativeArm64)' == 'AnyCPU|true'">
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-arm64\native\*">
             <Link>$(LibvipsOutputBase)%(Filename)%(Extension)</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

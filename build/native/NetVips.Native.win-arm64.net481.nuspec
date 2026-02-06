@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata>
+
+    <!-- package -->
+    <id>NetVips.Native.win-arm64.net481</id>
+    <title>NetVips - Native binaries for Windows ARM64</title>
+    <version>$version$</version>
+    <description>This package complements the NetVips package and contains native binaries of libvips for Windows (ARM64)</description>
+    <summary>Native binaries of libvips for Windows (ARM64)</summary>
+    <projectUrl>https://kleisauke.github.io/net-vips</projectUrl>
+    <repository type="git" url="https://github.com/kleisauke/net-vips" commit="$commit$" />
+    <tags>libvips binaries image-processing</tags>
+
+    <!-- legal -->
+    <license type="expression">LGPL-3.0-or-later</license>
+    <authors>Kleis Auke Wolthuizen</authors>
+    <owners>Kleis Auke Wolthuizen</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Kleis Auke Wolthuizen</copyright>
+
+  </metadata>
+  <files>
+
+    <!-- The .NET Framework >= 4.8.1 build bits -->
+    <file src="targets\NetVips.Native.win-arm64.net481.targets" target="build/net481" />
+
+    <!-- Include libvips Windows ARM64 binaries -->
+    <file src="pack\win-arm64.net481\*.dll" target="runtimes/win-arm64/native" />
+
+    <!-- Include the latest third-party notices -->
+    <file src="pack\win-arm64.net481\THIRD-PARTY-NOTICES.md" />
+
+    <!-- Include the version numbers of libvips and its dependencies -->
+    <file src="pack\win-arm64.net481\versions.json" />
+
+    <!-- A dummy reference which prevents NuGet from adding any compilation references when this package is imported -->
+    <file src="_._" target="lib/net481" />
+
+  </files>
+</package>
