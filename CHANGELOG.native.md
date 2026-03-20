@@ -4,9 +4,17 @@ The changes of libvips are documented [here](https://github.com/libvips/libvips/
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.18.1] - TBD
+## [8.18.1] - 2026-03-20
+### Note
+If you would like to see what's changed, please visit the release notes of libvips:  
+https://github.com/libvips/libvips/releases/tag/v8.18.1
+
 ### Added
 - Add `NetVips.Native.win-arm64.net481` compat package ([#270](https://github.com/kleisauke/net-vips/issues/270)).
+
+### Changed
+- Bump the minimum required glibc version to 2.28 ([lovell/sharp-libvips#317](https://github.com/lovell/sharp-libvips/pull/317)).
+- Bump the minimum required musl version to 1.2.5 ([lovell/sharp-libvips#317](https://github.com/lovell/sharp-libvips/pull/317)).
 
 ## [8.18.0] - 2026-01-01
 ### Note
