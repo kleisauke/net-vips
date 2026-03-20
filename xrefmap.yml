@@ -278,18 +278,18 @@ references:
   commentId: F:NetVips.Enums.ArgumentFlags.MODIFY
   fullName: NetVips.Enums.ArgumentFlags.MODIFY
   nameWithType: Enums.ArgumentFlags.MODIFY
-- uid: NetVips.Enums.ArgumentFlags.NON_HASHABLE
-  name: NON_HASHABLE
-  href: api/NetVips.Enums.ArgumentFlags.html#NetVips_Enums_ArgumentFlags_NON_HASHABLE
-  commentId: F:NetVips.Enums.ArgumentFlags.NON_HASHABLE
-  fullName: NetVips.Enums.ArgumentFlags.NON_HASHABLE
-  nameWithType: Enums.ArgumentFlags.NON_HASHABLE
 - uid: NetVips.Enums.ArgumentFlags.NONE
   name: NONE
   href: api/NetVips.Enums.ArgumentFlags.html#NetVips_Enums_ArgumentFlags_NONE
   commentId: F:NetVips.Enums.ArgumentFlags.NONE
   fullName: NetVips.Enums.ArgumentFlags.NONE
   nameWithType: Enums.ArgumentFlags.NONE
+- uid: NetVips.Enums.ArgumentFlags.NON_HASHABLE
+  name: NON_HASHABLE
+  href: api/NetVips.Enums.ArgumentFlags.html#NetVips_Enums_ArgumentFlags_NON_HASHABLE
+  commentId: F:NetVips.Enums.ArgumentFlags.NON_HASHABLE
+  fullName: NetVips.Enums.ArgumentFlags.NON_HASHABLE
+  nameWithType: Enums.ArgumentFlags.NON_HASHABLE
 - uid: NetVips.Enums.ArgumentFlags.OUTPUT
   name: OUTPUT
   href: api/NetVips.Enums.ArgumentFlags.html#NetVips_Enums_ArgumentFlags_OUTPUT
@@ -2479,32 +2479,6 @@ references:
   commentId: F:NetVips.GValue.GEnumType
   fullName: NetVips.GValue.GEnumType
   nameWithType: GValue.GEnumType
-- uid: NetVips.GValue.Get
-  name: Get()
-  href: api/NetVips.GValue.html#NetVips_GValue_Get
-  commentId: M:NetVips.GValue.Get
-  fullName: NetVips.GValue.Get()
-  nameWithType: GValue.Get()
-- uid: NetVips.GValue.Get*
-  name: Get
-  href: api/NetVips.GValue.html#NetVips_GValue_Get_
-  commentId: Overload:NetVips.GValue.Get
-  isSpec: "True"
-  fullName: NetVips.GValue.Get
-  nameWithType: GValue.Get
-- uid: NetVips.GValue.GetTypeOf
-  name: GetTypeOf()
-  href: api/NetVips.GValue.html#NetVips_GValue_GetTypeOf
-  commentId: M:NetVips.GValue.GetTypeOf
-  fullName: NetVips.GValue.GetTypeOf()
-  nameWithType: GValue.GetTypeOf()
-- uid: NetVips.GValue.GetTypeOf*
-  name: GetTypeOf
-  href: api/NetVips.GValue.html#NetVips_GValue_GetTypeOf_
-  commentId: Overload:NetVips.GValue.GetTypeOf
-  isSpec: "True"
-  fullName: NetVips.GValue.GetTypeOf
-  nameWithType: GValue.GetTypeOf
 - uid: NetVips.GValue.GFlagsType
   name: GFlagsType
   href: api/NetVips.GValue.html#NetVips_GValue_GFlagsType
@@ -2535,6 +2509,32 @@ references:
   commentId: F:NetVips.GValue.GUint64Type
   fullName: NetVips.GValue.GUint64Type
   nameWithType: GValue.GUint64Type
+- uid: NetVips.GValue.Get
+  name: Get()
+  href: api/NetVips.GValue.html#NetVips_GValue_Get
+  commentId: M:NetVips.GValue.Get
+  fullName: NetVips.GValue.Get()
+  nameWithType: GValue.Get()
+- uid: NetVips.GValue.Get*
+  name: Get
+  href: api/NetVips.GValue.html#NetVips_GValue_Get_
+  commentId: Overload:NetVips.GValue.Get
+  isSpec: "True"
+  fullName: NetVips.GValue.Get
+  nameWithType: GValue.Get
+- uid: NetVips.GValue.GetTypeOf
+  name: GetTypeOf()
+  href: api/NetVips.GValue.html#NetVips_GValue_GetTypeOf
+  commentId: M:NetVips.GValue.GetTypeOf
+  fullName: NetVips.GValue.GetTypeOf()
+  nameWithType: GValue.GetTypeOf()
+- uid: NetVips.GValue.GetTypeOf*
+  name: GetTypeOf
+  href: api/NetVips.GValue.html#NetVips_GValue_GetTypeOf_
+  commentId: Overload:NetVips.GValue.GetTypeOf
+  isSpec: "True"
+  fullName: NetVips.GValue.GetTypeOf
+  nameWithType: GValue.GetTypeOf
 - uid: NetVips.GValue.ImageType
   name: ImageType
   href: api/NetVips.GValue.html#NetVips_GValue_ImageType
@@ -2817,15 +2817,6 @@ references:
   commentId: M:NetVips.Image.Autorot
   fullName: NetVips.Image.Autorot()
   nameWithType: Image.Autorot()
-- uid: NetVips.Image.Autorot(NetVips.Enums.Angle@,System.Boolean@)
-  name: Autorot(out Angle, out bool)
-  href: api/NetVips.Image.html#NetVips_Image_Autorot_NetVips_Enums_Angle__System_Boolean__
-  commentId: M:NetVips.Image.Autorot(NetVips.Enums.Angle@,System.Boolean@)
-  name.vb: Autorot(Angle, Boolean)
-  fullName: NetVips.Image.Autorot(out NetVips.Enums.Angle, out bool)
-  fullName.vb: NetVips.Image.Autorot(NetVips.Enums.Angle, Boolean)
-  nameWithType: Image.Autorot(out Enums.Angle, out bool)
-  nameWithType.vb: Image.Autorot(Enums.Angle, Boolean)
 - uid: NetVips.Image.Autorot(NetVips.Enums.Angle@)
   name: Autorot(out Angle)
   href: api/NetVips.Image.html#NetVips_Image_Autorot_NetVips_Enums_Angle__
@@ -2835,6 +2826,15 @@ references:
   fullName.vb: NetVips.Image.Autorot(NetVips.Enums.Angle)
   nameWithType: Image.Autorot(out Enums.Angle)
   nameWithType.vb: Image.Autorot(Enums.Angle)
+- uid: NetVips.Image.Autorot(NetVips.Enums.Angle@,System.Boolean@)
+  name: Autorot(out Angle, out bool)
+  href: api/NetVips.Image.html#NetVips_Image_Autorot_NetVips_Enums_Angle__System_Boolean__
+  commentId: M:NetVips.Image.Autorot(NetVips.Enums.Angle@,System.Boolean@)
+  name.vb: Autorot(Angle, Boolean)
+  fullName: NetVips.Image.Autorot(out NetVips.Enums.Angle, out bool)
+  fullName.vb: NetVips.Image.Autorot(NetVips.Enums.Angle, Boolean)
+  nameWithType: Image.Autorot(out Enums.Angle, out bool)
+  nameWithType.vb: Image.Autorot(Enums.Angle, Boolean)
 - uid: NetVips.Image.Autorot*
   name: Autorot
   href: api/NetVips.Image.html#NetVips_Image_Autorot_
@@ -2868,19 +2868,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.BandAnd
   nameWithType: Image.BandAnd
-- uid: NetVips.Image.Bandbool(NetVips.Enums.OperationBoolean)
-  name: Bandbool(OperationBoolean)
-  href: api/NetVips.Image.html#NetVips_Image_Bandbool_NetVips_Enums_OperationBoolean_
-  commentId: M:NetVips.Image.Bandbool(NetVips.Enums.OperationBoolean)
-  fullName: NetVips.Image.Bandbool(NetVips.Enums.OperationBoolean)
-  nameWithType: Image.Bandbool(Enums.OperationBoolean)
-- uid: NetVips.Image.Bandbool*
-  name: Bandbool
-  href: api/NetVips.Image.html#NetVips_Image_Bandbool_
-  commentId: Overload:NetVips.Image.Bandbool
-  isSpec: "True"
-  fullName: NetVips.Image.Bandbool
-  nameWithType: Image.Bandbool
 - uid: NetVips.Image.BandEor
   name: BandEor()
   href: api/NetVips.Image.html#NetVips_Image_BandEor
@@ -2910,6 +2897,32 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.BandExists
   nameWithType: Image.BandExists
+- uid: NetVips.Image.BandOr
+  name: BandOr()
+  href: api/NetVips.Image.html#NetVips_Image_BandOr
+  commentId: M:NetVips.Image.BandOr
+  fullName: NetVips.Image.BandOr()
+  nameWithType: Image.BandOr()
+- uid: NetVips.Image.BandOr*
+  name: BandOr
+  href: api/NetVips.Image.html#NetVips_Image_BandOr_
+  commentId: Overload:NetVips.Image.BandOr
+  isSpec: "True"
+  fullName: NetVips.Image.BandOr
+  nameWithType: Image.BandOr
+- uid: NetVips.Image.Bandbool(NetVips.Enums.OperationBoolean)
+  name: Bandbool(OperationBoolean)
+  href: api/NetVips.Image.html#NetVips_Image_Bandbool_NetVips_Enums_OperationBoolean_
+  commentId: M:NetVips.Image.Bandbool(NetVips.Enums.OperationBoolean)
+  fullName: NetVips.Image.Bandbool(NetVips.Enums.OperationBoolean)
+  nameWithType: Image.Bandbool(Enums.OperationBoolean)
+- uid: NetVips.Image.Bandbool*
+  name: Bandbool
+  href: api/NetVips.Image.html#NetVips_Image_Bandbool_
+  commentId: Overload:NetVips.Image.Bandbool
+  isSpec: "True"
+  fullName: NetVips.Image.Bandbool
+  nameWithType: Image.Bandbool
 - uid: NetVips.Image.Bandfold(System.Nullable{System.Int32})
   name: Bandfold(int?)
   href: api/NetVips.Image.html#NetVips_Image_Bandfold_System_Nullable_System_Int32__
@@ -2998,19 +3011,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Bandmean
   nameWithType: Image.Bandmean
-- uid: NetVips.Image.BandOr
-  name: BandOr()
-  href: api/NetVips.Image.html#NetVips_Image_BandOr
-  commentId: M:NetVips.Image.BandOr
-  fullName: NetVips.Image.BandOr()
-  nameWithType: Image.BandOr()
-- uid: NetVips.Image.BandOr*
-  name: BandOr
-  href: api/NetVips.Image.html#NetVips_Image_BandOr_
-  commentId: Overload:NetVips.Image.BandOr
-  isSpec: "True"
-  fullName: NetVips.Image.BandOr
-  nameWithType: Image.BandOr
 - uid: NetVips.Image.Bandrank(NetVips.Image,System.Nullable{System.Int32})
   name: Bandrank(Image, int?)
   href: api/NetVips.Image.html#NetVips_Image_Bandrank_NetVips_Image_System_Nullable_System_Int32__
@@ -3176,6 +3176,32 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Byteswap
   nameWithType: Image.Byteswap
+- uid: NetVips.Image.CMC2LCh
+  name: CMC2LCh()
+  href: api/NetVips.Image.html#NetVips_Image_CMC2LCh
+  commentId: M:NetVips.Image.CMC2LCh
+  fullName: NetVips.Image.CMC2LCh()
+  nameWithType: Image.CMC2LCh()
+- uid: NetVips.Image.CMC2LCh*
+  name: CMC2LCh
+  href: api/NetVips.Image.html#NetVips_Image_CMC2LCh_
+  commentId: Overload:NetVips.Image.CMC2LCh
+  isSpec: "True"
+  fullName: NetVips.Image.CMC2LCh
+  nameWithType: Image.CMC2LCh
+- uid: NetVips.Image.CMYK2XYZ
+  name: CMYK2XYZ()
+  href: api/NetVips.Image.html#NetVips_Image_CMYK2XYZ
+  commentId: M:NetVips.Image.CMYK2XYZ
+  fullName: NetVips.Image.CMYK2XYZ()
+  nameWithType: Image.CMYK2XYZ()
+- uid: NetVips.Image.CMYK2XYZ*
+  name: CMYK2XYZ
+  href: api/NetVips.Image.html#NetVips_Image_CMYK2XYZ_
+  commentId: Overload:NetVips.Image.CMYK2XYZ
+  isSpec: "True"
+  fullName: NetVips.Image.CMYK2XYZ
+  nameWithType: Image.CMYK2XYZ
 - uid: NetVips.Image.Canny(System.Nullable{System.Double},System.Nullable{NetVips.Enums.Precision})
   name: Canny(double?, Precision?)
   href: api/NetVips.Image.html#NetVips_Image_Canny_System_Nullable_System_Double__System_Nullable_NetVips_Enums_Precision__
@@ -3280,32 +3306,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Clamp
   nameWithType: Image.Clamp
-- uid: NetVips.Image.CMC2LCh
-  name: CMC2LCh()
-  href: api/NetVips.Image.html#NetVips_Image_CMC2LCh
-  commentId: M:NetVips.Image.CMC2LCh
-  fullName: NetVips.Image.CMC2LCh()
-  nameWithType: Image.CMC2LCh()
-- uid: NetVips.Image.CMC2LCh*
-  name: CMC2LCh
-  href: api/NetVips.Image.html#NetVips_Image_CMC2LCh_
-  commentId: Overload:NetVips.Image.CMC2LCh
-  isSpec: "True"
-  fullName: NetVips.Image.CMC2LCh
-  nameWithType: Image.CMC2LCh
-- uid: NetVips.Image.CMYK2XYZ
-  name: CMYK2XYZ()
-  href: api/NetVips.Image.html#NetVips_Image_CMYK2XYZ
-  commentId: M:NetVips.Image.CMYK2XYZ
-  fullName: NetVips.Image.CMYK2XYZ()
-  nameWithType: Image.CMYK2XYZ()
-- uid: NetVips.Image.CMYK2XYZ*
-  name: CMYK2XYZ
-  href: api/NetVips.Image.html#NetVips_Image_CMYK2XYZ_
-  commentId: Overload:NetVips.Image.CMYK2XYZ
-  isSpec: "True"
-  fullName: NetVips.Image.CMYK2XYZ
-  nameWithType: Image.CMYK2XYZ
 - uid: NetVips.Image.Coding
   name: Coding
   href: api/NetVips.Image.html#NetVips_Image_Coding
@@ -3767,6 +3767,45 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.CsvsaveTarget
   nameWithType: Image.CsvsaveTarget
+- uid: NetVips.Image.DE00(NetVips.Image)
+  name: DE00(Image)
+  href: api/NetVips.Image.html#NetVips_Image_DE00_NetVips_Image_
+  commentId: M:NetVips.Image.DE00(NetVips.Image)
+  fullName: NetVips.Image.DE00(NetVips.Image)
+  nameWithType: Image.DE00(Image)
+- uid: NetVips.Image.DE00*
+  name: DE00
+  href: api/NetVips.Image.html#NetVips_Image_DE00_
+  commentId: Overload:NetVips.Image.DE00
+  isSpec: "True"
+  fullName: NetVips.Image.DE00
+  nameWithType: Image.DE00
+- uid: NetVips.Image.DE76(NetVips.Image)
+  name: DE76(Image)
+  href: api/NetVips.Image.html#NetVips_Image_DE76_NetVips_Image_
+  commentId: M:NetVips.Image.DE76(NetVips.Image)
+  fullName: NetVips.Image.DE76(NetVips.Image)
+  nameWithType: Image.DE76(Image)
+- uid: NetVips.Image.DE76*
+  name: DE76
+  href: api/NetVips.Image.html#NetVips_Image_DE76_
+  commentId: Overload:NetVips.Image.DE76
+  isSpec: "True"
+  fullName: NetVips.Image.DE76
+  nameWithType: Image.DE76
+- uid: NetVips.Image.DECMC(NetVips.Image)
+  name: DECMC(Image)
+  href: api/NetVips.Image.html#NetVips_Image_DECMC_NetVips_Image_
+  commentId: M:NetVips.Image.DECMC(NetVips.Image)
+  fullName: NetVips.Image.DECMC(NetVips.Image)
+  nameWithType: Image.DECMC(Image)
+- uid: NetVips.Image.DECMC*
+  name: DECMC
+  href: api/NetVips.Image.html#NetVips_Image_DECMC_
+  commentId: Overload:NetVips.Image.DECMC
+  isSpec: "True"
+  fullName: NetVips.Image.DECMC
+  nameWithType: Image.DECMC
 - uid: NetVips.Image.Dcrawload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
   name: Dcrawload(string, out ForeignFlags, int?, bool?, Access?, FailOn?, bool?)
   href: api/NetVips.Image.html#NetVips_Image_Dcrawload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
@@ -3867,45 +3906,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.DcrawloadStream
   nameWithType: Image.DcrawloadStream
-- uid: NetVips.Image.DE00(NetVips.Image)
-  name: DE00(Image)
-  href: api/NetVips.Image.html#NetVips_Image_DE00_NetVips_Image_
-  commentId: M:NetVips.Image.DE00(NetVips.Image)
-  fullName: NetVips.Image.DE00(NetVips.Image)
-  nameWithType: Image.DE00(Image)
-- uid: NetVips.Image.DE00*
-  name: DE00
-  href: api/NetVips.Image.html#NetVips_Image_DE00_
-  commentId: Overload:NetVips.Image.DE00
-  isSpec: "True"
-  fullName: NetVips.Image.DE00
-  nameWithType: Image.DE00
-- uid: NetVips.Image.DE76(NetVips.Image)
-  name: DE76(Image)
-  href: api/NetVips.Image.html#NetVips_Image_DE76_NetVips_Image_
-  commentId: M:NetVips.Image.DE76(NetVips.Image)
-  fullName: NetVips.Image.DE76(NetVips.Image)
-  nameWithType: Image.DE76(Image)
-- uid: NetVips.Image.DE76*
-  name: DE76
-  href: api/NetVips.Image.html#NetVips_Image_DE76_
-  commentId: Overload:NetVips.Image.DE76
-  isSpec: "True"
-  fullName: NetVips.Image.DE76
-  nameWithType: Image.DE76
-- uid: NetVips.Image.DECMC(NetVips.Image)
-  name: DECMC(Image)
-  href: api/NetVips.Image.html#NetVips_Image_DECMC_NetVips_Image_
-  commentId: M:NetVips.Image.DECMC(NetVips.Image)
-  fullName: NetVips.Image.DECMC(NetVips.Image)
-  nameWithType: Image.DECMC(Image)
-- uid: NetVips.Image.DECMC*
-  name: DECMC
-  href: api/NetVips.Image.html#NetVips_Image_DECMC_
-  commentId: Overload:NetVips.Image.DECMC
-  isSpec: "True"
-  fullName: NetVips.Image.DECMC
-  nameWithType: Image.DECMC
 - uid: NetVips.Image.Deviate
   name: Deviate()
   href: api/NetVips.Image.html#NetVips_Image_Deviate
@@ -4688,22 +4688,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.GetHashCode
   nameWithType: Image.GetHashCode
-- uid: NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})
-  name: Getpoint(int, int, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})
-  name.vb: Getpoint(Integer, Integer, Boolean?)
-  fullName: NetVips.Image.Getpoint(int, int, bool?)
-  fullName.vb: NetVips.Image.Getpoint(Integer, Integer, Boolean?)
-  nameWithType: Image.Getpoint(int, int, bool?)
-  nameWithType.vb: Image.Getpoint(Integer, Integer, Boolean?)
-- uid: NetVips.Image.Getpoint*
-  name: Getpoint
-  href: api/NetVips.Image.html#NetVips_Image_Getpoint_
-  commentId: Overload:NetVips.Image.Getpoint
-  isSpec: "True"
-  fullName: NetVips.Image.Getpoint
-  nameWithType: Image.Getpoint
 - uid: NetVips.Image.GetTypeOf(System.String)
   name: GetTypeOf(string)
   href: api/NetVips.Image.html#NetVips_Image_GetTypeOf_System_String_
@@ -4720,6 +4704,22 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.GetTypeOf
   nameWithType: Image.GetTypeOf
+- uid: NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})
+  name: Getpoint(int, int, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_Getpoint_System_Int32_System_Int32_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.Getpoint(System.Int32,System.Int32,System.Nullable{System.Boolean})
+  name.vb: Getpoint(Integer, Integer, Boolean?)
+  fullName: NetVips.Image.Getpoint(int, int, bool?)
+  fullName.vb: NetVips.Image.Getpoint(Integer, Integer, Boolean?)
+  nameWithType: Image.Getpoint(int, int, bool?)
+  nameWithType.vb: Image.Getpoint(Integer, Integer, Boolean?)
+- uid: NetVips.Image.Getpoint*
+  name: Getpoint
+  href: api/NetVips.Image.html#NetVips_Image_Getpoint_
+  commentId: Overload:NetVips.Image.Getpoint
+  isSpec: "True"
+  fullName: NetVips.Image.Getpoint
+  nameWithType: Image.Getpoint
 - uid: NetVips.Image.Gifload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
   name: Gifload(string, out ForeignFlags, int?, int?, bool?, Access?, FailOn?, bool?)
   href: api/NetVips.Image.html#NetVips_Image_Gifload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
@@ -4948,6 +4948,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Grid
   nameWithType: Image.Grid
+- uid: NetVips.Image.HSV2sRGB
+  name: HSV2sRGB()
+  href: api/NetVips.Image.html#NetVips_Image_HSV2sRGB
+  commentId: M:NetVips.Image.HSV2sRGB
+  fullName: NetVips.Image.HSV2sRGB()
+  nameWithType: Image.HSV2sRGB()
+- uid: NetVips.Image.HSV2sRGB*
+  name: HSV2sRGB
+  href: api/NetVips.Image.html#NetVips_Image_HSV2sRGB_
+  commentId: Overload:NetVips.Image.HSV2sRGB
+  isSpec: "True"
+  fullName: NetVips.Image.HSV2sRGB
+  nameWithType: Image.HSV2sRGB
 - uid: NetVips.Image.HasAlpha
   name: HasAlpha()
   href: api/NetVips.Image.html#NetVips_Image_HasAlpha
@@ -5325,19 +5338,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.HoughLine
   nameWithType: Image.HoughLine
-- uid: NetVips.Image.HSV2sRGB
-  name: HSV2sRGB()
-  href: api/NetVips.Image.html#NetVips_Image_HSV2sRGB
-  commentId: M:NetVips.Image.HSV2sRGB
-  fullName: NetVips.Image.HSV2sRGB()
-  nameWithType: Image.HSV2sRGB()
-- uid: NetVips.Image.HSV2sRGB*
-  name: HSV2sRGB
-  href: api/NetVips.Image.html#NetVips_Image_HSV2sRGB_
-  commentId: Overload:NetVips.Image.HSV2sRGB
-  isSpec: "True"
-  fullName: NetVips.Image.HSV2sRGB
-  nameWithType: Image.HSV2sRGB
 - uid: NetVips.Image.IccExport(System.Nullable{NetVips.Enums.PCS},System.Nullable{NetVips.Enums.Intent},System.Nullable{System.Boolean},System.String,System.Nullable{System.Int32})
   name: IccExport(PCS?, Intent?, bool?, string, int?)
   href: api/NetVips.Image.html#NetVips_Image_IccExport_System_Nullable_NetVips_Enums_PCS__System_Nullable_NetVips_Enums_Intent__System_Nullable_System_Boolean__System_String_System_Nullable_System_Int32__
@@ -5547,15 +5547,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.IsKilled
   nameWithType: Image.IsKilled
-- uid: NetVips.Image.Item(System.Int32,System.Int32)
-  name: this[int, int]
-  href: api/NetVips.Image.html#NetVips_Image_Item_System_Int32_System_Int32_
-  commentId: P:NetVips.Image.Item(System.Int32,System.Int32)
-  name.vb: this[](Integer, Integer)
-  fullName: NetVips.Image.this[int, int]
-  fullName.vb: NetVips.Image.this[](Integer, Integer)
-  nameWithType: Image.this[int, int]
-  nameWithType.vb: Image.this[](Integer, Integer)
 - uid: NetVips.Image.Item(System.Int32)
   name: this[int]
   href: api/NetVips.Image.html#NetVips_Image_Item_System_Int32_
@@ -5565,6 +5556,15 @@ references:
   fullName.vb: NetVips.Image.this[](Integer)
   nameWithType: Image.this[int]
   nameWithType.vb: Image.this[](Integer)
+- uid: NetVips.Image.Item(System.Int32,System.Int32)
+  name: this[int, int]
+  href: api/NetVips.Image.html#NetVips_Image_Item_System_Int32_System_Int32_
+  commentId: P:NetVips.Image.Item(System.Int32,System.Int32)
+  name.vb: this[](Integer, Integer)
+  fullName: NetVips.Image.this[int, int]
+  fullName.vb: NetVips.Image.this[](Integer, Integer)
+  nameWithType: Image.this[int, int]
+  nameWithType.vb: Image.this[](Integer, Integer)
 - uid: NetVips.Image.Item*
   name: this
   href: api/NetVips.Image.html#NetVips_Image_Item_
@@ -6099,6 +6099,45 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.JxlsaveTarget
   nameWithType: Image.JxlsaveTarget
+- uid: NetVips.Image.LCh2CMC
+  name: LCh2CMC()
+  href: api/NetVips.Image.html#NetVips_Image_LCh2CMC
+  commentId: M:NetVips.Image.LCh2CMC
+  fullName: NetVips.Image.LCh2CMC()
+  nameWithType: Image.LCh2CMC()
+- uid: NetVips.Image.LCh2CMC*
+  name: LCh2CMC
+  href: api/NetVips.Image.html#NetVips_Image_LCh2CMC_
+  commentId: Overload:NetVips.Image.LCh2CMC
+  isSpec: "True"
+  fullName: NetVips.Image.LCh2CMC
+  nameWithType: Image.LCh2CMC
+- uid: NetVips.Image.LCh2Lab
+  name: LCh2Lab()
+  href: api/NetVips.Image.html#NetVips_Image_LCh2Lab
+  commentId: M:NetVips.Image.LCh2Lab
+  fullName: NetVips.Image.LCh2Lab()
+  nameWithType: Image.LCh2Lab()
+- uid: NetVips.Image.LCh2Lab*
+  name: LCh2Lab
+  href: api/NetVips.Image.html#NetVips_Image_LCh2Lab_
+  commentId: Overload:NetVips.Image.LCh2Lab
+  isSpec: "True"
+  fullName: NetVips.Image.LCh2Lab
+  nameWithType: Image.LCh2Lab
+- uid: NetVips.Image.Lab2LCh
+  name: Lab2LCh()
+  href: api/NetVips.Image.html#NetVips_Image_Lab2LCh
+  commentId: M:NetVips.Image.Lab2LCh
+  fullName: NetVips.Image.Lab2LCh()
+  nameWithType: Image.Lab2LCh()
+- uid: NetVips.Image.Lab2LCh*
+  name: Lab2LCh
+  href: api/NetVips.Image.html#NetVips_Image_Lab2LCh_
+  commentId: Overload:NetVips.Image.Lab2LCh
+  isSpec: "True"
+  fullName: NetVips.Image.Lab2LCh
+  nameWithType: Image.Lab2LCh
 - uid: NetVips.Image.Lab2LabQ
   name: Lab2LabQ()
   href: api/NetVips.Image.html#NetVips_Image_Lab2LabQ
@@ -6125,19 +6164,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Lab2LabS
   nameWithType: Image.Lab2LabS
-- uid: NetVips.Image.Lab2LCh
-  name: Lab2LCh()
-  href: api/NetVips.Image.html#NetVips_Image_Lab2LCh
-  commentId: M:NetVips.Image.Lab2LCh
-  fullName: NetVips.Image.Lab2LCh()
-  nameWithType: Image.Lab2LCh()
-- uid: NetVips.Image.Lab2LCh*
-  name: Lab2LCh
-  href: api/NetVips.Image.html#NetVips_Image_Lab2LCh_
-  commentId: Overload:NetVips.Image.Lab2LCh
-  isSpec: "True"
-  fullName: NetVips.Image.Lab2LCh
-  nameWithType: Image.Lab2LCh
 - uid: NetVips.Image.Lab2XYZ(System.Double[])
   name: Lab2XYZ(double[])
   href: api/NetVips.Image.html#NetVips_Image_Lab2XYZ_System_Double___
@@ -6154,28 +6180,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Lab2XYZ
   nameWithType: Image.Lab2XYZ
-- uid: NetVips.Image.Labelregions
-  name: Labelregions()
-  href: api/NetVips.Image.html#NetVips_Image_Labelregions
-  commentId: M:NetVips.Image.Labelregions
-  fullName: NetVips.Image.Labelregions()
-  nameWithType: Image.Labelregions()
-- uid: NetVips.Image.Labelregions(System.Int32@)
-  name: Labelregions(out int)
-  href: api/NetVips.Image.html#NetVips_Image_Labelregions_System_Int32__
-  commentId: M:NetVips.Image.Labelregions(System.Int32@)
-  name.vb: Labelregions(Integer)
-  fullName: NetVips.Image.Labelregions(out int)
-  fullName.vb: NetVips.Image.Labelregions(Integer)
-  nameWithType: Image.Labelregions(out int)
-  nameWithType.vb: Image.Labelregions(Integer)
-- uid: NetVips.Image.Labelregions*
-  name: Labelregions
-  href: api/NetVips.Image.html#NetVips_Image_Labelregions_
-  commentId: Overload:NetVips.Image.Labelregions
-  isSpec: "True"
-  fullName: NetVips.Image.Labelregions
-  nameWithType: Image.Labelregions
 - uid: NetVips.Image.LabQ2Lab
   name: LabQ2Lab()
   href: api/NetVips.Image.html#NetVips_Image_LabQ2Lab
@@ -6241,32 +6245,28 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.LabS2LabQ
   nameWithType: Image.LabS2LabQ
-- uid: NetVips.Image.LCh2CMC
-  name: LCh2CMC()
-  href: api/NetVips.Image.html#NetVips_Image_LCh2CMC
-  commentId: M:NetVips.Image.LCh2CMC
-  fullName: NetVips.Image.LCh2CMC()
-  nameWithType: Image.LCh2CMC()
-- uid: NetVips.Image.LCh2CMC*
-  name: LCh2CMC
-  href: api/NetVips.Image.html#NetVips_Image_LCh2CMC_
-  commentId: Overload:NetVips.Image.LCh2CMC
+- uid: NetVips.Image.Labelregions
+  name: Labelregions()
+  href: api/NetVips.Image.html#NetVips_Image_Labelregions
+  commentId: M:NetVips.Image.Labelregions
+  fullName: NetVips.Image.Labelregions()
+  nameWithType: Image.Labelregions()
+- uid: NetVips.Image.Labelregions(System.Int32@)
+  name: Labelregions(out int)
+  href: api/NetVips.Image.html#NetVips_Image_Labelregions_System_Int32__
+  commentId: M:NetVips.Image.Labelregions(System.Int32@)
+  name.vb: Labelregions(Integer)
+  fullName: NetVips.Image.Labelregions(out int)
+  fullName.vb: NetVips.Image.Labelregions(Integer)
+  nameWithType: Image.Labelregions(out int)
+  nameWithType.vb: Image.Labelregions(Integer)
+- uid: NetVips.Image.Labelregions*
+  name: Labelregions
+  href: api/NetVips.Image.html#NetVips_Image_Labelregions_
+  commentId: Overload:NetVips.Image.Labelregions
   isSpec: "True"
-  fullName: NetVips.Image.LCh2CMC
-  nameWithType: Image.LCh2CMC
-- uid: NetVips.Image.LCh2Lab
-  name: LCh2Lab()
-  href: api/NetVips.Image.html#NetVips_Image_LCh2Lab
-  commentId: M:NetVips.Image.LCh2Lab
-  fullName: NetVips.Image.LCh2Lab()
-  nameWithType: Image.LCh2Lab()
-- uid: NetVips.Image.LCh2Lab*
-  name: LCh2Lab
-  href: api/NetVips.Image.html#NetVips_Image_LCh2Lab_
-  commentId: Overload:NetVips.Image.LCh2Lab
-  isSpec: "True"
-  fullName: NetVips.Image.LCh2Lab
-  nameWithType: Image.LCh2Lab
+  fullName: NetVips.Image.Labelregions
+  nameWithType: Image.Labelregions
 - uid: NetVips.Image.Linear(System.Double[],System.Double[],System.Nullable{System.Boolean})
   name: Linear(double[], double[], bool?)
   href: api/NetVips.Image.html#NetVips_Image_Linear_System_Double___System_Double___System_Nullable_System_Boolean__
@@ -6974,19 +6974,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Max
   nameWithType: Image.Max
-- uid: NetVips.Image.Maxpair(NetVips.Image)
-  name: Maxpair(Image)
-  href: api/NetVips.Image.html#NetVips_Image_Maxpair_NetVips_Image_
-  commentId: M:NetVips.Image.Maxpair(NetVips.Image)
-  fullName: NetVips.Image.Maxpair(NetVips.Image)
-  nameWithType: Image.Maxpair(Image)
-- uid: NetVips.Image.Maxpair*
-  name: Maxpair
-  href: api/NetVips.Image.html#NetVips_Image_Maxpair_
-  commentId: Overload:NetVips.Image.Maxpair
-  isSpec: "True"
-  fullName: NetVips.Image.Maxpair
-  nameWithType: Image.Maxpair
 - uid: NetVips.Image.MaxPos
   name: MaxPos()
   href: api/NetVips.Image.html#NetVips_Image_MaxPos
@@ -7000,6 +6987,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.MaxPos
   nameWithType: Image.MaxPos
+- uid: NetVips.Image.Maxpair(NetVips.Image)
+  name: Maxpair(Image)
+  href: api/NetVips.Image.html#NetVips_Image_Maxpair_NetVips_Image_
+  commentId: M:NetVips.Image.Maxpair(NetVips.Image)
+  fullName: NetVips.Image.Maxpair(NetVips.Image)
+  nameWithType: Image.Maxpair(Image)
+- uid: NetVips.Image.Maxpair*
+  name: Maxpair
+  href: api/NetVips.Image.html#NetVips_Image_Maxpair_
+  commentId: Overload:NetVips.Image.Maxpair
+  isSpec: "True"
+  fullName: NetVips.Image.Maxpair
+  nameWithType: Image.Maxpair
 - uid: NetVips.Image.Measure(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
   name: Measure(int, int, int?, int?, int?, int?)
   href: api/NetVips.Image.html#NetVips_Image_Measure_System_Int32_System_Int32_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__
@@ -7109,19 +7109,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Min
   nameWithType: Image.Min
-- uid: NetVips.Image.Minpair(NetVips.Image)
-  name: Minpair(Image)
-  href: api/NetVips.Image.html#NetVips_Image_Minpair_NetVips_Image_
-  commentId: M:NetVips.Image.Minpair(NetVips.Image)
-  fullName: NetVips.Image.Minpair(NetVips.Image)
-  nameWithType: Image.Minpair(Image)
-- uid: NetVips.Image.Minpair*
-  name: Minpair
-  href: api/NetVips.Image.html#NetVips_Image_Minpair_
-  commentId: Overload:NetVips.Image.Minpair
-  isSpec: "True"
-  fullName: NetVips.Image.Minpair
-  nameWithType: Image.Minpair
 - uid: NetVips.Image.MinPos
   name: MinPos()
   href: api/NetVips.Image.html#NetVips_Image_MinPos
@@ -7135,6 +7122,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.MinPos
   nameWithType: Image.MinPos
+- uid: NetVips.Image.Minpair(NetVips.Image)
+  name: Minpair(Image)
+  href: api/NetVips.Image.html#NetVips_Image_Minpair_NetVips_Image_
+  commentId: M:NetVips.Image.Minpair(NetVips.Image)
+  fullName: NetVips.Image.Minpair(NetVips.Image)
+  nameWithType: Image.Minpair(Image)
+- uid: NetVips.Image.Minpair*
+  name: Minpair
+  href: api/NetVips.Image.html#NetVips_Image_Minpair_
+  commentId: Overload:NetVips.Image.Minpair
+  isSpec: "True"
+  fullName: NetVips.Image.Minpair
+  nameWithType: Image.Minpair
 - uid: NetVips.Image.Morph(NetVips.Image,NetVips.Enums.OperationMorphology)
   name: Morph(Image, OperationMorphology)
   href: api/NetVips.Image.html#NetVips_Image_Morph_NetVips_Image_NetVips_Enums_OperationMorphology_
@@ -7286,6 +7286,15 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewFromArray
   nameWithType: Image.NewFromArray
+- uid: NetVips.Image.NewFromArray``1(``0[0:,0:],System.Double,System.Double)
+  name: NewFromArray<T>(T[,], double, double)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromArray__1___0_0__0___System_Double_System_Double_
+  commentId: M:NetVips.Image.NewFromArray``1(``0[0:,0:],System.Double,System.Double)
+  name.vb: NewFromArray(Of T)(T(,), Double, Double)
+  fullName: NetVips.Image.NewFromArray<T>(T[,], double, double)
+  fullName.vb: NetVips.Image.NewFromArray(Of T)(T(,), Double, Double)
+  nameWithType: Image.NewFromArray<T>(T[,], double, double)
+  nameWithType.vb: Image.NewFromArray(Of T)(T(,), Double, Double)
 - uid: NetVips.Image.NewFromArray``1(``0[],System.Double,System.Double)
   name: NewFromArray<T>(T[], double, double)
   href: api/NetVips.Image.html#NetVips_Image_NewFromArray__1___0___System_Double_System_Double_
@@ -7304,15 +7313,6 @@ references:
   fullName.vb: NetVips.Image.NewFromArray(Of T)(T()(), Double, Double)
   nameWithType: Image.NewFromArray<T>(T[][], double, double)
   nameWithType.vb: Image.NewFromArray(Of T)(T()(), Double, Double)
-- uid: NetVips.Image.NewFromArray``1(``0[0:,0:],System.Double,System.Double)
-  name: NewFromArray<T>(T[,], double, double)
-  href: api/NetVips.Image.html#NetVips_Image_NewFromArray__1___0_0__0___System_Double_System_Double_
-  commentId: M:NetVips.Image.NewFromArray``1(``0[0:,0:],System.Double,System.Double)
-  name.vb: NewFromArray(Of T)(T(,), Double, Double)
-  fullName: NetVips.Image.NewFromArray<T>(T[,], double, double)
-  fullName.vb: NetVips.Image.NewFromArray(Of T)(T(,), Double, Double)
-  nameWithType: Image.NewFromArray<T>(T[,], double, double)
-  nameWithType.vb: Image.NewFromArray(Of T)(T(,), Double, Double)
 - uid: NetVips.Image.NewFromBuffer(System.Byte[],System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)
   name: NewFromBuffer(byte[], string, Access?, FailOn?, VOption)
   href: api/NetVips.Image.html#NetVips_Image_NewFromBuffer_System_Byte___System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_
@@ -7428,24 +7428,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.NewFromMemory
   nameWithType: Image.NewFromMemory
-- uid: NetVips.Image.NewFromMemory``1(``0[],System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
-  name: NewFromMemory<T>(T[], int, int, int, BandFormat)
-  href: api/NetVips.Image.html#NetVips_Image_NewFromMemory__1___0___System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
-  commentId: M:NetVips.Image.NewFromMemory``1(``0[],System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
-  name.vb: NewFromMemory(Of T)(T(), Integer, Integer, Integer, BandFormat)
-  fullName: NetVips.Image.NewFromMemory<T>(T[], int, int, int, NetVips.Enums.BandFormat)
-  fullName.vb: NetVips.Image.NewFromMemory(Of T)(T(), Integer, Integer, Integer, NetVips.Enums.BandFormat)
-  nameWithType: Image.NewFromMemory<T>(T[], int, int, int, Enums.BandFormat)
-  nameWithType.vb: Image.NewFromMemory(Of T)(T(), Integer, Integer, Integer, Enums.BandFormat)
-- uid: NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
-  name: NewFromMemory<T>(ReadOnlyMemory<T>, int, int, int, BandFormat)
-  href: api/NetVips.Image.html#NetVips_Image_NewFromMemory__1_System_ReadOnlyMemory___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
-  commentId: M:NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
-  name.vb: NewFromMemory(Of T)(ReadOnlyMemory(Of T), Integer, Integer, Integer, BandFormat)
-  fullName: NetVips.Image.NewFromMemory<T>(System.ReadOnlyMemory<T>, int, int, int, NetVips.Enums.BandFormat)
-  fullName.vb: NetVips.Image.NewFromMemory(Of T)(System.ReadOnlyMemory(Of T), Integer, Integer, Integer, NetVips.Enums.BandFormat)
-  nameWithType: Image.NewFromMemory<T>(ReadOnlyMemory<T>, int, int, int, Enums.BandFormat)
-  nameWithType.vb: Image.NewFromMemory(Of T)(ReadOnlyMemory(Of T), Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromMemoryCopy(System.IntPtr,System.UInt64,System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
   name: NewFromMemoryCopy(nint, ulong, int, int, int, BandFormat)
   href: api/NetVips.Image.html#NetVips_Image_NewFromMemoryCopy_System_IntPtr_System_UInt64_System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
@@ -7471,6 +7453,24 @@ references:
   fullName.vb: NetVips.Image.NewFromMemoryCopy(Of T)(System.ReadOnlySpan(Of T), Integer, Integer, Integer, NetVips.Enums.BandFormat)
   nameWithType: Image.NewFromMemoryCopy<T>(ReadOnlySpan<T>, int, int, int, Enums.BandFormat)
   nameWithType.vb: Image.NewFromMemoryCopy(Of T)(ReadOnlySpan(Of T), Integer, Integer, Integer, Enums.BandFormat)
+- uid: NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name: NewFromMemory<T>(ReadOnlyMemory<T>, int, int, int, BandFormat)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromMemory__1_System_ReadOnlyMemory___0__System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
+  commentId: M:NetVips.Image.NewFromMemory``1(System.ReadOnlyMemory{``0},System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name.vb: NewFromMemory(Of T)(ReadOnlyMemory(Of T), Integer, Integer, Integer, BandFormat)
+  fullName: NetVips.Image.NewFromMemory<T>(System.ReadOnlyMemory<T>, int, int, int, NetVips.Enums.BandFormat)
+  fullName.vb: NetVips.Image.NewFromMemory(Of T)(System.ReadOnlyMemory(Of T), Integer, Integer, Integer, NetVips.Enums.BandFormat)
+  nameWithType: Image.NewFromMemory<T>(ReadOnlyMemory<T>, int, int, int, Enums.BandFormat)
+  nameWithType.vb: Image.NewFromMemory(Of T)(ReadOnlyMemory(Of T), Integer, Integer, Integer, Enums.BandFormat)
+- uid: NetVips.Image.NewFromMemory``1(``0[],System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name: NewFromMemory<T>(T[], int, int, int, BandFormat)
+  href: api/NetVips.Image.html#NetVips_Image_NewFromMemory__1___0___System_Int32_System_Int32_System_Int32_NetVips_Enums_BandFormat_
+  commentId: M:NetVips.Image.NewFromMemory``1(``0[],System.Int32,System.Int32,System.Int32,NetVips.Enums.BandFormat)
+  name.vb: NewFromMemory(Of T)(T(), Integer, Integer, Integer, BandFormat)
+  fullName: NetVips.Image.NewFromMemory<T>(T[], int, int, int, NetVips.Enums.BandFormat)
+  fullName.vb: NetVips.Image.NewFromMemory(Of T)(T(), Integer, Integer, Integer, NetVips.Enums.BandFormat)
+  nameWithType: Image.NewFromMemory<T>(T[], int, int, int, Enums.BandFormat)
+  nameWithType.vb: Image.NewFromMemory(Of T)(T(), Integer, Integer, Integer, Enums.BandFormat)
 - uid: NetVips.Image.NewFromSource(NetVips.Source,System.String,System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},NetVips.VOption)
   name: NewFromSource(Source, string, Access?, FailOn?, VOption)
   href: api/NetVips.Image.html#NetVips_Image_NewFromSource_NetVips_Source_System_String_System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__NetVips_VOption_
@@ -7689,1032 +7689,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Oklch2Oklab
   nameWithType: Image.Oklch2Oklab
-- uid: NetVips.Image.op_Addition(NetVips.Image,NetVips.Image)
-  name: operator +(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_Addition(NetVips.Image,NetVips.Image)
-  name.vb: +(Image, Image)
-  fullName: NetVips.Image.operator +(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.+(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator +(Image, Image)
-  nameWithType.vb: Image.+(Image, Image)
-- uid: NetVips.Image.op_Addition(NetVips.Image,System.Double)
-  name: operator +(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_Addition(NetVips.Image,System.Double)
-  name.vb: +(Image, Double)
-  fullName: NetVips.Image.operator +(NetVips.Image, double)
-  fullName.vb: NetVips.Image.+(NetVips.Image, Double)
-  nameWithType: Image.operator +(Image, double)
-  nameWithType.vb: Image.+(Image, Double)
-- uid: NetVips.Image.op_Addition(NetVips.Image,System.Double[])
-  name: operator +(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_Addition(NetVips.Image,System.Double[])
-  name.vb: +(Image, Double())
-  fullName: NetVips.Image.operator +(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.+(NetVips.Image, Double())
-  nameWithType: Image.operator +(Image, double[])
-  nameWithType.vb: Image.+(Image, Double())
-- uid: NetVips.Image.op_Addition(NetVips.Image,System.Int32[])
-  name: operator +(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_Addition(NetVips.Image,System.Int32[])
-  name.vb: +(Image, Integer())
-  fullName: NetVips.Image.operator +(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.+(NetVips.Image, Integer())
-  nameWithType: Image.operator +(Image, int[])
-  nameWithType.vb: Image.+(Image, Integer())
-- uid: NetVips.Image.op_Addition(System.Double,NetVips.Image)
-  name: operator +(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Addition(System.Double,NetVips.Image)
-  name.vb: +(Double, Image)
-  fullName: NetVips.Image.operator +(double, NetVips.Image)
-  fullName.vb: NetVips.Image.+(Double, NetVips.Image)
-  nameWithType: Image.operator +(double, Image)
-  nameWithType.vb: Image.+(Double, Image)
-- uid: NetVips.Image.op_Addition(System.Double[],NetVips.Image)
-  name: operator +(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Addition(System.Double[],NetVips.Image)
-  name.vb: +(Double(), Image)
-  fullName: NetVips.Image.operator +(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.+(Double(), NetVips.Image)
-  nameWithType: Image.operator +(double[], Image)
-  nameWithType.vb: Image.+(Double(), Image)
-- uid: NetVips.Image.op_Addition(System.Int32[],NetVips.Image)
-  name: operator +(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Addition(System.Int32[],NetVips.Image)
-  name.vb: +(Integer(), Image)
-  fullName: NetVips.Image.operator +(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.+(Integer(), NetVips.Image)
-  nameWithType: Image.operator +(int[], Image)
-  nameWithType.vb: Image.+(Integer(), Image)
-- uid: NetVips.Image.op_Addition*
-  name: operator +
-  href: api/NetVips.Image.html#NetVips_Image_op_Addition_
-  commentId: Overload:NetVips.Image.op_Addition
-  isSpec: "True"
-  name.vb: +
-  fullName: NetVips.Image.operator +
-  fullName.vb: NetVips.Image.+
-  nameWithType: Image.operator +
-  nameWithType.vb: Image.+
-- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,NetVips.Image)
-  name: operator &(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,NetVips.Image)
-  name.vb: And(Image, Image)
-  fullName: NetVips.Image.operator &(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.And(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator &(Image, Image)
-  nameWithType.vb: Image.And(Image, Image)
-- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double)
-  name: operator &(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double)
-  name.vb: And(Image, Double)
-  fullName: NetVips.Image.operator &(NetVips.Image, double)
-  fullName.vb: NetVips.Image.And(NetVips.Image, Double)
-  nameWithType: Image.operator &(Image, double)
-  nameWithType.vb: Image.And(Image, Double)
-- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double[])
-  name: operator &(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double[])
-  name.vb: And(Image, Double())
-  fullName: NetVips.Image.operator &(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.And(NetVips.Image, Double())
-  nameWithType: Image.operator &(Image, double[])
-  nameWithType.vb: Image.And(Image, Double())
-- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Int32[])
-  name: operator &(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Int32[])
-  name.vb: And(Image, Integer())
-  fullName: NetVips.Image.operator &(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.And(NetVips.Image, Integer())
-  nameWithType: Image.operator &(Image, int[])
-  nameWithType.vb: Image.And(Image, Integer())
-- uid: NetVips.Image.op_BitwiseAnd(System.Double,NetVips.Image)
-  name: operator &(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseAnd(System.Double,NetVips.Image)
-  name.vb: And(Double, Image)
-  fullName: NetVips.Image.operator &(double, NetVips.Image)
-  fullName.vb: NetVips.Image.And(Double, NetVips.Image)
-  nameWithType: Image.operator &(double, Image)
-  nameWithType.vb: Image.And(Double, Image)
-- uid: NetVips.Image.op_BitwiseAnd(System.Double[],NetVips.Image)
-  name: operator &(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseAnd(System.Double[],NetVips.Image)
-  name.vb: And(Double(), Image)
-  fullName: NetVips.Image.operator &(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.And(Double(), NetVips.Image)
-  nameWithType: Image.operator &(double[], Image)
-  nameWithType.vb: Image.And(Double(), Image)
-- uid: NetVips.Image.op_BitwiseAnd(System.Int32[],NetVips.Image)
-  name: operator &(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseAnd(System.Int32[],NetVips.Image)
-  name.vb: And(Integer(), Image)
-  fullName: NetVips.Image.operator &(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.And(Integer(), NetVips.Image)
-  nameWithType: Image.operator &(int[], Image)
-  nameWithType.vb: Image.And(Integer(), Image)
-- uid: NetVips.Image.op_BitwiseAnd*
-  name: operator &
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_
-  commentId: Overload:NetVips.Image.op_BitwiseAnd
-  isSpec: "True"
-  name.vb: And
-  fullName: NetVips.Image.operator &
-  fullName.vb: NetVips.Image.And
-  nameWithType: Image.operator &
-  nameWithType.vb: Image.And
-- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,NetVips.Image)
-  name: operator |(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,NetVips.Image)
-  name.vb: Or(Image, Image)
-  fullName: NetVips.Image.operator |(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.Or(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator |(Image, Image)
-  nameWithType.vb: Image.Or(Image, Image)
-- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double)
-  name: operator |(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double)
-  name.vb: Or(Image, Double)
-  fullName: NetVips.Image.operator |(NetVips.Image, double)
-  fullName.vb: NetVips.Image.Or(NetVips.Image, Double)
-  nameWithType: Image.operator |(Image, double)
-  nameWithType.vb: Image.Or(Image, Double)
-- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double[])
-  name: operator |(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double[])
-  name.vb: Or(Image, Double())
-  fullName: NetVips.Image.operator |(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.Or(NetVips.Image, Double())
-  nameWithType: Image.operator |(Image, double[])
-  nameWithType.vb: Image.Or(Image, Double())
-- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,System.Int32[])
-  name: operator |(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,System.Int32[])
-  name.vb: Or(Image, Integer())
-  fullName: NetVips.Image.operator |(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.Or(NetVips.Image, Integer())
-  nameWithType: Image.operator |(Image, int[])
-  nameWithType.vb: Image.Or(Image, Integer())
-- uid: NetVips.Image.op_BitwiseOr(System.Double,NetVips.Image)
-  name: operator |(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseOr(System.Double,NetVips.Image)
-  name.vb: Or(Double, Image)
-  fullName: NetVips.Image.operator |(double, NetVips.Image)
-  fullName.vb: NetVips.Image.Or(Double, NetVips.Image)
-  nameWithType: Image.operator |(double, Image)
-  nameWithType.vb: Image.Or(Double, Image)
-- uid: NetVips.Image.op_BitwiseOr(System.Double[],NetVips.Image)
-  name: operator |(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseOr(System.Double[],NetVips.Image)
-  name.vb: Or(Double(), Image)
-  fullName: NetVips.Image.operator |(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.Or(Double(), NetVips.Image)
-  nameWithType: Image.operator |(double[], Image)
-  nameWithType.vb: Image.Or(Double(), Image)
-- uid: NetVips.Image.op_BitwiseOr(System.Int32[],NetVips.Image)
-  name: operator |(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_BitwiseOr(System.Int32[],NetVips.Image)
-  name.vb: Or(Integer(), Image)
-  fullName: NetVips.Image.operator |(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.Or(Integer(), NetVips.Image)
-  nameWithType: Image.operator |(int[], Image)
-  nameWithType.vb: Image.Or(Integer(), Image)
-- uid: NetVips.Image.op_BitwiseOr*
-  name: operator |
-  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_
-  commentId: Overload:NetVips.Image.op_BitwiseOr
-  isSpec: "True"
-  name.vb: Or
-  fullName: NetVips.Image.operator |
-  fullName.vb: NetVips.Image.Or
-  nameWithType: Image.operator |
-  nameWithType.vb: Image.Or
-- uid: NetVips.Image.op_Division(NetVips.Image,NetVips.Image)
-  name: operator /(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_Division(NetVips.Image,NetVips.Image)
-  name.vb: /(Image, Image)
-  fullName: NetVips.Image.operator /(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image./(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator /(Image, Image)
-  nameWithType.vb: Image./(Image, Image)
-- uid: NetVips.Image.op_Division(NetVips.Image,System.Double)
-  name: operator /(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_Division(NetVips.Image,System.Double)
-  name.vb: /(Image, Double)
-  fullName: NetVips.Image.operator /(NetVips.Image, double)
-  fullName.vb: NetVips.Image./(NetVips.Image, Double)
-  nameWithType: Image.operator /(Image, double)
-  nameWithType.vb: Image./(Image, Double)
-- uid: NetVips.Image.op_Division(NetVips.Image,System.Double[])
-  name: operator /(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_Division(NetVips.Image,System.Double[])
-  name.vb: /(Image, Double())
-  fullName: NetVips.Image.operator /(NetVips.Image, double[])
-  fullName.vb: NetVips.Image./(NetVips.Image, Double())
-  nameWithType: Image.operator /(Image, double[])
-  nameWithType.vb: Image./(Image, Double())
-- uid: NetVips.Image.op_Division(NetVips.Image,System.Int32[])
-  name: operator /(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_Division(NetVips.Image,System.Int32[])
-  name.vb: /(Image, Integer())
-  fullName: NetVips.Image.operator /(NetVips.Image, int[])
-  fullName.vb: NetVips.Image./(NetVips.Image, Integer())
-  nameWithType: Image.operator /(Image, int[])
-  nameWithType.vb: Image./(Image, Integer())
-- uid: NetVips.Image.op_Division(System.Double,NetVips.Image)
-  name: operator /(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Division(System.Double,NetVips.Image)
-  name.vb: /(Double, Image)
-  fullName: NetVips.Image.operator /(double, NetVips.Image)
-  fullName.vb: NetVips.Image./(Double, NetVips.Image)
-  nameWithType: Image.operator /(double, Image)
-  nameWithType.vb: Image./(Double, Image)
-- uid: NetVips.Image.op_Division(System.Double[],NetVips.Image)
-  name: operator /(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Division(System.Double[],NetVips.Image)
-  name.vb: /(Double(), Image)
-  fullName: NetVips.Image.operator /(double[], NetVips.Image)
-  fullName.vb: NetVips.Image./(Double(), NetVips.Image)
-  nameWithType: Image.operator /(double[], Image)
-  nameWithType.vb: Image./(Double(), Image)
-- uid: NetVips.Image.op_Division(System.Int32[],NetVips.Image)
-  name: operator /(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Division(System.Int32[],NetVips.Image)
-  name.vb: /(Integer(), Image)
-  fullName: NetVips.Image.operator /(int[], NetVips.Image)
-  fullName.vb: NetVips.Image./(Integer(), NetVips.Image)
-  nameWithType: Image.operator /(int[], Image)
-  nameWithType.vb: Image./(Integer(), Image)
-- uid: NetVips.Image.op_Division*
-  name: operator /
-  href: api/NetVips.Image.html#NetVips_Image_op_Division_
-  commentId: Overload:NetVips.Image.op_Division
-  isSpec: "True"
-  name.vb: /
-  fullName: NetVips.Image.operator /
-  fullName.vb: NetVips.Image./
-  nameWithType: Image.operator /
-  nameWithType.vb: Image./
-- uid: NetVips.Image.op_Equality(System.Double,NetVips.Image)
-  name: operator ==(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Equality_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Equality(System.Double,NetVips.Image)
-  name.vb: =(Double, Image)
-  fullName: NetVips.Image.operator ==(double, NetVips.Image)
-  fullName.vb: NetVips.Image.=(Double, NetVips.Image)
-  nameWithType: Image.operator ==(double, Image)
-  nameWithType.vb: Image.=(Double, Image)
-- uid: NetVips.Image.op_Equality(System.Double[],NetVips.Image)
-  name: operator ==(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Equality_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Equality(System.Double[],NetVips.Image)
-  name.vb: =(Double(), Image)
-  fullName: NetVips.Image.operator ==(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.=(Double(), NetVips.Image)
-  nameWithType: Image.operator ==(double[], Image)
-  nameWithType.vb: Image.=(Double(), Image)
-- uid: NetVips.Image.op_Equality(System.Int32[],NetVips.Image)
-  name: operator ==(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Equality_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Equality(System.Int32[],NetVips.Image)
-  name.vb: =(Integer(), Image)
-  fullName: NetVips.Image.operator ==(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.=(Integer(), NetVips.Image)
-  nameWithType: Image.operator ==(int[], Image)
-  nameWithType.vb: Image.=(Integer(), Image)
-- uid: NetVips.Image.op_Equality*
-  name: operator ==
-  href: api/NetVips.Image.html#NetVips_Image_op_Equality_
-  commentId: Overload:NetVips.Image.op_Equality
-  isSpec: "True"
-  name.vb: =
-  fullName: NetVips.Image.operator ==
-  fullName.vb: NetVips.Image.=
-  nameWithType: Image.operator ==
-  nameWithType.vb: Image.=
-- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,NetVips.Image)
-  name: operator ^(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,NetVips.Image)
-  name.vb: Xor(Image, Image)
-  fullName: NetVips.Image.operator ^(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.Xor(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator ^(Image, Image)
-  nameWithType.vb: Image.Xor(Image, Image)
-- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double)
-  name: operator ^(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double)
-  name.vb: Xor(Image, Double)
-  fullName: NetVips.Image.operator ^(NetVips.Image, double)
-  fullName.vb: NetVips.Image.Xor(NetVips.Image, Double)
-  nameWithType: Image.operator ^(Image, double)
-  nameWithType.vb: Image.Xor(Image, Double)
-- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double[])
-  name: operator ^(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double[])
-  name.vb: Xor(Image, Double())
-  fullName: NetVips.Image.operator ^(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.Xor(NetVips.Image, Double())
-  nameWithType: Image.operator ^(Image, double[])
-  nameWithType.vb: Image.Xor(Image, Double())
-- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Int32[])
-  name: operator ^(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Int32[])
-  name.vb: Xor(Image, Integer())
-  fullName: NetVips.Image.operator ^(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.Xor(NetVips.Image, Integer())
-  nameWithType: Image.operator ^(Image, int[])
-  nameWithType.vb: Image.Xor(Image, Integer())
-- uid: NetVips.Image.op_ExclusiveOr(System.Double,NetVips.Image)
-  name: operator ^(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_ExclusiveOr(System.Double,NetVips.Image)
-  name.vb: Xor(Double, Image)
-  fullName: NetVips.Image.operator ^(double, NetVips.Image)
-  fullName.vb: NetVips.Image.Xor(Double, NetVips.Image)
-  nameWithType: Image.operator ^(double, Image)
-  nameWithType.vb: Image.Xor(Double, Image)
-- uid: NetVips.Image.op_ExclusiveOr(System.Double[],NetVips.Image)
-  name: operator ^(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_ExclusiveOr(System.Double[],NetVips.Image)
-  name.vb: Xor(Double(), Image)
-  fullName: NetVips.Image.operator ^(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.Xor(Double(), NetVips.Image)
-  nameWithType: Image.operator ^(double[], Image)
-  nameWithType.vb: Image.Xor(Double(), Image)
-- uid: NetVips.Image.op_ExclusiveOr(System.Int32[],NetVips.Image)
-  name: operator ^(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_ExclusiveOr(System.Int32[],NetVips.Image)
-  name.vb: Xor(Integer(), Image)
-  fullName: NetVips.Image.operator ^(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.Xor(Integer(), NetVips.Image)
-  nameWithType: Image.operator ^(int[], Image)
-  nameWithType.vb: Image.Xor(Integer(), Image)
-- uid: NetVips.Image.op_ExclusiveOr*
-  name: operator ^
-  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_
-  commentId: Overload:NetVips.Image.op_ExclusiveOr
-  isSpec: "True"
-  name.vb: Xor
-  fullName: NetVips.Image.operator ^
-  fullName.vb: NetVips.Image.Xor
-  nameWithType: Image.operator ^
-  nameWithType.vb: Image.Xor
-- uid: NetVips.Image.op_False(NetVips.Image)
-  name: operator false(Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_False_NetVips_Image_
-  commentId: M:NetVips.Image.op_False(NetVips.Image)
-  name.vb: IsFalse(Image)
-  fullName: NetVips.Image.operator false(NetVips.Image)
-  fullName.vb: NetVips.Image.IsFalse(NetVips.Image)
-  nameWithType: Image.operator false(Image)
-  nameWithType.vb: Image.IsFalse(Image)
-- uid: NetVips.Image.op_False*
-  name: operator false
-  href: api/NetVips.Image.html#NetVips_Image_op_False_
-  commentId: Overload:NetVips.Image.op_False
-  isSpec: "True"
-  name.vb: IsFalse
-  fullName: NetVips.Image.operator false
-  fullName.vb: NetVips.Image.IsFalse
-  nameWithType: Image.operator false
-  nameWithType.vb: Image.IsFalse
-- uid: NetVips.Image.op_GreaterThan(NetVips.Image,NetVips.Image)
-  name: operator >(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,NetVips.Image)
-  name.vb: '>(Image, Image)'
-  fullName: NetVips.Image.operator >(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.>(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator >(Image, Image)
-  nameWithType.vb: Image.>(Image, Image)
-- uid: NetVips.Image.op_GreaterThan(NetVips.Image,System.Double)
-  name: operator >(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,System.Double)
-  name.vb: '>(Image, Double)'
-  fullName: NetVips.Image.operator >(NetVips.Image, double)
-  fullName.vb: NetVips.Image.>(NetVips.Image, Double)
-  nameWithType: Image.operator >(Image, double)
-  nameWithType.vb: Image.>(Image, Double)
-- uid: NetVips.Image.op_GreaterThan(NetVips.Image,System.Double[])
-  name: operator >(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,System.Double[])
-  name.vb: '>(Image, Double())'
-  fullName: NetVips.Image.operator >(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.>(NetVips.Image, Double())
-  nameWithType: Image.operator >(Image, double[])
-  nameWithType.vb: Image.>(Image, Double())
-- uid: NetVips.Image.op_GreaterThan(NetVips.Image,System.Int32[])
-  name: operator >(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,System.Int32[])
-  name.vb: '>(Image, Integer())'
-  fullName: NetVips.Image.operator >(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.>(NetVips.Image, Integer())
-  nameWithType: Image.operator >(Image, int[])
-  nameWithType.vb: Image.>(Image, Integer())
-- uid: NetVips.Image.op_GreaterThan(System.Double,NetVips.Image)
-  name: operator >(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThan(System.Double,NetVips.Image)
-  name.vb: '>(Double, Image)'
-  fullName: NetVips.Image.operator >(double, NetVips.Image)
-  fullName.vb: NetVips.Image.>(Double, NetVips.Image)
-  nameWithType: Image.operator >(double, Image)
-  nameWithType.vb: Image.>(Double, Image)
-- uid: NetVips.Image.op_GreaterThan(System.Double[],NetVips.Image)
-  name: operator >(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThan(System.Double[],NetVips.Image)
-  name.vb: '>(Double(), Image)'
-  fullName: NetVips.Image.operator >(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.>(Double(), NetVips.Image)
-  nameWithType: Image.operator >(double[], Image)
-  nameWithType.vb: Image.>(Double(), Image)
-- uid: NetVips.Image.op_GreaterThan(System.Int32[],NetVips.Image)
-  name: operator >(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThan(System.Int32[],NetVips.Image)
-  name.vb: '>(Integer(), Image)'
-  fullName: NetVips.Image.operator >(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.>(Integer(), NetVips.Image)
-  nameWithType: Image.operator >(int[], Image)
-  nameWithType.vb: Image.>(Integer(), Image)
-- uid: NetVips.Image.op_GreaterThan*
-  name: operator >
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_
-  commentId: Overload:NetVips.Image.op_GreaterThan
-  isSpec: "True"
-  name.vb: '>'
-  fullName: NetVips.Image.operator >
-  fullName.vb: NetVips.Image.>
-  nameWithType: Image.operator >
-  nameWithType.vb: Image.>
-- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,NetVips.Image)
-  name: operator >=(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,NetVips.Image)
-  name.vb: '>=(Image, Image)'
-  fullName: NetVips.Image.operator >=(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.>=(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator >=(Image, Image)
-  nameWithType.vb: Image.>=(Image, Image)
-- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double)
-  name: operator >=(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double)
-  name.vb: '>=(Image, Double)'
-  fullName: NetVips.Image.operator >=(NetVips.Image, double)
-  fullName.vb: NetVips.Image.>=(NetVips.Image, Double)
-  nameWithType: Image.operator >=(Image, double)
-  nameWithType.vb: Image.>=(Image, Double)
-- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double[])
-  name: operator >=(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double[])
-  name.vb: '>=(Image, Double())'
-  fullName: NetVips.Image.operator >=(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.>=(NetVips.Image, Double())
-  nameWithType: Image.operator >=(Image, double[])
-  nameWithType.vb: Image.>=(Image, Double())
-- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Int32[])
-  name: operator >=(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Int32[])
-  name.vb: '>=(Image, Integer())'
-  fullName: NetVips.Image.operator >=(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.>=(NetVips.Image, Integer())
-  nameWithType: Image.operator >=(Image, int[])
-  nameWithType.vb: Image.>=(Image, Integer())
-- uid: NetVips.Image.op_GreaterThanOrEqual(System.Double,NetVips.Image)
-  name: operator >=(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(System.Double,NetVips.Image)
-  name.vb: '>=(Double, Image)'
-  fullName: NetVips.Image.operator >=(double, NetVips.Image)
-  fullName.vb: NetVips.Image.>=(Double, NetVips.Image)
-  nameWithType: Image.operator >=(double, Image)
-  nameWithType.vb: Image.>=(Double, Image)
-- uid: NetVips.Image.op_GreaterThanOrEqual(System.Double[],NetVips.Image)
-  name: operator >=(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(System.Double[],NetVips.Image)
-  name.vb: '>=(Double(), Image)'
-  fullName: NetVips.Image.operator >=(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.>=(Double(), NetVips.Image)
-  nameWithType: Image.operator >=(double[], Image)
-  nameWithType.vb: Image.>=(Double(), Image)
-- uid: NetVips.Image.op_GreaterThanOrEqual(System.Int32[],NetVips.Image)
-  name: operator >=(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_GreaterThanOrEqual(System.Int32[],NetVips.Image)
-  name.vb: '>=(Integer(), Image)'
-  fullName: NetVips.Image.operator >=(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.>=(Integer(), NetVips.Image)
-  nameWithType: Image.operator >=(int[], Image)
-  nameWithType.vb: Image.>=(Integer(), Image)
-- uid: NetVips.Image.op_GreaterThanOrEqual*
-  name: operator >=
-  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_
-  commentId: Overload:NetVips.Image.op_GreaterThanOrEqual
-  isSpec: "True"
-  name.vb: '>='
-  fullName: NetVips.Image.operator >=
-  fullName.vb: NetVips.Image.>=
-  nameWithType: Image.operator >=
-  nameWithType.vb: Image.>=
-- uid: NetVips.Image.op_Inequality(System.Double,NetVips.Image)
-  name: operator !=(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Inequality(System.Double,NetVips.Image)
-  name.vb: <>(Double, Image)
-  fullName: NetVips.Image.operator !=(double, NetVips.Image)
-  fullName.vb: NetVips.Image.<>(Double, NetVips.Image)
-  nameWithType: Image.operator !=(double, Image)
-  nameWithType.vb: Image.<>(Double, Image)
-- uid: NetVips.Image.op_Inequality(System.Double[],NetVips.Image)
-  name: operator !=(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Inequality(System.Double[],NetVips.Image)
-  name.vb: <>(Double(), Image)
-  fullName: NetVips.Image.operator !=(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.<>(Double(), NetVips.Image)
-  nameWithType: Image.operator !=(double[], Image)
-  nameWithType.vb: Image.<>(Double(), Image)
-- uid: NetVips.Image.op_Inequality(System.Int32[],NetVips.Image)
-  name: operator !=(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Inequality(System.Int32[],NetVips.Image)
-  name.vb: <>(Integer(), Image)
-  fullName: NetVips.Image.operator !=(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.<>(Integer(), NetVips.Image)
-  nameWithType: Image.operator !=(int[], Image)
-  nameWithType.vb: Image.<>(Integer(), Image)
-- uid: NetVips.Image.op_Inequality*
-  name: operator !=
-  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_
-  commentId: Overload:NetVips.Image.op_Inequality
-  isSpec: "True"
-  name.vb: <>
-  fullName: NetVips.Image.operator !=
-  fullName.vb: NetVips.Image.<>
-  nameWithType: Image.operator !=
-  nameWithType.vb: Image.<>
-- uid: NetVips.Image.op_LeftShift(NetVips.Image,System.Int32)
-  name: operator <<(Image, int)
-  href: api/NetVips.Image.html#NetVips_Image_op_LeftShift_NetVips_Image_System_Int32_
-  commentId: M:NetVips.Image.op_LeftShift(NetVips.Image,System.Int32)
-  name.vb: <<(Image, Integer)
-  fullName: NetVips.Image.operator <<(NetVips.Image, int)
-  fullName.vb: NetVips.Image.<<(NetVips.Image, Integer)
-  nameWithType: Image.operator <<(Image, int)
-  nameWithType.vb: Image.<<(Image, Integer)
-- uid: NetVips.Image.op_LeftShift*
-  name: operator <<
-  href: api/NetVips.Image.html#NetVips_Image_op_LeftShift_
-  commentId: Overload:NetVips.Image.op_LeftShift
-  isSpec: "True"
-  name.vb: <<
-  fullName: NetVips.Image.operator <<
-  fullName.vb: NetVips.Image.<<
-  nameWithType: Image.operator <<
-  nameWithType.vb: Image.<<
-- uid: NetVips.Image.op_LessThan(NetVips.Image,NetVips.Image)
-  name: operator <(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,NetVips.Image)
-  name.vb: <(Image, Image)
-  fullName: NetVips.Image.operator <(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.<(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator <(Image, Image)
-  nameWithType.vb: Image.<(Image, Image)
-- uid: NetVips.Image.op_LessThan(NetVips.Image,System.Double)
-  name: operator <(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,System.Double)
-  name.vb: <(Image, Double)
-  fullName: NetVips.Image.operator <(NetVips.Image, double)
-  fullName.vb: NetVips.Image.<(NetVips.Image, Double)
-  nameWithType: Image.operator <(Image, double)
-  nameWithType.vb: Image.<(Image, Double)
-- uid: NetVips.Image.op_LessThan(NetVips.Image,System.Double[])
-  name: operator <(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,System.Double[])
-  name.vb: <(Image, Double())
-  fullName: NetVips.Image.operator <(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.<(NetVips.Image, Double())
-  nameWithType: Image.operator <(Image, double[])
-  nameWithType.vb: Image.<(Image, Double())
-- uid: NetVips.Image.op_LessThan(NetVips.Image,System.Int32[])
-  name: operator <(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,System.Int32[])
-  name.vb: <(Image, Integer())
-  fullName: NetVips.Image.operator <(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.<(NetVips.Image, Integer())
-  nameWithType: Image.operator <(Image, int[])
-  nameWithType.vb: Image.<(Image, Integer())
-- uid: NetVips.Image.op_LessThan(System.Double,NetVips.Image)
-  name: operator <(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThan(System.Double,NetVips.Image)
-  name.vb: <(Double, Image)
-  fullName: NetVips.Image.operator <(double, NetVips.Image)
-  fullName.vb: NetVips.Image.<(Double, NetVips.Image)
-  nameWithType: Image.operator <(double, Image)
-  nameWithType.vb: Image.<(Double, Image)
-- uid: NetVips.Image.op_LessThan(System.Double[],NetVips.Image)
-  name: operator <(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThan(System.Double[],NetVips.Image)
-  name.vb: <(Double(), Image)
-  fullName: NetVips.Image.operator <(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.<(Double(), NetVips.Image)
-  nameWithType: Image.operator <(double[], Image)
-  nameWithType.vb: Image.<(Double(), Image)
-- uid: NetVips.Image.op_LessThan(System.Int32[],NetVips.Image)
-  name: operator <(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThan(System.Int32[],NetVips.Image)
-  name.vb: <(Integer(), Image)
-  fullName: NetVips.Image.operator <(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.<(Integer(), NetVips.Image)
-  nameWithType: Image.operator <(int[], Image)
-  nameWithType.vb: Image.<(Integer(), Image)
-- uid: NetVips.Image.op_LessThan*
-  name: operator <
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_
-  commentId: Overload:NetVips.Image.op_LessThan
-  isSpec: "True"
-  name.vb: <
-  fullName: NetVips.Image.operator <
-  fullName.vb: NetVips.Image.<
-  nameWithType: Image.operator <
-  nameWithType.vb: Image.<
-- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,NetVips.Image)
-  name: operator <=(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,NetVips.Image)
-  name.vb: <=(Image, Image)
-  fullName: NetVips.Image.operator <=(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.<=(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator <=(Image, Image)
-  nameWithType.vb: Image.<=(Image, Image)
-- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double)
-  name: operator <=(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double)
-  name.vb: <=(Image, Double)
-  fullName: NetVips.Image.operator <=(NetVips.Image, double)
-  fullName.vb: NetVips.Image.<=(NetVips.Image, Double)
-  nameWithType: Image.operator <=(Image, double)
-  nameWithType.vb: Image.<=(Image, Double)
-- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double[])
-  name: operator <=(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double[])
-  name.vb: <=(Image, Double())
-  fullName: NetVips.Image.operator <=(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.<=(NetVips.Image, Double())
-  nameWithType: Image.operator <=(Image, double[])
-  nameWithType.vb: Image.<=(Image, Double())
-- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Int32[])
-  name: operator <=(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Int32[])
-  name.vb: <=(Image, Integer())
-  fullName: NetVips.Image.operator <=(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.<=(NetVips.Image, Integer())
-  nameWithType: Image.operator <=(Image, int[])
-  nameWithType.vb: Image.<=(Image, Integer())
-- uid: NetVips.Image.op_LessThanOrEqual(System.Double,NetVips.Image)
-  name: operator <=(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThanOrEqual(System.Double,NetVips.Image)
-  name.vb: <=(Double, Image)
-  fullName: NetVips.Image.operator <=(double, NetVips.Image)
-  fullName.vb: NetVips.Image.<=(Double, NetVips.Image)
-  nameWithType: Image.operator <=(double, Image)
-  nameWithType.vb: Image.<=(Double, Image)
-- uid: NetVips.Image.op_LessThanOrEqual(System.Double[],NetVips.Image)
-  name: operator <=(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThanOrEqual(System.Double[],NetVips.Image)
-  name.vb: <=(Double(), Image)
-  fullName: NetVips.Image.operator <=(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.<=(Double(), NetVips.Image)
-  nameWithType: Image.operator <=(double[], Image)
-  nameWithType.vb: Image.<=(Double(), Image)
-- uid: NetVips.Image.op_LessThanOrEqual(System.Int32[],NetVips.Image)
-  name: operator <=(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_LessThanOrEqual(System.Int32[],NetVips.Image)
-  name.vb: <=(Integer(), Image)
-  fullName: NetVips.Image.operator <=(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.<=(Integer(), NetVips.Image)
-  nameWithType: Image.operator <=(int[], Image)
-  nameWithType.vb: Image.<=(Integer(), Image)
-- uid: NetVips.Image.op_LessThanOrEqual*
-  name: operator <=
-  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_
-  commentId: Overload:NetVips.Image.op_LessThanOrEqual
-  isSpec: "True"
-  name.vb: <=
-  fullName: NetVips.Image.operator <=
-  fullName.vb: NetVips.Image.<=
-  nameWithType: Image.operator <=
-  nameWithType.vb: Image.<=
-- uid: NetVips.Image.op_Modulus(NetVips.Image,NetVips.Image)
-  name: operator %(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,NetVips.Image)
-  name.vb: Mod(Image, Image)
-  fullName: NetVips.Image.operator %(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.Mod(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator %(Image, Image)
-  nameWithType.vb: Image.Mod(Image, Image)
-- uid: NetVips.Image.op_Modulus(NetVips.Image,System.Double)
-  name: operator %(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,System.Double)
-  name.vb: Mod(Image, Double)
-  fullName: NetVips.Image.operator %(NetVips.Image, double)
-  fullName.vb: NetVips.Image.Mod(NetVips.Image, Double)
-  nameWithType: Image.operator %(Image, double)
-  nameWithType.vb: Image.Mod(Image, Double)
-- uid: NetVips.Image.op_Modulus(NetVips.Image,System.Double[])
-  name: operator %(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,System.Double[])
-  name.vb: Mod(Image, Double())
-  fullName: NetVips.Image.operator %(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.Mod(NetVips.Image, Double())
-  nameWithType: Image.operator %(Image, double[])
-  nameWithType.vb: Image.Mod(Image, Double())
-- uid: NetVips.Image.op_Modulus(NetVips.Image,System.Int32[])
-  name: operator %(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,System.Int32[])
-  name.vb: Mod(Image, Integer())
-  fullName: NetVips.Image.operator %(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.Mod(NetVips.Image, Integer())
-  nameWithType: Image.operator %(Image, int[])
-  nameWithType.vb: Image.Mod(Image, Integer())
-- uid: NetVips.Image.op_Modulus(System.Double,NetVips.Image)
-  name: operator %(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Modulus(System.Double,NetVips.Image)
-  name.vb: Mod(Double, Image)
-  fullName: NetVips.Image.operator %(double, NetVips.Image)
-  fullName.vb: NetVips.Image.Mod(Double, NetVips.Image)
-  nameWithType: Image.operator %(double, Image)
-  nameWithType.vb: Image.Mod(Double, Image)
-- uid: NetVips.Image.op_Modulus(System.Double[],NetVips.Image)
-  name: operator %(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Modulus(System.Double[],NetVips.Image)
-  name.vb: Mod(Double(), Image)
-  fullName: NetVips.Image.operator %(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.Mod(Double(), NetVips.Image)
-  nameWithType: Image.operator %(double[], Image)
-  nameWithType.vb: Image.Mod(Double(), Image)
-- uid: NetVips.Image.op_Modulus(System.Int32[],NetVips.Image)
-  name: operator %(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Modulus(System.Int32[],NetVips.Image)
-  name.vb: Mod(Integer(), Image)
-  fullName: NetVips.Image.operator %(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.Mod(Integer(), NetVips.Image)
-  nameWithType: Image.operator %(int[], Image)
-  nameWithType.vb: Image.Mod(Integer(), Image)
-- uid: NetVips.Image.op_Modulus*
-  name: operator %
-  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_
-  commentId: Overload:NetVips.Image.op_Modulus
-  isSpec: "True"
-  name.vb: Mod
-  fullName: NetVips.Image.operator %
-  fullName.vb: NetVips.Image.Mod
-  nameWithType: Image.operator %
-  nameWithType.vb: Image.Mod
-- uid: NetVips.Image.op_Multiply(NetVips.Image,NetVips.Image)
-  name: operator *(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,NetVips.Image)
-  name.vb: '*(Image, Image)'
-  fullName: NetVips.Image.operator *(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.*(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator *(Image, Image)
-  nameWithType.vb: Image.*(Image, Image)
-- uid: NetVips.Image.op_Multiply(NetVips.Image,System.Double)
-  name: operator *(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,System.Double)
-  name.vb: '*(Image, Double)'
-  fullName: NetVips.Image.operator *(NetVips.Image, double)
-  fullName.vb: NetVips.Image.*(NetVips.Image, Double)
-  nameWithType: Image.operator *(Image, double)
-  nameWithType.vb: Image.*(Image, Double)
-- uid: NetVips.Image.op_Multiply(NetVips.Image,System.Double[])
-  name: operator *(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,System.Double[])
-  name.vb: '*(Image, Double())'
-  fullName: NetVips.Image.operator *(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.*(NetVips.Image, Double())
-  nameWithType: Image.operator *(Image, double[])
-  nameWithType.vb: Image.*(Image, Double())
-- uid: NetVips.Image.op_Multiply(NetVips.Image,System.Int32[])
-  name: operator *(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,System.Int32[])
-  name.vb: '*(Image, Integer())'
-  fullName: NetVips.Image.operator *(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.*(NetVips.Image, Integer())
-  nameWithType: Image.operator *(Image, int[])
-  nameWithType.vb: Image.*(Image, Integer())
-- uid: NetVips.Image.op_Multiply(System.Double,NetVips.Image)
-  name: operator *(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Multiply(System.Double,NetVips.Image)
-  name.vb: '*(Double, Image)'
-  fullName: NetVips.Image.operator *(double, NetVips.Image)
-  fullName.vb: NetVips.Image.*(Double, NetVips.Image)
-  nameWithType: Image.operator *(double, Image)
-  nameWithType.vb: Image.*(Double, Image)
-- uid: NetVips.Image.op_Multiply(System.Double[],NetVips.Image)
-  name: operator *(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Multiply(System.Double[],NetVips.Image)
-  name.vb: '*(Double(), Image)'
-  fullName: NetVips.Image.operator *(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.*(Double(), NetVips.Image)
-  nameWithType: Image.operator *(double[], Image)
-  nameWithType.vb: Image.*(Double(), Image)
-- uid: NetVips.Image.op_Multiply(System.Int32[],NetVips.Image)
-  name: operator *(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Multiply(System.Int32[],NetVips.Image)
-  name.vb: '*(Integer(), Image)'
-  fullName: NetVips.Image.operator *(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.*(Integer(), NetVips.Image)
-  nameWithType: Image.operator *(int[], Image)
-  nameWithType.vb: Image.*(Integer(), Image)
-- uid: NetVips.Image.op_Multiply*
-  name: operator *
-  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_
-  commentId: Overload:NetVips.Image.op_Multiply
-  isSpec: "True"
-  name.vb: '*'
-  fullName: NetVips.Image.operator *
-  fullName.vb: NetVips.Image.*
-  nameWithType: Image.operator *
-  nameWithType.vb: Image.*
-- uid: NetVips.Image.op_RightShift(NetVips.Image,System.Int32)
-  name: operator >>(Image, int)
-  href: api/NetVips.Image.html#NetVips_Image_op_RightShift_NetVips_Image_System_Int32_
-  commentId: M:NetVips.Image.op_RightShift(NetVips.Image,System.Int32)
-  name.vb: '>>(Image, Integer)'
-  fullName: NetVips.Image.operator >>(NetVips.Image, int)
-  fullName.vb: NetVips.Image.>>(NetVips.Image, Integer)
-  nameWithType: Image.operator >>(Image, int)
-  nameWithType.vb: Image.>>(Image, Integer)
-- uid: NetVips.Image.op_RightShift*
-  name: operator >>
-  href: api/NetVips.Image.html#NetVips_Image_op_RightShift_
-  commentId: Overload:NetVips.Image.op_RightShift
-  isSpec: "True"
-  name.vb: '>>'
-  fullName: NetVips.Image.operator >>
-  fullName.vb: NetVips.Image.>>
-  nameWithType: Image.operator >>
-  nameWithType.vb: Image.>>
-- uid: NetVips.Image.op_Subtraction(NetVips.Image,NetVips.Image)
-  name: operator -(Image, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_NetVips_Image_
-  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,NetVips.Image)
-  name.vb: -(Image, Image)
-  fullName: NetVips.Image.operator -(NetVips.Image, NetVips.Image)
-  fullName.vb: NetVips.Image.-(NetVips.Image, NetVips.Image)
-  nameWithType: Image.operator -(Image, Image)
-  nameWithType.vb: Image.-(Image, Image)
-- uid: NetVips.Image.op_Subtraction(NetVips.Image,System.Double)
-  name: operator -(Image, double)
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_System_Double_
-  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,System.Double)
-  name.vb: -(Image, Double)
-  fullName: NetVips.Image.operator -(NetVips.Image, double)
-  fullName.vb: NetVips.Image.-(NetVips.Image, Double)
-  nameWithType: Image.operator -(Image, double)
-  nameWithType.vb: Image.-(Image, Double)
-- uid: NetVips.Image.op_Subtraction(NetVips.Image,System.Double[])
-  name: operator -(Image, double[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_System_Double___
-  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,System.Double[])
-  name.vb: -(Image, Double())
-  fullName: NetVips.Image.operator -(NetVips.Image, double[])
-  fullName.vb: NetVips.Image.-(NetVips.Image, Double())
-  nameWithType: Image.operator -(Image, double[])
-  nameWithType.vb: Image.-(Image, Double())
-- uid: NetVips.Image.op_Subtraction(NetVips.Image,System.Int32[])
-  name: operator -(Image, int[])
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_System_Int32___
-  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,System.Int32[])
-  name.vb: -(Image, Integer())
-  fullName: NetVips.Image.operator -(NetVips.Image, int[])
-  fullName.vb: NetVips.Image.-(NetVips.Image, Integer())
-  nameWithType: Image.operator -(Image, int[])
-  nameWithType.vb: Image.-(Image, Integer())
-- uid: NetVips.Image.op_Subtraction(System.Double,NetVips.Image)
-  name: operator -(double, Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_System_Double_NetVips_Image_
-  commentId: M:NetVips.Image.op_Subtraction(System.Double,NetVips.Image)
-  name.vb: -(Double, Image)
-  fullName: NetVips.Image.operator -(double, NetVips.Image)
-  fullName.vb: NetVips.Image.-(Double, NetVips.Image)
-  nameWithType: Image.operator -(double, Image)
-  nameWithType.vb: Image.-(Double, Image)
-- uid: NetVips.Image.op_Subtraction(System.Double[],NetVips.Image)
-  name: operator -(double[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_System_Double___NetVips_Image_
-  commentId: M:NetVips.Image.op_Subtraction(System.Double[],NetVips.Image)
-  name.vb: -(Double(), Image)
-  fullName: NetVips.Image.operator -(double[], NetVips.Image)
-  fullName.vb: NetVips.Image.-(Double(), NetVips.Image)
-  nameWithType: Image.operator -(double[], Image)
-  nameWithType.vb: Image.-(Double(), Image)
-- uid: NetVips.Image.op_Subtraction(System.Int32[],NetVips.Image)
-  name: operator -(int[], Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_System_Int32___NetVips_Image_
-  commentId: M:NetVips.Image.op_Subtraction(System.Int32[],NetVips.Image)
-  name.vb: -(Integer(), Image)
-  fullName: NetVips.Image.operator -(int[], NetVips.Image)
-  fullName.vb: NetVips.Image.-(Integer(), NetVips.Image)
-  nameWithType: Image.operator -(int[], Image)
-  nameWithType.vb: Image.-(Integer(), Image)
-- uid: NetVips.Image.op_Subtraction*
-  name: operator -
-  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_
-  commentId: Overload:NetVips.Image.op_Subtraction
-  isSpec: "True"
-  name.vb: '-'
-  fullName: NetVips.Image.operator -
-  fullName.vb: NetVips.Image.-
-  nameWithType: Image.operator -
-  nameWithType.vb: Image.-
-- uid: NetVips.Image.op_True(NetVips.Image)
-  name: operator true(Image)
-  href: api/NetVips.Image.html#NetVips_Image_op_True_NetVips_Image_
-  commentId: M:NetVips.Image.op_True(NetVips.Image)
-  name.vb: IsTrue(Image)
-  fullName: NetVips.Image.operator true(NetVips.Image)
-  fullName.vb: NetVips.Image.IsTrue(NetVips.Image)
-  nameWithType: Image.operator true(Image)
-  nameWithType.vb: Image.IsTrue(Image)
-- uid: NetVips.Image.op_True*
-  name: operator true
-  href: api/NetVips.Image.html#NetVips_Image_op_True_
-  commentId: Overload:NetVips.Image.op_True
-  isSpec: "True"
-  name.vb: IsTrue
-  fullName: NetVips.Image.operator true
-  fullName.vb: NetVips.Image.IsTrue
-  nameWithType: Image.operator true
-  nameWithType.vb: Image.IsTrue
 - uid: NetVips.Image.Openexrload(System.String,NetVips.Enums.ForeignFlags@,System.Nullable{System.Boolean},System.Nullable{NetVips.Enums.Access},System.Nullable{NetVips.Enums.FailOn},System.Nullable{System.Boolean})
   name: Openexrload(string, out ForeignFlags, bool?, Access?, FailOn?, bool?)
   href: api/NetVips.Image.html#NetVips_Image_Openexrload_System_String_NetVips_Enums_ForeignFlags__System_Nullable_System_Boolean__System_Nullable_NetVips_Enums_Access__System_Nullable_NetVips_Enums_FailOn__System_Nullable_System_Boolean__
@@ -10004,6 +8978,77 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Round
   nameWithType: Image.Round
+- uid: NetVips.Image.SRGB2HSV
+  name: SRGB2HSV()
+  href: api/NetVips.Image.html#NetVips_Image_SRGB2HSV
+  commentId: M:NetVips.Image.SRGB2HSV
+  fullName: NetVips.Image.SRGB2HSV()
+  nameWithType: Image.SRGB2HSV()
+- uid: NetVips.Image.SRGB2HSV*
+  name: SRGB2HSV
+  href: api/NetVips.Image.html#NetVips_Image_SRGB2HSV_
+  commentId: Overload:NetVips.Image.SRGB2HSV
+  isSpec: "True"
+  fullName: NetVips.Image.SRGB2HSV
+  nameWithType: Image.SRGB2HSV
+- uid: NetVips.Image.SRGB2scRGB
+  name: SRGB2scRGB()
+  href: api/NetVips.Image.html#NetVips_Image_SRGB2scRGB
+  commentId: M:NetVips.Image.SRGB2scRGB
+  fullName: NetVips.Image.SRGB2scRGB()
+  nameWithType: Image.SRGB2scRGB()
+- uid: NetVips.Image.SRGB2scRGB*
+  name: SRGB2scRGB
+  href: api/NetVips.Image.html#NetVips_Image_SRGB2scRGB_
+  commentId: Overload:NetVips.Image.SRGB2scRGB
+  isSpec: "True"
+  fullName: NetVips.Image.SRGB2scRGB
+  nameWithType: Image.SRGB2scRGB
+- uid: NetVips.Image.ScRGB2BW(System.Nullable{System.Int32})
+  name: ScRGB2BW(int?)
+  href: api/NetVips.Image.html#NetVips_Image_ScRGB2BW_System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.ScRGB2BW(System.Nullable{System.Int32})
+  name.vb: ScRGB2BW(Integer?)
+  fullName: NetVips.Image.ScRGB2BW(int?)
+  fullName.vb: NetVips.Image.ScRGB2BW(Integer?)
+  nameWithType: Image.ScRGB2BW(int?)
+  nameWithType.vb: Image.ScRGB2BW(Integer?)
+- uid: NetVips.Image.ScRGB2BW*
+  name: ScRGB2BW
+  href: api/NetVips.Image.html#NetVips_Image_ScRGB2BW_
+  commentId: Overload:NetVips.Image.ScRGB2BW
+  isSpec: "True"
+  fullName: NetVips.Image.ScRGB2BW
+  nameWithType: Image.ScRGB2BW
+- uid: NetVips.Image.ScRGB2XYZ
+  name: ScRGB2XYZ()
+  href: api/NetVips.Image.html#NetVips_Image_ScRGB2XYZ
+  commentId: M:NetVips.Image.ScRGB2XYZ
+  fullName: NetVips.Image.ScRGB2XYZ()
+  nameWithType: Image.ScRGB2XYZ()
+- uid: NetVips.Image.ScRGB2XYZ*
+  name: ScRGB2XYZ
+  href: api/NetVips.Image.html#NetVips_Image_ScRGB2XYZ_
+  commentId: Overload:NetVips.Image.ScRGB2XYZ
+  isSpec: "True"
+  fullName: NetVips.Image.ScRGB2XYZ
+  nameWithType: Image.ScRGB2XYZ
+- uid: NetVips.Image.ScRGB2sRGB(System.Nullable{System.Int32})
+  name: ScRGB2sRGB(int?)
+  href: api/NetVips.Image.html#NetVips_Image_ScRGB2sRGB_System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.ScRGB2sRGB(System.Nullable{System.Int32})
+  name.vb: ScRGB2sRGB(Integer?)
+  fullName: NetVips.Image.ScRGB2sRGB(int?)
+  fullName.vb: NetVips.Image.ScRGB2sRGB(Integer?)
+  nameWithType: Image.ScRGB2sRGB(int?)
+  nameWithType.vb: Image.ScRGB2sRGB(Integer?)
+- uid: NetVips.Image.ScRGB2sRGB*
+  name: ScRGB2sRGB
+  href: api/NetVips.Image.html#NetVips_Image_ScRGB2sRGB_
+  commentId: Overload:NetVips.Image.ScRGB2sRGB
+  isSpec: "True"
+  fullName: NetVips.Image.ScRGB2sRGB
+  nameWithType: Image.ScRGB2sRGB
 - uid: NetVips.Image.ScaleImage(System.Nullable{System.Double},System.Nullable{System.Boolean})
   name: ScaleImage(double?, bool?)
   href: api/NetVips.Image.html#NetVips_Image_ScaleImage_System_Nullable_System_Double__System_Nullable_System_Boolean__
@@ -10033,51 +9078,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Scharr
   nameWithType: Image.Scharr
-- uid: NetVips.Image.ScRGB2BW(System.Nullable{System.Int32})
-  name: ScRGB2BW(int?)
-  href: api/NetVips.Image.html#NetVips_Image_ScRGB2BW_System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.ScRGB2BW(System.Nullable{System.Int32})
-  name.vb: ScRGB2BW(Integer?)
-  fullName: NetVips.Image.ScRGB2BW(int?)
-  fullName.vb: NetVips.Image.ScRGB2BW(Integer?)
-  nameWithType: Image.ScRGB2BW(int?)
-  nameWithType.vb: Image.ScRGB2BW(Integer?)
-- uid: NetVips.Image.ScRGB2BW*
-  name: ScRGB2BW
-  href: api/NetVips.Image.html#NetVips_Image_ScRGB2BW_
-  commentId: Overload:NetVips.Image.ScRGB2BW
-  isSpec: "True"
-  fullName: NetVips.Image.ScRGB2BW
-  nameWithType: Image.ScRGB2BW
-- uid: NetVips.Image.ScRGB2sRGB(System.Nullable{System.Int32})
-  name: ScRGB2sRGB(int?)
-  href: api/NetVips.Image.html#NetVips_Image_ScRGB2sRGB_System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.ScRGB2sRGB(System.Nullable{System.Int32})
-  name.vb: ScRGB2sRGB(Integer?)
-  fullName: NetVips.Image.ScRGB2sRGB(int?)
-  fullName.vb: NetVips.Image.ScRGB2sRGB(Integer?)
-  nameWithType: Image.ScRGB2sRGB(int?)
-  nameWithType.vb: Image.ScRGB2sRGB(Integer?)
-- uid: NetVips.Image.ScRGB2sRGB*
-  name: ScRGB2sRGB
-  href: api/NetVips.Image.html#NetVips_Image_ScRGB2sRGB_
-  commentId: Overload:NetVips.Image.ScRGB2sRGB
-  isSpec: "True"
-  fullName: NetVips.Image.ScRGB2sRGB
-  nameWithType: Image.ScRGB2sRGB
-- uid: NetVips.Image.ScRGB2XYZ
-  name: ScRGB2XYZ()
-  href: api/NetVips.Image.html#NetVips_Image_ScRGB2XYZ
-  commentId: M:NetVips.Image.ScRGB2XYZ
-  fullName: NetVips.Image.ScRGB2XYZ()
-  nameWithType: Image.ScRGB2XYZ()
-- uid: NetVips.Image.ScRGB2XYZ*
-  name: ScRGB2XYZ
-  href: api/NetVips.Image.html#NetVips_Image_ScRGB2XYZ_
-  commentId: Overload:NetVips.Image.ScRGB2XYZ
-  isSpec: "True"
-  fullName: NetVips.Image.ScRGB2XYZ
-  nameWithType: Image.ScRGB2XYZ
 - uid: NetVips.Image.Sdf(System.Int32,System.Int32,NetVips.Enums.SdfShape,System.Nullable{System.Double},System.Double[],System.Double[],System.Double[])
   name: Sdf(int, int, SdfShape, double?, double[], double[], double[])
   href: api/NetVips.Image.html#NetVips_Image_Sdf_System_Int32_System_Int32_NetVips_Enums_SdfShape_System_Nullable_System_Double__System_Double___System_Double___System_Double___
@@ -10375,32 +9375,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Spectrum
   nameWithType: Image.Spectrum
-- uid: NetVips.Image.SRGB2HSV
-  name: SRGB2HSV()
-  href: api/NetVips.Image.html#NetVips_Image_SRGB2HSV
-  commentId: M:NetVips.Image.SRGB2HSV
-  fullName: NetVips.Image.SRGB2HSV()
-  nameWithType: Image.SRGB2HSV()
-- uid: NetVips.Image.SRGB2HSV*
-  name: SRGB2HSV
-  href: api/NetVips.Image.html#NetVips_Image_SRGB2HSV_
-  commentId: Overload:NetVips.Image.SRGB2HSV
-  isSpec: "True"
-  fullName: NetVips.Image.SRGB2HSV
-  nameWithType: Image.SRGB2HSV
-- uid: NetVips.Image.SRGB2scRGB
-  name: SRGB2scRGB()
-  href: api/NetVips.Image.html#NetVips_Image_SRGB2scRGB
-  commentId: M:NetVips.Image.SRGB2scRGB
-  fullName: NetVips.Image.SRGB2scRGB()
-  nameWithType: Image.SRGB2scRGB()
-- uid: NetVips.Image.SRGB2scRGB*
-  name: SRGB2scRGB
-  href: api/NetVips.Image.html#NetVips_Image_SRGB2scRGB_
-  commentId: Overload:NetVips.Image.SRGB2scRGB
-  isSpec: "True"
-  fullName: NetVips.Image.SRGB2scRGB
-  nameWithType: Image.SRGB2scRGB
 - uid: NetVips.Image.Stats
   name: Stats()
   href: api/NetVips.Image.html#NetVips_Image_Stats
@@ -10591,15 +9565,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Switch
   nameWithType: Image.Switch
-- uid: NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String,System.Nullable{System.Boolean})
-  name: System(string, Image[], string, string, bool?)
-  href: api/NetVips.Image.html#NetVips_Image_System_System_String_NetVips_Image___System_String_System_String_System_Nullable_System_Boolean__
-  commentId: M:NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String,System.Nullable{System.Boolean})
-  name.vb: System(String, Image(), String, String, Boolean?)
-  fullName: NetVips.Image.System(string, NetVips.Image[], string, string, bool?)
-  fullName.vb: NetVips.Image.System(String, NetVips.Image(), String, String, Boolean?)
-  nameWithType: Image.System(string, Image[], string, string, bool?)
-  nameWithType.vb: Image.System(String, Image(), String, String, Boolean?)
 - uid: NetVips.Image.System(System.String,NetVips.Image@,NetVips.Image[],System.String,System.String,System.Nullable{System.Boolean})
   name: System(string, out Image, Image[], string, string, bool?)
   href: api/NetVips.Image.html#NetVips_Image_System_System_String_NetVips_Image__NetVips_Image___System_String_System_String_System_Nullable_System_Boolean__
@@ -10618,6 +9583,15 @@ references:
   fullName.vb: NetVips.Image.System(String, NetVips.Image, String, NetVips.Image(), String, String, Boolean?)
   nameWithType: Image.System(string, out Image, out string, Image[], string, string, bool?)
   nameWithType.vb: Image.System(String, Image, String, Image(), String, String, Boolean?)
+- uid: NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String,System.Nullable{System.Boolean})
+  name: System(string, Image[], string, string, bool?)
+  href: api/NetVips.Image.html#NetVips_Image_System_System_String_NetVips_Image___System_String_System_String_System_Nullable_System_Boolean__
+  commentId: M:NetVips.Image.System(System.String,NetVips.Image[],System.String,System.String,System.Nullable{System.Boolean})
+  name.vb: System(String, Image(), String, String, Boolean?)
+  fullName: NetVips.Image.System(string, NetVips.Image[], string, string, bool?)
+  fullName.vb: NetVips.Image.System(String, NetVips.Image(), String, String, Boolean?)
+  nameWithType: Image.System(string, Image[], string, string, bool?)
+  nameWithType.vb: Image.System(String, Image(), String, String, Boolean?)
 - uid: NetVips.Image.System*
   name: System
   href: api/NetVips.Image.html#NetVips_Image_System_
@@ -10936,6 +9910,19 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Tilecache
   nameWithType: Image.Tilecache
+- uid: NetVips.Image.ToString
+  name: ToString()
+  href: api/NetVips.Image.html#NetVips_Image_ToString
+  commentId: M:NetVips.Image.ToString
+  fullName: NetVips.Image.ToString()
+  nameWithType: Image.ToString()
+- uid: NetVips.Image.ToString*
+  name: ToString
+  href: api/NetVips.Image.html#NetVips_Image_ToString_
+  commentId: Overload:NetVips.Image.ToString
+  isSpec: "True"
+  fullName: NetVips.Image.ToString
+  nameWithType: Image.ToString
 - uid: NetVips.Image.Tonelut(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double})
   name: Tonelut(int?, int?, double?, double?, double?, double?, double?, double?, double?, double?)
   href: api/NetVips.Image.html#NetVips_Image_Tonelut_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__System_Nullable_System_Double__
@@ -10952,19 +9939,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Tonelut
   nameWithType: Image.Tonelut
-- uid: NetVips.Image.ToString
-  name: ToString()
-  href: api/NetVips.Image.html#NetVips_Image_ToString
-  commentId: M:NetVips.Image.ToString
-  fullName: NetVips.Image.ToString()
-  nameWithType: Image.ToString()
-- uid: NetVips.Image.ToString*
-  name: ToString
-  href: api/NetVips.Image.html#NetVips_Image_ToString_
-  commentId: Overload:NetVips.Image.ToString
-  isSpec: "True"
-  fullName: NetVips.Image.ToString
-  nameWithType: Image.ToString
 - uid: NetVips.Image.Transpose3d(System.Nullable{System.Int32})
   name: Transpose3d(int?)
   href: api/NetVips.Image.html#NetVips_Image_Transpose3d_System_Nullable_System_Int32__
@@ -11670,48 +10644,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.WriteToTarget
   nameWithType: Image.WriteToTarget
-- uid: NetVips.Image.Xoffset
-  name: Xoffset
-  href: api/NetVips.Image.html#NetVips_Image_Xoffset
-  commentId: P:NetVips.Image.Xoffset
-  fullName: NetVips.Image.Xoffset
-  nameWithType: Image.Xoffset
-- uid: NetVips.Image.Xoffset*
-  name: Xoffset
-  href: api/NetVips.Image.html#NetVips_Image_Xoffset_
-  commentId: Overload:NetVips.Image.Xoffset
-  isSpec: "True"
-  fullName: NetVips.Image.Xoffset
-  nameWithType: Image.Xoffset
-- uid: NetVips.Image.Xres
-  name: Xres
-  href: api/NetVips.Image.html#NetVips_Image_Xres
-  commentId: P:NetVips.Image.Xres
-  fullName: NetVips.Image.Xres
-  nameWithType: Image.Xres
-- uid: NetVips.Image.Xres*
-  name: Xres
-  href: api/NetVips.Image.html#NetVips_Image_Xres_
-  commentId: Overload:NetVips.Image.Xres
-  isSpec: "True"
-  fullName: NetVips.Image.Xres
-  nameWithType: Image.Xres
-- uid: NetVips.Image.Xyz(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name: Xyz(int, int, int?, int?, int?)
-  href: api/NetVips.Image.html#NetVips_Image_Xyz_System_Int32_System_Int32_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__
-  commentId: M:NetVips.Image.Xyz(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
-  name.vb: Xyz(Integer, Integer, Integer?, Integer?, Integer?)
-  fullName: NetVips.Image.Xyz(int, int, int?, int?, int?)
-  fullName.vb: NetVips.Image.Xyz(Integer, Integer, Integer?, Integer?, Integer?)
-  nameWithType: Image.Xyz(int, int, int?, int?, int?)
-  nameWithType.vb: Image.Xyz(Integer, Integer, Integer?, Integer?, Integer?)
-- uid: NetVips.Image.Xyz*
-  name: Xyz
-  href: api/NetVips.Image.html#NetVips_Image_Xyz_
-  commentId: Overload:NetVips.Image.Xyz
-  isSpec: "True"
-  fullName: NetVips.Image.Xyz
-  nameWithType: Image.Xyz
 - uid: NetVips.Image.XYZ2CMYK
   name: XYZ2CMYK()
   href: api/NetVips.Image.html#NetVips_Image_XYZ2CMYK
@@ -11754,19 +10686,6 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.XYZ2Oklab
   nameWithType: Image.XYZ2Oklab
-- uid: NetVips.Image.XYZ2scRGB
-  name: XYZ2scRGB()
-  href: api/NetVips.Image.html#NetVips_Image_XYZ2scRGB
-  commentId: M:NetVips.Image.XYZ2scRGB
-  fullName: NetVips.Image.XYZ2scRGB()
-  nameWithType: Image.XYZ2scRGB()
-- uid: NetVips.Image.XYZ2scRGB*
-  name: XYZ2scRGB
-  href: api/NetVips.Image.html#NetVips_Image_XYZ2scRGB_
-  commentId: Overload:NetVips.Image.XYZ2scRGB
-  isSpec: "True"
-  fullName: NetVips.Image.XYZ2scRGB
-  nameWithType: Image.XYZ2scRGB
 - uid: NetVips.Image.XYZ2Yxy
   name: XYZ2Yxy()
   href: api/NetVips.Image.html#NetVips_Image_XYZ2Yxy
@@ -11780,6 +10699,61 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.XYZ2Yxy
   nameWithType: Image.XYZ2Yxy
+- uid: NetVips.Image.XYZ2scRGB
+  name: XYZ2scRGB()
+  href: api/NetVips.Image.html#NetVips_Image_XYZ2scRGB
+  commentId: M:NetVips.Image.XYZ2scRGB
+  fullName: NetVips.Image.XYZ2scRGB()
+  nameWithType: Image.XYZ2scRGB()
+- uid: NetVips.Image.XYZ2scRGB*
+  name: XYZ2scRGB
+  href: api/NetVips.Image.html#NetVips_Image_XYZ2scRGB_
+  commentId: Overload:NetVips.Image.XYZ2scRGB
+  isSpec: "True"
+  fullName: NetVips.Image.XYZ2scRGB
+  nameWithType: Image.XYZ2scRGB
+- uid: NetVips.Image.Xoffset
+  name: Xoffset
+  href: api/NetVips.Image.html#NetVips_Image_Xoffset
+  commentId: P:NetVips.Image.Xoffset
+  fullName: NetVips.Image.Xoffset
+  nameWithType: Image.Xoffset
+- uid: NetVips.Image.Xoffset*
+  name: Xoffset
+  href: api/NetVips.Image.html#NetVips_Image_Xoffset_
+  commentId: Overload:NetVips.Image.Xoffset
+  isSpec: "True"
+  fullName: NetVips.Image.Xoffset
+  nameWithType: Image.Xoffset
+- uid: NetVips.Image.Xres
+  name: Xres
+  href: api/NetVips.Image.html#NetVips_Image_Xres
+  commentId: P:NetVips.Image.Xres
+  fullName: NetVips.Image.Xres
+  nameWithType: Image.Xres
+- uid: NetVips.Image.Xres*
+  name: Xres
+  href: api/NetVips.Image.html#NetVips_Image_Xres_
+  commentId: Overload:NetVips.Image.Xres
+  isSpec: "True"
+  fullName: NetVips.Image.Xres
+  nameWithType: Image.Xres
+- uid: NetVips.Image.Xyz(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
+  name: Xyz(int, int, int?, int?, int?)
+  href: api/NetVips.Image.html#NetVips_Image_Xyz_System_Int32_System_Int32_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__
+  commentId: M:NetVips.Image.Xyz(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})
+  name.vb: Xyz(Integer, Integer, Integer?, Integer?, Integer?)
+  fullName: NetVips.Image.Xyz(int, int, int?, int?, int?)
+  fullName.vb: NetVips.Image.Xyz(Integer, Integer, Integer?, Integer?, Integer?)
+  nameWithType: Image.Xyz(int, int, int?, int?, int?)
+  nameWithType.vb: Image.Xyz(Integer, Integer, Integer?, Integer?, Integer?)
+- uid: NetVips.Image.Xyz*
+  name: Xyz
+  href: api/NetVips.Image.html#NetVips_Image_Xyz_
+  commentId: Overload:NetVips.Image.Xyz
+  isSpec: "True"
+  fullName: NetVips.Image.Xyz
+  nameWithType: Image.Xyz
 - uid: NetVips.Image.Yoffset
   name: Yoffset
   href: api/NetVips.Image.html#NetVips_Image_Yoffset
@@ -11851,6 +10825,1032 @@ references:
   isSpec: "True"
   fullName: NetVips.Image.Zoom
   nameWithType: Image.Zoom
+- uid: NetVips.Image.op_Addition(NetVips.Image,NetVips.Image)
+  name: operator +(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_Addition(NetVips.Image,NetVips.Image)
+  name.vb: +(Image, Image)
+  fullName: NetVips.Image.operator +(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.+(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator +(Image, Image)
+  nameWithType.vb: Image.+(Image, Image)
+- uid: NetVips.Image.op_Addition(NetVips.Image,System.Double)
+  name: operator +(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_Addition(NetVips.Image,System.Double)
+  name.vb: +(Image, Double)
+  fullName: NetVips.Image.operator +(NetVips.Image, double)
+  fullName.vb: NetVips.Image.+(NetVips.Image, Double)
+  nameWithType: Image.operator +(Image, double)
+  nameWithType.vb: Image.+(Image, Double)
+- uid: NetVips.Image.op_Addition(NetVips.Image,System.Double[])
+  name: operator +(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_Addition(NetVips.Image,System.Double[])
+  name.vb: +(Image, Double())
+  fullName: NetVips.Image.operator +(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.+(NetVips.Image, Double())
+  nameWithType: Image.operator +(Image, double[])
+  nameWithType.vb: Image.+(Image, Double())
+- uid: NetVips.Image.op_Addition(NetVips.Image,System.Int32[])
+  name: operator +(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_Addition(NetVips.Image,System.Int32[])
+  name.vb: +(Image, Integer())
+  fullName: NetVips.Image.operator +(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.+(NetVips.Image, Integer())
+  nameWithType: Image.operator +(Image, int[])
+  nameWithType.vb: Image.+(Image, Integer())
+- uid: NetVips.Image.op_Addition(System.Double,NetVips.Image)
+  name: operator +(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Addition(System.Double,NetVips.Image)
+  name.vb: +(Double, Image)
+  fullName: NetVips.Image.operator +(double, NetVips.Image)
+  fullName.vb: NetVips.Image.+(Double, NetVips.Image)
+  nameWithType: Image.operator +(double, Image)
+  nameWithType.vb: Image.+(Double, Image)
+- uid: NetVips.Image.op_Addition(System.Double[],NetVips.Image)
+  name: operator +(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Addition(System.Double[],NetVips.Image)
+  name.vb: +(Double(), Image)
+  fullName: NetVips.Image.operator +(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.+(Double(), NetVips.Image)
+  nameWithType: Image.operator +(double[], Image)
+  nameWithType.vb: Image.+(Double(), Image)
+- uid: NetVips.Image.op_Addition(System.Int32[],NetVips.Image)
+  name: operator +(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Addition(System.Int32[],NetVips.Image)
+  name.vb: +(Integer(), Image)
+  fullName: NetVips.Image.operator +(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.+(Integer(), NetVips.Image)
+  nameWithType: Image.operator +(int[], Image)
+  nameWithType.vb: Image.+(Integer(), Image)
+- uid: NetVips.Image.op_Addition*
+  name: operator +
+  href: api/NetVips.Image.html#NetVips_Image_op_Addition_
+  commentId: Overload:NetVips.Image.op_Addition
+  isSpec: "True"
+  name.vb: +
+  fullName: NetVips.Image.operator +
+  fullName.vb: NetVips.Image.+
+  nameWithType: Image.operator +
+  nameWithType.vb: Image.+
+- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,NetVips.Image)
+  name: operator &(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,NetVips.Image)
+  name.vb: And(Image, Image)
+  fullName: NetVips.Image.operator &(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.And(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator &(Image, Image)
+  nameWithType.vb: Image.And(Image, Image)
+- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double)
+  name: operator &(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double)
+  name.vb: And(Image, Double)
+  fullName: NetVips.Image.operator &(NetVips.Image, double)
+  fullName.vb: NetVips.Image.And(NetVips.Image, Double)
+  nameWithType: Image.operator &(Image, double)
+  nameWithType.vb: Image.And(Image, Double)
+- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double[])
+  name: operator &(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Double[])
+  name.vb: And(Image, Double())
+  fullName: NetVips.Image.operator &(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.And(NetVips.Image, Double())
+  nameWithType: Image.operator &(Image, double[])
+  nameWithType.vb: Image.And(Image, Double())
+- uid: NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Int32[])
+  name: operator &(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_BitwiseAnd(NetVips.Image,System.Int32[])
+  name.vb: And(Image, Integer())
+  fullName: NetVips.Image.operator &(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.And(NetVips.Image, Integer())
+  nameWithType: Image.operator &(Image, int[])
+  nameWithType.vb: Image.And(Image, Integer())
+- uid: NetVips.Image.op_BitwiseAnd(System.Double,NetVips.Image)
+  name: operator &(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseAnd(System.Double,NetVips.Image)
+  name.vb: And(Double, Image)
+  fullName: NetVips.Image.operator &(double, NetVips.Image)
+  fullName.vb: NetVips.Image.And(Double, NetVips.Image)
+  nameWithType: Image.operator &(double, Image)
+  nameWithType.vb: Image.And(Double, Image)
+- uid: NetVips.Image.op_BitwiseAnd(System.Double[],NetVips.Image)
+  name: operator &(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseAnd(System.Double[],NetVips.Image)
+  name.vb: And(Double(), Image)
+  fullName: NetVips.Image.operator &(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.And(Double(), NetVips.Image)
+  nameWithType: Image.operator &(double[], Image)
+  nameWithType.vb: Image.And(Double(), Image)
+- uid: NetVips.Image.op_BitwiseAnd(System.Int32[],NetVips.Image)
+  name: operator &(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseAnd(System.Int32[],NetVips.Image)
+  name.vb: And(Integer(), Image)
+  fullName: NetVips.Image.operator &(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.And(Integer(), NetVips.Image)
+  nameWithType: Image.operator &(int[], Image)
+  nameWithType.vb: Image.And(Integer(), Image)
+- uid: NetVips.Image.op_BitwiseAnd*
+  name: operator &
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseAnd_
+  commentId: Overload:NetVips.Image.op_BitwiseAnd
+  isSpec: "True"
+  name.vb: And
+  fullName: NetVips.Image.operator &
+  fullName.vb: NetVips.Image.And
+  nameWithType: Image.operator &
+  nameWithType.vb: Image.And
+- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,NetVips.Image)
+  name: operator |(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,NetVips.Image)
+  name.vb: Or(Image, Image)
+  fullName: NetVips.Image.operator |(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.Or(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator |(Image, Image)
+  nameWithType.vb: Image.Or(Image, Image)
+- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double)
+  name: operator |(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double)
+  name.vb: Or(Image, Double)
+  fullName: NetVips.Image.operator |(NetVips.Image, double)
+  fullName.vb: NetVips.Image.Or(NetVips.Image, Double)
+  nameWithType: Image.operator |(Image, double)
+  nameWithType.vb: Image.Or(Image, Double)
+- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double[])
+  name: operator |(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,System.Double[])
+  name.vb: Or(Image, Double())
+  fullName: NetVips.Image.operator |(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.Or(NetVips.Image, Double())
+  nameWithType: Image.operator |(Image, double[])
+  nameWithType.vb: Image.Or(Image, Double())
+- uid: NetVips.Image.op_BitwiseOr(NetVips.Image,System.Int32[])
+  name: operator |(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_BitwiseOr(NetVips.Image,System.Int32[])
+  name.vb: Or(Image, Integer())
+  fullName: NetVips.Image.operator |(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.Or(NetVips.Image, Integer())
+  nameWithType: Image.operator |(Image, int[])
+  nameWithType.vb: Image.Or(Image, Integer())
+- uid: NetVips.Image.op_BitwiseOr(System.Double,NetVips.Image)
+  name: operator |(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseOr(System.Double,NetVips.Image)
+  name.vb: Or(Double, Image)
+  fullName: NetVips.Image.operator |(double, NetVips.Image)
+  fullName.vb: NetVips.Image.Or(Double, NetVips.Image)
+  nameWithType: Image.operator |(double, Image)
+  nameWithType.vb: Image.Or(Double, Image)
+- uid: NetVips.Image.op_BitwiseOr(System.Double[],NetVips.Image)
+  name: operator |(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseOr(System.Double[],NetVips.Image)
+  name.vb: Or(Double(), Image)
+  fullName: NetVips.Image.operator |(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.Or(Double(), NetVips.Image)
+  nameWithType: Image.operator |(double[], Image)
+  nameWithType.vb: Image.Or(Double(), Image)
+- uid: NetVips.Image.op_BitwiseOr(System.Int32[],NetVips.Image)
+  name: operator |(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_BitwiseOr(System.Int32[],NetVips.Image)
+  name.vb: Or(Integer(), Image)
+  fullName: NetVips.Image.operator |(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.Or(Integer(), NetVips.Image)
+  nameWithType: Image.operator |(int[], Image)
+  nameWithType.vb: Image.Or(Integer(), Image)
+- uid: NetVips.Image.op_BitwiseOr*
+  name: operator |
+  href: api/NetVips.Image.html#NetVips_Image_op_BitwiseOr_
+  commentId: Overload:NetVips.Image.op_BitwiseOr
+  isSpec: "True"
+  name.vb: Or
+  fullName: NetVips.Image.operator |
+  fullName.vb: NetVips.Image.Or
+  nameWithType: Image.operator |
+  nameWithType.vb: Image.Or
+- uid: NetVips.Image.op_Division(NetVips.Image,NetVips.Image)
+  name: operator /(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_Division(NetVips.Image,NetVips.Image)
+  name.vb: /(Image, Image)
+  fullName: NetVips.Image.operator /(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image./(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator /(Image, Image)
+  nameWithType.vb: Image./(Image, Image)
+- uid: NetVips.Image.op_Division(NetVips.Image,System.Double)
+  name: operator /(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_Division(NetVips.Image,System.Double)
+  name.vb: /(Image, Double)
+  fullName: NetVips.Image.operator /(NetVips.Image, double)
+  fullName.vb: NetVips.Image./(NetVips.Image, Double)
+  nameWithType: Image.operator /(Image, double)
+  nameWithType.vb: Image./(Image, Double)
+- uid: NetVips.Image.op_Division(NetVips.Image,System.Double[])
+  name: operator /(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_Division(NetVips.Image,System.Double[])
+  name.vb: /(Image, Double())
+  fullName: NetVips.Image.operator /(NetVips.Image, double[])
+  fullName.vb: NetVips.Image./(NetVips.Image, Double())
+  nameWithType: Image.operator /(Image, double[])
+  nameWithType.vb: Image./(Image, Double())
+- uid: NetVips.Image.op_Division(NetVips.Image,System.Int32[])
+  name: operator /(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_Division(NetVips.Image,System.Int32[])
+  name.vb: /(Image, Integer())
+  fullName: NetVips.Image.operator /(NetVips.Image, int[])
+  fullName.vb: NetVips.Image./(NetVips.Image, Integer())
+  nameWithType: Image.operator /(Image, int[])
+  nameWithType.vb: Image./(Image, Integer())
+- uid: NetVips.Image.op_Division(System.Double,NetVips.Image)
+  name: operator /(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Division(System.Double,NetVips.Image)
+  name.vb: /(Double, Image)
+  fullName: NetVips.Image.operator /(double, NetVips.Image)
+  fullName.vb: NetVips.Image./(Double, NetVips.Image)
+  nameWithType: Image.operator /(double, Image)
+  nameWithType.vb: Image./(Double, Image)
+- uid: NetVips.Image.op_Division(System.Double[],NetVips.Image)
+  name: operator /(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Division(System.Double[],NetVips.Image)
+  name.vb: /(Double(), Image)
+  fullName: NetVips.Image.operator /(double[], NetVips.Image)
+  fullName.vb: NetVips.Image./(Double(), NetVips.Image)
+  nameWithType: Image.operator /(double[], Image)
+  nameWithType.vb: Image./(Double(), Image)
+- uid: NetVips.Image.op_Division(System.Int32[],NetVips.Image)
+  name: operator /(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Division(System.Int32[],NetVips.Image)
+  name.vb: /(Integer(), Image)
+  fullName: NetVips.Image.operator /(int[], NetVips.Image)
+  fullName.vb: NetVips.Image./(Integer(), NetVips.Image)
+  nameWithType: Image.operator /(int[], Image)
+  nameWithType.vb: Image./(Integer(), Image)
+- uid: NetVips.Image.op_Division*
+  name: operator /
+  href: api/NetVips.Image.html#NetVips_Image_op_Division_
+  commentId: Overload:NetVips.Image.op_Division
+  isSpec: "True"
+  name.vb: /
+  fullName: NetVips.Image.operator /
+  fullName.vb: NetVips.Image./
+  nameWithType: Image.operator /
+  nameWithType.vb: Image./
+- uid: NetVips.Image.op_Equality(System.Double,NetVips.Image)
+  name: operator ==(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Equality_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Equality(System.Double,NetVips.Image)
+  name.vb: =(Double, Image)
+  fullName: NetVips.Image.operator ==(double, NetVips.Image)
+  fullName.vb: NetVips.Image.=(Double, NetVips.Image)
+  nameWithType: Image.operator ==(double, Image)
+  nameWithType.vb: Image.=(Double, Image)
+- uid: NetVips.Image.op_Equality(System.Double[],NetVips.Image)
+  name: operator ==(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Equality_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Equality(System.Double[],NetVips.Image)
+  name.vb: =(Double(), Image)
+  fullName: NetVips.Image.operator ==(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.=(Double(), NetVips.Image)
+  nameWithType: Image.operator ==(double[], Image)
+  nameWithType.vb: Image.=(Double(), Image)
+- uid: NetVips.Image.op_Equality(System.Int32[],NetVips.Image)
+  name: operator ==(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Equality_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Equality(System.Int32[],NetVips.Image)
+  name.vb: =(Integer(), Image)
+  fullName: NetVips.Image.operator ==(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.=(Integer(), NetVips.Image)
+  nameWithType: Image.operator ==(int[], Image)
+  nameWithType.vb: Image.=(Integer(), Image)
+- uid: NetVips.Image.op_Equality*
+  name: operator ==
+  href: api/NetVips.Image.html#NetVips_Image_op_Equality_
+  commentId: Overload:NetVips.Image.op_Equality
+  isSpec: "True"
+  name.vb: =
+  fullName: NetVips.Image.operator ==
+  fullName.vb: NetVips.Image.=
+  nameWithType: Image.operator ==
+  nameWithType.vb: Image.=
+- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,NetVips.Image)
+  name: operator ^(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,NetVips.Image)
+  name.vb: Xor(Image, Image)
+  fullName: NetVips.Image.operator ^(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.Xor(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator ^(Image, Image)
+  nameWithType.vb: Image.Xor(Image, Image)
+- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double)
+  name: operator ^(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double)
+  name.vb: Xor(Image, Double)
+  fullName: NetVips.Image.operator ^(NetVips.Image, double)
+  fullName.vb: NetVips.Image.Xor(NetVips.Image, Double)
+  nameWithType: Image.operator ^(Image, double)
+  nameWithType.vb: Image.Xor(Image, Double)
+- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double[])
+  name: operator ^(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Double[])
+  name.vb: Xor(Image, Double())
+  fullName: NetVips.Image.operator ^(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.Xor(NetVips.Image, Double())
+  nameWithType: Image.operator ^(Image, double[])
+  nameWithType.vb: Image.Xor(Image, Double())
+- uid: NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Int32[])
+  name: operator ^(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_ExclusiveOr(NetVips.Image,System.Int32[])
+  name.vb: Xor(Image, Integer())
+  fullName: NetVips.Image.operator ^(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.Xor(NetVips.Image, Integer())
+  nameWithType: Image.operator ^(Image, int[])
+  nameWithType.vb: Image.Xor(Image, Integer())
+- uid: NetVips.Image.op_ExclusiveOr(System.Double,NetVips.Image)
+  name: operator ^(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_ExclusiveOr(System.Double,NetVips.Image)
+  name.vb: Xor(Double, Image)
+  fullName: NetVips.Image.operator ^(double, NetVips.Image)
+  fullName.vb: NetVips.Image.Xor(Double, NetVips.Image)
+  nameWithType: Image.operator ^(double, Image)
+  nameWithType.vb: Image.Xor(Double, Image)
+- uid: NetVips.Image.op_ExclusiveOr(System.Double[],NetVips.Image)
+  name: operator ^(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_ExclusiveOr(System.Double[],NetVips.Image)
+  name.vb: Xor(Double(), Image)
+  fullName: NetVips.Image.operator ^(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.Xor(Double(), NetVips.Image)
+  nameWithType: Image.operator ^(double[], Image)
+  nameWithType.vb: Image.Xor(Double(), Image)
+- uid: NetVips.Image.op_ExclusiveOr(System.Int32[],NetVips.Image)
+  name: operator ^(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_ExclusiveOr(System.Int32[],NetVips.Image)
+  name.vb: Xor(Integer(), Image)
+  fullName: NetVips.Image.operator ^(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.Xor(Integer(), NetVips.Image)
+  nameWithType: Image.operator ^(int[], Image)
+  nameWithType.vb: Image.Xor(Integer(), Image)
+- uid: NetVips.Image.op_ExclusiveOr*
+  name: operator ^
+  href: api/NetVips.Image.html#NetVips_Image_op_ExclusiveOr_
+  commentId: Overload:NetVips.Image.op_ExclusiveOr
+  isSpec: "True"
+  name.vb: Xor
+  fullName: NetVips.Image.operator ^
+  fullName.vb: NetVips.Image.Xor
+  nameWithType: Image.operator ^
+  nameWithType.vb: Image.Xor
+- uid: NetVips.Image.op_False(NetVips.Image)
+  name: operator false(Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_False_NetVips_Image_
+  commentId: M:NetVips.Image.op_False(NetVips.Image)
+  name.vb: IsFalse(Image)
+  fullName: NetVips.Image.operator false(NetVips.Image)
+  fullName.vb: NetVips.Image.IsFalse(NetVips.Image)
+  nameWithType: Image.operator false(Image)
+  nameWithType.vb: Image.IsFalse(Image)
+- uid: NetVips.Image.op_False*
+  name: operator false
+  href: api/NetVips.Image.html#NetVips_Image_op_False_
+  commentId: Overload:NetVips.Image.op_False
+  isSpec: "True"
+  name.vb: IsFalse
+  fullName: NetVips.Image.operator false
+  fullName.vb: NetVips.Image.IsFalse
+  nameWithType: Image.operator false
+  nameWithType.vb: Image.IsFalse
+- uid: NetVips.Image.op_GreaterThan(NetVips.Image,NetVips.Image)
+  name: operator >(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,NetVips.Image)
+  name.vb: '>(Image, Image)'
+  fullName: NetVips.Image.operator >(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.>(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator >(Image, Image)
+  nameWithType.vb: Image.>(Image, Image)
+- uid: NetVips.Image.op_GreaterThan(NetVips.Image,System.Double)
+  name: operator >(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,System.Double)
+  name.vb: '>(Image, Double)'
+  fullName: NetVips.Image.operator >(NetVips.Image, double)
+  fullName.vb: NetVips.Image.>(NetVips.Image, Double)
+  nameWithType: Image.operator >(Image, double)
+  nameWithType.vb: Image.>(Image, Double)
+- uid: NetVips.Image.op_GreaterThan(NetVips.Image,System.Double[])
+  name: operator >(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,System.Double[])
+  name.vb: '>(Image, Double())'
+  fullName: NetVips.Image.operator >(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.>(NetVips.Image, Double())
+  nameWithType: Image.operator >(Image, double[])
+  nameWithType.vb: Image.>(Image, Double())
+- uid: NetVips.Image.op_GreaterThan(NetVips.Image,System.Int32[])
+  name: operator >(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_GreaterThan(NetVips.Image,System.Int32[])
+  name.vb: '>(Image, Integer())'
+  fullName: NetVips.Image.operator >(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.>(NetVips.Image, Integer())
+  nameWithType: Image.operator >(Image, int[])
+  nameWithType.vb: Image.>(Image, Integer())
+- uid: NetVips.Image.op_GreaterThan(System.Double,NetVips.Image)
+  name: operator >(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThan(System.Double,NetVips.Image)
+  name.vb: '>(Double, Image)'
+  fullName: NetVips.Image.operator >(double, NetVips.Image)
+  fullName.vb: NetVips.Image.>(Double, NetVips.Image)
+  nameWithType: Image.operator >(double, Image)
+  nameWithType.vb: Image.>(Double, Image)
+- uid: NetVips.Image.op_GreaterThan(System.Double[],NetVips.Image)
+  name: operator >(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThan(System.Double[],NetVips.Image)
+  name.vb: '>(Double(), Image)'
+  fullName: NetVips.Image.operator >(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.>(Double(), NetVips.Image)
+  nameWithType: Image.operator >(double[], Image)
+  nameWithType.vb: Image.>(Double(), Image)
+- uid: NetVips.Image.op_GreaterThan(System.Int32[],NetVips.Image)
+  name: operator >(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThan(System.Int32[],NetVips.Image)
+  name.vb: '>(Integer(), Image)'
+  fullName: NetVips.Image.operator >(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.>(Integer(), NetVips.Image)
+  nameWithType: Image.operator >(int[], Image)
+  nameWithType.vb: Image.>(Integer(), Image)
+- uid: NetVips.Image.op_GreaterThan*
+  name: operator >
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThan_
+  commentId: Overload:NetVips.Image.op_GreaterThan
+  isSpec: "True"
+  name.vb: '>'
+  fullName: NetVips.Image.operator >
+  fullName.vb: NetVips.Image.>
+  nameWithType: Image.operator >
+  nameWithType.vb: Image.>
+- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,NetVips.Image)
+  name: operator >=(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,NetVips.Image)
+  name.vb: '>=(Image, Image)'
+  fullName: NetVips.Image.operator >=(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.>=(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator >=(Image, Image)
+  nameWithType.vb: Image.>=(Image, Image)
+- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double)
+  name: operator >=(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double)
+  name.vb: '>=(Image, Double)'
+  fullName: NetVips.Image.operator >=(NetVips.Image, double)
+  fullName.vb: NetVips.Image.>=(NetVips.Image, Double)
+  nameWithType: Image.operator >=(Image, double)
+  nameWithType.vb: Image.>=(Image, Double)
+- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double[])
+  name: operator >=(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Double[])
+  name.vb: '>=(Image, Double())'
+  fullName: NetVips.Image.operator >=(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.>=(NetVips.Image, Double())
+  nameWithType: Image.operator >=(Image, double[])
+  nameWithType.vb: Image.>=(Image, Double())
+- uid: NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Int32[])
+  name: operator >=(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(NetVips.Image,System.Int32[])
+  name.vb: '>=(Image, Integer())'
+  fullName: NetVips.Image.operator >=(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.>=(NetVips.Image, Integer())
+  nameWithType: Image.operator >=(Image, int[])
+  nameWithType.vb: Image.>=(Image, Integer())
+- uid: NetVips.Image.op_GreaterThanOrEqual(System.Double,NetVips.Image)
+  name: operator >=(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(System.Double,NetVips.Image)
+  name.vb: '>=(Double, Image)'
+  fullName: NetVips.Image.operator >=(double, NetVips.Image)
+  fullName.vb: NetVips.Image.>=(Double, NetVips.Image)
+  nameWithType: Image.operator >=(double, Image)
+  nameWithType.vb: Image.>=(Double, Image)
+- uid: NetVips.Image.op_GreaterThanOrEqual(System.Double[],NetVips.Image)
+  name: operator >=(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(System.Double[],NetVips.Image)
+  name.vb: '>=(Double(), Image)'
+  fullName: NetVips.Image.operator >=(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.>=(Double(), NetVips.Image)
+  nameWithType: Image.operator >=(double[], Image)
+  nameWithType.vb: Image.>=(Double(), Image)
+- uid: NetVips.Image.op_GreaterThanOrEqual(System.Int32[],NetVips.Image)
+  name: operator >=(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_GreaterThanOrEqual(System.Int32[],NetVips.Image)
+  name.vb: '>=(Integer(), Image)'
+  fullName: NetVips.Image.operator >=(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.>=(Integer(), NetVips.Image)
+  nameWithType: Image.operator >=(int[], Image)
+  nameWithType.vb: Image.>=(Integer(), Image)
+- uid: NetVips.Image.op_GreaterThanOrEqual*
+  name: operator >=
+  href: api/NetVips.Image.html#NetVips_Image_op_GreaterThanOrEqual_
+  commentId: Overload:NetVips.Image.op_GreaterThanOrEqual
+  isSpec: "True"
+  name.vb: '>='
+  fullName: NetVips.Image.operator >=
+  fullName.vb: NetVips.Image.>=
+  nameWithType: Image.operator >=
+  nameWithType.vb: Image.>=
+- uid: NetVips.Image.op_Inequality(System.Double,NetVips.Image)
+  name: operator !=(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Inequality(System.Double,NetVips.Image)
+  name.vb: <>(Double, Image)
+  fullName: NetVips.Image.operator !=(double, NetVips.Image)
+  fullName.vb: NetVips.Image.<>(Double, NetVips.Image)
+  nameWithType: Image.operator !=(double, Image)
+  nameWithType.vb: Image.<>(Double, Image)
+- uid: NetVips.Image.op_Inequality(System.Double[],NetVips.Image)
+  name: operator !=(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Inequality(System.Double[],NetVips.Image)
+  name.vb: <>(Double(), Image)
+  fullName: NetVips.Image.operator !=(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.<>(Double(), NetVips.Image)
+  nameWithType: Image.operator !=(double[], Image)
+  nameWithType.vb: Image.<>(Double(), Image)
+- uid: NetVips.Image.op_Inequality(System.Int32[],NetVips.Image)
+  name: operator !=(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Inequality(System.Int32[],NetVips.Image)
+  name.vb: <>(Integer(), Image)
+  fullName: NetVips.Image.operator !=(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.<>(Integer(), NetVips.Image)
+  nameWithType: Image.operator !=(int[], Image)
+  nameWithType.vb: Image.<>(Integer(), Image)
+- uid: NetVips.Image.op_Inequality*
+  name: operator !=
+  href: api/NetVips.Image.html#NetVips_Image_op_Inequality_
+  commentId: Overload:NetVips.Image.op_Inequality
+  isSpec: "True"
+  name.vb: <>
+  fullName: NetVips.Image.operator !=
+  fullName.vb: NetVips.Image.<>
+  nameWithType: Image.operator !=
+  nameWithType.vb: Image.<>
+- uid: NetVips.Image.op_LeftShift(NetVips.Image,System.Int32)
+  name: operator <<(Image, int)
+  href: api/NetVips.Image.html#NetVips_Image_op_LeftShift_NetVips_Image_System_Int32_
+  commentId: M:NetVips.Image.op_LeftShift(NetVips.Image,System.Int32)
+  name.vb: <<(Image, Integer)
+  fullName: NetVips.Image.operator <<(NetVips.Image, int)
+  fullName.vb: NetVips.Image.<<(NetVips.Image, Integer)
+  nameWithType: Image.operator <<(Image, int)
+  nameWithType.vb: Image.<<(Image, Integer)
+- uid: NetVips.Image.op_LeftShift*
+  name: operator <<
+  href: api/NetVips.Image.html#NetVips_Image_op_LeftShift_
+  commentId: Overload:NetVips.Image.op_LeftShift
+  isSpec: "True"
+  name.vb: <<
+  fullName: NetVips.Image.operator <<
+  fullName.vb: NetVips.Image.<<
+  nameWithType: Image.operator <<
+  nameWithType.vb: Image.<<
+- uid: NetVips.Image.op_LessThan(NetVips.Image,NetVips.Image)
+  name: operator <(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,NetVips.Image)
+  name.vb: <(Image, Image)
+  fullName: NetVips.Image.operator <(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.<(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator <(Image, Image)
+  nameWithType.vb: Image.<(Image, Image)
+- uid: NetVips.Image.op_LessThan(NetVips.Image,System.Double)
+  name: operator <(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,System.Double)
+  name.vb: <(Image, Double)
+  fullName: NetVips.Image.operator <(NetVips.Image, double)
+  fullName.vb: NetVips.Image.<(NetVips.Image, Double)
+  nameWithType: Image.operator <(Image, double)
+  nameWithType.vb: Image.<(Image, Double)
+- uid: NetVips.Image.op_LessThan(NetVips.Image,System.Double[])
+  name: operator <(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,System.Double[])
+  name.vb: <(Image, Double())
+  fullName: NetVips.Image.operator <(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.<(NetVips.Image, Double())
+  nameWithType: Image.operator <(Image, double[])
+  nameWithType.vb: Image.<(Image, Double())
+- uid: NetVips.Image.op_LessThan(NetVips.Image,System.Int32[])
+  name: operator <(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_LessThan(NetVips.Image,System.Int32[])
+  name.vb: <(Image, Integer())
+  fullName: NetVips.Image.operator <(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.<(NetVips.Image, Integer())
+  nameWithType: Image.operator <(Image, int[])
+  nameWithType.vb: Image.<(Image, Integer())
+- uid: NetVips.Image.op_LessThan(System.Double,NetVips.Image)
+  name: operator <(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThan(System.Double,NetVips.Image)
+  name.vb: <(Double, Image)
+  fullName: NetVips.Image.operator <(double, NetVips.Image)
+  fullName.vb: NetVips.Image.<(Double, NetVips.Image)
+  nameWithType: Image.operator <(double, Image)
+  nameWithType.vb: Image.<(Double, Image)
+- uid: NetVips.Image.op_LessThan(System.Double[],NetVips.Image)
+  name: operator <(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThan(System.Double[],NetVips.Image)
+  name.vb: <(Double(), Image)
+  fullName: NetVips.Image.operator <(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.<(Double(), NetVips.Image)
+  nameWithType: Image.operator <(double[], Image)
+  nameWithType.vb: Image.<(Double(), Image)
+- uid: NetVips.Image.op_LessThan(System.Int32[],NetVips.Image)
+  name: operator <(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThan(System.Int32[],NetVips.Image)
+  name.vb: <(Integer(), Image)
+  fullName: NetVips.Image.operator <(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.<(Integer(), NetVips.Image)
+  nameWithType: Image.operator <(int[], Image)
+  nameWithType.vb: Image.<(Integer(), Image)
+- uid: NetVips.Image.op_LessThan*
+  name: operator <
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThan_
+  commentId: Overload:NetVips.Image.op_LessThan
+  isSpec: "True"
+  name.vb: <
+  fullName: NetVips.Image.operator <
+  fullName.vb: NetVips.Image.<
+  nameWithType: Image.operator <
+  nameWithType.vb: Image.<
+- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,NetVips.Image)
+  name: operator <=(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,NetVips.Image)
+  name.vb: <=(Image, Image)
+  fullName: NetVips.Image.operator <=(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.<=(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator <=(Image, Image)
+  nameWithType.vb: Image.<=(Image, Image)
+- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double)
+  name: operator <=(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double)
+  name.vb: <=(Image, Double)
+  fullName: NetVips.Image.operator <=(NetVips.Image, double)
+  fullName.vb: NetVips.Image.<=(NetVips.Image, Double)
+  nameWithType: Image.operator <=(Image, double)
+  nameWithType.vb: Image.<=(Image, Double)
+- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double[])
+  name: operator <=(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Double[])
+  name.vb: <=(Image, Double())
+  fullName: NetVips.Image.operator <=(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.<=(NetVips.Image, Double())
+  nameWithType: Image.operator <=(Image, double[])
+  nameWithType.vb: Image.<=(Image, Double())
+- uid: NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Int32[])
+  name: operator <=(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_LessThanOrEqual(NetVips.Image,System.Int32[])
+  name.vb: <=(Image, Integer())
+  fullName: NetVips.Image.operator <=(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.<=(NetVips.Image, Integer())
+  nameWithType: Image.operator <=(Image, int[])
+  nameWithType.vb: Image.<=(Image, Integer())
+- uid: NetVips.Image.op_LessThanOrEqual(System.Double,NetVips.Image)
+  name: operator <=(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThanOrEqual(System.Double,NetVips.Image)
+  name.vb: <=(Double, Image)
+  fullName: NetVips.Image.operator <=(double, NetVips.Image)
+  fullName.vb: NetVips.Image.<=(Double, NetVips.Image)
+  nameWithType: Image.operator <=(double, Image)
+  nameWithType.vb: Image.<=(Double, Image)
+- uid: NetVips.Image.op_LessThanOrEqual(System.Double[],NetVips.Image)
+  name: operator <=(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThanOrEqual(System.Double[],NetVips.Image)
+  name.vb: <=(Double(), Image)
+  fullName: NetVips.Image.operator <=(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.<=(Double(), NetVips.Image)
+  nameWithType: Image.operator <=(double[], Image)
+  nameWithType.vb: Image.<=(Double(), Image)
+- uid: NetVips.Image.op_LessThanOrEqual(System.Int32[],NetVips.Image)
+  name: operator <=(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_LessThanOrEqual(System.Int32[],NetVips.Image)
+  name.vb: <=(Integer(), Image)
+  fullName: NetVips.Image.operator <=(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.<=(Integer(), NetVips.Image)
+  nameWithType: Image.operator <=(int[], Image)
+  nameWithType.vb: Image.<=(Integer(), Image)
+- uid: NetVips.Image.op_LessThanOrEqual*
+  name: operator <=
+  href: api/NetVips.Image.html#NetVips_Image_op_LessThanOrEqual_
+  commentId: Overload:NetVips.Image.op_LessThanOrEqual
+  isSpec: "True"
+  name.vb: <=
+  fullName: NetVips.Image.operator <=
+  fullName.vb: NetVips.Image.<=
+  nameWithType: Image.operator <=
+  nameWithType.vb: Image.<=
+- uid: NetVips.Image.op_Modulus(NetVips.Image,NetVips.Image)
+  name: operator %(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,NetVips.Image)
+  name.vb: Mod(Image, Image)
+  fullName: NetVips.Image.operator %(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.Mod(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator %(Image, Image)
+  nameWithType.vb: Image.Mod(Image, Image)
+- uid: NetVips.Image.op_Modulus(NetVips.Image,System.Double)
+  name: operator %(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,System.Double)
+  name.vb: Mod(Image, Double)
+  fullName: NetVips.Image.operator %(NetVips.Image, double)
+  fullName.vb: NetVips.Image.Mod(NetVips.Image, Double)
+  nameWithType: Image.operator %(Image, double)
+  nameWithType.vb: Image.Mod(Image, Double)
+- uid: NetVips.Image.op_Modulus(NetVips.Image,System.Double[])
+  name: operator %(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,System.Double[])
+  name.vb: Mod(Image, Double())
+  fullName: NetVips.Image.operator %(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.Mod(NetVips.Image, Double())
+  nameWithType: Image.operator %(Image, double[])
+  nameWithType.vb: Image.Mod(Image, Double())
+- uid: NetVips.Image.op_Modulus(NetVips.Image,System.Int32[])
+  name: operator %(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_Modulus(NetVips.Image,System.Int32[])
+  name.vb: Mod(Image, Integer())
+  fullName: NetVips.Image.operator %(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.Mod(NetVips.Image, Integer())
+  nameWithType: Image.operator %(Image, int[])
+  nameWithType.vb: Image.Mod(Image, Integer())
+- uid: NetVips.Image.op_Modulus(System.Double,NetVips.Image)
+  name: operator %(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Modulus(System.Double,NetVips.Image)
+  name.vb: Mod(Double, Image)
+  fullName: NetVips.Image.operator %(double, NetVips.Image)
+  fullName.vb: NetVips.Image.Mod(Double, NetVips.Image)
+  nameWithType: Image.operator %(double, Image)
+  nameWithType.vb: Image.Mod(Double, Image)
+- uid: NetVips.Image.op_Modulus(System.Double[],NetVips.Image)
+  name: operator %(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Modulus(System.Double[],NetVips.Image)
+  name.vb: Mod(Double(), Image)
+  fullName: NetVips.Image.operator %(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.Mod(Double(), NetVips.Image)
+  nameWithType: Image.operator %(double[], Image)
+  nameWithType.vb: Image.Mod(Double(), Image)
+- uid: NetVips.Image.op_Modulus(System.Int32[],NetVips.Image)
+  name: operator %(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Modulus(System.Int32[],NetVips.Image)
+  name.vb: Mod(Integer(), Image)
+  fullName: NetVips.Image.operator %(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.Mod(Integer(), NetVips.Image)
+  nameWithType: Image.operator %(int[], Image)
+  nameWithType.vb: Image.Mod(Integer(), Image)
+- uid: NetVips.Image.op_Modulus*
+  name: operator %
+  href: api/NetVips.Image.html#NetVips_Image_op_Modulus_
+  commentId: Overload:NetVips.Image.op_Modulus
+  isSpec: "True"
+  name.vb: Mod
+  fullName: NetVips.Image.operator %
+  fullName.vb: NetVips.Image.Mod
+  nameWithType: Image.operator %
+  nameWithType.vb: Image.Mod
+- uid: NetVips.Image.op_Multiply(NetVips.Image,NetVips.Image)
+  name: operator *(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,NetVips.Image)
+  name.vb: '*(Image, Image)'
+  fullName: NetVips.Image.operator *(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.*(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator *(Image, Image)
+  nameWithType.vb: Image.*(Image, Image)
+- uid: NetVips.Image.op_Multiply(NetVips.Image,System.Double)
+  name: operator *(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,System.Double)
+  name.vb: '*(Image, Double)'
+  fullName: NetVips.Image.operator *(NetVips.Image, double)
+  fullName.vb: NetVips.Image.*(NetVips.Image, Double)
+  nameWithType: Image.operator *(Image, double)
+  nameWithType.vb: Image.*(Image, Double)
+- uid: NetVips.Image.op_Multiply(NetVips.Image,System.Double[])
+  name: operator *(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,System.Double[])
+  name.vb: '*(Image, Double())'
+  fullName: NetVips.Image.operator *(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.*(NetVips.Image, Double())
+  nameWithType: Image.operator *(Image, double[])
+  nameWithType.vb: Image.*(Image, Double())
+- uid: NetVips.Image.op_Multiply(NetVips.Image,System.Int32[])
+  name: operator *(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_Multiply(NetVips.Image,System.Int32[])
+  name.vb: '*(Image, Integer())'
+  fullName: NetVips.Image.operator *(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.*(NetVips.Image, Integer())
+  nameWithType: Image.operator *(Image, int[])
+  nameWithType.vb: Image.*(Image, Integer())
+- uid: NetVips.Image.op_Multiply(System.Double,NetVips.Image)
+  name: operator *(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Multiply(System.Double,NetVips.Image)
+  name.vb: '*(Double, Image)'
+  fullName: NetVips.Image.operator *(double, NetVips.Image)
+  fullName.vb: NetVips.Image.*(Double, NetVips.Image)
+  nameWithType: Image.operator *(double, Image)
+  nameWithType.vb: Image.*(Double, Image)
+- uid: NetVips.Image.op_Multiply(System.Double[],NetVips.Image)
+  name: operator *(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Multiply(System.Double[],NetVips.Image)
+  name.vb: '*(Double(), Image)'
+  fullName: NetVips.Image.operator *(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.*(Double(), NetVips.Image)
+  nameWithType: Image.operator *(double[], Image)
+  nameWithType.vb: Image.*(Double(), Image)
+- uid: NetVips.Image.op_Multiply(System.Int32[],NetVips.Image)
+  name: operator *(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Multiply(System.Int32[],NetVips.Image)
+  name.vb: '*(Integer(), Image)'
+  fullName: NetVips.Image.operator *(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.*(Integer(), NetVips.Image)
+  nameWithType: Image.operator *(int[], Image)
+  nameWithType.vb: Image.*(Integer(), Image)
+- uid: NetVips.Image.op_Multiply*
+  name: operator *
+  href: api/NetVips.Image.html#NetVips_Image_op_Multiply_
+  commentId: Overload:NetVips.Image.op_Multiply
+  isSpec: "True"
+  name.vb: '*'
+  fullName: NetVips.Image.operator *
+  fullName.vb: NetVips.Image.*
+  nameWithType: Image.operator *
+  nameWithType.vb: Image.*
+- uid: NetVips.Image.op_RightShift(NetVips.Image,System.Int32)
+  name: operator >>(Image, int)
+  href: api/NetVips.Image.html#NetVips_Image_op_RightShift_NetVips_Image_System_Int32_
+  commentId: M:NetVips.Image.op_RightShift(NetVips.Image,System.Int32)
+  name.vb: '>>(Image, Integer)'
+  fullName: NetVips.Image.operator >>(NetVips.Image, int)
+  fullName.vb: NetVips.Image.>>(NetVips.Image, Integer)
+  nameWithType: Image.operator >>(Image, int)
+  nameWithType.vb: Image.>>(Image, Integer)
+- uid: NetVips.Image.op_RightShift*
+  name: operator >>
+  href: api/NetVips.Image.html#NetVips_Image_op_RightShift_
+  commentId: Overload:NetVips.Image.op_RightShift
+  isSpec: "True"
+  name.vb: '>>'
+  fullName: NetVips.Image.operator >>
+  fullName.vb: NetVips.Image.>>
+  nameWithType: Image.operator >>
+  nameWithType.vb: Image.>>
+- uid: NetVips.Image.op_Subtraction(NetVips.Image,NetVips.Image)
+  name: operator -(Image, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_NetVips_Image_
+  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,NetVips.Image)
+  name.vb: -(Image, Image)
+  fullName: NetVips.Image.operator -(NetVips.Image, NetVips.Image)
+  fullName.vb: NetVips.Image.-(NetVips.Image, NetVips.Image)
+  nameWithType: Image.operator -(Image, Image)
+  nameWithType.vb: Image.-(Image, Image)
+- uid: NetVips.Image.op_Subtraction(NetVips.Image,System.Double)
+  name: operator -(Image, double)
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_System_Double_
+  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,System.Double)
+  name.vb: -(Image, Double)
+  fullName: NetVips.Image.operator -(NetVips.Image, double)
+  fullName.vb: NetVips.Image.-(NetVips.Image, Double)
+  nameWithType: Image.operator -(Image, double)
+  nameWithType.vb: Image.-(Image, Double)
+- uid: NetVips.Image.op_Subtraction(NetVips.Image,System.Double[])
+  name: operator -(Image, double[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_System_Double___
+  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,System.Double[])
+  name.vb: -(Image, Double())
+  fullName: NetVips.Image.operator -(NetVips.Image, double[])
+  fullName.vb: NetVips.Image.-(NetVips.Image, Double())
+  nameWithType: Image.operator -(Image, double[])
+  nameWithType.vb: Image.-(Image, Double())
+- uid: NetVips.Image.op_Subtraction(NetVips.Image,System.Int32[])
+  name: operator -(Image, int[])
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_NetVips_Image_System_Int32___
+  commentId: M:NetVips.Image.op_Subtraction(NetVips.Image,System.Int32[])
+  name.vb: -(Image, Integer())
+  fullName: NetVips.Image.operator -(NetVips.Image, int[])
+  fullName.vb: NetVips.Image.-(NetVips.Image, Integer())
+  nameWithType: Image.operator -(Image, int[])
+  nameWithType.vb: Image.-(Image, Integer())
+- uid: NetVips.Image.op_Subtraction(System.Double,NetVips.Image)
+  name: operator -(double, Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_System_Double_NetVips_Image_
+  commentId: M:NetVips.Image.op_Subtraction(System.Double,NetVips.Image)
+  name.vb: -(Double, Image)
+  fullName: NetVips.Image.operator -(double, NetVips.Image)
+  fullName.vb: NetVips.Image.-(Double, NetVips.Image)
+  nameWithType: Image.operator -(double, Image)
+  nameWithType.vb: Image.-(Double, Image)
+- uid: NetVips.Image.op_Subtraction(System.Double[],NetVips.Image)
+  name: operator -(double[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_System_Double___NetVips_Image_
+  commentId: M:NetVips.Image.op_Subtraction(System.Double[],NetVips.Image)
+  name.vb: -(Double(), Image)
+  fullName: NetVips.Image.operator -(double[], NetVips.Image)
+  fullName.vb: NetVips.Image.-(Double(), NetVips.Image)
+  nameWithType: Image.operator -(double[], Image)
+  nameWithType.vb: Image.-(Double(), Image)
+- uid: NetVips.Image.op_Subtraction(System.Int32[],NetVips.Image)
+  name: operator -(int[], Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_System_Int32___NetVips_Image_
+  commentId: M:NetVips.Image.op_Subtraction(System.Int32[],NetVips.Image)
+  name.vb: -(Integer(), Image)
+  fullName: NetVips.Image.operator -(int[], NetVips.Image)
+  fullName.vb: NetVips.Image.-(Integer(), NetVips.Image)
+  nameWithType: Image.operator -(int[], Image)
+  nameWithType.vb: Image.-(Integer(), Image)
+- uid: NetVips.Image.op_Subtraction*
+  name: operator -
+  href: api/NetVips.Image.html#NetVips_Image_op_Subtraction_
+  commentId: Overload:NetVips.Image.op_Subtraction
+  isSpec: "True"
+  name.vb: '-'
+  fullName: NetVips.Image.operator -
+  fullName.vb: NetVips.Image.-
+  nameWithType: Image.operator -
+  nameWithType.vb: Image.-
+- uid: NetVips.Image.op_True(NetVips.Image)
+  name: operator true(Image)
+  href: api/NetVips.Image.html#NetVips_Image_op_True_NetVips_Image_
+  commentId: M:NetVips.Image.op_True(NetVips.Image)
+  name.vb: IsTrue(Image)
+  fullName: NetVips.Image.operator true(NetVips.Image)
+  fullName.vb: NetVips.Image.IsTrue(NetVips.Image)
+  nameWithType: Image.operator true(Image)
+  nameWithType.vb: Image.IsTrue(Image)
+- uid: NetVips.Image.op_True*
+  name: operator true
+  href: api/NetVips.Image.html#NetVips_Image_op_True_
+  commentId: Overload:NetVips.Image.op_True
+  isSpec: "True"
+  name.vb: IsTrue
+  fullName: NetVips.Image.operator true
+  fullName.vb: NetVips.Image.IsTrue
+  nameWithType: Image.operator true
+  nameWithType.vb: Image.IsTrue
 - uid: NetVips.Interpolate
   name: Interpolate
   href: api/NetVips.Interpolate.html
@@ -13129,6 +13129,168 @@ references:
   commentId: T:NetVips.TargetCustom.WriteDelegate
   fullName: NetVips.TargetCustom.WriteDelegate
   nameWithType: TargetCustom.WriteDelegate
+- uid: NetVips.VOption
+  name: VOption
+  href: api/NetVips.VOption.html
+  commentId: T:NetVips.VOption
+  fullName: NetVips.VOption
+  nameWithType: VOption
+- uid: NetVips.VOption.Add(System.String,System.Object)
+  name: Add(string, object)
+  href: api/NetVips.VOption.html#NetVips_VOption_Add_System_String_System_Object_
+  commentId: M:NetVips.VOption.Add(System.String,System.Object)
+  name.vb: Add(String, Object)
+  fullName: NetVips.VOption.Add(string, object)
+  fullName.vb: NetVips.VOption.Add(String, Object)
+  nameWithType: VOption.Add(string, object)
+  nameWithType.vb: VOption.Add(String, Object)
+- uid: NetVips.VOption.Add*
+  name: Add
+  href: api/NetVips.VOption.html#NetVips_VOption_Add_
+  commentId: Overload:NetVips.VOption.Add
+  isSpec: "True"
+  fullName: NetVips.VOption.Add
+  nameWithType: VOption.Add
+- uid: NetVips.VOption.AddIfPresent*
+  name: AddIfPresent
+  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent_
+  commentId: Overload:NetVips.VOption.AddIfPresent
+  isSpec: "True"
+  fullName: NetVips.VOption.AddIfPresent
+  nameWithType: VOption.AddIfPresent
+- uid: NetVips.VOption.AddIfPresent``1(System.String,System.Nullable{``0})
+  name: AddIfPresent<T>(string, T?)
+  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent__1_System_String_System_Nullable___0__
+  commentId: M:NetVips.VOption.AddIfPresent``1(System.String,System.Nullable{``0})
+  name.vb: AddIfPresent(Of T)(String, T?)
+  fullName: NetVips.VOption.AddIfPresent<T>(string, T?)
+  fullName.vb: NetVips.VOption.AddIfPresent(Of T)(String, T?)
+  nameWithType: VOption.AddIfPresent<T>(string, T?)
+  nameWithType.vb: VOption.AddIfPresent(Of T)(String, T?)
+- uid: NetVips.VOption.AddIfPresent``1(System.String,``0)
+  name: AddIfPresent<T>(string, T)
+  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent__1_System_String___0_
+  commentId: M:NetVips.VOption.AddIfPresent``1(System.String,``0)
+  name.vb: AddIfPresent(Of T)(String, T)
+  fullName: NetVips.VOption.AddIfPresent<T>(string, T)
+  fullName.vb: NetVips.VOption.AddIfPresent(Of T)(String, T)
+  nameWithType: VOption.AddIfPresent<T>(string, T)
+  nameWithType.vb: VOption.AddIfPresent(Of T)(String, T)
+- uid: NetVips.VOption.AddIfPresent``1(System.String,``0[])
+  name: AddIfPresent<T>(string, T[])
+  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent__1_System_String___0___
+  commentId: M:NetVips.VOption.AddIfPresent``1(System.String,``0[])
+  name.vb: AddIfPresent(Of T)(String, T())
+  fullName: NetVips.VOption.AddIfPresent<T>(string, T[])
+  fullName.vb: NetVips.VOption.AddIfPresent(Of T)(String, T())
+  nameWithType: VOption.AddIfPresent<T>(string, T[])
+  nameWithType.vb: VOption.AddIfPresent(Of T)(String, T())
+- uid: NetVips.VOption.ContainsKey(System.String)
+  name: ContainsKey(string)
+  href: api/NetVips.VOption.html#NetVips_VOption_ContainsKey_System_String_
+  commentId: M:NetVips.VOption.ContainsKey(System.String)
+  name.vb: ContainsKey(String)
+  fullName: NetVips.VOption.ContainsKey(string)
+  fullName.vb: NetVips.VOption.ContainsKey(String)
+  nameWithType: VOption.ContainsKey(string)
+  nameWithType.vb: VOption.ContainsKey(String)
+- uid: NetVips.VOption.ContainsKey*
+  name: ContainsKey
+  href: api/NetVips.VOption.html#NetVips_VOption_ContainsKey_
+  commentId: Overload:NetVips.VOption.ContainsKey
+  isSpec: "True"
+  fullName: NetVips.VOption.ContainsKey
+  nameWithType: VOption.ContainsKey
+- uid: NetVips.VOption.Count
+  name: Count
+  href: api/NetVips.VOption.html#NetVips_VOption_Count
+  commentId: P:NetVips.VOption.Count
+  fullName: NetVips.VOption.Count
+  nameWithType: VOption.Count
+- uid: NetVips.VOption.Count*
+  name: Count
+  href: api/NetVips.VOption.html#NetVips_VOption_Count_
+  commentId: Overload:NetVips.VOption.Count
+  isSpec: "True"
+  fullName: NetVips.VOption.Count
+  nameWithType: VOption.Count
+- uid: NetVips.VOption.GetEnumerator
+  name: GetEnumerator()
+  href: api/NetVips.VOption.html#NetVips_VOption_GetEnumerator
+  commentId: M:NetVips.VOption.GetEnumerator
+  fullName: NetVips.VOption.GetEnumerator()
+  nameWithType: VOption.GetEnumerator()
+- uid: NetVips.VOption.GetEnumerator*
+  name: GetEnumerator
+  href: api/NetVips.VOption.html#NetVips_VOption_GetEnumerator_
+  commentId: Overload:NetVips.VOption.GetEnumerator
+  isSpec: "True"
+  fullName: NetVips.VOption.GetEnumerator
+  nameWithType: VOption.GetEnumerator
+- uid: NetVips.VOption.Item(System.String)
+  name: this[string]
+  href: api/NetVips.VOption.html#NetVips_VOption_Item_System_String_
+  commentId: P:NetVips.VOption.Item(System.String)
+  name.vb: this[](String)
+  fullName: NetVips.VOption.this[string]
+  fullName.vb: NetVips.VOption.this[](String)
+  nameWithType: VOption.this[string]
+  nameWithType.vb: VOption.this[](String)
+- uid: NetVips.VOption.Item*
+  name: this
+  href: api/NetVips.VOption.html#NetVips_VOption_Item_
+  commentId: Overload:NetVips.VOption.Item
+  isSpec: "True"
+  name.vb: this[]
+  fullName: NetVips.VOption.this
+  fullName.vb: NetVips.VOption.this[]
+  nameWithType: VOption.this
+  nameWithType.vb: VOption.this[]
+- uid: NetVips.VOption.Keys
+  name: Keys
+  href: api/NetVips.VOption.html#NetVips_VOption_Keys
+  commentId: P:NetVips.VOption.Keys
+  fullName: NetVips.VOption.Keys
+  nameWithType: VOption.Keys
+- uid: NetVips.VOption.Keys*
+  name: Keys
+  href: api/NetVips.VOption.html#NetVips_VOption_Keys_
+  commentId: Overload:NetVips.VOption.Keys
+  isSpec: "True"
+  fullName: NetVips.VOption.Keys
+  nameWithType: VOption.Keys
+- uid: NetVips.VOption.Remove(System.String)
+  name: Remove(string)
+  href: api/NetVips.VOption.html#NetVips_VOption_Remove_System_String_
+  commentId: M:NetVips.VOption.Remove(System.String)
+  name.vb: Remove(String)
+  fullName: NetVips.VOption.Remove(string)
+  fullName.vb: NetVips.VOption.Remove(String)
+  nameWithType: VOption.Remove(string)
+  nameWithType.vb: VOption.Remove(String)
+- uid: NetVips.VOption.Remove*
+  name: Remove
+  href: api/NetVips.VOption.html#NetVips_VOption_Remove_
+  commentId: Overload:NetVips.VOption.Remove
+  isSpec: "True"
+  fullName: NetVips.VOption.Remove
+  nameWithType: VOption.Remove
+- uid: NetVips.VOption.TryGetValue(System.String,System.Object@)
+  name: TryGetValue(string, out object)
+  href: api/NetVips.VOption.html#NetVips_VOption_TryGetValue_System_String_System_Object__
+  commentId: M:NetVips.VOption.TryGetValue(System.String,System.Object@)
+  name.vb: TryGetValue(String, Object)
+  fullName: NetVips.VOption.TryGetValue(string, out object)
+  fullName.vb: NetVips.VOption.TryGetValue(String, Object)
+  nameWithType: VOption.TryGetValue(string, out object)
+  nameWithType.vb: VOption.TryGetValue(String, Object)
+- uid: NetVips.VOption.TryGetValue*
+  name: TryGetValue
+  href: api/NetVips.VOption.html#NetVips_VOption_TryGetValue_
+  commentId: Overload:NetVips.VOption.TryGetValue
+  isSpec: "True"
+  fullName: NetVips.VOption.TryGetValue
+  nameWithType: VOption.TryGetValue
 - uid: NetVips.VipsException
   name: VipsException
   href: api/NetVips.VipsException.html
@@ -13144,15 +13306,6 @@ references:
   fullName.vb: NetVips.VipsException.New()
   nameWithType: VipsException.VipsException()
   nameWithType.vb: VipsException.New()
-- uid: NetVips.VipsException.#ctor(System.String,System.Exception)
-  name: VipsException(string, Exception)
-  href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_System_String_System_Exception_
-  commentId: M:NetVips.VipsException.#ctor(System.String,System.Exception)
-  name.vb: New(String, Exception)
-  fullName: NetVips.VipsException.VipsException(string, System.Exception)
-  fullName.vb: NetVips.VipsException.New(String, System.Exception)
-  nameWithType: VipsException.VipsException(string, Exception)
-  nameWithType.vb: VipsException.New(String, Exception)
 - uid: NetVips.VipsException.#ctor(System.String)
   name: VipsException(string)
   href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_System_String_
@@ -13162,6 +13315,15 @@ references:
   fullName.vb: NetVips.VipsException.New(String)
   nameWithType: VipsException.VipsException(string)
   nameWithType.vb: VipsException.New(String)
+- uid: NetVips.VipsException.#ctor(System.String,System.Exception)
+  name: VipsException(string, Exception)
+  href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_System_String_System_Exception_
+  commentId: M:NetVips.VipsException.#ctor(System.String,System.Exception)
+  name.vb: New(String, Exception)
+  fullName: NetVips.VipsException.VipsException(string, System.Exception)
+  fullName.vb: NetVips.VipsException.New(String, System.Exception)
+  nameWithType: VipsException.VipsException(string, Exception)
+  nameWithType.vb: VipsException.New(String, Exception)
 - uid: NetVips.VipsException.#ctor*
   name: VipsException
   href: api/NetVips.VipsException.html#NetVips_VipsException__ctor_
@@ -13278,165 +13440,3 @@ references:
   commentId: F:NetVips.VipsProgress.TPels
   fullName: NetVips.VipsProgress.TPels
   nameWithType: VipsProgress.TPels
-- uid: NetVips.VOption
-  name: VOption
-  href: api/NetVips.VOption.html
-  commentId: T:NetVips.VOption
-  fullName: NetVips.VOption
-  nameWithType: VOption
-- uid: NetVips.VOption.Add(System.String,System.Object)
-  name: Add(string, object)
-  href: api/NetVips.VOption.html#NetVips_VOption_Add_System_String_System_Object_
-  commentId: M:NetVips.VOption.Add(System.String,System.Object)
-  name.vb: Add(String, Object)
-  fullName: NetVips.VOption.Add(string, object)
-  fullName.vb: NetVips.VOption.Add(String, Object)
-  nameWithType: VOption.Add(string, object)
-  nameWithType.vb: VOption.Add(String, Object)
-- uid: NetVips.VOption.Add*
-  name: Add
-  href: api/NetVips.VOption.html#NetVips_VOption_Add_
-  commentId: Overload:NetVips.VOption.Add
-  isSpec: "True"
-  fullName: NetVips.VOption.Add
-  nameWithType: VOption.Add
-- uid: NetVips.VOption.AddIfPresent*
-  name: AddIfPresent
-  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent_
-  commentId: Overload:NetVips.VOption.AddIfPresent
-  isSpec: "True"
-  fullName: NetVips.VOption.AddIfPresent
-  nameWithType: VOption.AddIfPresent
-- uid: NetVips.VOption.AddIfPresent``1(System.String,``0)
-  name: AddIfPresent<T>(string, T)
-  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent__1_System_String___0_
-  commentId: M:NetVips.VOption.AddIfPresent``1(System.String,``0)
-  name.vb: AddIfPresent(Of T)(String, T)
-  fullName: NetVips.VOption.AddIfPresent<T>(string, T)
-  fullName.vb: NetVips.VOption.AddIfPresent(Of T)(String, T)
-  nameWithType: VOption.AddIfPresent<T>(string, T)
-  nameWithType.vb: VOption.AddIfPresent(Of T)(String, T)
-- uid: NetVips.VOption.AddIfPresent``1(System.String,``0[])
-  name: AddIfPresent<T>(string, T[])
-  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent__1_System_String___0___
-  commentId: M:NetVips.VOption.AddIfPresent``1(System.String,``0[])
-  name.vb: AddIfPresent(Of T)(String, T())
-  fullName: NetVips.VOption.AddIfPresent<T>(string, T[])
-  fullName.vb: NetVips.VOption.AddIfPresent(Of T)(String, T())
-  nameWithType: VOption.AddIfPresent<T>(string, T[])
-  nameWithType.vb: VOption.AddIfPresent(Of T)(String, T())
-- uid: NetVips.VOption.AddIfPresent``1(System.String,System.Nullable{``0})
-  name: AddIfPresent<T>(string, T?)
-  href: api/NetVips.VOption.html#NetVips_VOption_AddIfPresent__1_System_String_System_Nullable___0__
-  commentId: M:NetVips.VOption.AddIfPresent``1(System.String,System.Nullable{``0})
-  name.vb: AddIfPresent(Of T)(String, T?)
-  fullName: NetVips.VOption.AddIfPresent<T>(string, T?)
-  fullName.vb: NetVips.VOption.AddIfPresent(Of T)(String, T?)
-  nameWithType: VOption.AddIfPresent<T>(string, T?)
-  nameWithType.vb: VOption.AddIfPresent(Of T)(String, T?)
-- uid: NetVips.VOption.ContainsKey(System.String)
-  name: ContainsKey(string)
-  href: api/NetVips.VOption.html#NetVips_VOption_ContainsKey_System_String_
-  commentId: M:NetVips.VOption.ContainsKey(System.String)
-  name.vb: ContainsKey(String)
-  fullName: NetVips.VOption.ContainsKey(string)
-  fullName.vb: NetVips.VOption.ContainsKey(String)
-  nameWithType: VOption.ContainsKey(string)
-  nameWithType.vb: VOption.ContainsKey(String)
-- uid: NetVips.VOption.ContainsKey*
-  name: ContainsKey
-  href: api/NetVips.VOption.html#NetVips_VOption_ContainsKey_
-  commentId: Overload:NetVips.VOption.ContainsKey
-  isSpec: "True"
-  fullName: NetVips.VOption.ContainsKey
-  nameWithType: VOption.ContainsKey
-- uid: NetVips.VOption.Count
-  name: Count
-  href: api/NetVips.VOption.html#NetVips_VOption_Count
-  commentId: P:NetVips.VOption.Count
-  fullName: NetVips.VOption.Count
-  nameWithType: VOption.Count
-- uid: NetVips.VOption.Count*
-  name: Count
-  href: api/NetVips.VOption.html#NetVips_VOption_Count_
-  commentId: Overload:NetVips.VOption.Count
-  isSpec: "True"
-  fullName: NetVips.VOption.Count
-  nameWithType: VOption.Count
-- uid: NetVips.VOption.GetEnumerator
-  name: GetEnumerator()
-  href: api/NetVips.VOption.html#NetVips_VOption_GetEnumerator
-  commentId: M:NetVips.VOption.GetEnumerator
-  fullName: NetVips.VOption.GetEnumerator()
-  nameWithType: VOption.GetEnumerator()
-- uid: NetVips.VOption.GetEnumerator*
-  name: GetEnumerator
-  href: api/NetVips.VOption.html#NetVips_VOption_GetEnumerator_
-  commentId: Overload:NetVips.VOption.GetEnumerator
-  isSpec: "True"
-  fullName: NetVips.VOption.GetEnumerator
-  nameWithType: VOption.GetEnumerator
-- uid: NetVips.VOption.Item(System.String)
-  name: this[string]
-  href: api/NetVips.VOption.html#NetVips_VOption_Item_System_String_
-  commentId: P:NetVips.VOption.Item(System.String)
-  name.vb: this[](String)
-  fullName: NetVips.VOption.this[string]
-  fullName.vb: NetVips.VOption.this[](String)
-  nameWithType: VOption.this[string]
-  nameWithType.vb: VOption.this[](String)
-- uid: NetVips.VOption.Item*
-  name: this
-  href: api/NetVips.VOption.html#NetVips_VOption_Item_
-  commentId: Overload:NetVips.VOption.Item
-  isSpec: "True"
-  name.vb: this[]
-  fullName: NetVips.VOption.this
-  fullName.vb: NetVips.VOption.this[]
-  nameWithType: VOption.this
-  nameWithType.vb: VOption.this[]
-- uid: NetVips.VOption.Keys
-  name: Keys
-  href: api/NetVips.VOption.html#NetVips_VOption_Keys
-  commentId: P:NetVips.VOption.Keys
-  fullName: NetVips.VOption.Keys
-  nameWithType: VOption.Keys
-- uid: NetVips.VOption.Keys*
-  name: Keys
-  href: api/NetVips.VOption.html#NetVips_VOption_Keys_
-  commentId: Overload:NetVips.VOption.Keys
-  isSpec: "True"
-  fullName: NetVips.VOption.Keys
-  nameWithType: VOption.Keys
-- uid: NetVips.VOption.Remove(System.String)
-  name: Remove(string)
-  href: api/NetVips.VOption.html#NetVips_VOption_Remove_System_String_
-  commentId: M:NetVips.VOption.Remove(System.String)
-  name.vb: Remove(String)
-  fullName: NetVips.VOption.Remove(string)
-  fullName.vb: NetVips.VOption.Remove(String)
-  nameWithType: VOption.Remove(string)
-  nameWithType.vb: VOption.Remove(String)
-- uid: NetVips.VOption.Remove*
-  name: Remove
-  href: api/NetVips.VOption.html#NetVips_VOption_Remove_
-  commentId: Overload:NetVips.VOption.Remove
-  isSpec: "True"
-  fullName: NetVips.VOption.Remove
-  nameWithType: VOption.Remove
-- uid: NetVips.VOption.TryGetValue(System.String,System.Object@)
-  name: TryGetValue(string, out object)
-  href: api/NetVips.VOption.html#NetVips_VOption_TryGetValue_System_String_System_Object__
-  commentId: M:NetVips.VOption.TryGetValue(System.String,System.Object@)
-  name.vb: TryGetValue(String, Object)
-  fullName: NetVips.VOption.TryGetValue(string, out object)
-  fullName.vb: NetVips.VOption.TryGetValue(String, Object)
-  nameWithType: VOption.TryGetValue(string, out object)
-  nameWithType.vb: VOption.TryGetValue(String, Object)
-- uid: NetVips.VOption.TryGetValue*
-  name: TryGetValue
-  href: api/NetVips.VOption.html#NetVips_VOption_TryGetValue_
-  commentId: Overload:NetVips.VOption.TryGetValue
-  isSpec: "True"
-  fullName: NetVips.VOption.TryGetValue
-  nameWithType: VOption.TryGetValue
