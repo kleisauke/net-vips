@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using NetVips.Extensions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace NetVips.Tests;
 

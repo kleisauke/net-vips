@@ -1,5 +1,4 @@
 using Xunit;
-using Xunit.Abstractions;
 
 namespace NetVips.Tests;
 
@@ -96,10 +95,10 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(0.0, im.Min());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestFractsurf()
     {
-        Skip.IfNot(Helper.Have("fwfft"), "no FFTW support in this vips, skipping test");
+        Assert.SkipUnless(Helper.Have("fwfft"), "no FFTW support in this vips, skipping test");
 
         var im = Image.Fractsurf(100, 90, 2.5);
         Assert.Equal(100, im.Width);
@@ -477,10 +476,10 @@ public class CreateTests : IClassFixture<TestsFixture>
         Assert.Equal(Enums.BandFormat.Float, im.Format);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestText()
     {
-        Skip.IfNot(Helper.Have("text"), "no text in this vips, skipping test");
+        Assert.SkipUnless(Helper.Have("text"), "no text in this vips, skipping test");
 
         var im = Image.Text("Hello, world!", dpi: 300);
         Assert.True(im.Width > 10);

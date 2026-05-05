@@ -1,6 +1,5 @@
 using System.Linq;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace NetVips.Tests;
 
@@ -170,10 +169,10 @@ public class ColourTests : IClassFixture<TestsFixture>
         Assert.Equal(42.0, diffPixel[1], 3);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestIcc()
     {
-        Skip.IfNot(Helper.Have("icc_import"), "no lcms support in this vips, skipping test");
+        Assert.SkipUnless(Helper.Have("icc_import"), "no lcms support in this vips, skipping test");
 
         var test = Image.NewFromFile(Helper.JpegFile);
 

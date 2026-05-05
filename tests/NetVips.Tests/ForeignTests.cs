@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Text;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace NetVips.Tests;
 
@@ -156,10 +155,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(beforeExif, afterExif);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestJpeg()
     {
-        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
+        Assert.SkipUnless(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         void JpegValid(Image im)
         {
@@ -274,10 +273,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestJpegSave()
     {
-        Skip.IfNot(Helper.Have("jpegsave"), "no jpeg support, skipping test");
+        Assert.SkipUnless(Helper.Have("jpegsave"), "no jpeg support, skipping test");
 
         var im = Image.NewFromFile(Helper.JpegFile);
 
@@ -317,10 +316,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(im10.Avg(), im0.Avg());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestTruncated()
     {
-        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
+        Assert.SkipUnless(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         // This should open (there's enough there for the header)
         var im = Image.NewFromFile(Helper.TruncatedFile);
@@ -336,10 +335,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         _ = im.Avg();
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestPng()
     {
-        Skip.IfNot(Helper.Have("pngload"), "no png support, skipping test");
+        Assert.SkipUnless(Helper.Have("pngload"), "no png support, skipping test");
 
         void PngValid(Image im)
         {
@@ -403,10 +402,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(Enums.BandFormat.Uchar, rgb.Format);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestBufferOverload()
     {
-        Skip.IfNot(Helper.Have("pngload"), "no png support, skipping test");
+        Assert.SkipUnless(Helper.Have("pngload"), "no png support, skipping test");
 
         var buf = _colour.WriteToBuffer(".png");
         var x = Image.NewFromBuffer(buf);
@@ -417,10 +416,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(0, (_colour - x).Abs().Max());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestStreamOverload()
     {
-        Skip.IfNot(Helper.Have("jpegload"), "no jpeg support, skipping test");
+        Assert.SkipUnless(Helper.Have("jpegload"), "no jpeg support, skipping test");
 
         // Set the beginning of the stream to an arbitrary but carefully chosen number.
         using var stream = new MemoryStream { Position = 42 };
@@ -438,10 +437,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.True((_colour - x).Abs().Max() <= 80);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestTiff()
     {
-        Skip.IfNot(Helper.Have("tiffload"), "no tiff support, skipping test");
+        Assert.SkipUnless(Helper.Have("tiffload"), "no tiff support, skipping test");
 
         void TiffValid(Image im)
         {
@@ -666,10 +665,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         _ = x.TiffsaveBuffer(tile: true, pyramid: true, regionShrink: Enums.RegionShrink.Nearest);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestTiffJp2K()
     {
-        Skip.IfNot(Helper.Have("tiffload") && Helper.Have("jp2kload"), "no tiff or jp2k support, skipping test");
+        Assert.SkipUnless(Helper.Have("tiffload") && Helper.Have("jp2kload"), "no tiff or jp2k support, skipping test");
 
         SaveLoadFile(".tif", "[tile,compression=jp2k]", _colour, 80);
         SaveLoadFile(".tif",
@@ -679,10 +678,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
             _colour, 80);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestMagickLoad()
     {
-        Skip.IfNot(Helper.Have("magickload"), "no magick support, skipping test");
+        Assert.SkipUnless(Helper.Have("magickload"), "no magick support, skipping test");
 
         void BmpValid(Image im)
         {
@@ -739,10 +738,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(16, im.Height);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestMagickSave()
     {
-        Skip.IfNot(Helper.Have("magicksave"), "no magick support, skipping test");
+        Assert.SkipUnless(Helper.Have("magicksave"), "no magick support, skipping test");
 
         // save to a file and load again ... we can't use SaveLoadFile since
         // we want to make sure we use magickload/save
@@ -786,10 +785,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         }
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestWebp()
     {
-        Skip.IfNot(Helper.Have("webpload"), "no webp support, skipping test");
+        Assert.SkipUnless(Helper.Have("webpload"), "no webp support, skipping test");
 
         void WebpValid(Image im)
         {
@@ -883,10 +882,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.InRange(buf.Length, 19600, 20400);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestAnalyzeLoad()
     {
-        Skip.IfNot(Helper.Have("analyzeload"), "no analyze support, skipping test");
+        Assert.SkipUnless(Helper.Have("analyzeload"), "no analyze support, skipping test");
 
         void AnalyzeValid(Image im)
         {
@@ -901,10 +900,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         FileLoader("analyzeload", Helper.AnalyzeFile, AnalyzeValid);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestMatLoad()
     {
-        Skip.IfNot(Helper.Have("matload"), "no matlab support, skipping test");
+        Assert.SkipUnless(Helper.Have("matload"), "no matlab support, skipping test");
 
         void MatlabValid(Image im)
         {
@@ -919,10 +918,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         FileLoader("matload", Helper.MatlabFile, MatlabValid);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestOpenexrLoad()
     {
-        Skip.IfNot(Helper.Have("openexrload"), "no openexr support, skipping test");
+        Assert.SkipUnless(Helper.Have("openexrload"), "no openexr support, skipping test");
 
         void ExrValid(Image im)
         {
@@ -943,10 +942,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         FileLoader("openexrload", Helper.ExrFile, ExrValid);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestFitsLoad()
     {
-        Skip.IfNot(Helper.Have("fitsload"), "no fits support, skipping test");
+        Assert.SkipUnless(Helper.Have("fitsload"), "no fits support, skipping test");
 
         void FitsValid(Image im)
         {
@@ -968,10 +967,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         SaveLoad("%s.fits", _mono);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestNiftiLoad()
     {
-        Skip.IfNot(Helper.Have("niftiload"), "no nifti support, skipping test");
+        Assert.SkipUnless(Helper.Have("niftiload"), "no nifti support, skipping test");
 
         void NiftiValid(Image im)
         {
@@ -990,10 +989,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         SaveLoad("%s.nii.gz", _mono);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestOpenslideLoad()
     {
-        Skip.IfNot(Helper.Have("openslideload"), "no openslide support, skipping test");
+        Assert.SkipUnless(Helper.Have("openslideload"), "no openslide support, skipping test");
 
         void OpenslideValid(Image im)
         {
@@ -1008,10 +1007,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         FileLoader("openslideload", Helper.OpenslideFile, OpenslideValid);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestPdfLoad()
     {
-        Skip.IfNot(Helper.Have("pdfload"), "no pdf support, skipping test");
+        Assert.SkipUnless(Helper.Have("pdfload"), "no pdf support, skipping test");
 
         void PdfValid(Image im)
         {
@@ -1043,10 +1042,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(x.Height * 2, y.Height, 2.0);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestGifLoad()
     {
-        Skip.IfNot(Helper.Have("gifload"), "no gif support, skipping test");
+        Assert.SkipUnless(Helper.Have("gifload"), "no gif support, skipping test");
 
         void GifValid(Image im)
         {
@@ -1102,10 +1101,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(4 * x1.Height, x2.Height);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestSvgLoad()
     {
-        Skip.IfNot(Helper.Have("svgload"), "no svg support, skipping test");
+        Assert.SkipUnless(Helper.Have("svgload"), "no svg support, skipping test");
 
         void SvgValid(Image im)
         {
@@ -1218,10 +1217,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(0, (im - _mono).Abs().Max());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestPpm()
     {
-        Skip.IfNot(Helper.Have("ppmload"), "no PPM support, skipping test");
+        Assert.SkipUnless(Helper.Have("ppmload"), "no PPM support, skipping test");
 
         SaveLoadFile(".pgm", "[ascii]", _mono);
         SaveLoadFile(".ppm", "[ascii]", _colour);
@@ -1245,10 +1244,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         Assert.Equal(0, (im - _mono).Abs().Max());
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestRad()
     {
-        Skip.IfNot(Helper.Have("radload"), "no Radiance support, skipping test");
+        Assert.SkipUnless(Helper.Have("radload"), "no Radiance support, skipping test");
 
         SaveLoad("%s.hdr", _rad);
         SaveLoad("%s.pfm", _rad);
@@ -1257,10 +1256,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         SaveLoadStream(".hdr", "", _rad);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestDzSave()
     {
-        Skip.IfNot(Helper.Have("dzsave"), "no dzsave support, skipping test");
+        Assert.SkipUnless(Helper.Have("dzsave"), "no dzsave support, skipping test");
 
         // dzsave is hard to test, there are so many options
         // test each option separately and hope they all function together
@@ -1414,10 +1413,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         _ = _colour.DzsaveBuffer(regionShrink: Enums.RegionShrink.Median);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestHeifload()
     {
-        Skip.IfNot(Helper.Have("heifload"), "no HEIF support, skipping test");
+        Assert.SkipUnless(Helper.Have("heifload"), "no HEIF support, skipping test");
 
         void HeifValid(Image im)
         {
@@ -1440,10 +1439,10 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
         BufferLoader("heifload_buffer", Helper.AvifFile, HeifValid);
     }
 
-    [SkippableFact]
+    [Fact]
     public void TestHeifsave()
     {
-        Skip.IfNot(Helper.Have("heifsave"), "no HEIF support, skipping test");
+        Assert.SkipUnless(Helper.Have("heifsave"), "no HEIF support, skipping test");
 
         SaveLoadBuffer("heifsave_buffer", "heifload_buffer", _colour, kwargs: new VOption
         {
