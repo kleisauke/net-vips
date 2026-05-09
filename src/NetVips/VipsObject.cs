@@ -45,7 +45,7 @@ public class VipsObject : GObject
         var argument = Internal.VipsObject.GetArgument(this, name, out var pspec, out _, out _);
 
         return argument != 0
-            ? default(GParamSpec.Struct?)
+            ? null
             : Marshal.PtrToStructure<GParamSpec.Struct>(pspec);
     }
 

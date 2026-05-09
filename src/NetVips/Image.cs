@@ -2193,7 +2193,7 @@ public partial class Image : VipsObject
     /// <param name="data">Data to pass to handler calls.</param>
     /// <returns>The handler id.</returns>
     /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
-    public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, nint data = default)
+    public ulong SignalConnect(Enums.Signals signal, EvalDelegate callback, nint data = 0)
     {
         void EvalMarshal(nint imagePtr, nint progressPtr, nint userDataPtr)
         {

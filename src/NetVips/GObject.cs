@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using NetVips.Internal;
 
+using GConnectFlags = NetVips.Internal.Enums.GConnectFlags;
 using GSignalMatchType = NetVips.Internal.Enums.GSignalMatchType;
 
 namespace NetVips;
@@ -58,7 +59,7 @@ public class GObject : SafeHandle
     /// <param name="data">Data to pass to handler calls.</param>
     /// <returns>The handler id.</returns>
     /// <exception cref="T:System.ArgumentException">If it failed to connect the signal.</exception>
-    public ulong SignalConnect<T>(string detailedSignal, T callback, nint data = default)
+    public ulong SignalConnect<T>(string detailedSignal, T callback, nint data = 0)
         where T : notnull
     {
         // add a weak reference callback to ensure all handles are released on finalization
@@ -75,7 +76,8 @@ public class GObject : SafeHandle
         _handles.Add(delegateHandle);
 
         var cHandler = Marshal.GetFunctionPointerForDelegate(callback);
-        var ret = GSignal.ConnectData(this, detailedSignal, cHandler, data, null, default);
+        var ret = GSignal.ConnectData(this, detailedSignal, cHandler, data, null,
+            GConnectFlags.G_CONNECT_DEFAULT);
         if (ret == 0)
         {
             throw new ArgumentException("Failed to connect signal " + detailedSignal);
@@ -107,7 +109,7 @@ public class GObject : SafeHandle
     /// <param name="func">The func of the handlers.</param>
     /// <param name="data">The data of the handlers.</param>
     /// <returns>The number of handlers that matched.</returns>
-    public uint SignalHandlersDisconnectByFunc<T>(T func, nint data = default)
+    public uint SignalHandlersDisconnectByFunc<T>(T func, nint data = 0)
         where T : notnull
     {
         var funcPtr = Marshal.GetFunctionPointerForDelegate(func);
