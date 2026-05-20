@@ -110,7 +110,7 @@ public class Benchmark
         image.Save(output);
     }
 
-    [Benchmark(Description = "SkiaSharp{^1}")]
+    [Benchmark(Description = "SkiaSharp{^2}")]
     [Arguments("t.jpg", "t2.jpg")] // SkiaSharp doesn't have TIFF support
     public void SkiaSharp(string input, string output)
     {
@@ -154,7 +154,7 @@ public class Benchmark
     }
 
 #if Windows_NT
-    [Benchmark(Description = "System.Drawing{^2}")]
+    [Benchmark(Description = "System.Drawing{^3}")]
     [Arguments("t.tif", "t2.tif")]
     [Arguments("t.jpg", "t2.jpg")]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
