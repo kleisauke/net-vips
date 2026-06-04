@@ -20,7 +20,7 @@ jobs:
             container: mcr.microsoft.com/dotnet/sdk:10.0-noble-arm64v8
             script: ./build.sh
           - os: ubuntu-24.04
-            container: rockylinux:8
+            container: rockylinux/rockylinux:8-ubi-init
             script: ./build.sh
           - os: ubuntu-24.04
             container: mcr.microsoft.com/dotnet/sdk:10.0-alpine3.22
