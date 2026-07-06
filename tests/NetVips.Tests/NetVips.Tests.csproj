@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
-    <PackageReference Include="NetVips.Native" Version="8.18.3" Condition="'$(TestWithNuGetBinaries)' == 'true'" />
+    <PackageReference Include="NetVips.Native" Version="8.18.4" Condition="'$(TestWithNuGetBinaries)' == 'true'" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
