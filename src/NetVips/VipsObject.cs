@@ -24,6 +24,7 @@ public class VipsObject : GObject
     /// <inheritdoc cref="GObject"/>
     internal VipsObject(nint pointer) : base(pointer)
     {
+        VipsArena.Track(this);
     }
 
     /// <summary>

@@ -203,6 +203,16 @@ using var resultImage = image.Real().Cos();
 > using var real = image.Real();
 > using var resultImage = real.Cos();
 > ```
+> or wrap it in a `VipsArena`:
+> ```csharp
+> using (var arena = new VipsArena())
+> {
+>     // No using needed here
+>     var image = Image.NewFromFile("some-image.jpg");
+>     image = image.Real().Cos();
+>     ...
+> }
+> ```
 > Otherwise, these images will not be disposed until the next GC cycle runs.
 
 to calculate the cosine of the real part of a complex image. There is
@@ -295,6 +305,16 @@ using var resultImage = ((image * new[] { 1, 2, 3 }).Abs() < 128) | 4;
 > using var absolute = multiply.Abs();
 > using var threshold = absolute < 128;
 > using var resultImage = threshold | 4;
+> ```
+> or wrap it in a `VipsArena`:
+> ```csharp
+> using (var arena = new VipsArena())
+> {
+>     // No using needed here
+>     var image = Image.NewFromFile("some-image.jpg");
+>     image = ((image * new[] { 1, 2, 3 }).Abs() < 128) | 4;
+>     ...
+> }
 > ```
 > Otherwise, these images will not be disposed until the next GC cycle runs.
 
