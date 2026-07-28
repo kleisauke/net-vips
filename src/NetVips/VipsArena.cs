@@ -38,8 +38,10 @@ public sealed class VipsArena : IDisposable
             return;
         }
 
-        // Skip operations, they manage their own lifetimes inside Operation.Call
-        if (vipsObject is Operation)
+        // Skip classes that manage their own lifetime
+        if (vipsObject is Operation ||
+            vipsObject is SourceStream ||
+            vipsObject is TargetStream)
         {
             return;
         }
