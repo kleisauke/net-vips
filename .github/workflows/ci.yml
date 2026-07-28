@@ -55,7 +55,7 @@ jobs:
         run: apk add bash font-noto --update-cache
       - name: Setup dotnet
         if: matrix.container == ''
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10.x
       - name: Checkout
