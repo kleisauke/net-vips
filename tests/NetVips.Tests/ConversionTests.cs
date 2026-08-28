@@ -626,7 +626,8 @@ public class ConversionTests : IClassFixture<TestsFixture>
     [Fact]
     public void TestGamma()
     {
-        const double exponent = 2.4;
+        // https://github.com/libvips/libvips/pull/5229
+        double exponent = NetVips.AtLeastLibvips(8, 19) ? 2.2 : 2.4;
         foreach (var fmt in Helper.NonComplexFormats)
         {
             var mx = Helper.MaxValue[fmt];
