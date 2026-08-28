@@ -196,6 +196,16 @@ internal static class GValue
 
     [SuppressUnmanagedCodeSecurity]
     [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "g_value_set_pointer")]
+    internal static extern void SetPointer(ref Struct value, nint vPointer);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "g_value_get_pointer")]
+    internal static extern nint GetPointer(in Struct value);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport(Libraries.GObject, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "g_value_set_enum")]
     internal static extern void SetEnum(ref Struct value, int vEnum);
 

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [3.3.0] - TBD
 ### Added
 - Add `VipsArena` class for arena-style image disposal ([#271](https://github.com/kleisauke/net-vips/issues/271)).
+- Add support for marshaling pointers.
 
 ### Changed
 - Update methods/enums for libvips 8.19.

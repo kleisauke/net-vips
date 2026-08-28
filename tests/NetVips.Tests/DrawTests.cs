@@ -1,9 +1,12 @@
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace NetVips.Tests;
 
 public class DrawTests : IClassFixture<TestsFixture>
 {
+    private delegate void DrawPointDelegate(nint image, nint ink, int x, int y, nint client);
+
     public DrawTests(TestsFixture testsFixture, ITestOutputHelper output)
     {
         testsFixture.SetUpLogging(output);
@@ -76,6 +79,24 @@ public class DrawTests : IClassFixture<TestsFixture>
         pixel = im[0, 1];
         Assert.Single(pixel);
         Assert.Equal(0, pixel[0]);
+
+        if (NetVips.AtLeastLibvips(8, 19))
+        {
+            var callbackCount = 0;
+
+            void CustomDraw(nint image, nint ink, int x, int y, nint client)
+            {
+                Assert.Equal(42, client);
+                callbackCount++;
+            }
+
+            var callback = Marshal.GetFunctionPointerForDelegate<DrawPointDelegate>(CustomDraw);
+
+            var im2 = Image.Black(100, 100);
+            im2 = im2.Mutate(x => x.DrawLine([100], 0, 0, 100, 0, drawPoint: callback, client: 42));
+
+            Assert.Equal(101, callbackCount);
+        }
     }
 
     [Fact]
