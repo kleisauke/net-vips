@@ -153,8 +153,6 @@ public static class Enums
     /// <remarks>
     /// The Cairo docs have a nice explanation of all the blend modes:
     /// https://www.cairographics.org/operators
-    ///
-    /// The non-separable modes are not implemented.
     /// </remarks>
     public enum BlendMode
     {
@@ -231,7 +229,166 @@ public static class Enums
         Difference = 23, // "difference"
 
         /// <summary>Somewhat like Difference, but lower-contrast.</summary>
-        Exclusion = 24 // "exclusion"
+        Exclusion = 24, // "exclusion"
+
+        /// <summary>Hue of the second, saturation and luminosity of the first.</summary>
+        Hue = 25, // "hue"
+
+        /// <summary>Saturation of the second, hue and luminosity of the first.</summary>
+        Saturation = 26, // "saturation"
+
+        /// <summary>Hue and saturation of the second, luminosity of the first.</summary>
+        Colour = 27, // "colour"
+
+        /// <summary> Luminosity of the second, hue and saturation of the first.</summary>
+        Luminosity = 28 // "luminosity"
+    }
+
+    /// <summary>
+    /// Colour primaries.
+    /// </summary>
+    public enum CICPColourPrimaries
+    {
+        /// <summary>BT.709</summary>
+        Bt709 = 1, // "bt709"
+
+        /// <summary>Unspecified</summary>
+        Unspecified = 2, // "unspecified"
+
+        /// <summary>BT.470 System M (historical)</summary>
+        Bt470m = 4, // "bt470m"
+
+        /// <summary>BT.470 System B, G (historical)</summary>
+        Bt470bg = 5, // "bt470bg"
+
+        /// <summary>BT.601</summary>
+        Bt601 = 6, // "bt601"
+
+        /// <summary>SMPTE 240</summary>
+        Smpte240 = 7, // "smpte240"
+
+        /// <summary>Generic film (color filters using illuminant C)</summary>
+        GenericFilm = 8, // "generic-film"
+
+        /// <summary>BT.2020, BT.2100</summary>
+        Bt2020 = 9, // "bt2020"
+
+        /// <summary>SMPTE 428 (CIE 1921 XYZ)</summary>
+        Smpte428 = 10, // "smpte428"
+
+        /// <summary>SMPTE RP 431-2</summary>
+        DciP3 = 11, // "dci-p3"
+
+        /// <summary>SMPTE EG 432-1</summary>
+        DisplayP3 = 12, // "display-p3"
+
+        /// <summary>EBU Tech. 3213-E</summary>
+        Ebu3213 = 22 // "ebu3213"
+    }
+
+    /// <summary>
+    /// Matrix coefficients.
+    /// </summary>
+    public enum CICPMatrixCoefficients
+    {
+        /// <summary>Identity matrix</summary>
+        Rgb = 0, // "rgb"
+
+        /// <summary>BT.709</summary>
+        Bt709 = 1, // "bt709"
+
+        /// <summary>Unspecified</summary>
+        Unspecified = 2, // "unspecified"
+
+        /// <summary>US FCC 73.628</summary>
+        Fcc = 4, // "fcc"
+
+        /// <summary>BT.470 System B, G (historical)</summary>
+        Bt470bg = 5, // "bt470bg"
+
+        /// <summary>BT.601</summary>
+        Bt601 = 6, // "bt601"
+
+        /// <summary>SMPTE 240 M</summary>
+        Smpte240 = 7, // "smpte240"
+
+        /// <summary>YCgCo</summary>
+        Ycgco = 8, // "ycgco"
+
+        /// <summary>BT.2020 non-constant luminance, BT.2100 YCbCr</summary>
+        Bt2020Ncl = 9, // "bt2020-ncl"
+
+        /// <summary>BT.2020 constant luminance</summary>
+        Bt2020Cl = 10, // "bt2020-cl"
+
+        /// <summary>SMPTE ST 2085 YDzDx</summary>
+        Smpte2085 = 11, // "smpte2085"
+
+        /// <summary>Chromaticity-derived non-constant luminance</summary>
+        ChromaNcl = 12, // "chroma-ncl"
+
+        /// <summary>Chromaticity-derived constant luminance</summary>
+        ChromaCl = 13, // "chroma-cl"
+
+        /// <summary>BT.2100 ICtCp</summary>
+        Ictcp = 14 // "ictcp"
+    }
+
+    /// <summary>
+    /// Transfer characteristics.
+    /// </summary>
+    public enum CICPTransferCharacteristics
+    {
+        /// <summary>BT.709</summary>
+        Bt709 = 1, // "bt709"
+
+        /// <summary>Unspecified</summary>
+        Unspecified = 2, // "unspecified"
+
+        /// <summary>BT.470 System M (historical)</summary>
+        Bt470m = 4, // "bt470m"
+
+        /// <summary>BT.470 System B, G (historical)</summary>
+        Bt470bg = 5, // "bt470bg"
+
+        /// <summary>BT.601</summary>
+        Bt601 = 6, // "bt601"
+
+        /// <summary>SMPTE 240 M</summary>
+        Smpte240 = 7, // "smpte240"
+
+        /// <summary>Linear</summary>
+        Linear = 8, // "linear"
+
+        /// <summary>Logarithmic (100 : 1 range)</summary>
+        Log100 = 9, // "log-100"
+
+        /// <summary>Logarithmic (100 * Sqrt(10) : 1 range)</summary>
+        Log100Sqrt10 = 10, // "log-100-sqrt10"
+
+        /// <summary>IEC 61966-2-4</summary>
+        Iec61966 = 11, // "iec61966"
+
+        /// <summary>BT.1361</summary>
+        Bt1361 = 12, // "bt1361"
+
+        /// <summary>sRGB or sYCC</summary>
+        Srgb = 13, // "srgb"
+
+        /// <summary>BT.2020 10-bit systems</summary>
+        Bt202010bit = 14, // "bt2020-10bit"
+
+        /// <summary>BT.2020 12-bit systems</summary>
+        Bt202012bit = 15, // "bt2020-12bit"
+
+        /// <summary>SMPTE ST 2084, ITU BT.2100 PQ</summary>
+        Pq = 16, // "pq"
+
+        /// <summary>SMPTE ST 428</summary>
+        Smpte428 = 17, // "smpte428"
+
+        /// <summary>BT.2100 HLG, ARIB STD-B67</summary>
+        Hlg = 18 // "hlg"
     }
 
     /// <summary>
@@ -738,7 +895,10 @@ public static class Enums
         High = 5, // "high"
 
         /// <summary>Everything is interesting.</summary>
-        All = 6 // "all"
+        All = 6, // "all"
+
+        /// <summary>Use the specified point of interest.</summary>
+        Specific = 7 // "specific"
     }
 
     /// <summary>
