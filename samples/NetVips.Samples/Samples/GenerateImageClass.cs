@@ -262,6 +262,10 @@ public class GenerateImageClass : ISample
         {
             description = description[..^" (poppler)".Length];
         }
+        if (description.EndsWith("ImageMagick7"))
+        {
+            description = description[..^1];
+        }
         result.AppendLine($"{indent}/// {description.FirstLetterToUpper()}.")
             .AppendLine($"{indent}/// </summary>")
             .AppendLine($"{indent}/// <example>")
