@@ -21,6 +21,7 @@ public class GenerateImageClass : ISample
         //{GValue.GFlagsType, "uint"}, // Checked below
         {GValue.GDoubleType, "double"},
         {GValue.GStrType, "string"},
+        {GValue.GPointerType, "nint"},
         {GValue.GObjectType, "GObject"},
         {GValue.ImageType, "Image"},
         {GValue.ArrayIntType, "int[]"},
@@ -112,6 +113,13 @@ public class GenerateImageClass : ISample
         if (NetVips.AtLeastLibvips(8, 18) && NetVips.TypeFind("VipsOperation", "pdfload") != IntPtr.Zero)
         {
             _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsForeignPdfPageBox"), "Enums.ForeignPdfPageBox");
+        }
+
+        if (NetVips.AtLeastLibvips(8, 19))
+        {
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCICPColourPrimaries"), "Enums.CICPColourPrimaries");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCICPTransferCharacteristics"), "Enums.CICPTransferCharacteristics");
+            _gTypeToCSharpDict.Add(NetVips.TypeFromName("VipsCICPMatrixCoefficients"), "Enums.CICPMatrixCoefficients");
         }
 
         // Flags
@@ -244,6 +252,7 @@ public class GenerateImageClass : ISample
                 "GObject" => $"{type} {name} = null",
                 "Image" => $"{type} {name} = null",
                 "string" => $"{type} {name} = null",
+                "nint" => $"{type}? {name} = null",
                 "bool" => $"{type}? {name} = null",
                 "int" => $"{type}? {name} = null",
                 "ulong" => $"{type}? {name} = null",

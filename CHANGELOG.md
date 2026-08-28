@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - Add `VipsArena` class for arena-style image disposal ([#271](https://github.com/kleisauke/net-vips/issues/271)).
 
+### Changed
+- Update methods/enums for libvips 8.19.
+
 ## [3.2.0] - 2026-01-01
 ### Added
 - Add generic array overload for `Image.NewFromMemory()`.

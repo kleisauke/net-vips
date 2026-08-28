@@ -74,6 +74,11 @@ public class GValue : IDisposable
     public static readonly nint GStrType = 16 << FundamentalShift;
 
     /// <summary>
+    /// The fundamental type corresponding to gpointer.
+    /// </summary>
+    public static readonly nint GPointerType = 17 << FundamentalShift;
+
+    /// <summary>
     /// The fundamental type for GObject.
     /// </summary>
     public static readonly nint GObjectType = 20 << FundamentalShift;
