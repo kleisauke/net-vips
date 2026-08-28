@@ -1127,19 +1127,31 @@ public class ForeignTests : IClassFixture<TestsFixture>, IDisposable
 
         FileLoader("svgload", Helper.SvgGzFile, SvgValid);
 
+        // this SVG file has pixel dimensions in the header, so DPI should not
+        // affect render size
         var x = Image.NewFromFile(Helper.SvgFile);
         var y = Image.NewFromFile(Helper.SvgFile, kwargs: new VOption
         {
-            {"scale", 2}
+            {"dpi", 144}
         });
 
-        Assert.Equal(x.Width * 2, y.Width, 2.0);
-        Assert.Equal(x.Height * 2, y.Height, 2.0);
+        // https://github.com/libvips/libvips/pull/5205
+        if (NetVips.AtLeastLibvips(8, 19))
+        {
+            Assert.Equal(x.Width, y.Width);
+            Assert.Equal(x.Height, y.Height);
+        }
+        else
+        {
+            Assert.Equal(x.Width * 2, y.Width, 2.0);
+            Assert.Equal(x.Height * 2, y.Height, 2.0);
+        }
 
+        // but scale= should
         x = Image.NewFromFile(Helper.SvgFile);
         y = Image.NewFromFile(Helper.SvgFile, kwargs: new VOption
         {
-            {"dpi", 144}
+            {"scale", 2}
         });
         Assert.Equal(x.Width * 2, y.Width, 2.0);
         Assert.Equal(x.Height * 2, y.Height, 2.0);

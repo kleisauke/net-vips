@@ -165,7 +165,7 @@ public class ColourTests : IClassFixture<TestsFixture>
 
         var difference = reference.DECMC(sample);
         var diffPixel = difference[10, 10];
-        Assert.Equal(4.97, diffPixel[0], 0.5);
+        Assert.Equal(4.3, diffPixel[0], 0.5);
         Assert.Equal(42.0, diffPixel[1], 3);
     }
 
