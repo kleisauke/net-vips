@@ -242,6 +242,10 @@ public class GValue : IDisposable
                                                char.MinValue); // Ensure null-terminated string
             Internal.GValue.SetString(ref Struct, bytes);
         }
+        else if (gtype == GPointerType && value is nint pointer)
+        {
+            Internal.GValue.SetPointer(ref Struct, pointer);
+        }
         else if (gtype == RefStrType)
         {
             var bytes = Encoding.UTF8.GetBytes(Convert.ToString(value) +
@@ -391,6 +395,10 @@ public class GValue : IDisposable
         else if (gtype == GStrType)
         {
             result = Internal.GValue.GetString(in Struct).ToUtf8String();
+        }
+        else if (gtype == GPointerType)
+        {
+            result = Internal.GValue.GetPointer(in Struct);
         }
         else if (gtype == RefStrType)
         {

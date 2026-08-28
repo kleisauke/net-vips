@@ -119,6 +119,20 @@ public class GValueTests : IClassFixture<TestsFixture>
     }
 
     [Fact]
+    public void TestPointer()
+    {
+        nint actual;
+        using (var gv = new GValue())
+        {
+            gv.SetType(GValue.GPointerType);
+            gv.Set((nint)42);
+            actual = (nint)gv.Get();
+        }
+
+        Assert.Equal(42, actual);
+    }
+
+    [Fact]
     public void TestRefString()
     {
         string actual;
