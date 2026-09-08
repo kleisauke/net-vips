@@ -1,12 +1,11 @@
 {
   "sdk": {
-	// Use an SDK version supported by both AppVeyor and Rocky Linux 8
-    "version": "10.0.102",
+	// Require .NET SDK 10.0.300 for https://github.com/dotnet/sdk/pull/53004
+    "version": "10.0.300",
     "rollForward": "latestFeature",
     "allowPrerelease": false
   },
   "test": {
-	// TODO(kleisauke): Migrate to MTP
-    // "runner": "Microsoft.Testing.Platform"
+    "runner": "Microsoft.Testing.Platform"
   }
 }
