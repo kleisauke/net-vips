@@ -14,10 +14,10 @@ jobs:
       matrix:
         include:
           - os: ubuntu-26.04
-            container: mcr.microsoft.com/dotnet/sdk:10.0-noble
+            container: mcr.microsoft.com/dotnet/sdk:10.0-resolute
             script: ./build.sh
           - os: ubuntu-26.04-arm
-            container: mcr.microsoft.com/dotnet/sdk:10.0-noble-arm64v8
+            container: mcr.microsoft.com/dotnet/sdk:10.0-resolute-arm64v8
             script: ./build.sh
           - os: ubuntu-26.04
             container: rockylinux/rockylinux:8-ubi-init
@@ -44,8 +44,8 @@ jobs:
           apk add nodejs --update-cache
           mkdir /opt/bin
           ln -s /usr/bin/node /opt/bin/node
-      - name: Dependencies (Ubuntu 24.04)
-        if: contains(matrix.container, 'noble')
+      - name: Dependencies (Ubuntu 26.04)
+        if: contains(matrix.container, 'resolute')
         run: |
           apt-get update
           apt-get install -y fontconfig-config
