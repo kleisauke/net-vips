@@ -13,21 +13,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             container: mcr.microsoft.com/dotnet/sdk:10.0-noble
             script: ./build.sh
-          - os: ubuntu-24.04-arm
+          - os: ubuntu-26.04-arm
             container: mcr.microsoft.com/dotnet/sdk:10.0-noble-arm64v8
             script: ./build.sh
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             container: rockylinux/rockylinux:8-ubi-init
             script: ./build.sh
             # TODO(kleisauke): Remove once .NET SDK 10.0.300 is available on Rocky Linux 8
             allow_failures: true
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             container: mcr.microsoft.com/dotnet/sdk:10.0-alpine3.23
             script: ./build.sh
-          - os: ubuntu-24.04-arm
+          - os: ubuntu-26.04-arm
             container: mcr.microsoft.com/dotnet/sdk:10.0-alpine3.23-arm64v8
             script: ./build.sh
           - os: macos-15
