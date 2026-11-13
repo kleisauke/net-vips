@@ -114,6 +114,7 @@ partial class Build : FalloutBuild
                 }
 
                 var tempDir = PackingDirectory / "temp";
+                tempDir.CreateDirectory();
 
                 Information($"Uncompressing {fileName} ...");
                 ExtractTarball(filePath, tempDir);

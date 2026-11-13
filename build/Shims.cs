@@ -1,10 +1,10 @@
 using System;
 using System.IO;
+using System.IO.Compression;
+using System.Formats.Tar;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
 using Fallout.Common.CI;
 using Fallout.Common.CI.AppVeyor;
 using Fallout.Common.CI.GitHubActions;
@@ -47,8 +47,8 @@ public partial class Build
     public void ExtractTarball(string gzArchiveName, string destFolder)
     {
         using var inStream = File.OpenRead(gzArchiveName);
-        using var gzipStream = new GZipInputStream(inStream);
-        using var tarArchive = TarArchive.CreateInputTarArchive(gzipStream, Encoding.UTF8);
-        tarArchive.ExtractContents(destFolder);
+        using var gzipStream = new GZipStream(inStream, CompressionMode.Decompress);
+
+        TarFile.ExtractToDirectory(gzipStream, destFolder, overwriteFiles: false);
     }
 }
