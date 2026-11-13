@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetVips.Native" Version="8.18.7" Condition="'$(TestWithNuGetBinaries)' == 'true'" />
-    <PackageReference Include="xunit.v3" Version="4.0.1" />
+    <PackageReference Include="xunit.v3" Version="4.0.3" />
   </ItemGroup>
 
   <ItemGroup>
