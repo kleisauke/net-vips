@@ -19,6 +19,7 @@ artifacts/
 
 # BenchmarkDotNet
 BenchmarkDotNet.Artifacts/
+.bdn/
 
 # User-specific files
 *.suo

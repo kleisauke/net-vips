@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- TODO(kleisauke): Upgrade to .NET 11 once https://github.com/dotnet/docfx/issues/11211 is fixed -->
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>x64;x86;ARM64;ARM32</Platforms>
     <OutputType>Exe</OutputType>
