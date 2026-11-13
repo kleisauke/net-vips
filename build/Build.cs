@@ -2,20 +2,21 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using Nuke.Common;
-using Nuke.Common.Execution;
-using Nuke.Common.Git;
-using Nuke.Common.IO;
-using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
-using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.NuGet;
-using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.Tools.NuGet.NuGetTasks;
+using Fallout.Common;
+using Fallout.Common.Execution;
+using Fallout.Common.Git;
+using Fallout.Common.IO;
+using Fallout.Solutions;
+using Fallout.Common.Tooling;
+using Fallout.Common.Tools.DotNet;
+using Fallout.Common.Tools.NuGet;
+using Fallout.Common.Utilities.Collections;
+using static Fallout.Common.Tools.DotNet.DotNetTasks;
+using static Fallout.Common.Tools.NuGet.NuGetTasks;
 
+[DisableDefaultOutput(DefaultOutput.Logo)]
 [UnsetVisualStudioEnvironmentVariables]
-partial class Build : NukeBuild
+partial class Build : FalloutBuild
 {
     public static int Main() => Execute<Build>(x => x.All);
 
